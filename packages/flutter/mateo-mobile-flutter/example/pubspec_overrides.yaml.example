@@ -1,0 +1,3 @@
+dependency_overrides:
+  oh_my_flutter:
+    path: ../../../../../oh_my_flutter

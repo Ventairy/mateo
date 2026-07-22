@@ -70,6 +70,17 @@ All values reference `../foundation/color-palette.md` primitives. Tokens that do
 | ------------ | ------ | ------------------------- |
 | `background` | White  | App background (scaffold) |
 
+### Colors — Neutral
+
+Every entry in `colors` uses the same `solid` and `onSolid` variant contract.
+The current scheme defines `neutral`; additional color variants can be added
+without changing that shape.
+
+| Token     | Source     | Purpose                         |
+| --------- | ---------- | ------------------------------- |
+| `solid`   | neutral-12 | Neutral solid color             |
+| `onSolid` | White      | Foreground on the neutral solid |
+
 ### Text
 
 | Token       | Source     | WCAG on `background` | Purpose                                                         |
@@ -228,8 +239,7 @@ Pre-composed sets for specific component types. Each component has background, f
 | ------------------- | -------------- | ----------------------------------------- |
 | `background`        | White          | Enabled background                        |
 | `backgroundPressed` | White          | Pressed background                        |
-| `foreground`        | `Text.primary` | Search icon color                         |
-| `title`             | `Text.primary` | Search title                              |
+| `foreground`        | `Text.primary` | Search icon and title color               |
 | `border`            | `background`   | Background-colored border                 |
 | `shadow`            | Black @ 10%    | Drop shadow, matching the floating button |
 
@@ -254,43 +264,53 @@ Pre-composed sets for specific component types. Each component has background, f
 
 ### Toast — Success
 
-| Token        | Source   | Purpose                  |
-| ------------ | -------- | ------------------------ |
-| `background` | green-12 | Success toast background |
-| `foreground` | White    | Success toast text       |
-| `icon`       | green-9  | Success toast icon       |
+| Token         | Source                       | Purpose                                  |
+| ------------- | ---------------------------- | ---------------------------------------- |
+| `background`  | green-12                     | Success toast background                 |
+| `foreground`  | White                        | Success toast text                       |
+| `icon`        | green-9                      | Success toast icon                       |
+| `broadShadow` | `Colors.neutral.solid` @ 16% | Broad lower fade behind the Toast        |
+| `closeShadow` | `Colors.neutral.solid` @ 8%  | Close separation directly under the pill |
 
 ### Toast — Error
 
-| Token        | Source | Purpose                |
-| ------------ | ------ | ---------------------- |
-| `background` | red-12 | Error toast background |
-| `foreground` | White  | Error toast text       |
-| `icon`       | red-9  | Error toast icon       |
+| Token         | Source                       | Purpose                                  |
+| ------------- | ---------------------------- | ---------------------------------------- |
+| `background`  | red-12                       | Error toast background                   |
+| `foreground`  | White                        | Error toast text                         |
+| `icon`        | red-9                        | Error toast icon                         |
+| `broadShadow` | `Colors.neutral.solid` @ 16% | Broad lower fade behind the Toast        |
+| `closeShadow` | `Colors.neutral.solid` @ 8%  | Close separation directly under the pill |
 
 ### Toast — Warning
 
-| Token        | Source   | Purpose                  |
-| ------------ | -------- | ------------------------ |
-| `background` | amber-12 | Warning toast background |
-| `foreground` | White    | Warning toast text       |
-| `icon`       | amber-9  | Warning toast icon       |
+| Token         | Source                       | Purpose                                  |
+| ------------- | ---------------------------- | ---------------------------------------- |
+| `background`  | amber-12                     | Warning toast background                 |
+| `foreground`  | White                        | Warning toast text                       |
+| `icon`        | amber-9                      | Warning toast icon                       |
+| `broadShadow` | `Colors.neutral.solid` @ 16% | Broad lower fade behind the Toast        |
+| `closeShadow` | `Colors.neutral.solid` @ 8%  | Close separation directly under the pill |
 
 ### Toast — Info
 
-| Token        | Source  | Purpose               |
-| ------------ | ------- | --------------------- |
-| `background` | blue-12 | Info toast background |
-| `foreground` | White   | Info toast text       |
-| `icon`       | blue-9  | Info toast icon       |
+| Token         | Source                       | Purpose                                  |
+| ------------- | ---------------------------- | ---------------------------------------- |
+| `background`  | blue-12                      | Info toast background                    |
+| `foreground`  | White                        | Info toast text                          |
+| `icon`        | blue-9                       | Info toast icon                          |
+| `broadShadow` | `Colors.neutral.solid` @ 16% | Broad lower fade behind the Toast        |
+| `closeShadow` | `Colors.neutral.solid` @ 8%  | Close separation directly under the pill |
 
 ### Toast — Neutral
 
-| Token        | Source     | Purpose                  |
-| ------------ | ---------- | ------------------------ |
-| `background` | neutral-12 | Neutral toast background |
-| `foreground` | White      | Neutral toast text       |
-| `icon`       | neutral-8  | Neutral toast icon       |
+| Token         | Source                       | Purpose                                  |
+| ------------- | ---------------------------- | ---------------------------------------- |
+| `background`  | neutral-12                   | Neutral toast background                 |
+| `foreground`  | White                        | Neutral toast text                       |
+| `icon`        | neutral-8                    | Neutral toast icon                       |
+| `broadShadow` | `Colors.neutral.solid` @ 16% | Broad lower fade behind the Toast        |
+| `closeShadow` | `Colors.neutral.solid` @ 8%  | Close separation directly under the pill |
 
 ### Map
 

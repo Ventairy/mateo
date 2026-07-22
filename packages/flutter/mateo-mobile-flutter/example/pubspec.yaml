@@ -1,0 +1,21 @@
+name: mateo_mobile_example
+description: A gallery of public Mateo Mobile components.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mateo_mobile:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ">=7.0.0 <11.0.0"
+
+flutter:
+  uses-material-design: true

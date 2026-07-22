@@ -75,8 +75,7 @@ they are added.
   or `neutral-12`. Define semantic roles on top of primitives.
 - The default `primary` scale is a brand slot. It currently uses Black,
   but consuming apps may replace it with their own brand scale.
-- Dark mode is a separate authored appearance. Do not mechanically invert light
-  colors.
+- Mateo currently supports a light appearance only. Dark mode is not supported.
 - Verify important foreground/background pairs before presenting them as
   accessible. The palette guide lists expected use cases, not a universal
   contrast guarantee for every component.
@@ -93,13 +92,30 @@ they are added.
 ## Writing Style
 
 - Write documentation in clear, friendly, human language.
+- Research how leading designers solve the problem before defining new Mateo
+  guidance when the subject benefits from established practice.
+- Treat that research as internal design input. Mateo documentation must not
+  mention, compare itself with, attribute guidance to, or link to other design
+  systems. Explain every decision directly from Mateo's point of view, using
+  Mateo's principles and voice.
 - Prefer direct rules and examples over long philosophy once a concept is
   established.
 - Use "Mateo" consistently with this capitalization.
 - Avoid corporate filler such as "leverage", "robust solution", "seamless
   experience" unless the word is part of source material.
-- Keep user-facing guidance consumer-oriented. Explain what to use, when to use
-  it, and why it helps the person using the product.
+- Mateo design and package documentation must always be user-facing and
+  usage-facing. Explain what is available, when and how to use it, its visible
+  behavior, and why it helps the person using the product.
+- Keep documentation hierarchical. Do not repeat definitions, formulas,
+  tables, rules, or behavior already owned by a parent or canonical document.
+  Link to that source and document only the decisions introduced by the current
+  scope. Component guidance may define the exact values the component owns, but
+  it must reference inherited foundation and platform behavior instead of
+  restating it.
+- Do not include maintainer workflows in Mateo usage documentation, such as how
+  to add, author, synchronize, generate, publish, or release its artifacts.
+  Keep that guidance in the appropriate `AGENTS.md`, `CONTRIBUTING.md`, release
+  checklist, or internal tooling documentation.
 - Preserve intentional product language from existing docs unless the user asks
   for a rewrite.
 

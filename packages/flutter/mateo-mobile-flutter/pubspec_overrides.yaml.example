@@ -1,0 +1,4 @@
+# Use the sibling checkout while developing both public packages together.
+dependency_overrides:
+  oh_my_flutter:
+    path: ../../../../oh_my_flutter

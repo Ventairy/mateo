@@ -9,12 +9,16 @@ precedence for every file under `design-system/mobile/`.
 
 ## Scope
 
+In this directory, **mobile means phones only**. Tablets and
+tablet-sized layouts are outside this design-system scope. Do not add tablet
+guidance, adaptations, examples, or validation requirements to mobile
+documentation or components.
+
 Keep mobile-only work here, including:
 
 - semantic color schemes and authored appearances for mobile;
 - mobile components, patterns, navigation, gestures, and touch behavior;
-- phone and tablet layout, orientation, safe-area, keyboard, and system-UI
-  behavior;
+- mobile layout, orientation, safe-area, keyboard, and system-UI behavior;
 - mobile typography, iconography, motion, haptics, and feedback;
 - iOS- and Android-specific guidance, tokens, assets, and implementations;
 - mobile accessibility, localization, performance, and platform integration;
@@ -45,7 +49,7 @@ their respective platform directories.
   navigation, input, accessibility, system chrome, or motion conventions differ.
 - Design for touch first. Interactive targets, gestures, feedback, interruption,
   and one-handed reach must be considered from the start.
-- Support phones portrait and landscape, safe areas, software
+- Support mobile devices in portrait and landscape, safe areas, software
   keyboards, dynamic text, localization, screen readers, reduced motion, and
   platform accessibility settings.
 - Use mobile-native accessibility APIs and semantics in implementation code.
@@ -85,8 +89,8 @@ their respective platform directories.
 - The change is mobile-specific and belongs in this directory.
 - Shared primitives remain owned by `design-system/foundation/`.
 - iOS and Android differences are explicit where they affect behavior.
-- Accessibility, localization, reduced motion, and mobile form factors are
-  accounted for.
+- Accessibility, localization, reduced motion, and supported mobile device
+  layouts are accounted for.
 - Documentation, tokens, examples, and implementation have one clear source of
   truth.
 - Relevant validation was run, or the remaining validation boundary was

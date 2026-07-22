@@ -1,0 +1,17 @@
+# Generated source remains committed; transient tooling does not.
+.dart_tool/
+.packages
+.flutter-plugins-dependencies
+build/
+**/doc/api/
+.fvm/
+coverage/
+**/pubspec_overrides.yaml
+.DS_Store
+.idea/
+*.iml
+.vscode/settings.json
+**/test/**/goldens/linux/
+**/test/**/goldens/macos/
+**/test/**/goldens/windows/
+**/test/**/failures/
