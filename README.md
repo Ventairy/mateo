@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="./banner.png" alt="Mateo" width="960">
+  <img src="./banner.png" alt="Mateo" width="430">
 </p>
-
-<h1 align="center">Mateo</h1>
 
 <p align="center">
   <strong>A design system for simple, expressive, warm software.</strong><br>
