@@ -285,8 +285,7 @@ mateo-mobile-flutter/
 - Widgets live in the package's `lib/src/widgets/` directory. Simple widgets
   may use one file. Larger widgets may use a same-named folder with one public
   entrypoint and focused `part` files for public value types, controllers,
-  actions, and other support classes, following the `mateo_swipe_deck`
-  structure.
+  actions, and other support classes.
 
 - Access bundled SVG icons via `MateoIcon` (e.g. `MateoIcon.cross(width: 16, height: 16, color: Colors.red)`),
   exported from the barrel. `MateoIcon` is an `abstract final class` with one `static Widget` method per icon,

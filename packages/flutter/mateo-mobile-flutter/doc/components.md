@@ -5,9 +5,9 @@
 `MateoIconButton`, `MateoBottomSheet`, and `MateoToast` for common mobile application
 controls and feedback.
 
-Gesture-intensive experiences can use `MateoSwipeDeck`, `MateoYSnapList`,
-`MateoSwipeToPopSurface`, and `MateoHeroPage`. Controllers must be disposed by their
-owners unless a component's API explicitly states otherwise.
+Gesture-intensive experiences can use `MateoYSnapList`,
+`MateoSwipeToPopSurface`, and `MateoHeroPage`. Controllers must be disposed by
+their owners unless a component's API explicitly states otherwise.
 
 `MateoLocationRadiusMap` wraps MapLibre presentation behavior. Consumers remain
 responsible for their tile provider, attribution, access policy, and supported

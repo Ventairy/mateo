@@ -53,8 +53,6 @@ export 'src/theme/mateo_theme.dart' show MateoTheme;
 export 'src/theme/mateo_theme_context.dart' show MateoThemeContext;
 export 'src/theme/mateo_theme_data.dart' show MateoThemeData;
 export 'src/theme/mateo_typography.dart' show MateoTypography;
-export 'src/widgets/mateo_appear.dart'
-    show MateoAppear, MateoAppearAnimationType, MateoAppearController;
 export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet.dart'
     show MateoBottomSheet;
 export 'src/widgets/mateo_button/mateo_button.dart'
@@ -63,8 +61,6 @@ export 'src/widgets/mateo_button/mateo_button.dart'
         MateoButtonIconBuilder,
         MateoButtonState,
         MateoButtonVariant;
-export 'src/widgets/mateo_buttons_bar.dart'
-    show MateoButtonsBar, MateoButtonsBarFit, MateoButtonsBarOrientation;
 export 'src/widgets/mateo_dot_matrix/mateo_dot_matrix.dart' show MateoDotMatrix;
 export 'src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart'
     show MateoDotsLoadingIndicator;
@@ -91,12 +87,6 @@ export 'src/widgets/mateo_icon_button.dart'
 export 'src/widgets/mateo_loading_text.dart' show MateoLoadingText;
 export 'src/widgets/mateo_location_radius_map/mateo_location_radius_map.dart'
     show MateoLocationRadiusMap;
-export 'src/widgets/mateo_orbit/mateo_orbit.dart'
-    show MateoOrbit, MateoOrbitDirection, MateoOrbitItem;
-export 'src/widgets/mateo_radar_pulse/mateo_radar_pulse.dart'
-    show MateoRadarPulse, MateoRadarPulseStep;
-export 'src/widgets/mateo_route_settled/mateo_route_settled.dart'
-    show MateoRouteSettled;
 export 'src/widgets/mateo_search_bar_button.dart' show MateoSearchBarButton;
 export 'src/widgets/mateo_skeleton/mateo_skeleton.dart'
     show
@@ -106,17 +96,6 @@ export 'src/widgets/mateo_skeleton/mateo_skeleton.dart'
         MateoSkeletonShimmerEffect,
         MateoSkeletonStaticEffectBase,
         MateoSkeletonStyle;
-export 'src/widgets/mateo_swipe_deck/mateo_swipe_deck.dart'
-    show
-        MateoSwipeDeck,
-        MateoSwipeDeckAction,
-        MateoSwipeDeckController,
-        MateoSwipeDeckItemBuilder,
-        MateoSwipeDeckItemCallback,
-        MateoSwipeDeckItemProvider,
-        MateoSwipeDeckLoadMoreCallback,
-        MateoSwipeDeckLoadMoreErrorBuilder,
-        MateoSwipeDeckProgressCallback;
 export 'src/widgets/mateo_swipe_to_pop_surface/mateo_swipe_to_pop_surface.dart'
     show MateoSwipeToPopHandoffState, MateoSwipeToPopSurface;
 export 'src/widgets/mateo_swipe_up_hint/mateo_swipe_up_hint.dart'
@@ -133,8 +112,6 @@ export 'src/widgets/mateo_toast/mateo_toast.dart'
         MateoToastState,
         MateoToastType;
 export 'src/widgets/mateo_view_back_button.dart' show MateoViewBackButton;
-export 'src/widgets/mateo_widget_transition/mateo_widget_transition.dart'
-    show MateoWidgetTransition, MateoWidgetTransitionAnimationBuilder;
 export 'src/widgets/mateo_y_snap_list/mateo_y_snap_list.dart'
     show
         MateoYSnapList,
