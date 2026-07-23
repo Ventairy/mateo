@@ -65,8 +65,8 @@ void main() {
     });
 
     test('matches the Mateo map scheme', () {
-      expect(scheme.map.landuse, palette.neutral[3]);
-      expect(scheme.map.landuseBusiness, palette.neutral[3]);
+      expect(scheme.map.landuse, palette.neutral[2]);
+      expect(scheme.map.landuseBusiness, palette.neutral[2]);
       expect(scheme.map.locationRadius, palette.teal[9].withValues(alpha: .15));
     });
 
