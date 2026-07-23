@@ -161,8 +161,8 @@ class _LightMateoColorScheme extends MateoColorScheme {
          map: MateoMapColorScheme(
            background: palette.neutral[2],
            landcover: palette.green[5],
-           landuse: palette.neutral[3],
-           landuseBusiness: palette.neutral[3],
+           landuse: palette.neutral[2],
+           landuseBusiness: palette.neutral[2],
            landuseRecreation: palette.green[5],
            park: palette.green[5],
            water: palette.cyan[5],
