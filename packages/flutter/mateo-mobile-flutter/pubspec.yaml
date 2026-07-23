@@ -2,7 +2,7 @@ name: mateo_mobile
 description: >-
   The Flutter implementation of Mateo Mobile, a simple, expressive, warm design
   system for touch-first Android and iOS applications.
-version: 0.1.1
+version: 0.1.0
 homepage: https://github.com/Ventairy/mateo
 repository: https://github.com/Ventairy/mateo/tree/main/packages/flutter/mateo-mobile-flutter
 issue_tracker: https://github.com/Ventairy/mateo/issues
