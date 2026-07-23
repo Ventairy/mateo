@@ -1,4 +1,4 @@
-name: mateo-mobile-flutter
+name: Check mateo-mobile-flutter
 
 on:
   workflow_call:
@@ -66,7 +66,7 @@ jobs:
       - name: Analyze package
         run: fvm flutter analyze --fatal-infos
 
-      - name: Run tests and Linux goldens
+      - name: Run tests
         run: fvm flutter test
 
       - name: Validate API documentation

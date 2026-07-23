@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Validate local Markdown links
+      - name: Check local Markdown links
         run: |
           ruby <<'RUBY'
           require 'pathname'
@@ -31,7 +31,9 @@ jobs:
             next if file.start_with?('.git/')
 
             text = File.read(file)
-            text.scan(/\[[^\]]+\]\(([^)]+)\)/).flatten.each do |href|
+            text.to_enum(:scan, /\[[^\]]+\]\(([^)]+)\)/).each do
+              match = Regexp.last_match
+              href = match[1]
               next if href.start_with?('#')
               next if href.match?(/\A[a-z][a-z0-9+.-]*:/i)
 
@@ -39,12 +41,48 @@ jobs:
               next if target.empty?
 
               candidate = (Pathname(file).dirname + target).cleanpath
-              failures << "#{file}: missing #{href}" unless candidate.exist?
+              next if candidate.exist?
+
+              failures << {
+                file: file,
+                line: text[0...match.begin(0)].count("\n") + 1,
+                href: href,
+                target: candidate.to_s
+              }
             end
           end
 
           if failures.any?
-            puts failures.join("\n")
+            def escape_command(value)
+              value.to_s
+                .gsub('%', '%25')
+                .gsub("\r", '%0D')
+                .gsub("\n", '%0A')
+            end
+
+            def escape_property(value)
+              escape_command(value)
+                .gsub(':', '%3A')
+                .gsub(',', '%2C')
+            end
+
+            puts
+            puts 'Broken local Markdown links'
+            noun = failures.length == 1 ? 'link' : 'links'
+            verb = failures.length == 1 ? 'points' : 'point'
+            puts "Found #{failures.length} #{noun} that #{verb} to missing files."
+
+            failures.each_with_index do |failure, index|
+              message = "#{failure[:href]} resolves to missing path #{failure[:target]}"
+              puts "::error file=#{escape_property(failure[:file])},line=#{failure[:line]},title=Broken local Markdown link::#{escape_command(message)}"
+              puts
+              puts "#{index + 1}. #{failure[:file]}:#{failure[:line]}"
+              puts "   Link: #{failure[:href]}"
+              puts "   Resolved path: #{failure[:target]}"
+            end
+
+            puts
+            puts 'Update each link relative to its Markdown file, or restore the missing target.'
             exit 1
           end
           RUBY

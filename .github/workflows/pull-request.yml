@@ -18,11 +18,11 @@ concurrency:
 
 jobs:
   changes:
-    name: Detect affected lanes
+    name: Classify changed paths
     runs-on: ubuntu-latest
     outputs:
       documentation: ${{ steps.paths.outputs.documentation }}
-      flutter: ${{ steps.paths.outputs.flutter }}
+      mateo-mobile-flutter: ${{ steps.paths.outputs.mateo-mobile-flutter }}
       repository: ${{ steps.paths.outputs.repository }}
     steps:
       - name: Checkout
@@ -37,7 +37,7 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           documentation=false
-          flutter=false
+          mateo_mobile_flutter=false
           repository=false
 
           while IFS= read -r path; do
@@ -47,7 +47,7 @@ jobs:
 
             case "$path" in
               packages/flutter/mateo-mobile-flutter/*|.github/workflows/mateo-mobile-flutter.yml)
-                flutter=true
+                mateo_mobile_flutter=true
                 ;;
             esac
 
@@ -59,7 +59,7 @@ jobs:
           done < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
 
           echo "documentation=$documentation" >> "$GITHUB_OUTPUT"
-          echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
+          echo "mateo-mobile-flutter=$mateo_mobile_flutter" >> "$GITHUB_OUTPUT"
           echo "repository=$repository" >> "$GITHUB_OUTPUT"
 
   title:
@@ -92,11 +92,11 @@ jobs:
     if: needs.changes.outputs.documentation == 'true'
     uses: ./.github/workflows/docs.yml
 
-  flutter:
+  mateo-mobile-flutter:
     name: mateo-mobile-flutter
     needs: changes
-    if: needs.changes.outputs.flutter == 'true'
-    uses: ./.github/workflows/mateo-mobile-flutter.yml
+    if: needs.changes.outputs.mateo-mobile-flutter == 'true'
+    uses: ./.github/workflows/mateo-mobile-flutter-check.yml
 
   repository:
     name: Repository configuration
@@ -115,7 +115,7 @@ jobs:
       - changes
       - title
       - documentation
-      - flutter
+      - mateo-mobile-flutter
       - repository
       - dependency-review
     runs-on: ubuntu-latest
@@ -125,7 +125,7 @@ jobs:
           CHANGES: ${{ needs.changes.result }}
           TITLE: ${{ needs.title.result }}
           DOCUMENTATION: ${{ needs.documentation.result }}
-          FLUTTER: ${{ needs.flutter.result }}
+          MATEO_MOBILE_FLUTTER: ${{ needs.mateo-mobile-flutter.result }}
           REPOSITORY: ${{ needs.repository.result }}
           DEPENDENCY_REVIEW: ${{ needs.dependency-review.result }}
         run: |
@@ -133,7 +133,7 @@ jobs:
             "$CHANGES" \
             "$TITLE" \
             "$DOCUMENTATION" \
-            "$FLUTTER" \
+            "$MATEO_MOBILE_FLUTTER" \
             "$REPOSITORY" \
             "$DEPENDENCY_REVIEW"; do
             case "$result" in

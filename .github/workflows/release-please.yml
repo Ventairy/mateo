@@ -17,7 +17,6 @@ concurrency:
 jobs:
   release-please:
     name: Create release PRs and GitHub Releases
-    if: vars.RELEASE_AUTOMATION_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Run Release Please

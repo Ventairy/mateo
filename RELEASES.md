@@ -113,10 +113,9 @@ tags, and GitHub Releases. A dedicated token is required so release pull
 requests run normal CI and release tags can trigger package publication
 workflows.
 
-Keep the `RELEASE_AUTOMATION_ENABLED` repository variable unset or `false`
-while bootstrapping the initial release lanes. After the initial baseline tags
-and GitHub Releases exist and `RELEASE_PLEASE_TOKEN` is configured, set the
-variable to `true`.
+After the initial baseline tags and GitHub Releases exist and
+`RELEASE_PLEASE_TOKEN` is configured, Release Please is ready to run on every
+push to `main`.
 
 Protect `main` and require the path-specific checks that apply to each changed
 artifact. Protect package tag patterns where repository policy supports it.
