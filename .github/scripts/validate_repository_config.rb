@@ -14,6 +14,8 @@ config_paths.each do |path|
   YAML.safe_load(File.read(path), aliases: true)
 end
 
+issue_form_names = {}
+
 issue_form_paths.each do |path|
   next if File.basename(path) == 'config.yml'
 
@@ -24,7 +26,17 @@ issue_form_paths.each do |path|
     abort "#{path}: missing #{key}" unless form[key]
   end
 
-  ids = form.fetch('body').map { |item| item['id'] }.compact
+  name = form.fetch('name')
+  if issue_form_names.key?(name)
+    abort "#{path}: duplicate form name also used by #{issue_form_names.fetch(name)}"
+  end
+  issue_form_names[name] = path
+
+  body = form.fetch('body')
+  abort "#{path}: body must be an array" unless body.is_a?(Array)
+  abort "#{path}: issue forms support at most 10 body elements" if body.length > 10
+
+  ids = body.map { |item| item['id'] }.compact
   abort "#{path}: duplicate field ids" unless ids.uniq.length == ids.length
 end
 
