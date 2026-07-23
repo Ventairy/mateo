@@ -1,6 +1,6 @@
 # Mateo Design System changelog
 
-## 0.1.0 - Unreleased
+## 0.1.0 - 2026-07-22
 
 - Add the first Mateo foundations for color, typography, border radius, shadow,
   loading, animations, viewport edges, and icons.
