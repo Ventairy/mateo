@@ -24,7 +24,9 @@ distinct visual states. Bug fixes need regression tests; test descriptions use
 `make check` runs the complete non-golden suite locally. Linux CI additionally
 runs every committed CI golden. Use `make goldens` only when intentionally
 refreshing visual baselines, then inspect the rendered changes before opening
-a pull request.
+a pull request. Maintainers can run the manual **Update mateo-mobile-flutter
+Linux goldens** workflow on a branch to produce the exact Linux baselines as a
+review artifact; the workflow never commits them automatically.
 
 Keep changes portable across Android and iOS, accessible, and performant on
 low-end mobile devices. Do not add provider-specific URLs, credentials,
