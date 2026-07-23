@@ -16,7 +16,7 @@ jobs:
   verify:
     name: Verify release tag
     if: vars.PUB_AUTOMATION_ENABLED == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     env:
       PANA_MAX_DEFICIT: 0
