@@ -1,6 +1,7 @@
 # Mateo Mobile for Flutter
 
-[![CI](https://github.com/Ventairy/mateo/actions/workflows/ci.yml/badge.svg)](https://github.com/Ventairy/mateo/actions/workflows/ci.yml)
+[![CI](https://github.com/Ventairy/mateo/actions/workflows/mateo-mobile-flutter.yml/badge.svg)](https://github.com/Ventairy/mateo/actions/workflows/mateo-mobile-flutter.yml)
+[![pub package](https://img.shields.io/pub/v/mateo_mobile.svg)](https://pub.dev/packages/mateo_mobile)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Ventairy/mateo/blob/main/packages/flutter/mateo-mobile-flutter/LICENSE)
 
 `mateo_mobile` is the Flutter implementation of Mateo Mobile: a simple,
@@ -20,16 +21,12 @@ and feedback patterns, gesture-driven navigation, maps, and purposeful motion.
 
 ## Installation
 
-The package targets Flutter 3.44.0. Until the first pub.dev release, pin a
-reviewed Mateo commit:
+The package targets Flutter 3.44.0. Add the latest compatible release from
+pub.dev:
 
 ```yaml
 dependencies:
-  mateo_mobile:
-    git:
-      url: https://github.com/Ventairy/mateo.git
-      ref: <reviewed-commit>
-      path: packages/flutter/mateo-mobile-flutter
+  mateo_mobile: ^0.1.0
 ```
 
 Then run `flutter pub get`.

@@ -1,0 +1,35 @@
+name: Improve an existing component
+description: Propose a change to an existing Mateo component or foundation.
+title: "[Component]: "
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component or foundation
+      placeholder: Bottom Sheet, color scheme, typography
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Describe the consumer need or product behavior that Mateo cannot express well today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain the smallest useful change to the component, guidance, or public API.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility considerations
+      description: Note any API, accessibility, platform, performance, or migration implications you already know about.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add examples, screenshots, prototypes, or related issues when they help start the conversation.

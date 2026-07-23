@@ -1,0 +1,143 @@
+name: Pull request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - ready_for_review
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pull-request-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect affected lanes
+    runs-on: ubuntu-latest
+    outputs:
+      documentation: ${{ steps.paths.outputs.documentation }}
+      flutter: ${{ steps.paths.outputs.flutter }}
+      repository: ${{ steps.paths.outputs.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Classify changed paths
+        id: paths
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          documentation=false
+          flutter=false
+          repository=false
+
+          while IFS= read -r path; do
+            case "$path" in
+              *.md) documentation=true ;;
+            esac
+
+            case "$path" in
+              packages/flutter/mateo-mobile-flutter/*|.github/workflows/mateo-mobile-flutter.yml)
+                flutter=true
+                ;;
+            esac
+
+            case "$path" in
+              .github/*|.release-please-manifest.json|RELEASES.md|release-please-config.json)
+                repository=true
+                ;;
+            esac
+          done < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+
+          echo "documentation=$documentation" >> "$GITHUB_OUTPUT"
+          echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
+          echo "repository=$repository" >> "$GITHUB_OUTPUT"
+
+  title:
+    name: Conventional PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          ruby <<'RUBY'
+          title = ENV.fetch('PR_TITLE').strip
+          pattern = /\A(?<type>build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\((?<scope>[a-z0-9][a-z0-9-]*)\))?(!)?: \S.+\z/
+          match = pattern.match(title)
+
+          abort 'PR title must follow: type(scope): concise description' unless match
+          abort 'PR title must be 120 characters or fewer' if title.length > 120
+
+          scoped_types = %w[feat fix perf refactor]
+          if scoped_types.include?(match[:type]) && match[:scope].nil?
+            abort "#{match[:type]} PR titles require a release-lane scope"
+          end
+
+          puts "Valid PR title: #{title}"
+          RUBY
+
+  documentation:
+    name: Documentation
+    needs: changes
+    if: needs.changes.outputs.documentation == 'true'
+    uses: ./.github/workflows/docs.yml
+
+  flutter:
+    name: mateo-mobile-flutter
+    needs: changes
+    if: needs.changes.outputs.flutter == 'true'
+    uses: ./.github/workflows/mateo-mobile-flutter.yml
+
+  repository:
+    name: Repository configuration
+    needs: changes
+    if: needs.changes.outputs.repository == 'true'
+    uses: ./.github/workflows/release-config.yml
+
+  dependency-review:
+    name: Dependency review
+    uses: ./.github/workflows/dependency-review.yml
+
+  required:
+    name: Required checks
+    if: always()
+    needs:
+      - changes
+      - title
+      - documentation
+      - flutter
+      - repository
+      - dependency-review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful applicable checks
+        env:
+          CHANGES: ${{ needs.changes.result }}
+          TITLE: ${{ needs.title.result }}
+          DOCUMENTATION: ${{ needs.documentation.result }}
+          FLUTTER: ${{ needs.flutter.result }}
+          REPOSITORY: ${{ needs.repository.result }}
+          DEPENDENCY_REVIEW: ${{ needs.dependency-review.result }}
+        run: |
+          for result in \
+            "$CHANGES" \
+            "$TITLE" \
+            "$DOCUMENTATION" \
+            "$FLUTTER" \
+            "$REPOSITORY" \
+            "$DEPENDENCY_REVIEW"; do
+            case "$result" in
+              success|skipped) ;;
+              *) exit 1 ;;
+            esac
+          done

@@ -1,0 +1,35 @@
+name: Propose a new component
+description: Start a conversation about a component Mateo does not have yet.
+title: "[New component]: "
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Suggested component name
+      placeholder: Date Picker
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should people be able to do?
+      description: Describe the user need and why an existing Mateo component cannot meet it.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected behavior
+      description: Outline the simplest useful interaction and the platforms where it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Possible API or usage
+      description: Optional. Share a rough constructor, usage example, or implementation idea.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add examples, screenshots, prototypes, or related issues when they help start the conversation.

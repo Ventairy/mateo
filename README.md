@@ -11,7 +11,8 @@
 <p align="center">
   <a href="#what-ships-today">What ships</a> ·
   <a href="#start-here">Start here</a> ·
-  <a href="#mateo-mobile-for-flutter">Flutter</a>
+  <a href="#releases">Releases</a> ·
+  <a href="#contributing">Contributing</a>
 </p>
 
 ---
@@ -27,9 +28,8 @@ theming, deeply rounded geometry, tactile gestures, purposeful motion, and
 accessible mobile behavior.
 
 > [!IMPORTANT]
-> Mateo is pre-release. The design documentation is available now, while
-> `mateo_mobile` `0.1.0` remains unpublished and is installed from a reviewed
-> Git commit. Public APIs may change before the first pub.dev release.
+> Mateo is pre-1.0. Public APIs may change between minor versions while the
+> design system settles through real product use.
 
 ## What ships today
 
@@ -73,6 +73,27 @@ packages/flutter/            Public Flutter implementation
   its device class.
 - **Packages** implement those specifications as public libraries without
   redefining them.
+
+## Releases
+
+Mateo uses one repository, but it does not use one version number for
+everything. Design-system releases describe the authored Mateo contract, while
+package releases describe installable implementation artifacts.
+
+See [Mateo releases](./RELEASES.md) for the release lanes, tag names, and
+publication boundaries.
+
+## Contributing
+
+Mateo welcomes focused issues and pull requests from people using or
+implementing the system. Start with [CONTRIBUTING.md](./CONTRIBUTING.md) for
+the development flow and pull request contract. Participation is governed by
+the [Code of Conduct](./CODE_OF_CONDUCT.md); security reports belong in the
+private process described by [SECURITY.md](./SECURITY.md).
+
+Mateo is available under the [MIT License](./LICENSE). Bundled third-party
+assets and their licenses are listed in
+[THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
 ## Mateo's point of view
 

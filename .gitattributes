@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+*.freezed.dart linguist-generated=true
+*.g.dart linguist-generated=true
+
+*.png binary
+*.ttf binary

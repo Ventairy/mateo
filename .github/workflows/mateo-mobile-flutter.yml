@@ -1,0 +1,51 @@
+name: mateo-mobile-flutter
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/flutter/mateo-mobile-flutter/**
+      - .github/workflows/mateo-mobile-flutter.yml
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Release checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: packages/flutter/mateo-mobile-flutter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Read Flutter version
+        id: fvmrc
+        run: |
+          echo "flutter-version=$(ruby -rjson -e 'puts JSON.parse(File.read(".fvmrc")).fetch("flutter")')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ steps.fvmrc.outputs.flutter-version }}
+          cache: true
+
+      - name: Set up FVM
+        run: |
+          dart pub global activate fvm
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+          fvm install
+
+      - name: Install package dependencies
+        run: |
+          fvm flutter pub get
+          cd example
+          fvm flutter pub get
+
+      - name: Check release candidate
+        run: make release-check

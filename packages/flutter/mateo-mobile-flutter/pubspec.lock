@@ -443,11 +443,10 @@ packages:
   oh_my_flutter:
     dependency: "direct main"
     description:
-      name: oh_my_flutter
-      sha256: "7710d8b9e21916d3a535c50d500ecabdf40a22ab395baa7404cba428cca9e70a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
+      path: "../../../../ventairy/flutter/oh_my_flutter"
+      relative: true
+    source: path
+    version: "0.3.1"
   package_config:
     dependency: transitive
     description:

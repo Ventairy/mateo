@@ -1,6 +1,7 @@
 SHELL := /bin/bash
+PANA_MAX_DEFICIT ?= 10
 
-.PHONY: setup format format-check analyze test coverage docs example generate goldens publish-dry-run pana check clean
+.PHONY: setup format format-check analyze test coverage docs example generate goldens publish-dry-run pana check release-check clean
 
 setup:
 	test -f pubspec_overrides.yaml || cp pubspec_overrides.yaml.example pubspec_overrides.yaml
@@ -46,9 +47,18 @@ publish-dry-run:
 
 pana:
 	fvm dart pub global activate pana
-	fvm dart pub global run pana .
+	fvm dart pub global run pana --exit-code-threshold $(PANA_MAX_DEFICIT) .
 
 check: format-check analyze test docs example
+
+release-check:
+	test ! -f pubspec_overrides.yaml
+	test ! -f example/pubspec_overrides.yaml
+	$(MAKE) generate
+	git diff --exit-code -- lib
+	$(MAKE) check
+	$(MAKE) publish-dry-run
+	$(MAKE) pana
 
 clean:
 	fvm flutter clean

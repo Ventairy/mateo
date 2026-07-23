@@ -1,0 +1,50 @@
+name: Documentation
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.md"
+      - .github/workflows/docs.yml
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    name: Local Markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Validate local Markdown links
+        run: |
+          ruby <<'RUBY'
+          require 'pathname'
+
+          failures = []
+
+          Dir.glob('**/*.md', File::FNM_DOTMATCH).each do |file|
+            next if file.start_with?('.git/')
+
+            text = File.read(file)
+            text.scan(/\[[^\]]+\]\(([^)]+)\)/).flatten.each do |href|
+              next if href.start_with?('#')
+              next if href.match?(/\A[a-z][a-z0-9+.-]*:/i)
+
+              target = href.split('#', 2).first
+              next if target.empty?
+
+              candidate = (Pathname(file).dirname + target).cleanpath
+              failures << "#{file}: missing #{href}" unless candidate.exist?
+            end
+          end
+
+          if failures.any?
+            puts failures.join("\n")
+            exit 1
+          end
+          RUBY

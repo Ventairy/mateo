@@ -1,5 +1,11 @@
 # Contributing to Mateo
 
+Mateo's repository-wide contribution contract, branch workflow, pull request
+title format, and release policy live in the
+[repository contribution guide](https://github.com/Ventairy/mateo/blob/main/CONTRIBUTING.md).
+This file adds the checks and expectations specific to
+`mateo-mobile-flutter`.
+
 ## Development
 
 Set up and validate the package with:

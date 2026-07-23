@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "095637424fc1e3cc968101044b16642ea1cd5b30",
+  "bump-minor-pre-major": true,
+  "include-component-in-tag": true,
+  "separate-pull-requests": true,
+  "packages": {
+    "design-system": {
+      "release-type": "simple",
+      "component": "mateo-design-system",
+      "initial-version": "0.1.0",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "packages/flutter/mateo-mobile-flutter": {
+      "release-type": "dart",
+      "component": "mateo-mobile-flutter",
+      "initial-version": "0.1.0",
+      "changelog-path": "CHANGELOG.md"
+    }
+  }
+}

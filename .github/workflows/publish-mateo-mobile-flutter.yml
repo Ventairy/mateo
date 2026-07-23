@@ -1,0 +1,72 @@
+name: Publish mateo-mobile-flutter
+
+on:
+  push:
+    tags:
+      - 'mateo-mobile-flutter-v[0-9]+.[0-9]+.[0-9]+'
+
+concurrency:
+  group: publish-mateo-mobile-flutter
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify release tag
+    if: vars.PUB_AUTOMATION_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PANA_MAX_DEFICIT: 0
+    defaults:
+      run:
+        working-directory: packages/flutter/mateo-mobile-flutter
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Match tag and package versions
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          tag_version="${RELEASE_TAG#mateo-mobile-flutter-v}"
+          package_version="$(ruby -e 'puts File.read("pubspec.yaml")[/^version: (.+)$/, 1])'"
+          test "$tag_version" = "$package_version"
+
+      - name: Read Flutter version
+        id: fvmrc
+        run: |
+          echo "flutter-version=$(ruby -rjson -e 'puts JSON.parse(File.read(".fvmrc")).fetch("flutter")')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ steps.fvmrc.outputs.flutter-version }}
+          cache: true
+
+      - name: Set up FVM
+        run: |
+          dart pub global activate fvm
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+          fvm install
+
+      - name: Resolve hosted dependencies
+        run: |
+          fvm flutter pub get
+          cd example
+          fvm flutter pub get
+
+      - name: Check tagged release candidate
+        run: make release-check
+
+  publish:
+    name: Publish to pub.dev
+    needs: verify
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@65eb853c7ba17dde3be364c3d2858773e7144260 # v1
+    with:
+      working-directory: packages/flutter/mateo-mobile-flutter
+      environment: pub.dev
