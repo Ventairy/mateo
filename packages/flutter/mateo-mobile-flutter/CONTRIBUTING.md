@@ -28,4 +28,4 @@ Keep changes portable across Android and iOS, accessible, and performant on
 low-end mobile devices. Do not add provider-specific URLs, credentials,
 application state, or product-specific backend assumptions. Web and desktop
 support is outside the package scope. By participating, you agree to follow
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+[CODE_OF_CONDUCT.md](https://github.com/Ventairy/mateo/blob/main/CODE_OF_CONDUCT.md).
