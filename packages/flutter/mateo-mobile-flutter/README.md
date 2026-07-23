@@ -56,6 +56,7 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: MateoButton(
             label: 'Continue',
+            variant: MateoButtonVariant.primary,
             onPressed: () {},
           ),
         ),
