@@ -5,9 +5,9 @@ can ship on its own schedule.
 
 ## Release lanes
 
-| Lane | Path | Version source | Changelog | Tag |
-| ---- | ---- | -------------- | --------- | --- |
-| `mateo-design-system` | `design-system/` | `design-system/version.txt` | `design-system/CHANGELOG.md` | `mateo-design-system-v<version>` |
+| Commit scope | Path | Version source | Changelog | Tag |
+| ------------ | ---- | -------------- | --------- | --- |
+| `design-system` | `design-system/` | `design-system/version.txt` | `design-system/CHANGELOG.md` | `mateo-design-system-v<version>` |
 | `mateo-mobile-flutter` | `packages/flutter/mateo-mobile-flutter/` | `packages/flutter/mateo-mobile-flutter/pubspec.yaml` | `packages/flutter/mateo-mobile-flutter/CHANGELOG.md` | `mateo-mobile-flutter-v<version>` |
 
 Design-system releases describe Mateo contracts: foundations, platform
@@ -69,7 +69,7 @@ Every releasable package must define:
 - a stable path under `packages/<ecosystem>/<package>/`;
 - an ecosystem manifest and package-local changelog;
 - package-local validation and publication instructions;
-- one Release Please component and tag prefix;
+- one commit scope and tag prefix;
 - path-scoped CI for pull requests;
 - tag-scoped publishing for its registry, when publication exists.
 
