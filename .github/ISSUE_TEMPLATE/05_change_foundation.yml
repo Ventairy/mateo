@@ -1,6 +1,6 @@
 name: Change a foundation
 description: Propose a change to an existing Mateo foundation or design token.
-title: "[Foundation]: "
+title: "[Foundation Change]: "
 body:
   - type: input
     id: foundation

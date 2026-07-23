@@ -1,6 +1,6 @@
 name: Design system bug
 description: Report incorrect or inconsistent Mateo guidance, foundations, or component specifications.
-title: "[Design bug]: "
+title: "[Design System bug]: "
 body:
   - type: dropdown
     id: area

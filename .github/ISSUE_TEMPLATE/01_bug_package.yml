@@ -46,7 +46,7 @@ body:
     id: behavior
     attributes:
       label: What happened?
-      description: Describe the incorrect behavior and its effect on the person using the product.
+      description: Describe the incorrect behavior and its effect
     validations:
       required: true
   - type: textarea
