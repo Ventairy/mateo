@@ -323,8 +323,8 @@ This follows the MapLibre/OpenMapTiles model.
 | ------------------------- | --------------- | --------------------------------------------------------- |
 | `mapBackground`           | neutral-2       | Base canvas behind all vector layers                      |
 | `mapLandcover`            | green-5         | Natural landcover wash                                    |
-| `mapLanduse`              | neutral-3       | General landuse polygons                                  |
-| `mapLanduseBusiness`      | neutral-3       | Commercial/retail landuse wash                            |
+| `mapLanduse`              | neutral-2       | General landuse polygons                                  |
+| `mapLanduseBusiness`      | neutral-2       | Commercial/retail landuse wash                            |
 | `mapLanduseRecreation`    | green-5         | Recreation landuse such as pitches, playgrounds, tracks   |
 | `mapPark`                 | green-5         | Parks and green areas                                     |
 | `mapWater`                | cyan-5          | Water bodies                                              |
