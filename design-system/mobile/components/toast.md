@@ -29,15 +29,61 @@ surface is the dismissal target.
 
 ## Status
 
-The Toast currently has one status:
+Choose the status from the meaning of the message, not from the color a product
+prefers.
 
-| Status | Message                                               | Default icon           |
-| ------ | ----------------------------------------------------- | ---------------------- |
-| Error  | A failed action, unavailable result, or invalid state | `exclamation-triangle` |
+| Status  | Use for                                                                             | Default icon           |
+| ------- | ----------------------------------------------------------------------------------- | ---------------------- |
+| Error   | A failed action, unavailable result, or invalid state                               | `exclamation-circle`   |
+| Warning | A non-blocking risk, degraded condition, or unexpected outcome that deserves notice | `exclamation-triangle` |
+| Info    | Timely contextual information that helps the person understand the current task     | `circle-info`          |
+| Success | A meaningful action or awaited process that completed as expected                   | `circle-check`         |
+| Neutral | Object or system status that carries no success, warning, or error meaning          | Custom icon required   |
 
-The icon may be replaced when a more specific symbol explains the error more
-clearly. A custom icon keeps the same reserved space, uses the status icon
-color, and must remain understandable with the message.
+Error, Warning, Info, and Success provide a default icon. Replace one only when
+a more specific Mateo icon explains the message more clearly. Neutral has no
+default and must receive a relevant custom icon; it never appears without an
+icon. Every custom icon follows Mateo's icon guidance, keeps the `30 × 30` slot,
+and uses the active status icon color.
+
+The message must communicate the complete meaning without the icon or color.
+The icon reinforces the status visually; it does not replace clear words.
+
+### Choosing a status
+
+- Use Error after something has failed. Do not use Warning to soften a failure.
+- Use Warning for a condition the person should notice but can safely leave
+  without responding. Use a persistent or interruptive component when a risk
+  requires a decision or could cause irreversible harm.
+- Use Info for a timely fact or tip that is relevant to what is happening now.
+  Do not interrupt the person with unsolicited onboarding advice or unrelated
+  education.
+- Use Success when confirmation is valuable, especially after an action or
+  process whose completion the person was waiting for. Do not announce every
+  routine tap or expected state change.
+- Use Neutral for domain-specific status that has no severity, such as
+  “Headphones at 80%.” Do not use it as a fallback when the correct status is
+  unknown.
+
+| Good use                            | Why it fits                                                  |
+| ----------------------------------- | ------------------------------------------------------------ |
+| Error: “Message couldn't be sent.”  | A requested action failed.                                   |
+| Warning: “Working from saved data.” | The task can continue under a degraded condition.            |
+| Info: “A copy was saved offline.”   | A timely fact explains the current state.                    |
+| Success: “Download complete.”       | An awaited process finished successfully.                    |
+| Neutral: “Headphones at 80%.”       | The message reports object status without implying severity. |
+
+| Bad use                             | Why it does not fit                                          |
+| ----------------------------------- | ------------------------------------------------------------ |
+| Success: “Item selected.”           | The routine state change is already visible.                 |
+| Warning: “Delete all files?”        | Irreversible risk requires a decision before the action.     |
+| Info: “Did you know you can swipe?” | Unsolicited instruction is not timely status feedback.       |
+| Neutral: “Something happened.”      | Neutral is not a fallback for an unknown or unclear outcome. |
+
+Do not use a Toast when the message is persistent, actionable, blocking,
+critical, or likely to be revisited. Keep that information in context with an
+inline message or banner, or use a dialog when an immediate decision is
+required.
 
 ## Placement and layering
 
@@ -76,7 +122,7 @@ remain half its rendered height as text size or line count changes.
 | Trailing content space                  | `26`      |
 | Message line limit                      | `2`       |
 
-The icon and message are vertically centered as one row. The default icon fills
+The icon and message are vertically centered as one row. The status icon fills
 the `30 × 30` slot. Keep the icon at the leading edge and mirror the row for a
 right-to-left language.
 
@@ -115,9 +161,10 @@ for accessibility even when the visible message is truncated.
 Use the [mobile color scheme](../color-scheme.md). Do not assign palette colors
 directly.
 
-The Error surface, message, icon, and shadow colors use the roles defined under
-`Toast — Error`. The color scheme owns the shadow source colors and baked
-opacities; this component owns the shadow geometry below.
+The active status selects the matching `Toast — Success`, `Toast — Error`,
+`Toast — Warning`, `Toast — Info`, or `Toast — Neutral` roles. The color scheme
+owns the surface, foreground, icon, and shadow source colors, including baked
+shadow opacities. This component owns the shadow geometry below.
 
 The surface has no visible border.
 
@@ -127,10 +174,10 @@ The Toast is a detached surface, so it uses the shared
 [shadow character](../../foundation/shadow.md) with two component-owned layers.
 Draw both behind the pill and clip neither layer.
 
-| Layer            | Color role                | Horizontal offset | Vertical offset | Blur | Spread |
-| ---------------- | ------------------------- | ----------------- | --------------- | ---- | ------ |
-| Broad lower fade | `Toast.error.broadShadow` | `0`               | `18`            | `38` | `-8`   |
-| Close separation | `Toast.error.closeShadow` | `0`               | `6`             | `12` | `4`    |
+| Layer            | Color role                   | Horizontal offset | Vertical offset | Blur | Spread |
+| ---------------- | ---------------------------- | ----------------- | --------------- | ---- | ------ |
+| Broad lower fade | `Toast.<status>.broadShadow` | `0`               | `18`            | `38` | `-8`   |
+| Close separation | `Toast.<status>.closeShadow` | `0`               | `6`             | `12` | `4`    |
 
 Render the broad lower fade first and the close separation above it. The layers
 must merge into one quiet shadow rather than appearing as two outlines. Move,
@@ -303,11 +350,15 @@ remain unchanged.
 
 ## Accessibility and localization
 
-- Announce the Toast as a live status message when it appears.
+- Announce every Toast with the platform's native, non-interrupting live-status
+  behavior when it appears.
 - Use the complete localized message as its accessibility label, including text
   hidden by the two-line visual limit.
 - Do not move screen-reader focus into the Toast or interrupt the current task.
-- Keep status meaning in the icon and message, not color alone.
+- Hide the status icon from assistive technologies so it is not announced in
+  addition to the complete message.
+- Express the outcome in the message itself. Keep the icon as a visual
+  reinforcement and never rely on color alone.
 - Preserve text scaling. Recalculate the Toast's height and pill radius from the
   scaled message instead of clipping vertically.
 - Mirror icon and message order for right-to-left languages.
@@ -315,6 +366,9 @@ remain unchanged.
   available.
 - Do not place essential instructions, irreversible outcomes, or the only copy
   of an error inside a transient Toast.
+- Do not give Error or Warning an interruptive announcement merely because of
+  its status. Information important or time-sensitive enough to interrupt the
+  person requires a more persistent or interruptive component.
 
 The Toast emits no haptic feedback or sound by default. A product must not add
 either merely because the Toast appears.
@@ -323,6 +377,11 @@ either merely because the Toast appears.
 
 A Toast is ready when:
 
+- Error, Warning, Info, and Success use their defined default icons unless a
+  more specific icon is supplied;
+- Neutral cannot be presented without a relevant custom icon;
+- every status resolves its surface, foreground, icon, and shadow colors from
+  the matching mobile color-scheme roles;
 - one- and two-line messages match the defined geometry without changing the
   icon size or gap;
 - longer text truncates visually after two lines while the full message remains
@@ -337,6 +396,8 @@ A Toast is ready when:
 - downward and horizontal pulls use resistance without suggesting dismissal;
 - holding the Toast prevents a timed dismissal until release;
 - inactive software does not consume the message lifetime;
+- assistive technologies announce the complete message without moving focus or
+  announcing the status icon separately;
 - reduced motion preserves every dismissal path without movement; and
 - entrance, press, drag, return, and exit remain smooth on the least capable
   supported phone.
@@ -345,16 +406,6 @@ Review the Toast at normal speed and frame by frame. Validate short, two-line,
 truncated, localized, right-to-left, large-text, custom-icon, reduced-motion,
 replacement, and visually busy-background states on both iOS and Android
 phones.
-
-## Good and bad use
-
-| Good                                                     | Avoid                                                 |
-| -------------------------------------------------------- | ----------------------------------------------------- |
-| A save or refresh failed and the person can continue     | A failure that blocks the next step                   |
-| A temporary network request could not complete           | Field-level validation beside the affected field      |
-| Brief feedback whose meaning is complete in one sentence | Instructions, legal text, or multi-step guidance      |
-| A message that remains useful without an action button   | Undo, retry, confirmation, or another required choice |
-| One current message                                      | Several queued or stacked Toasts                      |
 
 Keep the message direct and specific. State what happened in language the person
 can act on without adding a title or explanation paragraph.
