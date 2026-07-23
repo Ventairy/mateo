@@ -1,3 +1,12 @@
+# Changelog
+
+## [0.1.1](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.0...mateo-mobile-flutter-v0.1.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* **mateo-mobile-flutter:** correct button quick start ([#8](https://github.com/Ventairy/mateo/issues/8)) ([b731820](https://github.com/Ventairy/mateo/commit/b731820737860db17894e62616b09ba5133adca7))
+
 ## 0.1.0 - 2026-07-22
 
 - Add the first Flutter implementation of Mateo Mobile for Android and iOS.
