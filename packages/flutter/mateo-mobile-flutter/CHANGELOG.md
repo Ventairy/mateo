@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.1...mateo-mobile-flutter-v0.1.2) (2026-07-23)
+
+
+### Bug Fixes
+
+* **mateo-mobile-flutter:** improve readme and remove pubspec lock from source control ([8991464](https://github.com/Ventairy/mateo/commit/899146461a23efb3763aa7ed919f6cd1afe5eb73))
+
 ## [0.1.1](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.0...mateo-mobile-flutter-v0.1.1) (2026-07-23)
 
 
