@@ -1,6 +1,9 @@
 name: Update mateo-mobile-flutter Linux goldens
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/update-mateo-mobile-flutter-goldens.yml
   workflow_dispatch:
 
 permissions:
