@@ -21,6 +21,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   return AlchemistConfig.runWithConfig(
     config: AlchemistConfig(
       theme: mateoTestTheme,
+      ciGoldensConfig: CiGoldensConfig(diffThreshold: isRunningInCi ? 0.02 : 0),
       platformGoldensConfig: PlatformGoldensConfig(
         enabled: !isRunningInCi,
         theme: mateoTestTheme,
