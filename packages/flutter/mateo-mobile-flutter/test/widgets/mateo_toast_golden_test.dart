@@ -8,7 +8,7 @@ import '../test_app.dart';
 void main() {
   group('MateoToast Golden Tests', () {
     goldenTest(
-      'when rendering error states, it should match the approved goldens',
+      'when rendering toast states, it should match the approved goldens',
       fileName: 'mateo_toast_states',
       builder: () => GoldenTestGroup(
         scenarioConstraints: BoxConstraints.tightFor(width: 390, height: 260),
@@ -17,6 +17,43 @@ void main() {
             name: 'error',
             child: _ToastGoldenFrame(
               child: MateoToast(message: 'Nao foi possivel carregar agora'),
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'warning',
+            child: _ToastGoldenFrame(
+              child: MateoToast(
+                message: 'Usando dados salvos',
+                type: MateoToastType.warning,
+              ),
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'info',
+            child: _ToastGoldenFrame(
+              child: MateoToast(
+                message: 'Uma copia foi salva offline',
+                type: MateoToastType.info,
+              ),
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'success',
+            child: _ToastGoldenFrame(
+              child: MateoToast(
+                message: 'Download concluido',
+                type: MateoToastType.success,
+              ),
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'neutral',
+            child: _ToastGoldenFrame(
+              child: MateoToast(
+                message: 'Fones de ouvido em 80%',
+                type: MateoToastType.neutral,
+                iconBuilder: _buildTestCustomIcon,
+              ),
             ),
           ),
           GoldenTestScenario(

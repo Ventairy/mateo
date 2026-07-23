@@ -7,7 +7,7 @@ import '../test_app.dart';
 void main() {
   group('MateoToastType', () {
     testWidgets(
-      'when type is error, it should resolve the default error background color',
+      'when each type resolves colors, it should use its matching toast color scheme',
       (tester) async {
         late BuildContext capturedContext;
 
@@ -22,59 +22,31 @@ void main() {
           ),
         );
 
-        final colors = MateoToastType.error.colors(capturedContext);
+        final toastColors = MateoColorScheme.light().toast;
+        final expectedColors = <MateoToastType, MateoToastVariantColorScheme>{
+          MateoToastType.error: toastColors.error,
+          MateoToastType.warning: toastColors.warning,
+          MateoToastType.info: toastColors.info,
+          MateoToastType.success: toastColors.success,
+          MateoToastType.neutral: toastColors.neutral,
+        };
 
-        expect(
-          colors.background,
-          equals(MateoColorScheme.light().toast.error.background),
-        );
-      },
-    );
+        for (final MapEntry(key: type, value: expected)
+            in expectedColors.entries) {
+          final actual = type.colors(capturedContext);
 
-    testWidgets(
-      'when type is error, it should resolve the default error foreground color',
-      (tester) async {
-        late BuildContext capturedContext;
-
-        await tester.pumpWidget(
-          TestApp(
-            child: Builder(
-              builder: (context) {
-                capturedContext = context;
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-        );
-
-        final colors = MateoToastType.error.colors(capturedContext);
-
-        expect(
-          colors.foreground,
-          equals(MateoColorScheme.light().toast.error.foreground),
-        );
-      },
-    );
-
-    testWidgets(
-      'when type is error, it should resolve the default error icon color',
-      (tester) async {
-        late BuildContext capturedContext;
-
-        await tester.pumpWidget(
-          TestApp(
-            child: Builder(
-              builder: (context) {
-                capturedContext = context;
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-        );
-
-        final colors = MateoToastType.error.colors(capturedContext);
-
-        expect(colors.icon, equals(MateoColorScheme.light().toast.error.icon));
+          expect(
+            actual.background,
+            equals(expected.background),
+            reason: '$type',
+          );
+          expect(
+            actual.foreground,
+            equals(expected.foreground),
+            reason: '$type',
+          );
+          expect(actual.icon, equals(expected.icon), reason: '$type');
+        }
       },
     );
   });

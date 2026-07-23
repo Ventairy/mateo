@@ -101,6 +101,12 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.circleBlock(<params>);
 /// ```
 /// ```dart
+/// $Icons.circleCheck(<params>);
+/// ```
+/// ```dart
+/// $Icons.circleInfo(<params>);
+/// ```
+/// ```dart
 /// $Icons.clock(<params>);
 /// ```
 /// ```dart
@@ -207,6 +213,36 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _CircleBlock(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `CircleCheck` widget from `circleCheck.svg`.
+  static Widget circleCheck({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _CircleCheck(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `CircleInfo` widget from `circleInfo.svg`.
+  static Widget circleInfo({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _CircleInfo(
     key: key,
     width: width,
     height: height,
@@ -977,6 +1013,255 @@ class _CircleBlockPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CircleBlockPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/circle_check.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CircleCheck extends StatelessWidget with _DotdartSvgSizing {
+  const _CircleCheck({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CircleCheck._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CircleCheck._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CircleCheck._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CircleCheck._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CircleCheckPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CircleCheckPainter extends CustomPainter {
+  _CircleCheckPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 0)
+    ..cubicTo(15.5228, 0, 20, 4.4771, 20, 10)
+    ..cubicTo(20, 15.5228, 15.5228, 20, 10, 20)
+    ..cubicTo(4.4771, 20, 0, 15.5228, 0, 10)
+    ..cubicTo(0, 4.4771, 4.4771, 0, 10, 0)
+    ..close()
+    ..moveTo(13.667, 6.1269)
+    ..cubicTo(13.3228, 5.8966, 12.8574, 5.9889, 12.627, 6.333)
+    ..lineTo(8.4482, 12.5723)
+    ..lineTo(6.2813, 10.3945)
+    ..cubicTo(5.9891, 10.1009, 5.5143, 10.0995, 5.2207, 10.3916)
+    ..cubicTo(4.9273, 10.6838, 4.9267, 11.1586, 5.2188, 11.4521)
+    ..lineTo(8.0312, 14.2793)
+    ..cubicTo(8.1897, 14.4384, 8.4112, 14.5177, 8.6348, 14.4961)
+    ..cubicTo(8.8584, 14.4744, 9.0605, 14.3537, 9.1855, 14.167)
+    ..lineTo(13.873, 7.167)
+    ..cubicTo(14.1034, 6.8228, 14.0111, 6.3574, 13.667, 6.1269)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CircleCheck._viewBoxWidth;
+    final scaleY = size.height / _CircleCheck._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CircleCheck._viewBoxMinX, -_CircleCheck._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CircleCheckPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/circle_info.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CircleInfo extends StatelessWidget with _DotdartSvgSizing {
+  const _CircleInfo({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CircleInfo._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CircleInfo._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CircleInfo._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CircleInfo._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CircleInfoPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CircleInfoPainter extends CustomPainter {
+  _CircleInfoPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 0)
+    ..cubicTo(4.4771, 0, 0, 4.4771, 0, 10)
+    ..cubicTo(0, 15.5228, 4.4771, 20, 10, 20)
+    ..cubicTo(15.5228, 20, 20, 15.5228, 20, 10)
+    ..cubicTo(20, 4.4771, 15.5228, 0, 10, 0)
+    ..close()
+    ..moveTo(8, 9)
+    ..cubicTo(8, 8.5858, 8.3358, 8.25, 8.75, 8.25)
+    ..lineTo(10, 8.25)
+    ..cubicTo(10.4142, 8.25, 10.75, 8.5858, 10.75, 9)
+    ..lineTo(10.75, 14.25)
+    ..cubicTo(10.75, 14.6642, 10.4142, 15, 10, 15)
+    ..cubicTo(9.5858, 15, 9.25, 14.6642, 9.25, 14.25)
+    ..lineTo(9.25, 9.75)
+    ..lineTo(8.75, 9.75)
+    ..cubicTo(8.3358, 9.75, 8, 9.4142, 8, 9)
+    ..close()
+    ..moveTo(10, 5.25)
+    ..cubicTo(9.5858, 5.25, 9.25, 5.5858, 9.25, 6)
+    ..cubicTo(9.25, 6.4142, 9.5858, 6.75, 10, 6.75)
+    ..cubicTo(10.4142, 6.75, 10.75, 6.4142, 10.75, 6)
+    ..cubicTo(10.75, 5.5858, 10.4142, 5.25, 10, 5.25)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CircleInfo._viewBoxWidth;
+    final scaleY = size.height / _CircleInfo._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CircleInfo._viewBoxMinX, -_CircleInfo._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CircleInfoPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }

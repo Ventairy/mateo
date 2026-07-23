@@ -13,5 +13,7 @@
   font size, weight, and line height owned by each component.
 - Add buttons, search, typed toasts, bottom sheets, loading and skeleton states,
   gesture surfaces, Y-Snap Lists, maps, heroes, and motion primitives.
+- Add Error, Warning, Info, Success, and Neutral toast statuses with semantic
+  colors and status-specific icons.
 - Add reduced-motion behavior, semantic labels, text-scaling support, safe-area
   handling, focused tests, and CI goldens.

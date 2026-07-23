@@ -905,18 +905,115 @@ void main() {
     );
 
     testWidgets(
-      'when no iconBuilder is provided, it should render the default icon in the icon box',
+      'when a semantic type has no iconBuilder, it should render the matching default icon',
       (tester) async {
+        const defaultIconKeys = <MateoToastType, Key>{
+          MateoToastType.error: Key('mateo_toast_default_icon_error'),
+          MateoToastType.warning: Key('mateo_toast_default_icon_warning'),
+          MateoToastType.info: Key('mateo_toast_default_icon_info'),
+          MateoToastType.success: Key('mateo_toast_default_icon_success'),
+        };
+
+        for (final MapEntry(key: type, value: iconKey)
+            in defaultIconKeys.entries) {
+          await tester.pumpWidget(
+            TestApp(
+              child: MateoToast(message: type.name, type: type),
+            ),
+          );
+
+          expect(find.byKey(iconKey), findsOneWidget, reason: '$type');
+        }
+      },
+    );
+
+    testWidgets(
+      'when neutral has a custom iconBuilder, it should use the neutral icon color',
+      (tester) async {
+        Color? capturedIconColor;
+
         await tester.pumpWidget(
-          const TestApp(child: MateoToast(message: 'Default icon')),
+          TestApp(
+            child: MateoToast(
+              message: 'Headphones at 80%',
+              type: MateoToastType.neutral,
+              iconBuilder: (state) {
+                capturedIconColor = state.iconColor;
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
         );
 
-        final iconBox = tester.widget<SizedBox>(
-          find.byKey(const Key('mateo_toast_icon_box')),
+        expect(
+          capturedIconColor,
+          equals(MateoColorScheme.light().toast.neutral.icon),
         );
-        final child = iconBox.child;
+      },
+    );
 
-        expect(child, isNotNull);
+    testWidgets(
+      'when neutral is constructed without an iconBuilder, it should fail fast',
+      (tester) async {
+        expect(
+          () => MateoToast(
+            message: 'Headphones at 80%',
+            type: MateoToastType.neutral,
+          ),
+          throwsAssertionError,
+        );
+      },
+    );
+
+    testWidgets(
+      'when neutral is shown without an iconBuilder, it should throw an argument error',
+      (tester) async {
+        late BuildContext toastContext;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: Builder(
+              builder: (context) {
+                toastContext = context;
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
+
+        expect(
+          () => MateoToast.show(
+            toastContext,
+            message: 'Headphones at 80%',
+            type: MateoToastType.neutral,
+          ),
+          throwsArgumentError,
+        );
+      },
+    );
+
+    testWidgets(
+      'when announced, it should expose one live-region label without child semantics',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+
+        await tester.pumpWidget(
+          const TestApp(
+            child: MateoToast(
+              message: 'Download complete',
+              type: MateoToastType.success,
+            ),
+          ),
+        );
+
+        final node = tester.getSemantics(
+          find.bySemanticsLabel('Download complete'),
+        );
+
+        expect(node.label, equals('Download complete'));
+        expect(node.flagsCollection.isLiveRegion, isTrue);
+
+        semantics.dispose();
       },
     );
 

@@ -62,6 +62,24 @@ abstract final class MateoIcon {
   }) =>
       $Icons.circleBlock(key: key, width: width, height: height, color1: color);
 
+  /// Checkmark in a circle.
+  static Widget circleCheck({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.circleCheck(key: key, width: width, height: height, color1: color);
+
+  /// Information mark in a circle.
+  static Widget circleInfo({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.circleInfo(key: key, width: width, height: height, color1: color);
+
   /// Clock icon.
   static Widget clock({
     Key? key,

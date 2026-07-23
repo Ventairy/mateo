@@ -41,13 +41,18 @@ class MateoToast extends StatelessWidget {
   /// Creates a Mateo Mobile toast widget.
   ///
   /// Use the constructor for direct rendering in previews, tests, or composed
-  /// surfaces. Use [show] for the common overlay behavior.
+  /// surfaces. Use [show] for the common overlay behavior. The [type] selects
+  /// the semantic colors and default icon; [MateoToastType.neutral] requires
+  /// an [iconBuilder].
   const MateoToast({
     required this.message,
     super.key,
     this.type = MateoToastType.error,
     this.iconBuilder,
-  });
+  }) : assert(
+         type != MateoToastType.neutral || iconBuilder != null,
+         'MateoToastType.neutral requires an iconBuilder.',
+       );
 
   /// The visible message presented in the toast.
   final String message;
@@ -58,8 +63,9 @@ class MateoToast extends StatelessWidget {
   /// Builds a custom icon to replace the default type-driven icon.
   ///
   /// When provided, [iconBuilder] is called with a [MateoToastState] that
-  /// carries the current toast config. When null, the default type-driven
-  /// icon is used.
+  /// carries the current toast config. When null, the default icon for [type]
+  /// is used. [MateoToastType.neutral] has no default, so it requires an
+  /// [iconBuilder].
   ///
   /// ```dart
   /// MateoToast(
@@ -76,10 +82,11 @@ class MateoToast extends StatelessWidget {
   /// Shows a Mateo Mobile toast above [context].
   ///
   /// The [message] is displayed after the safe area. The [type] resolves
-  /// the icon color. The optional [duration] controls how long the toast
-  /// remains visible before dismissing; when omitted, it estimates a reading
-  /// duration from [message]. The [padding] is applied after the safe area
-  /// and controls the toast inset from the overlay edges.
+  /// the colors and default icon. [MateoToastType.neutral] requires an
+  /// [iconBuilder]. The optional [duration] controls how long the toast remains
+  /// visible before dismissing; when omitted, it estimates a reading duration
+  /// from [message]. The [padding] is applied after the safe area and controls
+  /// the toast inset from the overlay edges.
   ///
   /// When a [MateoToastMessenger] ancestor is found via [context], the toast is
   /// inserted into that messenger's overlay so it remains above route and hero
@@ -89,6 +96,8 @@ class MateoToast extends StatelessWidget {
   ///
   /// With a messenger installed, an active toast is removed before the new one
   /// is shown. If [context] has no overlay, this method safely does nothing.
+  /// Throws an [ArgumentError] when [type] is [MateoToastType.neutral] and
+  /// [iconBuilder] is omitted.
   static void show(
     BuildContext context, {
     required String message,
@@ -100,6 +109,8 @@ class MateoToast extends StatelessWidget {
       vertical: 16,
     ),
   }) {
+    _validateIconBuilder(type, iconBuilder);
+
     final messenger = MateoToastMessenger.maybeOf(context);
     final overlay =
         messenger?.overlay ?? Overlay.maybeOf(context, rootOverlay: true);
@@ -169,6 +180,19 @@ class MateoToast extends StatelessWidget {
     return duration;
   }
 
+  static void _validateIconBuilder(
+    MateoToastType type,
+    MateoToastIconBuilder? iconBuilder,
+  ) {
+    if (type == MateoToastType.neutral && iconBuilder == null) {
+      throw ArgumentError.value(
+        type,
+        'type',
+        'MateoToastType.neutral requires an icon.',
+      );
+    }
+  }
+
   bool _isUsingTwoLines(
     BuildContext context,
     BoxConstraints constraints,
@@ -232,6 +256,7 @@ class MateoToast extends StatelessWidget {
     return Semantics(
       liveRegion: true,
       label: message,
+      excludeSemantics: true,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final usesTwoLines = _isUsingTwoLines(
@@ -260,7 +285,7 @@ class MateoToast extends StatelessWidget {
                       dimension: _iconSize,
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: _buildIcon(context, type, iconColor),
+                        child: _buildIcon(type, iconColor),
                       ),
                     ),
                   ),
@@ -283,11 +308,7 @@ class MateoToast extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(
-    BuildContext context,
-    MateoToastType type,
-    Color iconColor,
-  ) {
+  Widget _buildIcon(MateoToastType type, Color iconColor) {
     final iconBuilder = this.iconBuilder;
     if (iconBuilder != null) {
       return iconBuilder(
@@ -296,10 +317,32 @@ class MateoToast extends StatelessWidget {
     }
 
     return switch (type) {
-      MateoToastType.error => MateoIcon.exclamationTriangle(
+      MateoToastType.error => MateoIcon.exclamationCircle(
+        key: const Key('mateo_toast_default_icon_error'),
         width: _iconSize,
         height: _iconSize,
         color: iconColor,
+      ),
+      MateoToastType.warning => MateoIcon.exclamationTriangle(
+        key: const Key('mateo_toast_default_icon_warning'),
+        width: _iconSize,
+        height: _iconSize,
+        color: iconColor,
+      ),
+      MateoToastType.info => MateoIcon.circleInfo(
+        key: const Key('mateo_toast_default_icon_info'),
+        width: _iconSize,
+        height: _iconSize,
+        color: iconColor,
+      ),
+      MateoToastType.success => MateoIcon.circleCheck(
+        key: const Key('mateo_toast_default_icon_success'),
+        width: _iconSize,
+        height: _iconSize,
+        color: iconColor,
+      ),
+      MateoToastType.neutral => throw StateError(
+        'MateoToastType.neutral requires an iconBuilder.',
       ),
     };
   }
