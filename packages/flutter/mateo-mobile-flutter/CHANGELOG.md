@@ -1,15 +1,13 @@
-## 0.1.1
+# Changelog
 
-- Remove code of conduct to prioritize the root one
-- Improve makefile commands
-- Improve contribuiting file
-- Remove pubspec override example
-- Add pubcpec.lock in gitignore
-- Improve readme
-- Remove stale content from release checklist
-- Remove local docs in favor of real design system docs
+## [0.1.1](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.0...mateo-mobile-flutter-v0.1.1) (2026-07-23)
 
-## 0.1.0
+
+### Bug Fixes
+
+* **mateo-mobile-flutter:** correct button quick start ([#8](https://github.com/Ventairy/mateo/issues/8)) ([b731820](https://github.com/Ventairy/mateo/commit/b731820737860db17894e62616b09ba5133adca7))
+
+## 0.1.0 - 2026-07-22
 
 - Add the first Flutter implementation of Mateo Mobile for Android and iOS.
 - Add Mateo violet, brand-seed generation, tinted neutrals, vivid fixed scales,
