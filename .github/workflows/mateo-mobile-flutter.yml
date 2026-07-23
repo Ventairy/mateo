@@ -47,5 +47,39 @@ jobs:
           cd example
           fvm flutter pub get
 
-      - name: Check release candidate
-        run: make release-check
+      - name: Require hosted release dependencies
+        run: |
+          test ! -f pubspec_overrides.yaml
+          test ! -f example/pubspec_overrides.yaml
+
+      - name: Generate source
+        run: |
+          fvm dart run build_runner build
+          fvm dart format lib
+
+      - name: Require committed generated source
+        run: git diff --exit-code -- lib
+
+      - name: Check formatting
+        run: fvm dart format --output none --set-exit-if-changed lib test example/lib/main.dart
+
+      - name: Analyze package
+        run: fvm flutter analyze --fatal-infos
+
+      - name: Run tests and Linux goldens
+        run: fvm flutter test
+
+      - name: Validate API documentation
+        run: fvm dart doc --validate-links
+
+      - name: Analyze example
+        run: fvm flutter analyze --fatal-infos
+        working-directory: packages/flutter/mateo-mobile-flutter/example
+
+      - name: Validate pub.dev archive
+        run: fvm flutter pub publish --dry-run
+
+      - name: Score package quality
+        run: |
+          fvm dart pub global activate pana
+          fvm dart pub global run pana --exit-code-threshold 10 .
