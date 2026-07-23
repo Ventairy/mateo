@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 PANA_MAX_DEFICIT ?= 10
 
-.PHONY: setup format format-check analyze test coverage docs example generate goldens publish-dry-run pana check release-check clean
+.PHONY: setup format format-check analyze test coverage docs example generate update-goldens publish-dry-run pana check release-check clean
 
 setup:
 	test -f pubspec_overrides.yaml || cp pubspec_overrides.yaml.example pubspec_overrides.yaml
@@ -19,11 +19,7 @@ analyze:
 	fvm flutter analyze --fatal-infos
 
 test:
-	@if [ "$$CI" = "true" ]; then \
-		fvm flutter test; \
-	else \
-		fvm flutter test --exclude-tags golden; \
-	fi
+	fvm flutter test
 
 coverage:
 	fvm flutter test --coverage
@@ -39,8 +35,8 @@ generate:
 	fvm dart run build_runner build
 	fvm dart format lib
 
-goldens:
-	CI=true fvm flutter test --update-goldens
+update-goldens:
+	fvm flutter test --update-goldens
 
 publish-dry-run:
 	fvm flutter pub publish --dry-run

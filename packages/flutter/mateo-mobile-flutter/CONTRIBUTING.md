@@ -15,16 +15,14 @@ make setup
 make check
 ```
 
-Use FVM and the package Makefile. The Flutter package lives at
-`packages/flutter/mateo-mobile-flutter`. Public members require Dartdoc. Every
+Use FVM and the package Makefile. Public members require Dartdoc. Every
 widget change needs focused widget tests and approved CI goldens for all
 distinct visual states. Bug fixes need regression tests; test descriptions use
 `when ..., it should ...` and one assertion per case.
 
-`make check` runs the complete non-golden suite locally. Linux CI additionally
-runs every committed CI golden. Use `make goldens` only when intentionally
-refreshing visual baselines, then inspect the rendered changes before opening
-a pull request.
+`make check` runs the complete local gate, including committed goldens. Use
+`make update-goldens` only when intentionally refreshing visual baselines, then
+inspect the rendered changes before opening a pull request.
 
 Keep changes portable across Android and iOS, accessible, and performant on
 low-end mobile devices. Do not add provider-specific URLs, credentials,

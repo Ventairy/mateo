@@ -1,4 +1,15 @@
-## 0.1.0 - 2026-07-22
+## 0.1.1
+
+- Remove code of conduct to prioritize the root one
+- Improve makefile commands
+- Improve contribuiting file
+- Remove pubspec override example
+- Add pubcpec.lock in gitignore
+- Improve readme
+- Remove stale content from release checklist
+- Remove local docs in favor of real design system docs
+
+## 0.1.0
 
 - Add the first Flutter implementation of Mateo Mobile for Android and iOS.
 - Add Mateo violet, brand-seed generation, tinted neutrals, vivid fixed scales,
