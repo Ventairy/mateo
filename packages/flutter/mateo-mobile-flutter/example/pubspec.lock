@@ -251,10 +251,10 @@ packages:
     dependency: transitive
     description:
       name: oh_my_flutter
-      sha256: "7710d8b9e21916d3a535c50d500ecabdf40a22ab395baa7404cba428cca9e70a"
+      sha256: "3b83f44712f61b82101a1201f67f37d61faeb199d7273b53dd9337bf3984c65a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.3.1"
   path:
     dependency: transitive
     description:

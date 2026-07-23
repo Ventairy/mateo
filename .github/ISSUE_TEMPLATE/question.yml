@@ -1,0 +1,27 @@
+name: Question
+description: Ask about using, understanding, or contributing to Mateo.
+title: "[Question]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Design system guidance
+        - mateo-mobile-flutter
+        - Contributing or releases
+        - Other or not sure
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to understand or accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: What have you tried?
+      description: Share relevant code, documentation, or context so others can answer precisely.

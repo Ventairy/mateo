@@ -18,8 +18,8 @@ not supported product targets.
 - Use Flutter 3.44.0 exclusively through FVM.
 - The committed lockfile is the deterministic development and CI resolution.
 - Use this package's Makefile. This repository does not use Melos.
-- Keep `publish_to: none` until the release checklist is complete and publishing
-  is explicitly authorized.
+- Keep the package publishable in CI. Real publication still requires the
+  release checklist and explicit authorization.
 - Clone `oh_my_flutter` beside this repository and use the ignored package
   override files for local development.
 - Run `make check` before pull requests and `make pana` for publication changes.
