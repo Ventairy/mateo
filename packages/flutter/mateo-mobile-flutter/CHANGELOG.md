@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.2...mateo-mobile-flutter-v0.1.3) (2026-07-23)
+
+
+### Bug Fixes
+
+* **mateo-mobile-flutter:** align map color scheme test ([db6a907](https://github.com/Ventairy/mateo/commit/db6a907423e8eeac6c1eda0115e179292f6aaa21))
+* **mateo-mobile-flutter:** make landuse in map color scheme be same as background ([308c97b](https://github.com/Ventairy/mateo/commit/308c97b88705b5ab453a65f733dbad3518cf92ec))
+
 ## [0.1.2](https://github.com/Ventairy/mateo/compare/mateo-mobile-flutter-v0.1.1...mateo-mobile-flutter-v0.1.2) (2026-07-23)
 
 
