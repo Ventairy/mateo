@@ -16,7 +16,7 @@ not supported product targets.
 ## Standalone environment
 
 - Use Flutter 3.44.0 exclusively through FVM.
-- The committed lockfile is the deterministic development and CI resolution.
+- Do not commit the root `pubspec.lock`; this package is a reusable library.
 - Use this package's Makefile. This repository does not use Melos.
 - Keep the package publishable in CI. Real publication still requires the
   release checklist and explicit authorization.
@@ -242,7 +242,7 @@ Every new widget in `mateo_mobile` must have a corresponding golden test file at
 - Gitignore platform goldens stored at `test/widgets/goldens/macos/`,
   `test/widgets/goldens/linux/`, and `test/widgets/goldens/windows/`.
 - Regenerate approved goldens from the repository root with
-  `make goldens`.
+  `make update-goldens`.
 - Golden tests complement unit tests; they do not replace non-visual tests.
 - Resolve test colors from the same `MateoThemeData` applied by the test. Use
   its color scheme when the target consumes semantic colors, and use its
