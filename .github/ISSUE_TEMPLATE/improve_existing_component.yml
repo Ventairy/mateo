@@ -1,19 +1,28 @@
 name: Improve an existing component
-description: Propose a change to an existing Mateo component or foundation.
+description: Propose a change to an existing Mateo component.
 title: "[Component]: "
 body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Mateo platform
+      description: Select the Mateo platform where this component currently lives.
+      options:
+        - Mateo Mobile
+    validations:
+      required: true
   - type: input
     id: component
     attributes:
-      label: Component or foundation
-      placeholder: Bottom Sheet, color scheme, typography
+      label: Component
+      placeholder: Bottom Sheet, Toast, Dots Loading Indicator
     validations:
       required: true
   - type: textarea
     id: problem
     attributes:
       label: What problem should this solve?
-      description: Describe the consumer need or product behavior that Mateo cannot express well today.
+      description: Describe the need or product behavior that this component cannot express well today.
     validations:
       required: true
   - type: textarea

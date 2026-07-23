@@ -9,6 +9,18 @@ body:
       placeholder: Date Picker
     validations:
       required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Mateo platform
+      description: Select the Mateo platform this component is for.
+      options:
+        - Mateo Mobile
+        - Mateo Web
+        - Mateo Desktop
+        - Other or not sure
+    validations:
+      required: true
   - type: textarea
     id: problem
     attributes:

@@ -1,0 +1,38 @@
+name: Change a foundation
+description: Propose a change to an existing Mateo foundation or design token.
+title: "[Foundation]: "
+body:
+  - type: input
+    id: foundation
+    attributes:
+      label: Foundation
+      description: Name the foundation or token family that should change.
+      placeholder: Color, typography, motion, spacing, border radius, shadow, or icons
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Describe what the current foundation cannot express or where it creates incorrect outcomes.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed foundation change
+      description: Explain the smallest useful change to the values, scale, roles, naming, or guidance.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: System impact
+      description: Note affected semantic roles, components, platforms, accessibility behavior, APIs, or migrations.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Supporting context
+      description: Add examples, screenshots, prototypes, measurements, or related issues when they help start the conversation.

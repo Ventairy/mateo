@@ -8,7 +8,7 @@ body:
       label: Area
       options:
         - Design system guidance
-        - mateo-mobile-flutter
+        - Package integration
         - Contributing or releases
         - Other or not sure
     validations:

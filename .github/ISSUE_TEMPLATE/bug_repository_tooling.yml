@@ -1,0 +1,65 @@
+name: Repository tooling bug
+description: Report a problem with Mateo's CI, releases, automation, or contributor tooling.
+title: "[Tooling bug]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected tooling
+      options:
+        - Pull request checks
+        - Releases or publishing
+        - Issue or pull request automation
+        - Dependency automation
+        - Documentation validation
+        - Local contributor tooling
+        - Other or not sure
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Relevant commit, pull request, or workflow run
+      description: Share a commit SHA or link when one is available.
+      placeholder: https://github.com/Ventairy/mateo/actions/runs/...
+  - type: input
+    id: operating-system
+    attributes:
+      label: Operating system
+      description: Include the operating system and version when the problem affects local tooling.
+      placeholder: macOS 26.0, Ubuntu 22.04, or Not applicable
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Describe the incorrect behavior and where it occurred.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How can we reproduce it?
+      description: Share the command, workflow, or smallest sequence that consistently demonstrates the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Include the smallest relevant error or diagnostic output. Remove credentials and private data.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched for an existing issue that describes this problem.
+          required: true
+        - label: This report does not contain credentials, private data, or a security vulnerability.
+          required: true

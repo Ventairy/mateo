@@ -1,0 +1,79 @@
+name: Package bug
+description: Report incorrect, inaccessible, or inconsistent behavior in a Mateo package.
+title: "[Package bug]: "
+body:
+  - type: input
+    id: package
+    attributes:
+      label: Package and version
+      description: Share the exact package name and version or release tag where you observed the problem.
+      placeholder: mateo_mobile 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: runtime-version
+    attributes:
+      label: Language or runtime version
+      description: Share the version of the language or runtime used by the package.
+      placeholder: Dart 3.12.0, Node.js 24.0.0, or Swift 6.2
+    validations:
+      required: true
+  - type: input
+    id: framework-version
+    attributes:
+      label: Framework or SDK version
+      description: Share the relevant framework or platform SDK version.
+      placeholder: Flutter 3.44.0, React 20.0.0, or iOS SDK 26.0
+    validations:
+      required: true
+  - type: input
+    id: build-tool
+    attributes:
+      label: Package manager or build tool
+      description: Share the relevant package manager, workspace tool, or build tool and its version.
+      placeholder: FVM 4.0.0, pnpm 10.0.0, SwiftPM 6.2, or Xcode 26.0
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform and device or target
+      description: Include the operating system, browser, physical device, simulator, server, or assistive technology involved.
+      placeholder: Android 16 on Pixel 9, Chrome 140 on macOS, or Node.js on Ubuntu 22.04
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Describe the incorrect behavior and its effect on the person using the product.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How can we reproduce it?
+      description: Share the smallest code example or sequence that consistently demonstrates the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Include the smallest relevant error, stack trace, or diagnostic output.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched for an existing issue that describes this problem.
+          required: true
+        - label: This report does not contain credentials, private data, or a security vulnerability.
+          required: true

@@ -1,0 +1,52 @@
+name: Design system bug
+description: Report incorrect or inconsistent Mateo guidance, foundations, or component specifications.
+title: "[Design bug]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Foundations
+        - Mobile guidance
+        - Component specification
+        - Documentation or examples
+        - Other or not sure
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Where is the problem?
+      description: Share the component, foundation, document, section, or link.
+      placeholder: Typography, Bottom Sheet, or design-system/mobile/typography.md
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is incorrect?
+      description: Describe the typo, contradiction, missing state, inaccessible guidance, or other defect.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should it say or specify?
+      description: Explain the correction or intended design behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Supporting context
+      description: Add screenshots, examples, prototypes, or related issues when they clarify the problem.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched for an existing issue that describes this problem.
+          required: true
+        - label: This report does not contain credentials, private data, or a security vulnerability.
+          required: true
