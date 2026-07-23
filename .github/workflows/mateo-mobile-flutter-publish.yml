@@ -32,8 +32,12 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           tag_version="${RELEASE_TAG#mateo-mobile-flutter-v}"
-          package_version="$(ruby -e 'puts File.read("pubspec.yaml")[/^version: (.+)$/, 1])'"
-          test "$tag_version" = "$package_version"
+          package_version="$(ruby -e 'match = File.read("pubspec.yaml").match(/^version: (.+)$/) or abort("pubspec.yaml is missing a version field"); puts match[1]')"
+
+          if [ "$tag_version" != "$package_version" ]; then
+            echo "::error title=Release tag does not match pubspec version::Tag $RELEASE_TAG resolves to $tag_version, but pubspec.yaml contains $package_version."
+            exit 1
+          fi
 
       - name: Read Flutter version
         id: fvmrc
