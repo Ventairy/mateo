@@ -63,22 +63,9 @@ validated automatically, and maintainers can help correct one before merge.
 
 ## Flutter package
 
-The Flutter implementation lives in
-`packages/flutter/mateo-mobile-flutter`. Use Flutter 3.44.0 through FVM and run:
-
-```bash
-make setup
-make check
-```
-
-Bug fixes need regression coverage. New widgets need focused behavior tests and
-approved CI goldens for their distinct visual states. Public APIs require
-Dartdoc. Run `make gen` after changing generated inputs and inspect the
-resulting diff.
-
-`make release-check` is the clean, hosted-dependency publication gate. Normal
-local development uses ignored dependency overrides, so contributors usually
-run `make check`; CI runs the release gate without overrides.
+For setup, validation, testing, and other package-specific expectations, see
+the
+[Flutter package contribution guide](packages/flutter/mateo-mobile-flutter/CONTRIBUTING.md).
 
 ## Release files
 
