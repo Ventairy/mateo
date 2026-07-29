@@ -33,11 +33,11 @@ accessible mobile behavior.
 
 ## What ships today
 
-| Layer           | Available now                                                                              | Start with                                                          |
-| --------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| Foundations     | Color primitives and generation, typography, deeply rounded geometry, and Mateo icons      | [Foundation documentation](./design-system/foundation/)             |
-| Mateo Mobile    | Semantic color, mobile boundary rules, drag resistance, and the Bottom Sheet specification | [Mobile documentation](./design-system/mobile/)                     |
-| Flutter package | The Android and iOS implementation of Mateo Mobile                                         | [`mateo_mobile`](./packages/flutter/mateo-mobile-flutter/README.md) |
+| Layer           | Content                                                             | Start with                                                          |
+| --------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Foundations     | Color, typography, rounded geometry, motion, icons, etc.            | [Foundation documentation](./design-system/foundation/)             |
+| Mateo Mobile    | Semantic color, boundary rules, drag resistance, Action Bloom, etc. | [Mobile documentation](./design-system/mobile/)                     |
+| Flutter package | The Android and iOS implementation of Mateo Mobile                  | [`mateo_mobile`](./packages/flutter/mateo-mobile-flutter/README.md) |
 
 The design documentation describes observable results precisely enough to
 implement Mateo consistently in another technology. The Flutter package is the
@@ -52,9 +52,11 @@ first real implementation of those contracts, not a separate design source.
 | Understand Mateo's primitive colors              | [Color palette](./design-system/foundation/color-palette.md)                                   |
 | Use Mateo's typography foundation                | [Typography](./design-system/foundation/typography.md)                                         |
 | Reproduce Mateo's rounded geometry               | [Border radius](./design-system/foundation/border-radius.md)                                   |
+| Expand one action into related choices           | [Action Bloom](./design-system/foundation/action-bloom.md)                                     |
 | Use the Mateo icon language                      | [Icons](./design-system/foundation/icons/icons.md)                                             |
 | Implement Mateo's mobile semantic colors         | [Mobile color scheme](./design-system/mobile/color-scheme.md)                                  |
 | Implement Mateo's tactile boundary response      | [Drag resistance](./design-system/mobile/drag-resistance.md)                                   |
+| Reproduce Action Bloom on a phone                | [Mobile Action Bloom](./design-system/mobile/components/action-bloom.md)                       |
 
 ## How Mateo is organized
 
