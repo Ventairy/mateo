@@ -31,7 +31,7 @@ docs:
 example:
 	cd example && fvm flutter analyze --fatal-infos
 
-generate:
+gen:
 	fvm dart run build_runner build
 	fvm dart format lib
 

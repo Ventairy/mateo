@@ -290,7 +290,7 @@ mateo-mobile-flutter/
 - Access bundled SVG icons via `MateoIcon` (e.g. `MateoIcon.cross(width: 16, height: 16, color: Colors.red)`),
   exported from the barrel. `MateoIcon` is an `abstract final class` with one `static Widget` method per icon,
   delegating to dotdart's generated `$Icons` namespace. Add an `.svg` to `assets/icons/` and run
-  `make generate` to generate the dotdart accessor, then add a static method to `MateoIcon`.
+  `make gen` to generate the dotdart accessor, then add a static method to `MateoIcon`.
   Do not import `src/gen/icons.g.dart` directly from widget code; use `MateoIcon`.
 - Private declarations (`_`-prefixed classes, methods, fields, and part files for private types) must NOT have dartdoc. Private code should be self-explanatory through naming and structure alone. dartdoc is reserved for the public API surface that consumers outside the package can see.
 

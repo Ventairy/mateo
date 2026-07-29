@@ -73,7 +73,7 @@ make check
 
 Bug fixes need regression coverage. New widgets need focused behavior tests and
 approved CI goldens for their distinct visual states. Public APIs require
-Dartdoc. Run `make generate` after changing generated inputs and inspect the
+Dartdoc. Run `make gen` after changing generated inputs and inspect the
 resulting diff.
 
 `make release-check` is the clean, hosted-dependency publication gate. Normal
