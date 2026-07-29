@@ -286,6 +286,12 @@ mateo-mobile-flutter/
   may use one file. Larger widgets may use a same-named folder with one public
   entrypoint and focused `part` files for public value types, controllers,
   actions, and other support classes.
+- Keep each `StatefulWidget` and its corresponding `State` subclass together
+  in the same file. Do not extract a widget's `State` subclass into a separate
+  `part` file.
+- Keep a value inline when it is used in only one place. Extract it into a
+  variable only when it is used in more than one place, then reuse that
+  variable everywhere it is needed.
 
 - Access bundled SVG icons via `MateoIcon` (e.g. `MateoIcon.cross(width: 16, height: 16, color: Colors.red)`),
   exported from the barrel. `MateoIcon` is an `abstract final class` with one `static Widget` method per icon,
