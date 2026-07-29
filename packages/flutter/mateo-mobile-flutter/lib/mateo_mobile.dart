@@ -53,6 +53,12 @@ export 'src/theme/mateo_theme.dart' show MateoTheme;
 export 'src/theme/mateo_theme_context.dart' show MateoThemeContext;
 export 'src/theme/mateo_theme_data.dart' show MateoThemeData;
 export 'src/theme/mateo_typography.dart' show MateoTypography;
+export 'src/widgets/mateo_action_bloom/mateo_action_bloom.dart'
+    show
+        MateoActionBloomAction,
+        MateoActionBloomActionCallback,
+        MateoActionBloomActionIconBuilder,
+        MateoActionBloomActionIconState;
 export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet.dart'
     show MateoBottomSheet;
 export 'src/widgets/mateo_button/mateo_button.dart'
@@ -68,6 +74,11 @@ export 'src/widgets/mateo_drag_resistance/mateo_drag_resistance.dart'
     show MateoDragResistance;
 export 'src/widgets/mateo_edge_fade/mateo_edge_fade.dart'
     show MateoEdgeFade, MateoEdgeFadePosition, MateoEdgeFadeStyle;
+export 'src/widgets/mateo_floating_action_button/mateo_floating_action_button.dart'
+    show
+        MateoFloatingActionButton,
+        MateoFloatingActionButtonIconBuilder,
+        MateoFloatingActionButtonIconState;
 export 'src/widgets/mateo_hero/heroes/background/mateo_hero_background.dart'
     show MateoHeroBackground;
 export 'src/widgets/mateo_hero/heroes/group/mateo_hero_group.dart'
@@ -111,7 +122,6 @@ export 'src/widgets/mateo_toast/mateo_toast.dart'
         MateoToastMessenger,
         MateoToastState,
         MateoToastType;
-export 'src/widgets/mateo_view_back_button.dart' show MateoViewBackButton;
 export 'src/widgets/mateo_y_snap_list/mateo_y_snap_list.dart'
     show
         MateoYSnapList,

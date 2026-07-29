@@ -6,6 +6,7 @@ import 'package:mateo_mobile/src/enums/mateo_button_fit.dart';
 import 'package:mateo_mobile/src/theme/mateo_color_scheme/mateo_color_scheme.dart';
 import 'package:mateo_mobile/src/theme/mateo_theme_context.dart';
 import 'package:mateo_mobile/src/theme/mateo_typography.dart';
+import 'package:mateo_mobile/src/widgets/mateo_action_bloom/mateo_action_bloom.dart';
 import 'package:mateo_mobile/src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart';
 import 'package:mateo_mobile/src/widgets/mateo_tap/mateo_tap.dart';
 
@@ -60,7 +61,33 @@ class MateoButton extends StatefulWidget {
     this.fit = MateoButtonFit.fit,
     this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
     this.isLoading = false,
-  });
+  }) : _actionBloomActions = null;
+
+  /// Creates a Mateo button that opens an action-bloom panel.
+  ///
+  /// The [actions] list must contain at least two actions. The button retains
+  /// the selected [variant], sizing, alignment, icons, and optional custom
+  /// [colorScheme], while its press interaction is owned by the action bloom.
+  const MateoButton.actionBloom({
+    required this.label,
+    required this.variant,
+    required List<MateoActionBloomAction> actions,
+    super.key,
+    this.leadingIconBuilder,
+    this.trailingIconBuilder,
+    this.leadingIconSpacing = 8,
+    this.trailingIconSpacing = 8,
+    this.colorScheme,
+    this.alignment = MateoButtonAlignment.center,
+    this.fit = MateoButtonFit.fit,
+    this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+  }) : onPressed = null,
+       isLoading = false,
+       _actionBloomActions = actions,
+       assert(
+         actions.length >= 2,
+         'MateoButton.actionBloom requires at least two actions.',
+       );
 
   /// Visible button label.
   final String label;
@@ -141,6 +168,8 @@ class MateoButton extends StatefulWidget {
   /// ```
   final bool isLoading;
 
+  final List<MateoActionBloomAction>? _actionBloomActions;
+
   @override
   State<MateoButton> createState() => _MateoButtonState();
 }
@@ -208,14 +237,7 @@ class _MateoButtonState extends State<MateoButton>
     super.dispose();
   }
 
-  bool get _isEnabled => widget.onPressed != null;
-  bool get _isInteractive =>
-      _isEnabled && !_isPendingPress && !widget.isLoading;
-
-  Future<void> _handlePressed(Future<void> _) async {
-    final onPressed = widget.onPressed;
-    if (onPressed == null) return;
-
+  Future<void> _handlePressed(FutureOr<void> Function() onPressed) async {
     final result = onPressed();
 
     if (result is! Future<void>) return;
@@ -344,71 +366,105 @@ class _MateoButtonState extends State<MateoButton>
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.mateo.colorScheme;
     final buttonColorScheme =
-        widget.colorScheme ?? widget.variant.colorScheme(colorScheme);
-    final isEnabled = _isEnabled;
-    final isInteractive = _isInteractive;
-    final disableAnimations = MediaQuery.disableAnimationsOf(context);
+        widget.colorScheme ??
+        widget.variant.colorScheme(context.mateo.colorScheme);
+    final actionBloomActions = widget._actionBloomActions;
 
-    final resolvedBackground = switch ((isEnabled, _isPressed)) {
-      (false, _) => buttonColorScheme.backgroundDisabled,
-      (true, true) => buttonColorScheme.backgroundPressed,
-      (true, false) => buttonColorScheme.background,
-    };
+    if (actionBloomActions == null) {
+      return _buildButton(
+        context: context,
+        buttonColorScheme: buttonColorScheme,
+        onPressed: widget.onPressed,
+      );
+    }
 
-    final resolvedForeground = isEnabled
-        ? buttonColorScheme.foreground
-        : buttonColorScheme.foregroundDisabled;
-    final labelStyle = _baseLabelStyle.copyWith(color: resolvedForeground);
-    final content = _buildContent(
-      isEnabled: isEnabled,
-      foregroundColor: resolvedForeground,
-      labelStyle: labelStyle,
+    return MateoActionBloomSurface(
+      backgroundColor: buttonColorScheme.background,
+      borderRadius: _pillBorderRadius,
+      builder: (surfaceContext) => _buildButton(
+        context: context,
+        buttonColorScheme: buttonColorScheme,
+        onPressed: () => unawaited(
+          MateoActionBloom.open(
+            context: surfaceContext,
+            actions: actionBloomActions,
+            actionIconForegroundColor: buttonColorScheme.foreground,
+          ),
+        ),
+      ),
     );
-    final animatedContent = _buildAnimatedContent(
-      content: content,
-      foregroundColor: resolvedForeground,
-      disableAnimations: disableAnimations,
-    );
+  }
 
-    final innerContent = widget.fit == MateoButtonFit.expand
-        ? _alignedContent(animatedContent)
-        : animatedContent;
-    final padded = Padding(
-      key: const Key('mateo_button_container'),
-      padding: widget.padding,
-      child: innerContent,
-    );
+  Widget _buildButton({
+    required BuildContext context,
+    required MateoButtonColorScheme buttonColorScheme,
+    required FutureOr<void> Function()? onPressed,
+  }) {
+    final isEnabled = onPressed != null;
+    final isInteractive = isEnabled && !_isPendingPress && !widget.isLoading;
     final decorated = DecoratedBox(
       decoration: BoxDecoration(
-        color: resolvedBackground,
+        color: switch ((isEnabled, _isPressed)) {
+          (false, _) => buttonColorScheme.backgroundDisabled,
+          (true, true) => buttonColorScheme.backgroundPressed,
+          (true, false) => buttonColorScheme.background,
+        },
         borderRadius: _pillBorderRadius,
       ),
-      child: padded,
+      child: _buildButtonContent(
+        context: context,
+        buttonColorScheme: buttonColorScheme,
+        isEnabled: isEnabled,
+      ),
     );
-
-    final button = widget.fit == MateoButtonFit.expand
-        ? ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(width: double.infinity),
-            child: decorated,
-          )
-        : decorated;
 
     return Semantics(
       button: true,
       enabled: isInteractive,
-      onTap: isInteractive
-          ? () => unawaited(_handlePressed(Future<void>.value()))
-          : null,
+      onTap: isInteractive ? () => unawaited(_handlePressed(onPressed)) : null,
       child: MateoTap(
-        onPressed: isInteractive ? _handlePressed : null,
+        onPressed: isInteractive ? (_) => _handlePressed(onPressed) : null,
         onPressChanged: isInteractive
             ? (pressed) => setState(() => _isPressed = pressed)
             : null,
         animation: MateoTapAnimationType.scale,
-        child: button,
+        child: widget.fit == MateoButtonFit.expand
+            ? ConstrainedBox(
+                constraints: const BoxConstraints.tightFor(
+                  width: double.infinity,
+                ),
+                child: decorated,
+              )
+            : decorated,
       ),
+    );
+  }
+
+  Widget _buildButtonContent({
+    required BuildContext context,
+    required MateoButtonColorScheme buttonColorScheme,
+    required bool isEnabled,
+  }) {
+    final resolvedForeground = isEnabled
+        ? buttonColorScheme.foreground
+        : buttonColorScheme.foregroundDisabled;
+    final animatedContent = _buildAnimatedContent(
+      content: _buildContent(
+        isEnabled: isEnabled,
+        foregroundColor: resolvedForeground,
+        labelStyle: _baseLabelStyle.copyWith(color: resolvedForeground),
+      ),
+      foregroundColor: resolvedForeground,
+      disableAnimations: MediaQuery.disableAnimationsOf(context),
+    );
+
+    return Padding(
+      key: const Key('mateo_button_container'),
+      padding: widget.padding,
+      child: widget.fit == MateoButtonFit.expand
+          ? _alignedContent(animatedContent)
+          : animatedContent,
     );
   }
 
