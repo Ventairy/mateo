@@ -50,6 +50,7 @@ void main() {
           GoldenTestScenario(
             name: 'action bloom source',
             child: MateoIconButton.actionBloom(
+              semanticLabel: 'Note actions',
               actions: [
                 MateoActionBloomAction(
                   title: 'Create',

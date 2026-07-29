@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show PipelineOwner;
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
@@ -109,6 +111,71 @@ void main() {
               .having((rect) => 400 - rect.right, 'right', 12)
               .having((rect) => rect.top, 'top', 44),
         );
+      },
+    );
+
+    testWidgets(
+      'when the source is equally distant from both safe edges, it should open from the bottom',
+      (tester) async {
+        await _pumpBloom(
+          tester,
+          alignment: Alignment.center,
+          size: const Size(400, 800),
+        );
+
+        await _openBloom(tester);
+
+        expect(tester.getRect(find.byKey(_panelKey)).bottom, 800);
+      },
+    );
+
+    testWidgets(
+      'when landscape safe areas are asymmetric, it should not count the panel inset twice',
+      (tester) async {
+        await _pumpBloom(
+          tester,
+          size: const Size(800, 400),
+          mediaQueryData: const MediaQueryData(
+            size: Size(800, 400),
+            padding: EdgeInsets.fromLTRB(44, 0, 20, 21),
+          ),
+        );
+
+        await _openBloom(tester);
+
+        final panelRect = tester.getRect(find.byKey(_panelKey));
+        final actionRect = tester.getRect(
+          find.byKey(const ValueKey('create-action')),
+        );
+        expect(
+          (
+            panelRect.left,
+            800 - panelRect.right,
+            actionRect.left,
+            800 - actionRect.right,
+          ),
+          (12, 12, 44, 26),
+        );
+      },
+    );
+
+    testWidgets(
+      'when the keyboard is visible, it should stay above the keyboard and use the remaining safe height',
+      (tester) async {
+        await _pumpBloom(
+          tester,
+          mediaQueryData: const MediaQueryData(
+            size: Size(400, 800),
+            padding: EdgeInsets.only(top: 44),
+            viewInsets: EdgeInsets.only(bottom: 300),
+          ),
+        );
+
+        await _openBloom(tester);
+
+        final panelRect = tester.getRect(find.byKey(_panelKey));
+        expect(panelRect.bottom, 500);
+        expect(panelRect.height, lessThanOrEqualTo((500 - 44) * 0.85));
       },
     );
 
@@ -434,6 +501,101 @@ void main() {
     });
 
     testWidgets(
+      'when closed, it should expose the source as a collapsed control',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+
+        await _pumpBloom(tester, semanticLabel: 'Note actions');
+
+        final sourceSemantics = tester.getSemantics(
+          find.bySemanticsLabel('Note actions'),
+        );
+        expect(
+          (
+            sourceSemantics.flagsCollection.isButton,
+            sourceSemantics.flagsCollection.isExpanded.toBoolOrNull(),
+          ),
+          (true, false),
+        );
+        semantics.dispose();
+      },
+    );
+
+    testWidgets(
+      'when opened, it should block the source and underlying semantics',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+
+        await _pumpBloom(tester, semanticLabel: 'Note actions');
+
+        expect(
+          _semanticLabels(tester),
+          containsAll(['Underlying content', 'Note actions']),
+        );
+
+        await _openBloom(tester);
+
+        expect(_semanticLabels(tester), contains('Create'));
+        expect(
+          _semanticLabels(tester),
+          isNot(contains(anyOf('Underlying content', 'Note actions'))),
+        );
+        semantics.dispose();
+      },
+    );
+
+    testWidgets(
+      'when visible text is truncated, it should preserve complete action semantics',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+        const title = 'Create a note with a deliberately complete long title';
+        const description =
+            'Start with a fresh note and preserve this complete explanation.';
+
+        await _pumpBloom(
+          tester,
+          size: const Size(280, 500),
+          actions: [
+            _action(title, Icons.add, description: description),
+            _action('Delete', Icons.delete),
+          ],
+        );
+        await _openBloom(tester);
+
+        final actionSemantics = tester.getSemantics(
+          find.bySemanticsLabel(title),
+        );
+        expect(actionSemantics.label, title);
+        expect(actionSemantics.hint, description);
+        semantics.dispose();
+      },
+    );
+
+    testWidgets(
+      'when dismissed, it should restore the previously focused control',
+      (tester) async {
+        final sourceFocusNode = FocusNode(debugLabel: 'Action bloom source');
+        addTearDown(sourceFocusNode.dispose);
+
+        await _pumpBloom(tester, sourceFocusNode: sourceFocusNode);
+        sourceFocusNode.requestFocus();
+        await tester.pump();
+        expect(sourceFocusNode.hasFocus, isTrue);
+
+        await _openBloom(tester);
+        expect(
+          FocusManager.instance.primaryFocus,
+          isNot(same(sourceFocusNode)),
+        );
+
+        await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+        await tester.pumpAndSettle();
+
+        expect(FocusManager.instance.primaryFocus, same(sourceFocusNode));
+      },
+    );
+
+    testWidgets(
       'when the source is disposed while open, it should clean up without errors',
       (tester) async {
         await _pumpBloom(tester);
@@ -460,6 +622,7 @@ Future<void> _pumpBloom(
   String? semanticLabel,
   Color? backgroundColor,
   Color? foregroundColor,
+  FocusNode? sourceFocusNode,
 }) async {
   final resolvedMediaQueryData =
       mediaQueryData ??
@@ -495,6 +658,7 @@ Future<void> _pumpBloom(
       semanticLabel: semanticLabel,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
+      sourceFocusNode: sourceFocusNode,
     ),
   );
 }
@@ -544,6 +708,27 @@ Color? _iconBackgroundColor(WidgetTester tester, Key actionKey) {
       .color;
 }
 
+Set<String> _semanticLabels(WidgetTester tester) {
+  final labels = <String>{};
+
+  void collect(SemanticsNode node) {
+    if (node.label.isNotEmpty) labels.add(node.label);
+    node.visitChildren((child) {
+      collect(child);
+      return true;
+    });
+  }
+
+  void collectPipeline(PipelineOwner owner) {
+    final root = owner.semanticsOwner?.rootSemanticsNode;
+    if (root != null) collect(root);
+    owner.visitChildren(collectPipeline);
+  }
+
+  collectPipeline(tester.binding.rootPipelineOwner);
+  return labels;
+}
+
 enum _BloomSource { floating, button, icon }
 
 class _ActionBloomTestApp extends StatelessWidget {
@@ -555,6 +740,7 @@ class _ActionBloomTestApp extends StatelessWidget {
     this.semanticLabel,
     this.backgroundColor,
     this.foregroundColor,
+    this.sourceFocusNode,
   });
 
   final _BloomSource source;
@@ -564,51 +750,65 @@ class _ActionBloomTestApp extends StatelessWidget {
   final String? semanticLabel;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final FocusNode? sourceFocusNode;
 
   @override
   Widget build(BuildContext context) {
+    final sourceWidget = switch (source) {
+      _BloomSource.floating => MateoFloatingActionButton.actionBloom(
+        key: _sourceKey,
+        semanticLabel: semanticLabel ?? 'Note actions',
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        actions: actions,
+        iconBuilder: (state) => Icon(
+          Icons.more_horiz,
+          color: state.foregroundColor,
+          size: state.iconSize,
+        ),
+      ),
+      _BloomSource.button => MateoButton.actionBloom(
+        key: _sourceKey,
+        label: 'Actions',
+        variant: MateoButtonVariant.primary,
+        actions: actions,
+      ),
+      _BloomSource.icon => MateoIconButton.actionBloom(
+        key: _sourceKey,
+        semanticLabel: semanticLabel ?? 'Note actions',
+        backgroundColor: backgroundColor,
+        actions: actions,
+        iconBuilder: (state) => Icon(
+          Icons.more_horiz,
+          color: state.recommendedIconColor,
+          size: state.iconSize,
+        ),
+      ),
+    };
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: mateoTestTheme,
       home: MediaQuery(
         data: mediaQueryData,
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Align(
-              alignment: alignment,
-              child: switch (source) {
-                _BloomSource.floating => MateoFloatingActionButton.actionBloom(
-                  key: _sourceKey,
-                  semanticLabel: semanticLabel,
-                  backgroundColor: backgroundColor,
-                  foregroundColor: foregroundColor,
-                  actions: actions,
-                  iconBuilder: (state) => Icon(
-                    Icons.more_horiz,
-                    color: state.foregroundColor,
-                    size: state.iconSize,
-                  ),
+          body: Stack(
+            children: [
+              Semantics(
+                container: true,
+                label: 'Underlying content',
+                child: const SizedBox.expand(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Align(
+                  alignment: alignment,
+                  child: sourceFocusNode == null
+                      ? sourceWidget
+                      : Focus(focusNode: sourceFocusNode, child: sourceWidget),
                 ),
-                _BloomSource.button => MateoButton.actionBloom(
-                  key: _sourceKey,
-                  label: 'Actions',
-                  variant: MateoButtonVariant.primary,
-                  actions: actions,
-                ),
-                _BloomSource.icon => MateoIconButton.actionBloom(
-                  key: _sourceKey,
-                  semanticLabel: semanticLabel,
-                  backgroundColor: backgroundColor,
-                  actions: actions,
-                  iconBuilder: (state) => Icon(
-                    Icons.more_horiz,
-                    color: state.recommendedIconColor,
-                    size: state.iconSize,
-                  ),
-                ),
-              },
-            ),
+              ),
+            ],
           ),
         ),
       ),

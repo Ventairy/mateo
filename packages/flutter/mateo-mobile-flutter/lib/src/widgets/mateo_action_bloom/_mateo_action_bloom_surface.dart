@@ -39,6 +39,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
   AnimationController? _animationController;
   CurvedAnimation? _surfaceAnimation;
   FocusNode? _focusNode;
+  FocusNode? _previousFocus;
   LocalHistoryEntry? _localHistoryEntry;
   bool _isPanelOpen = false;
   bool _isPanelMounted = false;
@@ -87,13 +88,18 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
         !_isPanelOpen &&
         _isPanelMounted) {
       final closedCompleter = _closedCompleter;
+      final previousFocus = _previousFocus;
       _closedCompleter = null;
+      _previousFocus = null;
       _overlayController.hide();
       setState(() {
         _isPanelMounted = false;
         _actions = const [];
         _actionIconForegroundColor = null;
       });
+      if (previousFocus?.context != null) {
+        previousFocus!.requestFocus();
+      }
       closedCompleter?.complete();
     }
   }
@@ -111,6 +117,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
     }
 
     _ensureOverlayResources();
+    _previousFocus = FocusManager.instance.primaryFocus;
     _panelOpensAtTop = _resolvePanelOpensAtTop();
     final historyEntry = LocalHistoryEntry(
       impliesAppBarDismissal: false,
@@ -216,6 +223,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
     _localHistoryEntry = null;
     historyEntry?.remove();
     _focusNode?.dispose();
+    _previousFocus = null;
     _surfaceAnimation?.dispose();
     _animationController
       ?..removeStatusListener(_handleAnimationStatus)
@@ -242,6 +250,18 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
       sourceRect: sourceRect,
       mediaQuery: viewMediaQuery,
       opensAtTop: _panelOpensAtTop,
+    );
+    final panelMediaQuery = viewMediaQuery.copyWith(
+      padding: viewMediaQuery.padding.copyWith(
+        left: math.max<double>(
+          0,
+          viewMediaQuery.padding.left - geometry.panelHorizontalInset,
+        ),
+        right: math.max<double>(
+          0,
+          viewMediaQuery.padding.right - geometry.panelHorizontalInset,
+        ),
+      ),
     );
 
     return Focus(
@@ -283,7 +303,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
                       maxHeight: geometry.panelMaxHeight,
                     ),
                     child: MediaQuery(
-                      data: viewMediaQuery,
+                      data: panelMediaQuery,
                       child: _MateoActionBloomPanel(
                         sourceSize: sourceRect.size,
                         sourceBackgroundColor: widget.backgroundColor,
@@ -310,7 +330,10 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
 
   @override
   Widget build(BuildContext context) {
-    final source = Builder(builder: widget.builder);
+    final source = Semantics(
+      expanded: _isPanelMounted,
+      child: Builder(builder: widget.builder),
+    );
 
     return OverlayPortal.overlayChildLayoutBuilder(
       controller: _overlayController,
