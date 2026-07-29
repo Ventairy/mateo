@@ -201,4 +201,13 @@ abstract final class MateoIcon {
     double? height,
     Color? color,
   }) => $Icons.wrench(key: key, width: width, height: height, color1: color);
+
+  /// Plus / More Icon
+  static Widget plusSignal({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.plusSignal(key: key, width: width, height: height, color1: color);
 }

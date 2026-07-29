@@ -128,6 +128,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.phone(<params>);
 /// ```
 /// ```dart
+/// $Icons.plusSignal(<params>);
+/// ```
+/// ```dart
 /// $Icons.pointerHandUp(<params>);
 /// ```
 /// ```dart
@@ -348,6 +351,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _Phone(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `PlusSignal` widget from `plusSignal.svg`.
+  static Widget plusSignal({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _PlusSignal(
     key: key,
     width: width,
     height: height,
@@ -2102,6 +2120,128 @@ class _PhonePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PhonePainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/plus-signal.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _PlusSignal extends StatelessWidget with _DotdartSvgSizing {
+  const _PlusSignal({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _PlusSignal._svgWidth;
+
+  @override
+  double get svgNativeHeight => _PlusSignal._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _PlusSignal._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _PlusSignal._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _PlusSignalPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlusSignalPainter extends CustomPainter {
+  _PlusSignalPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(0, 10)
+    ..cubicTo(0, 9.1716, 0.6716, 8.5, 1.5, 8.5)
+    ..lineTo(18.5, 8.5)
+    ..cubicTo(19.3284, 8.5, 20, 9.1716, 20, 10)
+    ..cubicTo(20, 10.8284, 19.3284, 11.5, 18.5, 11.5)
+    ..lineTo(1.5, 11.5)
+    ..cubicTo(0.6716, 11.5, 0, 10.8284, 0, 10)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(10, 20)
+    ..cubicTo(9.1716, 20, 8.5, 19.3284, 8.5, 18.5)
+    ..lineTo(8.5, 1.5)
+    ..cubicTo(8.5, 0.6716, 9.1716, 0, 10, 0)
+    ..cubicTo(10.8284, 0, 11.5, 0.6716, 11.5, 1.5)
+    ..lineTo(11.5, 18.5)
+    ..cubicTo(11.5, 19.3284, 10.8284, 20, 10, 20)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _PlusSignal._viewBoxWidth;
+    final scaleY = size.height / _PlusSignal._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_PlusSignal._viewBoxMinX, -_PlusSignal._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _PlusSignalPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
