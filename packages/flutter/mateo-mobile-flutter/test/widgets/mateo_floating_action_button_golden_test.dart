@@ -11,6 +11,7 @@ void main() {
       'when rendering visual states, it should match the approved golden',
       fileName: 'mateo_floating_action_button_states',
       builder: () => GoldenTestGroup(
+        scenarioConstraints: const BoxConstraints.tightFor(width: 128),
         children: [
           GoldenTestScenario(
             name: 'resting',
