@@ -15,7 +15,7 @@ class _LightMateoColorScheme extends MateoColorScheme {
          text: MateoTextColorScheme(
            primary: palette.neutral[12],
            secondary: palette.neutral[10],
-           tertiary: palette.neutral[9],
+           tertiary: palette.neutral[8],
            disabled: palette.neutral[9],
            inverse: Colors.white,
            profit: palette.green[10],

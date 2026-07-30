@@ -13,7 +13,7 @@ void main() {
       expect(scheme.colors.neutral.onSolid, scheme.text.inverse);
       expect(scheme.text.primary, palette.neutral[12]);
       expect(scheme.text.secondary, palette.neutral[10]);
-      expect(scheme.text.tertiary, palette.neutral[9]);
+      expect(scheme.text.tertiary, palette.neutral[8]);
       expect(scheme.text.disabled, palette.neutral[9]);
       expect(scheme.text.inverse, scheme.inverse.onBackground);
       expect(scheme.text.profit, palette.green[10]);

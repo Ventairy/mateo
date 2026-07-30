@@ -87,7 +87,7 @@ without changing that shape.
 | ----------- | ---------- | -------------------- | --------------------------------------------------------------- |
 | `primary`   | neutral-12 | 17.24:1 ✅           | Headings, titles, primary body text                             |
 | `secondary` | neutral-10 | 5.83:1 ✅            | Descriptions, supporting text, captions                         |
-| `tertiary`  | neutral-9  | 4.73:1 ✅            | Metadata on neutral-1 or white only                             |
+| `tertiary`  | neutral-8  | 3.11:1 (large only)  | De-emphasized metadata                                          |
 | `disabled`  | neutral-9  | 4.73:1               | Disabled state text                                             |
 | `inverse`   | White      | —                    | Text on dark surfaces                                           |
 | `profit`    | green-10   | 2.49:1 ❌            | Money/profit amounts, e.g. `$1,200`; not suitable for body text |

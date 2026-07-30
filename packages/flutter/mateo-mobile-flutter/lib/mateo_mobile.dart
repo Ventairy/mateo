@@ -98,6 +98,8 @@ export 'src/widgets/mateo_icon_button.dart'
 export 'src/widgets/mateo_loading_text.dart' show MateoLoadingText;
 export 'src/widgets/mateo_location_radius_map/mateo_location_radius_map.dart'
     show MateoLocationRadiusMap;
+export 'src/widgets/mateo_page/mateo_page.dart'
+    show MateoPage, MateoPageTransition, MateoPageTransitionDirection;
 export 'src/widgets/mateo_search_bar_button.dart' show MateoSearchBarButton;
 export 'src/widgets/mateo_skeleton/mateo_skeleton.dart'
     show
@@ -115,6 +117,10 @@ export 'src/widgets/mateo_tap/mateo_tap.dart'
     show MateoTap, MateoTapAnimationType;
 export 'src/widgets/mateo_text_button.dart'
     show MateoTextButton, MateoTextButtonIconBuilder, MateoTextButtonIconState;
+export 'src/widgets/mateo_text_input/mateo_text_input.dart'
+    show MateoTextInput, MateoTextInputController;
+export 'src/widgets/mateo_text_input/mateo_text_input_variant.dart'
+    show MateoTextInputVariant;
 export 'src/widgets/mateo_toast/mateo_toast.dart'
     show
         MateoToast,
