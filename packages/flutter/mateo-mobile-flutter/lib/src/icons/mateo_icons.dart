@@ -164,6 +164,19 @@ abstract final class MateoIcon {
     color1: color,
   );
 
+  /// Question mark icon.
+  static Widget questionmark({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.questionmark(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
   /// Smartphone icon.
   static Widget smartphone({
     Key? key,

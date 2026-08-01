@@ -134,6 +134,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.pointerHandUp(<params>);
 /// ```
 /// ```dart
+/// $Icons.questionmark(<params>);
+/// ```
+/// ```dart
 /// $Icons.smartphone(<params>);
 /// ```
 /// ```dart
@@ -381,6 +384,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _PointerHandUp(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `Questionmark` widget from `questionmark.svg`.
+  static Widget questionmark({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _Questionmark(
     key: key,
     width: width,
     height: height,
@@ -2356,6 +2374,137 @@ class _PointerHandUpPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PointerHandUpPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/questionmark.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Questionmark extends StatelessWidget with _DotdartSvgSizing {
+  const _Questionmark({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Questionmark._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Questionmark._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Questionmark._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Questionmark._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _QuestionmarkPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuestionmarkPainter extends CustomPainter {
+  _QuestionmarkPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(4, 4.8158)
+    ..cubicTo(4, 4.3587, 4.107, 3.8275, 4.3441, 3.2968)
+    ..cubicTo(5.2926, 1.1464, 7.4822, 0, 9.8893, 0)
+    ..cubicTo(11.4952, 0, 12.983, 0.455, 14.0807, 1.3475)
+    ..cubicTo(15.1895, 2.2492, 15.8672, 3.5732, 15.8674, 5.2224)
+    ..cubicTo(15.8674, 7.3922, 14.6196, 8.8637, 12.842, 10.0632)
+    ..lineTo(12.8433, 10.0644)
+    ..cubicTo(12.0464, 10.6123, 11.603, 10.9775, 11.3444, 11.3331)
+    ..cubicTo(11.1094, 11.6563, 11.0042, 12.0041, 10.9953, 12.5881)
+    ..lineTo(10.9953, 12.9184)
+    ..cubicTo(10.9952, 13.3169, 10.8965, 13.7302, 10.6262, 14.0532)
+    ..cubicTo(10.3434, 14.3909, 9.9302, 14.5612, 9.4514, 14.5612)
+    ..cubicTo(8.9875, 14.5611, 8.5752, 14.4058, 8.284, 14.0832)
+    ..cubicTo(8.0003, 13.7688, 7.8874, 13.3574, 7.8874, 12.9471)
+    ..lineTo(7.8874, 12.3216)
+    ..cubicTo(7.8874, 10.2912, 9.2348, 8.9885, 10.8189, 7.8887)
+    ..cubicTo(12.0875, 6.9964, 12.7492, 6.3424, 12.7495, 5.2136)
+    ..cubicTo(12.7495, 4.5203, 12.4505, 3.9643, 11.9487, 3.5696)
+    ..cubicTo(11.4368, 3.1671, 10.6937, 2.9202, 9.8192, 2.9202)
+    ..cubicTo(9.0962, 2.9203, 8.501, 3.0818, 8.0388, 3.4144)
+    ..cubicTo(7.581, 3.7441, 7.2001, 4.2806, 6.9715, 5.1323)
+    ..lineTo(6.9665, 5.1498)
+    ..cubicTo(6.8684, 5.4702, 6.6962, 5.7648, 6.431, 5.9806)
+    ..cubicTo(6.161, 6.2002, 5.8284, 6.3096, 5.4651, 6.3097)
+    ..cubicTo(5.0409, 6.3097, 4.6565, 6.167, 4.3816, 5.8705)
+    ..cubicTo(4.1123, 5.58, 4.0001, 5.1986, 4, 4.8158)
+    ..close()
+    ..moveTo(11.4032, 18.0582)
+    ..cubicTo(11.4029, 19.1262, 10.5393, 20, 9.4514, 20)
+    ..cubicTo(8.3834, 19.9999, 7.5098, 19.1261, 7.5095, 18.0582)
+    ..cubicTo(7.5095, 16.9776, 8.3856, 16.1152, 9.4514, 16.1151)
+    ..cubicTo(10.5371, 16.1151, 11.4032, 16.9775, 11.4032, 18.0582)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Questionmark._viewBoxWidth;
+    final scaleY = size.height / _Questionmark._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Questionmark._viewBoxMinX, -_Questionmark._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _QuestionmarkPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
