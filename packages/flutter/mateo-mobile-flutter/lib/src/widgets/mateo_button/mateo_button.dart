@@ -182,7 +182,7 @@ class _MateoButtonState extends State<MateoButton>
   );
   static const TextStyle _baseLabelStyle = TextStyle(
     fontFamily: MateoTypography.fontFamily,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     letterSpacing: MateoTypography.letterSpacing,
   );

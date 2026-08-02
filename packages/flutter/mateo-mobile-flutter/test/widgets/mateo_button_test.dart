@@ -451,6 +451,25 @@ void main() {
       );
     });
 
+    group('label style', () {
+      testWidgets(
+        'when rendered, it should use the 15 pixel Mateo button label size',
+        (tester) async {
+          await tester.pumpWidget(
+            TestApp(
+              child: MateoButton(
+                variant: MateoButtonVariant.primary,
+                label: 'Ver oportunidades',
+                onPressed: () {},
+              ),
+            ),
+          );
+
+          expect(_labelStyle(tester).fontSize, equals(15));
+        },
+      );
+    });
+
     group('foreground colors', () {
       testWidgets(
         'when foreground is not customized, it should use the semantic foreground color',
