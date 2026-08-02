@@ -23,6 +23,15 @@ abstract final class MateoIcon {
     Color? color,
   }) => $Icons.arrowLeft(key: key, width: width, height: height, color1: color);
 
+  /// Arrow pointing right.
+  static Widget arrowRight({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.arrowRight(key: key, width: width, height: height, color1: color);
+
   /// Circular arrow (retry/refresh).
   static Widget arrowRotateClockwise({
     Key? key,
@@ -43,6 +52,14 @@ abstract final class MateoIcon {
     double? height,
     Color? color,
   }) => $Icons.arrowUp(key: key, width: width, height: height, color1: color);
+
+  /// Box with a pen icon.
+  static Widget boxPen({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.boxPen(key: key, width: width, height: height, color1: color);
 
   /// Chevron pointing down.
   static Widget chevronDown({

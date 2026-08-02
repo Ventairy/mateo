@@ -42,8 +42,10 @@ to their language conventions, such as `arrowLeft` in Dart.
 | Icon                                                             | Name                    | Use                                                                                                           | Do not use for                                                                            |
 | ---------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | ![Arrow pointing left](svg/arrow-left.svg)                       | `arrow-left`            | Back or previous navigation when the destination is clear from context.                                       | Undo, reply, or an arbitrary leftward action.                                             |
+| ![Arrow pointing right](svg/arrow-right.svg)                     | `arrow-right`           | Forward or next navigation when the destination is clear from context.                                        | Redo, send, sign out, or an arbitrary rightward action.                                   |
 | ![Clockwise circular arrow](svg/arrow-rotate-clockise.svg)       | `arrow-rotate-clockise` | Retry, reload, refresh, or repeat when the surrounding label or component makes the action explicit.          | History, undo, or automatic synchronization without supporting context.                   |
 | ![Arrow pointing up](svg/arrow-up.svg)                           | `arrow-up`              | Upward direction or an upward gesture. It may support a swipe-up instruction when paired with motion or text. | Upload, send, or sort ascending unless the component clearly establishes that meaning.    |
+| ![Box with a pen](svg/box-pen.svg)                               | `box-pen`               | Edit or compose content when the component or label identifies what will change.                              | Save, settings, or a generic indication that content is editable without an action.       |
 | ![Chevron pointing down](svg/chevron-down.svg)                   | `chevron-down`          | Reveal content below, expand a collapsed region, or indicate a downward selection control.                    | Download or a general down arrow.                                                         |
 | ![Circle with a slash](svg/circle-block.svg)                     | `circle-block`          | Blocked, prohibited, unavailable, or not allowed. Pair it with a reason when the state affects a task.        | Delete, cancel, or a generic error.                                                       |
 | ![Checkmark in a circle](svg/circle-check.svg)                   | `circle-check`          | Successful completion or a confirmed positive result. Pair it with text that names what completed.            | Selection, approval, or a decorative checkmark without a completed outcome.               |
@@ -104,8 +106,9 @@ to their language conventions, such as `arrowLeft` in Dart.
 
 ### Direction and localization
 
-- Mirror `arrow-left` only when the platform's navigation direction and locale
-  require it. Do not assume every left-pointing icon should mirror globally.
+- Mirror `arrow-left` or `arrow-right` only when the platform's navigation
+  direction and locale require it. Do not assume every horizontal arrow should
+  mirror globally.
 - Do not mirror `arrow-rotate-clockise`, `arrow-up`, `chevron-down`, status
   symbols, objects, or brand marks.
 - Validate metaphors in the languages and cultures where a product ships.
