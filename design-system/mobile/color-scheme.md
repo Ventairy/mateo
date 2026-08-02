@@ -233,6 +233,14 @@ Pre-composed sets for specific component types. Each component has background, f
 | `foreground`         | whatsapp-9      | Enabled foreground (brand green) |
 | `foregroundDisabled` | `Text.disabled` | Disabled foreground              |
 
+### Button Panel
+
+| Token        | Source       | Purpose                                              |
+| ------------ | ------------ | ---------------------------------------------------- |
+| `background` | neutral-1    | Surface behind the grouped buttons                   |
+| `border`     | `background` | One-pixel boundary separating the panel from content |
+| `shadow`     | Black @ 20%  | Shadow separating the floating panel from content    |
+
 ### Search Bar Button
 
 | Token               | Source         | Purpose                                   |

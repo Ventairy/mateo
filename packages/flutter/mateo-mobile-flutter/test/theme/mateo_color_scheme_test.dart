@@ -60,6 +60,9 @@ void main() {
       expect(scheme.buttons.success.foreground, palette.green[12]);
       expect(scheme.buttons.whatsapp.primary.foreground, palette.whatsapp[12]);
       expect(scheme.buttons.searchBar.foreground, scheme.text.primary);
+      expect(scheme.buttonPanel.background, palette.neutral[1]);
+      expect(scheme.buttonPanel.border, scheme.background);
+      expect(scheme.buttonPanel.shadow, const Color(0x33000000));
       expect(scheme.toast.neutral.icon, palette.neutral[8]);
       expect(scheme.bottomSheet.handle, palette.neutral[6]);
     });

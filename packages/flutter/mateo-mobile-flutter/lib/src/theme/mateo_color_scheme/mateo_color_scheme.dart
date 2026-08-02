@@ -11,6 +11,7 @@ import '../mateo_palette/mateo_palette.dart';
 part 'mateo_bottom_sheet_color_scheme.dart';
 part 'mateo_branded_button_color_scheme.dart';
 part 'mateo_button_color_scheme.dart';
+part 'mateo_button_panel_color_scheme.dart';
 part 'mateo_buttons_color_scheme.dart';
 part 'mateo_color_scheme_light.dart';
 part 'mateo_color_variant_color_scheme.dart';
@@ -47,6 +48,7 @@ class MateoColorScheme {
     required this.text,
     required this.selectionHighlight,
     required this.buttons,
+    required this.buttonPanel,
     required this.overlay,
     required this.bottomSheet,
     required this.toast,
@@ -72,6 +74,11 @@ class MateoColorScheme {
       t,
     )!,
     buttons: MateoButtonsColorScheme.lerp(a.buttons, b.buttons, t),
+    buttonPanel: MateoButtonPanelColorScheme.lerp(
+      a.buttonPanel,
+      b.buttonPanel,
+      t,
+    ),
     overlay: MateoOverlayColorScheme.lerp(a.overlay, b.overlay, t),
     bottomSheet: MateoBottomSheetColorScheme.lerp(
       a.bottomSheet,
@@ -112,6 +119,9 @@ class MateoColorScheme {
   /// Button component colors.
   final MateoButtonsColorScheme buttons;
 
+  /// Button-panel component colors.
+  final MateoButtonPanelColorScheme buttonPanel;
+
   /// Overlay colors.
   final MateoOverlayColorScheme overlay;
 
@@ -143,6 +153,7 @@ class MateoColorScheme {
     MateoTextColorScheme? text,
     Color? selectionHighlight,
     MateoButtonsColorScheme? buttons,
+    MateoButtonPanelColorScheme? buttonPanel,
     MateoOverlayColorScheme? overlay,
     MateoBottomSheetColorScheme? bottomSheet,
     MateoToastColorScheme? toast,
@@ -157,6 +168,7 @@ class MateoColorScheme {
     text: text ?? this.text,
     selectionHighlight: selectionHighlight ?? this.selectionHighlight,
     buttons: buttons ?? this.buttons,
+    buttonPanel: buttonPanel ?? this.buttonPanel,
     overlay: overlay ?? this.overlay,
     bottomSheet: bottomSheet ?? this.bottomSheet,
     toast: toast ?? this.toast,
@@ -176,6 +188,7 @@ class MateoColorScheme {
           text == other.text &&
           selectionHighlight == other.selectionHighlight &&
           buttons == other.buttons &&
+          buttonPanel == other.buttonPanel &&
           overlay == other.overlay &&
           bottomSheet == other.bottomSheet &&
           toast == other.toast &&
@@ -192,6 +205,7 @@ class MateoColorScheme {
     text,
     selectionHighlight,
     buttons,
+    buttonPanel,
     overlay,
     bottomSheet,
     toast,

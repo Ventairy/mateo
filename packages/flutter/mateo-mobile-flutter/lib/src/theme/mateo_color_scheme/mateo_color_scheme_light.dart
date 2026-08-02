@@ -104,6 +104,11 @@ class _LightMateoColorScheme extends MateoColorScheme {
              ),
            ),
          ),
+         buttonPanel: MateoButtonPanelColorScheme(
+           background: palette.neutral[1],
+           border: Colors.white,
+           shadow: const Color(0x33000000),
+         ),
          overlay: const MateoOverlayColorScheme(scrim: Color(0x66000000)),
          bottomSheet: MateoBottomSheetColorScheme(
            background: Colors.white,
