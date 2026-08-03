@@ -41,6 +41,7 @@ to their language conventions, such as `arrowLeft` in Dart.
 
 | Icon                                                             | Name                    | Use                                                                                                           | Do not use for                                                                            |
 | ---------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| ![Arrow pointing down](svg/arrow-down.svg)                       | `arrow-down`            | Downward direction or a downward gesture. Pair gesture instructions with motion or text.                      | Download, collapse, or sort descending unless the component clearly establishes that meaning. |
 | ![Arrow pointing left](svg/arrow-left.svg)                       | `arrow-left`            | Back or previous navigation when the destination is clear from context.                                       | Undo, reply, or an arbitrary leftward action.                                             |
 | ![Arrow pointing right](svg/arrow-right.svg)                     | `arrow-right`           | Forward or next navigation when the destination is clear from context.                                        | Redo, send, sign out, or an arbitrary rightward action.                                   |
 | ![Clockwise circular arrow](svg/arrow-rotate-clockise.svg)       | `arrow-rotate-clockise` | Retry, reload, refresh, or repeat when the surrounding label or component makes the action explicit.          | History, undo, or automatic synchronization without supporting context.                   |
@@ -109,8 +110,8 @@ to their language conventions, such as `arrowLeft` in Dart.
 - Mirror `arrow-left` or `arrow-right` only when the platform's navigation
   direction and locale require it. Do not assume every horizontal arrow should
   mirror globally.
-- Do not mirror `arrow-rotate-clockise`, `arrow-up`, `chevron-down`, status
-  symbols, objects, or brand marks.
+- Do not mirror `arrow-down`, `arrow-rotate-clockise`, `arrow-up`,
+  `chevron-down`, status symbols, objects, or brand marks.
 - Validate metaphors in the languages and cultures where a product ships.
   Replace or support an icon with text when its meaning is not dependable.
 

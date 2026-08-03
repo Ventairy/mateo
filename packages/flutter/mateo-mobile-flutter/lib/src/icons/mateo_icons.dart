@@ -15,6 +15,14 @@ import 'package:mateo_mobile/src/gen/icons.g.dart';
 abstract final class MateoIcon {
   MateoIcon._();
 
+  /// Arrow pointing down.
+  static Widget arrowDown({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.arrowDown(key: key, width: width, height: height, color1: color);
+
   /// Arrow pointing left.
   static Widget arrowLeft({
     Key? key,

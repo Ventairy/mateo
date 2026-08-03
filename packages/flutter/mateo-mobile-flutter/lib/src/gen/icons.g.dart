@@ -86,6 +86,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// Call a method named after each asset to render it:
 ///
 /// ```dart
+/// $Icons.arrowDown(<params>);
+/// ```
+/// ```dart
 /// $Icons.arrowLeft(<params>);
 /// ```
 /// ```dart
@@ -156,6 +159,21 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 abstract final class $Icons {
   $Icons._();
+
+  /// Builds the `ArrowDown` widget from `arrowDown.svg`.
+  static Widget arrowDown({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _ArrowDown(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
 
   /// Builds the `ArrowLeft` widget from `arrowLeft.svg`.
   static Widget arrowLeft({
@@ -501,6 +519,119 @@ abstract final class $Icons {
     maintainAspectRatio: maintainAspectRatio,
     color1: color1,
   );
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/arrow-down.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ArrowDown extends StatelessWidget with _DotdartSvgSizing {
+  const _ArrowDown({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ArrowDown._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ArrowDown._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ArrowDown._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ArrowDown._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ArrowDownPainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrowDownPainter extends CustomPainter {
+  _ArrowDownPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(9.5, 20)
+    ..cubicTo(9.9025, 20, 10.2886, 19.8537, 10.5733, 19.5932)
+    ..lineTo(17.5555, 13.2043)
+    ..cubicTo(18.1482, 12.6619, 18.1482, 11.7826, 17.5555, 11.2401)
+    ..cubicTo(16.9627, 10.6978, 16.0017, 10.6978, 15.4089, 11.2401)
+    ..lineTo(11.0179, 15.258)
+    ..lineTo(11.0179, 1.3889)
+    ..cubicTo(11.0179, 0.6218, 10.3382, -0, 9.5, -0)
+    ..cubicTo(8.6617, -0, 7.9822, 0.6218, 7.9822, 1.3889)
+    ..lineTo(7.9822, 15.258)
+    ..lineTo(3.5911, 11.2401)
+    ..cubicTo(2.9984, 10.6978, 2.0373, 10.6978, 1.4446, 11.2401)
+    ..cubicTo(0.8518, 11.7826, 0.8518, 12.6619, 1.4446, 13.2043)
+    ..lineTo(8.4267, 19.5932)
+    ..cubicTo(8.7113, 19.8537, 9.0975, 20, 9.5, 20)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ArrowDown._viewBoxWidth;
+    final scaleY = size.height / _ArrowDown._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ArrowDown._viewBoxMinX, -_ArrowDown._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ArrowDownPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
 }
 
 /// A dotdart-generated SVG widget from `assets/icons/arrow_left.svg`.
