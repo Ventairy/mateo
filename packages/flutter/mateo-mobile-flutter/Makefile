@@ -51,7 +51,7 @@ check: format-check analyze test docs example
 release-check:
 	test ! -f pubspec_overrides.yaml
 	test ! -f example/pubspec_overrides.yaml
-	$(MAKE) generate
+	$(MAKE) gen
 	git diff --exit-code -- lib
 	$(MAKE) check
 	$(MAKE) publish-dry-run

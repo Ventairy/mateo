@@ -90,10 +90,50 @@ MateoButton(
   onPressed: saveChanges,
 )
 
+MateoTextInput(
+  placeholder: 'Phone or email',
+  variant: MateoTextInputVariant.quiet,
+  keyboardType: TextInputType.emailAddress,
+  textInputAction: TextInputAction.done,
+  autofillHints: const [AutofillHints.email],
+  onChanged: updateContact,
+)
+
 MateoToast.show(
   context,
   message: 'Saved',
   type: MateoToastType.success,
+)
+```
+
+Use `MateoPage` with declarative routers for native platform navigation or an
+explicit Mateo transition:
+
+```dart
+MateoPage<void>(
+  child: JobView(jobId: jobId),
+  transition: MateoPageTransition.wash(),
+)
+```
+
+Omit `transition` to use native Cupertino motion on iOS and native Material
+motion on Android. Use `push` when both pages should travel together while only
+the source fades. It samples the destination's entering-edge colors for the
+blend, so custom painted backgrounds work without exposing destination content
+beneath the source:
+
+```dart
+MateoPageTransition.push(
+  direction: MateoPageTransitionDirection.left,
+)
+```
+
+All explicit transitions accept `duration`, `reverseDuration`, and
+`direction`. Use `reverseDuration` to tune the pop independently:
+
+```dart
+MateoPageTransition.wash(
+  reverseDuration: const Duration(milliseconds: 350),
 )
 ```
 
