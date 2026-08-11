@@ -339,7 +339,9 @@ void main() {
       expect(result, isTrue);
     });
 
-    testWidgets('when called, it should emit a settle haptic', (tester) async {
+    testWidgets('when called, it should not emit haptic feedback', (
+      tester,
+    ) async {
       final hapticCalls = <MethodCall>[];
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform,
@@ -356,35 +358,8 @@ void main() {
       await tester.pumpAndSettle();
       await future;
 
-      expect(hapticCalls, isNotEmpty);
+      expect(hapticCalls, isEmpty);
     });
-
-    testWidgets(
-      'when called with enableHapticFeedback false, it should not emit haptic',
-      (tester) async {
-        final hapticCalls = <MethodCall>[];
-        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          (call) {
-            if (call.method.startsWith('HapticFeedback')) hapticCalls.add(call);
-            return null;
-          },
-        );
-
-        final controller = MateoYSnapListController();
-
-        await _pumpFeed(
-          tester,
-          controller: controller,
-          enableHapticFeedback: false,
-        );
-        final future = controller.next();
-        await tester.pumpAndSettle();
-        await future;
-
-        expect(hapticCalls, isEmpty);
-      },
-    );
   });
 
   group('MateoYSnapListController.previous()', () {
@@ -1153,7 +1128,6 @@ Future<void> _pumpFeed(
   WidgetTester tester, {
   List<String> items = const ['first', 'second', 'third'],
   bool disableAnimations = false,
-  bool enableHapticFeedback = true,
   double loadMoreThreshold = 1,
   MateoYSnapListController? controller,
   void Function({
@@ -1177,7 +1151,6 @@ Future<void> _pumpFeed(
           keyBuilder: null,
         ),
         loadMoreThreshold: loadMoreThreshold,
-        enableHapticFeedback: enableHapticFeedback,
         controller: controller,
         onSwipeProgress: onSwipeProgress,
         onNext: onNext,

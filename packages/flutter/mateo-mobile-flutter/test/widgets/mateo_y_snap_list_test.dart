@@ -1928,7 +1928,7 @@ void main() {
 
   group('MateoYSnapList haptic feedback', () {
     testWidgets(
-      'when committing next via gesture, it should emit a selectionClick haptic',
+      'when passing to the next item via gesture, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -1941,53 +1941,6 @@ void main() {
         );
 
         await _pumpFeed(tester);
-
-        await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        expect(hapticCalls, isNotEmpty);
-      },
-    );
-
-    testWidgets(
-      'when committing next, it should use the selectionClick haptic type',
-      (tester) async {
-        final hapticCalls = <MethodCall>[];
-        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          (call) {
-            if (call.method.startsWith('HapticFeedback')) hapticCalls.add(call);
-
-            return null;
-          },
-        );
-
-        await _pumpFeed(tester);
-
-        await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        expect(
-          hapticCalls.first.arguments,
-          'HapticFeedbackType.selectionClick',
-        );
-      },
-    );
-
-    testWidgets(
-      'when enableHapticFeedback is false, committing next should not emit haptic',
-      (tester) async {
-        final hapticCalls = <MethodCall>[];
-        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          (call) {
-            if (call.method.startsWith('HapticFeedback')) hapticCalls.add(call);
-
-            return null;
-          },
-        );
-
-        await _pumpFeed(tester, enableHapticFeedback: false);
 
         await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
         await tester.pumpAndSettle();
@@ -1997,7 +1950,7 @@ void main() {
     );
 
     testWidgets(
-      'when dragging without committing, it should emit only the start haptic',
+      'when dragging without passing, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -2014,11 +1967,11 @@ void main() {
         await tester.drag(find.byType(GestureDetector), const Offset(0, -80));
         await tester.pumpAndSettle();
 
-        expect(hapticCalls, hasLength(1));
+        expect(hapticCalls, isEmpty);
       },
     );
 
-    testWidgets('when swiping down, it should NOT emit a haptic', (
+    testWidgets('when swiping down, it should not emit haptic feedback', (
       tester,
     ) async {
       final hapticCalls = <MethodCall>[];
@@ -2047,7 +2000,7 @@ void main() {
     });
 
     testWidgets(
-      'when a controller next is triggered, it should emit a settle haptic',
+      'when passing to the next item via controller, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -2066,7 +2019,7 @@ void main() {
         await tester.pumpAndSettle();
         await nextFuture;
 
-        expect(hapticCalls, isNotEmpty);
+        expect(hapticCalls, isEmpty);
       },
     );
   });
@@ -2223,7 +2176,6 @@ Future<void> _pumpFeed(
   List<String> items = const ['first', 'second', 'third'],
   bool includeEndBuilder = true,
   bool disableAnimations = false,
-  bool enableHapticFeedback = true,
   double loadMoreThreshold = 1,
   double loadingMoreOffset = 200,
   double spacing = 0,
@@ -2253,7 +2205,6 @@ Future<void> _pumpFeed(
         loadMoreThreshold: loadMoreThreshold,
         loadingMoreOffset: loadingMoreOffset,
         spacing: spacing,
-        enableHapticFeedback: enableHapticFeedback,
         controller: controller,
         onSwipeProgress: onSwipeProgress,
         onNext: onNext,

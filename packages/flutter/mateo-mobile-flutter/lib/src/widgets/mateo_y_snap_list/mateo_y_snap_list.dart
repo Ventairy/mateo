@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mateo_mobile/src/theme/mateo_theme_context.dart';
 import 'package:mateo_mobile/src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
@@ -55,7 +54,6 @@ class MateoYSnapList<T> extends StatefulWidget {
     this.onMotionEnd,
     this.loadMoreThreshold = 1,
     this.loadingMoreOffset = 200,
-    this.enableHapticFeedback = true,
   }) : assert(
          loadMoreThreshold >= 0 && loadMoreThreshold <= 1,
          'loadMoreThreshold must be greater than or equal to 0 and less than or equal to 1.',
@@ -174,11 +172,6 @@ class MateoYSnapList<T> extends StatefulWidget {
   /// Defaults to `200` (pixels).
   final double loadingMoreOffset;
 
-  /// Whether the list emits a soft haptic tick when the next item settles.
-  ///
-  /// Defaults to `true`. Set to `false` to disable the settle haptic.
-  final bool enableHapticFeedback;
-
   /// Vertical gap between the current card and its adjacent cards.
   ///
   /// The current card always settles at the same position regardless of this
@@ -204,7 +197,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     with SingleTickerProviderStateMixin
     implements _MateoYSnapListControllerClient {
   static const _settleDuration = Duration(milliseconds: 260);
-  static const _commitDuration = Duration(milliseconds: 220);
+  static const _commitDuration = Duration(milliseconds: 180);
   static const _swipeThreshold = 0.25;
 
   late final AnimationController _animationController;
@@ -218,7 +211,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   double _viewportWidth = 1;
   double get _commitDistance => _viewportHeight + widget.spacing;
   bool _isLoadingMore = false;
-  bool _hasFiredStartHaptic = false;
   bool _isLoadMoreScheduled = false;
   bool _isControllerActionRunning = false;
   bool _isMotionActive = false;
@@ -328,7 +320,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     if (_isControllerActionRunning) return;
 
     _animationController.stop(canceled: false);
-    _hasFiredStartHaptic = false;
     _activeDragGeneration = _startMotion();
 
     _handleAwaitDragStart();
@@ -455,7 +446,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
         .clamp(-widget.loadingMoreOffset, 0.0);
     _awaitDragProgress = _progressForLoadingLift(_loadingLiftNotifier.value);
 
-    _emitStartHapticIfNeeded(shouldEmit: _awaitDragProgress > 0);
     widget.onSwipeProgress?.call(
       action: MateoYSnapListAction.next,
       percentage: _awaitDragProgress,
@@ -464,17 +454,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
 
   void _handleRegularDragUpdate(double dragDeltaY) {
     _setDragOffset(_dragOffsetY + dragDeltaY);
-
-    _emitStartHapticIfNeeded(shouldEmit: _dragOffsetY < 0);
-  }
-
-  void _emitStartHapticIfNeeded({required bool shouldEmit}) {
-    if (_hasFiredStartHaptic || !widget.enableHapticFeedback || !shouldEmit) {
-      return;
-    }
-
-    _hasFiredStartHaptic = true;
-    unawaited(HapticFeedback.selectionClick());
   }
 
   Future<void> _finishAwaitDrag(DragEndDetails details) async {
@@ -620,10 +599,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       widget.onNext?.call(item, itemIndex);
       widget.controller?._notify(MateoYSnapListNotification.nextItem);
       _scheduleLoadMoreIfNeeded();
-
-      if (widget.enableHapticFeedback) {
-        unawaited(HapticFeedback.selectionClick());
-      }
     } finally {
       _isCommitting = false;
     }
@@ -971,10 +946,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       widget.onNext?.call(item, itemIndex);
       widget.controller?._notify(MateoYSnapListNotification.nextItem);
       _scheduleLoadMoreIfNeeded();
-
-      if (widget.enableHapticFeedback) {
-        unawaited(HapticFeedback.selectionClick());
-      }
     } finally {
       if (mounted) {
         _endMotion(motionGeneration);
