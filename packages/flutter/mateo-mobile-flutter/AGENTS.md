@@ -282,13 +282,16 @@ mateo-mobile-flutter/
 - All public widgets are exported from
   `packages/flutter/mateo-mobile-flutter/lib/mateo_mobile.dart` with explicit
   `show`.
-- Widgets live in the package's `lib/src/widgets/` directory. Simple widgets
-  may use one file. Larger widgets may use a same-named folder with one public
-  entrypoint and focused `part` files for public value types, controllers,
-  actions, and other support classes.
-- Keep each `StatefulWidget` and its corresponding `State` subclass together
-  in the same file. Do not extract a widget's `State` subclass into a separate
-  `part` file.
+- Widgets live in the package's `lib/src/widgets/` directory. A widget that
+  needs supporting classes must use a same-named folder with one public
+  entrypoint and focused supporting files.
+- Keep one class per file. The only routine exception is a `StatefulWidget` and
+  its corresponding `State`, which must remain together in the widget's file;
+  do not extract the `State` into a separate `part` file.
+- A supporting class that is tightly coupled to one public class and unlikely
+  to be reused by other public declarations must be private and live in its own
+  private `part` file of the owning library. Do not make an implementation
+  detail public only to place it in a separate file.
 - Keep a value inline when it is used in only one place. Extract it into a
   variable only when it is used in more than one place, then reuse that
   variable everywhere it is needed.

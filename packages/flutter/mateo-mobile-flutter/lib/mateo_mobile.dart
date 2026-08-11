@@ -69,6 +69,8 @@ export 'src/widgets/mateo_button/mateo_button.dart'
         MateoButtonState,
         MateoButtonVariant;
 export 'src/widgets/mateo_button_panel.dart' show MateoButtonPanel;
+export 'src/widgets/mateo_circular_loading_indicator/mateo_circular_loading_indicator.dart'
+    show MateoCircularLoadingIndicator;
 export 'src/widgets/mateo_dot_matrix/mateo_dot_matrix.dart' show MateoDotMatrix;
 export 'src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart'
     show MateoDotsLoadingIndicator;
