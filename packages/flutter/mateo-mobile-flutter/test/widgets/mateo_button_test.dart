@@ -1035,7 +1035,7 @@ void main() {
       );
 
       testWidgets(
-        'when fit is expand and loading, it should keep the expanded width',
+        'when fit is expand and loading, it should keep its width and height',
         (tester) async {
           final completer = Completer<void>();
 
@@ -1053,15 +1053,16 @@ void main() {
             ),
           );
 
+          final restingSize = tester.getSize(
+            find.byKey(const Key('mateo_button_container')),
+          );
           await tester.tap(find.text('Enviar candidatura completa'));
           await _pumpLoadingState(tester);
           await tester.pump(const Duration(milliseconds: 300));
 
           expect(
-            tester
-                .getSize(find.byKey(const Key('mateo_button_container')))
-                .width,
-            equals(300),
+            tester.getSize(find.byKey(const Key('mateo_button_container'))),
+            equals(restingSize),
           );
         },
       );

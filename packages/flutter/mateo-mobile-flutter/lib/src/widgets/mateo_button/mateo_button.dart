@@ -449,22 +449,28 @@ class _MateoButtonState extends State<MateoButton>
     final resolvedForeground = isEnabled
         ? buttonColorScheme.foreground
         : buttonColorScheme.foregroundDisabled;
-    final animatedContent = _buildAnimatedContent(
-      content: _buildContent(
-        isEnabled: isEnabled,
-        foregroundColor: resolvedForeground,
-        labelStyle: _baseLabelStyle.copyWith(color: resolvedForeground),
-      ),
+    final content = _buildContent(
+      isEnabled: isEnabled,
       foregroundColor: resolvedForeground,
-      disableAnimations: MediaQuery.disableAnimationsOf(context),
+      labelStyle: _baseLabelStyle.copyWith(color: resolvedForeground),
     );
+    final disableAnimations = MediaQuery.disableAnimationsOf(context);
+    final animatedContent = widget.fit == MateoButtonFit.expand
+        ? _buildExpandedAnimatedContent(
+            content: content,
+            foregroundColor: resolvedForeground,
+            disableAnimations: disableAnimations,
+          )
+        : _buildAnimatedContent(
+            content: content,
+            foregroundColor: resolvedForeground,
+            disableAnimations: disableAnimations,
+          );
 
     return Padding(
       key: const Key('mateo_button_container'),
       padding: widget.padding,
-      child: widget.fit == MateoButtonFit.expand
-          ? _alignedContent(animatedContent)
-          : animatedContent,
+      child: animatedContent,
     );
   }
 
@@ -548,6 +554,32 @@ class _MateoButtonState extends State<MateoButton>
               dotRadius: 4,
             )
           : FadeTransition(opacity: _contentOpacityController, child: content),
+    );
+  }
+
+  Widget _buildExpandedAnimatedContent({
+    required Widget content,
+    required Color foregroundColor,
+    required bool disableAnimations,
+  }) {
+    final fadedContent = disableAnimations
+        ? Opacity(opacity: _showLoadingIndicator ? 0 : 1, child: content)
+        : FadeTransition(opacity: _contentOpacityController, child: content);
+
+    return Stack(
+      children: <Widget>[
+        _alignedContent(fadedContent),
+        if (_showLoadingIndicator)
+          Positioned.fill(
+            child: _alignedContent(
+              MateoDotsLoadingIndicator(
+                key: _loadingIndicatorKey,
+                color: foregroundColor,
+                dotRadius: 4,
+              ),
+            ),
+          ),
+      ],
     );
   }
 
