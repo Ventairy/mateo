@@ -206,12 +206,19 @@ releases or the interaction is cancelled.
 
 ## Interaction and dismissal
 
-The Toast dismisses through any of these paths:
+Manual dismissal is enabled by default. In that mode, the Toast dismisses
+through any of these paths:
 
 - its visible lifetime ends;
 - the person taps the surface;
 - the person drags or swipes it upward far or fast enough; or
 - another Toast replaces it.
+
+A product may disable manual dismissal when the message must remain available
+until its lifetime ends or the product dismisses or replaces it
+programmatically. In that mode, taps are consumed without dismissing the Toast,
+and every drag direction uses resistance. Contact still pauses a timed
+dismissal until release.
 
 A tap is recognized when contact ends without moving beyond the platform's tap
 tolerance. Begin the pressed state on contact, dismiss on release, and consume
@@ -227,6 +234,10 @@ of `6` on each enabled axis.
 | Down      | Drag resistance  | `6`                       |
 | Left      | Drag resistance  | `6`                       |
 | Right     | Drag resistance  | `6`                       |
+
+When manual dismissal is disabled, Up also uses Drag resistance with a maximum
+resistance offset of `6`. The Toast does not change opacity or enter dismissal
+progress in response to a tap, drag, or swipe.
 
 If an upward dismissal drag reverses, restore all dismissal progress before
 downward resistance begins. Never combine dismissal movement and resistance on
@@ -394,6 +405,8 @@ A Toast is ready when:
 - upward dragging follows the finger, commits at the defined thresholds, and
   returns cleanly when incomplete;
 - downward and horizontal pulls use resistance without suggesting dismissal;
+- disabling manual dismissal gives every drag direction resistance while timed
+  and programmatic dismissal remain available;
 - holding the Toast prevents a timed dismissal until release;
 - inactive software does not consume the message lifetime;
 - assistive technologies announce the complete message without moving focus or
