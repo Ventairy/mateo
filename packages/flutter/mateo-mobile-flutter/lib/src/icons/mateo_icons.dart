@@ -78,6 +78,15 @@ abstract final class MateoIcon {
   }) =>
       $Icons.chevronDown(key: key, width: width, height: height, color1: color);
 
+  /// Chevron pointing left.
+  static Widget chevronLeft({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.chevronLeft(key: key, width: width, height: height, color1: color);
+
   /// Blocked / circle-slash icon.
   static Widget circleBlock({
     Key? key,
@@ -196,6 +205,19 @@ abstract final class MateoIcon {
     double? height,
     Color? color,
   }) => $Icons.questionmark(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
+  /// Stack of rectangles icon.
+  static Widget rectangleStack({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.rectangleStack(
     key: key,
     width: width,
     height: height,

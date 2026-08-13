@@ -107,6 +107,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.chevronDown(<params>);
 /// ```
 /// ```dart
+/// $Icons.chevronLeft(<params>);
+/// ```
+/// ```dart
 /// $Icons.circleBlock(<params>);
 /// ```
 /// ```dart
@@ -144,6 +147,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 /// ```dart
 /// $Icons.questionmark(<params>);
+/// ```
+/// ```dart
+/// $Icons.rectangleStack(<params>);
 /// ```
 /// ```dart
 /// $Icons.smartphone(<params>);
@@ -258,6 +264,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _ChevronDown(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `ChevronLeft` widget from `chevronLeft.svg`.
+  static Widget chevronLeft({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _ChevronLeft(
     key: key,
     width: width,
     height: height,
@@ -453,6 +474,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _Questionmark(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `RectangleStack` widget from `rectangleStack.svg`.
+  static Widget rectangleStack({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _RectangleStack(
     key: key,
     width: width,
     height: height,
@@ -1367,6 +1403,118 @@ class _ChevronDownPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChevronDownPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/chevron_left.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ChevronLeft extends StatelessWidget with _DotdartSvgSizing {
+  const _ChevronLeft({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ChevronLeft._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ChevronLeft._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ChevronLeft._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ChevronLeft._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ChevronLeftPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChevronLeftPainter extends CustomPainter {
+  _ChevronLeftPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(14.7449, 2.4213)
+    ..cubicTo(15.3141, 1.8674, 15.314, 0.9654, 14.7448, 0.4115)
+    ..lineTo(14.7182, 0.3862)
+    ..cubicTo(14.1615, -0.1287, 13.2897, -0.1287, 12.7331, 0.3862)
+    ..lineTo(12.7063, 0.4115)
+    ..lineTo(6.224, 6.7191)
+    ..cubicTo(4.3629, 8.53, 4.363, 11.47, 6.224, 13.2809)
+    ..lineTo(12.7063, 19.5884)
+    ..cubicTo(13.2703, 20.1372, 14.1809, 20.1372, 14.7448, 19.5884)
+    ..cubicTo(15.314, 19.0345, 15.3141, 18.1326, 14.7449, 17.5787)
+    ..lineTo(8.2625, 11.2712)
+    ..cubicTo(7.54, 10.5681, 7.54, 9.4319, 8.2625, 8.7288)
+    ..lineTo(14.7449, 2.4213)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ChevronLeft._viewBoxWidth;
+    final scaleY = size.height / _ChevronLeft._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ChevronLeft._viewBoxMinX, -_ChevronLeft._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ChevronLeftPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
@@ -2947,6 +3095,132 @@ class _QuestionmarkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _QuestionmarkPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/rectangle-stack.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _RectangleStack extends StatelessWidget with _DotdartSvgSizing {
+  const _RectangleStack({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _RectangleStack._svgWidth;
+
+  @override
+  double get svgNativeHeight => _RectangleStack._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _RectangleStack._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _RectangleStack._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _RectangleStackPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _RectangleStackPainter extends CustomPainter {
+  _RectangleStackPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(17.9429, 4.2286)
+    ..cubicTo(17.6371, 4.1729, 17.3129, 4.1453, 16.972, 4.1453)
+    ..lineTo(3.0278, 4.1453)
+    ..cubicTo(2.6869, 4.1453, 2.3628, 4.1729, 2.0571, 4.2285)
+    ..cubicTo(2.1606, 3.183, 2.7786, 2.6, 3.7882, 2.6)
+    ..lineTo(16.2211, 2.6)
+    ..cubicTo(17.2308, 2.6, 17.8409, 3.183, 17.9429, 4.2286)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(3.7143, 1.3714)
+    ..lineTo(16.2857, 1.3714)
+    ..cubicTo(16.2448, 0.5006, 15.734, 0, 14.8855, 0)
+    ..lineTo(5.1145, 0)
+    ..cubicTo(4.2661, 0, 3.7552, 0.5006, 3.7143, 1.3714)
+    ..close();
+
+  static final RRect _rrect0 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(0, 5.4286, 20, 14.5714),
+    const Radius.circular(3.8988),
+  );
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _RectangleStack._viewBoxWidth;
+    final scaleY = size.height / _RectangleStack._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_RectangleStack._viewBoxMinX, -_RectangleStack._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect0, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _RectangleStackPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }

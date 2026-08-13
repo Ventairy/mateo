@@ -48,6 +48,7 @@ to their language conventions, such as `arrowLeft` in Dart.
 | ![Arrow pointing up](svg/arrow-up.svg)                           | `arrow-up`              | Upward direction or an upward gesture. It may support a swipe-up instruction when paired with motion or text. | Upload, send, or sort ascending unless the component clearly establishes that meaning.    |
 | ![Box with a pen](svg/box-pen.svg)                               | `box-pen`               | Edit or compose content when the component or label identifies what will change.                              | Save, settings, or a generic indication that content is editable without an action.       |
 | ![Chevron pointing down](svg/chevron-down.svg)                   | `chevron-down`          | Reveal content below, expand a collapsed region, or indicate a downward selection control.                    | Download or a general down arrow.                                                         |
+| ![Chevron pointing left](svg/chevron-left.svg)                   | `chevron-left`          | Back or previous navigation, or collapse toward the left, when the surrounding component makes the action clear. | Undo, reply, or general leftward movement where `arrow-left` communicates direction more clearly. |
 | ![Circle with a slash](svg/circle-block.svg)                     | `circle-block`          | Blocked, prohibited, unavailable, or not allowed. Pair it with a reason when the state affects a task.        | Delete, cancel, or a generic error.                                                       |
 | ![Checkmark in a circle](svg/circle-check.svg)                   | `circle-check`          | Successful completion or a confirmed positive result. Pair it with text that names what completed.            | Selection, approval, or a decorative checkmark without a completed outcome.               |
 | ![Information mark in a circle](svg/circle-info.svg)             | `circle-info`           | Contextual information or a timely fact that helps explain the current state. Pair it with the information.   | Help, a warning, or decoration that does not communicate useful information.              |
@@ -61,6 +62,7 @@ to their language conventions, such as `arrowLeft` in Dart.
 | ![Plus sign](svg/plus-signal.svg)                                | `plus-signal`           | Add or create something, or increase a quantity when the surrounding component makes the operation explicit.  | Close, remove, expand, or a positive status without supporting text or context.           |
 | ![Hand with index finger pointing up](svg/pointer-hand-up.svg)   | `pointer-hand-up`       | A tap, touch, press, or gesture instruction. Use it in guidance where the interaction is demonstrated.        | A general cursor, selection state, or permanent navigation icon.                          |
 | ![Question mark](svg/questionmark.svg)                           | `questionmark`          | Help, support, or an answer to a question when the surrounding component makes the destination clear.         | General information, an unknown status, or punctuation within text.                       |
+| ![Stack of rectangles](svg/rectangle-stack.svg)                  | `rectangle-stack`       | A collection, layered content, or a stack of cards or pages.                                                   | Copy, duplicate, window switching, or a single item without supporting context.            |
 | ![Smartphone](svg/smartphone.svg)                                | `smartphone`            | A mobile device, mobile experience, or interaction happening on a phone.                                      | Calling; use `phone` for the call action.                                                 |
 | ![WhatsApp mark](svg/whatsapp.svg)                               | `whatsapp`              | An action or destination that is specifically WhatsApp. Keep an accessible label naming WhatsApp.             | Generic messaging, calling, or Mateo-owned communication.                                 |
 | ![Wi-Fi with an exclamation mark](svg/wifi-exclamation-mark.svg) | `wifi-exclamation-mark` | No internet, unreliable connectivity, or a network connection that needs attention.                           | A server, account, or generic application error without evidence of a connection problem. |
@@ -107,9 +109,9 @@ to their language conventions, such as `arrowLeft` in Dart.
 
 ### Direction and localization
 
-- Mirror `arrow-left` or `arrow-right` only when the platform's navigation
-  direction and locale require it. Do not assume every horizontal arrow should
-  mirror globally.
+- Mirror `arrow-left`, `arrow-right`, or `chevron-left` only when the
+  component's navigation or disclosure direction and locale require it. Do not
+  assume every horizontal directional icon should mirror globally.
 - Do not mirror `arrow-down`, `arrow-rotate-clockise`, `arrow-up`,
   `chevron-down`, status symbols, objects, or brand marks.
 - Validate metaphors in the languages and cultures where a product ships.
