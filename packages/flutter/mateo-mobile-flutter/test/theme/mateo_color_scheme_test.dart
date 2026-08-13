@@ -64,7 +64,6 @@ void main() {
       expect(scheme.buttonPanel.border, scheme.background);
       expect(scheme.buttonPanel.shadow, const Color(0x33000000));
       expect(scheme.toast.neutral.icon, palette.neutral[8]);
-      expect(scheme.bottomSheet.handle, palette.neutral[6]);
     });
 
     test('matches the Mateo map scheme', () {

@@ -268,7 +268,6 @@ Pre-composed sets for specific component types. Each component has background, f
 | Token        | Source       | Purpose                                        |
 | ------------ | ------------ | ---------------------------------------------- |
 | `background` | `background` | Bottom-sheet surface                           |
-| `handle`     | neutral-6    | Subtle drag handle on the bottom-sheet surface |
 
 ### Toast — Success
 

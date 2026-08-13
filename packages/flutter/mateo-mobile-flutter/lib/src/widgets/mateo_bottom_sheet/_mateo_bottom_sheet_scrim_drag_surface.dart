@@ -107,6 +107,7 @@ class _MateoBottomSheetScrimDragSurfaceState<T>
   }
 
   void _handlePointerDown(PointerDownEvent event) {
+    if (!widget.route.draggable) return;
     if (_activePointer != null) return;
 
     _activePointer = event.pointer;

@@ -42,7 +42,10 @@ class _RenderMateoBottomSheetTransition extends RenderProxyBox {
     final value = _animation.value;
     if (_isInteractive()) return value;
 
-    return Curves.easeOutCubic.transform(value);
+    final curve = _animation.status == AnimationStatus.reverse
+        ? Curves.easeInOutQuad
+        : Curves.easeOutCubic;
+    return curve.transform(value);
   }
 
   void _handleAnimationChanged() {

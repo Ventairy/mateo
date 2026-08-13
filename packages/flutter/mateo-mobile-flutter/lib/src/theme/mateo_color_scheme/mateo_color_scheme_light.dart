@@ -110,9 +110,8 @@ class _LightMateoColorScheme extends MateoColorScheme {
            shadow: const Color(0x33000000),
          ),
          overlay: const MateoOverlayColorScheme(scrim: Color(0x66000000)),
-         bottomSheet: MateoBottomSheetColorScheme(
+         bottomSheet: const MateoBottomSheetColorScheme(
            background: Colors.white,
-           handle: palette.neutral[6],
          ),
          toast: MateoToastColorScheme(
            success: MateoToastVariantColorScheme(

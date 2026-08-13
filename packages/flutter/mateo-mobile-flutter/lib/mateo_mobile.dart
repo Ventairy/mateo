@@ -62,6 +62,10 @@ export 'src/widgets/mateo_action_bloom/mateo_action_bloom.dart'
         MateoActionBloomActionIconState;
 export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet.dart'
     show MateoBottomSheet;
+export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet_dismiss_source.dart'
+    show MateoBottomSheetDismissSource;
+export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet_should_dismiss.dart'
+    show MateoBottomSheetShouldDismiss;
 export 'src/widgets/mateo_button/mateo_button.dart'
     show
         MateoButton,

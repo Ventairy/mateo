@@ -75,6 +75,7 @@ class _MateoBottomSheetDragSurfaceState<T>
   }
 
   bool _startDrag(PointerMoveEvent event) {
+    if (!widget.route.draggable) return false;
     if (!_hasClearDownwardIntent()) return false;
     if (!_canStartDrag) return false;
 
@@ -346,23 +347,27 @@ class _MateoBottomSheetDragSurfaceState<T>
 
   @override
   Widget build(BuildContext context) {
-    return MateoDragResistance(
-      top: !widget.route.scrollable,
-      bottom: false,
-      child: Listener(
-        onPointerDown: _handlePointerDown,
-        onPointerMove: _handlePointerMove,
-        onPointerUp: _handlePointerUp,
-        onPointerCancel: _handlePointerCancel,
-        behavior: HitTestBehavior.deferToChild,
-        child: NotificationListener<ScrollMetricsNotification>(
-          onNotification: _handleScrollMetricsNotification,
-          child: NotificationListener<ScrollNotification>(
-            onNotification: _handleScrollNotification,
-            child: widget.child,
-          ),
+    final dragSurface = Listener(
+      onPointerDown: _handlePointerDown,
+      onPointerMove: _handlePointerMove,
+      onPointerUp: _handlePointerUp,
+      onPointerCancel: _handlePointerCancel,
+      behavior: HitTestBehavior.deferToChild,
+      child: NotificationListener<ScrollMetricsNotification>(
+        onNotification: _handleScrollMetricsNotification,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: _handleScrollNotification,
+          child: widget.child,
         ),
       ),
+    );
+
+    if (!widget.route.resistance) return dragSurface;
+
+    return MateoDragResistance(
+      top: !widget.route.scrollable || !widget.route.draggable,
+      bottom: !widget.route.draggable,
+      child: dragSurface,
     );
   }
 }
