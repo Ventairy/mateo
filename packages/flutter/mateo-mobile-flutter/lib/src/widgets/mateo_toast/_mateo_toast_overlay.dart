@@ -6,6 +6,7 @@ class _MateoToastOverlay extends StatefulWidget {
     required this.type,
     required this.iconBuilder,
     required this.duration,
+    required this.dismissible,
     required this.disableAnimations,
     required this.padding,
     required this.onDismissed,
@@ -15,6 +16,7 @@ class _MateoToastOverlay extends StatefulWidget {
   final MateoToastType type;
   final MateoToastIconBuilder? iconBuilder;
   final Duration duration;
+  final bool dismissible;
   final bool disableAnimations;
   final EdgeInsetsGeometry padding;
   final VoidCallback onDismissed;
@@ -87,7 +89,11 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
     if (_flushPendingDismiss()) return;
 
     if (shouldDismissAsTap) {
-      _dismiss();
+      if (widget.dismissible) {
+        _dismiss();
+      } else {
+        _restoreToast();
+      }
       return;
     }
 
@@ -125,7 +131,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
   }
 
   void _handleDragUpdate(Offset delta) {
-    if (_isDismissed) return;
+    if (_isDismissed || !widget.dismissible) return;
 
     final nextDragOffsetY = (_dragOffsetY + delta.dy).clamp(
       double.negativeInfinity,
@@ -146,6 +152,10 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
 
   void _handleDragEnd(Velocity velocity) {
     if (_isDismissed) return;
+    if (!widget.dismissible) {
+      _restoreToast();
+      return;
+    }
 
     if (velocity.isSwipeUp(minVelocity: _swipeDismissMinVelocity)) {
       _dismiss(minimumDuration: _swipeDismissMinDuration);
@@ -158,13 +168,16 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
       return;
     }
 
+    _restoreToast();
+  }
+
+  void _restoreToast() {
+    _dragOffsetY = 0;
     if (widget.disableAnimations) {
-      _dragOffsetY = 0;
       _animationController.value = 1;
       return;
     }
 
-    _dragOffsetY = 0;
     unawaited(_showToast());
   }
 
@@ -327,7 +340,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: MateoDragResistance(
-                    top: false,
+                    top: !widget.dismissible,
                     child: ScaleTransition(
                       key: const Key('mateo_toast_press_scale_transition'),
                       alignment: Alignment.topLeft,

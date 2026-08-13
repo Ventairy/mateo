@@ -85,8 +85,10 @@ class MateoToast extends StatelessWidget {
   /// the colors and default icon. [MateoToastType.neutral] requires an
   /// [iconBuilder]. The optional [duration] controls how long the toast remains
   /// visible before dismissing; when omitted, it estimates a reading duration
-  /// from [message]. The [padding] is applied after the safe area and controls
-  /// the toast inset from the overlay edges.
+  /// from [message]. When [dismissible] is false, taps and upward swipes cannot
+  /// dismiss the toast; dragging in any direction uses resistance instead. The
+  /// [padding] is applied after the safe area and controls the toast inset from
+  /// the overlay edges.
   ///
   /// When a [MateoToastMessenger] ancestor is found via [context], the toast is
   /// inserted into that messenger's overlay so it remains above route and hero
@@ -104,6 +106,7 @@ class MateoToast extends StatelessWidget {
     MateoToastType type = MateoToastType.error,
     MateoToastIconBuilder? iconBuilder,
     Duration? duration,
+    bool dismissible = true,
     EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
       horizontal: 20,
       vertical: 16,
@@ -135,6 +138,7 @@ class MateoToast extends StatelessWidget {
           type: type,
           iconBuilder: iconBuilder,
           duration: duration ?? _estimateDuration(message),
+          dismissible: dismissible,
           disableAnimations: disableAnimations,
           padding: padding,
           onDismissed: () {
