@@ -63,15 +63,15 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
     if (_animationController != null) return;
 
     final animationController = AnimationController(
-      duration: const Duration(milliseconds: 240),
-      reverseDuration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 190),
+      reverseDuration: const Duration(milliseconds: 180),
       vsync: this,
     )..addStatusListener(_handleAnimationStatus);
     _animationController = animationController;
     _surfaceAnimation = CurvedAnimation(
       parent: animationController,
-      curve: const Cubic(0.2, 0, 0, 1),
-      reverseCurve: const Cubic(0.4, 0, 1, 1),
+      curve: Curves.easeOutCubic,
+      reverseCurve: Curves.easeInOutQuad,
     );
     _focusNode = FocusNode(debugLabel: 'MateoActionBloom');
   }

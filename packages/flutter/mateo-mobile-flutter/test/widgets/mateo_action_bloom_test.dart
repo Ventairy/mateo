@@ -260,6 +260,37 @@ void main() {
       },
     );
 
+    testWidgets('when opening, it should use the approved timing and curve', (
+      tester,
+    ) async {
+      var progress = 0.0;
+
+      await _pumpBloom(
+        tester,
+        actions: [
+          _action(
+            'Create',
+            Icons.add,
+            onBuild: (state) => progress = state.animationProgress,
+          ),
+          _action('Delete', Icons.delete),
+        ],
+      );
+
+      await tester.tap(find.byKey(_sourceKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 95));
+
+      expect(progress, closeTo(Curves.easeOutCubic.transform(0.5), 0.001));
+
+      await tester.pump(const Duration(milliseconds: 95));
+      expect(progress, 1);
+
+      await tester.tapAt(const Offset(200, 400));
+      await tester.pumpAndSettle();
+      expect(find.byKey(_panelKey), findsNothing);
+    });
+
     testWidgets(
       'when an action is tapped twice, it should close and invoke its callback once',
       (tester) async {

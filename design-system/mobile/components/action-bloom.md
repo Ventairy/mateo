@@ -28,8 +28,7 @@ All dimensions in this document are mobile density-independent units.
    the open panel.
 4. **Action row:** one complete choice containing an icon, title, and optional
    description.
-5. **Action icon surface:** the circular background that contains the action
-   icon.
+5. **Action icon:** the leading symbol that helps identify the choice.
 
 The open panel has no title, handle, close button, border, or shadow. The
 source label establishes the shared intent and each row names a complete
@@ -202,8 +201,9 @@ Repeated activation during closing must not perform another action.
 
 ### Opening
 
-Open over `240 ms`. Begin the expansion immediately, cover most of the distance
-early, and settle gently into the final panel without overshooting.
+Open over `190 ms` with an ease-out cubic curve. Begin the expansion
+immediately, cover most of the distance early, and settle gently into the final
+panel without overshooting.
 
 Across that progress:
 
@@ -220,10 +220,11 @@ most of the change early and settling gently. Do not stagger individual rows.
 
 ### Closing
 
-Close over `200 ms`. Begin the return immediately and settle gently as the
-surface reaches the exact source bounds. Reverse the visible content, border,
-and scrim relationships with it. Keep the source hidden until the bloom surface
-reaches its closed state, then remove that surface and restore the source.
+Close over `180 ms` with an ease-in-out quadratic curve. Begin the return
+immediately and settle gently as the surface reaches the exact source bounds.
+Reverse the visible content, border, and scrim relationships with it. Keep the
+source hidden until the bloom surface reaches its closed state, then remove
+that surface and restore the source.
 
 ### Reduced motion
 
