@@ -46,6 +46,34 @@ void main() {
             ),
           ),
           GoldenTestScenario(
+            name: 'disabled',
+            child: MateoFloatingActionButton(
+              semanticLabel: 'Create',
+              iconBuilder: (state) => Icon(
+                Icons.add,
+                color: state.foregroundColor,
+                size: state.iconSize,
+              ),
+              onPressed: null,
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'loading',
+            child: MediaQuery(
+              data: const MediaQueryData(disableAnimations: true),
+              child: MateoFloatingActionButton(
+                semanticLabel: 'Create',
+                isLoading: true,
+                iconBuilder: (state) => Icon(
+                  Icons.add,
+                  color: state.foregroundColor,
+                  size: state.iconSize,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+          GoldenTestScenario(
             name: 'action bloom source',
             child: MateoFloatingActionButton.actionBloom(
               semanticLabel: 'Note actions',
