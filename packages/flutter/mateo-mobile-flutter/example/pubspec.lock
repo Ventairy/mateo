@@ -152,6 +152,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "1ca20c894b1717686a2319b8548763d812bc0aabdac580420a44c5178c57a867"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.3"
   json_annotation:
     dependency: transitive
     description:
@@ -248,12 +256,13 @@ packages:
     source: hosted
     version: "2.0.0"
   oh_my_flutter:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../../../../ventairy/flutter/oh_my_flutter"
-      relative: true
-    source: path
-    version: "0.3.2"
+      name: oh_my_flutter
+      sha256: "4c25085977a4acd7606ced5ffff63947906a78dc769bf5ba789e001094bfaaeb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   path:
     dependency: transitive
     description:

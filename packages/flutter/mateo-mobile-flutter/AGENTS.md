@@ -116,6 +116,15 @@ the enclosing doc comment using `[parameterName]` references — never
 Widget wrap({required BuildContext context, required Widget child});
 ```
 
+### Keep Enum Variants as the Source of Truth
+
+Do not list or name an enum's possible values in the documentation of a widget,
+class, constructor, or property that consumes it. Describe the enum's role
+through the typed property, and document value-specific behavior on the enum
+and its values. The enum declaration must remain the only inventory of its
+variants so adding or removing a value cannot leave duplicated documentation
+stale.
+
 ### Cross-Reference Linking
 
 Wrap type names, member names, and constructor names in square brackets `[]`
