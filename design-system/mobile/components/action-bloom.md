@@ -121,18 +121,19 @@ from full at closed to transparent at open. The final panel has no border.
 | --------------------------------- | --------- |
 | Horizontal row space              | `18`      |
 | Vertical row space                | `14`      |
-| Action icon surface               | `42 × 42` |
+| Action icon layout space          | `42 × 42` |
 | Action icon                       | `24 × 24` |
-| Gap from icon surface to text     | `12`      |
+| Gap from icon space to text       | `12`      |
 | Gap between action rows           | `6`       |
 | Gap from title to description     | `2`       |
 | Title line limit                  | `1`       |
 | Description line limit            | `2`       |
 | Overflow beyond either line limit | Ellipsis  |
 
-Center the icon surface and text block vertically as one row. Keep the icon at
-the leading edge and mirror the row in right-to-left languages. Do not shrink
-the icon, gaps, or row space to fit longer text.
+Center the icon within its layout space and center that space with the text
+block vertically as one row. Keep the icon at the leading edge and mirror the
+row in right-to-left languages. The icon has no background surface. Do not
+shrink the icon, gaps, or row space to fit longer text.
 
 ## Typography
 
@@ -154,15 +155,13 @@ assistive technology when the visible lines truncate.
 
 Use semantic colors from the [mobile color scheme](../color-scheme.md):
 
-| Part                        | Color source                                                                 |
-| --------------------------- | ---------------------------------------------------------------------------- |
-| Scrim                       | `Overlay.scrim`                                                              |
-| Final bloom surface         | `Background.background`                                                      |
-| Title                       | `Text.primary`                                                               |
-| Description                 | `Text.secondary`                                                             |
-| Default action icon surface | The source button's resting background                                       |
-| Custom action icon surface  | The action's explicit semantic background                                    |
-| Action icon                 | The source button's enabled foreground, unless the icon defines its own role |
+| Part                | Color source                                                                 |
+| ------------------- | ---------------------------------------------------------------------------- |
+| Scrim               | `Overlay.scrim`                                                              |
+| Final bloom surface | `Background.background`                                                      |
+| Title               | `Text.primary`                                                               |
+| Description         | `Text.secondary`                                                             |
+| Action icon         | The source button's enabled foreground, unless the icon defines its own role |
 
 During the first `30%` of opening progress, interpolate the bloom surface from
 the source button's resting background to `Background.background`. Begin the

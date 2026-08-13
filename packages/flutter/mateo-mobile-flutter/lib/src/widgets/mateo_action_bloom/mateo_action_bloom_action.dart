@@ -6,8 +6,8 @@ part of 'mateo_action_bloom.dart';
 /// [description] adds supporting text beneath the title when the action needs
 /// more explanation; when it is null, no description space is reserved.
 ///
-/// The action receives its colors and presentation progress from its owning
-/// Mateo button.
+/// The action receives its icon foreground color and presentation progress
+/// from its owning Mateo button.
 ///
 /// See also:
 ///  * [MateoActionBloomActionIconState], the state passed to [iconBuilder].
@@ -19,7 +19,6 @@ class MateoActionBloomAction extends StatelessWidget {
     required this.onPressed,
     super.key,
     this.description,
-    this.iconBackgroundColor,
   });
 
   /// Builds the required icon from the action's presentation state.
@@ -30,11 +29,6 @@ class MateoActionBloomAction extends StatelessWidget {
 
   /// The optional supporting text displayed beneath [title].
   final String? description;
-
-  /// The optional background color of the circular icon surface.
-  ///
-  /// Defaults to the owning button's resting background color.
-  final Color? iconBackgroundColor;
 
   /// Handles this action after the panel starts closing.
   ///
@@ -59,28 +53,19 @@ class MateoActionBloomAction extends StatelessWidget {
           onPressed: scope.onPressed,
           animation: MateoTapAnimationType.scaleFade,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18,
-              vertical: 14,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
             child: Row(
               children: [
                 SizedBox.square(
                   dimension: 42,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: scope.iconBackgroundColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: AnimatedBuilder(
-                        animation: scope.animation,
-                        builder: (context, _) => iconBuilder(
-                          MateoActionBloomActionIconState(
-                            animationProgress: scope.animation.value,
-                            foregroundColor: scope.iconForegroundColor,
-                            iconSize: 24,
-                          ),
+                  child: Center(
+                    child: AnimatedBuilder(
+                      animation: scope.animation,
+                      builder: (context, _) => iconBuilder(
+                        MateoActionBloomActionIconState(
+                          animationProgress: scope.animation.value,
+                          foregroundColor: scope.iconForegroundColor,
+                          iconSize: 24,
                         ),
                       ),
                     ),
@@ -138,14 +123,12 @@ class MateoActionBloomAction extends StatelessWidget {
 class _MateoActionBloomActionScope extends InheritedWidget {
   const _MateoActionBloomActionScope({
     required this.animation,
-    required this.iconBackgroundColor,
     required this.iconForegroundColor,
     required this.onPressed,
     required super.child,
   });
 
   final Animation<double> animation;
-  final Color iconBackgroundColor;
   final Color iconForegroundColor;
   final MateoActionBloomActionCallback onPressed;
 
@@ -163,7 +146,6 @@ class _MateoActionBloomActionScope extends InheritedWidget {
   @override
   bool updateShouldNotify(_MateoActionBloomActionScope oldWidget) {
     return animation != oldWidget.animation ||
-        iconBackgroundColor != oldWidget.iconBackgroundColor ||
         iconForegroundColor != oldWidget.iconForegroundColor ||
         onPressed != oldWidget.onPressed;
   }

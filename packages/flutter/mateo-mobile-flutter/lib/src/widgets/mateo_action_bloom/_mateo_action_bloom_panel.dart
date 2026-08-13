@@ -61,8 +61,6 @@ class _MateoActionBloomPanel extends StatelessWidget {
                   for (final (index, action) in actions.indexed) ...[
                     _MateoActionBloomActionScope(
                       animation: animation,
-                      iconBackgroundColor:
-                          action.iconBackgroundColor ?? sourceBackgroundColor,
                       iconForegroundColor: actionIconForegroundColor,
                       onPressed: (pressAnimation) =>
                           onSelected(action, pressAnimation),

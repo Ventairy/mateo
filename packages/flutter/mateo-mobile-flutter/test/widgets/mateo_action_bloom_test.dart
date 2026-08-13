@@ -220,7 +220,7 @@ void main() {
     );
 
     testWidgets(
-      'when action colors resolve, it should use source and custom icon backgrounds',
+      'when an action icon resolves, it should use the source foreground without a background surface',
       (tester) async {
         final iconStates = <MateoActionBloomActionIconState>[];
 
@@ -239,7 +239,6 @@ void main() {
               'Delete',
               Icons.delete,
               key: const ValueKey('delete-action'),
-              iconBackgroundColor: Colors.purple,
               onBuild: iconStates.add,
             ),
           ],
@@ -249,13 +248,18 @@ void main() {
 
         expect(
           (
-            _iconBackgroundColor(tester, const ValueKey('create-action')),
-            _iconBackgroundColor(tester, const ValueKey('delete-action')),
             iconStates.last.foregroundColor,
             iconStates.last.iconSize,
             iconStates.last.animationProgress,
           ),
-          (Colors.blue, Colors.purple, Colors.yellow, 24, 1),
+          (Colors.yellow, 24, 1),
+        );
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('create-action')),
+            matching: find.byType(DecoratedBox),
+          ),
+          findsNothing,
         );
       },
     );
@@ -709,7 +713,6 @@ MateoActionBloomAction _action(
   IconData icon, {
   Key? key,
   String? description,
-  Color? iconBackgroundColor,
   MateoActionBloomActionCallback? onPressed,
   ValueChanged<MateoActionBloomActionIconState>? onBuild,
 }) {
@@ -717,26 +720,12 @@ MateoActionBloomAction _action(
     key: key,
     title: title,
     description: description,
-    iconBackgroundColor: iconBackgroundColor,
     iconBuilder: (state) {
       onBuild?.call(state);
       return Icon(icon, color: state.foregroundColor, size: state.iconSize);
     },
     onPressed: onPressed ?? (feedbackAnimation) async {},
   );
-}
-
-Color? _iconBackgroundColor(WidgetTester tester, Key actionKey) {
-  return (tester
-              .widget<DecoratedBox>(
-                find.descendant(
-                  of: find.byKey(actionKey),
-                  matching: find.byType(DecoratedBox),
-                ),
-              )
-              .decoration
-          as BoxDecoration)
-      .color;
 }
 
 Set<String> _semanticLabels(WidgetTester tester) {
