@@ -1,8 +1,7 @@
 part of 'mateo_floating_action_button.dart';
 
 /// Builds a [MateoFloatingActionButton] icon from its presentation state.
-typedef MateoFloatingActionButtonIconBuilder =
-    Widget Function(MateoFloatingActionButtonIconState state);
+typedef MateoFloatingActionButtonIconBuilder = Widget Function(MateoFloatingActionButtonIconState state);
 
 /// The presentation state passed to a floating-button icon builder.
 @immutable

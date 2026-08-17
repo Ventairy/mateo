@@ -44,10 +44,7 @@ class MateoScrollbarColorScheme {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MateoScrollbarColorScheme &&
-          thumb == other.thumb &&
-          track == other.track;
+      identical(this, other) || other is MateoScrollbarColorScheme && thumb == other.thumb && track == other.track;
 
   @override
   int get hashCode => Object.hash(thumb, track);

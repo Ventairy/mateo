@@ -73,18 +73,14 @@ class MateoSkeletonFadeEffect extends MateoSkeletonAnimatedEffectBase {
   }) {
     final boneColor = style.color ?? colorScheme.skeleton.bone;
     final phase = (1 - math.cos(t)) / 2;
-    final fadeAlpha = (opacity.start + (opacity.end - opacity.start) * phase)
-        .clamp(0.0, 1.0);
-    return Paint()
-      ..color = boneColor.withValues(alpha: boneColor.a * fadeAlpha);
+    final fadeAlpha = (opacity.start + (opacity.end - opacity.start) * phase).clamp(0.0, 1.0);
+    return Paint()..color = boneColor.withValues(alpha: boneColor.a * fadeAlpha);
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is MateoSkeletonFadeEffect &&
-        other.duration == duration &&
-        other.opacity == opacity;
+    return other is MateoSkeletonFadeEffect && other.duration == duration && other.opacity == opacity;
   }
 
   @override

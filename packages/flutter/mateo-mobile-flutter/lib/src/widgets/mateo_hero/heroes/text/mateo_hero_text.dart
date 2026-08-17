@@ -93,9 +93,7 @@ final class MateoHeroText extends MateoHero {
     required HeroFlightDirection flightDirection,
     MateoHeroTextFlightMetrics? flightMetrics,
   }) {
-    final lerpValue = flightDirection == HeroFlightDirection.push
-        ? value
-        : (1 - value);
+    final lerpValue = flightDirection == HeroFlightDirection.push ? value : (1 - value);
     final showBegin = lerpValue < from.switchThreshold;
     final lerpedStyle = TextStyle.lerp(from.style, to.style, lerpValue)!;
     final progressiveClampMaxLines = _progressiveClampMaxLinesHelper(
@@ -224,8 +222,7 @@ final class MateoHeroText extends MateoHero {
 
   final MateoHeroTextFlight? _flight;
 
-  ({MateoHeroText hero, double? estimatedHeight})
-  buildWithEndpointMetricsAndEstimatedHeight({
+  ({MateoHeroText hero, double? estimatedHeight}) buildWithEndpointMetricsAndEstimatedHeight({
     required BuildContext context,
     required double width,
     required Size beginSize,
@@ -365,8 +362,7 @@ final class MateoHeroText extends MateoHero {
     return EdgeInsetsGeometry.lerp(EdgeInsets.zero, padding, scale);
   }
 
-  TextStyle _resolvedStyle(BuildContext context) =>
-      DefaultTextStyle.of(context).style.merge(style);
+  TextStyle _resolvedStyle(BuildContext context) => DefaultTextStyle.of(context).style.merge(style);
 
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,8 @@ import '../test_app.dart';
 
 final _tapFinder = find.byType(MateoTap);
 
-Finder _scaleWithinTap() =>
-    find.descendant(of: _tapFinder, matching: find.byType(ScaleTransition));
-Finder _fadeWithinTap() =>
-    find.descendant(of: _tapFinder, matching: find.byType(FadeTransition));
+Finder _scaleWithinTap() => find.descendant(of: _tapFinder, matching: find.byType(ScaleTransition));
+Finder _fadeWithinTap() => find.descendant(of: _tapFinder, matching: find.byType(FadeTransition));
 
 void main() {
   group('MateoTap', () {
@@ -58,6 +56,29 @@ void main() {
 
       await gesture.up();
       await tester.pump(const Duration(milliseconds: 800));
+    });
+
+    testWidgets('when scale-fade feedback is idle, it should not retain an opacity layer', (tester) async {
+      await tester.pumpWidget(
+        TestApp(
+          child: MateoTap(
+            onPressed: (animation) async {},
+            child: const Text('Tap'),
+          ),
+        ),
+      );
+
+      expect(_fadeWithinTap(), findsNothing);
+
+      final gesture = await tester.startGesture(tester.getCenter(find.text('Tap')));
+      await tester.pump();
+
+      expect(_fadeWithinTap(), findsOneWidget);
+
+      await gesture.up();
+      await tester.pumpAndSettle();
+
+      expect(_fadeWithinTap(), findsNothing);
     });
 
     testWidgets('when pressed, it should apply pressed scale', (tester) async {

@@ -43,11 +43,11 @@ mixin _$MateoMapLibreStyleSymbolPaint {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleSymbolPaintCopyWith<MateoMapLibreStyleSymbolPaint>
-  get copyWith =>
-      _$MateoMapLibreStyleSymbolPaintCopyWithImpl<
-        MateoMapLibreStyleSymbolPaint
-      >(this as MateoMapLibreStyleSymbolPaint, _$identity);
+  $MateoMapLibreStyleSymbolPaintCopyWith<MateoMapLibreStyleSymbolPaint> get copyWith =>
+      _$MateoMapLibreStyleSymbolPaintCopyWithImpl<MateoMapLibreStyleSymbolPaint>(
+        this as MateoMapLibreStyleSymbolPaint,
+        _$identity,
+      );
 
   /// Serializes this MateoMapLibreStyleSymbolPaint to a JSON map.
   Map<String, dynamic> toJson();
@@ -57,14 +57,10 @@ mixin _$MateoMapLibreStyleSymbolPaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MateoMapLibreStyleSymbolPaint &&
-            (identical(other.textColor, textColor) ||
-                other.textColor == textColor) &&
-            (identical(other.textHaloColor, textHaloColor) ||
-                other.textHaloColor == textHaloColor) &&
-            (identical(other.textHaloWidth, textHaloWidth) ||
-                other.textHaloWidth == textHaloWidth) &&
-            (identical(other.textOpacity, textOpacity) ||
-                other.textOpacity == textOpacity));
+            (identical(other.textColor, textColor) || other.textColor == textColor) &&
+            (identical(other.textHaloColor, textHaloColor) || other.textHaloColor == textHaloColor) &&
+            (identical(other.textHaloWidth, textHaloWidth) || other.textHaloWidth == textHaloWidth) &&
+            (identical(other.textOpacity, textOpacity) || other.textOpacity == textOpacity));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -99,8 +95,7 @@ abstract mixin class $MateoMapLibreStyleSymbolPaintCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleSymbolPaintCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleSymbolPaintCopyWith<$Res> {
+class _$MateoMapLibreStyleSymbolPaintCopyWithImpl<$Res> implements $MateoMapLibreStyleSymbolPaintCopyWith<$Res> {
   _$MateoMapLibreStyleSymbolPaintCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleSymbolPaint _self;
@@ -140,8 +135,7 @@ class _$MateoMapLibreStyleSymbolPaintCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [MateoMapLibreStyleSymbolPaint].
-extension MateoMapLibreStyleSymbolPaintPatterns
-    on MateoMapLibreStyleSymbolPaint {
+extension MateoMapLibreStyleSymbolPaintPatterns on MateoMapLibreStyleSymbolPaint {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -375,11 +369,8 @@ class _MateoMapLibreStyleSymbolPaint implements MateoMapLibreStyleSymbolPaint {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleSymbolPaintCopyWith<_MateoMapLibreStyleSymbolPaint>
-  get copyWith =>
-      __$MateoMapLibreStyleSymbolPaintCopyWithImpl<
-        _MateoMapLibreStyleSymbolPaint
-      >(this, _$identity);
+  _$MateoMapLibreStyleSymbolPaintCopyWith<_MateoMapLibreStyleSymbolPaint> get copyWith =>
+      __$MateoMapLibreStyleSymbolPaintCopyWithImpl<_MateoMapLibreStyleSymbolPaint>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -391,14 +382,10 @@ class _MateoMapLibreStyleSymbolPaint implements MateoMapLibreStyleSymbolPaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MateoMapLibreStyleSymbolPaint &&
-            (identical(other.textColor, textColor) ||
-                other.textColor == textColor) &&
-            (identical(other.textHaloColor, textHaloColor) ||
-                other.textHaloColor == textHaloColor) &&
-            (identical(other.textHaloWidth, textHaloWidth) ||
-                other.textHaloWidth == textHaloWidth) &&
-            (identical(other.textOpacity, textOpacity) ||
-                other.textOpacity == textOpacity));
+            (identical(other.textColor, textColor) || other.textColor == textColor) &&
+            (identical(other.textHaloColor, textHaloColor) || other.textHaloColor == textHaloColor) &&
+            (identical(other.textHaloWidth, textHaloWidth) || other.textHaloWidth == textHaloWidth) &&
+            (identical(other.textOpacity, textOpacity) || other.textOpacity == textOpacity));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -435,8 +422,7 @@ abstract mixin class _$MateoMapLibreStyleSymbolPaintCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleSymbolPaintCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleSymbolPaintCopyWith<$Res> {
+class __$MateoMapLibreStyleSymbolPaintCopyWithImpl<$Res> implements _$MateoMapLibreStyleSymbolPaintCopyWith<$Res> {
   __$MateoMapLibreStyleSymbolPaintCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleSymbolPaint _self;

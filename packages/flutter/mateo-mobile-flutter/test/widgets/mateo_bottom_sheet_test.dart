@@ -94,9 +94,7 @@ void main() {
         final initialHeight = tester.getSize(surfaceFinder).height;
         await tester.drag(find.byType(CustomScrollView), const Offset(0, -120));
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
@@ -148,16 +146,11 @@ void main() {
         await gesture.moveBy(const Offset(0, -200));
         await gesture.up();
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
-            (tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height -
-                        680)
-                    .abs() <
-                0.01,
+            (tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height - 680).abs() < 0.01,
             scrollPosition.pixels > 0,
           ),
           (true, true),
@@ -183,8 +176,7 @@ void main() {
         expect(
           (
             find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
-            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height <
-                680,
+            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height < 680,
           ),
           (1, true),
         );
@@ -217,15 +209,12 @@ void main() {
         await downwardGesture.moveBy(const Offset(0, 100));
         await downwardGesture.up();
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
             scrollPosition.pixels,
-            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height <
-                680,
+            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height < 680,
           ),
           (0, true),
         );
@@ -700,10 +689,7 @@ void main() {
         );
 
         expect(
-          repaintBoundaries
-              .evaluate()
-              .map((element) => (element.renderObject! as RenderBox).size)
-              .toList(),
+          repaintBoundaries.evaluate().map((element) => (element.renderObject! as RenderBox).size).toList(),
           contains(tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey))),
         );
       },
@@ -735,10 +721,7 @@ void main() {
                 )
                 .evaluate()
                 .length,
-            find
-                .descendant(of: transition, matching: find.byType(Transform))
-                .evaluate()
-                .length,
+            find.descendant(of: transition, matching: find.byType(Transform)).evaluate().length,
           ),
           (0, 0, 0),
         );
@@ -1079,9 +1062,7 @@ void main() {
         await _pumpBottomSheetApp(tester);
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
-        final semanticsData = tester
-            .getSemantics(find.byKey(_BottomSheetTestApp.surfaceKey))
-            .getSemanticsData();
+        final semanticsData = tester.getSemantics(find.byKey(_BottomSheetTestApp.surfaceKey)).getSemanticsData();
 
         expect(semanticsData.hasAction(SemanticsAction.dismiss), isTrue);
         semantics.dispose();
@@ -2059,8 +2040,7 @@ class _LongSheetContent extends StatelessWidget {
     return ListView.builder(
       physics: physics,
       itemCount: 30,
-      itemBuilder: (context, index) =>
-          SizedBox(height: 60, child: Text('Opportunity $index')),
+      itemBuilder: (context, index) => SizedBox(height: 60, child: Text('Opportunity $index')),
     );
   }
 }

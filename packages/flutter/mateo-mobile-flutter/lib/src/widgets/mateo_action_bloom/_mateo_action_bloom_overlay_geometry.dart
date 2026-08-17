@@ -61,12 +61,10 @@ class _MateoActionBloomOverlayGeometry {
             sourceCenterY,
       );
 
-  static double _safeTop(MediaQueryData mediaQuery) =>
-      mediaQuery.padding.top + mediaQuery.viewInsets.top;
+  static double _safeTop(MediaQueryData mediaQuery) => mediaQuery.padding.top + mediaQuery.viewInsets.top;
 
   static double _safeBottom({
     required double overlayHeight,
     required MediaQueryData mediaQuery,
-  }) =>
-      overlayHeight - mediaQuery.viewInsets.bottom - mediaQuery.padding.bottom;
+  }) => overlayHeight - mediaQuery.viewInsets.bottom - mediaQuery.padding.bottom;
 }

@@ -73,8 +73,7 @@ class MateoFloatingActionButton extends StatefulWidget {
          'zero.',
        ),
        assert(
-         tapTargetSize == null ||
-             (tapTargetSize >= size && tapTargetSize < double.infinity),
+         tapTargetSize == null || (tapTargetSize >= size && tapTargetSize < double.infinity),
          'MateoFloatingActionButton tapTargetSize must be finite and greater '
          'than or equal to size.',
        );
@@ -112,8 +111,7 @@ class MateoFloatingActionButton extends StatefulWidget {
          'zero.',
        ),
        assert(
-         tapTargetSize == null ||
-             (tapTargetSize >= size && tapTargetSize < double.infinity),
+         tapTargetSize == null || (tapTargetSize >= size && tapTargetSize < double.infinity),
          'MateoFloatingActionButton tapTargetSize must be finite and greater '
          'than or equal to size.',
        );
@@ -181,8 +179,7 @@ class MateoFloatingActionButton extends StatefulWidget {
   final List<MateoActionBloomAction>? _actionBloomActions;
 
   @override
-  State<MateoFloatingActionButton> createState() =>
-      _MateoFloatingActionButtonState();
+  State<MateoFloatingActionButton> createState() => _MateoFloatingActionButtonState();
 }
 
 class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
@@ -216,10 +213,7 @@ class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
   Future<void> _showLoadingIndicatorAfterDelay(int generation) async {
     await Future<void>.delayed(_loadingDelay);
 
-    if (!mounted ||
-        _loadingGeneration != generation ||
-        !_isPendingPress ||
-        _showFutureLoadingIndicator) {
+    if (!mounted || _loadingGeneration != generation || !_isPendingPress || _showFutureLoadingIndicator) {
       return;
     }
 
@@ -237,8 +231,7 @@ class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
     final resolvedForegroundColor = isEnabled
         ? widget.foregroundColor ?? floatingColors.foreground
         : floatingColors.foregroundDisabled;
-    final resolvedBorderSide =
-        widget.borderSide ?? BorderSide(color: floatingColors.border);
+    final resolvedBorderSide = widget.borderSide ?? BorderSide(color: floatingColors.border);
     final resolvedTapTargetSize = widget.tapTargetSize ?? widget.size;
     final isLoading = widget.isLoading || _showFutureLoadingIndicator;
 
@@ -246,22 +239,17 @@ class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
       required FutureOr<void> Function()? onPressed,
       String? semanticLabel,
     }) {
-      final isInteractive =
-          onPressed != null && !_isPendingPress && !widget.isLoading;
+      final isInteractive = onPressed != null && !_isPendingPress && !widget.isLoading;
 
       return Semantics(
         key: const Key('mateo_floating_action_button_semantics'),
         button: true,
         enabled: isInteractive,
         label: semanticLabel,
-        onTap: isInteractive
-            ? () => unawaited(_handlePressed(onPressed))
-            : null,
+        onTap: isInteractive ? () => unawaited(_handlePressed(onPressed)) : null,
         child: ExcludeSemantics(
           child: MateoTap(
-            onPressed: isInteractive
-                ? (animation) => _handlePressed(onPressed)
-                : null,
+            onPressed: isInteractive ? (animation) => _handlePressed(onPressed) : null,
             animation: MateoTapAnimationType.none,
             child: SizedBox.square(
               key: const Key('mateo_floating_action_button_tap_target'),
@@ -295,17 +283,14 @@ class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
                                   size: math.max(
                                     0,
                                     math.min(
-                                      widget.iconSize +
-                                          _loadingIndicatorIconSizeOffset,
-                                      widget.size -
-                                          _loadingIndicatorButtonInset,
+                                      widget.iconSize + _loadingIndicatorIconSizeOffset,
+                                      widget.size - _loadingIndicatorButtonInset,
                                     ),
                                   ),
                                   color: resolvedForegroundColor,
-                                  trackColor: resolvedForegroundColor
-                                      .withValues(
-                                        alpha: _loadingIndicatorTrackOpacity,
-                                      ),
+                                  trackColor: resolvedForegroundColor.withValues(
+                                    alpha: _loadingIndicatorTrackOpacity,
+                                  ),
                                 )
                               : SizedBox.square(
                                   key: const Key(
@@ -316,8 +301,7 @@ class _MateoFloatingActionButtonState extends State<MateoFloatingActionButton> {
                                     fit: BoxFit.contain,
                                     child: widget.iconBuilder(
                                       MateoFloatingActionButtonIconState(
-                                        foregroundColor:
-                                            resolvedForegroundColor,
+                                        foregroundColor: resolvedForegroundColor,
                                         iconSize: widget.iconSize,
                                       ),
                                     ),

@@ -36,8 +36,7 @@ class _TestRouteInformationParser extends RouteInformationParser<Object> {
   ) async => Object();
 
   @override
-  RouteInformation restoreRouteInformation(Object configuration) =>
-      _rootRouteInformation;
+  RouteInformation restoreRouteInformation(Object configuration) => _rootRouteInformation;
 }
 
 RouterConfig<Object> _createConfig({void Function(BuildContext)? onBuild}) {
@@ -45,8 +44,7 @@ RouterConfig<Object> _createConfig({void Function(BuildContext)? onBuild}) {
     routeInformationParser: _TestRouteInformationParser(),
     routerDelegate: _TestRouterDelegate(onBuild: onBuild),
     routeInformationProvider: PlatformRouteInformationProvider(
-      initialRouteInformation:
-          _TestRouteInformationParser._rootRouteInformation,
+      initialRouteInformation: _TestRouteInformationParser._rootRouteInformation,
     ),
   );
 }

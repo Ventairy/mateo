@@ -29,10 +29,7 @@ class MateoToastState {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MateoToastState &&
-          other.iconSize == iconSize &&
-          other.iconColor == iconColor;
+      identical(this, other) || other is MateoToastState && other.iconSize == iconSize && other.iconColor == iconColor;
 
   @override
   int get hashCode => Object.hash(iconSize, iconColor);

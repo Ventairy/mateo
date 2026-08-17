@@ -212,8 +212,7 @@ MateoActionBloomAction _action(
   return MateoActionBloomAction(
     title: title,
     description: description,
-    iconBuilder: (state) =>
-        Icon(icon, color: state.foregroundColor, size: state.iconSize),
+    iconBuilder: (state) => Icon(icon, color: state.foregroundColor, size: state.iconSize),
     onPressed: (feedbackAnimation) async {},
   );
 }

@@ -78,11 +78,11 @@ mixin _$MateoMapLibreStyleSymbolLayout {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleSymbolLayoutCopyWith<MateoMapLibreStyleSymbolLayout>
-  get copyWith =>
-      _$MateoMapLibreStyleSymbolLayoutCopyWithImpl<
-        MateoMapLibreStyleSymbolLayout
-      >(this as MateoMapLibreStyleSymbolLayout, _$identity);
+  $MateoMapLibreStyleSymbolLayoutCopyWith<MateoMapLibreStyleSymbolLayout> get copyWith =>
+      _$MateoMapLibreStyleSymbolLayoutCopyWithImpl<MateoMapLibreStyleSymbolLayout>(
+        this as MateoMapLibreStyleSymbolLayout,
+        _$identity,
+      );
 
   /// Serializes this MateoMapLibreStyleSymbolLayout to a JSON map.
   Map<String, dynamic> toJson();
@@ -92,21 +92,14 @@ mixin _$MateoMapLibreStyleSymbolLayout {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MateoMapLibreStyleSymbolLayout &&
-            (identical(other.textField, textField) ||
-                other.textField == textField) &&
+            (identical(other.textField, textField) || other.textField == textField) &&
             const DeepCollectionEquality().equals(other.textFont, textFont) &&
-            (identical(other.textSize, textSize) ||
-                other.textSize == textSize) &&
-            (identical(other.textMaxWidth, textMaxWidth) ||
-                other.textMaxWidth == textMaxWidth) &&
-            (identical(other.textAnchor, textAnchor) ||
-                other.textAnchor == textAnchor) &&
-            (identical(other.textLetterSpacing, textLetterSpacing) ||
-                other.textLetterSpacing == textLetterSpacing) &&
-            (identical(other.textTransform, textTransform) ||
-                other.textTransform == textTransform) &&
-            (identical(other.symbolPlacement, symbolPlacement) ||
-                other.symbolPlacement == symbolPlacement));
+            (identical(other.textSize, textSize) || other.textSize == textSize) &&
+            (identical(other.textMaxWidth, textMaxWidth) || other.textMaxWidth == textMaxWidth) &&
+            (identical(other.textAnchor, textAnchor) || other.textAnchor == textAnchor) &&
+            (identical(other.textLetterSpacing, textLetterSpacing) || other.textLetterSpacing == textLetterSpacing) &&
+            (identical(other.textTransform, textTransform) || other.textTransform == textTransform) &&
+            (identical(other.symbolPlacement, symbolPlacement) || other.symbolPlacement == symbolPlacement));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -139,9 +132,7 @@ abstract mixin class $MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
   $Res call({
     @JsonKey(name: 'text-field') String? textField,
     @JsonKey(name: 'text-font') List<String>? textFont,
-    @JsonKey(name: 'text-size')
-    @MateoMapLibreStyleValueConverter()
-    MateoMapLibreStyleValue? textSize,
+    @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
     @JsonKey(name: 'text-max-width') double? textMaxWidth,
     @JsonKey(name: 'text-anchor') String? textAnchor,
     @JsonKey(name: 'text-letter-spacing') double? textLetterSpacing,
@@ -153,8 +144,7 @@ abstract mixin class $MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleSymbolLayoutCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
+class _$MateoMapLibreStyleSymbolLayoutCopyWithImpl<$Res> implements $MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
   _$MateoMapLibreStyleSymbolLayoutCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleSymbolLayout _self;
@@ -228,8 +218,7 @@ class _$MateoMapLibreStyleSymbolLayoutCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [MateoMapLibreStyleSymbolLayout].
-extension MateoMapLibreStyleSymbolLayoutPatterns
-    on MateoMapLibreStyleSymbolLayout {
+extension MateoMapLibreStyleSymbolLayoutPatterns on MateoMapLibreStyleSymbolLayout {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -324,9 +313,7 @@ extension MateoMapLibreStyleSymbolLayoutPatterns
     TResult Function(
       @JsonKey(name: 'text-field') String? textField,
       @JsonKey(name: 'text-font') List<String>? textFont,
-      @JsonKey(name: 'text-size')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue? textSize,
+      @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
       @JsonKey(name: 'text-max-width') double? textMaxWidth,
       @JsonKey(name: 'text-anchor') String? textAnchor,
       @JsonKey(name: 'text-letter-spacing') double? textLetterSpacing,
@@ -372,9 +359,7 @@ extension MateoMapLibreStyleSymbolLayoutPatterns
     TResult Function(
       @JsonKey(name: 'text-field') String? textField,
       @JsonKey(name: 'text-font') List<String>? textFont,
-      @JsonKey(name: 'text-size')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue? textSize,
+      @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
       @JsonKey(name: 'text-max-width') double? textMaxWidth,
       @JsonKey(name: 'text-anchor') String? textAnchor,
       @JsonKey(name: 'text-letter-spacing') double? textLetterSpacing,
@@ -418,9 +403,7 @@ extension MateoMapLibreStyleSymbolLayoutPatterns
     TResult? Function(
       @JsonKey(name: 'text-field') String? textField,
       @JsonKey(name: 'text-font') List<String>? textFont,
-      @JsonKey(name: 'text-size')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue? textSize,
+      @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
       @JsonKey(name: 'text-max-width') double? textMaxWidth,
       @JsonKey(name: 'text-anchor') String? textAnchor,
       @JsonKey(name: 'text-letter-spacing') double? textLetterSpacing,
@@ -450,14 +433,11 @@ extension MateoMapLibreStyleSymbolLayoutPatterns
 
 /// @nodoc
 @JsonSerializable(createFactory: false)
-class _MateoMapLibreStyleSymbolLayout
-    implements MateoMapLibreStyleSymbolLayout {
+class _MateoMapLibreStyleSymbolLayout implements MateoMapLibreStyleSymbolLayout {
   const _MateoMapLibreStyleSymbolLayout({
     @JsonKey(name: 'text-field') this.textField,
     @JsonKey(name: 'text-font') final List<String>? textFont,
-    @JsonKey(name: 'text-size')
-    @MateoMapLibreStyleValueConverter()
-    this.textSize,
+    @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() this.textSize,
     @JsonKey(name: 'text-max-width') this.textMaxWidth,
     @JsonKey(name: 'text-anchor') this.textAnchor,
     @JsonKey(name: 'text-letter-spacing') this.textLetterSpacing,
@@ -552,11 +532,8 @@ class _MateoMapLibreStyleSymbolLayout
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleSymbolLayoutCopyWith<_MateoMapLibreStyleSymbolLayout>
-  get copyWith =>
-      __$MateoMapLibreStyleSymbolLayoutCopyWithImpl<
-        _MateoMapLibreStyleSymbolLayout
-      >(this, _$identity);
+  _$MateoMapLibreStyleSymbolLayoutCopyWith<_MateoMapLibreStyleSymbolLayout> get copyWith =>
+      __$MateoMapLibreStyleSymbolLayoutCopyWithImpl<_MateoMapLibreStyleSymbolLayout>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -568,21 +545,14 @@ class _MateoMapLibreStyleSymbolLayout
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MateoMapLibreStyleSymbolLayout &&
-            (identical(other.textField, textField) ||
-                other.textField == textField) &&
+            (identical(other.textField, textField) || other.textField == textField) &&
             const DeepCollectionEquality().equals(other._textFont, _textFont) &&
-            (identical(other.textSize, textSize) ||
-                other.textSize == textSize) &&
-            (identical(other.textMaxWidth, textMaxWidth) ||
-                other.textMaxWidth == textMaxWidth) &&
-            (identical(other.textAnchor, textAnchor) ||
-                other.textAnchor == textAnchor) &&
-            (identical(other.textLetterSpacing, textLetterSpacing) ||
-                other.textLetterSpacing == textLetterSpacing) &&
-            (identical(other.textTransform, textTransform) ||
-                other.textTransform == textTransform) &&
-            (identical(other.symbolPlacement, symbolPlacement) ||
-                other.symbolPlacement == symbolPlacement));
+            (identical(other.textSize, textSize) || other.textSize == textSize) &&
+            (identical(other.textMaxWidth, textMaxWidth) || other.textMaxWidth == textMaxWidth) &&
+            (identical(other.textAnchor, textAnchor) || other.textAnchor == textAnchor) &&
+            (identical(other.textLetterSpacing, textLetterSpacing) || other.textLetterSpacing == textLetterSpacing) &&
+            (identical(other.textTransform, textTransform) || other.textTransform == textTransform) &&
+            (identical(other.symbolPlacement, symbolPlacement) || other.symbolPlacement == symbolPlacement));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -617,9 +587,7 @@ abstract mixin class _$MateoMapLibreStyleSymbolLayoutCopyWith<$Res>
   $Res call({
     @JsonKey(name: 'text-field') String? textField,
     @JsonKey(name: 'text-font') List<String>? textFont,
-    @JsonKey(name: 'text-size')
-    @MateoMapLibreStyleValueConverter()
-    MateoMapLibreStyleValue? textSize,
+    @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
     @JsonKey(name: 'text-max-width') double? textMaxWidth,
     @JsonKey(name: 'text-anchor') String? textAnchor,
     @JsonKey(name: 'text-letter-spacing') double? textLetterSpacing,
@@ -632,8 +600,7 @@ abstract mixin class _$MateoMapLibreStyleSymbolLayoutCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleSymbolLayoutCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
+class __$MateoMapLibreStyleSymbolLayoutCopyWithImpl<$Res> implements _$MateoMapLibreStyleSymbolLayoutCopyWith<$Res> {
   __$MateoMapLibreStyleSymbolLayoutCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleSymbolLayout _self;

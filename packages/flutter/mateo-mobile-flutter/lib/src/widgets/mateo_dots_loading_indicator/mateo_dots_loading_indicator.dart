@@ -58,18 +58,15 @@ class MateoDotsLoadingIndicator extends StatefulWidget {
   final double dotRadius;
 
   @override
-  State<MateoDotsLoadingIndicator> createState() =>
-      _MateoDotsLoadingIndicatorState();
+  State<MateoDotsLoadingIndicator> createState() => _MateoDotsLoadingIndicatorState();
 }
 
 class _MateoDotsLoadingIndicatorState extends State<MateoDotsLoadingIndicator>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final AnimationController _controller;
 
-  double get _spacing =>
-      widget.dotRadius * MateoDotsLoadingIndicator._spacingMultiplier;
-  double get _jumpHeight =>
-      widget.dotRadius * MateoDotsLoadingIndicator._jumpHeightMultiplier;
+  double get _spacing => widget.dotRadius * MateoDotsLoadingIndicator._spacingMultiplier;
+  double get _jumpHeight => widget.dotRadius * MateoDotsLoadingIndicator._jumpHeightMultiplier;
 
   Size get _indicatorSize {
     final diameter = widget.dotRadius * 2;

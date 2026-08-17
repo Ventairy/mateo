@@ -5,16 +5,14 @@ part of 'mateo_action_bloom.dart';
 typedef MateoActionBloomSurfaceBuilder = Widget Function(BuildContext context);
 
 /// A builder for a [MateoActionBloomAction] icon's presentation state.
-typedef MateoActionBloomActionIconBuilder =
-    Widget Function(MateoActionBloomActionIconState state);
+typedef MateoActionBloomActionIconBuilder = Widget Function(MateoActionBloomActionIconState state);
 
 /// A callback that handles a selected [MateoActionBloomAction].
 ///
 /// The [feedbackAnimation] future completes when the action's press feedback
 /// ends. Await it before navigation or another disruptive operation, or ignore
 /// it when the action should continue immediately.
-typedef MateoActionBloomActionCallback =
-    Future<void> Function(Future<void> feedbackAnimation);
+typedef MateoActionBloomActionCallback = Future<void> Function(Future<void> feedbackAnimation);
 
 /// A state snapshot passed to [MateoActionBloomActionIconBuilder].
 @immutable

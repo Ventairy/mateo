@@ -39,8 +39,7 @@ mixin _$MateoMapLibreStyleLinePaint {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleLinePaintCopyWith<MateoMapLibreStyleLinePaint>
-  get copyWith =>
+  $MateoMapLibreStyleLinePaintCopyWith<MateoMapLibreStyleLinePaint> get copyWith =>
       _$MateoMapLibreStyleLinePaintCopyWithImpl<MateoMapLibreStyleLinePaint>(
         this as MateoMapLibreStyleLinePaint,
         _$identity,
@@ -54,18 +53,14 @@ mixin _$MateoMapLibreStyleLinePaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MateoMapLibreStyleLinePaint &&
-            (identical(other.lineColor, lineColor) ||
-                other.lineColor == lineColor) &&
-            (identical(other.lineWidth, lineWidth) ||
-                other.lineWidth == lineWidth) &&
-            (identical(other.lineOpacity, lineOpacity) ||
-                other.lineOpacity == lineOpacity));
+            (identical(other.lineColor, lineColor) || other.lineColor == lineColor) &&
+            (identical(other.lineWidth, lineWidth) || other.lineWidth == lineWidth) &&
+            (identical(other.lineOpacity, lineOpacity) || other.lineOpacity == lineOpacity));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, lineColor, lineWidth, lineOpacity);
+  int get hashCode => Object.hash(runtimeType, lineColor, lineWidth, lineOpacity);
 
   @override
   String toString() {
@@ -82,9 +77,7 @@ abstract mixin class $MateoMapLibreStyleLinePaintCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'line-color') String lineColor,
-    @JsonKey(name: 'line-width')
-    @MateoMapLibreStyleValueConverter()
-    MateoMapLibreStyleValue lineWidth,
+    @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue lineWidth,
     @JsonKey(name: 'line-opacity') double lineOpacity,
   });
 
@@ -92,8 +85,7 @@ abstract mixin class $MateoMapLibreStyleLinePaintCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleLinePaintCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleLinePaintCopyWith<$Res> {
+class _$MateoMapLibreStyleLinePaintCopyWithImpl<$Res> implements $MateoMapLibreStyleLinePaintCopyWith<$Res> {
   _$MateoMapLibreStyleLinePaintCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleLinePaint _self;
@@ -232,9 +224,7 @@ extension MateoMapLibreStyleLinePaintPatterns on MateoMapLibreStyleLinePaint {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
       @JsonKey(name: 'line-color') String lineColor,
-      @JsonKey(name: 'line-width')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue lineWidth,
+      @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue lineWidth,
       @JsonKey(name: 'line-opacity') double lineOpacity,
     )?
     $default, {
@@ -266,9 +256,7 @@ extension MateoMapLibreStyleLinePaintPatterns on MateoMapLibreStyleLinePaint {
   TResult when<TResult extends Object?>(
     TResult Function(
       @JsonKey(name: 'line-color') String lineColor,
-      @JsonKey(name: 'line-width')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue lineWidth,
+      @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue lineWidth,
       @JsonKey(name: 'line-opacity') double lineOpacity,
     )
     $default,
@@ -298,9 +286,7 @@ extension MateoMapLibreStyleLinePaintPatterns on MateoMapLibreStyleLinePaint {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
       @JsonKey(name: 'line-color') String lineColor,
-      @JsonKey(name: 'line-width')
-      @MateoMapLibreStyleValueConverter()
-      MateoMapLibreStyleValue lineWidth,
+      @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue lineWidth,
       @JsonKey(name: 'line-opacity') double lineOpacity,
     )?
     $default,
@@ -320,9 +306,7 @@ extension MateoMapLibreStyleLinePaintPatterns on MateoMapLibreStyleLinePaint {
 class _MateoMapLibreStyleLinePaint implements MateoMapLibreStyleLinePaint {
   const _MateoMapLibreStyleLinePaint({
     @JsonKey(name: 'line-color') required this.lineColor,
-    @JsonKey(name: 'line-width')
-    @MateoMapLibreStyleValueConverter()
-    required this.lineWidth,
+    @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() required this.lineWidth,
     @JsonKey(name: 'line-opacity') required this.lineOpacity,
   });
 
@@ -356,8 +340,7 @@ class _MateoMapLibreStyleLinePaint implements MateoMapLibreStyleLinePaint {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleLinePaintCopyWith<_MateoMapLibreStyleLinePaint>
-  get copyWith =>
+  _$MateoMapLibreStyleLinePaintCopyWith<_MateoMapLibreStyleLinePaint> get copyWith =>
       __$MateoMapLibreStyleLinePaintCopyWithImpl<_MateoMapLibreStyleLinePaint>(
         this,
         _$identity,
@@ -373,18 +356,14 @@ class _MateoMapLibreStyleLinePaint implements MateoMapLibreStyleLinePaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MateoMapLibreStyleLinePaint &&
-            (identical(other.lineColor, lineColor) ||
-                other.lineColor == lineColor) &&
-            (identical(other.lineWidth, lineWidth) ||
-                other.lineWidth == lineWidth) &&
-            (identical(other.lineOpacity, lineOpacity) ||
-                other.lineOpacity == lineOpacity));
+            (identical(other.lineColor, lineColor) || other.lineColor == lineColor) &&
+            (identical(other.lineWidth, lineWidth) || other.lineWidth == lineWidth) &&
+            (identical(other.lineOpacity, lineOpacity) || other.lineOpacity == lineOpacity));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, lineColor, lineWidth, lineOpacity);
+  int get hashCode => Object.hash(runtimeType, lineColor, lineWidth, lineOpacity);
 
   @override
   String toString() {
@@ -393,8 +372,7 @@ class _MateoMapLibreStyleLinePaint implements MateoMapLibreStyleLinePaint {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleLinePaintCopyWith<$Res>
-    implements $MateoMapLibreStyleLinePaintCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleLinePaintCopyWith<$Res> implements $MateoMapLibreStyleLinePaintCopyWith<$Res> {
   factory _$MateoMapLibreStyleLinePaintCopyWith(
     _MateoMapLibreStyleLinePaint value,
     $Res Function(_MateoMapLibreStyleLinePaint) _then,
@@ -403,9 +381,7 @@ abstract mixin class _$MateoMapLibreStyleLinePaintCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'line-color') String lineColor,
-    @JsonKey(name: 'line-width')
-    @MateoMapLibreStyleValueConverter()
-    MateoMapLibreStyleValue lineWidth,
+    @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue lineWidth,
     @JsonKey(name: 'line-opacity') double lineOpacity,
   });
 
@@ -414,8 +390,7 @@ abstract mixin class _$MateoMapLibreStyleLinePaintCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleLinePaintCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleLinePaintCopyWith<$Res> {
+class __$MateoMapLibreStyleLinePaintCopyWithImpl<$Res> implements _$MateoMapLibreStyleLinePaintCopyWith<$Res> {
   __$MateoMapLibreStyleLinePaintCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleLinePaint _self;

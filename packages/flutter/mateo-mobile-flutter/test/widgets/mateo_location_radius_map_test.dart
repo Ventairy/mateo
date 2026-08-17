@@ -18,8 +18,7 @@ void main() {
           location: (latitude: -91, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
         ),
@@ -34,8 +33,7 @@ void main() {
           location: (latitude: 91, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
         ),
@@ -50,8 +48,7 @@ void main() {
           location: (latitude: 0, longitude: -181),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
         ),
@@ -66,8 +63,7 @@ void main() {
           location: (latitude: 0, longitude: 181),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
         ),
@@ -82,8 +78,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: -1,
         ),
@@ -98,8 +93,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           tileMinZoom: -1,
@@ -115,8 +109,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           tileMaxZoom: 0,
@@ -132,8 +125,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           tileMinZoom: 10,
@@ -150,8 +142,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           tileMinZoom: 10,
@@ -169,8 +160,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           offset: const Offset(double.nan, 0),
@@ -186,8 +176,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           offset: const Offset(0, double.infinity),
@@ -203,8 +192,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           maximumMapFps: 0,
@@ -220,8 +208,7 @@ void main() {
           location: (latitude: 0, longitude: 0),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 500,
           maximumMapFps: 61,
@@ -246,8 +233,7 @@ void main() {
                 location: (latitude: -23.55, longitude: -46.63),
                 fontConfig: (
                   fontStack: 'Inter Regular',
-                  glyphUrlTemplate:
-                      'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+                  glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
                 ),
                 radiusInMeters: 2000,
               ),
@@ -275,8 +261,7 @@ void main() {
                 location: (latitude: -23.55, longitude: -46.63),
                 fontConfig: (
                   fontStack: 'Inter Regular',
-                  glyphUrlTemplate:
-                      'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+                  glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
                 ),
                 radiusInMeters: 2000,
               ),
@@ -373,10 +358,7 @@ void main() {
       (tester) async {
         await _pumpMap(tester);
 
-        tester
-            .widget<MapLibreMap>(find.byType(MapLibreMap))
-            .onStyleLoadedCallback
-            ?.call();
+        tester.widget<MapLibreMap>(find.byType(MapLibreMap)).onStyleLoadedCallback?.call();
         await tester.pump();
 
         expect(_wobblePaint(), findsOneWidget);
@@ -388,14 +370,9 @@ void main() {
       (tester) async {
         await _pumpMap(tester);
 
-        tester
-            .widget<MapLibreMap>(find.byType(MapLibreMap))
-            .onStyleLoadedCallback
-            ?.call();
+        tester.widget<MapLibreMap>(find.byType(MapLibreMap)).onStyleLoadedCallback?.call();
         await tester.pump();
-        final painter =
-            tester.widget<CustomPaint>(_wobblePaint()).painter!
-                as MateoLocationRadiusMapDebugPainter;
+        final painter = tester.widget<CustomPaint>(_wobblePaint()).painter! as MateoLocationRadiusMapDebugPainter;
         final animation = painter.animation as AnimationController;
 
         expect(animation.duration, const Duration(milliseconds: 400));
@@ -407,14 +384,9 @@ void main() {
       (tester) async {
         await _pumpMap(tester);
 
-        tester
-            .widget<MapLibreMap>(find.byType(MapLibreMap))
-            .onStyleLoadedCallback
-            ?.call();
+        tester.widget<MapLibreMap>(find.byType(MapLibreMap)).onStyleLoadedCallback?.call();
         await tester.pump();
-        final painter =
-            tester.widget<CustomPaint>(_wobblePaint()).painter!
-                as MateoLocationRadiusMapDebugPainter;
+        final painter = tester.widget<CustomPaint>(_wobblePaint()).painter! as MateoLocationRadiusMapDebugPainter;
 
         expect(painter.curve, Curves.easeOutCubic);
       },
@@ -425,14 +397,9 @@ void main() {
       (tester) async {
         await _pumpMap(tester);
 
-        tester
-            .widget<MapLibreMap>(find.byType(MapLibreMap))
-            .onStyleLoadedCallback
-            ?.call();
+        tester.widget<MapLibreMap>(find.byType(MapLibreMap)).onStyleLoadedCallback?.call();
         await tester.pump();
-        final painter =
-            tester.widget<CustomPaint>(_wobblePaint()).painter!
-                as MateoLocationRadiusMapDebugPainter;
+        final painter = tester.widget<CustomPaint>(_wobblePaint()).painter! as MateoLocationRadiusMapDebugPainter;
         final initialTarget = painter.targetLocation;
         await tester.pump(const Duration(milliseconds: 600));
 
@@ -450,14 +417,11 @@ void main() {
         map.onStyleLoadedCallback?.call();
         map.onMapIdle?.call();
         await tester.pump(const Duration(milliseconds: 600));
-        final painter =
-            tester.widget<CustomPaint>(_wobblePaint()).painter!
-                as MateoLocationRadiusMapDebugPainter;
+        final painter = tester.widget<CustomPaint>(_wobblePaint()).painter! as MateoLocationRadiusMapDebugPainter;
         final target = painter.targetLocation;
 
         expect(
-          (target.latitude - location.latitude).abs() +
-              (target.longitude - location.longitude).abs(),
+          (target.latitude - location.latitude).abs() + (target.longitude - location.longitude).abs(),
           lessThan(0.000000001),
         );
       },
@@ -552,8 +516,7 @@ void main() {
           tileUrlTemplate: 'https://tiles.example.com/{z}/{x}/{y}.mvt',
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
         );
 
@@ -620,8 +583,7 @@ void main() {
                 location: (latitude: 0, longitude: 0),
                 fontConfig: (
                   fontStack: 'Inter Regular',
-                  glyphUrlTemplate:
-                      'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+                  glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
                 ),
                 radiusInMeters: 2000,
                 zoom: 0,
@@ -652,8 +614,7 @@ void main() {
                 location: (latitude: 0, longitude: 0),
                 fontConfig: (
                   fontStack: 'Inter Regular',
-                  glyphUrlTemplate:
-                      'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+                  glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
                 ),
                 radiusInMeters: 2000,
                 zoom: 0,
@@ -699,8 +660,7 @@ Future<void> _pumpMap(
           location: (latitude: -23.55, longitude: -46.63),
           fontConfig: (
             fontStack: 'Inter Regular',
-            glyphUrlTemplate:
-                'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+            glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
           ),
           radiusInMeters: 2000,
           zoom: zoom,

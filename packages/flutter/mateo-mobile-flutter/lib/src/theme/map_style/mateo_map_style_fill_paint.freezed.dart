@@ -37,8 +37,7 @@ mixin _$MateoMapLibreStyleFillPaint {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleFillPaintCopyWith<MateoMapLibreStyleFillPaint>
-  get copyWith =>
+  $MateoMapLibreStyleFillPaintCopyWith<MateoMapLibreStyleFillPaint> get copyWith =>
       _$MateoMapLibreStyleFillPaintCopyWithImpl<MateoMapLibreStyleFillPaint>(
         this as MateoMapLibreStyleFillPaint,
         _$identity,
@@ -52,18 +51,14 @@ mixin _$MateoMapLibreStyleFillPaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MateoMapLibreStyleFillPaint &&
-            (identical(other.fillColor, fillColor) ||
-                other.fillColor == fillColor) &&
-            (identical(other.fillOpacity, fillOpacity) ||
-                other.fillOpacity == fillOpacity) &&
-            (identical(other.fillOutlineColor, fillOutlineColor) ||
-                other.fillOutlineColor == fillOutlineColor));
+            (identical(other.fillColor, fillColor) || other.fillColor == fillColor) &&
+            (identical(other.fillOpacity, fillOpacity) || other.fillOpacity == fillOpacity) &&
+            (identical(other.fillOutlineColor, fillOutlineColor) || other.fillOutlineColor == fillOutlineColor));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, fillColor, fillOpacity, fillOutlineColor);
+  int get hashCode => Object.hash(runtimeType, fillColor, fillOpacity, fillOutlineColor);
 
   @override
   String toString() {
@@ -86,8 +81,7 @@ abstract mixin class $MateoMapLibreStyleFillPaintCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleFillPaintCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleFillPaintCopyWith<$Res> {
+class _$MateoMapLibreStyleFillPaintCopyWithImpl<$Res> implements $MateoMapLibreStyleFillPaintCopyWith<$Res> {
   _$MateoMapLibreStyleFillPaintCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleFillPaint _self;
@@ -342,8 +336,7 @@ class _MateoMapLibreStyleFillPaint implements MateoMapLibreStyleFillPaint {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleFillPaintCopyWith<_MateoMapLibreStyleFillPaint>
-  get copyWith =>
+  _$MateoMapLibreStyleFillPaintCopyWith<_MateoMapLibreStyleFillPaint> get copyWith =>
       __$MateoMapLibreStyleFillPaintCopyWithImpl<_MateoMapLibreStyleFillPaint>(
         this,
         _$identity,
@@ -359,18 +352,14 @@ class _MateoMapLibreStyleFillPaint implements MateoMapLibreStyleFillPaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MateoMapLibreStyleFillPaint &&
-            (identical(other.fillColor, fillColor) ||
-                other.fillColor == fillColor) &&
-            (identical(other.fillOpacity, fillOpacity) ||
-                other.fillOpacity == fillOpacity) &&
-            (identical(other.fillOutlineColor, fillOutlineColor) ||
-                other.fillOutlineColor == fillOutlineColor));
+            (identical(other.fillColor, fillColor) || other.fillColor == fillColor) &&
+            (identical(other.fillOpacity, fillOpacity) || other.fillOpacity == fillOpacity) &&
+            (identical(other.fillOutlineColor, fillOutlineColor) || other.fillOutlineColor == fillOutlineColor));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, fillColor, fillOpacity, fillOutlineColor);
+  int get hashCode => Object.hash(runtimeType, fillColor, fillOpacity, fillOutlineColor);
 
   @override
   String toString() {
@@ -379,8 +368,7 @@ class _MateoMapLibreStyleFillPaint implements MateoMapLibreStyleFillPaint {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleFillPaintCopyWith<$Res>
-    implements $MateoMapLibreStyleFillPaintCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleFillPaintCopyWith<$Res> implements $MateoMapLibreStyleFillPaintCopyWith<$Res> {
   factory _$MateoMapLibreStyleFillPaintCopyWith(
     _MateoMapLibreStyleFillPaint value,
     $Res Function(_MateoMapLibreStyleFillPaint) _then,
@@ -395,8 +383,7 @@ abstract mixin class _$MateoMapLibreStyleFillPaintCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleFillPaintCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleFillPaintCopyWith<$Res> {
+class __$MateoMapLibreStyleFillPaintCopyWithImpl<$Res> implements _$MateoMapLibreStyleFillPaintCopyWith<$Res> {
   __$MateoMapLibreStyleFillPaintCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleFillPaint _self;

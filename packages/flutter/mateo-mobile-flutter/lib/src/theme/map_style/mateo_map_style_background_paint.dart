@@ -19,8 +19,7 @@ part 'mateo_map_style_background_paint.g.dart';
 /// ```
 /// {@endtemplate}
 @Freezed(toJson: true, fromJson: false)
-abstract class MateoMapLibreStyleBackgroundPaint
-    with _$MateoMapLibreStyleBackgroundPaint {
+abstract class MateoMapLibreStyleBackgroundPaint with _$MateoMapLibreStyleBackgroundPaint {
   const factory MateoMapLibreStyleBackgroundPaint({
     /// The background fill color as a hex string (e.g. `"#ebedef"`).
     ///

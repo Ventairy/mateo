@@ -27,9 +27,7 @@ class MateoOverlayColorScheme {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MateoOverlayColorScheme && scrim == other.scrim;
+  bool operator ==(Object other) => identical(this, other) || other is MateoOverlayColorScheme && scrim == other.scrim;
 
   @override
   int get hashCode => scrim.hashCode;

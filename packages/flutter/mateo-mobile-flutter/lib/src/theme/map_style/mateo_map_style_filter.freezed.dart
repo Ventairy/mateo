@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 mixin _$MateoMapLibreStyleFilter {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is MateoMapLibreStyleFilter);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is MateoMapLibreStyleFilter);
   }
 
   @override
@@ -89,10 +88,8 @@ extension MateoMapLibreStyleFilterPatterns on MateoMapLibreStyleFilter {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(MateoMapLibreStyleEqualsFilter value) equals,
-    required TResult Function(MateoMapLibreStyleGteFilter value)
-    greaterThanOrEqual,
-    required TResult Function(MateoMapLibreStyleLteFilter value)
-    lessThanOrEqual,
+    required TResult Function(MateoMapLibreStyleGteFilter value) greaterThanOrEqual,
+    required TResult Function(MateoMapLibreStyleLteFilter value) lessThanOrEqual,
     required TResult Function(MateoMapLibreStyleAnyFilter value) any,
   }) {
     final _that = this;
@@ -260,11 +257,8 @@ class MateoMapLibreStyleEqualsFilter implements MateoMapLibreStyleFilter {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleEqualsFilterCopyWith<MateoMapLibreStyleEqualsFilter>
-  get copyWith =>
-      _$MateoMapLibreStyleEqualsFilterCopyWithImpl<
-        MateoMapLibreStyleEqualsFilter
-      >(this, _$identity);
+  $MateoMapLibreStyleEqualsFilterCopyWith<MateoMapLibreStyleEqualsFilter> get copyWith =>
+      _$MateoMapLibreStyleEqualsFilterCopyWithImpl<MateoMapLibreStyleEqualsFilter>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -276,8 +270,7 @@ class MateoMapLibreStyleEqualsFilter implements MateoMapLibreStyleFilter {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, key, const DeepCollectionEquality().hash(value));
+  int get hashCode => Object.hash(runtimeType, key, const DeepCollectionEquality().hash(value));
 
   @override
   String toString() {
@@ -286,8 +279,7 @@ class MateoMapLibreStyleEqualsFilter implements MateoMapLibreStyleFilter {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleEqualsFilterCopyWith<$Res>
-    implements $MateoMapLibreStyleFilterCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleEqualsFilterCopyWith<$Res> implements $MateoMapLibreStyleFilterCopyWith<$Res> {
   factory $MateoMapLibreStyleEqualsFilterCopyWith(
     MateoMapLibreStyleEqualsFilter value,
     $Res Function(MateoMapLibreStyleEqualsFilter) _then,
@@ -297,8 +289,7 @@ abstract mixin class $MateoMapLibreStyleEqualsFilterCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleEqualsFilterCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleEqualsFilterCopyWith<$Res> {
+class _$MateoMapLibreStyleEqualsFilterCopyWithImpl<$Res> implements $MateoMapLibreStyleEqualsFilterCopyWith<$Res> {
   _$MateoMapLibreStyleEqualsFilterCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleEqualsFilter _self;
@@ -332,8 +323,7 @@ class MateoMapLibreStyleGteFilter implements MateoMapLibreStyleFilter {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleGteFilterCopyWith<MateoMapLibreStyleGteFilter>
-  get copyWith =>
+  $MateoMapLibreStyleGteFilterCopyWith<MateoMapLibreStyleGteFilter> get copyWith =>
       _$MateoMapLibreStyleGteFilterCopyWithImpl<MateoMapLibreStyleGteFilter>(
         this,
         _$identity,
@@ -358,8 +348,7 @@ class MateoMapLibreStyleGteFilter implements MateoMapLibreStyleFilter {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleGteFilterCopyWith<$Res>
-    implements $MateoMapLibreStyleFilterCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleGteFilterCopyWith<$Res> implements $MateoMapLibreStyleFilterCopyWith<$Res> {
   factory $MateoMapLibreStyleGteFilterCopyWith(
     MateoMapLibreStyleGteFilter value,
     $Res Function(MateoMapLibreStyleGteFilter) _then,
@@ -369,8 +358,7 @@ abstract mixin class $MateoMapLibreStyleGteFilterCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleGteFilterCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleGteFilterCopyWith<$Res> {
+class _$MateoMapLibreStyleGteFilterCopyWithImpl<$Res> implements $MateoMapLibreStyleGteFilterCopyWith<$Res> {
   _$MateoMapLibreStyleGteFilterCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleGteFilter _self;
@@ -407,8 +395,7 @@ class MateoMapLibreStyleLteFilter implements MateoMapLibreStyleFilter {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleLteFilterCopyWith<MateoMapLibreStyleLteFilter>
-  get copyWith =>
+  $MateoMapLibreStyleLteFilterCopyWith<MateoMapLibreStyleLteFilter> get copyWith =>
       _$MateoMapLibreStyleLteFilterCopyWithImpl<MateoMapLibreStyleLteFilter>(
         this,
         _$identity,
@@ -433,8 +420,7 @@ class MateoMapLibreStyleLteFilter implements MateoMapLibreStyleFilter {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleLteFilterCopyWith<$Res>
-    implements $MateoMapLibreStyleFilterCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleLteFilterCopyWith<$Res> implements $MateoMapLibreStyleFilterCopyWith<$Res> {
   factory $MateoMapLibreStyleLteFilterCopyWith(
     MateoMapLibreStyleLteFilter value,
     $Res Function(MateoMapLibreStyleLteFilter) _then,
@@ -444,8 +430,7 @@ abstract mixin class $MateoMapLibreStyleLteFilterCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleLteFilterCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleLteFilterCopyWith<$Res> {
+class _$MateoMapLibreStyleLteFilterCopyWithImpl<$Res> implements $MateoMapLibreStyleLteFilterCopyWith<$Res> {
   _$MateoMapLibreStyleLteFilterCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleLteFilter _self;
@@ -488,8 +473,7 @@ class MateoMapLibreStyleAnyFilter implements MateoMapLibreStyleFilter {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleAnyFilterCopyWith<MateoMapLibreStyleAnyFilter>
-  get copyWith =>
+  $MateoMapLibreStyleAnyFilterCopyWith<MateoMapLibreStyleAnyFilter> get copyWith =>
       _$MateoMapLibreStyleAnyFilterCopyWithImpl<MateoMapLibreStyleAnyFilter>(
         this,
         _$identity,
@@ -504,8 +488,7 @@ class MateoMapLibreStyleAnyFilter implements MateoMapLibreStyleFilter {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_filters));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_filters));
 
   @override
   String toString() {
@@ -514,8 +497,7 @@ class MateoMapLibreStyleAnyFilter implements MateoMapLibreStyleFilter {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleAnyFilterCopyWith<$Res>
-    implements $MateoMapLibreStyleFilterCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleAnyFilterCopyWith<$Res> implements $MateoMapLibreStyleFilterCopyWith<$Res> {
   factory $MateoMapLibreStyleAnyFilterCopyWith(
     MateoMapLibreStyleAnyFilter value,
     $Res Function(MateoMapLibreStyleAnyFilter) _then,
@@ -525,8 +507,7 @@ abstract mixin class $MateoMapLibreStyleAnyFilterCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleAnyFilterCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleAnyFilterCopyWith<$Res> {
+class _$MateoMapLibreStyleAnyFilterCopyWithImpl<$Res> implements $MateoMapLibreStyleAnyFilterCopyWith<$Res> {
   _$MateoMapLibreStyleAnyFilterCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleAnyFilter _self;

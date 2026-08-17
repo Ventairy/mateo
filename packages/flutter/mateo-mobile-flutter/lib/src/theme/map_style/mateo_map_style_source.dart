@@ -22,8 +22,7 @@
 library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mateo_mobile/src/theme/map_style/mateo_map_style.dart'
-    show MateoMapLibreStyle;
+import 'package:mateo_mobile/src/theme/map_style/mateo_map_style.dart' show MateoMapLibreStyle;
 
 part 'mateo_map_style_source.freezed.dart';
 part 'mateo_map_style_source.g.dart';

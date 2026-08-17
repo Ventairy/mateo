@@ -155,10 +155,7 @@ void main() {
           ),
         );
 
-        final sizedBoxes = find
-            .byType(SizedBox)
-            .evaluate()
-            .map((e) => e.widget as SizedBox);
+        final sizedBoxes = find.byType(SizedBox).evaluate().map((e) => e.widget as SizedBox);
         final heroSizedBox = sizedBoxes.firstWhere((s) => s.width == 300);
         expect(heroSizedBox.width, equals(300));
       },
@@ -313,9 +310,7 @@ class _MateoHeroBackgroundLifecycleTestApp extends StatelessWidget {
                   ),
                   onStart: () => events.add('source-start'),
                   onEnd: () => events.add('source-end'),
-                  onReceived: receivedEvents != null
-                      ? () => receivedEvents!.add('source-received')
-                      : null,
+                  onReceived: receivedEvents != null ? () => receivedEvents!.add('source-received') : null,
                   child: const Center(child: Text(sourceText)),
                 ),
               ),
@@ -350,9 +345,7 @@ class _MateoHeroBackgroundLifecycleDestination extends StatelessWidget {
           ),
           onStart: () => events.add('destination-start'),
           onEnd: () => events.add('destination-end'),
-          onReceived: receivedEvents != null
-              ? () => receivedEvents!.add('destination-received')
-              : null,
+          onReceived: receivedEvents != null ? () => receivedEvents!.add('destination-received') : null,
           child: const Center(
             child: Text(_MateoHeroBackgroundLifecycleTestApp.destinationText),
           ),

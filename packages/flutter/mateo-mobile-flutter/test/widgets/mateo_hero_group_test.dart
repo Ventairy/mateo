@@ -27,8 +27,7 @@ void main() {
         );
 
         expect(
-          tester.getTopLeft(find.text('Hola')).dy >
-              tester.getTopLeft(find.text('Hello')).dy,
+          tester.getTopLeft(find.text('Hola')).dy > tester.getTopLeft(find.text('Hello')).dy,
           isTrue,
         );
       },
@@ -53,8 +52,7 @@ void main() {
         );
 
         expect(
-          tester.getTopLeft(find.text('Hola')).dx >
-              tester.getTopLeft(find.text('Hello')).dx,
+          tester.getTopLeft(find.text('Hola')).dx > tester.getTopLeft(find.text('Hello')).dx,
           isTrue,
         );
       },
@@ -290,18 +288,15 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 16));
 
-        final firstFrameMaxLines =
-            _GroupedLineClampPopTestApp.flightDescriptionMaxLines(tester);
+        final firstFrameMaxLines = _GroupedLineClampPopTestApp.flightDescriptionMaxLines(tester);
 
         await tester.pump(const Duration(milliseconds: 32));
 
-        final secondFrameMaxLines =
-            _GroupedLineClampPopTestApp.flightDescriptionMaxLines(tester);
+        final secondFrameMaxLines = _GroupedLineClampPopTestApp.flightDescriptionMaxLines(tester);
         expect(
           secondFrameMaxLines < firstFrameMaxLines,
           isTrue,
-          reason:
-              'firstFrameMaxLines=$firstFrameMaxLines secondFrameMaxLines=$secondFrameMaxLines',
+          reason: 'firstFrameMaxLines=$firstFrameMaxLines secondFrameMaxLines=$secondFrameMaxLines',
         );
       },
     );
@@ -556,14 +551,12 @@ void main() {
         }
 
         final deltas = [
-          for (var index = 1; index < baselines.length; index += 1)
-            baselines[index] - baselines[index - 1],
+          for (var index = 1; index < baselines.length; index += 1) baselines[index] - baselines[index - 1],
         ];
         final magnitudes = deltas.map((delta) => delta.abs()).toList();
         final isAlwaysMovingTowardCard = deltas.every((delta) => delta < 0);
         final hasNoMidFlightSpike = [
-          for (var index = 2; index < magnitudes.length; index += 1)
-            magnitudes[index] <= magnitudes[index - 1] + 0.5,
+          for (var index = 2; index < magnitudes.length; index += 1) magnitudes[index] <= magnitudes[index - 1] + 0.5,
         ].every((isSmooth) => isSmooth);
 
         expect(
@@ -673,8 +666,7 @@ void main() {
         final samples = <({double paymentTop, double titleBottom})>[];
         var elapsed = Duration.zero;
 
-        for (final sampleTime
-            in _GroupedTextEstimatedHeightRegressionTestApp.samples) {
+        for (final sampleTime in _GroupedTextEstimatedHeightRegressionTestApp.samples) {
           await tester.pump(sampleTime - elapsed);
           elapsed = sampleTime;
           samples.add(
@@ -686,8 +678,7 @@ void main() {
           expect(
             samples[i].paymentTop,
             lessThan(samples[i - 1].paymentTop),
-            reason:
-                'Frame $i: payment jumped instead of moving up smoothly. samples=$samples',
+            reason: 'Frame $i: payment jumped instead of moving up smoothly. samples=$samples',
           );
         }
       },
@@ -773,17 +764,14 @@ class _GroupedLifecycleTestApp extends StatelessWidget {
                       tag: 'group-lifecycle',
                       onStart: () => events.add('source-group-start'),
                       onEnd: () => events.add('source-group-end'),
-                      onReceived: receivedEvents != null
-                          ? () => receivedEvents!.add('source-group-received')
-                          : null,
+                      onReceived: receivedEvents != null ? () => receivedEvents!.add('source-group-received') : null,
                       heroes: [
                         MateoHeroText(
                           sourceText,
                           onStart: () => events.add('source-child-start'),
                           onEnd: () => events.add('source-child-end'),
                           onReceived: receivedEvents != null
-                              ? () =>
-                                    receivedEvents!.add('source-child-received')
+                              ? () => receivedEvents!.add('source-child-received')
                               : null,
                         ),
                       ],
@@ -821,18 +809,13 @@ class _GroupedLifecycleDestination extends StatelessWidget {
                 tag: 'group-lifecycle',
                 onStart: () => events.add('destination-group-start'),
                 onEnd: () => events.add('destination-group-end'),
-                onReceived: receivedEvents != null
-                    ? () => receivedEvents!.add('destination-group-received')
-                    : null,
+                onReceived: receivedEvents != null ? () => receivedEvents!.add('destination-group-received') : null,
                 heroes: [
                   MateoHeroText(
                     _GroupedLifecycleTestApp.destinationText,
                     onStart: () => events.add('destination-child-start'),
                     onEnd: () => events.add('destination-child-end'),
-                    onReceived: receivedEvents != null
-                        ? () =>
-                              receivedEvents!.add('destination-child-received')
-                        : null,
+                    onReceived: receivedEvents != null ? () => receivedEvents!.add('destination-child-received') : null,
                   ),
                 ],
               ),
@@ -1265,10 +1248,7 @@ class _GroupedWidthWrapTransitionTestApp extends StatelessWidget {
         )
         .where((entry) => entry.renderBox.hasSize)
         .reduce(
-          (largest, current) =>
-              current.renderBox.size.width > largest.renderBox.size.width
-              ? current
-              : largest,
+          (largest, current) => current.renderBox.size.width > largest.renderBox.size.width ? current : largest,
         );
     final textPainter = TextPainter(
       text: TextSpan(
@@ -1304,8 +1284,7 @@ class _GroupedWidthWrapTransitionTestApp extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push<void>(
                   const MateoHeroPage(
-                    builder:
-                        _GroupedWidthWrapTransitionTestApp.buildDestination,
+                    builder: _GroupedWidthWrapTransitionTestApp.buildDestination,
                   ).createRoute(context),
                 );
               },
@@ -1380,8 +1359,7 @@ class _GroupedSiblingDisplacementTestApp extends StatelessWidget {
   static const title = 'Atendente de Relacionamento (Voz e Chat)';
   static const payment = r'R$1.766,99/mes';
 
-  static ({double paymentTop, double titleBottom, int titleLineCount})
-  flightSample(WidgetTester tester) {
+  static ({double paymentTop, double titleBottom, int titleLineCount}) flightSample(WidgetTester tester) {
     final titleEntry = find
         .text(title, skipOffstage: false)
         .evaluate()
@@ -1402,14 +1380,9 @@ class _GroupedSiblingDisplacementTestApp extends StatelessWidget {
           (entry) => entry.renderBox.hasSize && entry.renderBox.size.width > 0,
         )
         .reduce(
-          (largest, current) =>
-              current.renderBox.size.height > largest.renderBox.size.height
-              ? current
-              : largest,
+          (largest, current) => current.renderBox.size.height > largest.renderBox.size.height ? current : largest,
         );
-    final paymentTop = tester
-        .getTopLeft(find.text(payment, skipOffstage: false).last)
-        .dy;
+    final paymentTop = tester.getTopLeft(find.text(payment, skipOffstage: false).last).dy;
     final titleTop = titleEntry.renderBox.localToGlobal(Offset.zero).dy;
     final titleLineCount = _lineCount(titleEntry);
 
@@ -1441,8 +1414,7 @@ class _GroupedSiblingDisplacementTestApp extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push<void>(
                   const MateoHeroPage(
-                    builder:
-                        _GroupedSiblingDisplacementTestApp.buildDestination,
+                    builder: _GroupedSiblingDisplacementTestApp.buildDestination,
                   ).createRoute(context),
                 );
               },
@@ -1552,9 +1524,7 @@ class _GroupedLineCeilingTestApp extends StatelessWidget {
 
     return (
       hasEllipsis: entries.any(
-        (entry) =>
-            entry.widget.maxLines != 2 &&
-            entry.widget.overflow == TextOverflow.ellipsis,
+        (entry) => entry.widget.maxLines != 2 && entry.widget.overflow == TextOverflow.ellipsis,
       ),
       lineCount: entries.map(_lineCount).reduce(math.max),
     );
@@ -1779,11 +1749,7 @@ class _GroupedBaselineSmoothnessTestApp extends StatelessWidget {
   ];
 
   static double titleBaseline(WidgetTester tester) {
-    final element = find
-        .text(title, skipOffstage: false)
-        .last
-        .evaluate()
-        .single;
+    final element = find.text(title, skipOffstage: false).last.evaluate().single;
     final textWidget = element.widget as Text;
     final renderBox = element.renderObject! as RenderBox;
     final textPainter = TextPainter(
@@ -2079,8 +2045,7 @@ class _MultipleUntaggedTextHeroesTestApp extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push<void>(
                     MaterialPageRoute<void>(
-                      builder:
-                          _MultipleUntaggedTextHeroesTestApp.buildDestination,
+                      builder: _MultipleUntaggedTextHeroesTestApp.buildDestination,
                     ),
                   );
                 },
@@ -2113,8 +2078,7 @@ class _MultipleUntaggedGroupHeroesTestApp extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push<void>(
                     MaterialPageRoute<void>(
-                      builder:
-                          _MultipleUntaggedGroupHeroesTestApp.buildDestination,
+                      builder: _MultipleUntaggedGroupHeroesTestApp.buildDestination,
                     ),
                   );
                 },
@@ -2209,8 +2173,7 @@ class _MultipleExplicitTextHeroesTestApp extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push<void>(
                     MaterialPageRoute<void>(
-                      builder:
-                          _MultipleExplicitTextHeroesTestApp.buildDestination,
+                      builder: _MultipleExplicitTextHeroesTestApp.buildDestination,
                     ),
                   );
                 },
@@ -2260,9 +2223,7 @@ class _GroupedTextEstimatedHeightRegressionTestApp extends StatelessWidget {
         .firstWhere((box) => box.hasSize && box.size.width > 0);
     final titleTop = titleElement.localToGlobal(Offset.zero).dy;
     final titleBottom = titleTop + titleElement.size.height;
-    final paymentTop = tester
-        .getTopLeft(find.text(payment, skipOffstage: false).last)
-        .dy;
+    final paymentTop = tester.getTopLeft(find.text(payment, skipOffstage: false).last).dy;
     return (paymentTop: paymentTop, titleBottom: titleBottom);
   }
 

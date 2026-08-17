@@ -13,8 +13,7 @@ abstract interface class MateoLocationRadiusMapDebugPainter {
   ({double latitude, double longitude}) get targetLocation;
 }
 
-class _MateoLocationRadiusMapRadiusPainter extends CustomPainter
-    implements MateoLocationRadiusMapDebugPainter {
+class _MateoLocationRadiusMapRadiusPainter extends CustomPainter implements MateoLocationRadiusMapDebugPainter {
   _MateoLocationRadiusMapRadiusPainter({
     required this.animation,
     required this.curve,
@@ -29,8 +28,7 @@ class _MateoLocationRadiusMapRadiusPainter extends CustomPainter
   final _MateoLocationRadiusMapRadiusFrame Function() frameProvider;
 
   @override
-  ({double latitude, double longitude}) get targetLocation =>
-      frameProvider().toLocation;
+  ({double latitude, double longitude}) get targetLocation => frameProvider().toLocation;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -48,10 +46,7 @@ class _MateoLocationRadiusMapRadiusPainter extends CustomPainter
       frame.toLocation.longitude,
       progress,
     )!;
-    final radius = ui
-        .lerpDouble(frame.fromRadius, frame.toRadius, progress)!
-        .clamp(1, double.infinity)
-        .toDouble();
+    final radius = ui.lerpDouble(frame.fromRadius, frame.toRadius, progress)!.clamp(1, double.infinity).toDouble();
     final center = _projectLocation(
       location: (latitude: latitude, longitude: longitude),
       cameraTarget: frame.cameraTarget,
@@ -91,8 +86,7 @@ class _MateoLocationRadiusMapRadiusPainter extends CustomPainter
     required double longitude,
     required double worldSize,
   }) {
-    final latitudeRadians =
-        latitude.clamp(-85.05112878, 85.05112878) * math.pi / 180;
+    final latitudeRadians = latitude.clamp(-85.05112878, 85.05112878) * math.pi / 180;
     final x = (longitude + 180) / 360 * worldSize;
     final y =
         (1 -

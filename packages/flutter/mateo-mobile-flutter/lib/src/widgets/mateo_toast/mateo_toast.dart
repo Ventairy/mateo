@@ -115,13 +115,11 @@ class MateoToast extends StatelessWidget {
     _validateIconBuilder(type, iconBuilder);
 
     final messenger = MateoToastMessenger.maybeOf(context);
-    final overlay =
-        messenger?.overlay ?? Overlay.maybeOf(context, rootOverlay: true);
+    final overlay = messenger?.overlay ?? Overlay.maybeOf(context, rootOverlay: true);
 
     if (overlay == null) return;
 
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     final capturedThemes = InheritedTheme.capture(
       from: context,
       to: overlay.context,
@@ -171,11 +169,8 @@ class MateoToast extends StatelessWidget {
   static const double _readableCharactersPerSecond = 14;
 
   static Duration _estimateDuration(String message) {
-    final readableCharacters = message.trim().isEmpty
-        ? 1
-        : message.trim().length;
-    final milliseconds =
-        (readableCharacters / _readableCharactersPerSecond * 1000).round();
+    final readableCharacters = message.trim().isEmpty ? 1 : message.trim().length;
+    final milliseconds = (readableCharacters / _readableCharactersPerSecond * 1000).round();
     final duration = Duration(milliseconds: milliseconds);
 
     if (duration < _minAutoDuration) return _minAutoDuration;
@@ -204,12 +199,7 @@ class MateoToast extends StatelessWidget {
   ) {
     if (!constraints.hasBoundedWidth) return false;
 
-    final maxTextWidth =
-        constraints.maxWidth -
-        _iconSize -
-        _iconTextGap -
-        _contentPaddingLeft -
-        _contentPaddingRight;
+    final maxTextWidth = constraints.maxWidth - _iconSize - _iconTextGap - _contentPaddingLeft - _contentPaddingRight;
     if (maxTextWidth <= 0) return true;
 
     final textPainter = TextPainter(

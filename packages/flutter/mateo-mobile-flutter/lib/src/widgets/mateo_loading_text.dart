@@ -32,8 +32,7 @@ class MateoLoadingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final indicatorColor =
-        progressIndicatorColor ?? context.mateo.palette.primary[9];
+    final indicatorColor = progressIndicatorColor ?? context.mateo.palette.primary[9];
     final disableAnimations = MediaQuery.disableAnimationsOf(context);
 
     return Row(

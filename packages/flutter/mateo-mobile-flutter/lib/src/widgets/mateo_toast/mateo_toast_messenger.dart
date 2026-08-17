@@ -52,8 +52,7 @@ class MateoToastMessenger extends StatefulWidget {
   ///
   /// Returns null if no messenger is mounted above [context].
   static MateoToastMessengerState? maybeOf(BuildContext context) {
-    final scope = context
-        .dependOnInheritedWidgetOfExactType<_MateoToastMessengerScope>();
+    final scope = context.dependOnInheritedWidgetOfExactType<_MateoToastMessengerScope>();
     return scope?._state;
   }
 }
@@ -96,6 +95,5 @@ class _MateoToastMessengerScope extends InheritedWidget {
   final MateoToastMessengerState _state;
 
   @override
-  bool updateShouldNotify(_MateoToastMessengerScope old) =>
-      _state != old._state;
+  bool updateShouldNotify(_MateoToastMessengerScope old) => _state != old._state;
 }

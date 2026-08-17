@@ -384,18 +384,13 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 180));
 
-        final firstFrameFinder = find
-            .text(destinationText, skipOffstage: false)
-            .last;
+        final firstFrameFinder = find.text(destinationText, skipOffstage: false).last;
         final firstFrameTop = tester.getTopLeft(firstFrameFinder).dy;
-        final firstFrameMaxLines =
-            tester.widget<Text>(firstFrameFinder).maxLines ?? 999;
+        final firstFrameMaxLines = tester.widget<Text>(firstFrameFinder).maxLines ?? 999;
 
         await tester.pump(const Duration(milliseconds: 80));
 
-        final secondFrameFinder = find
-            .text(destinationText, skipOffstage: false)
-            .last;
+        final secondFrameFinder = find.text(destinationText, skipOffstage: false).last;
         final secondFrameTop = tester.getTopLeft(secondFrameFinder).dy;
         final secondFrameText = tester.widget<Text>(secondFrameFinder);
 
@@ -582,9 +577,7 @@ class _MateoHeroTextLifecycleTestApp extends StatelessWidget {
                   tag: 'text-lifecycle',
                   onStart: () => events.add('source-start'),
                   onEnd: () => events.add('source-end'),
-                  onReceived: receivedEvents != null
-                      ? () => receivedEvents!.add('source-received')
-                      : null,
+                  onReceived: receivedEvents != null ? () => receivedEvents!.add('source-received') : null,
                 ),
               ),
             ),
@@ -615,9 +608,7 @@ class _MateoHeroTextLifecycleDestination extends StatelessWidget {
             tag: 'text-lifecycle',
             onStart: () => events.add('destination-start'),
             onEnd: () => events.add('destination-end'),
-            onReceived: receivedEvents != null
-                ? () => receivedEvents!.add('destination-received')
-                : null,
+            onReceived: receivedEvents != null ? () => receivedEvents!.add('destination-received') : null,
           ),
         ),
       ),

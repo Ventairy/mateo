@@ -133,8 +133,7 @@ class _MateoActionBloomActionScope extends InheritedWidget {
   final MateoActionBloomActionCallback onPressed;
 
   static _MateoActionBloomActionScope of(BuildContext context) {
-    final scope = context
-        .dependOnInheritedWidgetOfExactType<_MateoActionBloomActionScope>();
+    final scope = context.dependOnInheritedWidgetOfExactType<_MateoActionBloomActionScope>();
     if (scope != null) return scope;
 
     throw FlutterError(

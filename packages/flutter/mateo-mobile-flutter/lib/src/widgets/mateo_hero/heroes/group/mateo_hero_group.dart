@@ -90,8 +90,7 @@ final class MateoHeroGroup extends MateoHero {
     super.key,
   }) : super(flightShuttleBuilder: _buildFlightShuttle);
 
-  static List<({double layoutWidth, Offset offset, Size size})>?
-  _cachedEndChildMetrics;
+  static List<({double layoutWidth, Offset offset, Size size})>? _cachedEndChildMetrics;
   static MateoHeroGroupBackgroundFlightMetrics? _cachedEndBoxMetrics;
 
   /// The tagless child heroes that animate together.
@@ -123,8 +122,7 @@ final class MateoHeroGroup extends MateoHero {
     if (freshEndChildMetrics != null) {
       _cachedEndChildMetrics = freshEndChildMetrics;
     }
-    final endChildMetrics =
-        freshEndChildMetrics ?? _cachedEndChildMetrics ?? beginChildMetrics;
+    final endChildMetrics = freshEndChildMetrics ?? _cachedEndChildMetrics ?? beginChildMetrics;
 
     final beginBackgroundMetrics = _captureBackgroundMetrics(fromHeroContext);
     final freshEndBackgroundMetrics = _captureBackgroundMetrics(toHeroContext);
@@ -132,10 +130,7 @@ final class MateoHeroGroup extends MateoHero {
     if (freshEndBackgroundMetrics != null) {
       _cachedEndBoxMetrics = freshEndBackgroundMetrics;
     }
-    final endBoxMetrics =
-        freshEndBackgroundMetrics ??
-        _cachedEndBoxMetrics ??
-        beginBackgroundMetrics;
+    final endBoxMetrics = freshEndBackgroundMetrics ?? _cachedEndBoxMetrics ?? beginBackgroundMetrics;
 
     final beginHeight = _metricsHeight(beginChildMetrics);
     final endHeight = _metricsHeight(endChildMetrics);
@@ -147,13 +142,10 @@ final class MateoHeroGroup extends MateoHero {
       final toHero = toGroup.heroes[i];
 
       if (fromHero is MateoHeroText && toHero is MateoHeroText) {
-        final fromText =
-            fromHero.buildFlightChild(flightContext) as MateoHeroTextFlight;
-        final toText =
-            toHero.buildFlightChild(flightContext) as MateoHeroTextFlight;
+        final fromText = fromHero.buildFlightChild(flightContext) as MateoHeroTextFlight;
+        final toText = toHero.buildFlightChild(flightContext) as MateoHeroTextFlight;
 
-        final beginSize =
-            (beginChildMetrics != null && i < beginChildMetrics.length)
+        final beginSize = (beginChildMetrics != null && i < beginChildMetrics.length)
             ? beginChildMetrics[i].size as Size?
             : null;
 
@@ -161,13 +153,11 @@ final class MateoHeroGroup extends MateoHero {
             ? endChildMetrics[i].size as Size?
             : null;
 
-        final beginLayoutWidth =
-            (beginChildMetrics != null && i < beginChildMetrics.length)
+        final beginLayoutWidth = (beginChildMetrics != null && i < beginChildMetrics.length)
             ? beginChildMetrics[i].layoutWidth as double?
             : null;
 
-        final endLayoutWidth =
-            (endChildMetrics != null && i < endChildMetrics.length)
+        final endLayoutWidth = (endChildMetrics != null && i < endChildMetrics.length)
             ? endChildMetrics[i].layoutWidth as double?
             : null;
 
@@ -191,9 +181,7 @@ final class MateoHeroGroup extends MateoHero {
       child: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
-          final animationValue = flightDirection == HeroFlightDirection.push
-              ? animation.value
-              : 1 - animation.value;
+          final animationValue = flightDirection == HeroFlightDirection.push ? animation.value : 1 - animation.value;
           final value = Curves.easeOutCubic.transform(animationValue);
 
           final availableHeight = _computeAvailableHeight(
@@ -224,8 +212,7 @@ final class MateoHeroGroup extends MateoHero {
     );
   }
 
-  static List<({double layoutWidth, Offset offset, Size size})>?
-  _captureFlexChildMetrics(BuildContext context) {
+  static List<({double layoutWidth, Offset offset, Size size})>? _captureFlexChildMetrics(BuildContext context) {
     final groupBox = context.findRenderObject();
     if (groupBox is! RenderBox || !groupBox.hasSize) return null;
 
@@ -311,9 +298,7 @@ final class MateoHeroGroup extends MateoHero {
     return List<MateoHero>.generate(count, (index) {
       final beginHero = begin[index];
       final endHero = end[index];
-      final metrics = (textMetrics != null && index < textMetrics.length)
-          ? textMetrics[index]
-          : null;
+      final metrics = (textMetrics != null && index < textMetrics.length) ? textMetrics[index] : null;
 
       return beginHero.buildForGroupFlight(
         end: endHero,
@@ -357,13 +342,11 @@ final class MateoHeroGroup extends MateoHero {
 
     final beginBoxHeight = beginBoxMetrics.size.height;
     final endBoxHeight = endBoxMetrics.size.height;
-    final currentBoxHeight =
-        beginBoxHeight + (endBoxHeight - beginBoxHeight) * progress;
+    final currentBoxHeight = beginBoxHeight + (endBoxHeight - beginBoxHeight) * progress;
 
     final beginGroupOffset = beginBoxMetrics.groupOffsetInBox.dy;
     final endGroupOffset = endBoxMetrics.groupOffsetInBox.dy;
-    final currentGroupOffset =
-        beginGroupOffset + (endGroupOffset - beginGroupOffset) * progress;
+    final currentGroupOffset = beginGroupOffset + (endGroupOffset - beginGroupOffset) * progress;
 
     final available = currentBoxHeight - currentGroupOffset;
     return available > 0 ? available : 0.0;
@@ -389,15 +372,11 @@ final class MateoHeroGroup extends MateoHero {
   }) {
     return [
       for (final hero in heroes)
-        if (hero is MateoHeroText)
-          hero.buildWithResolvedStyle(context)
-        else
-          hero,
+        if (hero is MateoHeroText) hero.buildWithResolvedStyle(context) else hero,
     ];
   }
 
-  static List<({double layoutWidth, Offset offset, Size size})>?
-  _scaleChildMetrics({
+  static List<({double layoutWidth, Offset offset, Size size})>? _scaleChildMetrics({
     required List<({double layoutWidth, Offset offset, Size size})>? metrics,
     required double? scale,
   }) {

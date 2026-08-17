@@ -73,9 +73,11 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
   late final Animation<double> _opacityAnimation;
 
   bool _releaseRequested = false;
+  bool _isFadeActive = false;
   Completer<void>? _releaseCompleter;
   bool get _isEnabled => widget.onPressed != null;
   bool get _hasAnimation => widget.animation != MateoTapAnimationType.none;
+  bool get _usesFade => widget.animation == MateoTapAnimationType.scaleFade;
 
   @override
   void initState() {
@@ -126,6 +128,7 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
       _releaseCompleter?.complete();
       _releaseCompleter = null;
       _releaseRequested = false;
+      _isFadeActive = false;
       _controller.reset();
     }
   }
@@ -137,7 +140,13 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
     } else if (status == AnimationStatus.dismissed) {
       _releaseCompleter?.complete();
       _releaseCompleter = null;
+      _setFadeActive(false);
     }
+  }
+
+  void _setFadeActive(bool value) {
+    if (_isFadeActive == value || !mounted) return;
+    setState(() => _isFadeActive = value);
   }
 
   void _handleTapDown(TapDownDetails details) {
@@ -155,6 +164,7 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
     _releaseCompleter = null;
 
     if (!MediaQuery.disableAnimationsOf(context)) {
+      if (_usesFade) _setFadeActive(true);
       unawaited(_controller.forward());
     }
   }
@@ -182,7 +192,10 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
   }
 
   void _requestRelease() {
-    if (_controller.status == AnimationStatus.dismissed) return;
+    if (_controller.status == AnimationStatus.dismissed) {
+      _setFadeActive(false);
+      return;
+    }
     if (_controller.status == AnimationStatus.completed) {
       unawaited(_controller.reverse());
     } else {
@@ -203,10 +216,7 @@ class _MateoTapState extends State<MateoTap> with TickerProviderStateMixin {
           MateoTapAnimationType.none => widget.child,
           MateoTapAnimationType.scaleFade => ScaleTransition(
             scale: _scaleAnimation,
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: widget.child,
-            ),
+            child: _isFadeActive ? FadeTransition(opacity: _opacityAnimation, child: widget.child) : widget.child,
           ),
           MateoTapAnimationType.scale => ScaleTransition(
             scale: _scaleAnimation,

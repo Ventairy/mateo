@@ -12,16 +12,20 @@ void main() {
 
   setUp(() {
     hapticCalls = [];
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(SystemChannels.platform, (call) async {
-          hapticCalls.add(call);
-          return null;
-        });
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        hapticCalls.add(call);
+        return null;
+      },
+    );
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(SystemChannels.platform, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      null,
+    );
   });
 
   group('MateoFloatingActionButton', () {
@@ -573,9 +577,7 @@ void main() {
 
       expect(
         hapticCalls.any(
-          (call) =>
-              call.method == 'HapticFeedback.vibrate' &&
-              call.arguments == 'HapticFeedbackType.lightImpact',
+          (call) => call.method == 'HapticFeedback.vibrate' && call.arguments == 'HapticFeedbackType.lightImpact',
         ),
         isTrue,
       );

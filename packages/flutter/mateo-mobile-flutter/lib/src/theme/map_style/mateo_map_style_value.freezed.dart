@@ -26,8 +26,7 @@ mixin _$MateoMapLibreStyleZoomStop {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleZoomStopCopyWith<MateoMapLibreStyleZoomStop>
-  get copyWith =>
+  $MateoMapLibreStyleZoomStopCopyWith<MateoMapLibreStyleZoomStop> get copyWith =>
       _$MateoMapLibreStyleZoomStopCopyWithImpl<MateoMapLibreStyleZoomStop>(
         this as MateoMapLibreStyleZoomStop,
         _$identity,
@@ -62,8 +61,7 @@ abstract mixin class $MateoMapLibreStyleZoomStopCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleZoomStopCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleZoomStopCopyWith<$Res> {
+class _$MateoMapLibreStyleZoomStopCopyWithImpl<$Res> implements $MateoMapLibreStyleZoomStopCopyWith<$Res> {
   _$MateoMapLibreStyleZoomStopCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleZoomStop _self;
@@ -263,8 +261,7 @@ class _MateoMapLibreStyleZoomStop implements MateoMapLibreStyleZoomStop {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleZoomStopCopyWith<_MateoMapLibreStyleZoomStop>
-  get copyWith =>
+  _$MateoMapLibreStyleZoomStopCopyWith<_MateoMapLibreStyleZoomStop> get copyWith =>
       __$MateoMapLibreStyleZoomStopCopyWithImpl<_MateoMapLibreStyleZoomStop>(
         this,
         _$identity,
@@ -289,8 +286,7 @@ class _MateoMapLibreStyleZoomStop implements MateoMapLibreStyleZoomStop {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleZoomStopCopyWith<$Res>
-    implements $MateoMapLibreStyleZoomStopCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleZoomStopCopyWith<$Res> implements $MateoMapLibreStyleZoomStopCopyWith<$Res> {
   factory _$MateoMapLibreStyleZoomStopCopyWith(
     _MateoMapLibreStyleZoomStop value,
     $Res Function(_MateoMapLibreStyleZoomStop) _then,
@@ -301,8 +297,7 @@ abstract mixin class _$MateoMapLibreStyleZoomStopCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleZoomStopCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleZoomStopCopyWith<$Res> {
+class __$MateoMapLibreStyleZoomStopCopyWithImpl<$Res> implements _$MateoMapLibreStyleZoomStopCopyWith<$Res> {
   __$MateoMapLibreStyleZoomStopCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleZoomStop _self;
@@ -332,8 +327,7 @@ class __$MateoMapLibreStyleZoomStopCopyWithImpl<$Res>
 mixin _$MateoMapLibreStyleValue {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is MateoMapLibreStyleValue);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is MateoMapLibreStyleValue);
   }
 
   @override
@@ -535,11 +529,8 @@ class MateoMapLibreStyleScalarValue implements MateoMapLibreStyleValue {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleScalarValueCopyWith<MateoMapLibreStyleScalarValue>
-  get copyWith =>
-      _$MateoMapLibreStyleScalarValueCopyWithImpl<
-        MateoMapLibreStyleScalarValue
-      >(this, _$identity);
+  $MateoMapLibreStyleScalarValueCopyWith<MateoMapLibreStyleScalarValue> get copyWith =>
+      _$MateoMapLibreStyleScalarValueCopyWithImpl<MateoMapLibreStyleScalarValue>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -559,8 +550,7 @@ class MateoMapLibreStyleScalarValue implements MateoMapLibreStyleValue {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleScalarValueCopyWith<$Res>
-    implements $MateoMapLibreStyleValueCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleScalarValueCopyWith<$Res> implements $MateoMapLibreStyleValueCopyWith<$Res> {
   factory $MateoMapLibreStyleScalarValueCopyWith(
     MateoMapLibreStyleScalarValue value,
     $Res Function(MateoMapLibreStyleScalarValue) _then,
@@ -570,8 +560,7 @@ abstract mixin class $MateoMapLibreStyleScalarValueCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleScalarValueCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleScalarValueCopyWith<$Res> {
+class _$MateoMapLibreStyleScalarValueCopyWithImpl<$Res> implements $MateoMapLibreStyleScalarValueCopyWith<$Res> {
   _$MateoMapLibreStyleScalarValueCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleScalarValue _self;
@@ -610,8 +599,7 @@ class MateoMapLibreStyleStopsValue implements MateoMapLibreStyleValue {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleStopsValueCopyWith<MateoMapLibreStyleStopsValue>
-  get copyWith =>
+  $MateoMapLibreStyleStopsValueCopyWith<MateoMapLibreStyleStopsValue> get copyWith =>
       _$MateoMapLibreStyleStopsValueCopyWithImpl<MateoMapLibreStyleStopsValue>(
         this,
         _$identity,
@@ -626,8 +614,7 @@ class MateoMapLibreStyleStopsValue implements MateoMapLibreStyleValue {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_stops));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_stops));
 
   @override
   String toString() {
@@ -636,8 +623,7 @@ class MateoMapLibreStyleStopsValue implements MateoMapLibreStyleValue {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLibreStyleStopsValueCopyWith<$Res>
-    implements $MateoMapLibreStyleValueCopyWith<$Res> {
+abstract mixin class $MateoMapLibreStyleStopsValueCopyWith<$Res> implements $MateoMapLibreStyleValueCopyWith<$Res> {
   factory $MateoMapLibreStyleStopsValueCopyWith(
     MateoMapLibreStyleStopsValue value,
     $Res Function(MateoMapLibreStyleStopsValue) _then,
@@ -647,8 +633,7 @@ abstract mixin class $MateoMapLibreStyleStopsValueCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleStopsValueCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleStopsValueCopyWith<$Res> {
+class _$MateoMapLibreStyleStopsValueCopyWithImpl<$Res> implements $MateoMapLibreStyleStopsValueCopyWith<$Res> {
   _$MateoMapLibreStyleStopsValueCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleStopsValue _self;

@@ -852,9 +852,7 @@ void main() {
           const TestApp(child: MateoToast(message: 'Error')),
         );
 
-        final decoration = tester
-            .widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface')))
-            .decoration;
+        final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
 
         expect(
           (decoration as BoxDecoration).color,
@@ -932,9 +930,7 @@ void main() {
         MateoToast.show(toastContext, message: 'Themed error');
         await tester.pump();
 
-        final decoration = tester
-            .widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface')))
-            .decoration;
+        final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
 
         expect(
           (decoration as BoxDecoration).color,
@@ -1098,8 +1094,7 @@ void main() {
           MateoToastType.success: Key('mateo_toast_default_icon_success'),
         };
 
-        for (final MapEntry(key: type, value: iconKey)
-            in defaultIconKeys.entries) {
+        for (final MapEntry(key: type, value: iconKey) in defaultIconKeys.entries) {
           await tester.pumpWidget(
             TestApp(
               child: MateoToast(message: type.name, type: type),

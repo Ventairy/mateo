@@ -102,21 +102,17 @@ void main() {
         expect(
           longTextWidgets.isNotEmpty,
           isTrue,
-          reason:
-              'Long text should exist during flight (found ${longTextWidgets.length} instances)',
+          reason: 'Long text should exist during flight (found ${longTextWidgets.length} instances)',
         );
 
         final anyClamped = longTextWidgets.any(
-          (t) =>
-              t.overflow == TextOverflow.ellipsis ||
-              (t.maxLines != null && t.maxLines! < 10),
+          (t) => t.overflow == TextOverflow.ellipsis || (t.maxLines != null && t.maxLines! < 10),
         );
 
         expect(
           anyClamped,
           isTrue,
-          reason:
-              'At least one flight instance of the long text should show ellipsis or reduced maxLines',
+          reason: 'At least one flight instance of the long text should show ellipsis or reduced maxLines',
         );
       },
     );

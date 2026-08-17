@@ -29,8 +29,7 @@ part 'mateo_map_style_symbol_layout.freezed.dart';
 part 'mateo_map_style_symbol_layout.g.dart';
 
 @Freezed(toJson: true, fromJson: false)
-abstract class MateoMapLibreStyleSymbolLayout
-    with _$MateoMapLibreStyleSymbolLayout {
+abstract class MateoMapLibreStyleSymbolLayout with _$MateoMapLibreStyleSymbolLayout {
   const factory MateoMapLibreStyleSymbolLayout({
     /// The text content expression (e.g. `"{name}"` to use a feature property).
     ///
@@ -50,9 +49,7 @@ abstract class MateoMapLibreStyleSymbolLayout
     ///
     /// Mapped to the `text-size` JSON key in pixels. Uses
     /// [MateoMapLibreStyleValueConverter] for serialization.
-    @JsonKey(name: 'text-size')
-    @MateoMapLibreStyleValueConverter()
-    MateoMapLibreStyleValue? textSize,
+    @JsonKey(name: 'text-size') @MateoMapLibreStyleValueConverter() MateoMapLibreStyleValue? textSize,
 
     /// The maximum line width for text wrapping, in ems.
     ///

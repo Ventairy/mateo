@@ -33,8 +33,7 @@ class MateoBottomSheetColorScheme {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MateoBottomSheetColorScheme && background == other.background;
+      identical(this, other) || other is MateoBottomSheetColorScheme && background == other.background;
 
   @override
   int get hashCode => background.hashCode;

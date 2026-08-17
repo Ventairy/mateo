@@ -93,12 +93,9 @@ class MateoIconButton extends StatelessWidget {
     final isEnabled = _isEnabled;
     final resolvedBackgroundColor = isEnabled
         ? backgroundColor ?? context.mateo.palette.primary[9]
-        : disabledBackgroundColor ??
-              context.mateo.colorScheme.buttons.primary.backgroundDisabled;
+        : disabledBackgroundColor ?? context.mateo.colorScheme.buttons.primary.backgroundDisabled;
 
-    final recommendedIconColor = isEnabled
-        ? Colors.white
-        : resolvedBackgroundColor.darken(0.28);
+    final recommendedIconColor = isEnabled ? Colors.white : resolvedBackgroundColor.darken(0.28);
 
     Widget buildButton({
       required VoidCallback? onPressed,
@@ -111,9 +108,7 @@ class MateoIconButton extends StatelessWidget {
         onTap: onPressed,
         child: MateoTap(
           animation: MateoTapAnimationType.scale,
-          onPressed: onPressed != null
-              ? (animation) async => onPressed()
-              : null,
+          onPressed: onPressed != null ? (animation) async => onPressed() : null,
           child: Container(
             key: const Key('mateo_icon_button_circle'),
             width: buttonSize,

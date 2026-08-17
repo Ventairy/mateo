@@ -97,15 +97,10 @@ class _PageTestApp extends StatelessWidget {
                 onPressed: () {
                   final page = MateoHeroPage(
                     builder: (_) => const SizedBox(),
-                    transitionDuration:
-                        customTransitionDuration ??
-                        const Duration(milliseconds: 560),
-                    reverseTransitionDuration:
-                        customReverseTransitionDuration ??
-                        const Duration(milliseconds: 430),
+                    transitionDuration: customTransitionDuration ?? const Duration(milliseconds: 560),
+                    reverseTransitionDuration: customReverseTransitionDuration ?? const Duration(milliseconds: 430),
                   );
-                  final createdRoute =
-                      page.createRoute(context) as MateoHeroPageRoute;
+                  final createdRoute = page.createRoute(context) as MateoHeroPageRoute;
                   onRouteCreated?.call(createdRoute);
                   unawaited(Navigator.of(context).push(createdRoute));
                 },

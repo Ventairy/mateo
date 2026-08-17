@@ -112,8 +112,7 @@ abstract final class MateoBottomSheet {
     MateoBottomSheetShouldDismiss? shouldDismiss,
   }) {
     final navigator = Navigator.of(context);
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     final colorScheme = context.mateo.colorScheme;
 
     return navigator.push<T>(

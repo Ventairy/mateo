@@ -410,10 +410,7 @@ void main() {
         await _openBloom(tester);
 
         expect(
-          tester
-              .widget<AnimatedModalBarrier>(find.byKey(_barrierKey))
-              .color
-              .value,
+          tester.widget<AnimatedModalBarrier>(find.byKey(_barrierKey)).color.value,
           mateoTestColorScheme.overlay.scrim,
         );
 
@@ -524,10 +521,7 @@ void main() {
 
       expect(
         (
-          tester
-              .getSemantics(find.bySemanticsLabel('Create'))
-              .flagsCollection
-              .isButton,
+          tester.getSemantics(find.bySemanticsLabel('Create')).flagsCollection.isButton,
           tester.getSemantics(find.bySemanticsLabel('Create')).hint,
         ),
         (true, ''),
@@ -584,8 +578,7 @@ void main() {
       (tester) async {
         final semantics = tester.ensureSemantics();
         const title = 'Create a note with a deliberately complete long title';
-        const description =
-            'Start with a fresh note and preserve this complete explanation.';
+        const description = 'Start with a fresh note and preserve this complete explanation.';
 
         await _pumpBloom(
           tester,
@@ -659,9 +652,7 @@ Future<void> _pumpBloom(
   Color? foregroundColor,
   FocusNode? sourceFocusNode,
 }) async {
-  final resolvedMediaQueryData =
-      mediaQueryData ??
-      MediaQueryData(size: size, disableAnimations: disableAnimations);
+  final resolvedMediaQueryData = mediaQueryData ?? MediaQueryData(size: size, disableAnimations: disableAnimations);
   tester.view
     ..devicePixelRatio = 1
     ..physicalSize = size

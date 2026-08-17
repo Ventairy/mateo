@@ -16,8 +16,7 @@ void main() {
         tileUrlTemplate: '{tileUrlTemplate}',
         fontConfig: (
           fontStack: 'Inter Regular',
-          glyphUrlTemplate:
-              'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
+          glyphUrlTemplate: 'file://packages/mateo_mobile/assets/glyphs/{fontstack}/{range}.pbf',
         ),
       );
     });
@@ -76,18 +75,14 @@ void main() {
     );
 
     test('when inspecting layers, it should keep layer ids unique', () {
-      final layerIds = style.layers
-          .map((l) => l.toJson()['id'] as String)
-          .toList();
+      final layerIds = style.layers.map((l) => l.toJson()['id'] as String).toList();
       expect(layerIds.toSet(), hasLength(layerIds.length));
     });
 
     test(
       'when inspecting layers, it should include the required base layers',
       () {
-        final layerIds = style.layers
-            .map((l) => l.toJson()['id'] as String)
-            .toSet();
+        final layerIds = style.layers.map((l) => l.toJson()['id'] as String).toSet();
         expect(
           layerIds,
           containsAll(<String>[
@@ -183,9 +178,7 @@ void main() {
     test(
       'when inspecting layers, it should include the required road layers',
       () {
-        final layerIds = style.layers
-            .map((l) => l.toJson()['id'] as String)
-            .toSet();
+        final layerIds = style.layers.map((l) => l.toJson()['id'] as String).toSet();
         expect(
           layerIds,
           containsAll(<String>[
@@ -203,9 +196,7 @@ void main() {
     test(
       'when inspecting layers, it should include the required label layers',
       () {
-        final layerIds = style.layers
-            .map((l) => l.toJson()['id'] as String)
-            .toSet();
+        final layerIds = style.layers.map((l) => l.toJson()['id'] as String).toSet();
         expect(
           layerIds,
           containsAll(<String>[
@@ -254,9 +245,7 @@ void main() {
           'road_trunk',
           'road_motorway',
         ];
-        final widths = roadIds
-            .map((id) => _lineWidthAtZoom14(style, id))
-            .toList();
+        final widths = roadIds.map((id) => _lineWidthAtZoom14(style, id)).toList();
         expect(widths, expected);
       },
     );
@@ -441,16 +430,14 @@ double _lineWidthAtZoom(MateoMapLibreStyle style, String layerId, int zoom) {
   if (lineWidth is List) {
     // Expression: ["interpolate", ["linear"], ["zoom"], z1, v1, z2, v2, ...]
     for (var i = 3; i < lineWidth.length; i += 2) {
-      if ((lineWidth[i] as num).toInt() == zoom)
-        return (lineWidth[i + 1] as num).toDouble();
+      if ((lineWidth[i] as num).toInt() == zoom) return (lineWidth[i + 1] as num).toDouble();
     }
   }
   if (lineWidth is num) return lineWidth.toDouble();
   throw StateError('Expected line-width value at zoom $zoom.');
 }
 
-double _lineWidthAtZoom14(MateoMapLibreStyle style, String layerId) =>
-    _lineWidthAtZoom(style, layerId, 14);
+double _lineWidthAtZoom14(MateoMapLibreStyle style, String layerId) => _lineWidthAtZoom(style, layerId, 14);
 
 double _textSizeAtZoom(MateoMapLibreStyle style, String layerId, int zoom) {
   final layerJson = _layerJson(style, layerId);
@@ -460,8 +447,7 @@ double _textSizeAtZoom(MateoMapLibreStyle style, String layerId, int zoom) {
   if (textSize is List) {
     // Expression: ["interpolate", ["linear"], ["zoom"], z1, v1, z2, v2, ...]
     for (var i = 3; i < textSize.length; i += 2) {
-      if ((textSize[i] as num).toInt() == zoom)
-        return (textSize[i + 1] as num).toDouble();
+      if ((textSize[i] as num).toInt() == zoom) return (textSize[i + 1] as num).toDouble();
     }
   }
   if (textSize is num) return textSize.toDouble();

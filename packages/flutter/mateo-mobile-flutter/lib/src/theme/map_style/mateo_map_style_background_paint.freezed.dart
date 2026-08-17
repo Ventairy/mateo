@@ -24,11 +24,11 @@ mixin _$MateoMapLibreStyleBackgroundPaint {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleBackgroundPaintCopyWith<MateoMapLibreStyleBackgroundPaint>
-  get copyWith =>
-      _$MateoMapLibreStyleBackgroundPaintCopyWithImpl<
-        MateoMapLibreStyleBackgroundPaint
-      >(this as MateoMapLibreStyleBackgroundPaint, _$identity);
+  $MateoMapLibreStyleBackgroundPaintCopyWith<MateoMapLibreStyleBackgroundPaint> get copyWith =>
+      _$MateoMapLibreStyleBackgroundPaintCopyWithImpl<MateoMapLibreStyleBackgroundPaint>(
+        this as MateoMapLibreStyleBackgroundPaint,
+        _$identity,
+      );
 
   /// Serializes this MateoMapLibreStyleBackgroundPaint to a JSON map.
   Map<String, dynamic> toJson();
@@ -38,8 +38,7 @@ mixin _$MateoMapLibreStyleBackgroundPaint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MateoMapLibreStyleBackgroundPaint &&
-            (identical(other.backgroundColor, backgroundColor) ||
-                other.backgroundColor == backgroundColor));
+            (identical(other.backgroundColor, backgroundColor) || other.backgroundColor == backgroundColor));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -87,8 +86,7 @@ class _$MateoMapLibreStyleBackgroundPaintCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [MateoMapLibreStyleBackgroundPaint].
-extension MateoMapLibreStyleBackgroundPaintPatterns
-    on MateoMapLibreStyleBackgroundPaint {
+extension MateoMapLibreStyleBackgroundPaintPatterns on MateoMapLibreStyleBackgroundPaint {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -180,8 +178,7 @@ extension MateoMapLibreStyleBackgroundPaintPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'background-color') String backgroundColor)?
-    $default, {
+    TResult Function(@JsonKey(name: 'background-color') String backgroundColor)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -208,8 +205,7 @@ extension MateoMapLibreStyleBackgroundPaintPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'background-color') String backgroundColor)
-    $default,
+    TResult Function(@JsonKey(name: 'background-color') String backgroundColor) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -251,8 +247,7 @@ extension MateoMapLibreStyleBackgroundPaintPatterns
 
 /// @nodoc
 @JsonSerializable(createFactory: false)
-class _MateoMapLibreStyleBackgroundPaint
-    implements MateoMapLibreStyleBackgroundPaint {
+class _MateoMapLibreStyleBackgroundPaint implements MateoMapLibreStyleBackgroundPaint {
   const _MateoMapLibreStyleBackgroundPaint({
     @JsonKey(name: 'background-color') required this.backgroundColor,
   });
@@ -270,13 +265,8 @@ class _MateoMapLibreStyleBackgroundPaint
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleBackgroundPaintCopyWith<
-    _MateoMapLibreStyleBackgroundPaint
-  >
-  get copyWith =>
-      __$MateoMapLibreStyleBackgroundPaintCopyWithImpl<
-        _MateoMapLibreStyleBackgroundPaint
-      >(this, _$identity);
+  _$MateoMapLibreStyleBackgroundPaintCopyWith<_MateoMapLibreStyleBackgroundPaint> get copyWith =>
+      __$MateoMapLibreStyleBackgroundPaintCopyWithImpl<_MateoMapLibreStyleBackgroundPaint>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -288,8 +278,7 @@ class _MateoMapLibreStyleBackgroundPaint
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MateoMapLibreStyleBackgroundPaint &&
-            (identical(other.backgroundColor, backgroundColor) ||
-                other.backgroundColor == backgroundColor));
+            (identical(other.backgroundColor, backgroundColor) || other.backgroundColor == backgroundColor));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)

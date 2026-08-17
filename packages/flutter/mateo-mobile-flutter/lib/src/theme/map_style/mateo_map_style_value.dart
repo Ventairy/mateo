@@ -48,8 +48,7 @@ sealed class MateoMapLibreStyleZoomStop with _$MateoMapLibreStyleZoomStop {
 /// ```
 @Freezed(toJson: false, fromJson: false)
 sealed class MateoMapLibreStyleValue with _$MateoMapLibreStyleValue {
-  const factory MateoMapLibreStyleValue.scalar(num value) =
-      MateoMapLibreStyleScalarValue;
+  const factory MateoMapLibreStyleValue.scalar(num value) = MateoMapLibreStyleScalarValue;
   const factory MateoMapLibreStyleValue.stops(
     List<MateoMapLibreStyleZoomStop> stops,
   ) = MateoMapLibreStyleStopsValue;

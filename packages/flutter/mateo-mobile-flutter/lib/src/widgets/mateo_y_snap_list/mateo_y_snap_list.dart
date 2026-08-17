@@ -221,8 +221,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   bool _isCommitting = false;
   Animation<double>? _loadingLiftAnimation;
   final _disposeCompleter = Completer<void>();
-  final Map<Object, _MateoYSnapListCachedItem<T>> _cardCache =
-      <Object, _MateoYSnapListCachedItem<T>>{};
+  final Map<Object, _MateoYSnapListCachedItem<T>> _cardCache = <Object, _MateoYSnapListCachedItem<T>>{};
 
   final ValueNotifier<double> _dragOffsetNotifier = ValueNotifier<double>(0);
   final ValueNotifier<double> _loadingLiftNotifier = ValueNotifier<double>(0);
@@ -230,25 +229,18 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   bool get _hasCurrentItem => _currentIndex < widget.items.count;
   bool get _shouldShowLoadMoreErrorCard => widget.loadMoreErrorBuilder != null;
 
-  bool get _canEnterAwaitMode =>
-      _hasCurrentItem &&
-      _currentIndex + 1 >= widget.items.count &&
-      _isLoadingMore;
+  bool get _canEnterAwaitMode => _hasCurrentItem && _currentIndex + 1 >= widget.items.count && _isLoadingMore;
 
-  bool get _isAwaitDeciding =>
-      _awaitPhase == _MateoYSnapListAwaitPhase.deciding;
+  bool get _isAwaitDeciding => _awaitPhase == _MateoYSnapListAwaitPhase.deciding;
 
-  bool get _isAwaitDragging =>
-      _awaitPhase == _MateoYSnapListAwaitPhase.dragging;
+  bool get _isAwaitDragging => _awaitPhase == _MateoYSnapListAwaitPhase.dragging;
 
   bool get _isAwaitWaiting => _awaitPhase == _MateoYSnapListAwaitPhase.waiting;
 
   bool get _isAwaitActive => _isAwaitDragging || _isAwaitWaiting;
 
   bool get _paginationMayBringMore =>
-      widget.onLoadMore != null &&
-      !_shouldShowLoadMoreErrorCard &&
-      _exhaustedItemCount != widget.items.count;
+      widget.onLoadMore != null && !_shouldShowLoadMoreErrorCard && _exhaustedItemCount != widget.items.count;
 
   @override
   void initState() {
@@ -278,8 +270,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       _dragOffsetNotifier.value = 0;
     }
 
-    if (widget.items.count > oldWidget.items.count ||
-        widget.items.count > (_exhaustedItemCount ?? -1)) {
+    if (widget.items.count > oldWidget.items.count || widget.items.count > (_exhaustedItemCount ?? -1)) {
       _exhaustedItemCount = null;
     }
 
@@ -442,8 +433,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   }
 
   void _handleAwaitDragUpdate(double dragDeltaY) {
-    _loadingLiftNotifier.value = (_loadingLiftNotifier.value + dragDeltaY)
-        .clamp(-widget.loadingMoreOffset, 0.0);
+    _loadingLiftNotifier.value = (_loadingLiftNotifier.value + dragDeltaY).clamp(-widget.loadingMoreOffset, 0.0);
     _awaitDragProgress = _progressForLoadingLift(_loadingLiftNotifier.value);
 
     widget.onSwipeProgress?.call(
@@ -514,9 +504,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   }
 
   bool _isNextSwipe({required Velocity velocity}) {
-    return _dragOffsetY < 0 ||
-        (_dragOffsetY == 0 &&
-            velocity.isSwipeUp(requireVerticalDominance: false));
+    return _dragOffsetY < 0 || (_dragOffsetY == 0 && velocity.isSwipeUp(requireVerticalDominance: false));
   }
 
   bool _shouldCommitAwait({required Velocity velocity}) {
@@ -525,9 +513,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
         velocity.isSwipeUp(requireVerticalDominance: false) ||
         velocity.isSwipeDown(requireVerticalDominance: false);
 
-    return metThreshold &&
-        (_awaitDragProgress > 0 ||
-            velocity.isSwipeUp(requireVerticalDominance: false));
+    return metThreshold && (_awaitDragProgress > 0 || velocity.isSwipeUp(requireVerticalDominance: false));
   }
 
   bool _shouldExitWaiting({required Velocity velocity}) {
@@ -703,8 +689,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     double? loadingLiftTarget,
     Curve curve = Curves.easeOutCubic,
   }) {
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
     if (disableAnimations) {
       _applyAnimationTargets(
@@ -714,11 +699,8 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       return Future<void>.value();
     }
 
-    final shouldAnimateOffset =
-        offsetTarget != null && _dragOffsetY != offsetTarget;
-    final shouldAnimateLoadingLift =
-        loadingLiftTarget != null &&
-        _loadingLiftNotifier.value != loadingLiftTarget;
+    final shouldAnimateOffset = offsetTarget != null && _dragOffsetY != offsetTarget;
+    final shouldAnimateLoadingLift = loadingLiftTarget != null && _loadingLiftNotifier.value != loadingLiftTarget;
 
     if (!shouldAnimateOffset && !shouldAnimateLoadingLift) {
       _applyAnimationTargets(
@@ -1012,9 +994,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     final itemKey = widget.items.keyBuilder?.call(item, index) ?? index;
     final cachedCard = _cardCache[itemKey];
 
-    if (cachedCard != null &&
-        cachedCard.item == item &&
-        cachedCard.index == index) {
+    if (cachedCard != null && cachedCard.item == item && cachedCard.index == index) {
       return cachedCard;
     }
 
@@ -1068,9 +1048,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   _MateoYSnapListWindow<T> _listWindowFor(BuildContext context) {
     final nextIndex = _currentIndex + 1;
     final hasNextItem = nextIndex < widget.items.count;
-    final previousCard = _currentIndex > 0
-        ? _cardFor(index: _currentIndex - 1)
-        : null;
+    final previousCard = _currentIndex > 0 ? _cardFor(index: _currentIndex - 1) : null;
     final currentCard = _hasCurrentItem ? _cardFor(index: _currentIndex) : null;
     final nextCard = hasNextItem ? _cardFor(index: nextIndex) : null;
 
@@ -1128,8 +1106,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
         viewportWidth: _viewportWidth,
         spacing: widget.spacing,
         hasPreviousCard: listWindow.previousCard != null,
-        hasNextCard:
-            listWindow.nextCard != null || listWindow.paginationCard != null,
+        hasNextCard: listWindow.nextCard != null || listWindow.paginationCard != null,
         isAwaitMode: _isAwaitActive,
         loadingMoreOffset: widget.loadingMoreOffset,
       ),

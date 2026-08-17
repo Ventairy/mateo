@@ -61,8 +61,7 @@ class MateoSkeletonShimmerEffect extends MateoSkeletonAnimatedEffectBase {
     final center = bounds.center;
     final dx = math.cos(angle);
     final dy = math.sin(angle);
-    final halfLength =
-        (dx * bounds.width / 2).abs() + (dy * bounds.height / 2).abs();
+    final halfLength = (dx * bounds.width / 2).abs() + (dy * bounds.height / 2).abs();
     final travel = halfLength * 2;
     final shift = Offset(dx * travel * t, dy * travel * t);
     final start = center - Offset(dx * halfLength, dy * halfLength) + shift;
@@ -81,9 +80,7 @@ class MateoSkeletonShimmerEffect extends MateoSkeletonAnimatedEffectBase {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is MateoSkeletonShimmerEffect &&
-        other.color == color &&
-        other.angle == angle;
+    return other is MateoSkeletonShimmerEffect && other.color == color && other.angle == angle;
   }
 
   @override

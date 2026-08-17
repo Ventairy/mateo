@@ -10,8 +10,7 @@ typedef MateoYSnapListItemProvider<T> = T Function(int index);
 typedef MateoYSnapListItemKeyBuilder<T> = Object Function(T item, int index);
 
 /// Builds the widget for a [MateoYSnapList] item.
-typedef MateoYSnapListItemBuilder<T> =
-    Widget Function(BuildContext context, T item, int index);
+typedef MateoYSnapListItemBuilder<T> = Widget Function(BuildContext context, T item, int index);
 
 /// Called as the [MateoYSnapList] swipe position changes.
 typedef MateoYSnapListProgressCallback =
@@ -24,8 +23,7 @@ typedef MateoYSnapListProgressCallback =
 typedef MateoYSnapListLoadMoreCallback = Future<void> Function();
 
 /// Builds the load-more error card shown by [MateoYSnapList].
-typedef MateoYSnapListLoadMoreErrorBuilder =
-    Widget Function(BuildContext context, VoidCallback retry);
+typedef MateoYSnapListLoadMoreErrorBuilder = Widget Function(BuildContext context, VoidCallback retry);
 
 /// Item source used by [MateoYSnapList].
 typedef MateoYSnapListItems<T> = ({

@@ -14,8 +14,7 @@ import 'package:mateo_mobile/src/theme/map_style/mateo_map_style_value.dart';
 /// Converts [MateoMapLibreStyleValue] to/from its JSON representation.
 ///
 /// Used via `@MateoMapLibreStyleValueConverter()` annotation on DTO fields.
-class MateoMapLibreStyleValueConverter
-    implements JsonConverter<MateoMapLibreStyleValue, Object> {
+class MateoMapLibreStyleValueConverter implements JsonConverter<MateoMapLibreStyleValue, Object> {
   const MateoMapLibreStyleValueConverter();
 
   @override
@@ -30,17 +29,14 @@ class MateoMapLibreStyleValueConverter
 /// Converts a list of [MateoMapLibreStyleLayer] to/from its JSON representation.
 ///
 /// Used via `@MateoMapLibreStyleLayerConverter()` annotation on DTO fields.
-class MateoMapLibreStyleLayerConverter
-    implements JsonConverter<List<MateoMapLibreStyleLayer>, List<dynamic>> {
+class MateoMapLibreStyleLayerConverter implements JsonConverter<List<MateoMapLibreStyleLayer>, List<dynamic>> {
   const MateoMapLibreStyleLayerConverter();
 
   @override
-  List<MateoMapLibreStyleLayer> fromJson(List<dynamic> json) =>
-      throw UnsupportedError(
-        'MateoMapLibreStyleLayer.fromJson is not supported',
-      );
+  List<MateoMapLibreStyleLayer> fromJson(List<dynamic> json) => throw UnsupportedError(
+    'MateoMapLibreStyleLayer.fromJson is not supported',
+  );
 
   @override
-  List<dynamic> toJson(List<MateoMapLibreStyleLayer> layers) =>
-      layers.map((l) => l.toJson()).toList();
+  List<dynamic> toJson(List<MateoMapLibreStyleLayer> layers) => layers.map((l) => l.toJson()).toList();
 }

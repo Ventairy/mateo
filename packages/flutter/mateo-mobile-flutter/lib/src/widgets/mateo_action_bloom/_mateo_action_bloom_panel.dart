@@ -62,8 +62,7 @@ class _MateoActionBloomPanel extends StatelessWidget {
                     _MateoActionBloomActionScope(
                       animation: animation,
                       iconForegroundColor: actionIconForegroundColor,
-                      onPressed: (pressAnimation) =>
-                          onSelected(action, pressAnimation),
+                      onPressed: (pressAnimation) => onSelected(action, pressAnimation),
                       child: action,
                     ),
                     if (index != actions.length - 1) const SizedBox(height: 6),

@@ -7,8 +7,7 @@ import '../test_app.dart';
 RenderObject _findSkeletonRenderObject(WidgetTester tester) {
   return tester.renderObject(
     find.byWidgetPredicate(
-      (widget) =>
-          widget.runtimeType.toString() == '_MateoSkeletonRenderObjectWidget',
+      (widget) => widget.runtimeType.toString() == '_MateoSkeletonRenderObjectWidget',
     ),
   );
 }
@@ -590,8 +589,7 @@ class _TestClipper extends CustomClipper<Path> {
   const _TestClipper();
 
   @override
-  Path getClip(Size size) =>
-      Path()..addOval(Rect.fromLTWH(0, 0, size.width, size.height));
+  Path getClip(Size size) => Path()..addOval(Rect.fromLTWH(0, 0, size.width, size.height));
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;

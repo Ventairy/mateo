@@ -36,8 +36,7 @@ void main() {
             child: MateoButton(
               variant: MateoButtonVariant.primary,
               label: 'Buscar',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.search, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.search, color: state.foregroundColor, size: 20),
               onPressed: () {},
             ),
           ),
@@ -59,8 +58,7 @@ void main() {
             child: MateoButton(
               variant: MateoButtonVariant.primary,
               label: 'Filtrar',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.tune, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.tune, color: state.foregroundColor, size: 20),
               trailingIconBuilder: (state) => Icon(
                 Icons.arrow_drop_down,
                 color: state.foregroundColor,
@@ -76,10 +74,8 @@ void main() {
               label: 'Mapa',
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.buttons.success.background,
-                backgroundPressed:
-                    mateoTestColorScheme.buttons.success.backgroundPressed,
-                backgroundDisabled:
-                    mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
+                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.background,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -93,10 +89,8 @@ void main() {
               label: 'Salvar',
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.toast.warning.icon,
-                backgroundPressed:
-                    mateoTestColorScheme.toast.warning.background,
-                backgroundDisabled:
-                    mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundPressed: mateoTestColorScheme.toast.warning.background,
+                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.text.primary,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -108,8 +102,7 @@ void main() {
             child: MateoButton(
               variant: MateoButtonVariant.primary,
               label: 'Indisponivel',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.lock, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.lock, color: state.foregroundColor, size: 20),
             ),
           ),
           GoldenTestScenario(
@@ -117,8 +110,7 @@ void main() {
             child: MateoButton(
               variant: MateoButtonVariant.secondary,
               label: 'Indisponivel',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.lock, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.lock, color: state.foregroundColor, size: 20),
             ),
           ),
           GoldenTestScenario(
@@ -128,10 +120,8 @@ void main() {
               label: 'Fechado',
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.buttons.success.background,
-                backgroundPressed:
-                    mateoTestColorScheme.buttons.success.backgroundPressed,
-                backgroundDisabled:
-                    mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
+                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.background,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -181,8 +171,7 @@ void main() {
               label: 'Espacado',
               leadingIconSpacing: 14,
               trailingIconSpacing: 18,
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.tune, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.tune, color: state.foregroundColor, size: 20),
               trailingIconBuilder: (state) => Icon(
                 Icons.arrow_forward,
                 color: state.foregroundColor,
@@ -308,10 +297,8 @@ void main() {
                 label: 'Custom loading',
                 colorScheme: MateoButtonColorScheme(
                   background: mateoTestColorScheme.toast.warning.icon,
-                  backgroundPressed:
-                      mateoTestColorScheme.toast.warning.background,
-                  backgroundDisabled:
-                      mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                  backgroundPressed: mateoTestColorScheme.toast.warning.background,
+                  backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
                   foreground: mateoTestColorScheme.text.primary,
                   foregroundDisabled: mateoTestColorScheme.text.disabled,
                 ),
@@ -323,8 +310,7 @@ void main() {
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
                 label: 'Icon loading',
-                leadingIconBuilder: (state) =>
-                    Icon(Icons.search, color: state.foregroundColor, size: 20),
+                leadingIconBuilder: (state) => Icon(Icons.search, color: state.foregroundColor, size: 20),
                 onPressed: () => Completer<void>().future,
               ),
             ),
@@ -344,8 +330,7 @@ void main() {
             child: MateoButton(
               variant: MateoButtonVariant.primary,
               label: 'Filtrar resultados',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.tune, color: state.foregroundColor, size: 20),
+              leadingIconBuilder: (state) => Icon(Icons.tune, color: state.foregroundColor, size: 20),
               trailingIconBuilder: (state) => Icon(
                 Icons.arrow_drop_down,
                 color: state.foregroundColor,
@@ -379,8 +364,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Indisponivel',
                 fit: MateoButtonFit.expand,
-                leadingIconBuilder: (state) =>
-                    Icon(Icons.lock, color: state.foregroundColor, size: 20),
+                leadingIconBuilder: (state) => Icon(Icons.lock, color: state.foregroundColor, size: 20),
               ),
             ),
           ),
@@ -474,8 +458,7 @@ void main() {
                 MateoButton(
                   variant: MateoButtonVariant.primary,
                   label: 'Indisponivel',
-                  leadingIconBuilder: (state) =>
-                      Icon(Icons.lock, color: state.foregroundColor, size: 20),
+                  leadingIconBuilder: (state) => Icon(Icons.lock, color: state.foregroundColor, size: 20),
                 ),
               ],
             ),

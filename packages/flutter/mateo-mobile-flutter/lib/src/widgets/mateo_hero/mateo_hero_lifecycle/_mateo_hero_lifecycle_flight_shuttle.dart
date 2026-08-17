@@ -18,12 +18,10 @@ class _MateoHeroLifecycleFlightShuttle extends StatefulWidget {
   final Widget child;
 
   @override
-  State<_MateoHeroLifecycleFlightShuttle> createState() =>
-      _MateoHeroLifecycleFlightShuttleState();
+  State<_MateoHeroLifecycleFlightShuttle> createState() => _MateoHeroLifecycleFlightShuttleState();
 }
 
-class _MateoHeroLifecycleFlightShuttleState
-    extends State<_MateoHeroLifecycleFlightShuttle> {
+class _MateoHeroLifecycleFlightShuttleState extends State<_MateoHeroLifecycleFlightShuttle> {
   var _didCallEnd = false;
 
   @override

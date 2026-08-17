@@ -38,8 +38,7 @@ mixin _$MateoMapLibreStyleMetadata {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleMetadataCopyWith<MateoMapLibreStyleMetadata>
-  get copyWith =>
+  $MateoMapLibreStyleMetadataCopyWith<MateoMapLibreStyleMetadata> get copyWith =>
       _$MateoMapLibreStyleMetadataCopyWithImpl<MateoMapLibreStyleMetadata>(
         this as MateoMapLibreStyleMetadata,
         _$identity,
@@ -55,16 +54,13 @@ mixin _$MateoMapLibreStyleMetadata {
             other is MateoMapLibreStyleMetadata &&
             (identical(other.mapboxAutocomposite, mapboxAutocomposite) ||
                 other.mapboxAutocomposite == mapboxAutocomposite) &&
-            (identical(other.mapboxType, mapboxType) ||
-                other.mapboxType == mapboxType) &&
-            (identical(other.mateoStyle, mateoStyle) ||
-                other.mateoStyle == mateoStyle));
+            (identical(other.mapboxType, mapboxType) || other.mapboxType == mapboxType) &&
+            (identical(other.mateoStyle, mateoStyle) || other.mateoStyle == mateoStyle));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, mapboxAutocomposite, mapboxType, mateoStyle);
+  int get hashCode => Object.hash(runtimeType, mapboxAutocomposite, mapboxType, mateoStyle);
 
   @override
   String toString() {
@@ -87,8 +83,7 @@ abstract mixin class $MateoMapLibreStyleMetadataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleMetadataCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleMetadataCopyWith<$Res> {
+class _$MateoMapLibreStyleMetadataCopyWithImpl<$Res> implements $MateoMapLibreStyleMetadataCopyWith<$Res> {
   _$MateoMapLibreStyleMetadataCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleMetadata _self;
@@ -344,8 +339,7 @@ class _MateoMapLibreStyleMetadata implements MateoMapLibreStyleMetadata {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MateoMapLibreStyleMetadataCopyWith<_MateoMapLibreStyleMetadata>
-  get copyWith =>
+  _$MateoMapLibreStyleMetadataCopyWith<_MateoMapLibreStyleMetadata> get copyWith =>
       __$MateoMapLibreStyleMetadataCopyWithImpl<_MateoMapLibreStyleMetadata>(
         this,
         _$identity,
@@ -363,16 +357,13 @@ class _MateoMapLibreStyleMetadata implements MateoMapLibreStyleMetadata {
             other is _MateoMapLibreStyleMetadata &&
             (identical(other.mapboxAutocomposite, mapboxAutocomposite) ||
                 other.mapboxAutocomposite == mapboxAutocomposite) &&
-            (identical(other.mapboxType, mapboxType) ||
-                other.mapboxType == mapboxType) &&
-            (identical(other.mateoStyle, mateoStyle) ||
-                other.mateoStyle == mateoStyle));
+            (identical(other.mapboxType, mapboxType) || other.mapboxType == mapboxType) &&
+            (identical(other.mateoStyle, mateoStyle) || other.mateoStyle == mateoStyle));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, mapboxAutocomposite, mapboxType, mateoStyle);
+  int get hashCode => Object.hash(runtimeType, mapboxAutocomposite, mapboxType, mateoStyle);
 
   @override
   String toString() {
@@ -381,8 +372,7 @@ class _MateoMapLibreStyleMetadata implements MateoMapLibreStyleMetadata {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleMetadataCopyWith<$Res>
-    implements $MateoMapLibreStyleMetadataCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleMetadataCopyWith<$Res> implements $MateoMapLibreStyleMetadataCopyWith<$Res> {
   factory _$MateoMapLibreStyleMetadataCopyWith(
     _MateoMapLibreStyleMetadata value,
     $Res Function(_MateoMapLibreStyleMetadata) _then,
@@ -397,8 +387,7 @@ abstract mixin class _$MateoMapLibreStyleMetadataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleMetadataCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleMetadataCopyWith<$Res> {
+class __$MateoMapLibreStyleMetadataCopyWithImpl<$Res> implements _$MateoMapLibreStyleMetadataCopyWith<$Res> {
   __$MateoMapLibreStyleMetadataCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleMetadata _self;

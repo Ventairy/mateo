@@ -74,8 +74,7 @@ abstract class MateoMapLibreStyle with _$MateoMapLibreStyle {
     required String glyphs,
     required MateoMapLibreStyleMetadata metadata,
     required Map<String, MateoMapLibreStyleSource> sources,
-    @MateoMapLibreStyleLayerConverter()
-    required List<MateoMapLibreStyleLayer> layers,
+    @MateoMapLibreStyleLayerConverter() required List<MateoMapLibreStyleLayer> layers,
   }) = _MateoMapLibreStyle;
 
   /// Builds the Mateo Mobile light map style with runtime-configurable tile and

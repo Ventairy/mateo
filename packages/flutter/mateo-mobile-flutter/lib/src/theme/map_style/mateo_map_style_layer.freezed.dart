@@ -36,8 +36,7 @@ mixin _$MateoMapLibreStyleLayer {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, const DeepCollectionEquality().hash(paint));
+  int get hashCode => Object.hash(runtimeType, id, const DeepCollectionEquality().hash(paint));
 
   @override
   String toString() {
@@ -56,8 +55,7 @@ abstract mixin class $MateoMapLibreStyleLayerCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleLayerCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleLayerCopyWith<$Res> {
+class _$MateoMapLibreStyleLayerCopyWithImpl<$Res> implements $MateoMapLibreStyleLayerCopyWith<$Res> {
   _$MateoMapLibreStyleLayerCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleLayer _self;
@@ -197,8 +195,7 @@ extension MateoMapLibreStyleLayerPatterns on MateoMapLibreStyleLayer {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, MateoMapLibreStyleBackgroundPaint paint)?
-    background,
+    TResult Function(String id, MateoMapLibreStyleBackgroundPaint paint)? background,
     TResult Function(
       String id,
       MateoMapLibreStyleFillPaint paint,
@@ -376,8 +373,7 @@ extension MateoMapLibreStyleLayerPatterns on MateoMapLibreStyleLayer {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, MateoMapLibreStyleBackgroundPaint paint)?
-    background,
+    TResult? Function(String id, MateoMapLibreStyleBackgroundPaint paint)? background,
     TResult? Function(
       String id,
       MateoMapLibreStyleFillPaint paint,
@@ -491,8 +487,7 @@ class MateoMapBackgroundLayer implements MateoMapLibreStyleLayer {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapBackgroundLayerCopyWith<$Res>
-    implements $MateoMapLibreStyleLayerCopyWith<$Res> {
+abstract mixin class $MateoMapBackgroundLayerCopyWith<$Res> implements $MateoMapLibreStyleLayerCopyWith<$Res> {
   factory $MateoMapBackgroundLayerCopyWith(
     MateoMapBackgroundLayer value,
     $Res Function(MateoMapBackgroundLayer) _then,
@@ -505,8 +500,7 @@ abstract mixin class $MateoMapBackgroundLayerCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapBackgroundLayerCopyWithImpl<$Res>
-    implements $MateoMapBackgroundLayerCopyWith<$Res> {
+class _$MateoMapBackgroundLayerCopyWithImpl<$Res> implements $MateoMapBackgroundLayerCopyWith<$Res> {
   _$MateoMapBackgroundLayerCopyWithImpl(this._self, this._then);
 
   final MateoMapBackgroundLayer _self;
@@ -583,8 +577,7 @@ class MateoMapFillLayer implements MateoMapLibreStyleLayer {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.paint, paint) || other.paint == paint) &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.sourceLayer, sourceLayer) ||
-                other.sourceLayer == sourceLayer) &&
+            (identical(other.sourceLayer, sourceLayer) || other.sourceLayer == sourceLayer) &&
             (identical(other.minzoom, minzoom) || other.minzoom == minzoom) &&
             (identical(other.maxzoom, maxzoom) || other.maxzoom == maxzoom) &&
             (identical(other.filter, filter) || other.filter == filter));
@@ -609,8 +602,7 @@ class MateoMapFillLayer implements MateoMapLibreStyleLayer {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapFillLayerCopyWith<$Res>
-    implements $MateoMapLibreStyleLayerCopyWith<$Res> {
+abstract mixin class $MateoMapFillLayerCopyWith<$Res> implements $MateoMapLibreStyleLayerCopyWith<$Res> {
   factory $MateoMapFillLayerCopyWith(
     MateoMapFillLayer value,
     $Res Function(MateoMapFillLayer) _then,
@@ -632,8 +624,7 @@ abstract mixin class $MateoMapFillLayerCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapFillLayerCopyWithImpl<$Res>
-    implements $MateoMapFillLayerCopyWith<$Res> {
+class _$MateoMapFillLayerCopyWithImpl<$Res> implements $MateoMapFillLayerCopyWith<$Res> {
   _$MateoMapFillLayerCopyWithImpl(this._self, this._then);
 
   final MateoMapFillLayer _self;
@@ -750,8 +741,7 @@ class MateoMapLineLayer implements MateoMapLibreStyleLayer {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.paint, paint) || other.paint == paint) &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.sourceLayer, sourceLayer) ||
-                other.sourceLayer == sourceLayer) &&
+            (identical(other.sourceLayer, sourceLayer) || other.sourceLayer == sourceLayer) &&
             (identical(other.minzoom, minzoom) || other.minzoom == minzoom) &&
             (identical(other.maxzoom, maxzoom) || other.maxzoom == maxzoom) &&
             (identical(other.filter, filter) || other.filter == filter));
@@ -776,8 +766,7 @@ class MateoMapLineLayer implements MateoMapLibreStyleLayer {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapLineLayerCopyWith<$Res>
-    implements $MateoMapLibreStyleLayerCopyWith<$Res> {
+abstract mixin class $MateoMapLineLayerCopyWith<$Res> implements $MateoMapLibreStyleLayerCopyWith<$Res> {
   factory $MateoMapLineLayerCopyWith(
     MateoMapLineLayer value,
     $Res Function(MateoMapLineLayer) _then,
@@ -799,8 +788,7 @@ abstract mixin class $MateoMapLineLayerCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapLineLayerCopyWithImpl<$Res>
-    implements $MateoMapLineLayerCopyWith<$Res> {
+class _$MateoMapLineLayerCopyWithImpl<$Res> implements $MateoMapLineLayerCopyWith<$Res> {
   _$MateoMapLineLayerCopyWithImpl(this._self, this._then);
 
   final MateoMapLineLayer _self;
@@ -919,8 +907,7 @@ class MateoMapSymbolLayer implements MateoMapLibreStyleLayer {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.paint, paint) || other.paint == paint) &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.sourceLayer, sourceLayer) ||
-                other.sourceLayer == sourceLayer) &&
+            (identical(other.sourceLayer, sourceLayer) || other.sourceLayer == sourceLayer) &&
             (identical(other.minzoom, minzoom) || other.minzoom == minzoom) &&
             (identical(other.maxzoom, maxzoom) || other.maxzoom == maxzoom) &&
             (identical(other.filter, filter) || other.filter == filter) &&
@@ -947,8 +934,7 @@ class MateoMapSymbolLayer implements MateoMapLibreStyleLayer {
 }
 
 /// @nodoc
-abstract mixin class $MateoMapSymbolLayerCopyWith<$Res>
-    implements $MateoMapLibreStyleLayerCopyWith<$Res> {
+abstract mixin class $MateoMapSymbolLayerCopyWith<$Res> implements $MateoMapLibreStyleLayerCopyWith<$Res> {
   factory $MateoMapSymbolLayerCopyWith(
     MateoMapSymbolLayer value,
     $Res Function(MateoMapSymbolLayer) _then,
@@ -972,8 +958,7 @@ abstract mixin class $MateoMapSymbolLayerCopyWith<$Res>
 }
 
 /// @nodoc
-class _$MateoMapSymbolLayerCopyWithImpl<$Res>
-    implements $MateoMapSymbolLayerCopyWith<$Res> {
+class _$MateoMapSymbolLayerCopyWithImpl<$Res> implements $MateoMapSymbolLayerCopyWith<$Res> {
   _$MateoMapSymbolLayerCopyWithImpl(this._self, this._then);
 
   final MateoMapSymbolLayer _self;

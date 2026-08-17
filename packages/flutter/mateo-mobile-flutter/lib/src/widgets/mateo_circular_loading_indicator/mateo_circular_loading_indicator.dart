@@ -63,12 +63,10 @@ class MateoCircularLoadingIndicator extends StatefulWidget {
 
   /// The mutable state that owns the indicator animation.
   @override
-  State<MateoCircularLoadingIndicator> createState() =>
-      _MateoCircularLoadingIndicatorState();
+  State<MateoCircularLoadingIndicator> createState() => _MateoCircularLoadingIndicatorState();
 }
 
-class _MateoCircularLoadingIndicatorState
-    extends State<MateoCircularLoadingIndicator>
+class _MateoCircularLoadingIndicatorState extends State<MateoCircularLoadingIndicator>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final AnimationController _controller;
   late bool _applicationIsActive;
@@ -79,9 +77,7 @@ class _MateoCircularLoadingIndicatorState
 
     final initialLifecycleState = WidgetsBinding.instance.lifecycleState;
 
-    _applicationIsActive =
-        initialLifecycleState == null ||
-        initialLifecycleState == AppLifecycleState.resumed;
+    _applicationIsActive = initialLifecycleState == null || initialLifecycleState == AppLifecycleState.resumed;
 
     _controller = AnimationController(
       vsync: this,
@@ -169,18 +165,12 @@ class _MateoCircularLoadingIndicatorLayout extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final width = constraints.hasBoundedWidth
-            ? constraints.maxWidth
-            : double.infinity;
+        final width = constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity;
 
-        final height = constraints.hasBoundedHeight
-            ? constraints.maxHeight
-            : double.infinity;
+        final height = constraints.hasBoundedHeight ? constraints.maxHeight : double.infinity;
 
         final availableSize = math.min(width, height);
-        final resolvedSize = availableSize.isFinite
-            ? availableSize
-            : MateoCircularLoadingIndicator._fallbackSize;
+        final resolvedSize = availableSize.isFinite ? availableSize : MateoCircularLoadingIndicator._fallbackSize;
 
         return _buildSizedIndicator(resolvedSize);
       },

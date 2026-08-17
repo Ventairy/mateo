@@ -9,11 +9,7 @@ class _MateoSwipeToPopSurfaceHandoffScope extends InheritedWidget {
   final MateoSwipeToPopHandoffState? state;
 
   static MateoSwipeToPopHandoffState? maybeStateOf(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<
-          _MateoSwipeToPopSurfaceHandoffScope
-        >()
-        ?.state;
+    return context.dependOnInheritedWidgetOfExactType<_MateoSwipeToPopSurfaceHandoffScope>()?.state;
   }
 
   @override

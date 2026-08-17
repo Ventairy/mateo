@@ -55,8 +55,7 @@ class MateoHeroTextFlight extends StatelessWidget {
       flightEndStyle: flightEndStyle,
       flightProgress: flightProgress,
       endpointMaxLines: endpointMaxLines ?? this.endpointMaxLines,
-      endpointReservedLayoutWidth:
-          endpointReservedLayoutWidth ?? this.endpointReservedLayoutWidth,
+      endpointReservedLayoutWidth: endpointReservedLayoutWidth ?? this.endpointReservedLayoutWidth,
       progressiveClampMaxLines: progressiveClampMaxLines,
       progressiveClampProgress: progressiveClampProgress,
       padding: padding,
@@ -209,8 +208,7 @@ class MateoHeroTextFlight extends StatelessWidget {
     )..layout(maxWidth: layoutWidth);
     final textHeight = textPainter.height * (scaledMetrics?.scaleY ?? 1);
 
-    return textHeight +
-        (padding?.resolve(Directionality.of(context)).vertical ?? 0);
+    return textHeight + (padding?.resolve(Directionality.of(context)).vertical ?? 0);
   }
 
   double? _cachedEstimatedHeight({
@@ -264,8 +262,7 @@ class MateoHeroTextFlight extends StatelessWidget {
   }) {
     if (!shortenToBounds) return maxLines;
 
-    final lineHeight =
-        scaledMetrics?.lineHeight ?? metrics.stylePreferredLineHeight;
+    final lineHeight = scaledMetrics?.lineHeight ?? metrics.stylePreferredLineHeight;
     if (lineHeight <= 0) return maxLines;
 
     final boundedMaxLines = _boundedMaxLinesOf(null);
@@ -360,10 +357,7 @@ class MateoHeroTextFlight extends StatelessWidget {
 
   MateoHeroTextScaledMetrics? _scaledMetricsOf(BuildContext context) {
     final metrics = flightMetrics;
-    if (metrics != null &&
-        shortenToBounds &&
-        flightBeginStyle != null &&
-        flightEndStyle != null) {
+    if (metrics != null && shortenToBounds && flightBeginStyle != null && flightEndStyle != null) {
       return _optimizedScaledMetrics(context: context, metrics: metrics);
     }
     return _legacyScaledMetrics(context);
@@ -375,10 +369,7 @@ class MateoHeroTextFlight extends StatelessWidget {
   }) {
     final currentFontSize = style.fontSize;
     final stableFontSize = flightEndStyle!.fontSize;
-    if (currentFontSize == null ||
-        currentFontSize <= 0 ||
-        stableFontSize == null ||
-        stableFontSize <= 0) {
+    if (currentFontSize == null || currentFontSize <= 0 || stableFontSize == null || stableFontSize <= 0) {
       return null;
     }
 
@@ -393,8 +384,7 @@ class MateoHeroTextFlight extends StatelessWidget {
       metrics.endBaseline,
       progress,
     );
-    final scaledBaseline =
-        metrics.scaledBaseline * (lineHeight / metrics.scaledLineHeight);
+    final scaledBaseline = metrics.scaledBaseline * (lineHeight / metrics.scaledLineHeight);
 
     return MateoHeroTextScaledMetrics(
       style: style.copyWith(fontSize: stableFontSize),
@@ -412,10 +402,7 @@ class MateoHeroTextFlight extends StatelessWidget {
     final currentFontSize = style.fontSize;
     final stableFontSize = endStyle?.fontSize;
     if (!shortenToBounds || beginStyle == null || endStyle == null) return null;
-    if (currentFontSize == null ||
-        currentFontSize <= 0 ||
-        stableFontSize == null ||
-        stableFontSize <= 0) {
+    if (currentFontSize == null || currentFontSize <= 0 || stableFontSize == null || stableFontSize <= 0) {
       return null;
     }
 
@@ -439,9 +426,7 @@ class MateoHeroTextFlight extends StatelessWidget {
       endTextMetrics.baseline,
       progress,
     );
-    final scaledBaseline =
-        scaledTextMetrics.baseline *
-        (lineHeight / scaledTextMetrics.lineHeight);
+    final scaledBaseline = scaledTextMetrics.baseline * (lineHeight / scaledTextMetrics.lineHeight);
 
     return MateoHeroTextScaledMetrics(
       style: scaledStyle,
@@ -515,8 +500,7 @@ class MateoHeroTextFlight extends StatelessWidget {
     if (endFontSize == null || endFontSize <= 0) return null;
 
     if (flightProgress < switchThreshold) {
-      final beginLayoutWidthInEndFont =
-          beginLayoutWidth * (endFontSize / beginFontSize);
+      final beginLayoutWidthInEndFont = beginLayoutWidth * (endFontSize / beginFontSize);
 
       return math.min(beginLayoutWidthInEndFont, endLayoutWidth);
     }
@@ -541,8 +525,7 @@ class MateoHeroTextFlight extends StatelessWidget {
   }) {
     final endpointReservedLayoutWidth = this.endpointReservedLayoutWidth;
     final endpointMaxLines = this.endpointMaxLines;
-    if (endpointReservedLayoutWidth == null ||
-        endpointReservedLayoutWidth <= 0) {
+    if (endpointReservedLayoutWidth == null || endpointReservedLayoutWidth <= 0) {
       return null;
     }
 
@@ -587,9 +570,7 @@ class MateoHeroTextFlight extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: Align(
-          alignment: shortenToBounds
-              ? AlignmentDirectional.topStart
-              : Alignment.centerLeft,
+          alignment: shortenToBounds ? AlignmentDirectional.topStart : Alignment.centerLeft,
           child: shortenToBounds
               ? _buildShortenedText(context)
               : _buildText(

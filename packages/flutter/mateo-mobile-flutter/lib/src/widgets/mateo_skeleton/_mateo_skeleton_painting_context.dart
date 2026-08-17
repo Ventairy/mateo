@@ -14,11 +14,7 @@ class _MateoSkeletonPaintingContext extends PaintingContext {
       return child.child == null;
     }
 
-    if (child
-        is ContainerRenderObjectMixin<
-          RenderBox,
-          ContainerBoxParentData<RenderBox>
-        >) {
+    if (child is ContainerRenderObjectMixin<RenderBox, ContainerBoxParentData<RenderBox>>) {
       return child.firstChild == null;
     }
 

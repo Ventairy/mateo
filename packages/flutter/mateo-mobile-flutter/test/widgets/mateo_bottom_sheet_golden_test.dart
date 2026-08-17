@@ -335,8 +335,7 @@ class _LongContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: 18,
-      separatorBuilder: (context, index) =>
-          Divider(color: context.mateo.palette.neutral[6]),
+      separatorBuilder: (context, index) => Divider(color: context.mateo.palette.neutral[6]),
       itemBuilder: (context, index) => SizedBox(
         height: 64,
         child: Align(

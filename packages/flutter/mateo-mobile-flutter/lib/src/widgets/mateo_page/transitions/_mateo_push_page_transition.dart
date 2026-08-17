@@ -10,11 +10,7 @@ final class _MateoPushPageTransitionView extends SingleChildRenderObjectWidget {
     required this.useLinearProgress,
     required Widget child,
   }) : super(
-         child:
-             fadeIntoDestination &&
-                 !kIsWeb &&
-                 allowSnapshotting &&
-                 child is! RepaintBoundary
+         child: fadeIntoDestination && !kIsWeb && allowSnapshotting && child is! RepaintBoundary
              ? RepaintBoundary(child: child)
              : child,
        );
@@ -28,17 +24,14 @@ final class _MateoPushPageTransitionView extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    final allowEdgeSnapshot =
-        fadeIntoDestination && !kIsWeb && allowSnapshotting;
+    final allowEdgeSnapshot = fadeIntoDestination && !kIsWeb && allowSnapshotting;
     return _RenderMateoPushPageTransition(
       animation: animation,
       direction: direction,
       outgoing: outgoing,
       allowEdgeSnapshot: allowEdgeSnapshot,
       useLinearProgress: useLinearProgress,
-      devicePixelRatio: allowEdgeSnapshot
-          ? MediaQuery.devicePixelRatioOf(context)
-          : 1,
+      devicePixelRatio: allowEdgeSnapshot ? MediaQuery.devicePixelRatioOf(context) : 1,
     );
   }
 
@@ -47,17 +40,14 @@ final class _MateoPushPageTransitionView extends SingleChildRenderObjectWidget {
     BuildContext context,
     covariant _RenderMateoPushPageTransition renderObject,
   ) {
-    final allowEdgeSnapshot =
-        fadeIntoDestination && !kIsWeb && allowSnapshotting;
+    final allowEdgeSnapshot = fadeIntoDestination && !kIsWeb && allowSnapshotting;
     renderObject
       ..animation = animation
       ..direction = direction
       ..outgoing = outgoing
       ..allowEdgeSnapshot = allowEdgeSnapshot
       ..useLinearProgress = useLinearProgress
-      ..devicePixelRatio = allowEdgeSnapshot
-          ? MediaQuery.devicePixelRatioOf(context)
-          : 1;
+      ..devicePixelRatio = allowEdgeSnapshot ? MediaQuery.devicePixelRatioOf(context) : 1;
   }
 }
 
@@ -245,8 +235,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     final alpha = (progress * 255).round();
     if (alpha == 0 || alpha == 255) return;
 
-    final destinationPaint = (_destinationPaint ??= Paint())
-      ..color = _mateoWhiteWithAlpha(alpha);
+    final destinationPaint = (_destinationPaint ??= Paint())..color = _mateoWhiteWithAlpha(alpha);
     context.canvas.drawImageRect(
       image,
       _edgeImageBounds,
@@ -355,9 +344,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
 
   void _updateProgress() {
     final animationValue = _animation.value;
-    _progress = _useLinearProgress
-        ? animationValue
-        : _mateoPageEaseInOutCubic.transform(animationValue);
+    _progress = _useLinearProgress ? animationValue : _mateoPageEaseInOutCubic.transform(animationValue);
   }
 
   void _markMotionChanged() {

@@ -28,9 +28,7 @@ final class _MateoPageCubicCurve {
     final secondDerivative = 6 * _ax * parameter + 2 * _bx;
 
     // One Halley refinement stays within 0.00091 of the solved Mateo curves.
-    parameter -=
-        (2 * error * derivative) /
-        (2 * derivative * derivative - error * secondDerivative);
+    parameter -= (2 * error * derivative) / (2 * derivative * derivative - error * secondDerivative);
 
     return ((_ay * parameter + _by) * parameter + _cy) * parameter;
   }

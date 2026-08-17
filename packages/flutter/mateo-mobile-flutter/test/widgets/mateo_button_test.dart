@@ -180,9 +180,7 @@ void main() {
           ),
         );
 
-        final buttonWidth = tester
-            .getSize(find.byKey(const Key('mateo_button_container')))
-            .width;
+        final buttonWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
         final screenWidth = tester.getSize(find.byType(MaterialApp)).width;
         expect(buttonWidth, lessThan(screenWidth));
       });
@@ -231,9 +229,7 @@ void main() {
           );
 
           expect(
-            tester
-                .getSize(find.byKey(const Key('mateo_button_container')))
-                .height,
+            tester.getSize(find.byKey(const Key('mateo_button_container'))).height,
             lessThan(200),
           );
         },
@@ -377,8 +373,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.buttons.success.background,
             backgroundPressed: mateoTestColorScheme.buttons.success.background,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -425,10 +420,8 @@ void main() {
         (tester) async {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.buttons.success.background,
-            backgroundPressed:
-                mateoTestColorScheme.buttons.success.backgroundPressed,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -517,8 +510,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.toast.warning.icon,
             backgroundPressed: mateoTestColorScheme.toast.warning.icon,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -640,8 +632,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.buttons.primary.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -725,8 +716,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -746,8 +736,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -766,8 +755,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -919,8 +907,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -1020,15 +1007,11 @@ void main() {
             ),
           );
 
-          final restingWidth = tester
-              .getSize(find.byKey(const Key('mateo_button_container')))
-              .width;
+          final restingWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
           await tester.tap(find.text('Enviar candidatura completa'));
           await _pumpLoadingState(tester);
           await tester.pump(const Duration(milliseconds: 300));
-          final loadingWidth = tester
-              .getSize(find.byKey(const Key('mateo_button_container')))
-              .width;
+          final loadingWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
 
           expect(loadingWidth, lessThan(restingWidth));
         },
@@ -1102,8 +1085,7 @@ void main() {
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
                 label: 'Ligar agora',
-                leadingIconBuilder: (state) =>
-                    const SizedBox.square(dimension: 24),
+                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1126,8 +1108,7 @@ void main() {
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
                 label: 'Ligar agora',
-                leadingIconBuilder: (state) =>
-                    const SizedBox.square(dimension: 24),
+                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1396,8 +1377,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -1763,9 +1743,7 @@ Color? _buttonBackgroundColor(WidgetTester tester) {
 }
 
 EdgeInsetsGeometry? _buttonPadding(WidgetTester tester) {
-  return tester
-      .widget<Padding>(find.byKey(const Key('mateo_button_container')))
-      .padding;
+  return tester.widget<Padding>(find.byKey(const Key('mateo_button_container'))).padding;
 }
 
 TextStyle _labelStyle(WidgetTester tester) {
@@ -1788,9 +1766,7 @@ double _contentFadeOpacity(WidgetTester tester) {
       )
       .toList();
 
-  return fadeTransitions
-      .map((fadeTransition) => fadeTransition.opacity.value)
-      .reduce(math.min);
+  return fadeTransitions.map((fadeTransition) => fadeTransition.opacity.value).reduce(math.min);
 }
 
 Future<void> _pumpLoadingState(WidgetTester tester) async {

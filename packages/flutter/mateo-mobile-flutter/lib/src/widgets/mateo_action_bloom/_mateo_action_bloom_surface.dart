@@ -29,12 +29,10 @@ class MateoActionBloomSurface extends StatefulWidget {
   final BorderSide? borderSide;
 
   @override
-  State<MateoActionBloomSurface> createState() =>
-      _MateoActionBloomSurfaceState();
+  State<MateoActionBloomSurface> createState() => _MateoActionBloomSurfaceState();
 }
 
-class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
-    with SingleTickerProviderStateMixin {
+class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface> with SingleTickerProviderStateMixin {
   late final OverlayPortalController _overlayController;
   AnimationController? _animationController;
   CurvedAnimation? _surfaceAnimation;
@@ -84,9 +82,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
       return;
     }
 
-    if (status == AnimationStatus.dismissed &&
-        !_isPanelOpen &&
-        _isPanelMounted) {
+    if (status == AnimationStatus.dismissed && !_isPanelOpen && _isPanelMounted) {
       final closedCompleter = _closedCompleter;
       final previousFocus = _previousFocus;
       _closedCompleter = null;
@@ -197,9 +193,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
   }
 
   KeyEventResult _handleOverlayKeyEvent(FocusNode _, KeyEvent event) {
-    if (_isPanelMounted &&
-        event is KeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.escape) {
+    if (_isPanelMounted && event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.escape) {
       _requestPanelClose();
       return KeyEventResult.handled;
     }
@@ -313,8 +307,7 @@ class _MateoActionBloomSurfaceState extends State<MateoActionBloomSurface>
                         actions: _actions,
                         animation: surfaceAnimation,
                         opensAtTop: geometry.opensAtTop,
-                        sourceOffsetFromPanelAnchor:
-                            geometry.sourceOffsetFromPanelAnchor,
+                        sourceOffsetFromPanelAnchor: geometry.sourceOffsetFromPanelAnchor,
                         onSelected: _handleActionSelected,
                       ),
                     ),

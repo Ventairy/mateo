@@ -194,9 +194,7 @@ void main() {
         );
 
         final initialPainter = _painterOf(tester);
-        final initialCenterAngle =
-            initialPainter.startAngle + initialPainter.indicatorSweep / 2
-                as double;
+        final initialCenterAngle = initialPainter.startAngle + initialPainter.indicatorSweep / 2 as double;
         expect(initialCenterAngle, closeTo(-math.pi / 2, 0.001));
         expect(
           initialPainter.indicatorSweep,
@@ -206,9 +204,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 200));
 
         final rotatedPainter = _painterOf(tester);
-        final rotatedCenterAngle =
-            rotatedPainter.startAngle + rotatedPainter.indicatorSweep / 2
-                as double;
+        final rotatedCenterAngle = rotatedPainter.startAngle + rotatedPainter.indicatorSweep / 2 as double;
         expect(rotatedCenterAngle, closeTo(0, 0.02));
       },
     );
@@ -263,9 +259,7 @@ void main() {
         );
 
         final painterBefore = _painterOf(tester);
-        final centerAngleBefore =
-            painterBefore.startAngle + painterBefore.indicatorSweep / 2
-                as double;
+        final centerAngleBefore = painterBefore.startAngle + painterBefore.indicatorSweep / 2 as double;
         await tester.pump(const Duration(milliseconds: 200));
         final painterAfter = _painterOf(tester);
 

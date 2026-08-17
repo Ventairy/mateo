@@ -101,8 +101,7 @@ class MateoPage<T> extends Page<T> {
   bool canUpdate(Page<dynamic> other) {
     return super.canUpdate(other) &&
         other is MateoPage<dynamic> &&
-        _transitionFamilyOf(transition) ==
-            _transitionFamilyOf(other.transition);
+        _transitionFamilyOf(transition) == _transitionFamilyOf(other.transition);
   }
 
   /// The route that presents this page using native or explicit Mateo motion.
@@ -111,8 +110,7 @@ class MateoPage<T> extends Page<T> {
   /// are disabled when [MediaQuery.disableAnimationsOf] is `true`.
   @override
   Route<T> createRoute(BuildContext context) {
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     final platform = Theme.of(context).platform;
 
     if (transition case final transition?) {

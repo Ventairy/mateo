@@ -66,6 +66,5 @@ class MateoSkeletonColorScheme {
           skeletonTextGlow == other.skeletonTextGlow;
 
   @override
-  int get hashCode =>
-      Object.hash(bone, shimmerGlow, skeletonText, skeletonTextGlow);
+  int get hashCode => Object.hash(bone, shimmerGlow, skeletonText, skeletonTextGlow);
 }

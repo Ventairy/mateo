@@ -150,8 +150,7 @@ class MateoApp extends StatelessWidget {
   final RouteFactory? onUnknownRoute;
 
   /// The callback that receives navigation notifications.
-  final NotificationListenerCallback<NavigationNotification>?
-  onNavigationNotification;
+  final NotificationListenerCallback<NavigationNotification>? onNavigationNotification;
 
   /// The observers notified when the [Navigator] changes its route stack.
   final List<NavigatorObserver>? navigatorObservers;
@@ -231,21 +230,19 @@ class MateoApp extends StatelessWidget {
 
   final bool _usesRouter;
 
-  static const SystemUiOverlayStyle _systemUiOverlayStyle =
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarContrastEnforced: false,
-        systemStatusBarContrastEnforced: false,
-      );
+  static const SystemUiOverlayStyle _systemUiOverlayStyle = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarContrastEnforced: false,
+    systemStatusBarContrastEnforced: false,
+  );
 
   Widget _buildContent(BuildContext context, Widget? child) {
-    final userContent =
-        builder?.call(context, child) ?? child ?? const SizedBox.shrink();
+    final userContent = builder?.call(context, child) ?? child ?? const SizedBox.shrink();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _systemUiOverlayStyle,

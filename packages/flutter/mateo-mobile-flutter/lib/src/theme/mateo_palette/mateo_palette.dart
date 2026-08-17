@@ -60,9 +60,7 @@ class MateoPalette {
       for (final multiplier in _primaryChromaMultipliers) oklch.c * multiplier,
     ];
 
-    final neutralTint = oklch.c <= 0.000004
-        ? 0.0
-        : (oklch.c / 0.20).clamp(0.0, 1.0);
+    final neutralTint = oklch.c <= 0.000004 ? 0.0 : (oklch.c / 0.20).clamp(0.0, 1.0);
 
     return MateoPalette._(
       primaryColor: mainColor,

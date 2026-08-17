@@ -97,8 +97,7 @@ void main() {
 MateoActionBloomAction _action(String title, IconData icon) {
   return MateoActionBloomAction(
     title: title,
-    iconBuilder: (state) =>
-        Icon(icon, color: state.foregroundColor, size: state.iconSize),
+    iconBuilder: (state) => Icon(icon, color: state.foregroundColor, size: state.iconSize),
     onPressed: (feedbackAnimation) async {},
   );
 }

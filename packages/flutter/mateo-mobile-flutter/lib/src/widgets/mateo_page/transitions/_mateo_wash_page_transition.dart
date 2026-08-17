@@ -16,12 +16,10 @@ final class _MateoWashPageTransitionView extends StatefulWidget {
   final Widget child;
 
   @override
-  State<_MateoWashPageTransitionView> createState() =>
-      _MateoWashPageTransitionViewState();
+  State<_MateoWashPageTransitionView> createState() => _MateoWashPageTransitionViewState();
 }
 
-final class _MateoWashPageTransitionViewState
-    extends State<_MateoWashPageTransitionView> {
+final class _MateoWashPageTransitionViewState extends State<_MateoWashPageTransitionView> {
   final _snapshotController = SnapshotController();
   late _MateoWashPageTransitionPainter _painter;
 
@@ -58,8 +56,7 @@ final class _MateoWashPageTransitionViewState
   }
 
   void _updateSnapshotting() {
-    _snapshotController.allowSnapshotting =
-        _canSnapshot && widget.animation.isAnimating;
+    _snapshotController.allowSnapshotting = _canSnapshot && widget.animation.isAnimating;
   }
 
   _MateoWashPageTransitionPainter _createPainter() {
@@ -163,12 +160,10 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
 
   final Animation<double> animation;
   Paint? _snapshotPaint;
-  final LayerHandle<ShaderMaskLayer> _gradientLayer =
-      LayerHandle<ShaderMaskLayer>();
+  final LayerHandle<ShaderMaskLayer> _gradientLayer = LayerHandle<ShaderMaskLayer>();
   LayerHandle<ClipRectLayer>? _clipLayer;
   late final PaintingContextCallback _paintLiveCallback = _paintLiveChild;
-  late final PaintingContextCallback _paintSnapshotCallback =
-      _paintSnapshotChild;
+  late final PaintingContextCallback _paintSnapshotCallback = _paintSnapshotChild;
   final _gradientStops = List<double>.filled(
     _featherSampleCount + 1,
     0,
@@ -266,8 +261,7 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
 
   void _paintSnapshotChild(PaintingContext context, Offset offset) {
     final pixelRatio = _snapshotPixelRatio;
-    if (_snapshotSourceLocalRect != _activeLocalRect ||
-        _snapshotSourcePixelRatio != pixelRatio) {
+    if (_snapshotSourceLocalRect != _activeLocalRect || _snapshotSourcePixelRatio != pixelRatio) {
       _snapshotSourceLocalRect = _activeLocalRect;
       _snapshotSourcePixelRatio = pixelRatio;
       _snapshotSourceRect = Rect.fromLTRB(
@@ -333,8 +327,7 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
       );
       _maximumRadius =
           math.sqrt(
-            horizontalDistance * horizontalDistance +
-                verticalDistance * verticalDistance,
+            horizontalDistance * horizontalDistance + verticalDistance * verticalDistance,
           ) +
           _edgeSoftness;
     }
@@ -375,9 +368,7 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
         math.min(size.width, (_origin.dx + paddedRadius).ceilToDouble()),
         math.min(size.height, (_origin.dy + paddedRadius).ceilToDouble()),
       );
-      _activeRect = offset == Offset.zero
-          ? _activeLocalRect
-          : _activeLocalRect.shift(offset);
+      _activeRect = offset == Offset.zero ? _activeLocalRect : _activeLocalRect.shift(offset);
       _gradientCenter = Offset(
         _origin.dx - _activeLocalRect.left,
         _origin.dy - _activeLocalRect.top,
@@ -388,13 +379,10 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
       final opaqueStop = math.max(0, radius - _edgeSoftness) / radius;
       final featherSpan = 1 - opaqueStop;
       for (var index = 0; index <= _featherSampleCount; index++) {
-        _gradientStops[index] =
-            opaqueStop + featherSpan * _featherProgress[index];
+        _gradientStops[index] = opaqueStop + featherSpan * _featherProgress[index];
       }
     }
-    if (_revealShader == null ||
-        _shaderRadius != radius ||
-        _shaderCenterAlpha != _centerAlpha) {
+    if (_revealShader == null || _shaderRadius != radius || _shaderCenterAlpha != _centerAlpha) {
       _shaderRadius = radius;
       _shaderCenterAlpha = _centerAlpha;
       _revealShader = ui.Gradient.radial(
@@ -443,14 +431,10 @@ final class _MateoWashPageTransitionPainter extends SnapshotPainter {
     if (progress >= _closingRadiusBrakeStart) return progress;
     if (progress <= _closingRadiusHold) return _closingRadiusHold;
 
-    final brakeProgress =
-        (progress - _closingRadiusHold) /
-        (_closingRadiusBrakeStart - _closingRadiusHold);
-    final easedBrakeProgress =
-        brakeProgress * brakeProgress * (2 - brakeProgress);
+    final brakeProgress = (progress - _closingRadiusHold) / (_closingRadiusBrakeStart - _closingRadiusHold);
+    final easedBrakeProgress = brakeProgress * brakeProgress * (2 - brakeProgress);
 
-    return _closingRadiusHold +
-        (_closingRadiusBrakeStart - _closingRadiusHold) * easedBrakeProgress;
+    return _closingRadiusHold + (_closingRadiusBrakeStart - _closingRadiusHold) * easedBrakeProgress;
   }
 
   @override

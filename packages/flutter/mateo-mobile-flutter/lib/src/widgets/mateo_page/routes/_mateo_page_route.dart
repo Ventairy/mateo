@@ -63,36 +63,30 @@ abstract class _MateoPageRoute<T> extends PageRoute<T> {
   void _didUpdatePage(MateoPage<T> previousPage, MateoPage<T> updatedPage) {}
 }
 
-final class _MateoMaterialPageRoute<T> extends _MateoPageRoute<T>
-    with MaterialRouteTransitionMixin<T> {
+final class _MateoMaterialPageRoute<T> extends _MateoPageRoute<T> with MaterialRouteTransitionMixin<T> {
   _MateoMaterialPageRoute({
     required super.page,
     required super.disableAnimations,
   });
 
   @override
-  Duration get transitionDuration =>
-      disableAnimations ? Duration.zero : super.transitionDuration;
+  Duration get transitionDuration => disableAnimations ? Duration.zero : super.transitionDuration;
 
   @override
-  Duration get reverseTransitionDuration =>
-      disableAnimations ? Duration.zero : super.reverseTransitionDuration;
+  Duration get reverseTransitionDuration => disableAnimations ? Duration.zero : super.reverseTransitionDuration;
 }
 
-final class _MateoCupertinoPageRoute<T> extends _MateoPageRoute<T>
-    with CupertinoRouteTransitionMixin<T> {
+final class _MateoCupertinoPageRoute<T> extends _MateoPageRoute<T> with CupertinoRouteTransitionMixin<T> {
   _MateoCupertinoPageRoute({
     required super.page,
     required super.disableAnimations,
   });
 
   @override
-  Duration get transitionDuration =>
-      disableAnimations ? Duration.zero : super.transitionDuration;
+  Duration get transitionDuration => disableAnimations ? Duration.zero : super.transitionDuration;
 
   @override
-  Duration get reverseTransitionDuration =>
-      disableAnimations ? Duration.zero : super.reverseTransitionDuration;
+  Duration get reverseTransitionDuration => disableAnimations ? Duration.zero : super.reverseTransitionDuration;
 
   @override
   DelegatedTransitionBuilder? get delegatedTransition =>
@@ -116,28 +110,23 @@ final class _MateoTransitionPageRoute<T> extends _MateoPageRoute<T> {
   Widget? _outgoingChild;
   bool? _outgoingUsesLinearProgress;
   late Widget _outgoingTransition;
-  late final DelegatedTransitionBuilder? _delegatedTransition =
-      switch (transition) {
-        _MateoWashPageTransition() => null,
-        _MateoPushPageTransition() => _buildPushDelegatedTransition,
-      };
+  late final DelegatedTransitionBuilder? _delegatedTransition = switch (transition) {
+    _MateoWashPageTransition() => null,
+    _MateoPushPageTransition() => _buildPushDelegatedTransition,
+  };
 
   @override
-  Duration get transitionDuration =>
-      disableAnimations ? Duration.zero : transition.duration;
+  Duration get transitionDuration => disableAnimations ? Duration.zero : transition.duration;
 
   @override
-  Duration get reverseTransitionDuration =>
-      disableAnimations ? Duration.zero : transition.reverseDuration;
+  Duration get reverseTransitionDuration => disableAnimations ? Duration.zero : transition.reverseDuration;
 
   @override
-  bool get popGestureEnabled =>
-      platform != TargetPlatform.iOS && super.popGestureEnabled;
+  bool get popGestureEnabled => platform != TargetPlatform.iOS && super.popGestureEnabled;
 
   @override
   bool canTransitionFrom(TransitionRoute<dynamic> previousRoute) {
-    return transition is _MateoPushPageTransition &&
-        super.canTransitionFrom(previousRoute);
+    return transition is _MateoPushPageTransition && super.canTransitionFrom(previousRoute);
   }
 
   @override
@@ -183,32 +172,29 @@ final class _MateoTransitionPageRoute<T> extends _MateoPageRoute<T> {
     if (disableAnimations) return child;
 
     final useLinearProgress = popGestureInProgress;
-    if (identical(_enteringChild, child) &&
-        _enteringUsesLinearProgress == useLinearProgress) {
+    if (identical(_enteringChild, child) && _enteringUsesLinearProgress == useLinearProgress) {
       return _enteringTransition;
     }
 
     _enteringChild = child;
     _enteringUsesLinearProgress = useLinearProgress;
     final transitionView = switch (transition) {
-      _MateoWashPageTransition(:final direction) =>
-        _MateoWashPageTransitionView(
-          animation: animation,
-          direction: direction,
-          allowSnapshotting: allowSnapshotting,
-          useLinearProgress: useLinearProgress,
-          child: child,
-        ),
-      _MateoPushPageTransition(:final direction) =>
-        _MateoPushPageTransitionView(
-          animation: animation,
-          direction: direction,
-          outgoing: false,
-          fadeIntoDestination: true,
-          allowSnapshotting: allowSnapshotting,
-          useLinearProgress: useLinearProgress,
-          child: child,
-        ),
+      _MateoWashPageTransition(:final direction) => _MateoWashPageTransitionView(
+        animation: animation,
+        direction: direction,
+        allowSnapshotting: allowSnapshotting,
+        useLinearProgress: useLinearProgress,
+        child: child,
+      ),
+      _MateoPushPageTransition(:final direction) => _MateoPushPageTransitionView(
+        animation: animation,
+        direction: direction,
+        outgoing: false,
+        fadeIntoDestination: true,
+        allowSnapshotting: allowSnapshotting,
+        useLinearProgress: useLinearProgress,
+        child: child,
+      ),
     };
     return _enteringTransition = platform == TargetPlatform.android
         ? _MateoPredictiveBackGestureDetector(
@@ -229,8 +215,7 @@ final class _MateoTransitionPageRoute<T> extends _MateoPageRoute<T> {
 
     final push = transition as _MateoPushPageTransition;
     final useLinearProgress = popGestureInProgress;
-    if (identical(_outgoingChild, child) &&
-        _outgoingUsesLinearProgress == useLinearProgress) {
+    if (identical(_outgoingChild, child) && _outgoingUsesLinearProgress == useLinearProgress) {
       return _outgoingTransition;
     }
 

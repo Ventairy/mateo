@@ -306,8 +306,7 @@ void main() {
 
       await _pumpFeed(
         tester,
-        onPrevious: (item, index) =>
-            previousLogs.add((item: item, index: index)),
+        onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
       );
 
       await _dragCard(tester, 'first', const Offset(0, -300));
@@ -384,8 +383,7 @@ void main() {
 
         await _pumpFeed(
           tester,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         await _dragCurrentCard(
@@ -406,8 +404,7 @@ void main() {
 
         await _pumpFeed(
           tester,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         await _dragCurrentCard(
@@ -658,8 +655,7 @@ void main() {
         await _pumpFeed(
           tester,
           controller: controller,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
         final nextFuture = controller.next();
         await tester.pumpAndSettle();
@@ -915,8 +911,7 @@ void main() {
           items: const ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'],
         );
 
-        Finder currentCardFinder() =>
-            find.byKey(_cardKey(_currentCardLabel(tester)));
+        Finder currentCardFinder() => find.byKey(_cardKey(_currentCardLabel(tester)));
 
         await tester.drag(currentCardFinder(), const Offset(0, -300));
         await tester.pump(const Duration(milliseconds: 16));
@@ -1161,8 +1156,7 @@ void main() {
         await _pumpTypedFeed<String>(
           tester,
           items: const ['first', 'second', 'third'],
-          builder: (context, item, index) =>
-              _CreationTrackingCard(label: item, onCreate: creations.add),
+          builder: (context, item, index) => _CreationTrackingCard(label: item, onCreate: creations.add),
         );
         creations.clear();
 
@@ -1186,8 +1180,7 @@ void main() {
                 keyBuilder: (item, index) => item,
               ),
               endBuilder: _endBuilder,
-              builder: (context, item, index) =>
-                  _CreationTrackingCard(label: item, onCreate: creations.add),
+              builder: (context, item, index) => _CreationTrackingCard(label: item, onCreate: creations.add),
             ),
           );
         }
@@ -1572,8 +1565,7 @@ void main() {
           tester,
           items: const ['first'],
           onLoadMore: () => Completer<void>().future,
-          onSwipeProgress: ({required action, required percentage}) =>
-              progressValues.add(percentage),
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
         );
         await tester.pump();
 
@@ -1611,8 +1603,7 @@ void main() {
           items: const ['first'],
           loadingMoreOffset: 0,
           onLoadMore: () => Completer<void>().future,
-          onSwipeProgress: ({required action, required percentage}) =>
-              progressValues.add(percentage),
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
         );
         await tester.pump();
 
@@ -1660,10 +1651,7 @@ void main() {
         expect(
           (
             isLoadFailure: exception is StateError,
-            hasSpinner: find
-                .byType(MateoDotsLoadingIndicator)
-                .evaluate()
-                .isNotEmpty,
+            hasSpinner: find.byType(MateoDotsLoadingIndicator).evaluate().isNotEmpty,
           ),
           (isLoadFailure: true, hasSpinner: false),
         );
@@ -2034,8 +2022,7 @@ void main() {
         await _pumpFeed(
           tester,
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         final listFinder = find.byType(MateoYSnapList<String>);
@@ -2068,8 +2055,7 @@ void main() {
           tester,
           items: const ['first', 'second', 'third'],
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         // First advance from index 0 -> 1 to have a previous item
@@ -2128,8 +2114,7 @@ void main() {
           tester,
           items: const ['first', 'second', 'third'],
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         // advance to index 1
@@ -2372,9 +2357,7 @@ class _ControllerSwapHostState extends State<_ControllerSwapHost> {
           ),
           Expanded(
             child: MateoYSnapList<String>(
-              controller: _useSecondController
-                  ? widget.secondController
-                  : widget.firstController,
+              controller: _useSecondController ? widget.secondController : widget.firstController,
               items: (
                 count: 2,
                 provider: (int i) => const ['first', 'second'][i],

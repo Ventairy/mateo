@@ -26,11 +26,10 @@ mixin _$MateoMapLibreStyle {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MateoMapLibreStyleCopyWith<MateoMapLibreStyle> get copyWith =>
-      _$MateoMapLibreStyleCopyWithImpl<MateoMapLibreStyle>(
-        this as MateoMapLibreStyle,
-        _$identity,
-      );
+  $MateoMapLibreStyleCopyWith<MateoMapLibreStyle> get copyWith => _$MateoMapLibreStyleCopyWithImpl<MateoMapLibreStyle>(
+    this as MateoMapLibreStyle,
+    _$identity,
+  );
 
   /// Serializes this MateoMapLibreStyle to a JSON map.
   Map<String, dynamic> toJson();
@@ -44,8 +43,7 @@ mixin _$MateoMapLibreStyle {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.glyphs, glyphs) || other.glyphs == glyphs) &&
-            (identical(other.metadata, metadata) ||
-                other.metadata == metadata) &&
+            (identical(other.metadata, metadata) || other.metadata == metadata) &&
             const DeepCollectionEquality().equals(other.sources, sources) &&
             const DeepCollectionEquality().equals(other.layers, layers));
   }
@@ -90,8 +88,7 @@ abstract mixin class $MateoMapLibreStyleCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleCopyWith<$Res> {
+class _$MateoMapLibreStyleCopyWithImpl<$Res> implements $MateoMapLibreStyleCopyWith<$Res> {
   _$MateoMapLibreStyleCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyle _self;
@@ -373,8 +370,7 @@ class _MateoMapLibreStyle implements MateoMapLibreStyle {
     required this.glyphs,
     required this.metadata,
     required final Map<String, MateoMapLibreStyleSource> sources,
-    @MateoMapLibreStyleLayerConverter()
-    required final List<MateoMapLibreStyleLayer> layers,
+    @MateoMapLibreStyleLayerConverter() required final List<MateoMapLibreStyleLayer> layers,
   }) : _sources = sources,
        _layers = layers;
 
@@ -427,8 +423,7 @@ class _MateoMapLibreStyle implements MateoMapLibreStyle {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.glyphs, glyphs) || other.glyphs == glyphs) &&
-            (identical(other.metadata, metadata) ||
-                other.metadata == metadata) &&
+            (identical(other.metadata, metadata) || other.metadata == metadata) &&
             const DeepCollectionEquality().equals(other._sources, _sources) &&
             const DeepCollectionEquality().equals(other._layers, _layers));
   }
@@ -453,8 +448,7 @@ class _MateoMapLibreStyle implements MateoMapLibreStyle {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleCopyWith<$Res>
-    implements $MateoMapLibreStyleCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleCopyWith<$Res> implements $MateoMapLibreStyleCopyWith<$Res> {
   factory _$MateoMapLibreStyleCopyWith(
     _MateoMapLibreStyle value,
     $Res Function(_MateoMapLibreStyle) _then,
@@ -476,8 +470,7 @@ abstract mixin class _$MateoMapLibreStyleCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleCopyWith<$Res> {
+class __$MateoMapLibreStyleCopyWithImpl<$Res> implements _$MateoMapLibreStyleCopyWith<$Res> {
   __$MateoMapLibreStyleCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyle _self;

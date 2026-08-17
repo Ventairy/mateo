@@ -10,9 +10,7 @@ class MateoHeroBackgroundScope extends InheritedWidget {
   final BuildContext context;
 
   static MateoHeroBackgroundScope? maybeOf(BuildContext context) {
-    return context
-            .getElementForInheritedWidgetOfExactType<MateoHeroBackgroundScope>()
-            ?.widget
+    return context.getElementForInheritedWidgetOfExactType<MateoHeroBackgroundScope>()?.widget
         as MateoHeroBackgroundScope?;
   }
 

@@ -80,8 +80,7 @@ abstract mixin class $MateoMapLibreStyleSourceCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MateoMapLibreStyleSourceCopyWithImpl<$Res>
-    implements $MateoMapLibreStyleSourceCopyWith<$Res> {
+class _$MateoMapLibreStyleSourceCopyWithImpl<$Res> implements $MateoMapLibreStyleSourceCopyWith<$Res> {
   _$MateoMapLibreStyleSourceCopyWithImpl(this._self, this._then);
 
   final MateoMapLibreStyleSource _self;
@@ -213,8 +212,7 @@ extension MateoMapLibreStyleSourcePatterns on MateoMapLibreStyleSource {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String type, List<String> tiles, int minzoom, int maxzoom)?
-    $default, {
+    TResult Function(String type, List<String> tiles, int minzoom, int maxzoom)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -241,8 +239,7 @@ extension MateoMapLibreStyleSourcePatterns on MateoMapLibreStyleSource {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String type, List<String> tiles, int minzoom, int maxzoom)
-    $default,
+    TResult Function(String type, List<String> tiles, int minzoom, int maxzoom) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -370,8 +367,7 @@ class _MateoMapLibreStyleSource implements MateoMapLibreStyleSource {
 }
 
 /// @nodoc
-abstract mixin class _$MateoMapLibreStyleSourceCopyWith<$Res>
-    implements $MateoMapLibreStyleSourceCopyWith<$Res> {
+abstract mixin class _$MateoMapLibreStyleSourceCopyWith<$Res> implements $MateoMapLibreStyleSourceCopyWith<$Res> {
   factory _$MateoMapLibreStyleSourceCopyWith(
     _MateoMapLibreStyleSource value,
     $Res Function(_MateoMapLibreStyleSource) _then,
@@ -382,8 +378,7 @@ abstract mixin class _$MateoMapLibreStyleSourceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MateoMapLibreStyleSourceCopyWithImpl<$Res>
-    implements _$MateoMapLibreStyleSourceCopyWith<$Res> {
+class __$MateoMapLibreStyleSourceCopyWithImpl<$Res> implements _$MateoMapLibreStyleSourceCopyWith<$Res> {
   __$MateoMapLibreStyleSourceCopyWithImpl(this._self, this._then);
 
   final _MateoMapLibreStyleSource _self;

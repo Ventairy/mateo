@@ -36,9 +36,7 @@ abstract class MateoMapLibreStyleLinePaint with _$MateoMapLibreStyleLinePaint {
     /// Mapped to the `line-width` JSON key. Uses [MateoMapLibreStyleValueConverter]
     /// to serialize as either a raw number or a stops object.
     /// See [MateoMapLibreStyleValue] for value representations.
-    @JsonKey(name: 'line-width')
-    @MateoMapLibreStyleValueConverter()
-    required MateoMapLibreStyleValue lineWidth,
+    @JsonKey(name: 'line-width') @MateoMapLibreStyleValueConverter() required MateoMapLibreStyleValue lineWidth,
 
     /// The line opacity from 0 (transparent) to 1 (opaque).
     ///

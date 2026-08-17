@@ -91,18 +91,14 @@ class MateoSkeleton extends StatefulWidget {
   State<MateoSkeleton> createState() => _MateoSkeletonState();
 }
 
-class _MateoSkeletonState extends State<MateoSkeleton>
-    with TickerProviderStateMixin {
+class _MateoSkeletonState extends State<MateoSkeleton> with TickerProviderStateMixin {
   AnimationController? _controller;
   bool _disableAnimations = false;
 
   MateoSkeletonStyle get _style => widget.style ?? const MateoSkeletonStyle();
   MateoSkeletonEffect? get _effect => _style.effect;
 
-  bool get _shouldAnimate =>
-      widget.enabled &&
-      _effect is MateoSkeletonAnimatedEffectBase &&
-      !_disableAnimations;
+  bool get _shouldAnimate => widget.enabled && _effect is MateoSkeletonAnimatedEffectBase && !_disableAnimations;
 
   bool get _effectActive {
     if (_effect == null) return false;

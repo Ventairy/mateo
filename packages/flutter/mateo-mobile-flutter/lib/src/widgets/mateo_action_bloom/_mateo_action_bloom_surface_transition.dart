@@ -68,10 +68,8 @@ class _RenderMateoActionBloomSurfaceTransition extends RenderProxyBox {
     _resolveSourceBorderRadius();
   }
 
-  final LayerHandle<ClipRSuperellipseLayer> _clipLayer =
-      LayerHandle<ClipRSuperellipseLayer>();
-  final LayerHandle<TransformLayer> _contentTransformLayer =
-      LayerHandle<TransformLayer>();
+  final LayerHandle<ClipRSuperellipseLayer> _clipLayer = LayerHandle<ClipRSuperellipseLayer>();
+  final LayerHandle<TransformLayer> _contentTransformLayer = LayerHandle<TransformLayer>();
   final Matrix4 _contentTransform = Matrix4.identity();
   final Path _surfacePath = Path();
   final Path _borderPath = Path();
@@ -171,9 +169,7 @@ class _RenderMateoActionBloomSurfaceTransition extends RenderProxyBox {
   bool get isRepaintBoundary => true;
 
   void _resolveSourceBorderRadius() {
-    final scaledRRect = _sourceBorderRadius
-        .toRRect(Offset.zero & _sourceSize)
-        .scaleRadii();
+    final scaledRRect = _sourceBorderRadius.toRRect(Offset.zero & _sourceSize).scaleRadii();
     _resolvedSourceBorderRadius = BorderRadius.only(
       topLeft: scaledRRect.tlRadius,
       topRight: scaledRRect.trRadius,

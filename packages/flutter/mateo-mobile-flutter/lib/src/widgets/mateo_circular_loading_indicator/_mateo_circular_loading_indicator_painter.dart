@@ -36,10 +36,7 @@ class _MateoCircularLoadingIndicatorPainter extends CustomPainter {
   double get trackWidthFactor => _trackWidthFactor;
   double get indicatorWidthFactor => _indicatorWidthFactor;
   double get indicatorSweep => _indicatorSweep;
-  double get startAngle =>
-      _topCenterAngle -
-      _indicatorSweep / 2 +
-      (progress?.value ?? 0) * _completeRotation;
+  double get startAngle => _topCenterAngle - _indicatorSweep / 2 + (progress?.value ?? 0) * _completeRotation;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -75,8 +72,6 @@ class _MateoCircularLoadingIndicatorPainter extends CustomPainter {
   bool shouldRepaint(
     covariant _MateoCircularLoadingIndicatorPainter oldDelegate,
   ) {
-    return oldDelegate.color != color ||
-        oldDelegate.trackColor != trackColor ||
-        oldDelegate.progress != progress;
+    return oldDelegate.color != color || oldDelegate.trackColor != trackColor || oldDelegate.progress != progress;
   }
 }

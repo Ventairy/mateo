@@ -206,8 +206,7 @@ class MateoLocationRadiusMap extends StatefulWidget {
   State<MateoLocationRadiusMap> createState() => _MateoLocationRadiusMapState();
 }
 
-class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap>
-    with SingleTickerProviderStateMixin {
+class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap> with SingleTickerProviderStateMixin {
   late final AnimationController _animController;
 
   late String _styleJson;
@@ -316,18 +315,14 @@ class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap>
       widget.radiusInMeters / 2,
       MateoLocationRadiusMap._minimumFitRadiusInMeters / 2,
     );
-    final usablePixels =
-        math.min(viewport.width, viewport.height) - padding * 2;
+    final usablePixels = math.min(viewport.width, viewport.height) - padding * 2;
 
     if (usablePixels <= 0) return widget.tileMinZoom.toDouble();
 
     final latRad = widget.location.latitude * math.pi / 180;
     final cosLat = math.max(math.cos(latRad).abs(), 0.01);
 
-    final twoToZoom =
-        usablePixels *
-        earthCircumference /
-        (2 * centerToEdge * tileSize * cosLat);
+    final twoToZoom = usablePixels * earthCircumference / (2 * centerToEdge * tileSize * cosLat);
     final zoom = math.log(twoToZoom) / math.ln2;
 
     return zoom.clamp(widget.tileMinZoom.toDouble(), _effectiveMaxZoom);
@@ -336,8 +331,7 @@ class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap>
   double _metersToPixels(double meters, double zoom, double latitude) {
     const earthCircumference = 40075016.686;
     final latRad = latitude * math.pi / 180;
-    final metersPerPixel =
-        earthCircumference * math.cos(latRad).abs() / (256 * math.pow(2, zoom));
+    final metersPerPixel = earthCircumference * math.cos(latRad).abs() / (256 * math.pow(2, zoom));
     return meters / metersPerPixel;
   }
 
@@ -424,14 +418,9 @@ class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap>
     if (_targetPixelRadius < 1) _targetPixelRadius = 1;
 
     final t = Curves.easeOutCubic.transform(_animController.value);
-    final currentLat =
-        _wobbleFromLatLng.latitude +
-        (_wobbleToLatLng.latitude - _wobbleFromLatLng.latitude) * t;
-    final currentLng =
-        _wobbleFromLatLng.longitude +
-        (_wobbleToLatLng.longitude - _wobbleFromLatLng.longitude) * t;
-    final currentRadius =
-        _wobbleFromRadius + (_wobbleToRadius - _wobbleFromRadius) * t;
+    final currentLat = _wobbleFromLatLng.latitude + (_wobbleToLatLng.latitude - _wobbleFromLatLng.latitude) * t;
+    final currentLng = _wobbleFromLatLng.longitude + (_wobbleToLatLng.longitude - _wobbleFromLatLng.longitude) * t;
+    final currentRadius = _wobbleFromRadius + (_wobbleToRadius - _wobbleFromRadius) * t;
 
     _wobbleFromLatLng = LatLng(currentLat, currentLng);
     _wobbleFromRadius = currentRadius;
@@ -459,27 +448,18 @@ class _MateoLocationRadiusMapState extends State<MateoLocationRadiusMap>
 
   _MateoLocationRadiusMapRadiusFrame _radiusFrame() {
     final style = widget.radiusStyle;
-    final effectiveZoom =
-        widget.zoom ?? _computedZoom ?? widget.tileMinZoom.toDouble();
+    final effectiveZoom = widget.zoom ?? _computedZoom ?? widget.tileMinZoom.toDouble();
 
     return _MateoLocationRadiusMapRadiusFrame(
       isVisible: _hasStartedWobble,
       animationValue: _animController.value,
       fromLocation: (
-        latitude: _hasStartedWobble
-            ? _wobbleFromLatLng.latitude
-            : widget.location.latitude,
-        longitude: _hasStartedWobble
-            ? _wobbleFromLatLng.longitude
-            : widget.location.longitude,
+        latitude: _hasStartedWobble ? _wobbleFromLatLng.latitude : widget.location.latitude,
+        longitude: _hasStartedWobble ? _wobbleFromLatLng.longitude : widget.location.longitude,
       ),
       toLocation: (
-        latitude: _hasStartedWobble
-            ? _wobbleToLatLng.latitude
-            : widget.location.latitude,
-        longitude: _hasStartedWobble
-            ? _wobbleToLatLng.longitude
-            : widget.location.longitude,
+        latitude: _hasStartedWobble ? _wobbleToLatLng.latitude : widget.location.latitude,
+        longitude: _hasStartedWobble ? _wobbleToLatLng.longitude : widget.location.longitude,
       ),
       fromRadius: _wobbleFromRadius,
       toRadius: _wobbleToRadius,

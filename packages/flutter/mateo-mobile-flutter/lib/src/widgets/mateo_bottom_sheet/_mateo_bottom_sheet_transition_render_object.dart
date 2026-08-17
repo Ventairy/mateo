@@ -42,9 +42,7 @@ class _RenderMateoBottomSheetTransition extends RenderProxyBox {
     final value = _animation.value;
     if (_isInteractive()) return value;
 
-    final curve = _animation.status == AnimationStatus.reverse
-        ? Curves.easeInOutQuad
-        : Curves.easeOutCubic;
+    final curve = _animation.status == AnimationStatus.reverse ? Curves.easeInOutQuad : Curves.easeOutCubic;
     return curve.transform(value);
   }
 
@@ -98,8 +96,7 @@ class _RenderMateoBottomSheetTransition extends RenderProxyBox {
     return result.addWithPaintTransform(
       transform: _resolveTransform(),
       position: position,
-      hitTest: (result, position) =>
-          super.hitTestChildren(result, position: position),
+      hitTest: (result, position) => super.hitTestChildren(result, position: position),
     );
   }
 

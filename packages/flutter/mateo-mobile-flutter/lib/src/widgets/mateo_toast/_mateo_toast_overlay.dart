@@ -25,8 +25,7 @@ class _MateoToastOverlay extends StatefulWidget {
   State<_MateoToastOverlay> createState() => _MateoToastOverlayState();
 }
 
-class _MateoToastOverlayState extends State<_MateoToastOverlay>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProviderStateMixin, WidgetsBindingObserver {
   static const double _dragDismissDistance = 82;
   static const double _dragDismissOffset = 12;
   static const double _dragUpdateMaxDistance = 24;
@@ -61,8 +60,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
     _activePointer = event.pointer;
     _pointerStartPosition = event.position;
     _hasDraggedPointer = false;
-    _velocityTracker = VelocityTracker.withKind(event.kind)
-      ..addPosition(event.timeStamp, event.position);
+    _velocityTracker = VelocityTracker.withKind(event.kind)..addPosition(event.timeStamp, event.position);
     _handleDragStart();
   }
 
@@ -70,8 +68,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
     if (event.pointer != _activePointer || _isDismissed) return;
 
     _velocityTracker?.addPosition(event.timeStamp, event.position);
-    _hasDraggedPointer =
-        _hasDraggedPointer || _hasMovedPastTapSlop(event.position);
+    _hasDraggedPointer = _hasDraggedPointer || _hasMovedPastTapSlop(event.position);
     _handleDragUpdate(event.delta);
   }
 
@@ -146,8 +143,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
       _dragUpdateMaxDistance,
     );
     final dismissDelta = -dragDistance / _dragDismissDistance;
-    _animationController.value = (_animationController.value - dismissDelta)
-        .clamp(_dragMinVisibleProgress, 1);
+    _animationController.value = (_animationController.value - dismissDelta).clamp(_dragMinVisibleProgress, 1);
   }
 
   void _handleDragEnd(Velocity velocity) {
@@ -162,8 +158,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
       return;
     }
 
-    if (_dragOffsetY <= -_dragDismissOffset ||
-        _animationController.value <= _dragDismissProgress) {
+    if (_dragOffsetY <= -_dragDismissOffset || _animationController.value <= _dragDismissProgress) {
       _dismiss();
       return;
     }
@@ -344,9 +339,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay>
                     child: ScaleTransition(
                       key: const Key('mateo_toast_press_scale_transition'),
                       alignment: Alignment.topLeft,
-                      scale: widget.disableAnimations
-                          ? const AlwaysStoppedAnimation<double>(1)
-                          : _pressScaleAnimation,
+                      scale: widget.disableAnimations ? const AlwaysStoppedAnimation<double>(1) : _pressScaleAnimation,
                       child: RepaintBoundary(
                         child: Listener(
                           key: const Key('mateo_toast_gesture_target'),

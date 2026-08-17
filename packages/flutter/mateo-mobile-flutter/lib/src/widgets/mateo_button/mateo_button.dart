@@ -174,8 +174,7 @@ class MateoButton extends StatefulWidget {
   State<MateoButton> createState() => _MateoButtonState();
 }
 
-class _MateoButtonState extends State<MateoButton>
-    with SingleTickerProviderStateMixin {
+class _MateoButtonState extends State<MateoButton> with SingleTickerProviderStateMixin {
   static const Duration _loadingDelay = Duration(milliseconds: 50);
   static const Duration _contentTransitionDuration = Duration(
     milliseconds: 300,
@@ -366,9 +365,7 @@ class _MateoButtonState extends State<MateoButton>
 
   @override
   Widget build(BuildContext context) {
-    final buttonColorScheme =
-        widget.colorScheme ??
-        widget.variant.colorScheme(context.mateo.colorScheme);
+    final buttonColorScheme = widget.colorScheme ?? widget.variant.colorScheme(context.mateo.colorScheme);
     final actionBloomActions = widget._actionBloomActions;
 
     if (actionBloomActions == null) {
@@ -425,9 +422,7 @@ class _MateoButtonState extends State<MateoButton>
       onTap: isInteractive ? () => unawaited(_handlePressed(onPressed)) : null,
       child: MateoTap(
         onPressed: isInteractive ? (_) => _handlePressed(onPressed) : null,
-        onPressChanged: isInteractive
-            ? (pressed) => setState(() => _isPressed = pressed)
-            : null,
+        onPressChanged: isInteractive ? (pressed) => setState(() => _isPressed = pressed) : null,
         animation: MateoTapAnimationType.scale,
         child: widget.fit == MateoButtonFit.expand
             ? ConstrainedBox(
@@ -446,9 +441,7 @@ class _MateoButtonState extends State<MateoButton>
     required MateoButtonColorScheme buttonColorScheme,
     required bool isEnabled,
   }) {
-    final resolvedForeground = isEnabled
-        ? buttonColorScheme.foreground
-        : buttonColorScheme.foregroundDisabled;
+    final resolvedForeground = isEnabled ? buttonColorScheme.foreground : buttonColorScheme.foregroundDisabled;
     final content = _buildContent(
       isEnabled: isEnabled,
       foregroundColor: resolvedForeground,

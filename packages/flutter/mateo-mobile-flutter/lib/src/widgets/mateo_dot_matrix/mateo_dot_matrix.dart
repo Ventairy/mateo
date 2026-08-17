@@ -121,8 +121,7 @@ const double _kParticleRadius = 7;
 
 const Duration _kDefaultDuration = Duration(milliseconds: 2500);
 
-class _MateoDotMatrixState extends State<MateoDotMatrix>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+class _MateoDotMatrixState extends State<MateoDotMatrix> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   double get _pr => widget.dotSize ?? _kParticleRadius;
   late final AnimationController _controller;
   List<_MateoDotMatrixDot> _particles = [];

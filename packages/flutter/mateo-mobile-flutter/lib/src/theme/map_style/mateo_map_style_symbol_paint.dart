@@ -22,8 +22,7 @@ part 'mateo_map_style_symbol_paint.freezed.dart';
 part 'mateo_map_style_symbol_paint.g.dart';
 
 @Freezed(toJson: true, fromJson: false)
-abstract class MateoMapLibreStyleSymbolPaint
-    with _$MateoMapLibreStyleSymbolPaint {
+abstract class MateoMapLibreStyleSymbolPaint with _$MateoMapLibreStyleSymbolPaint {
   const factory MateoMapLibreStyleSymbolPaint({
     /// The text fill color as a hex string (e.g. `"#555657"`).
     ///

@@ -10,12 +10,10 @@ final class _MateoPredictiveBackGestureDetector extends StatefulWidget {
   final Widget child;
 
   @override
-  State<_MateoPredictiveBackGestureDetector> createState() =>
-      _MateoPredictiveBackGestureDetectorState();
+  State<_MateoPredictiveBackGestureDetector> createState() => _MateoPredictiveBackGestureDetectorState();
 }
 
-final class _MateoPredictiveBackGestureDetectorState
-    extends State<_MateoPredictiveBackGestureDetector>
+final class _MateoPredictiveBackGestureDetectorState extends State<_MateoPredictiveBackGestureDetector>
     with WidgetsBindingObserver {
   @override
   void initState() {
@@ -26,9 +24,7 @@ final class _MateoPredictiveBackGestureDetectorState
   @override
   bool handleStartBackGesture(PredictiveBackEvent backEvent) {
     final route = widget.route;
-    if (backEvent.isButtonEvent ||
-        !route.isCurrent ||
-        !route.popGestureEnabled) {
+    if (backEvent.isButtonEvent || !route.isCurrent || !route.popGestureEnabled) {
       return false;
     }
 

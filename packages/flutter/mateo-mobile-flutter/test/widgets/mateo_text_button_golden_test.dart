@@ -82,8 +82,7 @@ void main() {
             name: 'disabled',
             child: MateoTextButton(
               text: 'Indisponivel',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.lock, color: state.recommendedIconColor, size: 18),
+              leadingIconBuilder: (state) => Icon(Icons.lock, color: state.recommendedIconColor, size: 18),
             ),
           ),
         ],

@@ -38,8 +38,7 @@ abstract final class MateoActionBloom {
       );
     }
 
-    final surface = context
-        .findAncestorStateOfType<_MateoActionBloomSurfaceState>();
+    final surface = context.findAncestorStateOfType<_MateoActionBloomSurfaceState>();
     if (surface == null) {
       throw FlutterError(
         'MateoActionBloom.open requires a context beneath '

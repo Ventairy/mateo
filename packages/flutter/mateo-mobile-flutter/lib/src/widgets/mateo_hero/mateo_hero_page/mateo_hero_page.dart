@@ -89,16 +89,11 @@ class MateoHeroPage extends Page<void> {
 
   @override
   Route<void> createRoute(BuildContext context) {
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     return MateoHeroPageRoute(
       builder: builder,
-      transitionDuration: disableAnimations
-          ? Duration.zero
-          : transitionDuration,
-      reverseTransitionDuration: disableAnimations
-          ? Duration.zero
-          : reverseTransitionDuration,
+      transitionDuration: disableAnimations ? Duration.zero : transitionDuration,
+      reverseTransitionDuration: disableAnimations ? Duration.zero : reverseTransitionDuration,
       settings: this,
     );
   }

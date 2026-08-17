@@ -6,8 +6,7 @@ part of 'mateo_y_snap_list.dart';
 class MateoYSnapListController {
   _MateoYSnapListControllerClient? _client;
 
-  final List<void Function(MateoYSnapListNotification)> _notificationListeners =
-      [];
+  final List<void Function(MateoYSnapListNotification)> _notificationListeners = [];
 
   /// Whether this controller is attached to a [MateoYSnapList].
   bool get hasClients => _client != null;
