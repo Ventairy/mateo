@@ -19,7 +19,7 @@ surfaces.
   loading text, and animated indicators.
 - Gesture-first building blocks for swipe navigation, drag resistance, hero
   motion, vertical snap feeds, and edge fades.
-- Mobile foundations for color, typography, maps, reduced motion, safe areas,
+- Mobile foundations for color, typography, reduced motion, safe areas,
   touch targets, and semantic labels.
 
 Mateo Mobile currently supports Android and iOS. Web and desktop are separate

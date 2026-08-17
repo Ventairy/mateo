@@ -6,27 +6,6 @@ export 'src/enums/mateo_button_fit.dart' show MateoButtonFit;
 export 'src/extensions/widget_extension.dart' show WidgetExtension;
 export 'src/icons/mateo_icons.dart' show MateoIcon;
 export 'src/mateo_app.dart' show MateoApp;
-export 'src/theme/map_style/mateo_map_style.dart' show MateoMapLibreStyle;
-export 'src/theme/map_style/mateo_map_style_background_paint.dart'
-    show MateoMapLibreStyleBackgroundPaint;
-export 'src/theme/map_style/mateo_map_style_fill_paint.dart'
-    show MateoMapLibreStyleFillPaint;
-export 'src/theme/map_style/mateo_map_style_filter.dart'
-    show MateoMapLibreStyleFilter;
-export 'src/theme/map_style/mateo_map_style_layer.dart'
-    show MateoMapLibreStyleLayer;
-export 'src/theme/map_style/mateo_map_style_line_paint.dart'
-    show MateoMapLibreStyleLinePaint;
-export 'src/theme/map_style/mateo_map_style_metadata.dart'
-    show MateoMapLibreStyleMetadata;
-export 'src/theme/map_style/mateo_map_style_source.dart'
-    show MateoMapLibreStyleSource;
-export 'src/theme/map_style/mateo_map_style_symbol_layout.dart'
-    show MateoMapLibreStyleSymbolLayout;
-export 'src/theme/map_style/mateo_map_style_symbol_paint.dart'
-    show MateoMapLibreStyleSymbolPaint;
-export 'src/theme/map_style/mateo_map_style_value.dart'
-    show MateoMapLibreStyleValue, MateoMapLibreStyleZoomStop;
 export 'src/theme/mateo_color_scheme/mateo_color_scheme.dart'
     show
         MateoBottomSheetColorScheme,
@@ -104,8 +83,6 @@ export 'src/widgets/mateo_hero/mateo_hero_page/mateo_hero_page_route.dart'
 export 'src/widgets/mateo_icon_button.dart'
     show MateoIconButton, MateoIconButtonIconBuilder, MateoIconButtonIconState;
 export 'src/widgets/mateo_loading_text.dart' show MateoLoadingText;
-export 'src/widgets/mateo_location_radius_map/mateo_location_radius_map.dart'
-    show MateoLocationRadiusMap;
 export 'src/widgets/mateo_numeric_keypad/mateo_numeric_keypad.dart'
     show MateoNumericKeypad;
 export 'src/widgets/mateo_numeric_keypad/mateo_numeric_keypad_key.dart'
