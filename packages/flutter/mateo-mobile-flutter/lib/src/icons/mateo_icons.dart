@@ -61,6 +61,27 @@ abstract final class MateoIcon {
     Color? color,
   }) => $Icons.arrowUp(key: key, width: width, height: height, color1: color);
 
+  /// Banknote with a pin icon.
+  static Widget banknotePin({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.banknotePin(key: key, width: width, height: height, color1: color);
+
+  /// Horizontal range or two-direction icon.
+  static Widget bidirecionalHorizontalArrow({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.bidirecionalHorizontalArrow(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
   /// Box with a pen icon.
   static Widget boxPen({
     Key? key,
@@ -156,6 +177,14 @@ abstract final class MateoIcon {
     color1: color,
   );
 
+  /// Handshake icon.
+  static Widget handshake({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.handshake(key: key, width: width, height: height, color1: color);
+
   /// Magnifying glass icon.
   static Widget magnifierGlass({
     Key? key,
@@ -224,6 +253,10 @@ abstract final class MateoIcon {
     color1: color,
   );
 
+  /// Road icon.
+  static Widget road({Key? key, double? width, double? height, Color? color}) =>
+      $Icons.road(key: key, width: width, height: height, color1: color);
+
   /// Smartphone icon.
   static Widget smartphone({
     Key? key,
@@ -232,6 +265,10 @@ abstract final class MateoIcon {
     Color? color,
   }) =>
       $Icons.smartphone(key: key, width: width, height: height, color1: color);
+
+  /// Tree icon.
+  static Widget tree({Key? key, double? width, double? height, Color? color}) =>
+      $Icons.tree(key: key, width: width, height: height, color1: color);
 
   /// WhatsApp icon.
   static Widget whatsapp({
