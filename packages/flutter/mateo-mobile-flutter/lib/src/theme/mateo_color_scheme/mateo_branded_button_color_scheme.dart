@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 ///
 /// This group keeps the familiar primary, secondary, and tertiary button shape
 /// while allowing their colors to follow an external brand contract instead of
-/// the app's primary slot.
+/// the app's accent slot.
 @immutable
 class MateoBrandedButtonColorScheme {
   /// Creates brand-specific button roles for one external brand family.

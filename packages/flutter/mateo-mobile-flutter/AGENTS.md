@@ -245,7 +245,7 @@ Every new widget in `mateo_mobile` must have a corresponding golden test file at
   using `GoldenTestScenario` and `GoldenTestGroup`.
 - Use `goldenTest` from `alchemist`, not raw `matchesGoldenFile`.
 - Configure `AlchemistConfig` in `test/flutter_test_config.dart` with
-  `MateoTheme.light(primaryColor: ...)` so theme tokens resolve in all golden
+  `MateoTheme.light(accentColor: ...)` so theme tokens resolve in all golden
   scenarios.
 - Commit CI goldens stored at `test/widgets/goldens/ci/`.
 - Gitignore platform goldens stored at `test/widgets/goldens/macos/`,

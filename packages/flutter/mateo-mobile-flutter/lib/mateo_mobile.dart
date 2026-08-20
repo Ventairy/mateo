@@ -12,6 +12,7 @@ export 'src/theme/mateo_color_scheme/mateo_color_scheme.dart'
         MateoBrandedButtonColorScheme,
         MateoButtonColorScheme,
         MateoButtonPanelColorScheme,
+        MateoButtonToneColorScheme,
         MateoButtonsColorScheme,
         MateoColorScheme,
         MateoColorVariantColorScheme,
@@ -50,6 +51,7 @@ export 'src/widgets/mateo_button/mateo_button.dart'
         MateoButton,
         MateoButtonIconBuilder,
         MateoButtonState,
+        MateoButtonTone,
         MateoButtonVariant;
 export 'src/widgets/mateo_button_panel.dart' show MateoButtonPanel;
 export 'src/widgets/mateo_circular_loading_indicator/mateo_circular_loading_indicator.dart'

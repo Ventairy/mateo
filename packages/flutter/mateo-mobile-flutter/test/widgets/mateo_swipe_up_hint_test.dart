@@ -23,7 +23,7 @@ void main() {
 
     test('with a custom accentColor, it should not throw', () {
       expect(
-        () => MateoSwipeUpHint(accentColor: mateoTestPalette.primary[9]),
+        () => MateoSwipeUpHint(accentColor: mateoTestPalette.accent[9]),
         returnsNormally,
       );
     });
@@ -132,7 +132,7 @@ void main() {
     ) async {
       await tester.pumpWidget(
         TestApp(
-          child: MateoSwipeUpHint(accentColor: mateoTestPalette.primary[9]),
+          child: MateoSwipeUpHint(accentColor: mateoTestPalette.accent[9]),
         ),
       );
       expect(tester.takeException(), isNull);

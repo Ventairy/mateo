@@ -7,8 +7,7 @@ part of 'mateo_color_scheme.dart';
 class MateoButtonsColorScheme {
   /// Creates grouped button roles for the button patterns used across Mateo.
   const MateoButtonsColorScheme({
-    required this.primary,
-    required this.secondary,
+    required this.accent,
     required this.tertiary,
     required this.text,
     required this.danger,
@@ -25,8 +24,7 @@ class MateoButtonsColorScheme {
     double t,
   ) {
     return MateoButtonsColorScheme(
-      primary: MateoButtonColorScheme.lerp(a.primary, b.primary, t),
-      secondary: MateoButtonColorScheme.lerp(a.secondary, b.secondary, t),
+      accent: MateoButtonToneColorScheme.lerp(a.accent, b.accent, t),
       tertiary: MateoButtonColorScheme.lerp(a.tertiary, b.tertiary, t),
       text: MateoButtonColorScheme.lerp(a.text, b.text, t),
       danger: MateoButtonColorScheme.lerp(a.danger, b.danger, t),
@@ -41,11 +39,8 @@ class MateoButtonsColorScheme {
     );
   }
 
-  /// Primary action button pattern.
-  final MateoButtonColorScheme primary;
-
-  /// Secondary action button pattern.
-  final MateoButtonColorScheme secondary;
+  /// Accent-tone button variants.
+  final MateoButtonToneColorScheme accent;
 
   /// Tertiary action button pattern.
   final MateoButtonColorScheme tertiary;
@@ -70,8 +65,7 @@ class MateoButtonsColorScheme {
 
   /// {@macro mateo_color_scheme_copy_with}
   MateoButtonsColorScheme copyWith({
-    MateoButtonColorScheme? primary,
-    MateoButtonColorScheme? secondary,
+    MateoButtonToneColorScheme? accent,
     MateoButtonColorScheme? tertiary,
     MateoButtonColorScheme? text,
     MateoButtonColorScheme? danger,
@@ -81,8 +75,7 @@ class MateoButtonsColorScheme {
     MateoBrandedButtonColorScheme? whatsapp,
   }) {
     return MateoButtonsColorScheme(
-      primary: primary ?? this.primary,
-      secondary: secondary ?? this.secondary,
+      accent: accent ?? this.accent,
       tertiary: tertiary ?? this.tertiary,
       text: text ?? this.text,
       danger: danger ?? this.danger,
@@ -97,8 +90,7 @@ class MateoButtonsColorScheme {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MateoButtonsColorScheme &&
-          primary == other.primary &&
-          secondary == other.secondary &&
+          accent == other.accent &&
           tertiary == other.tertiary &&
           text == other.text &&
           danger == other.danger &&
@@ -109,8 +101,7 @@ class MateoButtonsColorScheme {
 
   @override
   int get hashCode => Object.hashAll([
-    primary,
-    secondary,
+    accent,
     tertiary,
     text,
     danger,

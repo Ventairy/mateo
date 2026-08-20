@@ -90,8 +90,8 @@ void main() {
         );
 
         final painter = _painterOf(tester);
-        expect(painter.color, mateoTestPalette.primary[9]);
-        expect(painter.trackColor, mateoTestPalette.primary[4]);
+        expect(painter.color, mateoTestPalette.accent[9]);
+        expect(painter.trackColor, mateoTestPalette.accent[4]);
       },
     );
 

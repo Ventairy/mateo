@@ -439,7 +439,7 @@ void main() {
         final scheme = MateoColorScheme.light();
         final custom = scheme.copyWith(
           bottomSheet: scheme.bottomSheet.copyWith(
-            background: MateoPalette().primary[3],
+            background: MateoPalette().accent[3],
           ),
         );
         await _pumpBottomSheetApp(tester, colorScheme: custom);

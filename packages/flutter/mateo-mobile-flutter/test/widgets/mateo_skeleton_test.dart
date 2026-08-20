@@ -499,7 +499,7 @@ void main() {
             theme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: mateoTestColorScheme.buttons.primary.background,
+                seedColor: mateoTestColorScheme.buttons.accent.primary.background,
               ),
               extensions: [
                 MateoThemeData(
@@ -541,7 +541,7 @@ void main() {
             theme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: mateoTestColorScheme.buttons.primary.background,
+                seedColor: mateoTestColorScheme.buttons.accent.primary.background,
               ),
               extensions: [
                 MateoThemeData(

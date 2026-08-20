@@ -71,10 +71,10 @@ they are added.
 ## Color Rules
 
 - Start with `color/palette.md` for raw color primitives.
-- Do not assign product meaning directly to primitive steps such as `primary-9`
+- Do not assign product meaning directly to primitive steps such as `accent-9`
   or `neutral-12`. Define semantic roles on top of primitives.
-- The default `primary` scale is a brand slot. It currently uses Black,
-  but consuming apps may replace it with their own brand scale.
+- The default `accent` scale is a product accent slot. It currently uses Mateo
+  violet, but consuming apps may replace it with their own accent scale.
 - Mateo currently supports a light appearance only. Dark mode is not supported.
 - Verify important foreground/background pairs before presenting them as
   accessible. The palette guide lists expected use cases, not a universal

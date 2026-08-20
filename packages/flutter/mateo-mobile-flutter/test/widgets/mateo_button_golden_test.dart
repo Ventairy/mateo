@@ -75,7 +75,7 @@ void main() {
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.buttons.success.background,
                 backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
-                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.background,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -90,7 +90,7 @@ void main() {
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.toast.warning.icon,
                 backgroundPressed: mateoTestColorScheme.toast.warning.background,
-                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.text.primary,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -121,7 +121,7 @@ void main() {
               colorScheme: MateoButtonColorScheme(
                 background: mateoTestColorScheme.buttons.success.background,
                 backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
-                backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
                 foreground: mateoTestColorScheme.background,
                 foregroundDisabled: mateoTestColorScheme.text.disabled,
               ),
@@ -298,7 +298,7 @@ void main() {
                 colorScheme: MateoButtonColorScheme(
                   background: mateoTestColorScheme.toast.warning.icon,
                   backgroundPressed: mateoTestColorScheme.toast.warning.background,
-                  backgroundDisabled: mateoTestColorScheme.buttons.primary.backgroundDisabled,
+                  backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
                   foreground: mateoTestColorScheme.text.primary,
                   foregroundDisabled: mateoTestColorScheme.text.disabled,
                 ),

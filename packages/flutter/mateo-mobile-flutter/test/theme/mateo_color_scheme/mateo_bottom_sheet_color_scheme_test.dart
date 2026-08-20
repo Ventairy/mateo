@@ -19,8 +19,8 @@ void main() {
       'when copied with a background override, it should replace the background color',
       () {
         expect(
-          scheme.copyWith(background: palette.primary[9]).background,
-          palette.primary[9],
+          scheme.copyWith(background: palette.accent[9]).background,
+          palette.accent[9],
         );
       },
     );

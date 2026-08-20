@@ -37,7 +37,7 @@ void main() {
               data: MediaQueryData(disableAnimations: true),
               child: _GoldenFrame(
                 child: MateoSwipeUpHint(
-                  accentColor: mateoTestPalette.primary[9],
+                  accentColor: mateoTestPalette.accent[9],
                 ),
               ),
             ),
@@ -49,7 +49,7 @@ void main() {
               child: _GoldenFrame(
                 child: MateoSwipeUpHint(
                   phoneColor: mateoTestPalette.neutral[12],
-                  accentColor: mateoTestPalette.primary[9],
+                  accentColor: mateoTestPalette.accent[9],
                 ),
               ),
             ),

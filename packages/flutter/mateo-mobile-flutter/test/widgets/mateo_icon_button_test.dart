@@ -124,7 +124,7 @@ void main() {
 
       expect(
         _circleColor(tester),
-        equals(_colorScheme.buttons.primary.backgroundDisabled),
+        equals(_colorScheme.buttons.accent.primary.backgroundDisabled),
       );
     });
 
@@ -279,7 +279,7 @@ void main() {
           resolvedForegroundColor,
           equals(
             Color.lerp(
-              _colorScheme.buttons.primary.backgroundDisabled,
+              _colorScheme.buttons.accent.primary.backgroundDisabled,
               mateoTestTheme.colorScheme.shadow,
               0.28,
             ),

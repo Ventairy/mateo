@@ -18,8 +18,9 @@ part 'mateo_button_types.dart';
 /// When [onPressed] returns a [Future], the button briefly shows a
 /// loading indicator while that future is still pending. Synchronous callbacks
 /// keep the button feeling instant and do not enter the loading state.
-/// The [variant] controls which [MateoButtonColorScheme] is read from the active
-/// Mateo Mobile theme unless [colorScheme] is provided directly.
+/// The [tone] selects the color family and [variant] selects the action
+/// hierarchy within it. Together they resolve a [MateoButtonColorScheme] from
+/// the active Mateo Mobile theme unless [colorScheme] is provided directly.
 ///
 /// Set [isLoading] to `true` to show the loading indicator immediately
 /// without requiring a press — useful for external loading state.
@@ -34,9 +35,10 @@ part 'mateo_button_types.dart';
 class MateoButton extends StatefulWidget {
   /// Creates a Mateo Mobile button.
   ///
-  /// Use [variant] to choose the themed button colors and [colorScheme] when a
-  /// caller needs to provide a complete custom style. Use [leadingIconSpacing]
-  /// and [trailingIconSpacing] to tune the icon gaps independently.
+  /// Use [tone] and [variant] to choose the themed button colors, and use
+  /// [colorScheme] when a caller needs to provide a complete custom style. Use
+  /// [leadingIconSpacing] and [trailingIconSpacing] to tune the icon gaps
+  /// independently.
   ///
   /// ```dart
   /// MateoButton(
@@ -52,6 +54,7 @@ class MateoButton extends StatefulWidget {
     required this.variant,
     super.key,
     this.onPressed,
+    this.tone = MateoButtonTone.accent,
     this.leadingIconBuilder,
     this.trailingIconBuilder,
     this.leadingIconSpacing = 8,
@@ -66,14 +69,16 @@ class MateoButton extends StatefulWidget {
   /// Creates a Mateo button that opens an action-bloom panel.
   ///
   /// The [actions] list must contain at least two actions. The button retains
-  /// the selected [variant], sizing, alignment, icons, and optional custom
-  /// [colorScheme], while its press interaction is owned by the action bloom.
+  /// the selected [tone], [variant], sizing, alignment, icons, and optional
+  /// custom [colorScheme], while its press interaction is owned by the action
+  /// bloom.
   const MateoButton.actionBloom({
     required this.label,
     required this.variant,
     required List<MateoActionBloomAction> actions,
     super.key,
     this.leadingIconBuilder,
+    this.tone = MateoButtonTone.accent,
     this.trailingIconBuilder,
     this.leadingIconSpacing = 8,
     this.trailingIconSpacing = 8,
@@ -94,6 +99,12 @@ class MateoButton extends StatefulWidget {
 
   /// Visual style variant resolved from the active Mateo Mobile theme.
   final MateoButtonVariant variant;
+
+  /// Color tone resolved from the active Mateo Mobile theme.
+  ///
+  /// Defaults to [MateoButtonTone.accent]. An explicit [colorScheme] takes
+  /// precedence over this tone and [variant].
+  final MateoButtonTone tone;
 
   /// Called when the button is pressed.
   ///
@@ -119,7 +130,7 @@ class MateoButton extends StatefulWidget {
 
   /// Complete color scheme used by this button.
   ///
-  /// When null, [variant] resolves a [MateoButtonColorScheme] from
+  /// When null, [tone] and [variant] resolve a [MateoButtonColorScheme] from
   /// `context.mateo.colorScheme.buttons`.
   final MateoButtonColorScheme? colorScheme;
 
@@ -365,7 +376,11 @@ class _MateoButtonState extends State<MateoButton> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final buttonColorScheme = widget.colorScheme ?? widget.variant.colorScheme(context.mateo.colorScheme);
+    final buttonColorScheme =
+        widget.colorScheme ??
+        widget.variant.colorScheme(
+          widget.tone.colorScheme(context.mateo.colorScheme),
+        );
     final actionBloomActions = widget._actionBloomActions;
 
     if (actionBloomActions == null) {

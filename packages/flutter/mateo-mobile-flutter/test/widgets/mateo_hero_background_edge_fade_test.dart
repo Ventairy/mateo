@@ -17,7 +17,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 child: Text('No Fade'),
               ),
@@ -40,7 +40,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-top',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 edgeFade: MateoHeroEdgeFade(top: MateoEdgeFadeStyle()),
                 child: Text('Top Fade'),
@@ -64,7 +64,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-both',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 edgeFade: MateoHeroEdgeFade.vertical,
                 child: Text('Both Fades'),
@@ -88,7 +88,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-pointer',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 edgeFade: MateoHeroEdgeFade.vertical,
                 child: Text('Ignore Pointer'),

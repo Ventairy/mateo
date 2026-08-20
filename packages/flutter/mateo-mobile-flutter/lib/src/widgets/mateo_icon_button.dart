@@ -70,7 +70,7 @@ class MateoIconButton extends StatelessWidget {
 
   /// Enabled circle background color.
   ///
-  /// Defaults to Mateo's active primary step 9.
+  /// Defaults to Mateo's active accent step 9.
   final Color? backgroundColor;
 
   /// Disabled circle background color.
@@ -92,8 +92,8 @@ class MateoIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isEnabled = _isEnabled;
     final resolvedBackgroundColor = isEnabled
-        ? backgroundColor ?? context.mateo.palette.primary[9]
-        : disabledBackgroundColor ?? context.mateo.colorScheme.buttons.primary.backgroundDisabled;
+        ? backgroundColor ?? context.mateo.palette.accent[9]
+        : disabledBackgroundColor ?? context.mateo.colorScheme.buttons.accent.primary.backgroundDisabled;
 
     final recommendedIconColor = isEnabled ? Colors.white : resolvedBackgroundColor.darken(0.28);
 

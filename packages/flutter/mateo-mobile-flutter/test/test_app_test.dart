@@ -9,7 +9,7 @@ void main() {
     'when TestApp receives a custom theme, it should expose that exact Mateo color scheme',
     (tester) async {
       final customColorScheme = mateoTestColorScheme.copyWith(
-        background: mateoTestColorScheme.buttons.secondary.background,
+        background: mateoTestColorScheme.buttons.accent.secondary.background,
       );
       final customMateoThemeData = mateoTestThemeData.copyWith(
         colorScheme: customColorScheme,

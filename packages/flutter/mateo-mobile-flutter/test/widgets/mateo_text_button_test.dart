@@ -94,7 +94,7 @@ void main() {
           TestApp(
             child: MateoTextButton(
               text: 'Buscar',
-              color: mateoTestColorScheme.buttons.primary.background,
+              color: mateoTestColorScheme.buttons.accent.primary.background,
               leadingIconBuilder: (state) {
                 recommendedIconColor = state.recommendedIconColor;
                 return const Icon(Icons.search);
@@ -106,7 +106,7 @@ void main() {
 
         expect(
           recommendedIconColor,
-          equals(mateoTestColorScheme.buttons.primary.background),
+          equals(mateoTestColorScheme.buttons.accent.primary.background),
         );
       },
     );

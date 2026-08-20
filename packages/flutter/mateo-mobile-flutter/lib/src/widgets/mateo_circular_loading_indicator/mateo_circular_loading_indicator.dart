@@ -24,9 +24,9 @@ part '_mateo_circular_loading_indicator_painter.dart';
 class MateoCircularLoadingIndicator extends StatefulWidget {
   /// Creates a circular Mateo loading indicator.
   ///
-  /// The optional [color] paints the moving arc and defaults to primary step 9
+  /// The optional [color] paints the moving arc and defaults to accent step 9
   /// from the active Mateo palette. The optional [trackColor] paints the full
-  /// track and defaults to primary step 4.
+  /// track and defaults to accent step 4.
   ///
   /// The optional [size] is the indicator diameter in logical pixels. It must
   /// be finite and non-negative when supplied. When omitted, the parent
@@ -46,12 +46,12 @@ class MateoCircularLoadingIndicator extends StatefulWidget {
 
   /// The color used to paint the moving arc.
   ///
-  /// When omitted, primary step 9 from the active Mateo palette is used.
+  /// When omitted, accent step 9 from the active Mateo palette is used.
   final Color? color;
 
   /// The color used to paint the circular track.
   ///
-  /// When omitted, primary step 4 from the active Mateo palette is used.
+  /// When omitted, accent step 4 from the active Mateo palette is used.
   final Color? trackColor;
 
   /// The optional diameter of the indicator in logical pixels.
@@ -132,8 +132,8 @@ class _MateoCircularLoadingIndicatorState extends State<MateoCircularLoadingIndi
     final palette = context.mateo.palette;
 
     final painter = _MateoCircularLoadingIndicatorPainter(
-      color: widget.color ?? palette.primary[9],
-      trackColor: widget.trackColor ?? palette.primary[4],
+      color: widget.color ?? palette.accent[9],
+      trackColor: widget.trackColor ?? palette.accent[4],
       progress: animationsDisabled ? null : _controller,
     );
 

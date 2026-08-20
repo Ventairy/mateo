@@ -16,8 +16,8 @@ part of 'mateo_toast.dart';
 /// ```dart
 /// MaterialApp(
 ///   theme: MateoTheme.light(
-///     primaryColor: const Color(0xFF8E51FF),
-///     onPrimary: const Color(0xFFFFFFFF),
+///     accentColor: const Color(0xFF8E51FF),
+///     onAccent: const Color(0xFFFFFFFF),
 ///   ),
 ///   home: const Scaffold(
 ///     body: Center(child: Text('Home')),

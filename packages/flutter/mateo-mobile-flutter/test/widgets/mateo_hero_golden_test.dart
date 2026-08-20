@@ -65,7 +65,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-box-with-child',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                   borderRadius: BorderRadius.circular(38),
                 ),
                 padding: EdgeInsets.all(16),
@@ -91,10 +91,10 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-box-decoration',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.secondary.background,
+                  color: mateoTestColorScheme.buttons.accent.secondary.background,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: mateoTestColorScheme.buttons.primary.background,
+                    color: mateoTestColorScheme.buttons.accent.primary.background,
                     width: 2,
                   ),
                 ),
@@ -109,7 +109,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-box-fade-top',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 edgeFade: MateoHeroEdgeFade(top: MateoEdgeFadeStyle()),
                 child: Align(
@@ -134,7 +134,7 @@ void main() {
               child: MateoHeroBackground(
                 tag: 'test-box-fade-both',
                 decoration: BoxDecoration(
-                  color: mateoTestColorScheme.buttons.primary.background,
+                  color: mateoTestColorScheme.buttons.accent.primary.background,
                 ),
                 edgeFade: MateoHeroEdgeFade.vertical,
                 child: Align(

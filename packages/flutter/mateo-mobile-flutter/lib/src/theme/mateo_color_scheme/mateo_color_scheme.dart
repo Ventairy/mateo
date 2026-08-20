@@ -12,6 +12,7 @@ part 'mateo_bottom_sheet_color_scheme.dart';
 part 'mateo_branded_button_color_scheme.dart';
 part 'mateo_button_color_scheme.dart';
 part 'mateo_button_panel_color_scheme.dart';
+part 'mateo_button_tone_color_scheme.dart';
 part 'mateo_buttons_color_scheme.dart';
 part 'mateo_color_scheme_light.dart';
 part 'mateo_color_variant_color_scheme.dart';
@@ -95,13 +96,13 @@ class MateoColorScheme {
 
   /// Creates Mateo's light color scheme.
   ///
-  /// [onPrimary] is a package-only input used as the foreground on primary
+  /// [onAccent] is a package-only input used as the foreground on accent
   /// component surfaces. It is supplied by the consuming app rather than the
   /// platform-independent Mateo color scheme.
-  factory MateoColorScheme.light({MateoPalette? palette, Color? onPrimary}) =>
+  factory MateoColorScheme.light({MateoPalette? palette, Color? onAccent}) =>
       _LightMateoColorScheme(
         palette: palette ?? MateoPalette(),
-        onPrimary: onPrimary ?? Colors.white,
+        onAccent: onAccent ?? Colors.white,
       );
 
   /// App background.

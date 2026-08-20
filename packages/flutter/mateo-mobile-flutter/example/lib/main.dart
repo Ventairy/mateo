@@ -13,8 +13,8 @@ class MateoExample extends StatelessWidget {
     return MateoApp(
       title: 'Mateo component gallery',
       color: const (
-        primary: Color(0xFFFF4A4B),
-        onPrimary: Color(0xFFFFFFFF),
+        accent: Color(0xFFFF4A4B),
+        onAccent: Color(0xFFFFFFFF),
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Mateo component gallery')),

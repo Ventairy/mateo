@@ -69,13 +69,13 @@ invalid.
 
 ## Color
 
-When presented independently, all three dots use `primary-9` from the active
+When presented independently, all three dots use `accent-9` from the active
 Mateo palette.
 
 When embedded inside another component, use that component's active foreground
 color so the indicator belongs to the surface it temporarily represents. For
 example, a button uses its enabled foreground color while its action is
-pending. Do not assume that `primary-9` is readable on every colored surface.
+pending. Do not assume that `accent-9` is readable on every colored surface.
 
 The dots are fully opaque. Do not add gradients or per-dot color changes.
 Where the dots are the only visible loading cue, their color must have at least

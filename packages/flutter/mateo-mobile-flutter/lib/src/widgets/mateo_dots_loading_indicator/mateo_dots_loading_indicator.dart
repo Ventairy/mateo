@@ -48,7 +48,7 @@ class MateoDotsLoadingIndicator extends StatefulWidget {
 
   /// The color used to paint each dot.
   ///
-  /// When omitted, the primary color of the current theme is used.
+  /// When omitted, the accent color of the current theme is used.
   final Color? color;
 
   /// The radius of each dot in logical pixels.
@@ -125,7 +125,7 @@ class _MateoDotsLoadingIndicatorState extends State<MateoDotsLoadingIndicator>
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.color ?? context.mateo.palette.primary[9];
+    final color = widget.color ?? context.mateo.palette.accent[9];
     final disabled = MediaQuery.disableAnimationsOf(context);
     final size = _indicatorSize;
 

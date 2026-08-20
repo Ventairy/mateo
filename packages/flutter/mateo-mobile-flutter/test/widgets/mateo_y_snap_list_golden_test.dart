@@ -375,7 +375,7 @@ Widget _goldenCardBuilder(BuildContext context, String item, int index) {
       title: 'Garcom para hoje',
       neighborhood: 'Pinheiros',
       pay: r'R$ 180',
-      color: mateoTestColorScheme.buttons.primary.background,
+      color: mateoTestColorScheme.buttons.accent.primary.background,
     ),
   };
 }
@@ -429,7 +429,7 @@ Widget _loadMoreErrorBuilder(BuildContext context, VoidCallback retry) {
     title: 'Tente de novo',
     subtitle: 'Nao conseguimos carregar agora.',
     icon: Icons.refresh_rounded,
-    color: mateoTestColorScheme.buttons.primary.background,
+    color: mateoTestColorScheme.buttons.accent.primary.background,
     onPressed: retry,
   );
 }

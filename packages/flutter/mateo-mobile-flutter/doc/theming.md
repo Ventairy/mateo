@@ -5,26 +5,26 @@
 Use `MateoApp` or `MateoApp.router`. Both install the Mateo theme, mobile system
 UI styling, and the overlay infrastructure required by Mateo components.
 
-`MateoApp` keeps the primary surface and its foreground together in a required
+`MateoApp` keeps the accent surface and its foreground together in a required
 package-level `color` record:
 
 ```dart
 MateoApp(
   title: 'My App',
   color: (
-    primary: const Color(0xFFFF4A4B),
-    onPrimary: const Color(0xFFFFFFFF),
+    accent: const Color(0xFFFF4A4B),
+    onAccent: const Color(0xFFFFFFFF),
   ),
   home: const HomeScreen(),
 )
 ```
 
-`primary` must be opaque. Mateo preserves it at primary step 9 and regenerates
-the complete primary and neutral scales using the design-system OKLCH recipe.
-`onPrimary` is used for text and icons on primary buttons, indicators, and
+`accent` must be opaque. Mateo preserves it at accent step 9 and regenerates
+the complete accent and neutral scales using the design-system OKLCH recipe.
+`onAccent` is used for text and icons on accent-toned buttons, indicators, and
 Material primary surfaces. Consumers must verify the pair's contrast.
 
-Use an active, vivid primary seed; pale, pastel, near-white, muted, and very
+Use an active, vivid accent seed; pale, pastel, near-white, muted, and very
 dark seeds need manual review.
 
 Palette generation does not validate semantic contrast. Recheck every important
@@ -37,7 +37,7 @@ Access the active theme through `context.mateo`:
 ```dart
 final mateo = context.mateo;
 final textColor = mateo.colorScheme.text.primary;
-final primarySeed = mateo.palette.primary[9];
+final accentSeed = mateo.palette.accent[9];
 ```
 
 Use component color schemes when implementing a Mateo component. Use shared
@@ -54,8 +54,8 @@ content:
 ```dart
 MaterialApp(
   theme: MateoTheme.light(
-    primaryColor: const Color(0xFF8E51FF),
-    onPrimary: const Color(0xFFFFFFFF),
+    accentColor: const Color(0xFF8E51FF),
+    onAccent: const Color(0xFFFFFFFF),
   ),
   home: const HomeScreen(),
   builder: (context, child) => MateoToastMessenger(

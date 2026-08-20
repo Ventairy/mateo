@@ -27,12 +27,12 @@ class MateoLoadingText extends StatelessWidget {
 
   /// Color of the [CircularProgressIndicator].
   ///
-  /// Defaults to Mateo's active primary step 9.
+  /// Defaults to Mateo's active accent step 9.
   final Color? progressIndicatorColor;
 
   @override
   Widget build(BuildContext context) {
-    final indicatorColor = progressIndicatorColor ?? context.mateo.palette.primary[9];
+    final indicatorColor = progressIndicatorColor ?? context.mateo.palette.accent[9];
     final disableAnimations = MediaQuery.disableAnimationsOf(context);
 
     return Row(

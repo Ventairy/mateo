@@ -20,46 +20,46 @@ void main() {
       );
       expect(mateo, isNotNull);
       expect(theme.scaffoldBackgroundColor, mateo!.colorScheme.background);
-      expect(theme.colorScheme.primary, mateo.palette.primary[9]);
+      expect(theme.colorScheme.primary, mateo.palette.accent[9]);
       expect(
         theme.colorScheme.onPrimary,
-        mateo.colorScheme.buttons.primary.foreground,
+        mateo.colorScheme.buttons.accent.primary.foreground,
       );
       expect(theme.colorScheme.scrim, mateo.colorScheme.overlay.scrim);
     });
 
-    test('maps the default primary through the palette and color scheme', () {
+    test('maps the default accent through the palette and color scheme', () {
       final mateo = MateoTheme.light().extension<MateoThemeData>()!;
 
       expect(
-        mateo.colorScheme.buttons.primary.background,
-        mateo.palette.primary[9],
+        mateo.colorScheme.buttons.accent.primary.background,
+        mateo.palette.accent[9],
       );
     });
 
-    test('regenerates primary and neutral from a custom seed', () {
+    test('regenerates accent and neutral from a custom seed', () {
       const seed = Color(0xFF00A86B);
-      const onPrimary = Color(0xFF101A16);
+      const onAccent = Color(0xFF101A16);
       final mateo = MateoTheme.light(
-        primaryColor: seed,
-        onPrimary: onPrimary,
+        accentColor: seed,
+        onAccent: onAccent,
       ).extension<MateoThemeData>()!;
 
-      expect(mateo.palette.primary[9], seed);
-      expect(mateo.colorScheme.buttons.primary.background, seed);
-      expect(mateo.colorScheme.buttons.primary.foreground, onPrimary);
-      expect(mateo.colorScheme.controls.indicatorForeground, onPrimary);
+      expect(mateo.palette.accent[9], seed);
+      expect(mateo.colorScheme.buttons.accent.primary.background, seed);
+      expect(mateo.colorScheme.buttons.accent.primary.foreground, onAccent);
+      expect(mateo.colorScheme.controls.indicatorForeground, onAccent);
       expect(mateo.colorScheme.text.primary, mateo.palette.neutral[12]);
     });
 
-    test('maps onPrimary to Material and Mateo primary surfaces', () {
-      const onPrimary = Color(0xFF171221);
-      final theme = MateoTheme.light(onPrimary: onPrimary);
+    test('maps onAccent to Material primary and Mateo accent surfaces', () {
+      const onAccent = Color(0xFF171221);
+      final theme = MateoTheme.light(onAccent: onAccent);
       final mateo = theme.extension<MateoThemeData>()!;
 
-      expect(theme.colorScheme.onPrimary, onPrimary);
-      expect(mateo.colorScheme.buttons.primary.foreground, onPrimary);
-      expect(mateo.colorScheme.controls.indicatorForeground, onPrimary);
+      expect(theme.colorScheme.onPrimary, onAccent);
+      expect(mateo.colorScheme.buttons.accent.primary.foreground, onAccent);
+      expect(mateo.colorScheme.controls.indicatorForeground, onAccent);
     });
 
     test('maps Material roles from Mateo primitives and semantics', () {
@@ -67,7 +67,7 @@ void main() {
       final mateo = theme.extension<MateoThemeData>()!;
       final palette = mateo.palette;
 
-      expect(theme.colorScheme.primaryContainer, palette.primary[3]);
+      expect(theme.colorScheme.primaryContainer, palette.accent[3]);
       expect(theme.colorScheme.secondary, palette.teal[9]);
       expect(theme.colorScheme.tertiary, palette.orange[9]);
       expect(theme.colorScheme.error, palette.red[10]);

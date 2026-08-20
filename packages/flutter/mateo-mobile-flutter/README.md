@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
     return MateoApp(
       title: 'My App',
       color: const (
-        primary: Color(0xFFFF4A4B),
-        onPrimary: Color(0xFFFFFFFF),
+        accent: Color(0xFFFF4A4B),
+        onAccent: Color(0xFFFFFFFF),
       ),
       home: Scaffold(
         body: Center(
@@ -86,6 +86,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 ```dart
 MateoButton(
   label: 'Save changes',
+  tone: MateoButtonTone.accent,
   variant: MateoButtonVariant.primary,
   onPressed: saveChanges,
 )
