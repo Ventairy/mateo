@@ -31,8 +31,7 @@ void main() {
           MateoToastType.neutral: toastColors.neutral,
         };
 
-        for (final MapEntry(key: type, value: expected)
-            in expectedColors.entries) {
+        for (final MapEntry(key: type, value: expected) in expectedColors.entries) {
           final actual = type.colors(capturedContext);
 
           expect(

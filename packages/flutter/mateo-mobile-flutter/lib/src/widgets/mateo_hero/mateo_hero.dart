@@ -1,8 +1,7 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:mateo_mobile/mateo_mobile.dart'
-    show MateoHeroExtension, MateoHeroPage;
+import 'package:mateo_mobile/mateo_mobile.dart' show MateoHeroExtension, MateoHeroPage;
 import 'package:mateo_mobile/src/theme/mateo_theme_data.dart';
 import 'package:mateo_mobile/src/widgets/mateo_edge_fade/mateo_edge_fade.dart'
     show MateoEdgeFade, MateoEdgeFadePosition, MateoEdgeFadeStyle;
@@ -12,8 +11,7 @@ import 'package:mateo_mobile/src/widgets/mateo_swipe_to_pop_surface/mateo_swipe_
 
 import 'heroes/background/mateo_hero_background.dart' show MateoHeroBackground;
 import 'heroes/group/mateo_hero_group.dart' show MateoHeroGroup;
-import 'heroes/text/mateo_hero_text.dart'
-    show MateoHeroText, MateoHeroTextFlightMetrics;
+import 'heroes/text/mateo_hero_text.dart' show MateoHeroText, MateoHeroTextFlightMetrics;
 
 part 'mateo_hero_edge_fade.dart';
 part 'mateo_hero_enums.dart';

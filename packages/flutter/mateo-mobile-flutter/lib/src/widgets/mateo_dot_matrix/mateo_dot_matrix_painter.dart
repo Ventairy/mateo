@@ -16,20 +16,13 @@ class _MateoDotMatrixPainter extends CustomPainter {
   final Color color;
   final double progress;
 
+  double get bandCenter => progress % 1.0;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0 || particles.isEmpty) return;
 
     // ---- diagonal sweep band ----
-    final rawPos = progress % 1.0;
-    final double bandCenter;
-    if (rawPos < 0.5) {
-      bandCenter = 2.0 * rawPos * rawPos;
-    } else {
-      final t = rawPos - 1.0;
-      bandCenter = 1.0 - 2.0 * t * t;
-    }
-
     final invSumWH = 1.0 / (size.width + size.height);
 
     final paint = Paint();

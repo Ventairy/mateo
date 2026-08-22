@@ -109,8 +109,7 @@ class MateoDragResistance extends StatefulWidget {
   State<MateoDragResistance> createState() => _MateoDragResistanceState();
 }
 
-class _MateoDragResistanceState extends State<MateoDragResistance>
-    with SingleTickerProviderStateMixin {
+class _MateoDragResistanceState extends State<MateoDragResistance> with SingleTickerProviderStateMixin {
   static const double _dampingDistance = 96;
   static const Duration _resetDuration = Duration(milliseconds: 180);
 
@@ -125,16 +124,13 @@ class _MateoDragResistanceState extends State<MateoDragResistance>
   Offset _offsetAtResetStart = Offset.zero;
 
   bool get _hasEnabledResistance {
-    final horizontalResistanceEnabled =
-        widget.offset.dx > 0 && (widget.left || widget.right);
-    final verticalResistanceEnabled =
-        widget.offset.dy > 0 && (widget.top || widget.bottom);
+    final horizontalResistanceEnabled = widget.offset.dx > 0 && (widget.left || widget.right);
+    final verticalResistanceEnabled = widget.offset.dy > 0 && (widget.top || widget.bottom);
     return horizontalResistanceEnabled || verticalResistanceEnabled;
   }
 
   void _stopResetAnimation() {
-    if (_resetController case final resetController?
-        when resetController.isAnimating) {
+    if (_resetController case final resetController? when resetController.isAnimating) {
       resetController.stop();
     }
   }
@@ -283,9 +279,7 @@ class _MateoDragResistanceState extends State<MateoDragResistance>
     }
 
     _stopResetAnimation();
-    _resistanceOffsetNotifier.value = _disableAnimations
-        ? Offset.zero
-        : _resolveResistanceOffset();
+    _resistanceOffsetNotifier.value = _disableAnimations ? Offset.zero : _resolveResistanceOffset();
   }
 
   @override

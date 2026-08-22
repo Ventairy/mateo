@@ -24,8 +24,7 @@ class MateoColorsColorScheme {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MateoColorsColorScheme && neutral == other.neutral;
+      identical(this, other) || other is MateoColorsColorScheme && neutral == other.neutral;
 
   @override
   int get hashCode => neutral.hashCode;

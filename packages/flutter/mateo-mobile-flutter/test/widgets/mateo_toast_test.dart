@@ -87,6 +87,53 @@ void main() {
     );
 
     testWidgets(
+      'when tapping a non-dismissible toast, it should stay visible and consume the interaction',
+      (tester) async {
+        late BuildContext toastContext;
+        var tapCount = 0;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: MateoTheme.light(),
+            home: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: SizedBox(
+                      width: 220,
+                      height: 58,
+                      child: TextButton(
+                        onPressed: () => tapCount += 1,
+                        child: const Text('Under toast'),
+                      ),
+                    ),
+                  ),
+                ),
+                Builder(
+                  builder: (context) {
+                    toastContext = context;
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+
+        MateoToast.show(toastContext, message: 'Keep me', dismissible: false);
+        await tester.pump();
+        await tester.tap(find.byKey(const Key('mateo_toast_surface')));
+        await tester.pump(const Duration(milliseconds: 500));
+
+        expect(find.text('Keep me'), findsOneWidget);
+        expect(tapCount, equals(0));
+      },
+    );
+
+    testWidgets(
       'when tapping the toast above another control, it should not pass the tap to the control below',
       (tester) async {
         late BuildContext toastContext;
@@ -405,6 +452,82 @@ void main() {
     );
 
     testWidgets(
+      'when dragging a non-dismissible toast upward, it should use resistance and stay visible',
+      (tester) async {
+        late BuildContext toastContext;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: Builder(
+              builder: (context) {
+                toastContext = context;
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
+
+        MateoToast.show(toastContext, message: 'Resist me', dismissible: false);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(const Key('mateo_toast_gesture_target'))),
+        );
+        await gesture.moveBy(const Offset(0, -18));
+        await gesture.moveBy(const Offset(0, -96));
+        await tester.pump();
+
+        final renderObject = _findResistanceTransformRenderObject(tester);
+        final transition = tester.widget<FadeTransition>(
+          find.byKey(const Key('mateo_toast_fade_transition')),
+        );
+        expect(
+          renderObject.currentResistanceOffset.dy,
+          allOf(lessThan(0), greaterThan(-7)),
+        );
+        expect(transition.opacity.value, equals(1));
+
+        await gesture.up();
+        await tester.pump(const Duration(milliseconds: 500));
+
+        expect(find.text('Resist me'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'when swiping a non-dismissible toast upward quickly, it should stay visible',
+      (tester) async {
+        late BuildContext toastContext;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: Builder(
+              builder: (context) {
+                toastContext = context;
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
+
+        MateoToast.show(
+          toastContext,
+          message: 'Resist the swipe',
+          dismissible: false,
+        );
+        await tester.pump();
+        await tester.fling(
+          find.byKey(const Key('mateo_toast_gesture_target')),
+          const Offset(0, -240),
+          3000,
+        );
+        await tester.pump(const Duration(milliseconds: 500));
+
+        expect(find.text('Resist the swipe'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
       'when shown, it should center the toast surface in the overlay',
       (tester) async {
         late BuildContext toastContext;
@@ -485,6 +608,67 @@ void main() {
         await tester.pump(const Duration(milliseconds: 500));
 
         expect(find.text('Short error'), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'when a non-dismissible toast duration completes, it should dismiss the toast',
+      (tester) async {
+        late BuildContext toastContext;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: Builder(
+              builder: (context) {
+                toastContext = context;
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
+
+        MateoToast.show(
+          toastContext,
+          message: 'Timed only',
+          duration: const Duration(milliseconds: 20),
+          dismissible: false,
+        );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+
+        expect(find.text('Timed only'), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'when dismissActive is called for a non-dismissible toast, it should dismiss the toast',
+      (tester) async {
+        late BuildContext toastContext;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: MateoToastMessenger(
+              child: Builder(
+                builder: (context) {
+                  toastContext = context;
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ),
+        );
+
+        MateoToast.show(
+          toastContext,
+          message: 'Programmatic only',
+          dismissible: false,
+        );
+        await tester.pump();
+
+        MateoToastMessenger.maybeOf(toastContext)?.dismissActive();
+        await tester.pump();
+
+        expect(find.text('Programmatic only'), findsNothing);
       },
     );
 
@@ -668,9 +852,7 @@ void main() {
           const TestApp(child: MateoToast(message: 'Error')),
         );
 
-        final decoration = tester
-            .widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface')))
-            .decoration;
+        final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
 
         expect(
           (decoration as BoxDecoration).color,
@@ -748,9 +930,7 @@ void main() {
         MateoToast.show(toastContext, message: 'Themed error');
         await tester.pump();
 
-        final decoration = tester
-            .widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface')))
-            .decoration;
+        final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
 
         expect(
           (decoration as BoxDecoration).color,
@@ -914,8 +1094,7 @@ void main() {
           MateoToastType.success: Key('mateo_toast_default_icon_success'),
         };
 
-        for (final MapEntry(key: type, value: iconKey)
-            in defaultIconKeys.entries) {
+        for (final MapEntry(key: type, value: iconKey) in defaultIconKeys.entries) {
           await tester.pumpWidget(
             TestApp(
               child: MateoToast(message: type.name, type: type),

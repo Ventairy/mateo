@@ -4,14 +4,14 @@
 >
 > This scheme is **mobile-specific and implementation-framework-agnostic**. Framework mappings, such as Flutter and native iOS or Android APIs, belong in the corresponding public package under `../../packages/`.
 >
-> **Brand slot:** The `primary` scale defaults to Mateo violet (`#4A5CFF`) and
-> is overridable by consuming brands. Component tokens reference its primitives
-> directly. Consumers regenerate `primary` and `neutral` together according to
+> **Accent slot:** The `accent` scale defaults to Mateo violet (`#4A5CFF`) and
+> is overridable by consuming products. Component tokens reference its primitives
+> directly. Consumers regenerate `accent` and `neutral` together according to
 > `../foundation/color-palette.md`.
 >
 > **External brand colors:** Component tokens for external platforms reference
 > their fixed palette scales directly. WhatsApp component tokens use the
-> `whatsapp` scale, not the overridable `primary` slot.
+> `whatsapp` scale, not the overridable `accent` slot.
 >
 > **Appearance support:** This version defines a light appearance only. Dark
 > mode is not supported.
@@ -41,7 +41,7 @@ Shared roles that are useful across components, such as Text `primary`,
 Each component owns a self-contained set that references palette primitives or
 shared roles directly: background (rest/pressed/disabled), foreground
 (rest/disabled), and any component-specific boundary. Examples:
-`buttonPrimaryBackground`, `buttonPrimaryForeground`, and
+`buttonAccentPrimaryBackground`, `buttonAccentPrimaryForeground`, and
 `toastSuccessBackground`.
 
 ### State Naming
@@ -87,7 +87,7 @@ without changing that shape.
 | ----------- | ---------- | -------------------- | --------------------------------------------------------------- |
 | `primary`   | neutral-12 | 17.24:1 ✅           | Headings, titles, primary body text                             |
 | `secondary` | neutral-10 | 5.83:1 ✅            | Descriptions, supporting text, captions                         |
-| `tertiary`  | neutral-9  | 4.73:1 ✅            | Metadata on neutral-1 or white only                             |
+| `tertiary`  | neutral-8  | 3.11:1 (large only)  | De-emphasized metadata                                          |
 | `disabled`  | neutral-9  | 4.73:1               | Disabled state text                                             |
 | `inverse`   | White      | —                    | Text on dark surfaces                                           |
 | `profit`    | green-10   | 2.49:1 ❌            | Money/profit amounts, e.g. `$1,200`; not suitable for body text |
@@ -100,7 +100,7 @@ For tooltips, snackbars, and any UI that inverts the surrounding color scheme.
 | -------------- | ---------- | ----------------------------------------------- |
 | `background`   | neutral-12 | Dark inverted surface (tooltip bg, snackbar bg) |
 | `onBackground` | White      | Text on inverse surface                         |
-| `primary`      | primary-3  | Primary color on inverse surface                |
+| `accent`       | accent-3   | Accent color on inverse surface                 |
 
 ### Overlay
 
@@ -112,7 +112,7 @@ For tooltips, snackbars, and any UI that inverts the surrounding color scheme.
 
 | Token                | Source          | Purpose                        |
 | -------------------- | --------------- | ------------------------------ |
-| `selectionHighlight` | primary-9 @ 30% | Text selection highlight color |
+| `selectionHighlight` | accent-9 @ 30% | Text selection highlight color |
 
 ### Skeleton / Loading
 
@@ -143,24 +143,28 @@ For tooltips, snackbars, and any UI that inverts the surrounding color scheme.
 
 Pre-composed sets for specific component types. Each component has background, foreground, and border tokens with state variants where applicable.
 
-### Button — Primary (Primary CTA)
+Mateo Button resolves color in two steps: its tone selects a color family, then
+its variant selects the action hierarchy within that family. `accent` is the
+only button tone in this version and is the default when no tone is specified.
+
+### Button — Accent / Primary (Primary CTA)
 
 | Token                | Source          | Purpose                        |
 | -------------------- | --------------- | ------------------------------ |
-| `background`         | primary-9       | Enabled background             |
-| `backgroundPressed`  | primary-9       | Pressed background             |
+| `background`         | accent-9        | Enabled background             |
+| `backgroundPressed`  | accent-9        | Pressed background             |
 | `backgroundDisabled` | neutral-4       | Disabled background            |
 | `foreground`         | White           | Enabled foreground (text/icon) |
 | `foregroundDisabled` | `Text.disabled` | Disabled foreground            |
 
-### Button — Secondary (Primary-Tinted)
+### Button — Accent / Secondary (Accent-Tinted)
 
 | Token                | Source          | Purpose             |
 | -------------------- | --------------- | ------------------- |
-| `background`         | primary-2       | Enabled background  |
-| `backgroundPressed`  | primary-2       | Pressed background  |
+| `background`         | accent-2        | Enabled background  |
+| `backgroundPressed`  | accent-2        | Pressed background  |
 | `backgroundDisabled` | neutral-4       | Disabled background |
-| `foreground`         | primary-9       | Enabled foreground  |
+| `foreground`         | accent-9        | Enabled foreground  |
 | `foregroundDisabled` | `Text.disabled` | Disabled foreground |
 
 ### Button — Tertiary (Dark Action)
@@ -233,6 +237,14 @@ Pre-composed sets for specific component types. Each component has background, f
 | `foreground`         | whatsapp-9      | Enabled foreground (brand green) |
 | `foregroundDisabled` | `Text.disabled` | Disabled foreground              |
 
+### Button Panel
+
+| Token        | Source       | Purpose                                              |
+| ------------ | ------------ | ---------------------------------------------------- |
+| `background` | neutral-1    | Surface behind the grouped buttons                   |
+| `border`     | `background` | One-pixel boundary separating the panel from content |
+| `shadow`     | Black @ 20%  | Shadow separating the floating panel from content    |
+
 ### Search Bar Button
 
 | Token               | Source         | Purpose                                   |
@@ -260,7 +272,6 @@ Pre-composed sets for specific component types. Each component has background, f
 | Token        | Source       | Purpose                                        |
 | ------------ | ------------ | ---------------------------------------------- |
 | `background` | `background` | Bottom-sheet surface                           |
-| `handle`     | neutral-6    | Subtle drag handle on the bottom-sheet surface |
 
 ### Toast — Success
 

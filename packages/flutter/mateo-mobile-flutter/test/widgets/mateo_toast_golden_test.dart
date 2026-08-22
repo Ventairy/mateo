@@ -70,8 +70,7 @@ void main() {
           GoldenTestScenario(
             name: 'strong shadow',
             child: _ToastGoldenFrame(
-              backgroundColor:
-                  mateoTestColorScheme.buttons.secondary.background,
+              backgroundColor: mateoTestColorScheme.buttons.accent.secondary.background,
               child: MateoToast(message: 'O mapa perdeu a conexao'),
             ),
           ),

@@ -10,12 +10,10 @@ class _MateoBottomSheetScrimDragSurface<T> extends StatefulWidget {
   final Widget child;
 
   @override
-  State<_MateoBottomSheetScrimDragSurface<T>> createState() =>
-      _MateoBottomSheetScrimDragSurfaceState<T>();
+  State<_MateoBottomSheetScrimDragSurface<T>> createState() => _MateoBottomSheetScrimDragSurfaceState<T>();
 }
 
-class _MateoBottomSheetScrimDragSurfaceState<T>
-    extends State<_MateoBottomSheetScrimDragSurface<T>> {
+class _MateoBottomSheetScrimDragSurfaceState<T> extends State<_MateoBottomSheetScrimDragSurface<T>> {
   int? _activePointer;
   bool _isDragActive = false;
   double _accumulatedPointerX = 0;
@@ -29,8 +27,7 @@ class _MateoBottomSheetScrimDragSurfaceState<T>
     final horizontalDistance = _accumulatedPointerX.abs();
     final verticalDistance = _accumulatedPointerY.abs();
 
-    return verticalDistance >=
-            _MateoBottomSheetRoute._directionMinIntentDistance &&
+    return verticalDistance >= _MateoBottomSheetRoute._directionMinIntentDistance &&
         verticalDistance > horizontalDistance &&
         _accumulatedPointerY > 0;
   }
@@ -107,13 +104,13 @@ class _MateoBottomSheetScrimDragSurfaceState<T>
   }
 
   void _handlePointerDown(PointerDownEvent event) {
+    if (!widget.route.draggable) return;
     if (_activePointer != null) return;
 
     _activePointer = event.pointer;
     _accumulatedPointerX = 0;
     _accumulatedPointerY = 0;
-    _velocityTracker = VelocityTracker.withKind(event.kind)
-      ..addPosition(event.timeStamp, event.position);
+    _velocityTracker = VelocityTracker.withKind(event.kind)..addPosition(event.timeStamp, event.position);
   }
 
   void _handlePointerMove(PointerMoveEvent event) {

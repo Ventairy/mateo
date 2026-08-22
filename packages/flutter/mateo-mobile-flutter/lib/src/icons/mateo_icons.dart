@@ -15,6 +15,14 @@ import 'package:mateo_mobile/src/gen/icons.g.dart';
 abstract final class MateoIcon {
   MateoIcon._();
 
+  /// Arrow pointing down.
+  static Widget arrowDown({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.arrowDown(key: key, width: width, height: height, color1: color);
+
   /// Arrow pointing left.
   static Widget arrowLeft({
     Key? key,
@@ -22,6 +30,15 @@ abstract final class MateoIcon {
     double? height,
     Color? color,
   }) => $Icons.arrowLeft(key: key, width: width, height: height, color1: color);
+
+  /// Arrow pointing right.
+  static Widget arrowRight({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.arrowRight(key: key, width: width, height: height, color1: color);
 
   /// Circular arrow (retry/refresh).
   static Widget arrowRotateClockwise({
@@ -44,6 +61,35 @@ abstract final class MateoIcon {
     Color? color,
   }) => $Icons.arrowUp(key: key, width: width, height: height, color1: color);
 
+  /// Banknote with a pin icon.
+  static Widget banknotePin({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.banknotePin(key: key, width: width, height: height, color1: color);
+
+  /// Horizontal range or two-direction icon.
+  static Widget bidirecionalHorizontalArrow({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.bidirecionalHorizontalArrow(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
+  /// Box with a pen icon.
+  static Widget boxPen({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.boxPen(key: key, width: width, height: height, color1: color);
+
   /// Chevron pointing down.
   static Widget chevronDown({
     Key? key,
@@ -52,6 +98,15 @@ abstract final class MateoIcon {
     Color? color,
   }) =>
       $Icons.chevronDown(key: key, width: width, height: height, color1: color);
+
+  /// Chevron pointing left.
+  static Widget chevronLeft({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.chevronLeft(key: key, width: width, height: height, color1: color);
 
   /// Blocked / circle-slash icon.
   static Widget circleBlock({
@@ -122,6 +177,14 @@ abstract final class MateoIcon {
     color1: color,
   );
 
+  /// Handshake icon.
+  static Widget handshake({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.handshake(key: key, width: width, height: height, color1: color);
+
   /// Magnifying glass icon.
   static Widget magnifierGlass({
     Key? key,
@@ -164,6 +227,36 @@ abstract final class MateoIcon {
     color1: color,
   );
 
+  /// Question mark icon.
+  static Widget questionmark({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.questionmark(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
+  /// Stack of rectangles icon.
+  static Widget rectangleStack({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) => $Icons.rectangleStack(
+    key: key,
+    width: width,
+    height: height,
+    color1: color,
+  );
+
+  /// Road icon.
+  static Widget road({Key? key, double? width, double? height, Color? color}) =>
+      $Icons.road(key: key, width: width, height: height, color1: color);
+
   /// Smartphone icon.
   static Widget smartphone({
     Key? key,
@@ -172,6 +265,10 @@ abstract final class MateoIcon {
     Color? color,
   }) =>
       $Icons.smartphone(key: key, width: width, height: height, color1: color);
+
+  /// Tree icon.
+  static Widget tree({Key? key, double? width, double? height, Color? color}) =>
+      $Icons.tree(key: key, width: width, height: height, color1: color);
 
   /// WhatsApp icon.
   static Widget whatsapp({
@@ -201,4 +298,13 @@ abstract final class MateoIcon {
     double? height,
     Color? color,
   }) => $Icons.wrench(key: key, width: width, height: height, color1: color);
+
+  /// Plus / More Icon
+  static Widget plusSignal({
+    Key? key,
+    double? width,
+    double? height,
+    Color? color,
+  }) =>
+      $Icons.plusSignal(key: key, width: width, height: height, color1: color);
 }

@@ -61,7 +61,7 @@ void main() {
             child: _FadeScenario(
               position: MateoEdgeFadePosition.top,
               style: MateoEdgeFadeStyle(
-                color: mateoTestColorScheme.buttons.primary.background,
+                color: mateoTestColorScheme.buttons.accent.primary.background,
               ),
             ),
           ),

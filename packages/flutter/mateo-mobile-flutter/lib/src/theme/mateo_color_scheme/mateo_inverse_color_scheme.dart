@@ -13,7 +13,7 @@ class MateoInverseColorScheme {
   const MateoInverseColorScheme({
     required this.background,
     required this.onBackground,
-    required this.primary,
+    required this.accent,
   });
 
   /// {@macro mateo_color_scheme_lerp}
@@ -25,7 +25,7 @@ class MateoInverseColorScheme {
     return MateoInverseColorScheme(
       background: Color.lerp(a.background, b.background, t)!,
       onBackground: Color.lerp(a.onBackground, b.onBackground, t)!,
-      primary: Color.lerp(a.primary, b.primary, t)!,
+      accent: Color.lerp(a.accent, b.accent, t)!,
     );
   }
 
@@ -35,19 +35,19 @@ class MateoInverseColorScheme {
   /// Readable foreground color placed on [background].
   final Color onBackground;
 
-  /// Primary accent color intended for use within inverse surfaces.
-  final Color primary;
+  /// Accent color intended for use within inverse surfaces.
+  final Color accent;
 
   /// {@macro mateo_color_scheme_copy_with}
   MateoInverseColorScheme copyWith({
     Color? background,
     Color? onBackground,
-    Color? primary,
+    Color? accent,
   }) {
     return MateoInverseColorScheme(
       background: background ?? this.background,
       onBackground: onBackground ?? this.onBackground,
-      primary: primary ?? this.primary,
+      accent: accent ?? this.accent,
     );
   }
 
@@ -57,8 +57,8 @@ class MateoInverseColorScheme {
       other is MateoInverseColorScheme &&
           background == other.background &&
           onBackground == other.onBackground &&
-          primary == other.primary;
+          accent == other.accent;
 
   @override
-  int get hashCode => Object.hash(background, onBackground, primary);
+  int get hashCode => Object.hash(background, onBackground, accent);
 }

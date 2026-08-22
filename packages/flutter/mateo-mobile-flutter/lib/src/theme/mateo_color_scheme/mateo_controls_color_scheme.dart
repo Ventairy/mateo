@@ -79,6 +79,5 @@ class MateoControlsColorScheme {
           caret == other.caret;
 
   @override
-  int get hashCode =>
-      Object.hash(track, trackFilled, indicator, indicatorForeground, caret);
+  int get hashCode => Object.hash(track, trackFilled, indicator, indicatorForeground, caret);
 }

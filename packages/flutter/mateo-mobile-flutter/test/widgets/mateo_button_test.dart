@@ -11,6 +11,61 @@ final _colorScheme = MateoColorScheme.light();
 
 void main() {
   group('MateoButton', () {
+    group('tone', () {
+      test(
+        'when tone is omitted, it should default to accent in both constructors',
+        () {
+          final button = MateoButton(
+            variant: MateoButtonVariant.primary,
+            label: 'Continue',
+            onPressed: () {},
+          );
+          final actionBloomButton = MateoButton.actionBloom(
+            variant: MateoButtonVariant.primary,
+            label: 'Choose',
+            actions: _actionBloomActions(),
+          );
+
+          expect(button.tone, MateoButtonTone.accent);
+          expect(actionBloomButton.tone, MateoButtonTone.accent);
+        },
+      );
+
+      test(
+        'when accent tone is explicit, it should be retained by both constructors',
+        () {
+          final button = MateoButton(
+            variant: MateoButtonVariant.secondary,
+            tone: MateoButtonTone.accent,
+            label: 'Continue',
+            onPressed: () {},
+          );
+          final actionBloomButton = MateoButton.actionBloom(
+            variant: MateoButtonVariant.secondary,
+            tone: MateoButtonTone.accent,
+            label: 'Choose',
+            actions: _actionBloomActions(),
+          );
+
+          expect(button.tone, MateoButtonTone.accent);
+          expect(actionBloomButton.tone, MateoButtonTone.accent);
+        },
+      );
+
+      test('when accent tone resolves variants, it should use accent colors', () {
+        final accent = MateoButtonTone.accent.colorScheme(_colorScheme);
+
+        expect(
+          MateoButtonVariant.primary.colorScheme(accent),
+          _colorScheme.buttons.accent.primary,
+        );
+        expect(
+          MateoButtonVariant.secondary.colorScheme(accent),
+          _colorScheme.buttons.accent.secondary,
+        );
+      });
+    });
+
     group('tap behavior', () {
       testWidgets(
         'when tapped with a sync callback, it should invoke onPressed',
@@ -180,9 +235,7 @@ void main() {
           ),
         );
 
-        final buttonWidth = tester
-            .getSize(find.byKey(const Key('mateo_button_container')))
-            .width;
+        final buttonWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
         final screenWidth = tester.getSize(find.byType(MaterialApp)).width;
         expect(buttonWidth, lessThan(screenWidth));
       });
@@ -231,9 +284,7 @@ void main() {
           );
 
           expect(
-            tester
-                .getSize(find.byKey(const Key('mateo_button_container')))
-                .height,
+            tester.getSize(find.byKey(const Key('mateo_button_container'))).height,
             lessThan(200),
           );
         },
@@ -283,7 +334,7 @@ void main() {
 
     group('background colors', () {
       testWidgets(
-        'when background is not customized, it should use the primary color',
+        'when background is not customized, it should use the accent tone primary background',
         (tester) async {
           await tester.pumpWidget(
             TestApp(
@@ -297,7 +348,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.primary.background),
+            equals(_colorScheme.buttons.accent.primary.background),
           );
         },
       );
@@ -317,7 +368,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.secondary.background),
+            equals(_colorScheme.buttons.accent.secondary.background),
           );
         },
       );
@@ -340,7 +391,7 @@ void main() {
 
         expect(
           _buttonBackgroundColor(tester),
-          equals(_colorScheme.buttons.primary.background),
+          equals(_colorScheme.buttons.accent.primary.background),
         );
       });
 
@@ -366,7 +417,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.primary.background),
+            equals(_colorScheme.buttons.accent.primary.background),
           );
         },
       );
@@ -377,8 +428,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.buttons.success.background,
             backgroundPressed: mateoTestColorScheme.buttons.success.background,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -387,6 +437,7 @@ void main() {
             TestApp(
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
+                tone: MateoButtonTone.accent,
                 label: 'Mapa',
                 colorScheme: customColorScheme,
                 onPressed: () {},
@@ -415,7 +466,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.primary.backgroundDisabled),
+            equals(_colorScheme.buttons.accent.primary.backgroundDisabled),
           );
         },
       );
@@ -425,10 +476,8 @@ void main() {
         (tester) async {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.buttons.success.background,
-            backgroundPressed:
-                mateoTestColorScheme.buttons.success.backgroundPressed,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -445,8 +494,27 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(mateoTestColorScheme.buttons.primary.backgroundDisabled),
+            equals(mateoTestColorScheme.buttons.accent.primary.backgroundDisabled),
           );
+        },
+      );
+    });
+
+    group('label style', () {
+      testWidgets(
+        'when rendered, it should use the 15 pixel Mateo button label size',
+        (tester) async {
+          await tester.pumpWidget(
+            TestApp(
+              child: MateoButton(
+                variant: MateoButtonVariant.primary,
+                label: 'Ver oportunidades',
+                onPressed: () {},
+              ),
+            ),
+          );
+
+          expect(_labelStyle(tester).fontSize, equals(15));
         },
       );
     });
@@ -467,7 +535,7 @@ void main() {
 
           expect(
             _labelStyle(tester).color,
-            equals(_colorScheme.buttons.primary.foreground),
+            equals(_colorScheme.buttons.accent.primary.foreground),
           );
         },
       );
@@ -487,7 +555,7 @@ void main() {
 
           expect(
             _labelStyle(tester).color,
-            equals(_colorScheme.buttons.secondary.foreground),
+            equals(_colorScheme.buttons.accent.secondary.foreground),
           );
         },
       );
@@ -498,8 +566,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.toast.warning.icon,
             backgroundPressed: mateoTestColorScheme.toast.warning.icon,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -535,7 +602,7 @@ void main() {
           final style = tester.widget<Text>(find.text('Indisponivel')).style!;
           expect(
             style.color,
-            equals(_colorScheme.buttons.primary.foregroundDisabled),
+            equals(_colorScheme.buttons.accent.primary.foregroundDisabled),
           );
         },
       );
@@ -621,9 +688,8 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
-            foreground: mateoTestColorScheme.buttons.primary.background,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            foreground: mateoTestColorScheme.buttons.accent.primary.background,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
           Color? foregroundColor;
@@ -645,7 +711,7 @@ void main() {
 
           expect(
             foregroundColor,
-            equals(mateoTestColorScheme.buttons.primary.background),
+            equals(mateoTestColorScheme.buttons.accent.primary.background),
           );
         },
       );
@@ -692,7 +758,7 @@ void main() {
 
           expect(
             foregroundColor,
-            equals(_colorScheme.buttons.primary.foregroundDisabled),
+            equals(_colorScheme.buttons.accent.primary.foregroundDisabled),
           );
         },
       );
@@ -706,8 +772,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -727,8 +792,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -747,8 +811,7 @@ void main() {
                 variant: MateoButtonVariant.primary,
                 label: 'Filtrar',
                 leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) =>
-                    const Icon(Icons.arrow_drop_down),
+                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
                 onPressed: () {},
               ),
             ),
@@ -900,8 +963,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -1001,22 +1063,18 @@ void main() {
             ),
           );
 
-          final restingWidth = tester
-              .getSize(find.byKey(const Key('mateo_button_container')))
-              .width;
+          final restingWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
           await tester.tap(find.text('Enviar candidatura completa'));
           await _pumpLoadingState(tester);
           await tester.pump(const Duration(milliseconds: 300));
-          final loadingWidth = tester
-              .getSize(find.byKey(const Key('mateo_button_container')))
-              .width;
+          final loadingWidth = tester.getSize(find.byKey(const Key('mateo_button_container'))).width;
 
           expect(loadingWidth, lessThan(restingWidth));
         },
       );
 
       testWidgets(
-        'when fit is expand and loading, it should keep the expanded width',
+        'when fit is expand and loading, it should keep its width and height',
         (tester) async {
           final completer = Completer<void>();
 
@@ -1034,15 +1092,16 @@ void main() {
             ),
           );
 
+          final restingSize = tester.getSize(
+            find.byKey(const Key('mateo_button_container')),
+          );
           await tester.tap(find.text('Enviar candidatura completa'));
           await _pumpLoadingState(tester);
           await tester.pump(const Duration(milliseconds: 300));
 
           expect(
-            tester
-                .getSize(find.byKey(const Key('mateo_button_container')))
-                .width,
-            equals(300),
+            tester.getSize(find.byKey(const Key('mateo_button_container'))),
+            equals(restingSize),
           );
         },
       );
@@ -1082,8 +1141,7 @@ void main() {
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
                 label: 'Ligar agora',
-                leadingIconBuilder: (state) =>
-                    const SizedBox.square(dimension: 24),
+                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1106,8 +1164,7 @@ void main() {
               child: MateoButton(
                 variant: MateoButtonVariant.primary,
                 label: 'Ligar agora',
-                leadingIconBuilder: (state) =>
-                    const SizedBox.square(dimension: 24),
+                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1376,8 +1433,7 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled:
-                mateoTestColorScheme.buttons.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
             foregroundDisabled: mateoTestColorScheme.text.disabled,
           );
@@ -1732,6 +1788,19 @@ void main() {
   });
 }
 
+List<MateoActionBloomAction> _actionBloomActions() => [
+  MateoActionBloomAction(
+    iconBuilder: (_) => const SizedBox.shrink(),
+    title: 'First',
+    onPressed: (_) async {},
+  ),
+  MateoActionBloomAction(
+    iconBuilder: (_) => const SizedBox.shrink(),
+    title: 'Second',
+    onPressed: (_) async {},
+  ),
+];
+
 Color? _buttonBackgroundColor(WidgetTester tester) {
   final decorated = tester.widget<DecoratedBox>(
     find.descendant(
@@ -1743,9 +1812,7 @@ Color? _buttonBackgroundColor(WidgetTester tester) {
 }
 
 EdgeInsetsGeometry? _buttonPadding(WidgetTester tester) {
-  return tester
-      .widget<Padding>(find.byKey(const Key('mateo_button_container')))
-      .padding;
+  return tester.widget<Padding>(find.byKey(const Key('mateo_button_container'))).padding;
 }
 
 TextStyle _labelStyle(WidgetTester tester) {
@@ -1768,9 +1835,7 @@ double _contentFadeOpacity(WidgetTester tester) {
       )
       .toList();
 
-  return fadeTransitions
-      .map((fadeTransition) => fadeTransition.opacity.value)
-      .reduce(math.min);
+  return fadeTransitions.map((fadeTransition) => fadeTransition.opacity.value).reduce(math.min);
 }
 
 Future<void> _pumpLoadingState(WidgetTester tester) async {

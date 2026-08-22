@@ -26,18 +26,15 @@ class MateoColorVariantColorScheme {
   final Color onSolid;
 
   /// {@macro mateo_color_scheme_copy_with}
-  MateoColorVariantColorScheme copyWith({Color? solid, Color? onSolid}) =>
-      MateoColorVariantColorScheme(
-        solid: solid ?? this.solid,
-        onSolid: onSolid ?? this.onSolid,
-      );
+  MateoColorVariantColorScheme copyWith({Color? solid, Color? onSolid}) => MateoColorVariantColorScheme(
+    solid: solid ?? this.solid,
+    onSolid: onSolid ?? this.onSolid,
+  );
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MateoColorVariantColorScheme &&
-          solid == other.solid &&
-          onSolid == other.onSolid;
+      other is MateoColorVariantColorScheme && solid == other.solid && onSolid == other.onSolid;
 
   @override
   int get hashCode => Object.hash(solid, onSolid);

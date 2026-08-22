@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mateo_mobile/src/theme/mateo_theme_context.dart';
 import 'package:mateo_mobile/src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
@@ -55,7 +54,6 @@ class MateoYSnapList<T> extends StatefulWidget {
     this.onMotionEnd,
     this.loadMoreThreshold = 1,
     this.loadingMoreOffset = 200,
-    this.enableHapticFeedback = true,
   }) : assert(
          loadMoreThreshold >= 0 && loadMoreThreshold <= 1,
          'loadMoreThreshold must be greater than or equal to 0 and less than or equal to 1.',
@@ -174,11 +172,6 @@ class MateoYSnapList<T> extends StatefulWidget {
   /// Defaults to `200` (pixels).
   final double loadingMoreOffset;
 
-  /// Whether the list emits a soft haptic tick when the next item settles.
-  ///
-  /// Defaults to `true`. Set to `false` to disable the settle haptic.
-  final bool enableHapticFeedback;
-
   /// Vertical gap between the current card and its adjacent cards.
   ///
   /// The current card always settles at the same position regardless of this
@@ -204,7 +197,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     with SingleTickerProviderStateMixin
     implements _MateoYSnapListControllerClient {
   static const _settleDuration = Duration(milliseconds: 260);
-  static const _commitDuration = Duration(milliseconds: 220);
+  static const _commitDuration = Duration(milliseconds: 180);
   static const _swipeThreshold = 0.25;
 
   late final AnimationController _animationController;
@@ -218,7 +211,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   double _viewportWidth = 1;
   double get _commitDistance => _viewportHeight + widget.spacing;
   bool _isLoadingMore = false;
-  bool _hasFiredStartHaptic = false;
   bool _isLoadMoreScheduled = false;
   bool _isControllerActionRunning = false;
   bool _isMotionActive = false;
@@ -229,8 +221,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   bool _isCommitting = false;
   Animation<double>? _loadingLiftAnimation;
   final _disposeCompleter = Completer<void>();
-  final Map<Object, _MateoYSnapListCachedItem<T>> _cardCache =
-      <Object, _MateoYSnapListCachedItem<T>>{};
+  final Map<Object, _MateoYSnapListCachedItem<T>> _cardCache = <Object, _MateoYSnapListCachedItem<T>>{};
 
   final ValueNotifier<double> _dragOffsetNotifier = ValueNotifier<double>(0);
   final ValueNotifier<double> _loadingLiftNotifier = ValueNotifier<double>(0);
@@ -238,25 +229,18 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   bool get _hasCurrentItem => _currentIndex < widget.items.count;
   bool get _shouldShowLoadMoreErrorCard => widget.loadMoreErrorBuilder != null;
 
-  bool get _canEnterAwaitMode =>
-      _hasCurrentItem &&
-      _currentIndex + 1 >= widget.items.count &&
-      _isLoadingMore;
+  bool get _canEnterAwaitMode => _hasCurrentItem && _currentIndex + 1 >= widget.items.count && _isLoadingMore;
 
-  bool get _isAwaitDeciding =>
-      _awaitPhase == _MateoYSnapListAwaitPhase.deciding;
+  bool get _isAwaitDeciding => _awaitPhase == _MateoYSnapListAwaitPhase.deciding;
 
-  bool get _isAwaitDragging =>
-      _awaitPhase == _MateoYSnapListAwaitPhase.dragging;
+  bool get _isAwaitDragging => _awaitPhase == _MateoYSnapListAwaitPhase.dragging;
 
   bool get _isAwaitWaiting => _awaitPhase == _MateoYSnapListAwaitPhase.waiting;
 
   bool get _isAwaitActive => _isAwaitDragging || _isAwaitWaiting;
 
   bool get _paginationMayBringMore =>
-      widget.onLoadMore != null &&
-      !_shouldShowLoadMoreErrorCard &&
-      _exhaustedItemCount != widget.items.count;
+      widget.onLoadMore != null && !_shouldShowLoadMoreErrorCard && _exhaustedItemCount != widget.items.count;
 
   @override
   void initState() {
@@ -286,8 +270,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       _dragOffsetNotifier.value = 0;
     }
 
-    if (widget.items.count > oldWidget.items.count ||
-        widget.items.count > (_exhaustedItemCount ?? -1)) {
+    if (widget.items.count > oldWidget.items.count || widget.items.count > (_exhaustedItemCount ?? -1)) {
       _exhaustedItemCount = null;
     }
 
@@ -328,7 +311,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     if (_isControllerActionRunning) return;
 
     _animationController.stop(canceled: false);
-    _hasFiredStartHaptic = false;
     _activeDragGeneration = _startMotion();
 
     _handleAwaitDragStart();
@@ -451,11 +433,9 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   }
 
   void _handleAwaitDragUpdate(double dragDeltaY) {
-    _loadingLiftNotifier.value = (_loadingLiftNotifier.value + dragDeltaY)
-        .clamp(-widget.loadingMoreOffset, 0.0);
+    _loadingLiftNotifier.value = (_loadingLiftNotifier.value + dragDeltaY).clamp(-widget.loadingMoreOffset, 0.0);
     _awaitDragProgress = _progressForLoadingLift(_loadingLiftNotifier.value);
 
-    _emitStartHapticIfNeeded(shouldEmit: _awaitDragProgress > 0);
     widget.onSwipeProgress?.call(
       action: MateoYSnapListAction.next,
       percentage: _awaitDragProgress,
@@ -464,17 +444,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
 
   void _handleRegularDragUpdate(double dragDeltaY) {
     _setDragOffset(_dragOffsetY + dragDeltaY);
-
-    _emitStartHapticIfNeeded(shouldEmit: _dragOffsetY < 0);
-  }
-
-  void _emitStartHapticIfNeeded({required bool shouldEmit}) {
-    if (_hasFiredStartHaptic || !widget.enableHapticFeedback || !shouldEmit) {
-      return;
-    }
-
-    _hasFiredStartHaptic = true;
-    unawaited(HapticFeedback.selectionClick());
   }
 
   Future<void> _finishAwaitDrag(DragEndDetails details) async {
@@ -535,9 +504,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   }
 
   bool _isNextSwipe({required Velocity velocity}) {
-    return _dragOffsetY < 0 ||
-        (_dragOffsetY == 0 &&
-            velocity.isSwipeUp(requireVerticalDominance: false));
+    return _dragOffsetY < 0 || (_dragOffsetY == 0 && velocity.isSwipeUp(requireVerticalDominance: false));
   }
 
   bool _shouldCommitAwait({required Velocity velocity}) {
@@ -546,9 +513,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
         velocity.isSwipeUp(requireVerticalDominance: false) ||
         velocity.isSwipeDown(requireVerticalDominance: false);
 
-    return metThreshold &&
-        (_awaitDragProgress > 0 ||
-            velocity.isSwipeUp(requireVerticalDominance: false));
+    return metThreshold && (_awaitDragProgress > 0 || velocity.isSwipeUp(requireVerticalDominance: false));
   }
 
   bool _shouldExitWaiting({required Velocity velocity}) {
@@ -620,10 +585,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       widget.onNext?.call(item, itemIndex);
       widget.controller?._notify(MateoYSnapListNotification.nextItem);
       _scheduleLoadMoreIfNeeded();
-
-      if (widget.enableHapticFeedback) {
-        unawaited(HapticFeedback.selectionClick());
-      }
     } finally {
       _isCommitting = false;
     }
@@ -728,8 +689,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     double? loadingLiftTarget,
     Curve curve = Curves.easeOutCubic,
   }) {
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
     if (disableAnimations) {
       _applyAnimationTargets(
@@ -739,11 +699,8 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       return Future<void>.value();
     }
 
-    final shouldAnimateOffset =
-        offsetTarget != null && _dragOffsetY != offsetTarget;
-    final shouldAnimateLoadingLift =
-        loadingLiftTarget != null &&
-        _loadingLiftNotifier.value != loadingLiftTarget;
+    final shouldAnimateOffset = offsetTarget != null && _dragOffsetY != offsetTarget;
+    final shouldAnimateLoadingLift = loadingLiftTarget != null && _loadingLiftNotifier.value != loadingLiftTarget;
 
     if (!shouldAnimateOffset && !shouldAnimateLoadingLift) {
       _applyAnimationTargets(
@@ -971,10 +928,6 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
       widget.onNext?.call(item, itemIndex);
       widget.controller?._notify(MateoYSnapListNotification.nextItem);
       _scheduleLoadMoreIfNeeded();
-
-      if (widget.enableHapticFeedback) {
-        unawaited(HapticFeedback.selectionClick());
-      }
     } finally {
       if (mounted) {
         _endMotion(motionGeneration);
@@ -1041,9 +994,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
     final itemKey = widget.items.keyBuilder?.call(item, index) ?? index;
     final cachedCard = _cardCache[itemKey];
 
-    if (cachedCard != null &&
-        cachedCard.item == item &&
-        cachedCard.index == index) {
+    if (cachedCard != null && cachedCard.item == item && cachedCard.index == index) {
       return cachedCard;
     }
 
@@ -1097,9 +1048,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
   _MateoYSnapListWindow<T> _listWindowFor(BuildContext context) {
     final nextIndex = _currentIndex + 1;
     final hasNextItem = nextIndex < widget.items.count;
-    final previousCard = _currentIndex > 0
-        ? _cardFor(index: _currentIndex - 1)
-        : null;
+    final previousCard = _currentIndex > 0 ? _cardFor(index: _currentIndex - 1) : null;
     final currentCard = _hasCurrentItem ? _cardFor(index: _currentIndex) : null;
     final nextCard = hasNextItem ? _cardFor(index: nextIndex) : null;
 
@@ -1157,8 +1106,7 @@ class _MateoYSnapListState<T> extends State<MateoYSnapList<T>>
         viewportWidth: _viewportWidth,
         spacing: widget.spacing,
         hasPreviousCard: listWindow.previousCard != null,
-        hasNextCard:
-            listWindow.nextCard != null || listWindow.paginationCard != null,
+        hasNextCard: listWindow.nextCard != null || listWindow.paginationCard != null,
         isAwaitMode: _isAwaitActive,
         loadingMoreOffset: widget.loadingMoreOffset,
       ),

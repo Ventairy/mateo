@@ -49,7 +49,7 @@ void main() {
           find.byType(CircularProgressIndicator),
         );
 
-        expect(indicator.color, equals(mateoTestPalette.primary[9]));
+        expect(indicator.color, equals(mateoTestPalette.accent[9]));
       },
     );
 

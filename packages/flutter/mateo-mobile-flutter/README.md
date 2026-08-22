@@ -19,7 +19,7 @@ surfaces.
   loading text, and animated indicators.
 - Gesture-first building blocks for swipe navigation, drag resistance, hero
   motion, vertical snap feeds, and edge fades.
-- Mobile foundations for color, typography, maps, reduced motion, safe areas,
+- Mobile foundations for color, typography, reduced motion, safe areas,
   touch targets, and semantic labels.
 
 Mateo Mobile currently supports Android and iOS. Web and desktop are separate
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
     return MateoApp(
       title: 'My App',
       color: const (
-        primary: Color(0xFFFF4A4B),
-        onPrimary: Color(0xFFFFFFFF),
+        accent: Color(0xFFFF4A4B),
+        onAccent: Color(0xFFFFFFFF),
       ),
       home: Scaffold(
         body: Center(
@@ -86,14 +86,55 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 ```dart
 MateoButton(
   label: 'Save changes',
+  tone: MateoButtonTone.accent,
   variant: MateoButtonVariant.primary,
   onPressed: saveChanges,
+)
+
+MateoTextInput(
+  placeholder: 'Phone or email',
+  variant: MateoTextInputVariant.quiet,
+  keyboardType: TextInputType.emailAddress,
+  textInputAction: TextInputAction.done,
+  autofillHints: const [AutofillHints.email],
+  onChanged: updateContact,
 )
 
 MateoToast.show(
   context,
   message: 'Saved',
   type: MateoToastType.success,
+)
+```
+
+Use `MateoPage` with declarative routers for native platform navigation or an
+explicit Mateo transition:
+
+```dart
+MateoPage<void>(
+  child: JobView(jobId: jobId),
+  transition: MateoPageTransition.wash(),
+)
+```
+
+Omit `transition` to use native Cupertino motion on iOS and native Material
+motion on Android. Use `push` when both pages should travel together while only
+the source fades. It samples the destination's entering-edge colors for the
+blend, so custom painted backgrounds work without exposing destination content
+beneath the source:
+
+```dart
+MateoPageTransition.push(
+  direction: MateoPageTransitionDirection.left,
+)
+```
+
+All explicit transitions accept `duration`, `reverseDuration`, and
+`direction`. Use `reverseDuration` to tune the pop independently:
+
+```dart
+MateoPageTransition.wash(
+  reverseDuration: const Duration(milliseconds: 350),
 )
 ```
 

@@ -45,7 +45,7 @@ void main() {
             name: 'custom color',
             child: MateoTextButton(
               text: 'Destacar',
-              color: mateoTestColorScheme.buttons.primary.background,
+              color: mateoTestColorScheme.buttons.accent.primary.background,
               onPressed: () {},
             ),
           ),
@@ -82,8 +82,7 @@ void main() {
             name: 'disabled',
             child: MateoTextButton(
               text: 'Indisponivel',
-              leadingIconBuilder: (state) =>
-                  Icon(Icons.lock, color: state.recommendedIconColor, size: 18),
+              leadingIconBuilder: (state) => Icon(Icons.lock, color: state.recommendedIconColor, size: 18),
             ),
           ),
         ],

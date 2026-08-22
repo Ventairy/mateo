@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 class _LightMateoColorScheme extends MateoColorScheme {
   _LightMateoColorScheme({
     required MateoPalette palette,
-    required Color onPrimary,
+    required Color onAccent,
   }) : super(
          background: Colors.white,
          colors: MateoColorsColorScheme(
@@ -15,26 +15,28 @@ class _LightMateoColorScheme extends MateoColorScheme {
          text: MateoTextColorScheme(
            primary: palette.neutral[12],
            secondary: palette.neutral[10],
-           tertiary: palette.neutral[9],
+           tertiary: palette.neutral[8],
            disabled: palette.neutral[9],
            inverse: Colors.white,
            profit: palette.green[10],
          ),
-         selectionHighlight: palette.primary[9].withValues(alpha: 0.30),
+         selectionHighlight: palette.accent[9].withValues(alpha: 0.30),
          buttons: MateoButtonsColorScheme(
-           primary: MateoButtonColorScheme(
-             background: palette.primary[9],
-             backgroundPressed: palette.primary[9],
-             backgroundDisabled: palette.neutral[4],
-             foreground: onPrimary,
-             foregroundDisabled: palette.neutral[9],
-           ),
-           secondary: MateoButtonColorScheme(
-             background: palette.primary[2],
-             backgroundPressed: palette.primary[2],
-             backgroundDisabled: palette.neutral[4],
-             foreground: palette.primary[9],
-             foregroundDisabled: palette.neutral[9],
+           accent: MateoButtonToneColorScheme(
+             primary: MateoButtonColorScheme(
+               background: palette.accent[9],
+               backgroundPressed: palette.accent[9],
+               backgroundDisabled: palette.neutral[4],
+               foreground: onAccent,
+               foregroundDisabled: palette.neutral[9],
+             ),
+             secondary: MateoButtonColorScheme(
+               background: palette.accent[2],
+               backgroundPressed: palette.accent[2],
+               backgroundDisabled: palette.neutral[4],
+               foreground: palette.accent[9],
+               foregroundDisabled: palette.neutral[9],
+             ),
            ),
            tertiary: MateoButtonColorScheme(
              background: palette.neutral[12],
@@ -104,10 +106,14 @@ class _LightMateoColorScheme extends MateoColorScheme {
              ),
            ),
          ),
+         buttonPanel: MateoButtonPanelColorScheme(
+           background: palette.neutral[1],
+           border: Colors.white,
+           shadow: const Color(0x33000000),
+         ),
          overlay: const MateoOverlayColorScheme(scrim: Color(0x66000000)),
-         bottomSheet: MateoBottomSheetColorScheme(
+         bottomSheet: const MateoBottomSheetColorScheme(
            background: Colors.white,
-           handle: palette.neutral[6],
          ),
          toast: MateoToastColorScheme(
            success: MateoToastVariantColorScheme(
@@ -149,14 +155,14 @@ class _LightMateoColorScheme extends MateoColorScheme {
          inverse: MateoInverseColorScheme(
            background: palette.neutral[12],
            onBackground: Colors.white,
-           primary: palette.primary[3],
+           accent: palette.accent[3],
          ),
          controls: MateoControlsColorScheme(
            track: palette.neutral[6],
-           trackFilled: palette.primary[9],
-           indicator: palette.primary[9],
-           indicatorForeground: onPrimary,
-           caret: palette.primary[9],
+           trackFilled: palette.accent[9],
+           indicator: palette.accent[9],
+           indicatorForeground: onAccent,
+           caret: palette.accent[9],
          ),
          map: MateoMapColorScheme(
            background: palette.neutral[2],

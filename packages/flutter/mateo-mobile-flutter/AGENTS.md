@@ -116,6 +116,15 @@ the enclosing doc comment using `[parameterName]` references — never
 Widget wrap({required BuildContext context, required Widget child});
 ```
 
+### Keep Enum Variants as the Source of Truth
+
+Do not list or name an enum's possible values in the documentation of a widget,
+class, constructor, or property that consumes it. Describe the enum's role
+through the typed property, and document value-specific behavior on the enum
+and its values. The enum declaration must remain the only inventory of its
+variants so adding or removing a value cannot leave duplicated documentation
+stale.
+
 ### Cross-Reference Linking
 
 Wrap type names, member names, and constructor names in square brackets `[]`
@@ -236,7 +245,7 @@ Every new widget in `mateo_mobile` must have a corresponding golden test file at
   using `GoldenTestScenario` and `GoldenTestGroup`.
 - Use `goldenTest` from `alchemist`, not raw `matchesGoldenFile`.
 - Configure `AlchemistConfig` in `test/flutter_test_config.dart` with
-  `MateoTheme.light(primaryColor: ...)` so theme tokens resolve in all golden
+  `MateoTheme.light(accentColor: ...)` so theme tokens resolve in all golden
   scenarios.
 - Commit CI goldens stored at `test/widgets/goldens/ci/`.
 - Gitignore platform goldens stored at `test/widgets/goldens/macos/`,
@@ -282,15 +291,24 @@ mateo-mobile-flutter/
 - All public widgets are exported from
   `packages/flutter/mateo-mobile-flutter/lib/mateo_mobile.dart` with explicit
   `show`.
-- Widgets live in the package's `lib/src/widgets/` directory. Simple widgets
-  may use one file. Larger widgets may use a same-named folder with one public
-  entrypoint and focused `part` files for public value types, controllers,
-  actions, and other support classes.
+- Widgets live in the package's `lib/src/widgets/` directory. A widget that
+  needs supporting classes must use a same-named folder with one public
+  entrypoint and focused supporting files.
+- Keep one class per file. The only routine exception is a `StatefulWidget` and
+  its corresponding `State`, which must remain together in the widget's file;
+  do not extract the `State` into a separate `part` file.
+- A supporting class that is tightly coupled to one public class and unlikely
+  to be reused by other public declarations must be private and live in its own
+  private `part` file of the owning library. Do not make an implementation
+  detail public only to place it in a separate file.
+- Keep a value inline when it is used in only one place. Extract it into a
+  variable only when it is used in more than one place, then reuse that
+  variable everywhere it is needed.
 
 - Access bundled SVG icons via `MateoIcon` (e.g. `MateoIcon.cross(width: 16, height: 16, color: Colors.red)`),
   exported from the barrel. `MateoIcon` is an `abstract final class` with one `static Widget` method per icon,
   delegating to dotdart's generated `$Icons` namespace. Add an `.svg` to `assets/icons/` and run
-  `make generate` to generate the dotdart accessor, then add a static method to `MateoIcon`.
+  `make gen` to generate the dotdart accessor, then add a static method to `MateoIcon`.
   Do not import `src/gen/icons.g.dart` directly from widget code; use `MateoIcon`.
 - Private declarations (`_`-prefixed classes, methods, fields, and part files for private types) must NOT have dartdoc. Private code should be self-explanatory through naming and structure alone. dartdoc is reserved for the public API surface that consumers outside the package can see.
 

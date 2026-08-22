@@ -1,13 +1,14 @@
 SHELL := /bin/bash
 PANA_MAX_DEFICIT ?= 10
 
-.PHONY: setup format format-check analyze test coverage docs example generate update-goldens publish-dry-run pana check release-check clean
+.PHONY: setup format format-check analyze test coverage docs example gen update-goldens publish-dry-run pana check release-check clean
 
 setup:
 	test -f pubspec_overrides.yaml || cp pubspec_overrides.yaml.example pubspec_overrides.yaml
 	test -f example/pubspec_overrides.yaml || cp example/pubspec_overrides.yaml.example example/pubspec_overrides.yaml
 	fvm flutter pub get
 	cd example && fvm flutter pub get
+	$(MAKE) gen
 
 format:
 	fvm dart format lib test example/lib/main.dart
@@ -31,7 +32,7 @@ docs:
 example:
 	cd example && fvm flutter analyze --fatal-infos
 
-generate:
+gen:
 	fvm dart run build_runner build
 	fvm dart format lib
 
@@ -50,7 +51,7 @@ check: format-check analyze test docs example
 release-check:
 	test ! -f pubspec_overrides.yaml
 	test ! -f example/pubspec_overrides.yaml
-	$(MAKE) generate
+	$(MAKE) gen
 	git diff --exit-code -- lib
 	$(MAKE) check
 	$(MAKE) publish-dry-run

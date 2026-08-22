@@ -306,8 +306,7 @@ void main() {
 
       await _pumpFeed(
         tester,
-        onPrevious: (item, index) =>
-            previousLogs.add((item: item, index: index)),
+        onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
       );
 
       await _dragCard(tester, 'first', const Offset(0, -300));
@@ -384,8 +383,7 @@ void main() {
 
         await _pumpFeed(
           tester,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         await _dragCurrentCard(
@@ -406,8 +404,7 @@ void main() {
 
         await _pumpFeed(
           tester,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         await _dragCurrentCard(
@@ -658,8 +655,7 @@ void main() {
         await _pumpFeed(
           tester,
           controller: controller,
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
         final nextFuture = controller.next();
         await tester.pumpAndSettle();
@@ -915,8 +911,7 @@ void main() {
           items: const ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'],
         );
 
-        Finder currentCardFinder() =>
-            find.byKey(_cardKey(_currentCardLabel(tester)));
+        Finder currentCardFinder() => find.byKey(_cardKey(_currentCardLabel(tester)));
 
         await tester.drag(currentCardFinder(), const Offset(0, -300));
         await tester.pump(const Duration(milliseconds: 16));
@@ -1161,8 +1156,7 @@ void main() {
         await _pumpTypedFeed<String>(
           tester,
           items: const ['first', 'second', 'third'],
-          builder: (context, item, index) =>
-              _CreationTrackingCard(label: item, onCreate: creations.add),
+          builder: (context, item, index) => _CreationTrackingCard(label: item, onCreate: creations.add),
         );
         creations.clear();
 
@@ -1186,8 +1180,7 @@ void main() {
                 keyBuilder: (item, index) => item,
               ),
               endBuilder: _endBuilder,
-              builder: (context, item, index) =>
-                  _CreationTrackingCard(label: item, onCreate: creations.add),
+              builder: (context, item, index) => _CreationTrackingCard(label: item, onCreate: creations.add),
             ),
           );
         }
@@ -1572,8 +1565,7 @@ void main() {
           tester,
           items: const ['first'],
           onLoadMore: () => Completer<void>().future,
-          onSwipeProgress: ({required action, required percentage}) =>
-              progressValues.add(percentage),
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
         );
         await tester.pump();
 
@@ -1611,8 +1603,7 @@ void main() {
           items: const ['first'],
           loadingMoreOffset: 0,
           onLoadMore: () => Completer<void>().future,
-          onSwipeProgress: ({required action, required percentage}) =>
-              progressValues.add(percentage),
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
         );
         await tester.pump();
 
@@ -1660,10 +1651,7 @@ void main() {
         expect(
           (
             isLoadFailure: exception is StateError,
-            hasSpinner: find
-                .byType(MateoDotsLoadingIndicator)
-                .evaluate()
-                .isNotEmpty,
+            hasSpinner: find.byType(MateoDotsLoadingIndicator).evaluate().isNotEmpty,
           ),
           (isLoadFailure: true, hasSpinner: false),
         );
@@ -1928,7 +1916,7 @@ void main() {
 
   group('MateoYSnapList haptic feedback', () {
     testWidgets(
-      'when committing next via gesture, it should emit a selectionClick haptic',
+      'when passing to the next item via gesture, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -1941,53 +1929,6 @@ void main() {
         );
 
         await _pumpFeed(tester);
-
-        await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        expect(hapticCalls, isNotEmpty);
-      },
-    );
-
-    testWidgets(
-      'when committing next, it should use the selectionClick haptic type',
-      (tester) async {
-        final hapticCalls = <MethodCall>[];
-        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          (call) {
-            if (call.method.startsWith('HapticFeedback')) hapticCalls.add(call);
-
-            return null;
-          },
-        );
-
-        await _pumpFeed(tester);
-
-        await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        expect(
-          hapticCalls.first.arguments,
-          'HapticFeedbackType.selectionClick',
-        );
-      },
-    );
-
-    testWidgets(
-      'when enableHapticFeedback is false, committing next should not emit haptic',
-      (tester) async {
-        final hapticCalls = <MethodCall>[];
-        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          (call) {
-            if (call.method.startsWith('HapticFeedback')) hapticCalls.add(call);
-
-            return null;
-          },
-        );
-
-        await _pumpFeed(tester, enableHapticFeedback: false);
 
         await tester.drag(find.byType(GestureDetector), const Offset(0, -300));
         await tester.pumpAndSettle();
@@ -1997,7 +1938,7 @@ void main() {
     );
 
     testWidgets(
-      'when dragging without committing, it should emit only the start haptic',
+      'when dragging without passing, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -2014,11 +1955,11 @@ void main() {
         await tester.drag(find.byType(GestureDetector), const Offset(0, -80));
         await tester.pumpAndSettle();
 
-        expect(hapticCalls, hasLength(1));
+        expect(hapticCalls, isEmpty);
       },
     );
 
-    testWidgets('when swiping down, it should NOT emit a haptic', (
+    testWidgets('when swiping down, it should not emit haptic feedback', (
       tester,
     ) async {
       final hapticCalls = <MethodCall>[];
@@ -2047,7 +1988,7 @@ void main() {
     });
 
     testWidgets(
-      'when a controller next is triggered, it should emit a settle haptic',
+      'when passing to the next item via controller, it should not emit haptic feedback',
       (tester) async {
         final hapticCalls = <MethodCall>[];
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -2066,7 +2007,7 @@ void main() {
         await tester.pumpAndSettle();
         await nextFuture;
 
-        expect(hapticCalls, isNotEmpty);
+        expect(hapticCalls, isEmpty);
       },
     );
   });
@@ -2081,8 +2022,7 @@ void main() {
         await _pumpFeed(
           tester,
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         final listFinder = find.byType(MateoYSnapList<String>);
@@ -2115,8 +2055,7 @@ void main() {
           tester,
           items: const ['first', 'second', 'third'],
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         // First advance from index 0 -> 1 to have a previous item
@@ -2175,8 +2114,7 @@ void main() {
           tester,
           items: const ['first', 'second', 'third'],
           onNext: (item, index) => nextLogs.add((item: item, index: index)),
-          onPrevious: (item, index) =>
-              previousLogs.add((item: item, index: index)),
+          onPrevious: (item, index) => previousLogs.add((item: item, index: index)),
         );
 
         // advance to index 1
@@ -2223,7 +2161,6 @@ Future<void> _pumpFeed(
   List<String> items = const ['first', 'second', 'third'],
   bool includeEndBuilder = true,
   bool disableAnimations = false,
-  bool enableHapticFeedback = true,
   double loadMoreThreshold = 1,
   double loadingMoreOffset = 200,
   double spacing = 0,
@@ -2253,7 +2190,6 @@ Future<void> _pumpFeed(
         loadMoreThreshold: loadMoreThreshold,
         loadingMoreOffset: loadingMoreOffset,
         spacing: spacing,
-        enableHapticFeedback: enableHapticFeedback,
         controller: controller,
         onSwipeProgress: onSwipeProgress,
         onNext: onNext,
@@ -2421,9 +2357,7 @@ class _ControllerSwapHostState extends State<_ControllerSwapHost> {
           ),
           Expanded(
             child: MateoYSnapList<String>(
-              controller: _useSecondController
-                  ? widget.secondController
-                  : widget.firstController,
+              controller: _useSecondController ? widget.secondController : widget.firstController,
               items: (
                 count: 2,
                 provider: (int i) => const ['first', 'second'][i],

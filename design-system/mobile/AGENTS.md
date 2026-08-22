@@ -22,8 +22,7 @@ Keep mobile-only work here, including:
 - mobile typography, iconography, motion, haptics, and feedback;
 - iOS- and Android-specific guidance, tokens, assets, and implementations;
 - mobile accessibility, localization, performance, and platform integration;
-- mobile package code, tests, examples, and adoption guidance as they are
-  introduced.
+- mobile component examples and adoption guidance.
 
 Do not place platform-agnostic primitives here. Shared color scales, spacing,
 type ramps, motion curves, and other reusable foundations belong in
@@ -42,6 +41,45 @@ their respective platform directories.
 - If a decision is genuinely reusable across platforms, move it to the
   foundation layer instead of defining competing mobile and shared versions.
 
+## Design Documentation Language
+
+Documents under this directory describe Mateo's observable mobile design
+contract, not the code used to produce it.
+
+- Never mention programming frameworks, packages, source files, classes,
+  widgets, constructors, methods, properties, callbacks, futures, render
+  objects, lifecycle states, or implementation-specific APIs in design
+  documentation.
+- Do not copy identifiers from an existing implementation into a design
+  artifact. Translate them into visible shape, layout, motion, interaction,
+  content, state, and accessibility behavior.
+- Describe platform capabilities in human terms, such as the system back
+  action, safe area, software keyboard, screen reader, or reduced-motion
+  setting. Do not name the API that exposes the capability.
+- Design token names, platform names, measurable values, formulas, and
+  accessibility roles are part of the design contract and may be named
+  directly.
+- Keep exact framework mappings and coding guidance in the corresponding
+  implementation package documentation. They never belong in Mateo usage or
+  component design documents.
+
+Abstraction must not make a specification vague. Continue to define every
+observable value and transition precisely enough for independent
+implementations to reproduce the same Mateo result.
+
+Write each design document so that any designer, engineer, or coding agent can
+use it without access to the current implementation and still:
+
+- understand when to use the pattern and when not to use it;
+- reproduce the same visible behavior, interaction, states, motion, layout,
+  content, and accessibility experience; and
+- make the same decisions in cases such as interruption, overflow,
+  localization, and platform differences.
+
+A document is not complete if hidden implementation knowledge is required to
+use it correctly, or if two reasonable readers could produce materially
+different Mateo experiences from its guidance.
+
 ## Mobile Design Rules
 
 - Treat iOS and Android as related mobile platforms, not interchangeable
@@ -52,9 +90,9 @@ their respective platform directories.
 - Support mobile devices in portrait and landscape, safe areas, software
   keyboards, dynamic text, localization, screen readers, reduced motion, and
   platform accessibility settings.
-- Use mobile-native accessibility APIs and semantics in implementation code.
-- Keep APIs Mateo-native and difficult to misuse. Do not expose raw styling
-  knobs when a named mobile semantic option can express the intent.
+- Implement mobile accessibility through each platform's native capabilities.
+- Keep public component options Mateo-native and difficult to misuse. Prefer a
+  named mobile semantic option over low-level visual overrides.
 - Motion and haptics must communicate continuity, state, focus, or confirmation.
   Respect reduced-motion and platform feedback settings.
 - Preserve Mateo's warmth and expressiveness without overriding familiar mobile
@@ -70,8 +108,9 @@ their respective platform directories.
   differences explicit.
 - Do not introduce a mobile framework, package manager, or dependency until the
   repository defines that implementation direction.
-- When package code and tooling are added, document their exact format, analyze,
-  test, and build commands here rather than guessing them in advance.
+- Keep format, analysis, test, build, and other coding workflows in the
+  implementation package's `AGENTS.md`, `CONTRIBUTING.md`, or internal tooling
+  documentation. Never place them in mobile design documents.
 
 ## Validation
 

@@ -89,10 +89,8 @@ final class MateoHeroBackground extends MateoHero {
     BuildContext fromHeroContext,
     BuildContext toHeroContext,
   ) {
-    final fromHero =
-        (fromHeroContext.widget as Hero).child as MateoHeroBackgroundEdgeFade;
-    final toHero =
-        (toHeroContext.widget as Hero).child as MateoHeroBackgroundEdgeFade;
+    final fromHero = (fromHeroContext.widget as Hero).child as MateoHeroBackgroundEdgeFade;
+    final toHero = (toHeroContext.widget as Hero).child as MateoHeroBackgroundEdgeFade;
     final fromHeroChild = fromHero.edgeFade;
     final toHeroChild = toHero.edgeFade;
     final fromRadius = fromHero.borderRadius;
@@ -103,20 +101,15 @@ final class MateoHeroBackground extends MateoHero {
     final sourceRadius = fromRadius;
     final destinationRadius = toRadius;
 
-    final resolvedSource =
-        sourceFade?.resolve(flightContext) ??
-        const MateoHeroEdgeFade().resolve(flightContext);
+    final resolvedSource = sourceFade?.resolve(flightContext) ?? const MateoHeroEdgeFade().resolve(flightContext);
     final resolvedDestination =
-        destinationFade?.resolve(flightContext) ??
-        const MateoHeroEdgeFade().resolve(flightContext);
+        destinationFade?.resolve(flightContext) ?? const MateoHeroEdgeFade().resolve(flightContext);
 
     return RepaintBoundary(
       child: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
-          final animationValue = flightDirection == HeroFlightDirection.push
-              ? animation.value
-              : 1 - animation.value;
+          final animationValue = flightDirection == HeroFlightDirection.push ? animation.value : 1 - animation.value;
           final edgeFadeProgress = resolvedSource.switchThreshold >= 1.0
               ? Curves.easeOutCubic.transform(animationValue)
               : animationValue;
@@ -214,9 +207,7 @@ final class MateoHeroBackground extends MateoHero {
     MateoHeroTextFlightMetrics? flightMetrics,
   }) {
     final endBox = end as MateoHeroBackground;
-    final lerpValue = flightDirection == HeroFlightDirection.push
-        ? value
-        : (1 - value);
+    final lerpValue = flightDirection == HeroFlightDirection.push ? value : (1 - value);
 
     final lerpedBox = _lerpBoxFlight(
       from: MateoHeroBackgroundFlight(decoration: decoration),

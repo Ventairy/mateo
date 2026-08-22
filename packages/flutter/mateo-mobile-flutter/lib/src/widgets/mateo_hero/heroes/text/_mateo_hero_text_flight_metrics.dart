@@ -71,16 +71,13 @@ class MateoHeroTextFlightMetrics {
     double? reservedLayoutWidthForTargetText;
 
     if (beginLayoutWidth != null && endLayoutWidth != null) {
-      final hasSourceFontSize =
-          from.style.fontSize != null && from.style.fontSize! > 0;
-      final hasTargetFontSize =
-          to.style.fontSize != null && to.style.fontSize! > 0;
+      final hasSourceFontSize = from.style.fontSize != null && from.style.fontSize! > 0;
+      final hasTargetFontSize = to.style.fontSize != null && to.style.fontSize! > 0;
 
       if (hasSourceFontSize && hasTargetFontSize) {
         final beginFontSize = from.style.fontSize!;
         final endFontSize = to.style.fontSize!;
-        final sourceWidthInEndFont =
-            beginLayoutWidth * (endFontSize / beginFontSize);
+        final sourceWidthInEndFont = beginLayoutWidth * (endFontSize / beginFontSize);
         reservedLayoutWidthForSourceText = math.min(
           sourceWidthInEndFont,
           endLayoutWidth,

@@ -10,11 +10,11 @@ import 'mateo_typography.dart';
 /// Material components and Mateo widgets resolve from the same semantic scheme,
 /// preventing framework defaults from drifting away from package tokens.
 abstract final class MateoTheme {
-  /// Creates a Mateo Mobile light theme from [primaryColor] and [onPrimary].
+  /// Creates a Mateo Mobile light theme from [accentColor] and [onAccent].
   ///
-  /// When omitted, Mateo violet and white are used. A custom [primaryColor]
-  /// regenerates both the primary and neutral scales. [onPrimary] defines the
-  /// foreground on primary surfaces and must be contrast-checked by consumers.
+  /// When omitted, Mateo violet and white are used. A custom [accentColor]
+  /// regenerates both the accent and neutral scales. [onAccent] defines the
+  /// foreground on accent surfaces and must be contrast-checked by consumers.
   ///
   /// ```dart
   /// MaterialApp(
@@ -22,11 +22,11 @@ abstract final class MateoTheme {
   ///   home: const HomeScreen(),
   /// )
   /// ```
-  static ThemeData light({Color? primaryColor, Color? onPrimary}) {
-    final palette = MateoPalette(primaryColor: primaryColor);
+  static ThemeData light({Color? accentColor, Color? onAccent}) {
+    final palette = MateoPalette(accentColor: accentColor);
     final colorScheme = MateoColorScheme.light(
       palette: palette,
-      onPrimary: onPrimary,
+      onAccent: onAccent,
     );
 
     return _build(MateoThemeData(colorScheme: colorScheme, palette: palette));
@@ -38,10 +38,10 @@ abstract final class MateoTheme {
 
     final colorScheme = ColorScheme(
       brightness: Brightness.light,
-      primary: palette.primary[9],
-      onPrimary: mateoColorScheme.buttons.primary.foreground,
-      primaryContainer: palette.primary[3],
-      onPrimaryContainer: palette.primary[11],
+      primary: palette.accent[9],
+      onPrimary: mateoColorScheme.buttons.accent.primary.foreground,
+      primaryContainer: palette.accent[3],
+      onPrimaryContainer: palette.accent[11],
       secondary: palette.teal[9],
       onSecondary: palette.teal[12],
       secondaryContainer: palette.teal[3],
@@ -63,8 +63,8 @@ abstract final class MateoTheme {
       scrim: mateoColorScheme.overlay.scrim,
       inverseSurface: mateoColorScheme.inverse.background,
       onInverseSurface: mateoColorScheme.inverse.onBackground,
-      inversePrimary: mateoColorScheme.inverse.primary,
-      surfaceTint: palette.primary[9],
+      inversePrimary: mateoColorScheme.inverse.accent,
+      surfaceTint: palette.accent[9],
     );
     final theme = ThemeData(
       useMaterial3: true,

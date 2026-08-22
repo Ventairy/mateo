@@ -15,19 +15,24 @@ full width of the bottom edge. Each fade is a foreground overlay above the
 scrolling content.
 
 The gradient uses the semantic background color of the surface that owns the
-viewport. It follows three stops measured from the outside edge toward the
-center of the viewport:
+viewport. Its opacity is measured from the outside edge toward the center of
+the viewport:
 
 | Position through the fade | Color                                     |
 | ------------------------- | ----------------------------------------- |
 | `0%`                      | Background color at `100%` opacity        |
-| `30%`                     | Background color at `100%` opacity        |
+| `0–100%`                  | The same color following the smooth curve |
 | `100%`                    | The same background color at `0%` opacity |
 
-Interpolate color and opacity continuously between the stops. The first 30%
-creates a calm area at the physical edge; the remaining 70% makes content
-appear or disappear gradually. Do not replace this with a short two-stop fade:
-it exposes content too close to the edge and makes the boundary visible again.
+Normalize the distance through the complete fade to `x` from `0` to `1`, then
+resolve opacity as `1 - (6x⁵ - 15x⁴ + 10x³)`. This curve begins and ends
+without a sudden change in slope, so content appears or disappears without
+revealing where the fade starts or stops. It remains nearly opaque beside the
+physical edge, then settles gently into complete transparency near the inner
+edge. Sample the curve finely enough that its shape remains smooth at every
+supported fade depth. Do not add an opaque plateau or replace the curve with a
+short linear fade: either choice compresses the transition and makes a boundary
+visible again.
 
 The direction mirrors by edge:
 
@@ -126,7 +131,7 @@ animate the fade as part of the same surface:
 - interpolate its depth continuously rather than replacing it;
 - grow a newly introduced fade from zero depth at its edge;
 - shrink a removed fade back to zero depth; and
-- keep the gradient stops at `0%`, `30%`, and `100%` throughout.
+- keep the smooth opacity curve unchanged throughout.
 
 The fade must not flash, detach, or reveal a hard edge during a shared element
 transition. Follow the [animation foundation](animations.md) for continuity,
@@ -153,8 +158,9 @@ A Mateo viewport edge treatment is complete when:
 
 - content enters and leaves through a gradual fade rather than a hard line;
 - both fades span the viewport and mirror each other vertically;
-- the outer 30% is visually identical to the owning surface;
-- the transition reaches complete transparency at the inner edge;
+- the outer edge is visually identical to the owning surface;
+- the transition eases into complete transparency without an identifiable
+  inner boundary;
 - the default depth follows the viewport formula and its limits;
 - no seam appears between the fade and its surface;
 - gradients remain clipped to rounded and animated viewport shapes;

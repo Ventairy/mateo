@@ -15,8 +15,8 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 /// MateoApp(
 ///   title: 'My App',
 ///   color: (
-///     primary: Color(0xFFFF4A4B),
-///     onPrimary: Color(0xFFFFFFFF),
+///     accent: Color(0xFFFF4A4B),
+///     onAccent: Color(0xFFFFFFFF),
 ///   ),
 ///   home: HomePage(),
 /// )
@@ -26,8 +26,8 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 /// MateoApp.router(
 ///   title: 'My App',
 ///   color: (
-///     primary: Color(0xFFFF4A4B),
-///     onPrimary: Color(0xFFFFFFFF),
+///     accent: Color(0xFFFF4A4B),
+///     onAccent: Color(0xFFFFFFFF),
 ///   ),
 ///   routerConfig: goRouter,
 /// )
@@ -39,8 +39,8 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 class MateoApp extends StatelessWidget {
   /// Creates a Mateo Mobile application shell that uses a [Navigator].
   ///
-  /// The [color] record configures the primary palette and the foreground used
-  /// on primary surfaces. Provide [home], [routes], [onGenerateRoute], or
+  /// The [color] record configures the accent palette and the foreground used
+  /// on accent surfaces. Provide [home], [routes], [onGenerateRoute], or
   /// [builder] for app content.
   const MateoApp({
     required this.title,
@@ -81,8 +81,8 @@ class MateoApp extends StatelessWidget {
 
   /// Creates a Mateo Mobile application shell that uses a [Router].
   ///
-  /// The [color] record configures the primary palette and the foreground used
-  /// on primary surfaces. The [routerConfig] and [routerDelegate] parameters
+  /// The [color] record configures the accent palette and the foreground used
+  /// on accent surfaces. The [routerConfig] and [routerDelegate] parameters
   /// must not both be null.
   const MateoApp.router({
     required this.title,
@@ -150,8 +150,7 @@ class MateoApp extends StatelessWidget {
   final RouteFactory? onUnknownRoute;
 
   /// The callback that receives navigation notifications.
-  final NotificationListenerCallback<NavigationNotification>?
-  onNavigationNotification;
+  final NotificationListenerCallback<NavigationNotification>? onNavigationNotification;
 
   /// The observers notified when the [Navigator] changes its route stack.
   final List<NavigatorObserver>? navigatorObservers;
@@ -180,12 +179,12 @@ class MateoApp extends StatelessWidget {
   /// The callback that generates the application title from context.
   final GenerateAppTitle? onGenerateTitle;
 
-  /// The package-level primary color configuration.
+  /// The package-level accent color configuration.
   ///
-  /// `primary` seeds the primary and neutral palette scales. `onPrimary` is the
-  /// foreground placed on primary surfaces, including primary button text and
+  /// `accent` seeds the accent and neutral palette scales. `onAccent` is the
+  /// foreground placed on accent surfaces, including primary button text and
   /// icons. Consumers must verify that the pair has sufficient contrast.
-  final ({Color primary, Color onPrimary}) color;
+  final ({Color accent, Color onAccent}) color;
 
   /// The locale used for localized widgets.
   final Locale? locale;
@@ -231,21 +230,19 @@ class MateoApp extends StatelessWidget {
 
   final bool _usesRouter;
 
-  static const SystemUiOverlayStyle _systemUiOverlayStyle =
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarContrastEnforced: false,
-        systemStatusBarContrastEnforced: false,
-      );
+  static const SystemUiOverlayStyle _systemUiOverlayStyle = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarContrastEnforced: false,
+    systemStatusBarContrastEnforced: false,
+  );
 
   Widget _buildContent(BuildContext context, Widget? child) {
-    final userContent =
-        builder?.call(context, child) ?? child ?? const SizedBox.shrink();
+    final userContent = builder?.call(context, child) ?? child ?? const SizedBox.shrink();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _systemUiOverlayStyle,
@@ -266,7 +263,7 @@ class MateoApp extends StatelessWidget {
         title: title,
         onGenerateTitle: onGenerateTitle,
         onNavigationNotification: onNavigationNotification,
-        color: color.primary,
+        color: color.accent,
         theme: _theme,
         themeMode: ThemeMode.light,
         locale: locale,
@@ -301,7 +298,7 @@ class MateoApp extends StatelessWidget {
       builder: _buildContent,
       title: title ?? '',
       onGenerateTitle: onGenerateTitle,
-      color: color.primary,
+      color: color.accent,
       theme: _theme,
       themeMode: ThemeMode.light,
       locale: locale,
@@ -322,7 +319,7 @@ class MateoApp extends StatelessWidget {
   }
 
   ThemeData get _theme => MateoTheme.light(
-    primaryColor: color.primary,
-    onPrimary: color.onPrimary,
+    accentColor: color.accent,
+    onAccent: color.onAccent,
   );
 }

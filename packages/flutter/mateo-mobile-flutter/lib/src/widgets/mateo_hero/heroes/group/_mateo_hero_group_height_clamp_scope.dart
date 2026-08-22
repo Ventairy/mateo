@@ -4,11 +4,7 @@ class MateoHeroGroupHeightClampScope extends InheritedWidget {
   const MateoHeroGroupHeightClampScope({required super.child, super.key});
 
   static bool isActive(BuildContext context) {
-    return context
-            .getElementForInheritedWidgetOfExactType<
-              MateoHeroGroupHeightClampScope
-            >() !=
-        null;
+    return context.getElementForInheritedWidgetOfExactType<MateoHeroGroupHeightClampScope>() != null;
   }
 
   @override

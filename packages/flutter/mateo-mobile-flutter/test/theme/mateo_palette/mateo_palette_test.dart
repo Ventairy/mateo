@@ -4,10 +4,10 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 
 void main() {
   group('MateoPalette', () {
-    test('ships the documented Mateo primary and neutral scales', () {
+    test('ships the documented Mateo accent and neutral scales', () {
       final palette = MateoPalette();
 
-      expect(palette.primary.colors, const [
+      expect(palette.accent.colors, const [
         Color(0xFFF9FBFE),
         Color(0xFFF2F4FB),
         Color(0xFFE5EAFA),
@@ -53,7 +53,7 @@ void main() {
       expect(palette.whatsapp[9], const Color(0xFF25D366));
     });
 
-    test('preserves a custom opaque seed exactly at primary step 9', () {
+    test('preserves a custom opaque seed exactly at accent step 9', () {
       const seeds = [
         Color(0xFFE53935),
         Color(0xFF00A86B),
@@ -64,24 +64,24 @@ void main() {
       ];
 
       for (final seed in seeds) {
-        expect(MateoPalette(primaryColor: seed).primary[9], seed);
+        expect(MateoPalette(accentColor: seed).accent[9], seed);
       }
     });
 
-    test('keeps generated primary scales ordered by relative luminance', () {
-      final palette = MateoPalette(primaryColor: const Color(0xFF00A86B));
+    test('keeps generated accent scales ordered by relative luminance', () {
+      final palette = MateoPalette(accentColor: const Color(0xFF00A86B));
 
-      for (var index = 1; index < palette.primary.colors.length; index++) {
+      for (var index = 1; index < palette.accent.colors.length; index++) {
         expect(
-          palette.primary.colors[index - 1].computeLuminance(),
-          greaterThan(palette.primary.colors[index].computeLuminance()),
+          palette.accent.colors[index - 1].computeLuminance(),
+          greaterThan(palette.accent.colors[index].computeLuminance()),
         );
       }
     });
 
     test('creates untinted neutrals from an achromatic seed', () {
       final neutral = MateoPalette(
-        primaryColor: const Color(0xFF555555),
+        accentColor: const Color(0xFF555555),
       ).neutral;
 
       for (final color in neutral.colors) {
@@ -90,17 +90,17 @@ void main() {
       }
     });
 
-    test('rejects translucent primary seeds', () {
+    test('rejects translucent accent seeds', () {
       expect(
-        () => MateoPalette(primaryColor: const Color(0x804A5CFF)),
+        () => MateoPalette(accentColor: const Color(0x804A5CFF)),
         throwsArgumentError,
       );
     });
 
-    test('compares palettes by their primary seed', () {
+    test('compares palettes by their accent seed', () {
       expect(MateoPalette(), MateoPalette());
       expect(
-        MateoPalette(primaryColor: const Color(0xFF00A86B)),
+        MateoPalette(accentColor: const Color(0xFF00A86B)),
         isNot(MateoPalette()),
       );
     });

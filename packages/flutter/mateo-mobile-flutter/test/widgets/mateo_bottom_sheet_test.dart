@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -92,9 +94,7 @@ void main() {
         final initialHeight = tester.getSize(surfaceFinder).height;
         await tester.drag(find.byType(CustomScrollView), const Offset(0, -120));
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
@@ -107,7 +107,7 @@ void main() {
     );
 
     testWidgets(
-      'when dragging the handle upward with scrolling enabled, it should expand the sheet',
+      'when dragging scrollable content upward, it should expand the sheet',
       (tester) async {
         await _pumpBottomSheetApp(
           tester,
@@ -118,10 +118,7 @@ void main() {
         await tester.pumpAndSettle();
         final surfaceFinder = find.byKey(_BottomSheetTestApp.surfaceKey);
         final initialHeight = tester.getSize(surfaceFinder).height;
-        await tester.drag(
-          find.byKey(_BottomSheetTestApp.handleKey),
-          const Offset(0, -120),
-        );
+        await tester.drag(find.byType(CustomScrollView), const Offset(0, -120));
         await tester.pumpAndSettle();
 
         expect(
@@ -149,16 +146,11 @@ void main() {
         await gesture.moveBy(const Offset(0, -200));
         await gesture.up();
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
-            (tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height -
-                        680)
-                    .abs() <
-                0.01,
+            (tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height - 680).abs() < 0.01,
             scrollPosition.pixels > 0,
           ),
           (true, true),
@@ -184,8 +176,7 @@ void main() {
         expect(
           (
             find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
-            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height <
-                680,
+            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height < 680,
           ),
           (1, true),
         );
@@ -218,15 +209,12 @@ void main() {
         await downwardGesture.moveBy(const Offset(0, 100));
         await downwardGesture.up();
         await tester.pumpAndSettle();
-        final scrollPosition = tester
-            .state<ScrollableState>(find.byType(Scrollable))
-            .position;
+        final scrollPosition = tester.state<ScrollableState>(find.byType(Scrollable)).position;
 
         expect(
           (
             scrollPosition.pixels,
-            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height <
-                680,
+            tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey)).height < 680,
           ),
           (0, true),
         );
@@ -451,7 +439,7 @@ void main() {
         final scheme = MateoColorScheme.light();
         final custom = scheme.copyWith(
           bottomSheet: scheme.bottomSheet.copyWith(
-            background: MateoPalette().primary[3],
+            background: MateoPalette().accent[3],
           ),
         );
         await _pumpBottomSheetApp(tester, colorScheme: custom);
@@ -526,66 +514,151 @@ void main() {
     );
 
     testWidgets(
-      'when shown, it should render the draggable handle with the bottom-sheet handle token',
+      'when shown, it should overlay a cross close button at the top right',
       (tester) async {
-        final scheme = MateoColorScheme.light();
-        final custom = scheme.copyWith(
-          bottomSheet: scheme.bottomSheet.copyWith(
-            handle: MateoPalette().primary[9],
-          ),
-        );
-        await _pumpBottomSheetApp(tester, colorScheme: custom);
+        await _pumpBottomSheetApp(tester);
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
-        final handle = tester.widget<DecoratedBox>(
-          find.descendant(
-            of: find.byKey(_BottomSheetTestApp.handleKey),
-            matching: find.byType(DecoratedBox),
-          ),
+        final surfaceRect = tester.getRect(
+          find.byKey(_BottomSheetTestApp.surfaceKey),
+        );
+        final closeButtonRect = tester.getRect(
+          find.byKey(_BottomSheetTestApp.closeButtonKey),
         );
 
-        expect((
-          tester.getSize(find.byKey(_BottomSheetTestApp.handleKey)),
-          handle.decoration,
-        ), _handleMatcher(custom.bottomSheet.handle));
+        expect(
+          (
+            closeButtonRect.top - surfaceRect.top,
+            surfaceRect.right - closeButtonRect.right,
+            closeButtonRect.size,
+            tester.getSize(
+              find.byKey(const Key('mateo_floating_action_button_visual')),
+            ),
+            tester.getSize(
+              find.byKey(const Key('mateo_floating_action_button_icon_box')),
+            ),
+            find.byKey(_BottomSheetTestApp.closeIconKey).evaluate().length,
+          ),
+          (
+            20,
+            20,
+            const Size.square(44),
+            const Size.square(44),
+            const Size.square(16),
+            1,
+          ),
+        );
       },
     );
 
     testWidgets(
-      'when scrollable content is shown, it should use the bottom-sheet tokens for the pinned handle',
+      'when content reaches the top right, it should continue behind the close button',
       (tester) async {
-        final scheme = MateoColorScheme.light();
-        final custom = scheme.copyWith(
-          bottomSheet: scheme.bottomSheet.copyWith(
-            background: MateoPalette().primary[3],
-            handle: MateoPalette().primary[9],
-          ),
-        );
         await _pumpBottomSheetApp(
           tester,
-          scrollable: true,
-          colorScheme: custom,
-          child: const _ScrollableSheetContent(),
+          child: const SizedBox(
+            key: _BottomSheetTestApp.contentKey,
+            width: double.infinity,
+            height: 80,
+          ),
         );
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
-        final handleFinder = find.byKey(_BottomSheetTestApp.handleKey);
-        final header = tester.widget<ColoredBox>(
-          find
-              .ancestor(of: handleFinder, matching: find.byType(ColoredBox))
-              .first,
+        final contentRect = tester.getRect(
+          find.byKey(_BottomSheetTestApp.contentKey),
         );
-        final handle = tester.widget<DecoratedBox>(
-          find.descendant(
-            of: handleFinder,
-            matching: find.byType(DecoratedBox),
-          ),
+        final closeButtonRect = tester.getRect(
+          find.byKey(_BottomSheetTestApp.closeButtonKey),
         );
 
-        expect(
-          (header.color, (handle.decoration as BoxDecoration).color),
-          (custom.bottomSheet.background, custom.bottomSheet.handle),
+        expect(contentRect.overlaps(closeButtonRect), isTrue);
+      },
+    );
+
+    testWidgets(
+      'when the close button is tapped, it should dismiss the sheet',
+      (tester) async {
+        await _pumpBottomSheetApp(tester);
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(_BottomSheetTestApp.surfaceKey), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'when the close-button dismissal is denied, it should keep the sheet open',
+      (tester) async {
+        MateoBottomSheetDismissSource? requestedSource;
+        await _pumpBottomSheetApp(
+          tester,
+          shouldDismiss: (source) {
+            requestedSource = source;
+            return false;
+          },
         );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pumpAndSettle();
+
+        expect(
+          (
+            requestedSource,
+            find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
+          ),
+          (MateoBottomSheetDismissSource.closeButton, 1),
+        );
+      },
+    );
+
+    testWidgets(
+      'when an asynchronous close-button decision is pending, it should wait and ignore repeated dismissal attempts',
+      (tester) async {
+        final decision = Completer<bool>();
+        var decisionCount = 0;
+        await _pumpBottomSheetApp(
+          tester,
+          shouldDismiss: (source) {
+            decisionCount += 1;
+            return decision.future;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pump();
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pump();
+
+        expect(
+          (
+            decisionCount,
+            find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
+          ),
+          (1, 1),
+        );
+
+        decision.complete(true);
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(_BottomSheetTestApp.surfaceKey), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'when exposed to assistive technology, the close button should use the localized close label',
+      (tester) async {
+        await _pumpBottomSheetApp(tester);
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final button = tester.widget<Semantics>(
+          find.byKey(const Key('mateo_floating_action_button_semantics')),
+        );
+
+        expect(button.properties.label, 'Close');
       },
     );
 
@@ -604,18 +677,20 @@ void main() {
     );
 
     testWidgets(
-      'when animations are enabled, it should isolate the complete sheet with only one repaint boundary',
+      'when animations are enabled, it should isolate the complete sheet with a repaint boundary',
       (tester) async {
         await _pumpBottomSheetApp(tester);
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
 
+        final repaintBoundaries = find.descendant(
+          of: find.byType(MateoDragResistance),
+          matching: find.byType(RepaintBoundary),
+        );
+
         expect(
-          find.descendant(
-            of: find.byType(MateoDragResistance),
-            matching: find.byType(RepaintBoundary),
-          ),
-          findsOneWidget,
+          repaintBoundaries.evaluate().map((element) => (element.renderObject! as RenderBox).size).toList(),
+          contains(tester.getSize(find.byKey(_BottomSheetTestApp.surfaceKey))),
         );
       },
     );
@@ -646,10 +721,7 @@ void main() {
                 )
                 .evaluate()
                 .length,
-            find
-                .descendant(of: transition, matching: find.byType(Transform))
-                .evaluate()
-                .length,
+            find.descendant(of: transition, matching: find.byType(Transform)).evaluate().length,
           ),
           (0, 0, 0),
         );
@@ -671,7 +743,7 @@ void main() {
     );
 
     testWidgets(
-      'when animations are enabled, it should use the slower presentation and dismissal durations',
+      'when animations are enabled, it should present in 270 ms and dismiss in 230 ms',
       (tester) async {
         await _pumpBottomSheetApp(tester);
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
@@ -683,9 +755,26 @@ void main() {
         expect(
           (route.transitionDuration, route.reverseTransitionDuration),
           (
-            const Duration(milliseconds: 400),
             const Duration(milliseconds: 270),
+            const Duration(milliseconds: 230),
           ),
+        );
+      },
+    );
+
+    testWidgets(
+      'when dismissal is one quarter complete, it should ease one eighth offscreen',
+      (tester) async {
+        await _pumpBottomSheetApp(tester);
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 58));
+
+        expect(
+          _transitionState(tester).verticalTranslation,
+          closeTo(0.125, 0.02),
         );
       },
     );
@@ -737,6 +826,35 @@ void main() {
     });
 
     testWidgets(
+      'when only close-button dismissal is allowed, it should deny an outside tap and allow the close button',
+      (tester) async {
+        final requestedSources = <MateoBottomSheetDismissSource>[];
+        await _pumpBottomSheetApp(
+          tester,
+          shouldDismiss: (source) {
+            requestedSources.add(source);
+            return source == MateoBottomSheetDismissSource.closeButton;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.tapAt(const Offset(200, 100));
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(_BottomSheetTestApp.surfaceKey), findsOneWidget);
+
+        await tester.tap(find.byKey(_BottomSheetTestApp.closeButtonKey));
+        await tester.pumpAndSettle();
+
+        expect(requestedSources, [
+          MateoBottomSheetDismissSource.tapOutside,
+          MateoBottomSheetDismissSource.closeButton,
+        ]);
+        expect(find.byKey(_BottomSheetTestApp.surfaceKey), findsNothing);
+      },
+    );
+
+    testWidgets(
       'when dragging the backdrop downward, it should move the sheet by the same finger distance',
       (tester) async {
         await _pumpBottomSheetApp(tester);
@@ -771,6 +889,30 @@ void main() {
       },
     );
 
+    testWidgets('when drag dismissal is denied, it should restore the sheet', (
+      tester,
+    ) async {
+      MateoBottomSheetDismissSource? requestedSource;
+      await _pumpBottomSheetApp(
+        tester,
+        shouldDismiss: (source) {
+          requestedSource = source;
+          return false;
+        },
+      );
+      await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+      await tester.pumpAndSettle();
+      final gesture = await tester.startGesture(const Offset(200, 100));
+      await gesture.moveBy(const Offset(0, 360));
+      await gesture.up();
+      await tester.pumpAndSettle();
+
+      expect(
+        (requestedSource, _transitionState(tester).verticalTranslation),
+        (MateoBottomSheetDismissSource.drag, 0),
+      );
+    });
+
     testWidgets(
       'when swiping the backdrop downward at one hundred fifty pixels per second below halfway, it should dismiss the sheet',
       (tester) async {
@@ -795,7 +937,7 @@ void main() {
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
         final gesture = await tester.startGesture(const Offset(200, 100));
-        await gesture.moveBy(const Offset(0, 30));
+        await gesture.moveBy(const Offset(0, 20));
         await gesture.up();
         await tester.pumpAndSettle();
 
@@ -888,17 +1030,78 @@ void main() {
     });
 
     testWidgets(
+      'when system-back dismissal is denied, it should keep the sheet open',
+      (tester) async {
+        MateoBottomSheetDismissSource? requestedSource;
+        await _pumpBottomSheetApp(
+          tester,
+          shouldDismiss: (source) {
+            requestedSource = source;
+            return false;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        await tester.binding.handlePopRoute();
+        await tester.pumpAndSettle();
+
+        expect(
+          (
+            requestedSource,
+            find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
+          ),
+          (MateoBottomSheetDismissSource.systemBack, 1),
+        );
+      },
+    );
+
+    testWidgets(
       'when exposed to assistive technology, it should provide a dismiss action',
       (tester) async {
         final semantics = tester.ensureSemantics();
         await _pumpBottomSheetApp(tester);
         await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
         await tester.pumpAndSettle();
-        final semanticsData = tester
-            .getSemantics(find.byKey(_BottomSheetTestApp.surfaceKey))
-            .getSemanticsData();
+        final semanticsData = tester.getSemantics(find.byKey(_BottomSheetTestApp.surfaceKey)).getSemanticsData();
 
         expect(semanticsData.hasAction(SemanticsAction.dismiss), isTrue);
+        semantics.dispose();
+      },
+    );
+
+    testWidgets(
+      'when accessibility dismissal is denied, it should keep the sheet open',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+        MateoBottomSheetDismissSource? requestedSource;
+        await _pumpBottomSheetApp(
+          tester,
+          shouldDismiss: (source) {
+            requestedSource = source;
+            return false;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final semanticsNode = tester.getSemantics(
+          find.byKey(_BottomSheetTestApp.surfaceKey),
+        );
+        tester.platformDispatcher.onSemanticsActionEvent!(
+          SemanticsActionEvent(
+            type: SemanticsAction.dismiss,
+            viewId: tester.view.viewId,
+            nodeId: semanticsNode.id,
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(
+          (
+            requestedSource,
+            find.byKey(_BottomSheetTestApp.surfaceKey).evaluate().length,
+          ),
+          (MateoBottomSheetDismissSource.accessibilityAction, 1),
+        );
         semantics.dispose();
       },
     );
@@ -1087,6 +1290,100 @@ void main() {
     );
 
     testWidgets(
+      'when dragging is disabled, it should resist a downward sheet drag without requesting dismissal',
+      (tester) async {
+        var dismissalRequestCount = 0;
+        await _pumpBottomSheetApp(
+          tester,
+          draggable: false,
+          shouldDismiss: (source) {
+            dismissalRequestCount += 1;
+            return true;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_BottomSheetTestApp.surfaceKey)),
+        );
+        await gesture.moveBy(const Offset(0, 120));
+        await tester.pump();
+        final renderObject = _findResistanceTransformRenderObject(tester);
+
+        expect(
+          (
+            _transitionState(tester).verticalTranslation,
+            renderObject.currentResistanceOffset.dy > 0,
+            dismissalRequestCount,
+          ),
+          (0, true, 0),
+        );
+        await gesture.cancel();
+      },
+    );
+
+    testWidgets(
+      'when dragging is disabled on a scrollable sheet, it should resist upward movement without expanding or scrolling',
+      (tester) async {
+        await _pumpBottomSheetApp(
+          tester,
+          scrollable: true,
+          draggable: false,
+          child: const _ScrollableSheetContent(),
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final surfaceFinder = find.byKey(_BottomSheetTestApp.surfaceKey);
+        final initialHeight = tester.getSize(surfaceFinder).height;
+        final scrollable = tester.state<ScrollableState>(
+          find.byType(Scrollable),
+        );
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byType(CustomScrollView)),
+        );
+        await gesture.moveBy(const Offset(0, -120));
+        await tester.pump();
+        final renderObject = _findResistanceTransformRenderObject(tester);
+
+        expect(
+          (
+            tester.getSize(surfaceFinder).height,
+            scrollable.position.pixels,
+            renderObject.currentResistanceOffset.dy < 0,
+          ),
+          (initialHeight, 0, true),
+        );
+        await gesture.cancel();
+      },
+    );
+
+    testWidgets(
+      'when dragging is disabled, it should ignore a scrim drag without requesting dismissal',
+      (tester) async {
+        var dismissalRequestCount = 0;
+        await _pumpBottomSheetApp(
+          tester,
+          draggable: false,
+          shouldDismiss: (source) {
+            dismissalRequestCount += 1;
+            return true;
+          },
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final gesture = await tester.startGesture(const Offset(200, 100));
+        await gesture.moveBy(const Offset(0, 360));
+        await gesture.up();
+        await tester.pumpAndSettle();
+
+        expect(
+          (_transitionState(tester).verticalTranslation, dismissalRequestCount),
+          (0, 0),
+        );
+      },
+    );
+
+    testWidgets(
       'when reversing a downward drag past the resting edge, it should restore the route and apply top-edge resistance',
       (tester) async {
         await _pumpBottomSheetApp(tester);
@@ -1243,7 +1540,7 @@ void main() {
         final gesture = await tester.startGesture(
           tester.getCenter(find.byKey(_BottomSheetTestApp.surfaceKey)),
         );
-        await gesture.moveBy(const Offset(0, 30));
+        await gesture.moveBy(const Offset(0, 20));
         await tester.pump(const Duration(milliseconds: 300));
         await gesture.up();
         await tester.pumpAndSettle();
@@ -1401,6 +1698,59 @@ void main() {
     );
 
     testWidgets(
+      'when resistance is disabled, it should let consumer-provided scrolling run without a resistance transform',
+      (tester) async {
+        await _pumpBottomSheetApp(
+          tester,
+          resistance: false,
+          child: const _LongSheetContent(physics: BouncingScrollPhysics()),
+        );
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final listFinder = find.byType(ListView);
+        final scrollable = tester.state<ScrollableState>(
+          find.descendant(of: listFinder, matching: find.byType(Scrollable)),
+        );
+        await tester.drag(listFinder, const Offset(0, -120));
+        await tester.pumpAndSettle();
+
+        expect(
+          (
+            scrollable.position.pixels > 0,
+            find.byType(MateoDragResistance).evaluate().length,
+          ),
+          (true, 0),
+        );
+      },
+    );
+
+    testWidgets(
+      'when dragging and resistance are disabled, it should keep direct sheet drags completely stationary',
+      (tester) async {
+        await _pumpBottomSheetApp(tester, draggable: false, resistance: false);
+        await tester.tap(find.byKey(_BottomSheetTestApp.openButtonKey));
+        await tester.pumpAndSettle();
+        final surfaceFinder = find.byKey(_BottomSheetTestApp.surfaceKey);
+        final restingRect = tester.getRect(surfaceFinder);
+        final gesture = await tester.startGesture(
+          tester.getCenter(surfaceFinder),
+        );
+        await gesture.moveBy(const Offset(120, 120));
+        await tester.pump();
+
+        expect(
+          (
+            tester.getRect(surfaceFinder),
+            _transitionState(tester).verticalTranslation,
+            find.byType(MateoDragResistance).evaluate().length,
+          ),
+          (restingRect, 0, 0),
+        );
+        await gesture.cancel();
+      },
+    );
+
+    testWidgets(
       'when scrollable content is at the top, dragging down should dismiss the sheet',
       (tester) async {
         await _pumpBottomSheetApp(tester, child: const _LongSheetContent());
@@ -1531,16 +1881,6 @@ void main() {
   });
 }
 
-Matcher _handleMatcher(Color expectedColor) {
-  return isA<(Size, Decoration)>()
-      .having((value) => value.$1, 'size', const Size(36, 8))
-      .having(
-        (value) => (value.$2 as BoxDecoration).color,
-        'color',
-        expectedColor,
-      );
-}
-
 ({double scale, double verticalTranslation}) _transitionState(
   WidgetTester tester,
 ) {
@@ -1559,8 +1899,11 @@ Future<void> _pumpBottomSheetApp(
   MediaQueryData mediaQueryData = const MediaQueryData(size: Size(400, 800)),
   Widget child = const Text('Opportunity details'),
   bool scrollable = false,
+  bool draggable = true,
+  bool resistance = true,
   TargetPlatform? platform,
   MateoColorScheme? colorScheme,
+  MateoBottomSheetShouldDismiss? shouldDismiss,
   void Function(BuildContext context)? onShow,
 }) async {
   tester.view
@@ -1591,8 +1934,11 @@ Future<void> _pumpBottomSheetApp(
       mediaQueryData: mediaQueryData,
       sheetChild: child,
       scrollable: scrollable,
+      draggable: draggable,
+      resistance: resistance,
       platform: platform,
       colorScheme: colorScheme,
+      shouldDismiss: shouldDismiss,
       onShow: onShow,
     ),
   );
@@ -1604,22 +1950,29 @@ class _BottomSheetTestApp extends StatelessWidget {
     required this.mediaQueryData,
     required this.sheetChild,
     required this.scrollable,
+    required this.draggable,
+    required this.resistance,
     required this.platform,
     required this.colorScheme,
+    this.shouldDismiss,
     this.onShow,
   });
 
   static const openButtonKey = Key('open_bottom_sheet');
   static const resultButtonKey = Key('close_with_result');
   static const contentKey = Key('bottom_sheet_content');
+  static const closeButtonKey = Key('mateo_bottom_sheet_close_button');
+  static const closeIconKey = Key('mateo_bottom_sheet_close_icon');
   static const surfaceKey = Key('mateo_bottom_sheet_surface');
-  static const handleKey = Key('mateo_bottom_sheet_handle');
 
   final MediaQueryData mediaQueryData;
   final Widget sheetChild;
   final bool scrollable;
+  final bool draggable;
+  final bool resistance;
   final TargetPlatform? platform;
   final MateoColorScheme? colorScheme;
+  final MateoBottomSheetShouldDismiss? shouldDismiss;
   final void Function(BuildContext context)? onShow;
 
   @override
@@ -1661,6 +2014,9 @@ class _BottomSheetTestApp extends StatelessWidget {
                   MateoBottomSheet.show<void>(
                     context,
                     scrollable: scrollable,
+                    draggable: draggable,
+                    resistance: resistance,
+                    shouldDismiss: shouldDismiss,
                     child: sheetChild,
                   );
                 },
@@ -1684,8 +2040,7 @@ class _LongSheetContent extends StatelessWidget {
     return ListView.builder(
       physics: physics,
       itemCount: 30,
-      itemBuilder: (context, index) =>
-          SizedBox(height: 60, child: Text('Opportunity $index')),
+      itemBuilder: (context, index) => SizedBox(height: 60, child: Text('Opportunity $index')),
     );
   }
 }

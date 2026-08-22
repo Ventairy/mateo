@@ -37,7 +37,7 @@ part 'mateo_edge_fade_style.dart';
 /// See also:
 ///  * [MateoEdgeFadePosition], the screen edges supported by this widget.
 ///  * [MateoEdgeFadeStyle], the visual configuration consumed by this widget.
-class MateoEdgeFade extends StatelessWidget {
+class MateoEdgeFade extends StatefulWidget {
   /// Creates a Mateo Mobile edge-fade gradient.
   const MateoEdgeFade({
     required this.position,
@@ -57,6 +57,40 @@ class MateoEdgeFade extends StatelessWidget {
   /// at build time (color → theme background, height → viewport factor).
   final MateoEdgeFadeStyle style;
 
+  @override
+  State<MateoEdgeFade> createState() => _MateoEdgeFadeState();
+}
+
+class _MateoEdgeFadeState extends State<MateoEdgeFade> {
+  static const int _curveSegmentCount = 32;
+
+  static final List<double> _gradientStops = List<double>.unmodifiable([
+    for (var index = 0; index <= _curveSegmentCount; index++)
+      index / _curveSegmentCount,
+  ]);
+
+  static double _smoothFadeOpacity(double progress) {
+    final progressSquared = progress * progress;
+    final progressCubed = progressSquared * progress;
+    final smootherStep = progressCubed * (progress * (progress * 6 - 15) + 10);
+
+    return 1 - smootherStep;
+  }
+
+  static List<Color> _resolveGradientColors(Color color) {
+    return <Color>[
+      color,
+      for (var index = 1; index <= _curveSegmentCount; index++)
+        color.withValues(
+          alpha: color.a * _smoothFadeOpacity(index / _curveSegmentCount),
+        ),
+    ];
+  }
+
+  Color? _cachedColor;
+  MateoEdgeFadePosition? _cachedPosition;
+  late LinearGradient _cachedGradient;
+
   static (Alignment, Alignment) _resolveGradientAlignment(
     MateoEdgeFadePosition position,
   ) {
@@ -72,11 +106,27 @@ class MateoEdgeFade extends StatelessWidget {
     };
   }
 
+  LinearGradient _resolveGradient(Color color) {
+    if (_cachedColor == color && _cachedPosition == widget.position) {
+      return _cachedGradient;
+    }
+
+    _cachedColor = color;
+    _cachedPosition = widget.position;
+    final (begin, end) = _resolveGradientAlignment(widget.position);
+
+    return _cachedGradient = LinearGradient(
+      begin: begin,
+      end: end,
+      stops: _gradientStops,
+      colors: _resolveGradientColors(color),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final resolved = style.resolve(context);
+    final resolved = widget.style.resolve(context);
     final resolvedColor = resolved.color!;
-    final (begin, end) = _resolveGradientAlignment(position);
 
     return SizedBox(
       height: resolved.height,
@@ -84,16 +134,7 @@ class MateoEdgeFade extends StatelessWidget {
         child: RepaintBoundary(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: begin,
-                end: end,
-                stops: const [0.0, 0.3, 1.0],
-                colors: <Color>[
-                  resolvedColor,
-                  resolvedColor,
-                  resolvedColor.withValues(alpha: 0),
-                ],
-              ),
+              gradient: _resolveGradient(resolvedColor),
             ),
           ),
         ),

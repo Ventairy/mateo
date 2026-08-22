@@ -36,8 +36,7 @@ class _TestRouteInformationParser extends RouteInformationParser<Object> {
   ) async => Object();
 
   @override
-  RouteInformation restoreRouteInformation(Object configuration) =>
-      _rootRouteInformation;
+  RouteInformation restoreRouteInformation(Object configuration) => _rootRouteInformation;
 }
 
 RouterConfig<Object> _createConfig({void Function(BuildContext)? onBuild}) {
@@ -45,8 +44,7 @@ RouterConfig<Object> _createConfig({void Function(BuildContext)? onBuild}) {
     routeInformationParser: _TestRouteInformationParser(),
     routerDelegate: _TestRouterDelegate(onBuild: onBuild),
     routeInformationProvider: PlatformRouteInformationProvider(
-      initialRouteInformation:
-          _TestRouteInformationParser._rootRouteInformation,
+      initialRouteInformation: _TestRouteInformationParser._rootRouteInformation,
     ),
   );
 }
@@ -60,8 +58,8 @@ void main() {
           MateoApp(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.success.background,
-              onPrimary: mateoTestColorScheme.text.inverse,
+              accent: mateoTestColorScheme.buttons.success.background,
+              onAccent: mateoTestColorScheme.text.inverse,
             ),
             home: Scaffold(body: Text('Home')),
           ),
@@ -74,15 +72,15 @@ void main() {
           messengerContext,
         ).extension<MateoThemeData>()!;
         final expectedPalette = MateoPalette(
-          primaryColor: mateoTestColorScheme.buttons.success.background,
+          accentColor: mateoTestColorScheme.buttons.success.background,
         );
 
         expect(find.text('Home'), findsOneWidget);
         expect(find.byType(Navigator), findsOneWidget);
         expect(find.byType(MateoToastMessenger), findsOneWidget);
-        expect(mateoTheme.palette.primary[9], expectedPalette.primary[9]);
+        expect(mateoTheme.palette.accent[9], expectedPalette.accent[9]);
         expect(
-          mateoTheme.colorScheme.buttons.primary.foreground,
+          mateoTheme.colorScheme.buttons.accent.primary.foreground,
           mateoTestColorScheme.text.inverse,
         );
       },
@@ -95,8 +93,8 @@ void main() {
           MateoApp(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.danger.background,
-              onPrimary: mateoTestColorScheme.background,
+              accent: mateoTestColorScheme.buttons.danger.background,
+              onAccent: mateoTestColorScheme.background,
             ),
             home: Builder(
               builder: (context) => Scaffold(
@@ -126,8 +124,8 @@ void main() {
         MateoApp(
           title: 'Test App',
           color: (
-            primary: mateoTestColorScheme.buttons.danger.background,
-            onPrimary: mateoTestColorScheme.background,
+            accent: mateoTestColorScheme.buttons.danger.background,
+            onAccent: mateoTestColorScheme.background,
           ),
           home: Builder(
             builder: (context) {
@@ -153,8 +151,8 @@ void main() {
           MateoApp.router(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.danger.background,
-              onPrimary: mateoTestColorScheme.background,
+              accent: mateoTestColorScheme.buttons.danger.background,
+              onAccent: mateoTestColorScheme.background,
             ),
             routerConfig: _createConfig(),
           ),
@@ -165,14 +163,14 @@ void main() {
     );
 
     testWidgets(
-      'when configured with a color, it should apply the Mateo Mobile palette from the given primary',
+      'when configured with a color, it should apply the Mateo Mobile palette from the given accent',
       (tester) async {
         await tester.pumpWidget(
           MateoApp.router(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.success.background,
-              onPrimary: mateoTestColorScheme.text.inverse,
+              accent: mateoTestColorScheme.buttons.success.background,
+              onAccent: mateoTestColorScheme.text.inverse,
             ),
             routerConfig: _createConfig(),
             builder: (context, child) => child ?? const SizedBox.shrink(),
@@ -186,15 +184,15 @@ void main() {
           messengerContext,
         ).extension<MateoThemeData>()!;
         final expectedPalette = MateoPalette(
-          primaryColor: mateoTestColorScheme.buttons.success.background,
+          accentColor: mateoTestColorScheme.buttons.success.background,
         );
 
         expect(
-          mateoTheme.palette.primary[9],
-          equals(expectedPalette.primary[9]),
+          mateoTheme.palette.accent[9],
+          equals(expectedPalette.accent[9]),
         );
         expect(
-          mateoTheme.colorScheme.buttons.primary.foreground,
+          mateoTheme.colorScheme.buttons.accent.primary.foreground,
           mateoTestColorScheme.text.inverse,
         );
       },
@@ -207,8 +205,8 @@ void main() {
           MateoApp.router(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.danger.background,
-              onPrimary: mateoTestColorScheme.background,
+              accent: mateoTestColorScheme.buttons.danger.background,
+              onAccent: mateoTestColorScheme.background,
             ),
             routerConfig: _createConfig(),
             builder: (context, child) => child ?? const SizedBox.shrink(),
@@ -228,8 +226,8 @@ void main() {
           MateoApp.router(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.danger.background,
-              onPrimary: mateoTestColorScheme.background,
+              accent: mateoTestColorScheme.buttons.danger.background,
+              onAccent: mateoTestColorScheme.background,
             ),
             routerConfig: _createConfig(
               onBuild: (context) {
@@ -254,8 +252,8 @@ void main() {
           MateoApp.router(
             title: 'Test App',
             color: (
-              primary: mateoTestColorScheme.buttons.danger.background,
-              onPrimary: mateoTestColorScheme.background,
+              accent: mateoTestColorScheme.buttons.danger.background,
+              onAccent: mateoTestColorScheme.background,
             ),
             routerConfig: _createConfig(
               onBuild: (context) {

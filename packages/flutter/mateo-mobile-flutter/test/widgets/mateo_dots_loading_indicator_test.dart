@@ -58,9 +58,7 @@ void main() {
 
         expect(
           sizedBox,
-          isA<SizedBox>()
-              .having((box) => box.width, 'width', 43.5)
-              .having((box) => box.height, 'height', 19.5),
+          isA<SizedBox>().having((box) => box.width, 'width', 43.5).having((box) => box.height, 'height', 19.5),
         );
       },
     );

@@ -17,7 +17,7 @@ class _MateoYSnapListLoadingIndicator extends StatelessWidget {
       child: visible
           ? Center(
               child: MateoDotsLoadingIndicator(
-                color: context.mateo.palette.primary[9],
+                color: context.mateo.palette.accent[9],
                 dotRadius: 5,
               ),
             )

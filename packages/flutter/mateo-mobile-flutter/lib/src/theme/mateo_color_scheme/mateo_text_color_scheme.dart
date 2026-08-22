@@ -77,6 +77,5 @@ class MateoTextColorScheme {
           profit == other.profit;
 
   @override
-  int get hashCode =>
-      Object.hash(primary, secondary, tertiary, disabled, inverse, profit);
+  int get hashCode => Object.hash(primary, secondary, tertiary, disabled, inverse, profit);
 }

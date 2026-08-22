@@ -4,7 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 
 void main() {
   group('MateoColorScale', () {
-    final scale = MateoPalette().primary;
+    final scale = MateoPalette().accent;
 
     test(
       'when used directly as a color, it should have the same channels as step 9',
@@ -39,18 +39,18 @@ void main() {
     );
 
     test('when two scales contain the same colors, they should be equal', () {
-      final first = MateoPalette(primaryColor: const Color(0xFF0090FF)).primary;
+      final first = MateoPalette(accentColor: const Color(0xFF0090FF)).accent;
       final second = MateoPalette(
-        primaryColor: const Color(0xFF0090FF),
-      ).primary;
+        accentColor: const Color(0xFF0090FF),
+      ).accent;
       expect(first, second);
     });
 
     test('when two scales are equal, they should have equal hash codes', () {
-      final first = MateoPalette(primaryColor: const Color(0xFF0090FF)).primary;
+      final first = MateoPalette(accentColor: const Color(0xFF0090FF)).accent;
       final second = MateoPalette(
-        primaryColor: const Color(0xFF0090FF),
-      ).primary;
+        accentColor: const Color(0xFF0090FF),
+      ).accent;
       expect(first.hashCode, second.hashCode);
     });
   });

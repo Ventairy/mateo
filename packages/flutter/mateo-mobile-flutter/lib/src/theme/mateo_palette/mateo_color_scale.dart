@@ -10,9 +10,9 @@ part of 'mateo_palette.dart';
 ///
 /// ```dart
 /// final palette = MateoPalette();
-/// final solid = palette.primary;
-/// final subtleBackground = palette.primary[2];
-/// final highContrastText = palette.primary[12];
+/// final solid = palette.accent;
+/// final subtleBackground = palette.accent[2];
+/// final highContrastText = palette.accent[12];
 /// ```
 ///
 /// Invalid steps throw [RangeError] instead of resolving to a different token.

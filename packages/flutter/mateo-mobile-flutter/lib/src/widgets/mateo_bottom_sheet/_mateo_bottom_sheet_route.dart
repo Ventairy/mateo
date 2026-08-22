@@ -8,9 +8,10 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
     required this.barrierLabel,
     required this.disableAnimations,
     required this.scrollable,
-  }) : _scrollableController = scrollable
-           ? DraggableScrollableController()
-           : null;
+    required this.draggable,
+    required this.resistance,
+    required this.shouldDismiss,
+  }) : _scrollableController = scrollable ? DraggableScrollableController() : null;
 
   static const double _directionMinIntentDistance = 10;
   static const double _dismissMinVelocity = 100;
@@ -23,30 +24,32 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
   final CapturedThemes capturedThemes;
   final bool disableAnimations;
   final bool scrollable;
+  final bool draggable;
+  final bool resistance;
+  final MateoBottomSheetShouldDismiss? shouldDismiss;
   final DraggableScrollableController? _scrollableController;
   final GlobalKey _sheetMeasurementKey = GlobalKey(
     debugLabel: 'mateo_bottom_sheet_measurement',
   );
   bool _isInteractiveDismissActive = false;
+  bool _isDismissDecisionActive = false;
   bool _hasNavigatorUserGesture = false;
+  MateoBottomSheetDismissSource? _pendingDismissSource;
 
   double get transitionValue => controller?.value ?? 1;
 
-  double get _initialScrollableExtent =>
-      _initialScrollableHeightFraction / _maximumHeightFraction;
+  double get _initialScrollableExtent => _initialScrollableHeightFraction / _maximumHeightFraction;
 
   bool get _canDismissFromCurrentSheetExtent {
     final scrollableController = _scrollableController;
     if (scrollableController == null) return true;
     if (!scrollableController.isAttached) return false;
 
-    return scrollableController.size <=
-        _initialScrollableExtent + _extentTolerance;
+    return scrollableController.size <= _initialScrollableExtent + _extentTolerance;
   }
 
   double get _sheetHeight {
-    final renderObject = _sheetMeasurementKey.currentContext
-        ?.findRenderObject();
+    final renderObject = _sheetMeasurementKey.currentContext?.findRenderObject();
     if (renderObject is! RenderBox || !renderObject.hasSize) return 0;
 
     return renderObject.size.height;
@@ -68,9 +71,7 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
 
   void updateInteractiveDismiss({required double closingProgress}) {
     final routeController = controller;
-    if (!_isInteractiveDismissActive ||
-        routeController == null ||
-        disableAnimations) {
+    if (!_isInteractiveDismissActive || routeController == null || disableAnimations) {
       return;
     }
 
@@ -99,13 +100,11 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
   Future<void> commitInteractiveDismiss() async {
     final routeController = controller;
     final routeNavigator = navigator;
-    if (!_isInteractiveDismissActive ||
-        routeController == null ||
-        routeNavigator == null) {
+    if (!_isInteractiveDismissActive || routeController == null || routeNavigator == null) {
       return;
     }
 
-    await routeNavigator.maybePop<T>();
+    await requestDismiss(MateoBottomSheetDismissSource.drag);
     if (isCurrent) {
       await cancelInteractiveDismiss();
       return;
@@ -124,6 +123,40 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
     );
     _stopUserGestureWhenAnimationEnds(routeController);
     await animation;
+  }
+
+  Future<bool> requestDismiss(MateoBottomSheetDismissSource source) async {
+    if (!isCurrent || _isDismissDecisionActive) return false;
+
+    _pendingDismissSource = source;
+    try {
+      return await navigator?.maybePop<T>() ?? false;
+    } finally {
+      _pendingDismissSource = null;
+    }
+  }
+
+  @override
+  Future<RoutePopDisposition> willPop() async {
+    if (_isDismissDecisionActive) return RoutePopDisposition.doNotPop;
+
+    final dismissSource = _pendingDismissSource ?? MateoBottomSheetDismissSource.systemBack;
+    final dismissDecision = shouldDismiss;
+    _isDismissDecisionActive = true;
+    try {
+      if (dismissDecision != null) {
+        if (!await dismissDecision(dismissSource)) {
+          return RoutePopDisposition.doNotPop;
+        }
+      }
+
+      // Navigator.maybePop still uses this asynchronous hook before the
+      // synchronous popDisposition API, so it is required for an async gate.
+      // ignore: deprecated_member_use
+      return await super.willPop();
+    } finally {
+      _isDismissDecisionActive = false;
+    }
   }
 
   void _deferStopInteractiveDismiss() {
@@ -183,9 +216,24 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
 
   @override
   Widget buildModalBarrier() {
+    final color = animation!.drive(
+      ColorTween(
+        begin: barrierColor.withValues(alpha: 0),
+        end: barrierColor,
+      ).chain(CurveTween(curve: barrierCurve)),
+    );
+
     return _MateoBottomSheetScrimDragSurface<T>(
       route: this,
-      child: super.buildModalBarrier(),
+      child: AnimatedModalBarrier(
+        color: color,
+        dismissible: barrierDismissible,
+        semanticsLabel: barrierLabel,
+        barrierSemanticsDismissible: semanticsDismissible,
+        onDismiss: () => unawaited(
+          requestDismiss(MateoBottomSheetDismissSource.tapOutside),
+        ),
+      ),
     );
   }
 
@@ -193,12 +241,10 @@ class _MateoBottomSheetRoute<T> extends PopupRoute<T> {
   Curve get barrierCurve => Curves.easeOutCubic;
 
   @override
-  Duration get transitionDuration =>
-      disableAnimations ? Duration.zero : const Duration(milliseconds: 400);
+  Duration get transitionDuration => disableAnimations ? Duration.zero : const Duration(milliseconds: 270);
 
   @override
-  Duration get reverseTransitionDuration =>
-      disableAnimations ? Duration.zero : const Duration(milliseconds: 270);
+  Duration get reverseTransitionDuration => disableAnimations ? Duration.zero : const Duration(milliseconds: 230);
 
   @override
   Widget buildPage(

@@ -288,6 +288,26 @@ void main() {
       await tester.pump(const Duration(seconds: 4));
       expect(tester.takeException(), isNull);
     });
+
+    testWidgets(
+      'when a quarter cycle elapses, it should move the highlight a quarter of the path',
+      (tester) async {
+        await tester.pumpWidget(
+          TestApp(
+            child: const MateoDotMatrix(width: 200, height: 200, dotSize: 4),
+          ),
+        );
+        await tester.pump(Duration.zero);
+        await tester.pump(const Duration(milliseconds: 625));
+
+        final customPaint = tester.widget<CustomPaint>(
+          find.byType(CustomPaint),
+        );
+        final painter = customPaint.painter as dynamic;
+        expect(painter.progress as double, closeTo(0.25, 0.001));
+        expect(painter.bandCenter as double, closeTo(0.25, 0.001));
+      },
+    );
   });
 
   group('when the animation wraps around', () {

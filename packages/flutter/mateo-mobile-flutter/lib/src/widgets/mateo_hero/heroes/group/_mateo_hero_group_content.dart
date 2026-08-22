@@ -17,8 +17,7 @@ class _MateoHeroGroupContent extends StatelessWidget {
   final MateoHeroGroupLayout layout;
   final List<MateoHero> heroes;
   final bool allowsFlightOverflow;
-  final List<({double layoutWidth, Offset offset, Size size})>?
-  beginChildMetrics;
+  final List<({double layoutWidth, Offset offset, Size size})>? beginChildMetrics;
   final List<({double layoutWidth, Offset offset, Size size})>? endChildMetrics;
   final double flightValue;
   final double? maxAvailableHeight;
@@ -32,32 +31,25 @@ class _MateoHeroGroupContent extends StatelessWidget {
     if (!allowsFlightOverflow || beginMetrics == null || endMetrics == null) {
       return false;
     }
-    if (layout.type != MateoHeroGroupLayoutType.flex ||
-        layout.direction != Axis.vertical) {
+    if (layout.type != MateoHeroGroupLayoutType.flex || layout.direction != Axis.vertical) {
       return false;
     }
 
-    return beginMetrics.length >= heroes.length &&
-        endMetrics.length >= heroes.length;
+    return beginMetrics.length >= heroes.length && endMetrics.length >= heroes.length;
   }
 
   double _positionedChildTop({
     required int index,
     required Offset offset,
     required double previousBottom,
-    required List<({double layoutWidth, Offset offset, Size size})>
-    beginMetrics,
+    required List<({double layoutWidth, Offset offset, Size size})> beginMetrics,
     required List<({double layoutWidth, Offset offset, Size size})> endMetrics,
   }) {
     if (index == 0) return offset.dy;
 
     final beginGap =
-        beginMetrics[index].offset.dy -
-        (beginMetrics[index - 1].offset.dy +
-            beginMetrics[index - 1].size.height);
-    final endGap =
-        endMetrics[index].offset.dy -
-        (endMetrics[index - 1].offset.dy + endMetrics[index - 1].size.height);
+        beginMetrics[index].offset.dy - (beginMetrics[index - 1].offset.dy + beginMetrics[index - 1].size.height);
+    final endGap = endMetrics[index].offset.dy - (endMetrics[index - 1].offset.dy + endMetrics[index - 1].size.height);
     final gap = beginGap + (endGap - beginGap) * flightValue;
 
     return math.max(offset.dy, previousBottom + gap);
@@ -78,9 +70,7 @@ class _MateoHeroGroupContent extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           if (maxHeight != null) {
-            final effectiveWidth = constraints.hasBoundedWidth
-                ? constraints.maxWidth
-                : double.infinity;
+            final effectiveWidth = constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity;
 
             return OverflowBox(
               alignment: Alignment.topLeft,
@@ -178,9 +168,7 @@ class _MateoHeroGroupContent extends StatelessWidget {
               final end = endMetrics[index];
               final offset = Offset.lerp(begin.offset, end.offset, progress)!;
               final size = Size.lerp(begin.size, end.size, progress)!;
-              final width = constraints.hasBoundedWidth
-                  ? constraints.maxWidth - offset.dx
-                  : size.width;
+              final width = constraints.hasBoundedWidth ? constraints.maxWidth - offset.dx : size.width;
               final childData = _positionedChild(
                 context: context,
                 hero: heroes[index],

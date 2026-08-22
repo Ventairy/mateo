@@ -124,6 +124,113 @@ void main() {
     );
 
     testWidgets(
+      'when rendered, it should ease opacity smoothly at both curve boundaries',
+      (tester) async {
+        await tester.pumpWidget(
+          const TestApp(
+            child: MateoEdgeFade(position: MateoEdgeFadePosition.top),
+          ),
+        );
+
+        final gradient = _gradientOf(tester);
+        final opacities = gradient.colors.map((color) => color.a).toList();
+        final opacityChanges = <double>[
+          for (var index = 1; index < opacities.length; index++)
+            opacities[index - 1] - opacities[index],
+        ];
+        final largestOpacityChange = opacityChanges.reduce(
+          (largest, change) => change > largest ? change : largest,
+        );
+
+        expect(gradient.stops, hasLength(greaterThan(20)));
+        expect(gradient.stops!.first, equals(0.0));
+        expect(gradient.stops!.last, equals(1.0));
+        expect(opacityChanges.first, lessThan(largestOpacityChange / 10));
+        expect(opacityChanges.last, lessThan(largestOpacityChange / 10));
+        expect(opacityChanges, everyElement(greaterThanOrEqualTo(0.0)));
+      },
+    );
+
+    testWidgets(
+      'when an explicit height is passed, it should stretch the complete smooth fade to that height',
+      (tester) async {
+        await tester.pumpWidget(
+          const TestApp(
+            child: MateoEdgeFade(
+              position: MateoEdgeFadePosition.top,
+              style: MateoEdgeFadeStyle(height: 240),
+            ),
+          ),
+        );
+
+        final sizedBox = tester.widget<SizedBox>(
+          find.descendant(
+            of: find.byType(MateoEdgeFade),
+            matching: find.byWidgetPredicate(
+              (widget) => widget is SizedBox && widget.height == 240,
+            ),
+          ),
+        );
+        final gradient = _gradientOf(tester);
+
+        expect(sizedBox.height, equals(240));
+        expect(gradient.stops!.first, equals(0.0));
+        expect(gradient.stops!.last, equals(1.0));
+        expect(gradient.colors.first.a, equals(1.0));
+        expect(gradient.colors.last.a, equals(0.0));
+      },
+    );
+
+    testWidgets(
+      'when rebuilt with the same color and position, it should reuse the resolved gradient',
+      (tester) async {
+        Widget buildFade(double height) {
+          return TestApp(
+            child: MateoEdgeFade(
+              position: MateoEdgeFadePosition.top,
+              style: MateoEdgeFadeStyle(height: height),
+            ),
+          );
+        }
+
+        await tester.pumpWidget(buildFade(72));
+        final initialGradient = _gradientOf(tester);
+
+        await tester.pumpWidget(buildFade(120));
+        final rebuiltGradient = _gradientOf(tester);
+
+        expect(rebuiltGradient, same(initialGradient));
+      },
+    );
+
+    testWidgets(
+      'when rebuilt with a different color, it should replace the resolved gradient',
+      (tester) async {
+        Widget buildFade(Color color) {
+          return TestApp(
+            child: MateoEdgeFade(
+              position: MateoEdgeFadePosition.top,
+              style: MateoEdgeFadeStyle(color: color),
+            ),
+          );
+        }
+
+        final initialColor = mateoTestColorScheme.background;
+        final replacementColor =
+            mateoTestColorScheme.buttons.success.background;
+
+        await tester.pumpWidget(buildFade(initialColor));
+        final initialGradient = _gradientOf(tester);
+
+        await tester.pumpWidget(buildFade(replacementColor));
+        final rebuiltGradient = _gradientOf(tester);
+
+        expect(rebuiltGradient, isNot(same(initialGradient)));
+        expect(rebuiltGradient.colors.first, equals(replacementColor));
+      },
+    );
+
+    testWidgets(
       'when the device is very short, it should clamp the fade height to the minimum',
       (tester) async {
         await tester.pumpWidget(

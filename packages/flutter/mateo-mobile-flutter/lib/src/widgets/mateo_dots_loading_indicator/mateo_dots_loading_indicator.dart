@@ -48,7 +48,7 @@ class MateoDotsLoadingIndicator extends StatefulWidget {
 
   /// The color used to paint each dot.
   ///
-  /// When omitted, the primary color of the current theme is used.
+  /// When omitted, the accent color of the current theme is used.
   final Color? color;
 
   /// The radius of each dot in logical pixels.
@@ -58,18 +58,15 @@ class MateoDotsLoadingIndicator extends StatefulWidget {
   final double dotRadius;
 
   @override
-  State<MateoDotsLoadingIndicator> createState() =>
-      _MateoDotsLoadingIndicatorState();
+  State<MateoDotsLoadingIndicator> createState() => _MateoDotsLoadingIndicatorState();
 }
 
 class _MateoDotsLoadingIndicatorState extends State<MateoDotsLoadingIndicator>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final AnimationController _controller;
 
-  double get _spacing =>
-      widget.dotRadius * MateoDotsLoadingIndicator._spacingMultiplier;
-  double get _jumpHeight =>
-      widget.dotRadius * MateoDotsLoadingIndicator._jumpHeightMultiplier;
+  double get _spacing => widget.dotRadius * MateoDotsLoadingIndicator._spacingMultiplier;
+  double get _jumpHeight => widget.dotRadius * MateoDotsLoadingIndicator._jumpHeightMultiplier;
 
   Size get _indicatorSize {
     final diameter = widget.dotRadius * 2;
@@ -128,7 +125,7 @@ class _MateoDotsLoadingIndicatorState extends State<MateoDotsLoadingIndicator>
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.color ?? context.mateo.palette.primary[9];
+    final color = widget.color ?? context.mateo.palette.accent[9];
     final disabled = MediaQuery.disableAnimationsOf(context);
     final size = _indicatorSize;
 

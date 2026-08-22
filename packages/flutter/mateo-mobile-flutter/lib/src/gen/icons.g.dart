@@ -86,7 +86,13 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// Call a method named after each asset to render it:
 ///
 /// ```dart
+/// $Icons.arrowDown(<params>);
+/// ```
+/// ```dart
 /// $Icons.arrowLeft(<params>);
+/// ```
+/// ```dart
+/// $Icons.arrowRight(<params>);
 /// ```
 /// ```dart
 /// $Icons.arrowRotateClockwise(<params>);
@@ -95,7 +101,19 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.arrowUp(<params>);
 /// ```
 /// ```dart
+/// $Icons.banknotePin(<params>);
+/// ```
+/// ```dart
+/// $Icons.bidirecionalHorizontalArrow(<params>);
+/// ```
+/// ```dart
+/// $Icons.boxPen(<params>);
+/// ```
+/// ```dart
 /// $Icons.chevronDown(<params>);
+/// ```
+/// ```dart
+/// $Icons.chevronLeft(<params>);
 /// ```
 /// ```dart
 /// $Icons.circleBlock(<params>);
@@ -119,6 +137,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.exclamationTriangle(<params>);
 /// ```
 /// ```dart
+/// $Icons.handshake(<params>);
+/// ```
+/// ```dart
 /// $Icons.magnifierGlass(<params>);
 /// ```
 /// ```dart
@@ -128,10 +149,25 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.phone(<params>);
 /// ```
 /// ```dart
+/// $Icons.plusSignal(<params>);
+/// ```
+/// ```dart
 /// $Icons.pointerHandUp(<params>);
 /// ```
 /// ```dart
+/// $Icons.questionmark(<params>);
+/// ```
+/// ```dart
+/// $Icons.rectangleStack(<params>);
+/// ```
+/// ```dart
+/// $Icons.road(<params>);
+/// ```
+/// ```dart
 /// $Icons.smartphone(<params>);
+/// ```
+/// ```dart
+/// $Icons.tree(<params>);
 /// ```
 /// ```dart
 /// $Icons.whatsapp(<params>);
@@ -145,6 +181,21 @@ mixin _DotdartSvgSizing on StatelessWidget {
 abstract final class $Icons {
   $Icons._();
 
+  /// Builds the `ArrowDown` widget from `arrowDown.svg`.
+  static Widget arrowDown({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _ArrowDown(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
   /// Builds the `ArrowLeft` widget from `arrowLeft.svg`.
   static Widget arrowLeft({
     Key? key,
@@ -153,6 +204,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _ArrowLeft(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `ArrowRight` widget from `arrowRight.svg`.
+  static Widget arrowRight({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _ArrowRight(
     key: key,
     width: width,
     height: height,
@@ -190,6 +256,51 @@ abstract final class $Icons {
     color1: color1,
   );
 
+  /// Builds the `BanknotePin` widget from `banknotePin.svg`.
+  static Widget banknotePin({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _BanknotePin(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `BidirecionalHorizontalArrow` widget from `bidirecionalHorizontalArrow.svg`.
+  static Widget bidirecionalHorizontalArrow({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _BidirecionalHorizontalArrow(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `BoxPen` widget from `boxPen.svg`.
+  static Widget boxPen({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _BoxPen(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
   /// Builds the `ChevronDown` widget from `chevronDown.svg`.
   static Widget chevronDown({
     Key? key,
@@ -198,6 +309,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _ChevronDown(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `ChevronLeft` widget from `chevronLeft.svg`.
+  static Widget chevronLeft({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _ChevronLeft(
     key: key,
     width: width,
     height: height,
@@ -310,6 +436,21 @@ abstract final class $Icons {
     color1: color1,
   );
 
+  /// Builds the `Handshake` widget from `handshake.svg`.
+  static Widget handshake({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _Handshake(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
   /// Builds the `MagnifierGlass` widget from `magnifierGlass.svg`.
   static Widget magnifierGlass({
     Key? key,
@@ -355,6 +496,21 @@ abstract final class $Icons {
     color1: color1,
   );
 
+  /// Builds the `PlusSignal` widget from `plusSignal.svg`.
+  static Widget plusSignal({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _PlusSignal(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
   /// Builds the `PointerHandUp` widget from `pointerHandUp.svg`.
   static Widget pointerHandUp({
     Key? key,
@@ -370,6 +526,51 @@ abstract final class $Icons {
     color1: color1,
   );
 
+  /// Builds the `Questionmark` widget from `questionmark.svg`.
+  static Widget questionmark({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _Questionmark(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `RectangleStack` widget from `rectangleStack.svg`.
+  static Widget rectangleStack({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _RectangleStack(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `Road` widget from `road.svg`.
+  static Widget road({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _Road(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
   /// Builds the `Smartphone` widget from `smartphone.svg`.
   static Widget smartphone({
     Key? key,
@@ -378,6 +579,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? color1,
   }) => _Smartphone(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    color1: color1,
+  );
+
+  /// Builds the `Tree` widget from `tree.svg`.
+  static Widget tree({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? color1,
+  }) => _Tree(
     key: key,
     width: width,
     height: height,
@@ -429,6 +645,119 @@ abstract final class $Icons {
     maintainAspectRatio: maintainAspectRatio,
     color1: color1,
   );
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/arrow-down.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ArrowDown extends StatelessWidget with _DotdartSvgSizing {
+  const _ArrowDown({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ArrowDown._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ArrowDown._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ArrowDown._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ArrowDown._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ArrowDownPainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrowDownPainter extends CustomPainter {
+  _ArrowDownPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(9.5, 20)
+    ..cubicTo(9.9025, 20, 10.2886, 19.8537, 10.5733, 19.5932)
+    ..lineTo(17.5555, 13.2043)
+    ..cubicTo(18.1482, 12.6619, 18.1482, 11.7826, 17.5555, 11.2401)
+    ..cubicTo(16.9627, 10.6978, 16.0017, 10.6978, 15.4089, 11.2401)
+    ..lineTo(11.0179, 15.258)
+    ..lineTo(11.0179, 1.3889)
+    ..cubicTo(11.0179, 0.6218, 10.3382, -0, 9.5, -0)
+    ..cubicTo(8.6617, -0, 7.9822, 0.6218, 7.9822, 1.3889)
+    ..lineTo(7.9822, 15.258)
+    ..lineTo(3.5911, 11.2401)
+    ..cubicTo(2.9984, 10.6978, 2.0373, 10.6978, 1.4446, 11.2401)
+    ..cubicTo(0.8518, 11.7826, 0.8518, 12.6619, 1.4446, 13.2043)
+    ..lineTo(8.4267, 19.5932)
+    ..cubicTo(8.7113, 19.8537, 9.0975, 20, 9.5, 20)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ArrowDown._viewBoxWidth;
+    final scaleY = size.height / _ArrowDown._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ArrowDown._viewBoxMinX, -_ArrowDown._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ArrowDownPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
 }
 
 /// A dotdart-generated SVG widget from `assets/icons/arrow_left.svg`.
@@ -540,6 +869,121 @@ class _ArrowLeftPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArrowLeftPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/arrow-right.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ArrowRight extends StatelessWidget with _DotdartSvgSizing {
+  const _ArrowRight({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ArrowRight._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ArrowRight._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ArrowRight._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ArrowRight._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ArrowRightPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrowRightPainter extends CustomPainter {
+  _ArrowRightPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(11.2401, 17.5816)
+    ..cubicTo(11.7826, 18.1395, 12.6619, 18.1395, 13.2043, 17.5816)
+    ..lineTo(19.5932, 11.0102)
+    ..cubicTo(19.8537, 10.7423, 20, 10.3789, 20, 10)
+    ..cubicTo(20, 9.6212, 19.8537, 9.2578, 19.5932, 8.9898)
+    ..lineTo(13.2043, 2.4184)
+    ..cubicTo(12.6619, 1.8605, 11.7826, 1.8605, 11.2401, 2.4184)
+    ..cubicTo(10.6978, 2.9763, 10.6978, 3.8808, 11.2401, 4.4387)
+    ..lineTo(15.258, 8.5714)
+    ..lineTo(1.3889, 8.5714)
+    ..cubicTo(0.6218, 8.5714, -0, 9.2111, -0, 10)
+    ..cubicTo(-0, 10.789, 0.6218, 11.4286, 1.3889, 11.4286)
+    ..lineTo(15.258, 11.4286)
+    ..lineTo(11.2401, 15.5613)
+    ..cubicTo(10.6978, 16.1192, 10.6978, 17.0237, 11.2401, 17.5816)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ArrowRight._viewBoxWidth;
+    final scaleY = size.height / _ArrowRight._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ArrowRight._viewBoxMinX, -_ArrowRight._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ArrowRightPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
@@ -782,6 +1226,470 @@ class _ArrowUpPainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/banknote-pin.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _BanknotePin extends StatelessWidget with _DotdartSvgSizing {
+  const _BanknotePin({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _BanknotePin._svgWidth;
+
+  @override
+  double get svgNativeHeight => _BanknotePin._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _BanknotePin._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _BanknotePin._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _BanknotePinPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _BanknotePinPainter extends CustomPainter {
+  _BanknotePinPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(16.0428, 8.0297)
+    ..lineTo(15.1649, 7.3443)
+    ..lineTo(14.0609, 8.53)
+    ..cubicTo(13.9299, 8.6706, 13.701, 8.6887, 13.5496, 8.5705)
+    ..cubicTo(13.3981, 8.4522, 13.3815, 8.2424, 13.5124, 8.1018)
+    ..lineTo(14.6164, 6.9162)
+    ..lineTo(13.7385, 6.2308)
+    ..cubicTo(12.8086, 5.5048, 13.2383, 4.1011, 14.4513, 3.9026)
+    ..lineTo(15.5343, 3.7253)
+    ..cubicTo(15.7744, 3.686, 15.9786, 3.5391, 16.0781, 3.3342)
+    ..lineTo(16.3358, 2.8034)
+    ..cubicTo(16.7331, 1.9852, 17.8725, 1.7389, 18.6072, 2.3126)
+    ..lineTo(19.4983, 3.0082)
+    ..cubicTo(20.233, 3.5818, 20.1477, 4.6509, 19.3281, 5.1394)
+    ..lineTo(18.7965, 5.4564)
+    ..cubicTo(18.5912, 5.5788, 18.4651, 5.7866, 18.4607, 6.0099)
+    ..lineTo(18.4408, 7.0172)
+    ..cubicTo(18.4185, 8.1453, 16.9727, 8.7557, 16.0428, 8.0297)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(12.6281, 4.0379)
+    ..cubicTo(12.5198, 4.2093, 12.4343, 4.3942, 12.3749, 4.5883)
+    ..cubicTo(12.1214, 5.4164, 12.3562, 6.3676, 13.1487, 6.9864)
+    ..lineTo(13.2023, 7.0282)
+    ..lineTo(12.8111, 7.4486)
+    ..cubicTo(12.2972, 8.0006, 12.3652, 8.8617, 12.9597, 9.3259)
+    ..lineTo(12.9599, 9.3261)
+    ..cubicTo(13.5031, 9.7501, 14.2928, 9.6876, 14.7624, 9.1833)
+    ..lineTo(15.2676, 8.6405)
+    ..lineTo(15.4529, 8.7851)
+    ..lineTo(15.5258, 8.8402)
+    ..cubicTo(16.2862, 9.3906, 17.2198, 9.4122, 17.955, 9.1018)
+    ..cubicTo(18.0567, 9.0589, 18.1564, 9.0082, 18.2533, 8.9508)
+    ..lineTo(18.2533, 13.9943)
+    ..cubicTo(18.2533, 15.8272, 16.7674, 17.3132, 14.9345, 17.3132)
+    ..lineTo(3.3188, 17.3132)
+    ..cubicTo(1.4859, 17.3132, 0, 15.8272, 0, 13.9943)
+    ..lineTo(0, 7.3567)
+    ..cubicTo(0, 5.5238, 1.4859, 4.0379, 3.3188, 4.0379)
+    ..lineTo(12.6281, 4.0379)
+    ..close()
+    ..moveTo(14.9345, 13.9943)
+    ..cubicTo(14.4763, 13.9944, 14.1049, 14.3658, 14.1049, 14.824)
+    ..cubicTo(14.1049, 15.2822, 14.4763, 15.6537, 14.9345, 15.6538)
+    ..lineTo(15.7643, 15.6538)
+    ..cubicTo(16.2225, 15.6537, 16.5939, 15.2822, 16.5939, 14.824)
+    ..cubicTo(16.5939, 14.3658, 16.2225, 13.9944, 15.7643, 13.9943)
+    ..lineTo(14.9345, 13.9943)
+    ..close()
+    ..moveTo(9.1267, 8.6012)
+    ..cubicTo(7.9811, 8.6012, 7.0524, 9.53, 7.0524, 10.6755)
+    ..cubicTo(7.0524, 11.8211, 7.9811, 12.7498, 9.1267, 12.7498)
+    ..cubicTo(10.2722, 12.7498, 11.201, 11.8211, 11.201, 10.6755)
+    ..cubicTo(11.201, 9.53, 10.2722, 8.6012, 9.1267, 8.6012)
+    ..close()
+    ..moveTo(2.489, 5.6973)
+    ..cubicTo(2.0308, 5.6973, 1.6594, 6.0689, 1.6594, 6.5271)
+    ..cubicTo(1.6594, 6.9853, 2.0308, 7.3567, 2.489, 7.3567)
+    ..lineTo(3.3188, 7.3567)
+    ..cubicTo(3.777, 7.3567, 4.1484, 6.9853, 4.1484, 6.5271)
+    ..cubicTo(4.1484, 6.0689, 3.777, 5.6973, 3.3188, 5.6973)
+    ..lineTo(2.489, 5.6973)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _BanknotePin._viewBoxWidth;
+    final scaleY = size.height / _BanknotePin._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_BanknotePin._viewBoxMinX, -_BanknotePin._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _BanknotePinPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/bidirecional-horizontal-arrow.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _BidirecionalHorizontalArrow extends StatelessWidget with _DotdartSvgSizing {
+  const _BidirecionalHorizontalArrow({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _BidirecionalHorizontalArrow._svgWidth;
+
+  @override
+  double get svgNativeHeight => _BidirecionalHorizontalArrow._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _BidirecionalHorizontalArrow._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _BidirecionalHorizontalArrow._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _BidirecionalHorizontalArrowPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _BidirecionalHorizontalArrowPainter extends CustomPainter {
+  _BidirecionalHorizontalArrowPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(13.6156, 15.7573)
+    ..cubicTo(14.0109, 16.1526, 14.6518, 16.1526, 15.0472, 15.7573)
+    ..lineTo(19.7035, 11.101)
+    ..cubicTo(19.8933, 10.9111, 20, 10.6536, 20, 10.3852)
+    ..cubicTo(20, 10.1167, 19.8934, 9.8593, 19.7035, 9.6694)
+    ..lineTo(15.0472, 5.013)
+    ..cubicTo(14.6518, 4.6177, 14.0109, 4.6177, 13.6156, 5.013)
+    ..cubicTo(13.2203, 5.4084, 13.2203, 6.0493, 13.6156, 6.4446)
+    ..lineTo(16.544, 9.3729)
+    ..lineTo(6.4358, 9.3729)
+    ..cubicTo(5.8767, 9.3729, 5.4236, 9.8262, 5.4236, 10.3852)
+    ..cubicTo(5.4236, 10.9443, 5.8767, 11.3974, 6.4358, 11.3974)
+    ..lineTo(16.544, 11.3974)
+    ..lineTo(13.6156, 14.3258)
+    ..cubicTo(13.2203, 14.7211, 13.2203, 15.362, 13.6156, 15.7573)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(6.3844, 15.7573)
+    ..cubicTo(5.989, 16.1526, 5.3482, 16.1526, 4.9528, 15.7573)
+    ..lineTo(0.2965, 11.101)
+    ..cubicTo(0.1067, 10.9111, 0, 10.6536, 0, 10.3852)
+    ..cubicTo(0, 10.1167, 0.1066, 9.8593, 0.2965, 9.6694)
+    ..lineTo(4.9528, 5.013)
+    ..cubicTo(5.3482, 4.6177, 5.989, 4.6177, 6.3844, 5.013)
+    ..cubicTo(6.7797, 5.4084, 6.7797, 6.0493, 6.3844, 6.4446)
+    ..lineTo(3.456, 9.3729)
+    ..lineTo(13.5642, 9.3729)
+    ..cubicTo(14.1233, 9.3729, 14.5764, 9.8262, 14.5764, 10.3852)
+    ..cubicTo(14.5764, 10.9443, 14.1233, 11.3974, 13.5642, 11.3974)
+    ..lineTo(3.456, 11.3974)
+    ..lineTo(6.3844, 14.3258)
+    ..cubicTo(6.7797, 14.7211, 6.7797, 15.362, 6.3844, 15.7573)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _BidirecionalHorizontalArrow._viewBoxWidth;
+    final scaleY = size.height / _BidirecionalHorizontalArrow._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_BidirecionalHorizontalArrow._viewBoxMinX,
+        -_BidirecionalHorizontalArrow._viewBoxMinY,
+      );
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(
+    covariant _BidirecionalHorizontalArrowPainter oldDelegate,
+  ) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/box-pen.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _BoxPen extends StatelessWidget with _DotdartSvgSizing {
+  const _BoxPen({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _BoxPen._svgWidth;
+
+  @override
+  double get svgNativeHeight => _BoxPen._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _BoxPen._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _BoxPen._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _BoxPenPainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _BoxPenPainter extends CustomPainter {
+  _BoxPenPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(13.5598, 0.0087)
+    ..cubicTo(13.5714, 0.0204, 13.5712, 0.0394, 13.5593, 0.0508)
+    ..cubicTo(13.5406, 0.0688, 13.522, 0.0871, 13.5036, 0.1055)
+    ..lineTo(8.8021, 4.8069)
+    ..cubicTo(8.7893, 4.8196, 8.7768, 4.8326, 8.7644, 4.8456)
+    ..cubicTo(8.4045, 5.2232, 8.188, 5.7136, 8.1501, 6.2315)
+    ..cubicTo(8.1474, 6.2673, 8.1456, 6.3031, 8.1447, 6.3391)
+    ..lineTo(8.1441, 6.3948)
+    ..lineTo(8.1441, 9.5295)
+    ..cubicTo(8.1441, 9.5489, 8.1443, 9.5682, 8.1448, 9.5875)
+    ..cubicTo(8.1483, 9.7224, 8.1635, 9.8542, 8.1897, 9.9822)
+    ..cubicTo(8.1972, 10.0187, 8.2055, 10.055, 8.2147, 10.0909)
+    ..cubicTo(8.2886, 10.378, 8.4179, 10.6428, 8.5903, 10.8734)
+    ..cubicTo(8.6119, 10.9023, 8.6341, 10.9306, 8.657, 10.9583)
+    ..cubicTo(8.6799, 10.9861, 8.7035, 11.0132, 8.7276, 11.0398)
+    ..cubicTo(8.7518, 11.0664, 8.7765, 11.0925, 8.8019, 11.1179)
+    ..cubicTo(9.1957, 11.5117, 9.7351, 11.7599, 10.3324, 11.775)
+    ..cubicTo(10.3516, 11.7755, 10.371, 11.7758, 10.3904, 11.7758)
+    ..lineTo(13.5247, 11.7758)
+    ..cubicTo(13.953, 11.7758, 14.3686, 11.6535, 14.7249, 11.4283)
+    ..cubicTo(14.7868, 11.3892, 14.8469, 11.3469, 14.905, 11.3016)
+    ..cubicTo(14.9632, 11.2563, 15.0193, 11.2081, 15.0731, 11.1569)
+    ..cubicTo(15.0865, 11.1441, 15.0998, 11.1311, 15.113, 11.1179)
+    ..lineTo(19.8144, 6.4164)
+    ..cubicTo(19.8392, 6.3915, 19.8636, 6.3663, 19.8878, 6.341)
+    ..cubicTo(19.8889, 6.3398, 19.8908, 6.3398, 19.892, 6.341)
+    ..cubicTo(19.8925, 6.3415, 19.8929, 6.3423, 19.8929, 6.343)
+    ..lineTo(19.8929, 13.893)
+    ..cubicTo(19.8929, 17.2067, 17.2066, 19.893, 13.8929, 19.893)
+    ..lineTo(6, 19.893)
+    ..cubicTo(2.6863, 19.893, 0, 17.2067, 0, 13.893)
+    ..lineTo(0, 6.0001)
+    ..cubicTo(0, 2.6864, 2.6863, 0.0001, 6, 0.0001)
+    ..lineTo(13.539, 0.0001)
+    ..cubicTo(13.5468, 0.0001, 13.5543, 0.0032, 13.5598, 0.0087)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(13.5961, 1.7737)
+    ..lineTo(18.2263, 6.4039)
+    ..lineTo(14.3207, 10.3094)
+    ..cubicTo(14.1241, 10.5061, 13.8573, 10.6167, 13.5791, 10.6167)
+    ..lineTo(10.4322, 10.6167)
+    ..cubicTo(9.8529, 10.6167, 9.3833, 10.147, 9.3833, 9.5677)
+    ..lineTo(9.3833, 6.4208)
+    ..cubicTo(9.3834, 6.1427, 9.4939, 5.8758, 9.6906, 5.6792)
+    ..lineTo(13.5961, 1.7737)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(19.1667, 5.4563)
+    ..cubicTo(19.0994, 5.5315, 18.9832, 5.5312, 18.9118, 5.4598)
+    ..lineTo(14.5402, 1.0881)
+    ..cubicTo(14.4688, 1.0167, 14.4685, 0.9005, 14.5437, 0.8332)
+    ..cubicTo(15.8292, -0.3181, 17.8059, -0.2763, 19.0411, 0.9589)
+    ..cubicTo(20.2763, 2.1941, 20.3182, 4.1707, 19.1667, 5.4563)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _BoxPen._viewBoxWidth;
+    final scaleY = size.height / _BoxPen._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_BoxPen._viewBoxMinX, -_BoxPen._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.drawPath(__path2, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _BoxPenPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/chevron_down.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -889,6 +1797,118 @@ class _ChevronDownPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChevronDownPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/chevron_left.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ChevronLeft extends StatelessWidget with _DotdartSvgSizing {
+  const _ChevronLeft({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ChevronLeft._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ChevronLeft._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ChevronLeft._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ChevronLeft._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ChevronLeftPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChevronLeftPainter extends CustomPainter {
+  _ChevronLeftPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(14.7449, 2.4213)
+    ..cubicTo(15.3141, 1.8674, 15.314, 0.9654, 14.7448, 0.4115)
+    ..lineTo(14.7182, 0.3862)
+    ..cubicTo(14.1615, -0.1287, 13.2897, -0.1287, 12.7331, 0.3862)
+    ..lineTo(12.7063, 0.4115)
+    ..lineTo(6.224, 6.7191)
+    ..cubicTo(4.3629, 8.53, 4.363, 11.47, 6.224, 13.2809)
+    ..lineTo(12.7063, 19.5884)
+    ..cubicTo(13.2703, 20.1372, 14.1809, 20.1372, 14.7448, 19.5884)
+    ..cubicTo(15.314, 19.0345, 15.3141, 18.1326, 14.7449, 17.5787)
+    ..lineTo(8.2625, 11.2712)
+    ..cubicTo(7.54, 10.5681, 7.54, 9.4319, 8.2625, 8.7288)
+    ..lineTo(14.7449, 2.4213)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ChevronLeft._viewBoxWidth;
+    final scaleY = size.height / _ChevronLeft._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ChevronLeft._viewBoxMinX, -_ChevronLeft._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ChevronLeftPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
@@ -1756,6 +2776,178 @@ class _ExclamationTrianglePainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/handshake.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Handshake extends StatelessWidget with _DotdartSvgSizing {
+  const _Handshake({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Handshake._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Handshake._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Handshake._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Handshake._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _HandshakePainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _HandshakePainter extends CustomPainter {
+  _HandshakePainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(0.6245, 6.2102)
+    ..cubicTo(1.1632, 6.1641, 1.8015, 6.2197, 2.3467, 6.2001)
+    ..cubicTo(2.6773, 6.1882, 3.2631, 6.1567, 3.5153, 6.3724)
+    ..cubicTo(3.6321, 6.4723, 3.672, 7.0017, 3.7561, 7.1611)
+    ..cubicTo(3.8597, 7.3875, 3.952, 7.5514, 4.1076, 7.7459)
+    ..cubicTo(4.6769, 8.4454, 5.4975, 8.8942, 6.3937, 8.9963)
+    ..cubicTo(7.1964, 9.0805, 7.8848, 8.9121, 8.5472, 8.44)
+    ..cubicTo(8.8729, 8.1997, 9.1719, 7.9272, 9.4804, 7.6662)
+    ..cubicTo(9.7588, 7.4307, 10.1135, 7.3837, 10.4054, 7.6274)
+    ..cubicTo(10.7927, 7.9509, 11.1614, 8.2992, 11.5395, 8.6345)
+    ..cubicTo(12.4282, 9.4236, 13.3123, 10.218, 14.1919, 11.0174)
+    ..lineTo(15.3679, 12.0816)
+    ..cubicTo(15.6101, 12.3001, 15.8886, 12.5118, 16.0879, 12.7705)
+    ..cubicTo(16.2679, 13.004, 16.3478, 13.2847, 16.3031, 13.5769)
+    ..cubicTo(16.2576, 13.8738, 16.0823, 14.143, 15.8368, 14.3141)
+    ..cubicTo(15.6685, 14.4317, 15.4793, 14.4894, 15.2746, 14.4953)
+    ..cubicTo(14.3549, 14.5218, 13.8207, 13.3504, 13.4644, 13.3344)
+    ..cubicTo(13.4134, 13.3321, 13.4027, 13.3422, 13.3639, 13.3711)
+    ..cubicTo(13.3092, 13.4955, 13.404, 13.5846, 13.4998, 13.6604)
+    ..cubicTo(14.1075, 14.1413, 14.4651, 14.8774, 13.8307, 15.547)
+    ..cubicTo(13.4071, 15.9148, 12.8985, 15.9798, 12.4223, 15.6423)
+    ..cubicTo(12.2514, 15.5212, 12.0914, 15.3348, 11.9414, 15.1872)
+    ..cubicTo(11.6729, 14.923, 11.4111, 14.6495, 11.1495, 14.3784)
+    ..cubicTo(11.0661, 14.2911, 10.9631, 14.2272, 10.8532, 14.3144)
+    ..cubicTo(10.8045, 14.5059, 11.1593, 14.7312, 11.2743, 14.9222)
+    ..cubicTo(11.689, 15.6102, 11.2396, 16.4708, 10.4456, 16.5535)
+    ..cubicTo(9.8975, 16.6109, 9.5079, 16.1237, 9.1656, 15.7557)
+    ..cubicTo(8.9636, 15.5378, 8.7627, 15.3187, 8.5629, 15.0987)
+    ..cubicTo(8.459, 14.9835, 8.2232, 14.6119, 8.0592, 14.8168)
+    ..cubicTo(8.0426, 14.9598, 8.218, 15.0544, 8.2696, 15.2182)
+    ..cubicTo(8.321, 15.3809, 8.3496, 15.4691, 8.3463, 15.6479)
+    ..cubicTo(8.3434, 15.9406, 8.221, 16.2194, 8.0075, 16.4196)
+    ..cubicTo(7.6423, 16.7675, 7.0907, 16.8297, 6.6776, 16.5417)
+    ..cubicTo(6.4612, 16.3906, 6.203, 16.1014, 6.0169, 15.9073)
+    ..cubicTo(5.7169, 15.5963, 5.4201, 15.2825, 5.1263, 14.9657)
+    ..lineTo(2.4369, 12.0698)
+    ..cubicTo(2.0505, 12.053, 1.6395, 12.0729, 1.2512, 12.0665)
+    ..cubicTo(1.0749, 12.0635, 0.8396, 12.0773, 0.6713, 12.0508)
+    ..cubicTo(0.5729, 12.0361, 0.4778, 12.0049, 0.3899, 11.9586)
+    ..cubicTo(-0.091, 11.699, 0.0092, 11.0907, 0.0077, 10.6229)
+    ..lineTo(0.0063, 9.0307)
+    ..lineTo(0.007, 7.6676)
+    ..cubicTo(0.0083, 7.0786, -0.1067, 6.3979, 0.6245, 6.2102)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(9.2076, 4.017)
+    ..cubicTo(9.4904, 3.9808, 10.0849, 4.0153, 10.4027, 4.0051)
+    ..cubicTo(10.7263, 3.9947, 11.2734, 4.0006, 11.578, 4.0602)
+    ..cubicTo(11.931, 4.129, 12.2714, 4.2509, 12.5878, 4.4217)
+    ..cubicTo(12.9558, 4.6229, 13.2301, 4.8656, 13.5583, 5.11)
+    ..cubicTo(14.3143, 5.6727, 15.0623, 6.3512, 15.8969, 6.7893)
+    ..cubicTo(16.1546, 6.601, 16.5385, 6.2207, 16.8592, 6.2148)
+    ..cubicTo(17.6945, 6.1993, 18.5533, 6.1811, 19.3876, 6.2233)
+    ..cubicTo(19.5005, 6.2417, 19.6074, 6.3145, 19.6933, 6.3782)
+    ..cubicTo(20.084, 6.6669, 19.9902, 7.2376, 19.9894, 7.6801)
+    ..lineTo(19.9875, 9.1192)
+    ..lineTo(19.9913, 10.5695)
+    ..cubicTo(19.9923, 10.941, 20.0592, 11.493, 19.805, 11.7894)
+    ..cubicTo(19.662, 11.9563, 19.4485, 12.0565, 19.228, 12.0624)
+    ..cubicTo(18.8086, 12.0739, 18.385, 12.0568, 17.9649, 12.0638)
+    ..cubicTo(17.6766, 12.0555, 17.3598, 12.0856, 17.0749, 12.0476)
+    ..cubicTo(16.8253, 12.0143, 16.5519, 11.7291, 16.3651, 11.5634)
+    ..cubicTo(16.1457, 11.369, 15.9252, 11.1759, 15.7035, 10.9841)
+    ..cubicTo(15.3728, 10.7082, 14.9984, 10.3604, 14.6687, 10.0714)
+    ..lineTo(12.2828, 7.9622)
+    ..lineTo(11.3117, 7.0916)
+    ..cubicTo(10.9394, 6.7609, 10.6667, 6.4463, 10.1494, 6.3884)
+    ..cubicTo(9.0758, 6.2683, 8.3977, 7.4627, 7.6373, 7.8808)
+    ..cubicTo(6.8771, 8.2989, 6.1302, 8.2423, 5.4646, 7.7495)
+    ..cubicTo(4.7989, 7.2568, 4.9783, 7.0156, 5.4212, 6.6444)
+    ..cubicTo(5.864, 6.2732, 5.7646, 6.3593, 6.1381, 6.0452)
+    ..cubicTo(6.5117, 5.7311, 6.6674, 5.5956, 7.331, 5.032)
+    ..cubicTo(7.9946, 4.4684, 8.3039, 4.1302, 9.2076, 4.017)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Handshake._viewBoxWidth;
+    final scaleY = size.height / _Handshake._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Handshake._viewBoxMinX, -_Handshake._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _HandshakePainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/magnifier_glass.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -2106,6 +3298,128 @@ class _PhonePainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/plus-signal.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _PlusSignal extends StatelessWidget with _DotdartSvgSizing {
+  const _PlusSignal({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _PlusSignal._svgWidth;
+
+  @override
+  double get svgNativeHeight => _PlusSignal._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _PlusSignal._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _PlusSignal._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _PlusSignalPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlusSignalPainter extends CustomPainter {
+  _PlusSignalPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(0, 10)
+    ..cubicTo(0, 9.1716, 0.6716, 8.5, 1.5, 8.5)
+    ..lineTo(18.5, 8.5)
+    ..cubicTo(19.3284, 8.5, 20, 9.1716, 20, 10)
+    ..cubicTo(20, 10.8284, 19.3284, 11.5, 18.5, 11.5)
+    ..lineTo(1.5, 11.5)
+    ..cubicTo(0.6716, 11.5, 0, 10.8284, 0, 10)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(10, 20)
+    ..cubicTo(9.1716, 20, 8.5, 19.3284, 8.5, 18.5)
+    ..lineTo(8.5, 1.5)
+    ..cubicTo(8.5, 0.6716, 9.1716, 0, 10, 0)
+    ..cubicTo(10.8284, 0, 11.5, 0.6716, 11.5, 1.5)
+    ..lineTo(11.5, 18.5)
+    ..cubicTo(11.5, 19.3284, 10.8284, 20, 10, 20)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _PlusSignal._viewBoxWidth;
+    final scaleY = size.height / _PlusSignal._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_PlusSignal._viewBoxMinX, -_PlusSignal._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _PlusSignalPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/pointer_hand_up.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -2216,6 +3530,391 @@ class _PointerHandUpPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PointerHandUpPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/questionmark.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Questionmark extends StatelessWidget with _DotdartSvgSizing {
+  const _Questionmark({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Questionmark._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Questionmark._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Questionmark._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Questionmark._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _QuestionmarkPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuestionmarkPainter extends CustomPainter {
+  _QuestionmarkPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(4, 4.8158)
+    ..cubicTo(4, 4.3587, 4.107, 3.8275, 4.3441, 3.2968)
+    ..cubicTo(5.2926, 1.1464, 7.4822, 0, 9.8893, 0)
+    ..cubicTo(11.4952, 0, 12.983, 0.455, 14.0807, 1.3475)
+    ..cubicTo(15.1895, 2.2492, 15.8672, 3.5732, 15.8674, 5.2224)
+    ..cubicTo(15.8674, 7.3922, 14.6196, 8.8637, 12.842, 10.0632)
+    ..lineTo(12.8433, 10.0644)
+    ..cubicTo(12.0464, 10.6123, 11.603, 10.9775, 11.3444, 11.3331)
+    ..cubicTo(11.1094, 11.6563, 11.0042, 12.0041, 10.9953, 12.5881)
+    ..lineTo(10.9953, 12.9184)
+    ..cubicTo(10.9952, 13.3169, 10.8965, 13.7302, 10.6262, 14.0532)
+    ..cubicTo(10.3434, 14.3909, 9.9302, 14.5612, 9.4514, 14.5612)
+    ..cubicTo(8.9875, 14.5611, 8.5752, 14.4058, 8.284, 14.0832)
+    ..cubicTo(8.0003, 13.7688, 7.8874, 13.3574, 7.8874, 12.9471)
+    ..lineTo(7.8874, 12.3216)
+    ..cubicTo(7.8874, 10.2912, 9.2348, 8.9885, 10.8189, 7.8887)
+    ..cubicTo(12.0875, 6.9964, 12.7492, 6.3424, 12.7495, 5.2136)
+    ..cubicTo(12.7495, 4.5203, 12.4505, 3.9643, 11.9487, 3.5696)
+    ..cubicTo(11.4368, 3.1671, 10.6937, 2.9202, 9.8192, 2.9202)
+    ..cubicTo(9.0962, 2.9203, 8.501, 3.0818, 8.0388, 3.4144)
+    ..cubicTo(7.581, 3.7441, 7.2001, 4.2806, 6.9715, 5.1323)
+    ..lineTo(6.9665, 5.1498)
+    ..cubicTo(6.8684, 5.4702, 6.6962, 5.7648, 6.431, 5.9806)
+    ..cubicTo(6.161, 6.2002, 5.8284, 6.3096, 5.4651, 6.3097)
+    ..cubicTo(5.0409, 6.3097, 4.6565, 6.167, 4.3816, 5.8705)
+    ..cubicTo(4.1123, 5.58, 4.0001, 5.1986, 4, 4.8158)
+    ..close()
+    ..moveTo(11.4032, 18.0582)
+    ..cubicTo(11.4029, 19.1262, 10.5393, 20, 9.4514, 20)
+    ..cubicTo(8.3834, 19.9999, 7.5098, 19.1261, 7.5095, 18.0582)
+    ..cubicTo(7.5095, 16.9776, 8.3856, 16.1152, 9.4514, 16.1151)
+    ..cubicTo(10.5371, 16.1151, 11.4032, 16.9775, 11.4032, 18.0582)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Questionmark._viewBoxWidth;
+    final scaleY = size.height / _Questionmark._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Questionmark._viewBoxMinX, -_Questionmark._viewBoxMinY);
+
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _QuestionmarkPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/rectangle-stack.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _RectangleStack extends StatelessWidget with _DotdartSvgSizing {
+  const _RectangleStack({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _RectangleStack._svgWidth;
+
+  @override
+  double get svgNativeHeight => _RectangleStack._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _RectangleStack._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _RectangleStack._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _RectangleStackPainter(
+            color1: color1 ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _RectangleStackPainter extends CustomPainter {
+  _RectangleStackPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(17.9429, 4.2286)
+    ..cubicTo(17.6371, 4.1729, 17.3129, 4.1453, 16.972, 4.1453)
+    ..lineTo(3.0278, 4.1453)
+    ..cubicTo(2.6869, 4.1453, 2.3628, 4.1729, 2.0571, 4.2285)
+    ..cubicTo(2.1606, 3.183, 2.7786, 2.6, 3.7882, 2.6)
+    ..lineTo(16.2211, 2.6)
+    ..cubicTo(17.2308, 2.6, 17.8409, 3.183, 17.9429, 4.2286)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(3.7143, 1.3714)
+    ..lineTo(16.2857, 1.3714)
+    ..cubicTo(16.2448, 0.5006, 15.734, 0, 14.8855, 0)
+    ..lineTo(5.1145, 0)
+    ..cubicTo(4.2661, 0, 3.7552, 0.5006, 3.7143, 1.3714)
+    ..close();
+
+  static final RRect _rrect0 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(0, 5.4286, 20, 14.5714),
+    const Radius.circular(3.8988),
+  );
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _RectangleStack._viewBoxWidth;
+    final scaleY = size.height / _RectangleStack._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_RectangleStack._viewBoxMinX, -_RectangleStack._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect0, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _RectangleStackPainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/road.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Road extends StatelessWidget with _DotdartSvgSizing {
+  const _Road({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Road._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Road._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Road._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Road._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _RoadPainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _RoadPainter extends CustomPainter {
+  _RoadPainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final RRect _rrect0 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(8.3402, 0.6846, 2.7386, 4.4191),
+    const Radius.circular(1.3693),
+  );
+
+  static final RRect _rrect1 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(8.3402, 7.78, 2.7386, 4.4191),
+    const Radius.circular(1.3693),
+  );
+
+  static final RRect _rrect2 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(8.3402, 14.8754, 2.7386, 4.4191),
+    const Radius.circular(1.3693),
+  );
+
+  static final RRect _rrect3 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(0, 0, 2.9253, 19.9791),
+    const Radius.circular(1.4626),
+  );
+
+  static final RRect _rrect4 = RRect.fromRectAndRadius(
+    Rect.fromLTWH(17.0538, 0, 2.9253, 19.9791),
+    const Radius.circular(1.4626),
+  );
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Road._viewBoxWidth;
+    final scaleY = size.height / _Road._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Road._viewBoxMinX, -_Road._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawRRect(_rrect0, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect1, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect2, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect3, _fillPaint..color = color1);
+    canvas.drawRRect(_rrect4, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _RoadPainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }
@@ -2333,6 +4032,142 @@ class _SmartphonePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SmartphonePainter oldDelegate) {
+    return oldDelegate.color1 != color1;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/tree.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Tree extends StatelessWidget with _DotdartSvgSizing {
+  const _Tree({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.color1,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color 1 — defaults to 0xff000000.
+  final Color? color1;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Tree._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Tree._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Tree._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Tree._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _TreePainter(color1: color1 ?? const Color(0xff000000)),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _TreePainter extends CustomPainter {
+  _TreePainter({required this.color1});
+
+  final Color color1;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Path __path0 = Path()
+    ..moveTo(8.971, 15.8774)
+    ..lineTo(11.0319, 15.8774)
+    ..lineTo(11.0319, 17.9383)
+    ..lineTo(12.8319, 17.9383)
+    ..cubicTo(13.401, 17.9383, 13.8623, 18.3996, 13.8623, 18.9687)
+    ..cubicTo(13.8623, 19.5378, 13.401, 19.9991, 12.8319, 19.9991)
+    ..lineTo(7.1387, 19.9991)
+    ..cubicTo(6.5697, 19.9991, 6.1083, 19.5378, 6.1083, 18.9687)
+    ..cubicTo(6.1083, 18.3996, 6.5697, 17.9383, 7.1387, 17.9383)
+    ..lineTo(8.971, 17.9383)
+    ..lineTo(8.971, 15.8774)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(0.2782, 11.6502)
+    ..cubicTo(0.2782, 13.5126, 1.5301, 14.8032, 3.3385, 14.8032)
+    ..cubicTo(3.9104, 14.8032, 4.1621, 14.8032, 4.8995, 14.8032)
+    ..cubicTo(5.3787, 15.236, 6.5533, 15.8465, 7.9212, 15.9005)
+    ..lineTo(10.1511, 15.9005)
+    ..lineTo(12.0789, 15.9005)
+    ..cubicTo(13.4467, 15.8465, 14.6214, 15.236, 15.1005, 14.8032)
+    ..cubicTo(15.734, 14.8032, 16.082, 14.8032, 16.6538, 14.8032)
+    ..cubicTo(18.4622, 14.8032, 19.7141, 13.5126, 19.7141, 11.6502)
+    ..cubicTo(19.7141, 10.7073, 19.6137, 10.1819, 18.7249, 9.2931)
+    ..cubicTo(19.4282, 8.559, 19.7141, 7.6857, 19.7141, 6.8279)
+    ..cubicTo(19.7141, 4.9809, 18.2921, 3.273, 16.5147, 3.0644)
+    ..cubicTo(16.4374, 1.2792, 14.4513, 0.0041, 12.5503, 0.0041)
+    ..cubicTo(11.5765, 0.0041, 10.6723, 0.3055, 10, 1.001)
+    ..cubicTo(9.3277, 0.3055, 8.4235, 0.0041, 7.4498, 0.0041)
+    ..cubicTo(5.5487, 0.0041, 3.5626, 1.2792, 3.4853, 3.0644)
+    ..cubicTo(1.7079, 3.273, 0.2782, 4.9809, 0.2782, 6.8279)
+    ..cubicTo(0.2782, 7.6857, 0.5719, 8.559, 1.2751, 9.2931)
+    ..cubicTo(0.3864, 10.1819, 0.2782, 10.7073, 0.2782, 11.6502)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Tree._viewBoxWidth;
+    final scaleY = size.height / _Tree._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Tree._viewBoxMinX, -_Tree._viewBoxMinY);
+
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = color1);
+    canvas.drawPath(__path1, _fillPaint..color = color1);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _TreePainter oldDelegate) {
     return oldDelegate.color1 != color1;
   }
 }

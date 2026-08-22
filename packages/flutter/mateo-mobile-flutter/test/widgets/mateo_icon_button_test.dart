@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+
 import '../test_app.dart';
 
 final _colorScheme = MateoColorScheme.light();
@@ -43,12 +44,38 @@ void main() {
       expect(semantics.properties.enabled, isFalse);
     });
 
-    testWidgets('when label is not provided, it should not render label text', (
+    testWidgets(
+      'when semanticLabel is provided, it should expose the accessibility label',
+      (tester) async {
+        await tester.pumpWidget(
+          TestApp(
+            child: MateoIconButton(
+              semanticLabel: 'Search',
+              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
+              onPressed: () {},
+            ),
+          ),
+        );
+
+        expect(
+          tester
+              .widget<Semantics>(
+                find.byKey(const Key('mateo_icon_button_semantics')),
+              )
+              .properties
+              .label,
+          'Search',
+        );
+      },
+    );
+
+    testWidgets('when rendered, it should not add visible label text', (
       tester,
     ) async {
       await tester.pumpWidget(
         TestApp(
           child: MateoIconButton(
+            semanticLabel: 'Search',
             iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
             onPressed: () {},
           ),
@@ -59,92 +86,28 @@ void main() {
     });
 
     testWidgets(
-      'when label style is not provided, it should use text primary as label color',
+      'when buttonSize is not positive, it should reject the invalid dimension',
       (tester) async {
-        await tester.pumpWidget(
-          TestApp(
-            child: MateoIconButton(
-              label: 'Buscar',
-              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
-              onPressed: () {},
-            ),
-          ),
-        );
-
-        expect(_labelStyle(tester).color, equals(_colorScheme.text.primary));
-      },
-    );
-
-    testWidgets(
-      'when label style is not provided, it should use the component font size',
-      (tester) async {
-        await tester.pumpWidget(
-          TestApp(
-            child: MateoIconButton(
-              label: 'Buscar',
-              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
-              onPressed: () {},
-            ),
-          ),
-        );
-
-        expect(_labelStyle(tester).fontSize, equals(12));
-      },
-    );
-
-    testWidgets(
-      'when label style is not provided, it should use semi-bold weight',
-      (tester) async {
-        await tester.pumpWidget(
-          TestApp(
-            child: MateoIconButton(
-              label: 'Buscar',
-              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
-              onPressed: () {},
-            ),
-          ),
-        );
-
-        expect(_labelStyle(tester).fontWeight, equals(FontWeight.w600));
-      },
-    );
-
-    testWidgets(
-      'when label style sets color, it should use the provided label color',
-      (tester) async {
-        await tester.pumpWidget(
-          TestApp(
-            child: MateoIconButton(
-              label: 'Buscar',
-              labelStyle: TextStyle(color: mateoTestColorScheme.text.profit),
-              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
-              onPressed: () {},
-            ),
-          ),
-        );
-
         expect(
-          _labelStyle(tester).color,
-          equals(mateoTestColorScheme.text.profit),
+          () => MateoIconButton(
+            buttonSize: 0,
+            iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
+          ),
+          throwsAssertionError,
         );
       },
     );
 
     testWidgets(
-      'when label style omits color, it should keep the default label color',
+      'when iconSize is not positive, it should reject the invalid dimension',
       (tester) async {
-        await tester.pumpWidget(
-          TestApp(
-            child: MateoIconButton(
-              label: 'Buscar',
-              labelStyle: const TextStyle(fontSize: 16),
-              iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
-              onPressed: () {},
-            ),
+        expect(
+          () => MateoIconButton(
+            iconSize: 0,
+            iconBuilder: (state) => Icon(Icons.search, size: state.iconSize),
           ),
+          throwsAssertionError,
         );
-
-        expect(_labelStyle(tester).color, equals(_colorScheme.text.primary));
       },
     );
 
@@ -161,7 +124,7 @@ void main() {
 
       expect(
         _circleColor(tester),
-        equals(_colorScheme.buttons.primary.backgroundDisabled),
+        equals(_colorScheme.buttons.accent.primary.backgroundDisabled),
       );
     });
 
@@ -316,7 +279,7 @@ void main() {
           resolvedForegroundColor,
           equals(
             Color.lerp(
-              _colorScheme.buttons.primary.backgroundDisabled,
+              _colorScheme.buttons.accent.primary.backgroundDisabled,
               mateoTestTheme.colorScheme.shadow,
               0.28,
             ),
@@ -357,10 +320,6 @@ void main() {
   });
 }
 
-TextStyle _labelStyle(WidgetTester tester) {
-  return tester.widget<Text>(find.text('Buscar')).style!;
-}
-
 Size _circleSize(WidgetTester tester) {
   final container = tester.widget<Container>(
     find.byKey(const Key('mateo_icon_button_circle')),
@@ -372,9 +331,11 @@ Size _circleSize(WidgetTester tester) {
 }
 
 Color? _circleColor(WidgetTester tester) {
-  final container = tester.widget<Container>(
-    find.byKey(const Key('mateo_icon_button_circle')),
-  );
-  final decoration = container.decoration! as BoxDecoration;
-  return decoration.color;
+  return (tester
+              .widget<Container>(
+                find.byKey(const Key('mateo_icon_button_circle')),
+              )
+              .decoration!
+          as BoxDecoration)
+      .color;
 }

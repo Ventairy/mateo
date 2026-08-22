@@ -25,8 +25,7 @@ class _MateoYSnapListFlowDelegate extends FlowDelegate {
   final bool isAwaitMode;
   final double loadingMoreOffset;
 
-  static const double _spinnerSize =
-      _MateoYSnapListLoadingIndicator.indicatorBoxSize;
+  static const double _spinnerSize = _MateoYSnapListLoadingIndicator.indicatorBoxSize;
 
   @override
   BoxConstraints getConstraintsForChild(int index, BoxConstraints constraints) {
@@ -129,7 +128,6 @@ class _MateoYSnapListFlowDelegate extends FlowDelegate {
 
   @override
   bool shouldRelayout(covariant _MateoYSnapListFlowDelegate oldDelegate) {
-    return oldDelegate.viewportHeight != viewportHeight ||
-        oldDelegate.viewportWidth != viewportWidth;
+    return oldDelegate.viewportHeight != viewportHeight || oldDelegate.viewportWidth != viewportWidth;
   }
 }

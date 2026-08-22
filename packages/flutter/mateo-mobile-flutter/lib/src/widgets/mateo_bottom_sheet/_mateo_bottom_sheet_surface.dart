@@ -8,6 +8,7 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
   });
 
   static const double _maximumEstimatedBottomCornerRadius = 50;
+  static const double _contentPadding = 20;
   static const double _outerMargin = 12;
 
   static BorderRadius _resolveBorderRadius(
@@ -65,22 +66,17 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
   final Animation<double> animation;
   final Widget child;
 
-  void _dismiss(BuildContext context) {
-    unawaited(Navigator.of(context).maybePop());
+  void _dismiss(MateoBottomSheetDismissSource source) {
+    unawaited(route.requestDismiss(source));
   }
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final bottomSafeAreaInset =
-        Theme.of(context).platform == TargetPlatform.android
-        ? mediaQuery.padding.bottom
-        : 0.0;
+    final bottomSafeAreaInset = Theme.of(context).platform == TargetPlatform.android ? mediaQuery.padding.bottom : 0.0;
     final availableHeight = math.max(
       0,
-      mediaQuery.size.height -
-          mediaQuery.viewInsets.bottom -
-          bottomSafeAreaInset,
+      mediaQuery.size.height - mediaQuery.viewInsets.bottom - bottomSafeAreaInset,
     );
 
     return Align(
@@ -98,13 +94,9 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
           removeBottom: bottomSafeAreaInset > 0,
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight:
-                  availableHeight *
-                  _MateoBottomSheetRoute._maximumHeightFraction,
+              maxHeight: availableHeight * _MateoBottomSheetRoute._maximumHeightFraction,
             ),
-            child: route.scrollable
-                ? _buildScrollableSheet(context)
-                : _buildIntrinsicSheet(context),
+            child: route.scrollable ? _buildScrollableSheet(context) : _buildIntrinsicSheet(context),
           ),
         ),
       ),
@@ -112,8 +104,6 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
   }
 
   Widget _buildScrollableSheet(BuildContext context) {
-    final colorScheme = context.mateo.colorScheme.bottomSheet;
-
     return DraggableScrollableSheet(
       controller: route._scrollableController,
       initialChildSize: route._initialScrollableExtent,
@@ -125,26 +115,18 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
         animation: animation,
         child: _buildSheet(
           context,
-          showFixedHandle: false,
-          content: Expanded(
-            child: CustomScrollView(
-              key: const Key('mateo_bottom_sheet_scroll_view'),
-              controller: scrollController,
-              slivers: [
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _MateoBottomSheetHandleDelegate(
-                    backgroundColor: colorScheme.background,
-                    handleColor: colorScheme.handle,
-                  ),
-                ),
-                SliverSafeArea(
-                  top: false,
-                  minimum: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                  sliver: SliverToBoxAdapter(child: child),
-                ),
-              ],
-            ),
+          expandContent: true,
+          content: CustomScrollView(
+            key: const Key('mateo_bottom_sheet_scroll_view'),
+            controller: scrollController,
+            physics: route.draggable ? null : const NeverScrollableScrollPhysics(),
+            slivers: [
+              SliverSafeArea(
+                top: false,
+                minimum: const EdgeInsets.all(_contentPadding),
+                sliver: SliverToBoxAdapter(child: child),
+              ),
+            ],
           ),
         ),
       ),
@@ -156,12 +138,10 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
       animation: animation,
       child: _buildSheet(
         context,
-        content: Flexible(
-          child: SafeArea(
-            top: false,
-            minimum: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: child,
-          ),
+        content: SafeArea(
+          top: false,
+          minimum: const EdgeInsets.all(_contentPadding),
+          child: child,
         ),
       ),
     );
@@ -170,7 +150,7 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
   Widget _buildSheet(
     BuildContext context, {
     required Widget content,
-    bool showFixedHandle = true,
+    bool expandContent = false,
   }) {
     final colorScheme = context.mateo.colorScheme.bottomSheet;
 
@@ -180,7 +160,9 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
       child: _MateoBottomSheetDragSurface(
         route: route,
         child: Semantics(
-          onDismiss: () => _dismiss(context),
+          onDismiss: () => _dismiss(
+            MateoBottomSheetDismissSource.accessibilityAction,
+          ),
           child: ClipRSuperellipse(
             borderRadius: _resolveBorderRadius(
               MediaQuery.of(context),
@@ -190,12 +172,32 @@ class _MateoBottomSheetSurface<T> extends StatelessWidget {
             child: Material(
               key: const Key('mateo_bottom_sheet_surface'),
               color: colorScheme.background,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Stack(
+                fit: expandContent ? StackFit.expand : StackFit.loose,
                 children: [
-                  if (showFixedHandle)
-                    _MateoBottomSheetHandle(color: colorScheme.handle),
                   content,
+                  Positioned(
+                    top: _contentPadding,
+                    right: _contentPadding,
+                    child: MateoFloatingActionButton(
+                      key: const Key('mateo_bottom_sheet_close_button'),
+                      size: 44,
+                      tapTargetSize: 44,
+                      iconSize: 16,
+                      semanticLabel: MaterialLocalizations.of(
+                        context,
+                      ).closeButtonLabel,
+                      iconBuilder: (state) => MateoIcon.cross(
+                        key: const Key('mateo_bottom_sheet_close_icon'),
+                        width: state.iconSize,
+                        height: state.iconSize,
+                        color: state.foregroundColor,
+                      ),
+                      onPressed: () => _dismiss(
+                        MateoBottomSheetDismissSource.closeButton,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

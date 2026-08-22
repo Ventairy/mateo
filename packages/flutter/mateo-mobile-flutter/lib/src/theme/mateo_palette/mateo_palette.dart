@@ -8,67 +8,65 @@ part 'mateo_color_scale.dart';
 
 /// The raw primitive color palette for the Mateo Mobile design system.
 ///
-/// Contains 12-step color scales for [primary], [neutral], [green],
-/// [amber], [red], [blue], [whatsapp], and six accent colors ([cyan],
+/// Contains 12-step color scales for [accent], [neutral], [green],
+/// [amber], [red], [blue], [whatsapp], and six additional colors ([cyan],
 /// [violet], [teal], [orange], [pink], [yellow]).
 ///
-/// The [primary] and [neutral] scales are **auto-derived** from the
-/// `primaryColor` parameter using OKLCH color space generation. All other scales
+/// The [accent] and [neutral] scales are **auto-derived** from the
+/// `accentColor` parameter using OKLCH color space generation. All other scales
 /// are fixed values from the Mateo Mobile palette specification.
 ///
 /// This primitive palette is appearance-independent and has no semantic token
 /// assignments. Build semantic color schemes on top of these primitives.
 ///
 /// ```dart
-/// final palette = MateoPalette(primaryColor: Color(0xFF4A5CFF));
-/// final primary = palette.primary;
+/// final palette = MateoPalette(accentColor: Color(0xFF4A5CFF));
+/// final accent = palette.accent;
 /// final neutral = palette.neutral[12];
 /// ```
 @immutable
 class MateoPalette {
-  /// Creates a Mateo Mobile color palette generated from [primaryColor].
+  /// Creates a Mateo Mobile color palette generated from [accentColor].
   ///
-  /// The [primary] and [neutral] scales are derived from [primaryColor]
+  /// The [accent] and [neutral] scales are derived from [accentColor]
   /// using OKLCH color space generation. The color must be fully opaque, and
-  /// it is preserved exactly at primary step 9. All other scales are fixed.
+  /// it is preserved exactly at accent step 9. All other scales are fixed.
   ///
-  /// When [primaryColor] is omitted, the default Mateo Colors are used
+  /// When [accentColor] is omitted, the default Mateo colors are used.
   ///
-  /// Throws [ArgumentError] when [primaryColor] is not fully opaque.
-  factory MateoPalette({Color? primaryColor}) {
-    final mainColor = primaryColor ?? _defaultBrandColor;
+  /// Throws [ArgumentError] when [accentColor] is not fully opaque.
+  factory MateoPalette({Color? accentColor}) {
+    final mainColor = accentColor ?? _defaultAccentColor;
     if (mainColor.a != 1) {
       throw ArgumentError.value(
         mainColor,
-        'primaryColor',
+        'accentColor',
         'must be fully opaque',
       );
     }
 
-    final isDefault = mainColor == _defaultBrandColor;
+    final isDefault = mainColor == _defaultAccentColor;
     if (isDefault) return _defaultPalette;
 
     final oklch = Oklch.fromColor(mainColor);
     final hue = oklch.h;
-    final primaryLightness = <double>[
-      for (final amount in _primaryLighten) oklch.l + (1 - oklch.l) * amount,
+    final accentLightness = <double>[
+      for (final amount in _accentLighten) oklch.l + (1 - oklch.l) * amount,
       oklch.l,
-      for (final amount in _primaryDarken) 0.21 + (oklch.l - 0.21) * amount,
+      for (final amount in _accentDarken) 0.21 + (oklch.l - 0.21) * amount,
     ];
 
-    final primaryChroma = [
-      for (final multiplier in _primaryChromaMultipliers) oklch.c * multiplier,
+    final accentChroma = [
+      for (final multiplier in _accentChromaMultipliers) oklch.c * multiplier,
     ];
 
-    final neutralTint = oklch.c <= 0.000004
-        ? 0.0
-        : (oklch.c / 0.20).clamp(0.0, 1.0);
+    final neutralTint = oklch.c <= 0.000004 ? 0.0 : (oklch.c / 0.20).clamp(0.0, 1.0);
 
     return MateoPalette._(
-      primaryColor: mainColor,
-      primary: _generateScale(
-        lightness: primaryLightness,
-        chroma: primaryChroma,
+      accentColor: mainColor,
+      accent: _generateScale(
+        lightness: accentLightness,
+        chroma: accentChroma,
         baseHue: hue,
         anchor: mainColor,
       ),
@@ -92,8 +90,8 @@ class MateoPalette {
   }
 
   const MateoPalette._({
-    required this._primaryColor,
-    required this.primary,
+    required this._accentColor,
+    required this.accent,
     required this.neutral,
     required this.green,
     required this.amber,
@@ -108,13 +106,13 @@ class MateoPalette {
     required this.yellow,
   });
 
-  final Color _primaryColor;
+  final Color _accentColor;
 
-  static const Color _defaultBrandColor = Color(0xFF4A5CFF);
+  static const Color _defaultAccentColor = Color(0xFF4A5CFF);
 
   static final MateoPalette _defaultPalette = MateoPalette._(
-    primaryColor: _defaultBrandColor,
-    primary: _defaultPrimaryScale,
+    accentColor: _defaultAccentColor,
+    accent: _defaultAccentScale,
     neutral: _defaultNeutralScale,
     green: _greenScale,
     amber: _amberScale,
@@ -129,7 +127,7 @@ class MateoPalette {
     yellow: _yellowScale,
   );
 
-  static final MateoColorScale _defaultPrimaryScale = MateoColorScale._(
+  static final MateoColorScale _defaultAccentScale = MateoColorScale._(
     steps: const [
       Color(0xFFF9FBFE),
       Color(0xFFF2F4FB),
@@ -350,7 +348,7 @@ class MateoPalette {
     ],
   );
 
-  static const List<double> _primaryLighten = [
+  static const List<double> _accentLighten = [
     0.97,
     0.925,
     0.86,
@@ -361,9 +359,9 @@ class MateoPalette {
     0.245,
   ];
 
-  static const List<double> _primaryDarken = [0.85, 0.47, 0];
+  static const List<double> _accentDarken = [0.85, 0.47, 0];
 
-  static const List<double> _primaryChromaMultipliers = [
+  static const List<double> _accentChromaMultipliers = [
     0.02,
     0.04,
     0.09,
@@ -428,16 +426,16 @@ class MateoPalette {
     return MateoColorScale._(steps: colors);
   }
 
-  /// The brand color scale derived from the palette's primary color.
+  /// The accent color scale derived from the palette's accent color.
   ///
-  /// Step 9 is exactly the supplied primary color. The surrounding steps keep
+  /// Step 9 is exactly the supplied accent color. The surrounding steps keep
   /// its OKLCH hue and follow Mateo's documented lightness and chroma recipe.
-  final MateoColorScale primary;
+  final MateoColorScale accent;
 
-  /// The warm neutral scale tinted toward the palette's primary hue.
+  /// The warm neutral scale tinted toward the palette's accent hue.
   ///
   /// Its chroma is capped between 0.002 and 0.008, then scaled by the seed's
-  /// chroma so muted primaries do not create exaggerated neutral tinting.
+  /// chroma so muted accents do not create exaggerated neutral tinting.
   final MateoColorScale neutral;
 
   /// The fixed green scale.
@@ -455,33 +453,33 @@ class MateoPalette {
   /// The fixed WhatsApp reference scale.
   final MateoColorScale whatsapp;
 
-  /// The cyan accent scale.
+  /// The fixed cyan scale.
   final MateoColorScale cyan;
 
-  /// The violet accent scale.
+  /// The fixed violet scale.
   final MateoColorScale violet;
 
-  /// The teal accent scale.
+  /// The fixed teal scale.
   final MateoColorScale teal;
 
-  /// The orange accent scale.
+  /// The fixed orange scale.
   final MateoColorScale orange;
 
-  /// The pink accent scale.
+  /// The fixed pink scale.
   final MateoColorScale pink;
 
-  /// The yellow accent scale.
+  /// The fixed yellow scale.
   final MateoColorScale yellow;
 
-  /// Equality based on the primary color that defines this palette.
+  /// Equality based on the accent color that defines this palette.
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! MateoPalette) return false;
-    return _primaryColor == other._primaryColor;
+    return _accentColor == other._accentColor;
   }
 
-  /// The hash code derived from the primary color that defines this palette.
+  /// The hash code derived from the accent color that defines this palette.
   @override
-  int get hashCode => _primaryColor.hashCode;
+  int get hashCode => _accentColor.hashCode;
 }

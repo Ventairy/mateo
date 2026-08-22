@@ -6,32 +6,13 @@ export 'src/enums/mateo_button_fit.dart' show MateoButtonFit;
 export 'src/extensions/widget_extension.dart' show WidgetExtension;
 export 'src/icons/mateo_icons.dart' show MateoIcon;
 export 'src/mateo_app.dart' show MateoApp;
-export 'src/theme/map_style/mateo_map_style.dart' show MateoMapLibreStyle;
-export 'src/theme/map_style/mateo_map_style_background_paint.dart'
-    show MateoMapLibreStyleBackgroundPaint;
-export 'src/theme/map_style/mateo_map_style_fill_paint.dart'
-    show MateoMapLibreStyleFillPaint;
-export 'src/theme/map_style/mateo_map_style_filter.dart'
-    show MateoMapLibreStyleFilter;
-export 'src/theme/map_style/mateo_map_style_layer.dart'
-    show MateoMapLibreStyleLayer;
-export 'src/theme/map_style/mateo_map_style_line_paint.dart'
-    show MateoMapLibreStyleLinePaint;
-export 'src/theme/map_style/mateo_map_style_metadata.dart'
-    show MateoMapLibreStyleMetadata;
-export 'src/theme/map_style/mateo_map_style_source.dart'
-    show MateoMapLibreStyleSource;
-export 'src/theme/map_style/mateo_map_style_symbol_layout.dart'
-    show MateoMapLibreStyleSymbolLayout;
-export 'src/theme/map_style/mateo_map_style_symbol_paint.dart'
-    show MateoMapLibreStyleSymbolPaint;
-export 'src/theme/map_style/mateo_map_style_value.dart'
-    show MateoMapLibreStyleValue, MateoMapLibreStyleZoomStop;
 export 'src/theme/mateo_color_scheme/mateo_color_scheme.dart'
     show
         MateoBottomSheetColorScheme,
         MateoBrandedButtonColorScheme,
         MateoButtonColorScheme,
+        MateoButtonPanelColorScheme,
+        MateoButtonToneColorScheme,
         MateoButtonsColorScheme,
         MateoColorScheme,
         MateoColorVariantColorScheme,
@@ -53,14 +34,28 @@ export 'src/theme/mateo_theme.dart' show MateoTheme;
 export 'src/theme/mateo_theme_context.dart' show MateoThemeContext;
 export 'src/theme/mateo_theme_data.dart' show MateoThemeData;
 export 'src/theme/mateo_typography.dart' show MateoTypography;
+export 'src/widgets/mateo_action_bloom/mateo_action_bloom.dart'
+    show
+        MateoActionBloomAction,
+        MateoActionBloomActionCallback,
+        MateoActionBloomActionIconBuilder,
+        MateoActionBloomActionIconState;
 export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet.dart'
     show MateoBottomSheet;
+export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet_dismiss_source.dart'
+    show MateoBottomSheetDismissSource;
+export 'src/widgets/mateo_bottom_sheet/mateo_bottom_sheet_should_dismiss.dart'
+    show MateoBottomSheetShouldDismiss;
 export 'src/widgets/mateo_button/mateo_button.dart'
     show
         MateoButton,
         MateoButtonIconBuilder,
         MateoButtonState,
+        MateoButtonTone,
         MateoButtonVariant;
+export 'src/widgets/mateo_button_panel.dart' show MateoButtonPanel;
+export 'src/widgets/mateo_circular_loading_indicator/mateo_circular_loading_indicator.dart'
+    show MateoCircularLoadingIndicator;
 export 'src/widgets/mateo_dot_matrix/mateo_dot_matrix.dart' show MateoDotMatrix;
 export 'src/widgets/mateo_dots_loading_indicator/mateo_dots_loading_indicator.dart'
     show MateoDotsLoadingIndicator;
@@ -68,6 +63,11 @@ export 'src/widgets/mateo_drag_resistance/mateo_drag_resistance.dart'
     show MateoDragResistance;
 export 'src/widgets/mateo_edge_fade/mateo_edge_fade.dart'
     show MateoEdgeFade, MateoEdgeFadePosition, MateoEdgeFadeStyle;
+export 'src/widgets/mateo_floating_action_button/mateo_floating_action_button.dart'
+    show
+        MateoFloatingActionButton,
+        MateoFloatingActionButtonIconBuilder,
+        MateoFloatingActionButtonIconState;
 export 'src/widgets/mateo_hero/heroes/background/mateo_hero_background.dart'
     show MateoHeroBackground;
 export 'src/widgets/mateo_hero/heroes/group/mateo_hero_group.dart'
@@ -85,8 +85,14 @@ export 'src/widgets/mateo_hero/mateo_hero_page/mateo_hero_page_route.dart'
 export 'src/widgets/mateo_icon_button.dart'
     show MateoIconButton, MateoIconButtonIconBuilder, MateoIconButtonIconState;
 export 'src/widgets/mateo_loading_text.dart' show MateoLoadingText;
-export 'src/widgets/mateo_location_radius_map/mateo_location_radius_map.dart'
-    show MateoLocationRadiusMap;
+export 'src/widgets/mateo_numeric_keypad/mateo_numeric_keypad.dart'
+    show MateoNumericKeypad;
+export 'src/widgets/mateo_numeric_keypad/mateo_numeric_keypad_key.dart'
+    show MateoNumericKeypadKey;
+export 'src/widgets/mateo_numeric_keypad/mateo_numeric_keypad_variant.dart'
+    show MateoNumericKeypadVariant;
+export 'src/widgets/mateo_page/mateo_page.dart'
+    show MateoPage, MateoPageTransition, MateoPageTransitionDirection;
 export 'src/widgets/mateo_search_bar_button.dart' show MateoSearchBarButton;
 export 'src/widgets/mateo_skeleton/mateo_skeleton.dart'
     show
@@ -104,6 +110,10 @@ export 'src/widgets/mateo_tap/mateo_tap.dart'
     show MateoTap, MateoTapAnimationType;
 export 'src/widgets/mateo_text_button.dart'
     show MateoTextButton, MateoTextButtonIconBuilder, MateoTextButtonIconState;
+export 'src/widgets/mateo_text_input/mateo_text_input.dart'
+    show MateoTextInput, MateoTextInputController;
+export 'src/widgets/mateo_text_input/mateo_text_input_variant.dart'
+    show MateoTextInputVariant;
 export 'src/widgets/mateo_toast/mateo_toast.dart'
     show
         MateoToast,
@@ -111,7 +121,6 @@ export 'src/widgets/mateo_toast/mateo_toast.dart'
         MateoToastMessenger,
         MateoToastState,
         MateoToastType;
-export 'src/widgets/mateo_view_back_button.dart' show MateoViewBackButton;
 export 'src/widgets/mateo_y_snap_list/mateo_y_snap_list.dart'
     show
         MateoYSnapList,

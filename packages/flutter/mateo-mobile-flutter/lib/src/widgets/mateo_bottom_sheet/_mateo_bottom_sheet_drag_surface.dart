@@ -10,12 +10,10 @@ class _MateoBottomSheetDragSurface<T> extends StatefulWidget {
   final Widget child;
 
   @override
-  State<_MateoBottomSheetDragSurface<T>> createState() =>
-      _MateoBottomSheetDragSurfaceState<T>();
+  State<_MateoBottomSheetDragSurface<T>> createState() => _MateoBottomSheetDragSurfaceState<T>();
 }
 
-class _MateoBottomSheetDragSurfaceState<T>
-    extends State<_MateoBottomSheetDragSurface<T>> {
+class _MateoBottomSheetDragSurfaceState<T> extends State<_MateoBottomSheetDragSurface<T>> {
   static const int _flingCooldownUs = 120 * 1000;
   static const double _scrollAtTopTolerance = 0.5;
   static const double _scrollAwayThreshold = 5;
@@ -43,8 +41,7 @@ class _MateoBottomSheetDragSurfaceState<T>
   bool get _isScrollAtTop {
     final metrics = _activeVerticalMetrics;
     if (!_hasVerticalScrollable || metrics == null) return true;
-    if (metrics.maxScrollExtent <=
-        metrics.minScrollExtent + _scrollAtTopTolerance) {
+    if (metrics.maxScrollExtent <= metrics.minScrollExtent + _scrollAtTopTolerance) {
       return true;
     }
     return metrics.pixels <= metrics.minScrollExtent + _scrollAtTopTolerance;
@@ -57,24 +54,20 @@ class _MateoBottomSheetDragSurfaceState<T>
     final flingReachedTopAtUs = _flingReachedTopAtUs;
     if (flingReachedTopAtUs == null) return true;
 
-    return SchedulerBinding
-                .instance
-                .currentSystemFrameTimeStamp
-                .inMicroseconds -
-            flingReachedTopAtUs >=
+    return SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds - flingReachedTopAtUs >=
         _flingCooldownUs;
   }
 
   bool _hasClearDownwardIntent() {
     final horizontalDistance = _accumulatedPointerX.abs();
     final verticalDistance = _accumulatedPointerY.abs();
-    return verticalDistance >=
-            _MateoBottomSheetRoute._directionMinIntentDistance &&
+    return verticalDistance >= _MateoBottomSheetRoute._directionMinIntentDistance &&
         verticalDistance > horizontalDistance &&
         _accumulatedPointerY > 0;
   }
 
   bool _startDrag(PointerMoveEvent event) {
+    if (!widget.route.draggable) return false;
     if (!_hasClearDownwardIntent()) return false;
     if (!_canStartDrag) return false;
 
@@ -162,9 +155,7 @@ class _MateoBottomSheetDragSurfaceState<T>
     required bool forceRefresh,
   }) {
     if (scrollContext == null) return;
-    if (!forceRefresh &&
-        identical(scrollContext, _activeScrollContext) &&
-        _activeScrollPosition != null) {
+    if (!forceRefresh && identical(scrollContext, _activeScrollContext) && _activeScrollPosition != null) {
       return;
     }
 
@@ -174,8 +165,7 @@ class _MateoBottomSheetDragSurfaceState<T>
     }
 
     final scrollPosition = _activeScrollableState?.position;
-    if (scrollPosition == null ||
-        identical(scrollPosition, _activeScrollPosition)) {
+    if (scrollPosition == null || identical(scrollPosition, _activeScrollPosition)) {
       return;
     }
 
@@ -227,8 +217,7 @@ class _MateoBottomSheetDragSurfaceState<T>
     required bool isBallistic,
   }) {
     if (_activePointer != null && _flingReachedTopAtUs != null) {
-      _flingReachedTopAtUs =
-          SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
+      _flingReachedTopAtUs = SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
     }
 
     if (metrics.pixels > metrics.minScrollExtent + _scrollAwayThreshold) {
@@ -240,8 +229,7 @@ class _MateoBottomSheetDragSurfaceState<T>
 
     if (!_scrollWasAwayFromTop) return;
 
-    if (_peakScrollDelta <= _fastScrollDeltaThreshold &&
-        scrollDelta.abs() > _peakScrollDelta) {
+    if (_peakScrollDelta <= _fastScrollDeltaThreshold && scrollDelta.abs() > _peakScrollDelta) {
       _peakScrollDelta = scrollDelta.abs();
     }
 
@@ -252,8 +240,7 @@ class _MateoBottomSheetDragSurfaceState<T>
 
     _scrollWasAwayFromTop = false;
     if (isBallistic || _peakScrollDelta > _fastScrollDeltaThreshold) {
-      _flingReachedTopAtUs =
-          SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
+      _flingReachedTopAtUs = SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
     }
     _peakScrollDelta = 0;
   }
@@ -280,8 +267,7 @@ class _MateoBottomSheetDragSurfaceState<T>
 
   void _restoreDragScrollPosition(ScrollNotification notification) {
     if (!_isDragActive || _isReducedMotionDrag) return;
-    if (notification is! ScrollUpdateNotification &&
-        notification is! OverscrollNotification) {
+    if (notification is! ScrollUpdateNotification && notification is! OverscrollNotification) {
       return;
     }
     if (notification.metrics.pixels >= notification.metrics.minScrollExtent) {
@@ -303,8 +289,7 @@ class _MateoBottomSheetDragSurfaceState<T>
 
     _activePointer = event.pointer;
     _isReducedMotionDrag = MediaQuery.disableAnimationsOf(context);
-    _velocityTracker = VelocityTracker.withKind(event.kind)
-      ..addPosition(event.timeStamp, event.position);
+    _velocityTracker = VelocityTracker.withKind(event.kind)..addPosition(event.timeStamp, event.position);
     _accumulatedPointerX = 0;
     _accumulatedPointerY = 0;
   }
@@ -346,23 +331,27 @@ class _MateoBottomSheetDragSurfaceState<T>
 
   @override
   Widget build(BuildContext context) {
-    return MateoDragResistance(
-      top: !widget.route.scrollable,
-      bottom: false,
-      child: Listener(
-        onPointerDown: _handlePointerDown,
-        onPointerMove: _handlePointerMove,
-        onPointerUp: _handlePointerUp,
-        onPointerCancel: _handlePointerCancel,
-        behavior: HitTestBehavior.deferToChild,
-        child: NotificationListener<ScrollMetricsNotification>(
-          onNotification: _handleScrollMetricsNotification,
-          child: NotificationListener<ScrollNotification>(
-            onNotification: _handleScrollNotification,
-            child: widget.child,
-          ),
+    final dragSurface = Listener(
+      onPointerDown: _handlePointerDown,
+      onPointerMove: _handlePointerMove,
+      onPointerUp: _handlePointerUp,
+      onPointerCancel: _handlePointerCancel,
+      behavior: HitTestBehavior.deferToChild,
+      child: NotificationListener<ScrollMetricsNotification>(
+        onNotification: _handleScrollMetricsNotification,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: _handleScrollNotification,
+          child: widget.child,
         ),
       ),
+    );
+
+    if (!widget.route.resistance) return dragSurface;
+
+    return MateoDragResistance(
+      top: !widget.route.scrollable || !widget.route.draggable,
+      bottom: !widget.route.draggable,
+      child: dragSurface,
     );
   }
 }

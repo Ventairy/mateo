@@ -2,9 +2,9 @@
 
 > The raw primitive color scales for Mateo, a warm and simple design system. These are **pure colors**, not semantic assignments. Each platform's color scheme defines its semantic roles.
 >
-> The palette contains: **2 foundation colors** (pure white, pure black) + **13 color scales** (primary, neutral, green, amber, red, blue, cyan, violet, teal, orange, pink, yellow, whatsapp), each with 12 steps.
+> The palette contains: **2 foundation colors** (pure white, pure black) + **13 color scales** (accent, neutral, green, amber, red, blue, cyan, violet, teal, orange, pink, yellow, whatsapp), each with 12 steps.
 >
-> **Mateo's default `primary` seed is `#4A5CFF`.** The `primary` scale is a brand slot, not a universal product color. Every consuming brand must replace the seed and regenerate both `primary` and `neutral` using the contract below.
+> **Mateo's default `accent` seed is `#4A5CFF`.** The `accent` scale is the active product accent slot. Consuming products may replace the seed and regenerate both `accent` and `neutral` using the contract below.
 
 ---
 
@@ -38,13 +38,13 @@ numbered scales.
 
 ---
 
-## 1. Primary — Mateo violet
+## 1. Accent — Mateo violet
 
 **Hue:** ~271 (vivid violet)
 **Anchor:** Step 9 = `#4A5CFF` = `oklch(56.50% 0.239 271.36)`
 
-This is Mateo's own brand scale. Consumers must replace the step-9 seed and
-regenerate the entire primary and neutral scales together.
+This is Mateo's default accent scale. Consumers may replace the step-9 seed and
+regenerate the entire accent and neutral scales together.
 
 | Step | Hex           | OKLCH                      |
 | ---- | ------------- | -------------------------- |
@@ -61,7 +61,7 @@ regenerate the entire primary and neutral scales together.
 | 11   | `#273392`     | `oklch(37.7% 0.156 271.4)` |
 | 12   | `#0C123E`     | `oklch(21.0% 0.084 271.4)` |
 
-### Generate a primary scale from a brand seed
+### Generate an accent scale from an accent seed
 
 Start from the consumer's intended solid color at step 9. Convert it to OKLCH
 and call its coordinates `L9`, `C9`, and `H9`. Preserve the seed exactly at step 9. For every other step, keep `H = H9` and calculate from this table:
@@ -94,12 +94,12 @@ adjust the generated scale.
 
 ---
 
-## 2. Neutral — Primary-tinted
+## 2. Neutral — Accent-tinted
 
-**Hue:** ~271 by default; always inherited from the current primary seed
+**Hue:** ~271 by default; always inherited from the current accent seed
 **Chroma:** 0.002–0.008 with Mateo's vivid seed
 
-Its low chroma carries a trace of the current primary hue while remaining
+Its low chroma carries a trace of the current accent hue while remaining
 visually neutral.
 
 | Step | Hex       | OKLCH                      |
@@ -117,11 +117,11 @@ visually neutral.
 | 11   | `#3E4043` | `oklch(37.0% 0.006 271.4)` |
 | 12   | `#17181B` | `oklch(21.0% 0.006 271.4)` |
 
-### Regenerate neutral with primary
+### Regenerate neutral with accent
 
-Let `tint = min(1, C9 / 0.20)`. Set every neutral step to the primary seed hue
+Let `tint = min(1, C9 / 0.20)`. Set every neutral step to the accent seed hue
 and multiply each maximum chroma below by `tint`. This makes lower-chroma seeds
-produce quieter neutrals instead of exaggerating their color. If the primary
+produce quieter neutrals instead of exaggerating their color. If the accent
 seed is achromatic, set neutral chroma to `0`; hue is then irrelevant.
 
 | Step | Lightness | Maximum chroma |
@@ -366,7 +366,7 @@ seed is achromatic, set neutral chroma to `0`; hue is then irrelevant.
 **Hue:** ~150 (green — WhatsApp brand green, slightly more blue-green than `green`)
 **Anchor:** Step 9 = `#25D366` (Mateo's fixed WhatsApp reference green)
 
-A fixed external-brand reference. Unlike `primary`, this scale is not
+A fixed external-brand reference. Unlike `accent`, this scale is not
 regenerated from the consuming brand's seed.
 
 | Step | Hex           | OKLCH                      |
@@ -391,7 +391,7 @@ regenerated from the consuming brand's seed.
 To add a new color scale:
 
 1. Choose a hue and step-9 anchor.
-2. Apply the primary generation curve, preserving constant hue unless a perceptual correction is documented.
+2. Apply the accent generation curve, preserving constant hue unless a perceptual correction is documented.
 3. Gamut-map each step to sRGB by reducing chroma while preserving lightness and hue.
 4. Convert the final OKLCH values to hex and record both representations.
 5. Verify lightness ordering, sRGB gamut inclusion, and hex/OKLCH round-trip accuracy.

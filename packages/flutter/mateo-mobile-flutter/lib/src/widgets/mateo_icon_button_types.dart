@@ -1,8 +1,7 @@
 part of 'mateo_icon_button.dart';
 
 /// Builds a [MateoIconButton] icon from its current state.
-typedef MateoIconButtonIconBuilder =
-    Widget Function(MateoIconButtonIconState state);
+typedef MateoIconButtonIconBuilder = Widget Function(MateoIconButtonIconState state);
 
 /// State passed to [MateoIconButtonIconBuilder].
 @immutable

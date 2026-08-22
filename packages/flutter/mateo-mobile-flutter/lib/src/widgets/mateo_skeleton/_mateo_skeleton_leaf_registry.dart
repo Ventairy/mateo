@@ -3,8 +3,7 @@ part of 'mateo_skeleton.dart';
 class _MateoSkeletonLeafRegistry {
   static const double _coordinatePrecision = 10;
 
-  static int _scaledCoordinate(double coordinate) =>
-      (coordinate * _coordinatePrecision).round();
+  static int _scaledCoordinate(double coordinate) => (coordinate * _coordinatePrecision).round();
   static int _key(int x, int y) => ((x & 0xffffffff) << 32) ^ (y & 0xffffffff);
 
   final Set<int> _centerKeys = <int>{};

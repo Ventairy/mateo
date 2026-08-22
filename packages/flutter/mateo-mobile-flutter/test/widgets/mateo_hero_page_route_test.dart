@@ -243,8 +243,7 @@ class _RouteTestAppState extends State<_RouteTestApp> {
                     Navigator.of(context).push<void>(
                       MateoHeroPageRoute(
                         builder: (routeContext) {
-                          _RouteTestApp.capturedRoute =
-                              MateoHeroPageRoute.maybeOf(routeContext);
+                          _RouteTestApp.capturedRoute = MateoHeroPageRoute.maybeOf(routeContext);
                           return const Text('Destination');
                         },
                         transitionDuration: widget.transitionDuration,
