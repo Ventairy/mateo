@@ -1,0 +1,328 @@
+{
+  "cases": [
+    {
+      "id": "pill-panel",
+      "label": "Pill \u2192 panel",
+      "a": [
+        144,
+        48,
+        24
+      ],
+      "b": [
+        240,
+        280,
+        32
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    },
+    {
+      "id": "compact-square",
+      "label": "Compact \u2192 square",
+      "a": [
+        96,
+        96,
+        48
+      ],
+      "b": [
+        112,
+        112,
+        0
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    },
+    {
+      "id": "pill-upright",
+      "label": "Horizontal \u2192 vertical",
+      "a": [
+        200,
+        56,
+        28
+      ],
+      "b": [
+        56,
+        200,
+        28
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    },
+    {
+      "id": "less-rounding",
+      "label": "Rounded \u2192 sharp",
+      "a": [
+        144,
+        96,
+        16
+      ],
+      "b": [
+        144,
+        96,
+        0
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    },
+    {
+      "id": "same-endpoints",
+      "label": "Surface resize \u00b7 same inputs",
+      "a": [
+        144,
+        96,
+        16
+      ],
+      "b": [
+        240,
+        280,
+        32
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    },
+    {
+      "id": "same-bounds",
+      "label": "Corner morph \u00b7 same inputs",
+      "a": [
+        220,
+        220,
+        16
+      ],
+      "b": [
+        220,
+        220,
+        60
+      ],
+      "kinds": [
+        "new",
+        "new"
+      ]
+    }
+  ],
+  "progress": [
+    -0.2,
+    -0.19,
+    -0.18,
+    -0.17,
+    -0.16,
+    -0.15,
+    -0.14,
+    -0.13,
+    -0.12,
+    -0.11,
+    -0.1,
+    -0.09,
+    -0.08,
+    -0.07,
+    -0.06,
+    -0.05,
+    -0.04,
+    -0.03,
+    -0.02,
+    -0.01,
+    0.0,
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06,
+    0.07,
+    0.08,
+    0.09,
+    0.1,
+    0.11,
+    0.12,
+    0.13,
+    0.14,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.19,
+    0.2,
+    0.21,
+    0.22,
+    0.23,
+    0.24,
+    0.25,
+    0.26,
+    0.27,
+    0.28,
+    0.29,
+    0.3,
+    0.31,
+    0.32,
+    0.33,
+    0.34,
+    0.35,
+    0.36,
+    0.37,
+    0.38,
+    0.39,
+    0.4,
+    0.41,
+    0.42,
+    0.43,
+    0.44,
+    0.45,
+    0.46,
+    0.47,
+    0.48,
+    0.49,
+    0.5,
+    0.51,
+    0.52,
+    0.53,
+    0.54,
+    0.55,
+    0.56,
+    0.57,
+    0.58,
+    0.59,
+    0.6,
+    0.61,
+    0.62,
+    0.63,
+    0.64,
+    0.65,
+    0.66,
+    0.67,
+    0.68,
+    0.69,
+    0.7,
+    0.71,
+    0.72,
+    0.73,
+    0.74,
+    0.75,
+    0.76,
+    0.77,
+    0.78,
+    0.79,
+    0.8,
+    0.81,
+    0.82,
+    0.83,
+    0.84,
+    0.85,
+    0.86,
+    0.87,
+    0.88,
+    0.89,
+    0.9,
+    0.91,
+    0.92,
+    0.93,
+    0.94,
+    0.95,
+    0.96,
+    0.97,
+    0.98,
+    0.99,
+    1.0,
+    1.01,
+    1.02,
+    1.03,
+    1.04,
+    1.05,
+    1.06,
+    1.07,
+    1.08,
+    1.09,
+    1.1,
+    1.11,
+    1.12,
+    1.13,
+    1.14,
+    1.15,
+    1.16,
+    1.17,
+    1.18,
+    1.19,
+    1.2
+  ],
+  "rays": 512,
+  "quantization": 32760,
+  "checks": [
+    {
+      "case": "pill-panel",
+      "currentPreparationSeconds": 0.035243167000000006,
+      "currentRoundsCorners": false,
+      "maximumSupportDifference": 1.1308769754953403,
+      "maximumInteriorSupportDifference": 0.14396398832995771,
+      "maximumEndpointDifference": 0.05166086961958172,
+      "maximumDifferenceAfterEndpointAdjustment": 0.1468965514908632,
+      "maximumPreviewSupportError": 0.026911040521468976
+    },
+    {
+      "case": "compact-square",
+      "currentPreparationSeconds": 2.7658099170000003,
+      "currentRoundsCorners": true,
+      "maximumSupportDifference": 1.4653886755097432,
+      "maximumInteriorSupportDifference": 1.4653886755097432,
+      "maximumEndpointDifference": 0.41400938700778056,
+      "maximumDifferenceAfterEndpointAdjustment": 1.3881219488483914,
+      "maximumPreviewSupportError": 0.09424788766622783
+    },
+    {
+      "case": "pill-upright",
+      "currentPreparationSeconds": 0.037910791999999915,
+      "currentRoundsCorners": false,
+      "maximumSupportDifference": 1.841264063156423,
+      "maximumInteriorSupportDifference": 0.14505392407248507,
+      "maximumEndpointDifference": 0.03995804812059589,
+      "maximumDifferenceAfterEndpointAdjustment": 0.15121704141853343,
+      "maximumPreviewSupportError": 0.007620615811724463
+    },
+    {
+      "case": "less-rounding",
+      "currentPreparationSeconds": 0.02539900000000017,
+      "currentRoundsCorners": false,
+      "maximumSupportDifference": 0.7062545670623166,
+      "maximumInteriorSupportDifference": 0.7062545670623166,
+      "maximumEndpointDifference": 0.7062545670623166,
+      "maximumDifferenceAfterEndpointAdjustment": 1.0184066923102364e-09,
+      "maximumPreviewSupportError": 0.09145198209685645
+    },
+    {
+      "case": "same-endpoints",
+      "currentPreparationSeconds": 0.03435866699999934,
+      "currentRoundsCorners": false,
+      "maximumSupportDifference": 0.7474707569303973,
+      "maximumInteriorSupportDifference": 0.05166086961958172,
+      "maximumEndpointDifference": 0.05166086961958172,
+      "maximumDifferenceAfterEndpointAdjustment": 1.7871642013500555e-10,
+      "maximumPreviewSupportError": 0.028249472347397386
+    },
+    {
+      "case": "same-bounds",
+      "currentPreparationSeconds": 0.05375450000000015,
+      "currentRoundsCorners": false,
+      "maximumSupportDifference": 1.4247958740229194,
+      "maximumInteriorSupportDifference": 0.05389453849645065,
+      "maximumEndpointDifference": 0.05389453849645065,
+      "maximumDifferenceAfterEndpointAdjustment": 1.6846399830683367e-09,
+      "maximumPreviewSupportError": 0.02794795341100098
+    }
+  ],
+  "sourceHashes": {
+    "tools/rounded_shape/reference.py": "462cffe4a31a4777c8740546d42eae249e4444a6830a860ee22ca617b151023e",
+    "tools/rounded_shape_interpolation/reference.py": "2be8ca723a40c6cba66ac8cfa4db1b0c18787a4aedf3948c3d9dce2aa1095dd0",
+    "tools/rounded_shape_interpolation/compare.py": "f0e9f196ed6d8a5b3b12306db78e973d8ee3e41418549d5bcf2175dd184c0d07",
+    "tools/rounded_convex_interpolation/reference.py": "2821146ca73ec6bd545684b5fca02749535a30d6b24bf4a97096a747805ffcef",
+    "tools/rounded_convex_interpolation/geometry.py": "55aba41b0a111367aed9c4d1745f86aebbec2b5df37c58e8cf00fdfd3a3a9515",
+    "tools/rounded_convex_interpolation/motion.py": "7005846dd9d5549dedd76d28974b0dc142bbf3d995a3be1a76f7a30581ebb7b2"
+  },
+  "note": "Both engines receive the same current rounded-shape endpoints. Arcs are converted to two cubics only for the current engine and numerical measurements; the simple rounded-shape preview renders exact arcs. Support checks use 128 directions, 0.05 progress increments, and selected preview midpoints; these are sampled measurements, not a proof of perceptual equivalence."
+}

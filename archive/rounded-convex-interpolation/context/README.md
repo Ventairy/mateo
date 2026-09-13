@@ -1,0 +1,112 @@
+<p align="center">
+  <img src="./banner.png" alt="Mateo" width="430">
+</p>
+
+<p align="center">
+  <strong>A design system for simple, expressive, warm software.</strong><br>
+  Clear foundations, tactile mobile guidance, and reusable components that
+  make complex workflows feel obvious and human.
+</p>
+
+<p align="center">
+  <a href="#what-ships-today">What ships</a> ·
+  <a href="#start-here">Start here</a> ·
+  <a href="#releases">Releases</a> ·
+  <a href="#contributing">Contributing</a>
+</p>
+
+---
+
+Mateo keeps authored design decisions and their public implementations in one
+source of truth. Shared foundations define the visual language, platform
+guidance defines how it behaves on a device, and packages turn those decisions
+into reusable APIs.
+
+Mateo currently focuses on Android and iOS phone applications. Its first
+implementation is `mateo_mobile`, a Flutter package built around semantic
+theming, deeply rounded geometry, tactile gestures, purposeful motion, and
+accessible mobile behavior.
+
+> [!IMPORTANT]
+> Mateo is pre-1.0. Public APIs may change between minor versions while the
+> design system settles through real product use.
+
+## What ships today
+
+| Layer           | Content                                                           | Start with                                                          |
+| --------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Foundations     | Color, typography, rounded geometry, motion, icons, etc.          | [Foundation documentation](./design-system/foundation/)             |
+| Mateo Mobile    | Semantic color, boundary rules, drag resistance, components, etc. | [Mobile documentation](./design-system/mobile/)                     |
+| Flutter package | The Android and iOS implementation of Mateo Mobile                | [`mateo_mobile`](./packages/flutter/mateo-mobile-flutter/README.md) |
+
+The design documentation describes observable results precisely enough to
+implement Mateo consistently in another technology. The Flutter package is the
+first real implementation of those contracts, not a separate design source.
+
+## Start here
+
+| I want to…                                       | Go to…                                                                                         |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| Build an Android or iOS application with Flutter | [Installation and quick start](./packages/flutter/mateo-mobile-flutter/README.md#installation) |
+| Run a minimal Flutter application                | [Flutter example](./packages/flutter/mateo-mobile-flutter/example/lib/main.dart)               |
+| Understand Mateo's primitive colors              | [Color palette](./design-system/foundation/color-palette.md)                                   |
+| Use Mateo's typography foundation                | [Typography](./design-system/foundation/typography.md)                                         |
+| Choose rounding for a component                  | [Border radius](./design-system/foundation/border-radius.md)                                   |
+| Reproduce Mateo's rounded geometry               | [Rounded shape](./design-system/foundation/rounded-shape.md)                                   |
+| Change smoothly between rounded convex outlines  | [Rounded convex interpolation](./design-system/foundation/rounded-convex-interpolation.md)     |
+| Soften content at every clipping boundary        | [Boundaries](./design-system/foundation/boundaries.md)                                         |
+| Use the Mateo icon language                      | [Icons](./design-system/foundation/icons.md)                                                   |
+| Implement Mateo's mobile semantic colors         | [Mobile color scheme](./design-system/mobile/color-scheme.md)                                  |
+| Implement Mateo's tactile boundary response      | [Drag resistance](./design-system/mobile/drag-resistance.md)                                   |
+
+## How Mateo is organized
+
+Mateo's sources flow in one direction:
+
+```text
+design-system/foundation/    Shared visual foundations
+            ↓
+design-system/mobile/        Android and iOS phone guidance
+            ↓
+packages/flutter/            Public Flutter implementation
+```
+
+- **Foundations** own reusable primitives and visual rules.
+- **Platform guidance** owns semantic behavior and component specifications for
+  its device class.
+- **Packages** implement those specifications as public libraries without
+  redefining them.
+
+## Releases
+
+Mateo uses one repository, but it does not use one version number for
+everything. Design-system releases describe the authored Mateo contract, while
+package releases describe installable implementation artifacts.
+
+See [Mateo releases](./RELEASES.md) for the release lanes, tag names, and
+publication boundaries.
+
+## Contributing
+
+Mateo welcomes focused issues and pull requests from people using or
+implementing the system. Start with [CONTRIBUTING.md](./CONTRIBUTING.md) for
+the development flow and pull request contract. Participation is governed by
+the [Code of Conduct](./CODE_OF_CONDUCT.md); security reports belong in the
+private process described by [SECURITY.md](./SECURITY.md).
+
+Mateo is available under the [MIT License](./LICENSE). Bundled third-party
+assets and their licenses are listed in
+[THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
+## Mateo's point of view
+
+- **Simple is a hard gate.** Common controls should explain themselves at the
+  point of use.
+- **Warmth is functional.** Space, color, shape, feedback, and tone should help
+  people feel oriented and capable.
+- **Motion carries meaning.** Movement communicates continuity, state,
+  confirmation, or a physical boundary.
+- **Accessibility starts with the design.** Meaning must survive text scaling,
+  reduced motion, assistive technology, and the absence of color.
+- **Platforms keep their character.** Shared foundations must not erase native
+  navigation, input, accessibility, or system behavior.

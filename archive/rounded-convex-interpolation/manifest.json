@@ -1,0 +1,552 @@
+{
+  "base": "229698441e95c1ce89f9bd6f7ee21a3e0c5a1089",
+  "branch": "codex/archive-rounded-convex-interpolation",
+  "files": [
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/asymmetric.svg",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/asymmetric.svg",
+      "role": "moved",
+      "sha256": "fa6c30c97eadef6fb9b30c28343776b1b23e904e9c84fd88cd1ce6fe17a44f6d"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/construction.svg",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/construction.svg",
+      "role": "moved",
+      "sha256": "b24c296326dea934016108783184243a607106d2d86ee8ee963e1eca8db6567f"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/overshoot.svg",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/overshoot.svg",
+      "role": "moved",
+      "sha256": "b2e2c724e8702576a7e27c729fb57e25d6143c652469d96dd7ae65dc4e156691"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/reference.json",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/reference.json",
+      "role": "moved",
+      "sha256": "2e595cb083dee0be386129269f0b7bcd0f5ea94da3d4ae4ca0241f0f84656176"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/reference.svg",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/reference.svg",
+      "role": "moved",
+      "sha256": "7a6cb49212b585ebcf975553eafaa535beec5d9cad5ec58edb2fbb9b71cb26cc"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-convex-interpolation/source-outlines.json",
+      "archive": "design-system/foundation/assets/rounded-convex-interpolation/source-outlines.json",
+      "role": "moved",
+      "sha256": "f671e05b3a9aa08b09aeb2dd21b95d2e249e577f34c7a83fedfc9a072fca7f9a"
+    },
+    {
+      "source": "design-system/foundation/rounded-convex-interpolation.md",
+      "archive": "design-system/foundation/rounded-convex-interpolation.md",
+      "role": "moved",
+      "sha256": "744713738e74069a720924c84221b9e05c187a7009ee1522adc4cb898cc81ffd"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/hook/build.dart",
+      "archive": "packages/flutter/mateo-mobile/hook/build.dart",
+      "role": "moved",
+      "sha256": "7dfde798698bc79e4668f5586241f40ac6fe9c092ff4e61ce07e3ee52770be11"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/_base_mateo_surface_flight_delegate.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/_base_mateo_surface_flight_delegate.dart",
+      "role": "moved",
+      "sha256": "65a2264e6ada1fb62fc7e6d17c16f1c2a13640a19e5dd7d663812f920f6a5967"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_bindings.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_bindings.dart",
+      "role": "moved",
+      "sha256": "98322a7b51929b221255a07d3dab1de71fad4c137dd9c9206fec3085bc1ea52c"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_border.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_border.dart",
+      "role": "moved",
+      "sha256": "3f26adb21bdb017be9dd0bd00be1b54a014bd8ce3c5f43141c6a5c90d2ae82bc"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_border_cache.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_border_cache.dart",
+      "role": "moved",
+      "sha256": "9f31eb8b2538b8558a9249a9de9f081c0f0f44dbfb73528e0c75d8f9376213c4"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_chart.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_chart.dart",
+      "role": "moved",
+      "sha256": "02bf1f8eb458413415883e11cea887e29b5c48d31b44db0b0eb17610b65c74ca"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_curve.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_curve.dart",
+      "role": "moved",
+      "sha256": "26e93de4af62c01690a7a24ce78e8f690ef55df2e75a5548373474d0481b8d42"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_endpoint.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_endpoint.dart",
+      "role": "moved",
+      "sha256": "5077a143915e8b778739d74c9289dd3f75695e0ca449db21b98b2db8bdb5e4b3"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_native.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_native.dart",
+      "role": "moved",
+      "sha256": "7ae8e4d4142ace5fc23e227ecad0d068f8cd9c066654a5309b557fe72cf6ad62"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_native_path.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_native_path.dart",
+      "role": "moved",
+      "sha256": "ffa56d4c75f8d237793d8ca1288357d13b0f61f4828f1b76e329634328bb7712"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_pair_cache.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/_mateo_rounded_convex_pair_cache.dart",
+      "role": "moved",
+      "sha256": "1c4f6ef58432b254d090703e780121145ee04a682a51c1f6d544be85084db3ce"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_evaluator.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_evaluator.dart",
+      "role": "moved",
+      "sha256": "0f3aced31fbe8d117c7a078b94f0dcf61b4d87e8977f4ce2bebe96fabceb84eb"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_geometry.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_geometry.dart",
+      "role": "moved",
+      "sha256": "506a68a0cf1a610d7c5c4cd57ad466395760ca83e5bbb88e1135e51e312778a4"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_interpolation.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_interpolation.dart",
+      "role": "moved",
+      "sha256": "6107797f8dcf56b017308b8c9a64530a3be8ffcbf2a0304dedae4e72bca406c1"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_path.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_path.dart",
+      "role": "moved",
+      "sha256": "6b3c633cd09693275ed88350523c7ff476acb272cd8c9cc06075cdf2268226f2"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_preparation.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_convex_interpolation/mateo_rounded_convex_preparation.dart",
+      "role": "moved",
+      "sha256": "c4bbb3c066e7803186ecc55a61cfb8e9fe3f5b6934e1704869c1d1d07fdb9de4"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/exports.h",
+      "archive": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/exports.h",
+      "role": "moved",
+      "sha256": "a6f1f1165f36ddfaff86bbd7a04f7288348a9a03f49ccab249bef27742fd7f03"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/kernel.cpp",
+      "archive": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/kernel.cpp",
+      "role": "moved",
+      "sha256": "2e13c0bf6948b9052301f1c6f71da98aa819ddcf7af51c25637da45ec990d3b1"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/kernel.h",
+      "archive": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/kernel.h",
+      "role": "moved",
+      "sha256": "aea5936b78886ff3f2f9858bff44fbb25115066d9342b18626a6a07422478e51"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/path.cpp",
+      "archive": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/path.cpp",
+      "role": "moved",
+      "sha256": "58180433241e25a4b56302ff19835a831673a0a3caed5e93ad34c3a82fb2335e"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/path.h",
+      "archive": "packages/flutter/mateo-mobile/src/rounded_convex_interpolation/path.h",
+      "role": "moved",
+      "sha256": "c900f93493879f1c21aff652541de528c3441a92072ebfe2fff0f1bc9e1c5bfc"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/foundation/_rounded_convex_contour_index.dart",
+      "archive": "packages/flutter/mateo-mobile/test/foundation/_rounded_convex_contour_index.dart",
+      "role": "moved",
+      "sha256": "9d7548c4d6ae2b4b8fbc7bcb992fb1ef54cb8281d476b774b82edbe984b8d2fa"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_interpolation_test.dart",
+      "archive": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_interpolation_test.dart",
+      "role": "moved",
+      "sha256": "5aa47cb51fd18a5029ceaeab4bea2b683b629f0ee190dec50d5706ae5e51c7fc"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_motion_test.dart",
+      "archive": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_motion_test.dart",
+      "role": "moved",
+      "sha256": "03689a5b49eac23d8ac4216eb53a26fa75bba256609812e83d2f264dd9385916"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_native_test.dart",
+      "archive": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_native_test.dart",
+      "role": "moved",
+      "sha256": "7dfaa619e45988dd67f56fa2046baeec3ee95ffa3d08955bf2f95c2c99b31a4d"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_physical_native_test.dart",
+      "archive": "packages/flutter/mateo-mobile/test/foundation/mateo_rounded_convex_physical_native_test.dart",
+      "role": "moved",
+      "sha256": "71933761245cd80917fc44a3e6c19c4dc220af341698ecd9958dd4a90fcbf328"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation.png",
+      "archive": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation.png",
+      "role": "moved",
+      "sha256": "771fc05b8c906cd096243695d9b88b5401ec5dee5aed737086f4523248548ab1"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation_movement.png",
+      "archive": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation_movement.png",
+      "role": "moved",
+      "sha256": "b83c96985278100091f0a8071d80e4381c6eaf39b760ef9e6315c0bf8369839c"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation_shoulders.png",
+      "archive": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_rounded_convex_interpolation_shoulders.png",
+      "role": "moved",
+      "sha256": "90044b854672f763d93625fc523cef6fa10b7402df23476a24f0e08c4298c519"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/mateo_rounded_convex_interpolation_golden_test.dart",
+      "archive": "packages/flutter/mateo-mobile/test/widgets/mateo_rounded_convex_interpolation_golden_test.dart",
+      "role": "moved",
+      "sha256": "862fd110de5fe49bf7a6a6e36244098a88f4e456e118d5eb0672d016d199d826"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/.gitignore",
+      "archive": "tools/rounded_convex_interpolation/.gitignore",
+      "role": "moved",
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/README.md",
+      "archive": "tools/rounded_convex_interpolation/README.md",
+      "role": "moved",
+      "sha256": "e809b9931c86eec6590c54c7bc610b267b9d2557b93a168d26eed67f9e18dea1"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/artifacts.py",
+      "archive": "tools/rounded_convex_interpolation/artifacts.py",
+      "role": "moved",
+      "sha256": "1b4bf6f8f4b763c45d6dbc427ce545fbbdf5bf93ab521447384f683ba59cb5ef"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/geometry.py",
+      "archive": "tools/rounded_convex_interpolation/geometry.py",
+      "role": "moved",
+      "sha256": "55aba41b0a111367aed9c4d1745f86aebbec2b5df37c58e8cf00fdfd3a3a9515"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/motion.py",
+      "archive": "tools/rounded_convex_interpolation/motion.py",
+      "role": "moved",
+      "sha256": "7005846dd9d5549dedd76d28974b0dc142bbf3d995a3be1a76f7a30581ebb7b2"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/reference.py",
+      "archive": "tools/rounded_convex_interpolation/reference.py",
+      "role": "moved",
+      "sha256": "2821146ca73ec6bd545684b5fca02749535a30d6b24bf4a97096a747805ffcef"
+    },
+    {
+      "source": "tools/rounded_convex_interpolation/verify.py",
+      "archive": "tools/rounded_convex_interpolation/verify.py",
+      "role": "moved",
+      "sha256": "a173f3850978262ecbeac442f237db2d7d107acae91c92ea94d395311f974e8f"
+    },
+    {
+      "source": "design-system/foundation/assets/capsule/curvature.svg",
+      "archive": "design-system/foundation/assets/capsule/curvature.svg",
+      "role": "support",
+      "sha256": "74d1fd5d91eab4763f25b86a5146c54a387998a8022c135b51728482d8a08052"
+    },
+    {
+      "source": "design-system/foundation/assets/capsule/reference.json",
+      "archive": "design-system/foundation/assets/capsule/reference.json",
+      "role": "support",
+      "sha256": "929aa78f3a4af44bbf20173494bf9e90b22cc612004a5ba7eccb21ae6d223a1b"
+    },
+    {
+      "source": "design-system/foundation/assets/capsule/reference.svg",
+      "archive": "design-system/foundation/assets/capsule/reference.svg",
+      "role": "support",
+      "sha256": "3b46183412975b430e8e24db2f60114eafe31e9ee2a8957e7ca8cf036e8d280b"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-rectangle/curvature.svg",
+      "archive": "design-system/foundation/assets/rounded-rectangle/curvature.svg",
+      "role": "support",
+      "sha256": "649f7360ad0cef1d5517a74e6779da446b7e2bb8bb58c3cb59f0b5508e321dff"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-rectangle/reference.json",
+      "archive": "design-system/foundation/assets/rounded-rectangle/reference.json",
+      "role": "support",
+      "sha256": "d7acc1c0cd80fa5fe0cc7b247a622e2cb08b509eae8ab6692cbc044b549a40f9"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-rectangle/reference.svg",
+      "archive": "design-system/foundation/assets/rounded-rectangle/reference.svg",
+      "role": "support",
+      "sha256": "312f2482935e8f06fb439d2a128b93c98958b6399139435741fd41bfa31d526e"
+    },
+    {
+      "source": "design-system/foundation/capsule.md",
+      "archive": "design-system/foundation/capsule.md",
+      "role": "support",
+      "sha256": "8ab5170e3a999bd6c0a8e3c197a2b4a9d8cbf8c32c649648656f16eea5d99764"
+    },
+    {
+      "source": "design-system/foundation/rounded-rectangle.md",
+      "archive": "design-system/foundation/rounded-rectangle.md",
+      "role": "support",
+      "sha256": "ce8cd80ba11e33fbf2f7007a2234db4c30aa0e71182ad18c292166fd8d4d263c"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_border_contour.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_border_contour.dart",
+      "role": "support",
+      "sha256": "9d74f8385b5956c2745a22d51f01d2b603ec6042bf746ca086bfdecdd5c16798"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_capsule_border/_mateo_capsule_path.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_capsule_border/_mateo_capsule_path.dart",
+      "role": "support",
+      "sha256": "8de9c12c4fe7074a2aa2fd564e757578d79af1546765b49328db225953d45b6c"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_capsule_border/mateo_capsule_border.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_capsule_border/mateo_capsule_border.dart",
+      "role": "support",
+      "sha256": "cef760298f1e6a998dfe049f64de7f327cc282c75ebe7d01acba180ca6624168"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_rectangle_border/_mateo_rounded_rectangle_path.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_rectangle_border/_mateo_rounded_rectangle_path.dart",
+      "role": "support",
+      "sha256": "5847814e909480582291125061fcb6b3e0ceb436e7aeb8fd291e9af77a5bb41b"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_rectangle_border/mateo_rounded_rectangle_border.dart",
+      "archive": "packages/flutter/mateo-mobile/lib/src/foundation/mateo_rounded_rectangle_border/mateo_rounded_rectangle_border.dart",
+      "role": "support",
+      "sha256": "5a48b9069d891f2ef881620417257371422a20757e95ccd154c3d9cd58258aa1"
+    },
+    {
+      "source": "tools/capsule/.gitignore",
+      "archive": "tools/capsule/.gitignore",
+      "role": "support",
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    {
+      "source": "tools/capsule/README.md",
+      "archive": "tools/capsule/README.md",
+      "role": "support",
+      "sha256": "23e44e61ae9c47b8af1a8780bf3552fb1572609c20d775e9dc6bc7a795a659d8"
+    },
+    {
+      "source": "tools/capsule/artifacts.py",
+      "archive": "tools/capsule/artifacts.py",
+      "role": "support",
+      "sha256": "968e37707e8cbec4ef8bee516e6a9ec30ece6f7be161cefaeee7126dde381679"
+    },
+    {
+      "source": "tools/capsule/reference.py",
+      "archive": "tools/capsule/reference.py",
+      "role": "support",
+      "sha256": "f00b57c1e55c300f1c5feb7e38218460bdd6da3b57640f3a7927ce9c4b13caac"
+    },
+    {
+      "source": "tools/capsule/verify.py",
+      "archive": "tools/capsule/verify.py",
+      "role": "support",
+      "sha256": "11d7022c581b5219b688f9af61639a81e013c20f045b4886ee8f1cdd9b9fe9d9"
+    },
+    {
+      "source": "tools/rounded_rectangle/.gitignore",
+      "archive": "tools/rounded_rectangle/.gitignore",
+      "role": "support",
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    {
+      "source": "tools/rounded_rectangle/README.md",
+      "archive": "tools/rounded_rectangle/README.md",
+      "role": "support",
+      "sha256": "a64a9690ba0a1434e7ab3c5b258b2bc9c5010c8830ceb573c3c1a9a42da74d55"
+    },
+    {
+      "source": "tools/rounded_rectangle/artifacts.py",
+      "archive": "tools/rounded_rectangle/artifacts.py",
+      "role": "support",
+      "sha256": "e679f63e048017dc1e2c56bea408ec74677d9cfff9406b8b7a5cbe251aea3e31"
+    },
+    {
+      "source": "tools/rounded_rectangle/reference.py",
+      "archive": "tools/rounded_rectangle/reference.py",
+      "role": "support",
+      "sha256": "44bbd907d3be6756e78c02492f615cc4d11fcf654bb4e45b498618b0cd4dfd1e"
+    },
+    {
+      "source": "tools/rounded_rectangle/verify.py",
+      "archive": "tools/rounded_rectangle/verify.py",
+      "role": "support",
+      "sha256": "34b3ad733516eb9b717128f4e1f2e6079a3c215a66878397ade4d75e29793b85"
+    },
+    {
+      "source": "README.md",
+      "archive": "archive/rounded-convex-interpolation/context/README.md",
+      "role": "context",
+      "sha256": "f3661ad9d58d1d5e923b42513ed41b6fb12703815a4d68339a5ead3c71ca1a4e"
+    },
+    {
+      "source": "design-system/foundation/animations.md",
+      "archive": "archive/rounded-convex-interpolation/context/design-system/foundation/animations.md",
+      "role": "context",
+      "sha256": "0298cac4c5fcdaf0c152f78f0704efbbc3b5be6aa8963885c63b8d29cac6af77"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-shape-interpolation/comparison.json",
+      "archive": "archive/rounded-convex-interpolation/context/design-system/foundation/assets/rounded-shape-interpolation/comparison.json",
+      "role": "context",
+      "sha256": "4e3b5229ee58cec137a2e5f1cf7d24a22ae1d174cbb2a00ef45461537cb08528"
+    },
+    {
+      "source": "design-system/foundation/assets/rounded-shape-interpolation/current-frames.bin.gz",
+      "archive": "archive/rounded-convex-interpolation/context/design-system/foundation/assets/rounded-shape-interpolation/current-frames.bin.gz",
+      "role": "context",
+      "sha256": "2a1d5bd5d33f0b57aac388b4c1c6046c9d6d5fc2e52fa6b74b015dc4808d4717"
+    },
+    {
+      "source": "design-system/foundation/border-radius.md",
+      "archive": "archive/rounded-convex-interpolation/context/design-system/foundation/border-radius.md",
+      "role": "context",
+      "sha256": "f4588e40cdca6638b7d006b16b42e26583b83ce7fac1dcb4c1883431057a6e9e"
+    },
+    {
+      "source": "packages/flutter/.fvmrc",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/.fvmrc",
+      "role": "context",
+      "sha256": "3dcaa77540d758777ffbd2b98eb2dc252153afa4a71f39ec3d17daf07fb2bb9c"
+    },
+    {
+      "source": "packages/flutter/analysis_options.yaml",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/analysis_options.yaml",
+      "role": "context",
+      "sha256": "5eb8964041279bb03cc5c66daa3cd61a921397bb5d109c8dd5dfd9a356a6cba0"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/mateo_mobile.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/lib/mateo_mobile.dart",
+      "role": "context",
+      "sha256": "b2f2a7c1e8588faf8086ab38a3c3d2a05973ab674f1339a1c6fd019f37611465"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/_base_mateo_surface_scaled_border.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/_base_mateo_surface_scaled_border.dart",
+      "role": "context",
+      "sha256": "2e8b5612a14e5c85a1f4f988314e41b6347cc04df975a9405ad8e0690b1a1ead"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/base_mateo_surface.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/lib/src/bases/base_mateo_surface/base_mateo_surface.dart",
+      "role": "context",
+      "sha256": "7e6e777745359453fd760b6b8b9677d0b09e4e0f8d5cede5529836c2a525c2de"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/lib/src/components/mateo_surface/mateo_surface_animation.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/lib/src/components/mateo_surface/mateo_surface_animation.dart",
+      "role": "context",
+      "sha256": "2897c516f86c4d68baeb1bd18c4538e58f0374e01ffb607cd2ee832d02934c94"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/pubspec.yaml",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/pubspec.yaml",
+      "role": "context",
+      "sha256": "5b849d99d62b943cb3a2bcf9cf1209362255d697572392f6ec4cda60f80652ba"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/fixtures/surface_transform_test_router.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/fixtures/surface_transform_test_router.dart",
+      "role": "context",
+      "sha256": "6b4d9a4943ba4ac2621a61f4950d3f5ae9880221e65e0be2262c619dc0983f20"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/fixtures/surface_transform_test_widgets.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/fixtures/surface_transform_test_widgets.dart",
+      "role": "context",
+      "sha256": "1439997b02d59c8eb72d603276e2277b9a2950235450b22e6984984f4d9a16b2"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/flutter_test_config.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/flutter_test_config.dart",
+      "role": "context",
+      "sha256": "9712f9e4fb2fbd3cef6a495de85d9dd02a3a9dd8365f2200e014563560881b23"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_150ms.png",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_150ms.png",
+      "role": "context",
+      "sha256": "fec6c29a882950ddb8cae6f967cb799e0153bfa09a36e76730602a1d8c9c516b"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_300ms.png",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_300ms.png",
+      "role": "context",
+      "sha256": "211538af38e0de0a5f93dbafa9d8a72de188bb9bc6f2029b593620fa1d02eb27"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_75ms.png",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_75ms.png",
+      "role": "context",
+      "sha256": "7bc78dcaeb9bda461047169999947e875fd2031c48f0b31422f031a3a8d097da"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_resting.png",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/goldens/ci/mateo_surface_animation_resting.png",
+      "role": "context",
+      "sha256": "1512bf2df38f66309c151fceebc7b5b718149d45ac10e8d15611be2629f386eb"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/mateo_surface_animation_golden_test.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/mateo_surface_animation_golden_test.dart",
+      "role": "context",
+      "sha256": "90c8792a3d7dccd29971c1995afa3a3f28163affc23f5ea9f8249d8be15fcf77"
+    },
+    {
+      "source": "packages/flutter/mateo-mobile/test/widgets/mateo_surface_animation_test.dart",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/mateo-mobile/test/widgets/mateo_surface_animation_test.dart",
+      "role": "context",
+      "sha256": "d7277f2191d9d7ee88f93f8901cf2d5758ca941eb32b7273a84ed3b926399a14"
+    },
+    {
+      "source": "packages/flutter/pubspec.lock",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/pubspec.lock",
+      "role": "context",
+      "sha256": "5f8ec56300d7c98be194ff4e844112475a6c4d2bd7a7bca39de8f7403c9059d9"
+    },
+    {
+      "source": "packages/flutter/pubspec.yaml",
+      "archive": "archive/rounded-convex-interpolation/context/packages/flutter/pubspec.yaml",
+      "role": "context",
+      "sha256": "2296bf3dca753f1f84c7e8c986128cf63c2ff0649603a806141b55cd80d0506c"
+    },
+    {
+      "source": "tools/rounded_shape_interpolation/compare.py",
+      "archive": "archive/rounded-convex-interpolation/context/tools/rounded_shape_interpolation/compare.py",
+      "role": "context",
+      "sha256": "f0e9f196ed6d8a5b3b12306db78e973d8ee3e41418549d5bcf2175dd184c0d07"
+    }
+  ]
+}

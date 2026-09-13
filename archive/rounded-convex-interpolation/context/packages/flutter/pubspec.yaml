@@ -1,0 +1,47 @@
+name: mateo_flutter_workspace
+publish_to: none
+
+environment: &environment
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+workspace:
+  - mateo-mobile
+
+dev_dependencies:
+  melos: ^8.6.0
+  very_good_analysis: ^10.3.0
+
+melos:
+  sdkPath: .fvm/flutter_sdk
+  useRootAsPackage: false
+  ide:
+    intellij:
+      enabled: false
+  command:
+    bootstrap:
+      environment: *environment
+  scripts:
+    analyze:
+      description: Analyze registered packages with the shared lint rules.
+      exec: dart analyze --fatal-infos .
+    format:check:
+      description: Check formatting without changing files.
+      run: dart run melos format --output=none --set-exit-if-changed
+    test:
+      description: Run tests in registered Flutter packages.
+      exec:
+        command: flutter test
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        flutter: true
+        dirExists: test
+    gen:
+      description: Generate assets.
+      exec:
+        command: dart run build_runner build && dart format lib
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        dependsOn: build_runner
