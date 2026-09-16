@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../theme/mateo_theme.dart';
@@ -14,6 +15,8 @@ import 'presentations/options_presentation/mateo_menu_options_presentation_item.
 part '_mateo_menu_presentation_scope.dart';
 part 'presentations/mateo_menu_presentation.dart';
 part 'presentations/options_presentation/_mateo_menu_options_presentation_row.dart';
+part 'presentations/options_presentation/_mateo_menu_options_row.dart';
+part 'presentations/options_presentation/_render_mateo_menu_options_row.dart';
 part 'presentations/options_presentation/_mateo_menu_options_presentation.dart';
 
 /// A Mateo menu that displays the supplied presentation.

@@ -4,7 +4,7 @@ enum MateoMenuDensity {
   compact(horizontalPadding: 18, verticalPadding: 16),
 
   /// Comfortable padding for everyday choices.
-  standard(horizontalPadding: 24, verticalPadding: 20);
+  standard(horizontalPadding: 24, verticalPadding: 24);
 
   const MateoMenuDensity({required this.horizontalPadding, required this.verticalPadding});
 

@@ -21,7 +21,7 @@ final class _MateoMenuOptionsPresentation extends MateoMenuPresentation {
     final hasSupporting = items[index].supporting != null || items[index + 1].supporting != null;
     return switch (density) {
       .compact => hasSupporting ? 12 : 8,
-      .standard => hasSupporting ? 20 : 16,
+      .standard => hasSupporting ? 24 : 16,
     };
   }
 

@@ -36,12 +36,12 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
 
   double get _iconSize => switch (density) {
     .compact => 30,
-    .standard => 36,
+    .standard => 38,
   };
 
   double get _iconSizeWithBackground => switch (density) {
     .compact => 34,
-    .standard => 42,
+    .standard => 44,
   };
 
   double get _principalFontSize => switch (density) {
@@ -52,6 +52,20 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = MateoTheme.of(context).colorScheme.menus.options;
+    final principalStyle = TextStyle(
+      fontFamily: MateoTypography.fontFamily,
+      letterSpacing: MateoTypography.letterSpacing,
+      fontSize: _principalFontSize,
+      height: 1.4,
+      fontWeight: .w600,
+      color: colors.principal,
+    );
+    final singleLinePainter = TextPainter(
+      text: TextSpan(text: ' ', style: principalStyle),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
+    )..layout();
 
     return MateoPress(
       animation: .scaleFade,
@@ -67,8 +81,9 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
           ),
           child: Opacity(
             opacity: onPressed == null ? 0.5 : 1,
-            child: Row(
-              mainAxisSize: .min,
+            child: _MateoMenuOptionsRow(
+              hasSupporting: item.supporting != null,
+              singleLineHeight: singleLinePainter.height,
               children: [
                 if (item.leading != null)
                   MateoIconScope(
@@ -87,14 +102,8 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
                       children: [
                         if (item.principal != null)
                           DefaultTextStyle(
-                            style: TextStyle(
-                              fontFamily: MateoTypography.fontFamily,
-                              letterSpacing: MateoTypography.letterSpacing,
-                              fontSize: _principalFontSize,
-                              height: 1.4,
-                              fontWeight: .w600,
-                              color: colors.principal,
-                            ),
+                            style: principalStyle,
+                            textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
                             child: item.principal!,
                           ),
                         if (item.principal != null && item.supporting != null) const SizedBox(height: _supportingGap),
@@ -107,6 +116,9 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
                               height: 1.4,
                               fontWeight: .w500,
                               color: colors.supporting,
+                            ),
+                            textHeightBehavior: TextHeightBehavior(
+                              applyHeightToFirstAscent: item.principal != null,
                             ),
                             child: item.supporting!,
                           ),

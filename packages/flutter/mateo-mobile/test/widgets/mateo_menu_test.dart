@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' show Tristate;
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
@@ -317,6 +318,10 @@ void main() {
                     principal: Text('Long principal content wraps naturally'),
                     supporting: Text('Supporting'),
                   ),
+                  MateoMenuOptionsPresentationItem(
+                    leading: SizedBox(key: ValueKey('single-line-leading'), width: 24, height: 24),
+                    principal: Text('One'),
+                  ),
                   MateoMenuOptionsPresentationItem(supporting: Text('Supporting alone')),
                   MateoMenuOptionsPresentationItem(leading: SizedBox(width: 30, height: 60)),
                   MateoMenuOptionsPresentationItem(),
@@ -331,8 +336,21 @@ void main() {
       );
       expect(tester.getSize(find.byType(MateoPress).first).height, greaterThan(56));
       final leading = tester.getCenter(find.byKey(const ValueKey('leading')));
-      final text = tester.getCenter(find.text('Long principal content wraps naturally'));
+      final principalFinder = find.text('Long principal content wraps naturally');
+      final text = tester.getCenter(principalFinder);
       expect(direction == .ltr ? leading.dx < text.dx : leading.dx > text.dx, isTrue);
+      final principal = tester.renderObject<RenderParagraph>(principalFinder);
+      final firstCharacterBox = principal
+          .getBoxesForSelection(const TextSelection(baseOffset: 0, extentOffset: 1))
+          .single;
+      expect(
+        tester.getTopLeft(find.byKey(const ValueKey('leading'))).dy,
+        closeTo(principal.localToGlobal(Offset(0, firstCharacterBox.top)).dy, 0.1),
+      );
+      expect(
+        tester.getCenter(find.byKey(const ValueKey('single-line-leading'))).dy,
+        tester.getCenter(find.text('One')).dy,
+      );
       expect(tester.takeException(), isNull);
     });
   }
