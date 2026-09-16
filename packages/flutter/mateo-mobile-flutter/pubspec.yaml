@@ -36,7 +36,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test_api: ^0.7.0
-  very_good_analysis: ">=7.0.0 <11.0.0"
+  very_good_analysis: ^11.0.0
 
 dotdart:
   output: lib/src/gen/
