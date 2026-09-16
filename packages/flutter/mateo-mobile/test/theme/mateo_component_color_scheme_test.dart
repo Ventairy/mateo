@@ -70,7 +70,7 @@ void main() {
     expect(colors.buttons.primary.accent.background, colors.accent);
     expect(colors.buttons.primary.accent.foreground, colors.onAccent);
     expect(colors.buttons.secondary.accent.background, changed.palette.accent[2]);
-    expect(colors.buttons.secondary.accent.foreground, changed.palette.accent[11]);
+    expect(colors.buttons.secondary.accent.foreground, changed.palette.accent[9]);
     expect(colors.buttons.primary.neutral, theme.colorScheme.buttons.primary.neutral);
   });
 

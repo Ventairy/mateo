@@ -61,7 +61,7 @@ final class MateoColorScheme {
       secondary: ._(
         accent: .new(
           background: palette.accent[2],
-          foreground: palette.accent[11],
+          foreground: palette.accent[9],
           backgroundDisabled: palette.neutral[4],
           foregroundDisabled: palette.neutral[9],
         ),
