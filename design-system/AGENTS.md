@@ -30,6 +30,12 @@ real implementation.
 - Follow links to canonical parent documents for inherited rules and tokens;
   do not repeat them. The current document must define every decision owned by
   its scope and link directly to everything an implementer must also read.
+- Frame each document around the complete, durable concept it owns rather than
+  the first rule, value, or use case added to it. A document may begin with one
+  decided case, but its title, introduction, scope, and terminology must leave
+  room for later guidance that belongs to the same concept. State what is
+  currently defined without presenting undecided areas as permanently outside
+  the document's scope.
 - Compare documentation with the real implementation and its approved visual
   states before treating it as complete. Resolve or explicitly record any
   difference; do not let documentation and implementation silently describe

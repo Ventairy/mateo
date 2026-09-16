@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
@@ -43,7 +43,12 @@ void main() {
       fileName: 'mateo_y_snap_list_drag_states',
       whilePerforming: (tester) async {
         await _holdDrag(tester, 'up_first', const Offset(0, -200));
-        await _holdDrag(tester, 'down_first', const Offset(0, 200));
+        await tester.drag(
+          find.byKey(_cardKey('down_first')),
+          const Offset(0, -300),
+        );
+        await tester.pumpAndSettle();
+        await _holdDrag(tester, 'down_second', const Offset(0, 200));
         await _holdDrag(tester, 'high_up_first', const Offset(0, -400));
 
         return null;
@@ -70,6 +75,70 @@ void main() {
             name: 'high progress up drag',
             child: const _GoldenFrame(
               child: _GoldenFeed(items: ['high_up_first', 'high_up_second']),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    goldenTest(
+      'when handing off nested scroll boundaries, it should match the approved goldens',
+      fileName: 'mateo_y_snap_list_nested_scroll_handoff',
+      whilePerforming: (tester) async {
+        await _holdNestedDrag(
+          tester,
+          item: 'nested_next_first',
+          offset: const Offset(0, -200),
+          startAtBottom: true,
+        );
+
+        final previousPosition = _nestedScrollPosition(
+          tester,
+          'nested_previous_first',
+        );
+        previousPosition.jumpTo(previousPosition.maxScrollExtent);
+        await tester.pump();
+        final advanceGesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollKey('nested_previous_first'))),
+        );
+        await advanceGesture.moveBy(const Offset(0, -20));
+        await tester.pump();
+        await advanceGesture.moveBy(const Offset(0, -300));
+        await tester.pump();
+        await advanceGesture.up();
+        await tester.pumpAndSettle();
+
+        await _holdNestedDrag(
+          tester,
+          item: 'nested_previous_second',
+          offset: const Offset(0, 200),
+        );
+
+        return null;
+      },
+      builder: () => GoldenTestGroup(
+        scenarioConstraints: const BoxConstraints.tightFor(
+          width: 400,
+          height: 600,
+        ),
+        children: [
+          GoldenTestScenario(
+            name: 'partial next handoff',
+            child: const _GoldenFrame(
+              child: _GoldenScrollableFeed(
+                items: ['nested_next_first', 'nested_next_second'],
+              ),
+            ),
+          ),
+          GoldenTestScenario(
+            name: 'partial previous handoff',
+            child: const _GoldenFrame(
+              child: _GoldenScrollableFeed(
+                items: [
+                  'nested_previous_first',
+                  'nested_previous_second',
+                ],
+              ),
             ),
           ),
         ],
@@ -346,12 +415,44 @@ void main() {
 
 Key _cardKey(String item) => Key('golden_card_$item');
 
+Key _scrollKey(String item) => Key('golden_scroll_$item');
+
 Future<void> _holdDrag(WidgetTester tester, String item, Offset offset) async {
   final gesture = await tester.startGesture(
     tester.getCenter(find.byKey(_cardKey(item))),
   );
   await gesture.moveBy(offset);
   await tester.pump();
+}
+
+Future<void> _holdNestedDrag(
+  WidgetTester tester, {
+  required String item,
+  required Offset offset,
+  bool startAtBottom = false,
+}) async {
+  final scrollFinder = find.byKey(_scrollKey(item));
+  if (startAtBottom) {
+    final position = _nestedScrollPosition(tester, item);
+    position.jumpTo(position.maxScrollExtent);
+    await tester.pump();
+  }
+  final gesture = await tester.startGesture(tester.getCenter(scrollFinder));
+  await gesture.moveBy(Offset(0, offset.dy.sign * 20));
+  await tester.pump();
+  await gesture.moveBy(Offset(0, offset.dy - (offset.dy.sign * 20)));
+  await tester.pump();
+}
+
+ScrollPosition _nestedScrollPosition(WidgetTester tester, String item) {
+  return tester
+      .state<ScrollableState>(
+        find.descendant(
+          of: find.byKey(_scrollKey(item)),
+          matching: find.byType(Scrollable),
+        ),
+      )
+      .position;
 }
 
 Widget _goldenCardBuilder(BuildContext context, String item, int index) {
@@ -368,14 +469,14 @@ Widget _goldenCardBuilder(BuildContext context, String item, int index) {
       title: 'Ajuda em evento',
       neighborhood: 'Vila Madalena',
       pay: r'R$ 240',
-      color: mateoTestColorScheme.buttons.success.background,
+      color: mateoTestThemeData.palette.green[9],
     ),
     _ => _GoldenCard(
       key: _cardKey(item),
       title: 'Garcom para hoje',
       neighborhood: 'Pinheiros',
       pay: r'R$ 180',
-      color: mateoTestColorScheme.buttons.accent.primary.background,
+      color: mateoTestColorScheme.buttons.primary.accent.background,
     ),
   };
 }
@@ -424,12 +525,37 @@ class _GoldenFeed extends StatelessWidget {
   }
 }
 
+class _GoldenScrollableFeed extends StatelessWidget {
+  const _GoldenScrollableFeed({required this.items});
+
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return MateoYSnapList<String>(
+      items: (
+        count: items.length,
+        provider: (int i) => items[i],
+        keyBuilder: null,
+      ),
+      builder: (context, item, index) => SingleChildScrollView(
+        key: _scrollKey(item),
+        physics: const BouncingScrollPhysics(),
+        child: SizedBox(
+          height: 800,
+          child: _goldenCardBuilder(context, item, index),
+        ),
+      ),
+    );
+  }
+}
+
 Widget _loadMoreErrorBuilder(BuildContext context, VoidCallback retry) {
   return _PaginationStateCard(
     title: 'Tente de novo',
     subtitle: 'Nao conseguimos carregar agora.',
     icon: Icons.refresh_rounded,
-    color: mateoTestColorScheme.buttons.accent.primary.background,
+    color: mateoTestColorScheme.buttons.primary.accent.background,
     onPressed: retry,
   );
 }
@@ -439,7 +565,7 @@ Widget _endBuilder(BuildContext context) {
     title: 'Tudo visto',
     subtitle: 'Volte em breve para novas chances.',
     icon: Icons.check_rounded,
-    color: mateoTestColorScheme.buttons.success.background,
+    color: mateoTestThemeData.palette.green[9],
   );
 }
 
@@ -482,7 +608,7 @@ class _GoldenCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: mateoTestColorScheme.buttons.floating.shadow,
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 30,
             offset: Offset(0, 16),
           ),
@@ -564,7 +690,7 @@ class _PaginationStateCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: mateoTestColorScheme.buttons.floating.shadow,
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 30,
             offset: Offset(0, 16),
           ),

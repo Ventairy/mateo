@@ -1,15 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
-Finder _key(MateoNumericKeypadKey key) =>
-    find.byKey(Key('mateo_numeric_keypad_${key.name}'));
+Finder _key(MateoNumericKeypadKey key) => find.byKey(Key('mateo_numeric_keypad_${key.name}'));
 
-class _MaterialLocalizationsDelegate
-    extends LocalizationsDelegate<MaterialLocalizations> {
+class _MaterialLocalizationsDelegate extends LocalizationsDelegate<MaterialLocalizations> {
   const _MaterialLocalizationsDelegate();
 
   @override
@@ -37,14 +35,16 @@ class _LocalizedKeypad extends StatelessWidget {
     this.onChanged,
     this.onChangeRejected,
     this.disableAnimations = false,
+    this.width,
   });
 
   final Locale locale;
-  final List<MateoTextInputController> controllers;
+  final List<MateoTextController> controllers;
   final int maxDecimals;
   final ValueChanged<double?>? onChanged;
   final VoidCallback? onChangeRejected;
   final bool disableAnimations;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -58,25 +58,28 @@ class _LocalizedKeypad extends StatelessWidget {
             context: context,
             locale: locale,
             delegates: const [_MaterialLocalizationsDelegate()],
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final controller in controllers)
-                  MateoTextInput(
-                    placeholder: 'Value',
-                    variant: MateoTextInputVariant.quiet,
-                    controller: controller,
-                    keyboardType: TextInputType.none,
-                    onChanged: (_) {},
+            child: SizedBox(
+              width: width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final controller in controllers)
+                    MateoTextField(
+                      placeholder: 'Value',
+                      presentation: MateoTextFieldPresentation.search(variant: .filled),
+                      controller: controller,
+                      keyboardType: TextInputType.none,
+                      onChanged: (_) {},
+                    ),
+                  MateoNumericKeypad(
+                    controllers: controllers,
+                    variant: MateoNumericKeypadVariant.monetary,
+                    maxDecimals: maxDecimals,
+                    onChanged: onChanged,
+                    onChangeRejected: onChangeRejected,
                   ),
-                MateoNumericKeypad(
-                  controllers: controllers,
-                  variant: MateoNumericKeypadVariant.monetary,
-                  maxDecimals: maxDecimals,
-                  onChanged: onChanged,
-                  onChangeRejected: onChangeRejected,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -133,7 +136,7 @@ void main() {
     });
 
     test('when maxDecimals is not positive, it should reject construction', () {
-      final controller = MateoTextInputController();
+      final controller = MateoTextController();
       addTearDown(controller.dispose);
 
       expect(
@@ -149,8 +152,8 @@ void main() {
     testWidgets(
       'when no controller is focused, it should focus and edit the first controller',
       (tester) async {
-        final firstController = MateoTextInputController();
-        final secondController = MateoTextInputController();
+        final firstController = MateoTextController();
+        final secondController = MateoTextController();
         addTearDown(firstController.dispose);
         addTearDown(secondController.dispose);
 
@@ -172,8 +175,8 @@ void main() {
     testWidgets(
       'when another controller is focused, it should edit only that controller',
       (tester) async {
-        final firstController = MateoTextInputController();
-        final secondController = MateoTextInputController();
+        final firstController = MateoTextController();
+        final secondController = MateoTextController();
         addTearDown(firstController.dispose);
         addTearDown(secondController.dispose);
 
@@ -196,7 +199,7 @@ void main() {
     testWidgets(
       'when entering an English value, it should group thousands and preserve fractional zeroes',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         final changes = <double?>[];
         addTearDown(controller.dispose);
 
@@ -228,7 +231,7 @@ void main() {
     testWidgets(
       'when entering a Portuguese value, it should use localized separators',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -262,7 +265,7 @@ void main() {
     testWidgets(
       'when locale data is unavailable, it should use English separators',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -290,7 +293,7 @@ void main() {
     testWidgets(
       'when attaching existing localized text, it should normalize its formatting',
       (tester) async {
-        final controller = MateoTextInputController(text: '1200,5');
+        final controller = MateoTextController(text: '1200,5');
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -308,7 +311,7 @@ void main() {
     testWidgets(
       'when locale changes, it should preserve value and update separators',
       (tester) async {
-        final controller = MateoTextInputController(text: '1200.50');
+        final controller = MateoTextController(text: '1200.50');
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -335,7 +338,7 @@ void main() {
     testWidgets(
       'when selection is replaced, it should preserve localized grouping and caret position',
       (tester) async {
-        final controller = MateoTextInputController(text: '1,234');
+        final controller = MateoTextController(text: '1,234');
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -359,7 +362,7 @@ void main() {
     testWidgets(
       'when the selected decimal is replaced, it should accept one decimal separator',
       (tester) async {
-        final controller = MateoTextInputController(text: '12.3');
+        final controller = MateoTextController(text: '12.3');
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -383,7 +386,7 @@ void main() {
     testWidgets(
       'when backspacing beside a grouping separator, it should delete the preceding digit',
       (tester) async {
-        final controller = MateoTextInputController(text: '1,234');
+        final controller = MateoTextController(text: '1,234');
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -407,7 +410,7 @@ void main() {
     testWidgets(
       'when decimal input exceeds its rules, it should report each rejected change',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         final changes = <double?>[];
         var rejectedChanges = 0;
         addTearDown(controller.dispose);
@@ -443,7 +446,7 @@ void main() {
     testWidgets(
       'when backspace cannot delete, it should report the rejected change',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         final changes = <double?>[];
         var rejectedChanges = 0;
         addTearDown(controller.dispose);
@@ -468,7 +471,7 @@ void main() {
     testWidgets('when deletion empties the value, it should report null', (
       tester,
     ) async {
-      final controller = MateoTextInputController(text: '1');
+      final controller = MateoTextController(text: '1');
       double? reportedValue = 1;
       addTearDown(controller.dispose);
 
@@ -490,7 +493,7 @@ void main() {
     testWidgets(
       'when backspace is held, it should repeatedly delete without deleting again on release',
       (tester) async {
-        final controller = MateoTextInputController(text: '12345');
+        final controller = MateoTextController(text: '12345');
         final changes = <double?>[];
         addTearDown(controller.dispose);
 
@@ -528,7 +531,7 @@ void main() {
     testWidgets(
       'when rendered, it should use primary text color and scale-only feedback',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -559,9 +562,64 @@ void main() {
     );
 
     testWidgets(
+      'when rendered in a wide parent, it should keep compact accessible columns',
+      (tester) async {
+        final controller = MateoTextController();
+        addTearDown(controller.dispose);
+
+        await tester.pumpWidget(
+          _LocalizedKeypad(
+            locale: const Locale('en', 'US'),
+            controllers: [controller],
+          ),
+        );
+
+        final oneKey = _key(MateoNumericKeypadKey.one);
+        final twoKey = _key(MateoNumericKeypadKey.two);
+        final keypad = find.byType(MateoNumericKeypad);
+        final oneCenter = tester.getCenter(oneKey);
+        final twoCenter = tester.getCenter(twoKey);
+        final keySize = tester.getSize(oneKey);
+
+        expect(twoCenter.dx - oneCenter.dx, closeTo(365 / 3, 0.001));
+        expect(twoCenter.dx, equals(tester.getCenter(keypad).dx));
+        expect(keySize.width, closeTo(365 / 3, 0.001));
+        expect(keySize.height, 65);
+        expect(tester.getSize(keypad).width, greaterThan(384));
+      },
+    );
+
+    testWidgets(
+      'when rendered in a thin parent, it should shrink columns with the available width',
+      (tester) async {
+        final controller = MateoTextController();
+        addTearDown(controller.dispose);
+
+        await tester.pumpWidget(
+          _LocalizedKeypad(
+            locale: const Locale('en', 'US'),
+            controllers: [controller],
+            width: 240,
+          ),
+        );
+
+        final oneKey = _key(MateoNumericKeypadKey.one);
+        final twoKey = _key(MateoNumericKeypadKey.two);
+        final keySize = tester.getSize(oneKey);
+
+        expect(
+          tester.getCenter(twoKey).dx - tester.getCenter(oneKey).dx,
+          equals(80),
+        );
+        expect(keySize, equals(const Size(80, 65)));
+        expect(keySize.width, greaterThanOrEqualTo(48));
+      },
+    );
+
+    testWidgets(
       'when semantics are read, it should expose button labels for every key',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(
@@ -600,7 +658,7 @@ void main() {
     testWidgets(
       'when animations are disabled, it should edit without entering a pressed scale',
       (tester) async {
-        final controller = MateoTextInputController();
+        final controller = MateoTextController();
         addTearDown(controller.dispose);
 
         await tester.pumpWidget(

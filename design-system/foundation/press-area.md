@@ -6,13 +6,38 @@ forgiving when a person presses near, rather than exactly on, what they intend
 to use.
 
 This foundation owns Mateo's shared press-area behavior. Guidance is added as
-each part of that behavior is defined. The current guidance covers only how
-neighboring interactive objects share the spacing between them.
+each part of that behavior is defined. The current guidance covers how inner
+spacing belongs to interactive objects and how neighboring objects share the
+spacing between them.
 
 In this foundation, **press** includes touch, mouse, trackpad, stylus, and other
 direct pointer activation. Platform accessibility actions and keyboard
 activation still operate on the same interactive object, but they do not
 change how pointer space is divided.
+
+## Inner spacing is part of the press area
+
+Whitespace inside the visible boundary of an interactive object or container
+must never become an unresponsive region. Treat inner spacing as part of a
+press area regardless of whether an implementation represents that spacing as
+padding, margin, a gap, an inset, or an empty layout element.
+
+For a single interactive object, all inner spacing belongs to that object. A
+button therefore activates when a person presses the space between its label,
+icon, or other visible content and its outer edge. The content does not need to
+paint across that space for the space to remain interactive.
+
+When a visible container such as a panel or menu contains multiple interactive
+objects, assign every point in its inner spacing to the closest object. Outer
+insets at the beginning and end of a list belong to the first and last items.
+Spacing beside a row belongs to that row. Spacing between neighboring objects
+follows the midpoint rule below. At an equal-distance boundary, divide the
+space at the exact geometric midpoint so the press areas remain distinct,
+continuous, and non-overlapping.
+
+The visual outcome must not change when spacing moves into an object's press
+area. Preserve the same content position, panel size, alignment, and visible
+distance between objects; change only which interactive object owns each point.
 
 ## Shared spacing in a list
 
@@ -69,15 +94,16 @@ distinct and must not overlap.
 
 ## Boundaries and exceptions
 
-Share only spacing between interactive siblings that belong to the same list
-or choice group. Do not automatically assign these regions to an item:
+The required ownership rule ends at the visible boundary of the containing
+interactive surface. Spacing outside that boundary is outer spacing. Extending
+a nearby press area into outer spacing is encouraged when it makes the
+interface more forgiving, but it is not required by this foundation.
 
-- padding between the list and its containing surface;
-- spacing that separates different sections or groups;
-- scrolling gutters, safe areas, or system gesture regions;
-- space reserved for another control; or
-- a gap whose component specification intentionally dismisses, deselects, or
-  performs another action.
+Do not assign safe areas, system gesture regions, or space reserved for another
+control to an unrelated object. A component may also define an inner region
+that intentionally dismisses, deselects, scrolls, or performs another action;
+that explicit interaction owns the region instead. Inner spacing must not be
+left unresponsive merely because no action was assigned to it.
 
 If a separator sits between two items, it remains visual and non-interactive;
 the surrounding press space still divides at the midpoint between the items.
@@ -89,8 +115,13 @@ visible object while hit testing uses the larger press area.
 
 ## Validation
 
-A list follows this foundation when:
+A component follows this foundation when:
 
+- every point inside the visible boundary of an interactive object or
+  container activates the object that owns that region;
+- a single object's inner padding activates that object;
+- container insets belong to their closest interactive object and do not form
+  an unresponsive border around the contents;
 - every point in the visual spacing between neighboring interactive items
   belongs to exactly one of those items;
 - the midpoint divides the gap equally;
@@ -99,5 +130,5 @@ A list follows this foundation when:
 - no invisible focus stop or accessibility node is introduced;
 - pointer and spatial accessibility bounds agree without overlapping;
 - the visible spacing, alignment, and motion geometry remain unchanged; and
-- container padding and boundaries between unrelated groups keep their
+- outer spacing and regions with an explicit alternate interaction keep their
   component-defined behavior.

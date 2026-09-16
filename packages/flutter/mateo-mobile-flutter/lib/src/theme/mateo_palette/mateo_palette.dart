@@ -9,12 +9,12 @@ part 'mateo_color_scale.dart';
 /// The raw primitive color palette for the Mateo Mobile design system.
 ///
 /// Contains 12-step color scales for [accent], [neutral], [green],
-/// [amber], [red], [blue], [whatsapp], and six additional colors ([cyan],
+/// [amber], [red], [blue], and six additional colors ([cyan],
 /// [violet], [teal], [orange], [pink], [yellow]).
 ///
-/// The [accent] and [neutral] scales are **auto-derived** from the
-/// `accentColor` parameter using OKLCH color space generation. All other scales
-/// are fixed values from the Mateo Mobile palette specification.
+/// The [accent] scale is generated in OKLCH from `accentColor`. The [neutral]
+/// scale and all other scales are fixed values from the Mateo Mobile palette
+/// specification.
 ///
 /// This primitive palette is appearance-independent and has no semantic token
 /// assignments. Build semantic color schemes on top of these primitives.
@@ -26,60 +26,49 @@ part 'mateo_color_scale.dart';
 /// ```
 @immutable
 class MateoPalette {
-  /// Creates a Mateo Mobile color palette generated from [accentColor].
+  /// Creates a Mateo Mobile color palette from [accentColor].
   ///
-  /// The [accent] and [neutral] scales are derived from [accentColor]
-  /// using OKLCH color space generation. The color must be fully opaque, and
-  /// it is preserved exactly at accent step 9. All other scales are fixed.
+  /// The [accent] scale is derived from [accentColor], which is preserved
+  /// exactly at accent step 9. The neutral scale is fixed and achromatic.
   ///
-  /// When [accentColor] is omitted, the default Mateo colors are used.
+  /// When [accentColor] is omitted, Mateo violet supplies the accent.
   ///
   /// Throws [ArgumentError] when [accentColor] is not fully opaque.
   factory MateoPalette({Color? accentColor}) {
-    final mainColor = accentColor ?? _defaultAccentColor;
-    if (mainColor.a != 1) {
+    final resolvedAccentColor = accentColor ?? _defaultAccentColor;
+    if (resolvedAccentColor.a != 1) {
       throw ArgumentError.value(
-        mainColor,
+        resolvedAccentColor,
         'accentColor',
         'must be fully opaque',
       );
     }
+    if (resolvedAccentColor == _defaultAccentColor) return _defaultPalette;
 
-    final isDefault = mainColor == _defaultAccentColor;
-    if (isDefault) return _defaultPalette;
-
-    final oklch = Oklch.fromColor(mainColor);
-    final hue = oklch.h;
+    final accentOklch = Oklch.fromColor(resolvedAccentColor);
     final accentLightness = <double>[
-      for (final amount in _accentLighten) oklch.l + (1 - oklch.l) * amount,
-      oklch.l,
-      for (final amount in _accentDarken) 0.21 + (oklch.l - 0.21) * amount,
+      for (final amount in _accentLighten) accentOklch.l + (1 - accentOklch.l) * amount,
+      accentOklch.l,
+      for (final amount in _accentDarken) 0.21 + (accentOklch.l - 0.21) * amount,
     ];
 
     final accentChroma = [
-      for (final multiplier in _accentChromaMultipliers) oklch.c * multiplier,
+      for (final multiplier in _accentChromaMultipliers) accentOklch.c * multiplier,
     ];
 
-    final neutralTint = oklch.c <= 0.000004 ? 0.0 : (oklch.c / 0.20).clamp(0.0, 1.0);
-
     return MateoPalette._(
-      accentColor: mainColor,
+      accentColor: resolvedAccentColor,
       accent: _generateScale(
         lightness: accentLightness,
         chroma: accentChroma,
-        baseHue: hue,
-        anchor: mainColor,
+        baseHue: accentOklch.h,
+        anchor: resolvedAccentColor,
       ),
-      neutral: _generateScale(
-        lightness: _neutralLightness,
-        chroma: _neutralChroma.map((c) => c * neutralTint).toList(),
-        baseHue: hue,
-      ),
+      neutral: _neutralScale,
       green: _greenScale,
       amber: _amberScale,
       red: _redScale,
       blue: _blueScale,
-      whatsapp: _whatsappScale,
       cyan: _cyanScale,
       violet: _violetScale,
       teal: _tealScale,
@@ -97,7 +86,6 @@ class MateoPalette {
     required this.amber,
     required this.red,
     required this.blue,
-    required this.whatsapp,
     required this.cyan,
     required this.violet,
     required this.teal,
@@ -113,12 +101,11 @@ class MateoPalette {
   static final MateoPalette _defaultPalette = MateoPalette._(
     accentColor: _defaultAccentColor,
     accent: _defaultAccentScale,
-    neutral: _defaultNeutralScale,
+    neutral: _neutralScale,
     green: _greenScale,
     amber: _amberScale,
     red: _redScale,
     blue: _blueScale,
-    whatsapp: _whatsappScale,
     cyan: _cyanScale,
     violet: _violetScale,
     teal: _tealScale,
@@ -144,20 +131,20 @@ class MateoPalette {
     ],
   );
 
-  static final MateoColorScale _defaultNeutralScale = MateoColorScale._(
+  static final MateoColorScale _neutralScale = MateoColorScale._(
     steps: const [
-      Color(0xFFFBFCFD),
-      Color(0xFFF4F5F7),
-      Color(0xFFEAEBEF),
-      Color(0xFFE0E1E5),
-      Color(0xFFD6D7DC),
-      Color(0xFFCCCDD3),
-      Color(0xFFBFC1C6),
-      Color(0xFF909297),
-      Color(0xFF707175),
-      Color(0xFF626367),
-      Color(0xFF3E4043),
-      Color(0xFF17181B),
+      Color(0xFFFCFCFC),
+      Color(0xFFF5F5F5),
+      Color(0xFFEBEBEB),
+      Color(0xFFE1E1E1),
+      Color(0xFFD7D7D7),
+      Color(0xFFCECECE),
+      Color(0xFFC1C1C1),
+      Color(0xFF929292),
+      Color(0xFF717171),
+      Color(0xFF636363),
+      Color(0xFF404040),
+      Color(0xFF181818),
     ],
   );
 
@@ -171,7 +158,7 @@ class MateoPalette {
       Color(0xFFC8F2CD),
       Color(0xFFB2F1BA),
       Color(0xFF78E18A),
-      Color(0xFF00D757),
+      Color(0xFF00C950),
       Color(0xFF00B849),
       Color(0xFF006F29),
       Color(0xFF001F06),
@@ -226,23 +213,6 @@ class MateoPalette {
       Color(0xFF1A6CE5),
       Color(0xFF13448F),
       Color(0xFF031639),
-    ],
-  );
-
-  static final MateoColorScale _whatsappScale = MateoColorScale._(
-    steps: const [
-      Color(0xFFF9FDFA),
-      Color(0xFFF4FAF5),
-      Color(0xFFECF7ED),
-      Color(0xFFE2F3E5),
-      Color(0xFFD6F2DA),
-      Color(0xFFC9F0CE),
-      Color(0xFFB5EFBE),
-      Color(0xFF7FDE92),
-      Color(0xFF25D366),
-      Color(0xFF01B950),
-      Color(0xFF126E2A),
-      Color(0xFF002002),
     ],
   );
 
@@ -376,36 +346,6 @@ class MateoPalette {
     0.35,
   ];
 
-  static const List<double> _neutralLightness = [
-    0.99,
-    0.97,
-    0.94,
-    0.91,
-    0.88,
-    0.85,
-    0.81,
-    0.66,
-    0.55,
-    0.50,
-    0.37,
-    0.21,
-  ];
-
-  static const List<double> _neutralChroma = [
-    0.002,
-    0.003,
-    0.005,
-    0.006,
-    0.007,
-    0.008,
-    0.008,
-    0.007,
-    0.006,
-    0.006,
-    0.006,
-    0.006,
-  ];
-
   static MateoColorScale _generateScale({
     required List<double> lightness,
     required List<double> chroma,
@@ -432,10 +372,7 @@ class MateoPalette {
   /// its OKLCH hue and follow Mateo's documented lightness and chroma recipe.
   final MateoColorScale accent;
 
-  /// The warm neutral scale tinted toward the palette's accent hue.
-  ///
-  /// Its chroma is capped between 0.002 and 0.008, then scaled by the seed's
-  /// chroma so muted accents do not create exaggerated neutral tinting.
+  /// The fixed achromatic neutral scale.
   final MateoColorScale neutral;
 
   /// The fixed green scale.
@@ -449,9 +386,6 @@ class MateoPalette {
 
   /// The fixed blue scale.
   final MateoColorScale blue;
-
-  /// The fixed WhatsApp reference scale.
-  final MateoColorScale whatsapp;
 
   /// The fixed cyan scale.
   final MateoColorScale cyan;
@@ -479,7 +413,7 @@ class MateoPalette {
     return _accentColor == other._accentColor;
   }
 
-  /// The hash code derived from the accent color that defines this palette.
+  /// The hash code derived from the accent color.
   @override
   int get hashCode => _accentColor.hashCode;
 }

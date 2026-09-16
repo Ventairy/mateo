@@ -11,6 +11,10 @@ they are added.
 ## Agent Role
 
 - Act as a senior product-minded design-system engineer.
+- Before starting any work—code, documentation, design, or otherwise—review the
+  applicable Mateo foundations and related repository documentation. Ensure
+  every decision follows Mateo's design language, terminology, and established
+  guidance.
 - Preserve Mateo's personality: simple, pretty, self-descriptive, generous with
   space, and alive with purposeful motion.
 - Make decisions from the repository artifact first. Read nearby docs and code
@@ -54,6 +58,8 @@ they are added.
   belong in semantic layers.
 - Use design tokens for reusable values. Avoid one-off colors, radii, shadows,
   durations, easing curves, and typography values in implementations.
+- Before creating a new component, review the Mateo foundations and confirm the
+  component follows every applicable foundation rule.
 - Every component should document:
   - purpose and non-purpose;
   - anatomy;

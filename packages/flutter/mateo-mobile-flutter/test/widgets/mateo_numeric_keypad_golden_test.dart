@@ -2,7 +2,7 @@ import 'package:alchemist/alchemist.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 class _MaterialLocalizationsDelegate extends LocalizationsDelegate<MaterialLocalizations> {
   const _MaterialLocalizationsDelegate();
@@ -37,12 +37,12 @@ class _KeypadGoldenHarness extends StatefulWidget {
 }
 
 class _KeypadGoldenHarnessState extends State<_KeypadGoldenHarness> {
-  late final MateoTextInputController _controller;
+  late final MateoTextController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = MateoTextInputController(text: widget.initialText);
+    _controller = MateoTextController(text: widget.initialText);
   }
 
   @override
@@ -60,14 +60,14 @@ class _KeypadGoldenHarnessState extends State<_KeypadGoldenHarness> {
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaler: widget.textScaler),
         child: SizedBox(
-          width: 360,
+          width: 384,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.showInput)
-                MateoTextInput(
+                MateoTextField(
                   placeholder: 'Amount',
-                  variant: MateoTextInputVariant.quiet,
+                  presentation: MateoTextFieldPresentation.search(variant: .filled),
                   controller: _controller,
                   keyboardType: TextInputType.none,
                   onChanged: (_) {},
@@ -129,7 +129,7 @@ void main() {
         return null;
       },
       builder: () => const SizedBox(
-        width: 360,
+        width: 392,
         child: _KeypadGoldenHarness(
           locale: Locale('en', 'US'),
           showInput: false,

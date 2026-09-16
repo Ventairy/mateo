@@ -1,7 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 void main() {
   group('MateoDragResistance Golden Tests', () {
@@ -54,9 +54,11 @@ class _ResistanceGoldenApp extends StatelessWidget {
       child: Center(
         child: MateoDragResistance(
           child: MateoButton(
+            presentation: MateoButtonPresentation.label(
+              variant: MateoButtonVariant.primary,
+              label: 'Continuar',
+            ),
             key: buttonKey,
-            variant: MateoButtonVariant.primary,
-            label: 'Continuar',
             onPressed: () {},
           ),
         ),

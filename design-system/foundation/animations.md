@@ -107,7 +107,19 @@ rotation as a generic entrance effect.
 Shape transitions preserve identity when one surface becomes another. Animate
 the complete visible boundary continuously, including its background, content
 clipping, touch feedback, and shadow. Follow the
-[border-radius foundation](border-radius.md) throughout the transition.
+[border-radius foundation](border-radius.md) throughout the transition. Use
+[rounded convex interpolation](rounded-convex-interpolation.md) when one convex outline becomes
+another; it defines how the complete boundary changes independently of timing.
+
+When overshoot is appropriate for a shape using rounded convex interpolation, aim to keep
+progress between **−10% and 110%**: at most **10% before the source** or
+**10% beyond the destination**. This includes a rebound past the source when
+reversing. These are visual guidelines, not hard limits on the interpolation.
+Greater overshoot is acceptable when the outline keeps its intended character without
+unwanted narrowing, flattening, or skew. The same progress can affect different
+shape pairs differently; even a smaller rebound needs visual review. Check the
+complete motion at the intended size, especially the peak where distortion is
+most apparent, and reduce overshoot if the shape loses its recognizable form.
 
 Clipping and masks may reveal content without moving its layout. Their movement
 must follow the same origin and direction rules as translation.
@@ -407,7 +419,7 @@ meet the Mateo standard even if its first and last frames are correct.
   or memory cost.
 - Avoid expensive blur, shadow, clipping, or intermediate rendering effects
   during motion unless they materially improve the result and remain smooth.
-- Keep a floating surface and its [shadow](shadow.md) attached to the same
+- Keep a surface and its rendered shadow attached to the same
   movement so they behave as one object.
 - Pause animation work whenever its result cannot be seen.
 - Never wait for an animation before beginning real work. When navigation or a

@@ -1,4 +1,5 @@
-name: mateo_mobile
+name: mateo_mobile_old
+publish_to: none
 description: >-
   The Flutter implementation of Mateo Mobile, a simple, expressive, warm design
   system for touch-first Android and iOS applications.
@@ -6,7 +7,6 @@ version: 0.1.3
 homepage: https://github.com/Ventairy/mateo
 repository: https://github.com/Ventairy/mateo/tree/main/packages/flutter/mateo-mobile-flutter
 issue_tracker: https://github.com/Ventairy/mateo/issues
-documentation: https://pub.dev/documentation/mateo_mobile/latest/
 topics:
   - flutter
   - design-system
@@ -19,19 +19,20 @@ platforms:
   ios:
 
 environment:
-  sdk: ">=3.12.0 <4.0.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.0.0
   intl: ^0.20.2
-  oh_my_flutter: ^0.5.0
+  oh_my_flutter: ^0.20.0
 
 dev_dependencies:
   alchemist: ^0.14.0
   build_runner: ^2.15.0
-  dotdart: ^0.6.1
+  dotdart: ^0.10.1
   flutter_test:
     sdk: flutter
   test_api: ^0.7.0
@@ -39,13 +40,13 @@ dev_dependencies:
 
 dotdart:
   output: lib/src/gen/
-  lottie:
-    - assets/lotties/
   svg:
     - assets/icons/
 
 flutter:
   uses-material-design: true
+  shaders:
+    - shaders/mateo_orb.frag
   assets:
     - assets/icons/
   fonts:

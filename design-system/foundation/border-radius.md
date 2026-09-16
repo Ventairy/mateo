@@ -26,20 +26,35 @@ for the component's size, placement, content, nesting, and platform. Components
 may use different fixed values, but they must preserve the same deeply rounded
 quality.
 
-## Pill geometry
+## Rounded shape
 
-A pill is a rounded rectangle whose effective corner radius is half its
-shortest side:
+Use the [Mateo rounded shape](rounded-shape.md) for rounded rectangles and
+capsules. It gives them one shared construction, with soft shoulders that adapt
+to the available width and height. A non-pill surface uses its
+component-defined radius; a capsule uses full rounding.
+
+The rounded-shape foundation defines the radius, axis fitting, coefficients,
+and complete outline. Equal dimensions at full rounding give the circle
+geometry below. The skeleton exception keeps its own geometry.
+
+## Capsule
+
+Use the [rounded-shape construction](rounded-shape.md#pills-and-circles) for
+every pill- or capsule-shaped element, including controls, surfaces,
+indicators, and decorative shapes. This rule applies regardless of the
+element's size, orientation, or platform.
+
+Request a radius of half the shorter dimension:
 
 ```text
-pill radius = min(width, height) / 2
+pill radius = half the shorter dimension
 ```
 
 The pill must remain fully rounded when its width, height, content, or text
-scale changes. Prefer a platform's capsule or pill shape when one is available.
-A very large numeric radius such as `999` or `9999` is also acceptable when the
-rendering system automatically clamps it to half the shortest side. Those
-numbers are implementation techniques, not additional Mateo radius values.
+scale changes. Re-evaluate the rounded shape from its current bounds.
+Larger radius requests reach the same limit in this construction. A
+conventional rounded rectangle with circular corners still produces a
+different outline.
 
 Examples:
 
@@ -51,13 +66,17 @@ Examples:
 
 ## Circle geometry
 
-A circle is the square form of `pill`. Give the element equal width and height,
-then apply the pill shape:
+A circle uses equal width and height and an exact circular outline:
 
 ```text
 circle diameter = width = height
 circle radius = diameter / 2
 ```
+
+For center **(cˣ, cʸ)** and radius **r**, its boundary is
+**(cˣ + r cos θ, cʸ + r sin θ)** for **0 ≤ θ ≤ 2π**.
+Use the platform's circle primitive when available. It is the same geometry
+as the rounded-shape construction with equal dimensions at full rounding.
 
 Use a circle when the component contains one centered symbol or represents a
 radial effect. Do not force text or changing-width content into a circle.
@@ -72,32 +91,36 @@ Use the shape defined by the Mateo component whenever one exists.
 | Search controls                        | `pill`            |
 | Floating button groups and action bars | `pill`            |
 | Toasts and compact feedback surfaces   | `pill`            |
-| Drag handles and skeleton text lines   | `pill`            |
+| Drag handles                           | `pill`            |
 | Icon-only and back buttons             | Circle            |
 | Radial pulses                          | Circle by default |
+| Rectangular skeleton bones             | Material-style    |
 
 Do not replace a component's pill with a smaller arbitrary radius to make it
 feel more compact. Change its height, padding, or density instead; the fully
-rounded silhouette remains part of the component.
+rounded silhouette remains part of the component. Skeleton bones are the
+intentional exception because they represent content bounds rather than Mateo
+controls.
 
 ## Rounded shapes inside other shapes
 
-When one rounded shape sits inside another, their corners should follow the
-same curve. Reduce the inner corner radius by the visible space between the two
-shapes.
+Choose the outer shape, inner shape, and spacing together. Components own the
+dimensions, radius, and placement that make their nested shapes feel aligned.
+Check the visible corner gap as well as the straight-edge padding.
 
-For example, if the outer radius is `24` and the space between the shapes is
-`8`, use `16` for the inner radius.
-
-This rule does not apply to pills. Each pill stays fully rounded based on its
-own size.
+Drawing a smaller rounded shape and subtracting the padding from its radius
+does not generally produce a constant gap. Do not treat that shortcut as an
+exact parallel outline. Borders, fills, and clipping should share the same
+finished boundary.
 
 ## States and motion
 
-- Keep a component's radius unchanged across resting, pressed, selected,
-  loading, and disabled states.
+- Keep a component's shape rule unchanged across resting, pressed, selected,
+  loading, and disabled states. A capsule always derives its outline from its
+  current bounds; a component with a fixed radius retains that radius.
 - When a transition changes one component shape into another, interpolate the
-  visible corners continuously. Do not let the surface become square midway.
+  visible corners continuously. Use [rounded convex interpolation](rounded-convex-interpolation.md)
+  for changes between convex outlines. Do not let the surface become square midway.
 - End every shape transition on the exact destination shape defined by the
   component and its platform.
 - Shape animation must preserve clipping for backgrounds, content, effects, and

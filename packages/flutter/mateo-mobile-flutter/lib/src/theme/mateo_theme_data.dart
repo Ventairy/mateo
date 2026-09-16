@@ -6,7 +6,7 @@ import 'mateo_palette/mateo_palette.dart';
 @immutable
 /// The reusable Mateo tokens registered on a Material [ThemeData].
 class MateoThemeData extends ThemeExtension<MateoThemeData> {
-  /// Creates theme data from the required semantic [colorScheme] and [palette].
+  /// Creates theme data from the required [colorScheme] and [palette].
   const MateoThemeData({
     required this.colorScheme,
     required this.palette,

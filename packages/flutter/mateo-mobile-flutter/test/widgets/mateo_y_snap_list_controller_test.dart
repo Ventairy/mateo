@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
@@ -1202,7 +1202,10 @@ class _HarnessApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: MateoTheme.light(),
+      theme: MateoTheme.light(
+        accentColor: const Color(0xFF4A5CFF),
+        onAccent: const Color(0xFFFFFFFF),
+      ).lightTheme,
       home: MediaQuery(
         data: const MediaQueryData(
           size: Size(800, 800),

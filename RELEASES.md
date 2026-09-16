@@ -8,11 +8,13 @@ can ship on its own schedule.
 | Commit scope | Path | Version source | Changelog | Tag |
 | ------------ | ---- | -------------- | --------- | --- |
 | `design-system` | `design-system/` | `design-system/version.txt` | `design-system/CHANGELOG.md` | `mateo-design-system-v<version>` |
-| `mateo-mobile-flutter` | `packages/flutter/mateo-mobile-flutter/` | `packages/flutter/mateo-mobile-flutter/pubspec.yaml` | `packages/flutter/mateo-mobile-flutter/CHANGELOG.md` | `mateo-mobile-flutter-v<version>` |
 
 Design-system releases describe Mateo contracts: foundations, platform
 guidance, component specifications, interaction behavior, accessibility
 expectations, and migration guidance.
+
+`mateo_mobile` is under development with `publish_to: none`; it has no active
+publication lane.
 
 Package releases describe installable artifacts. A package bug fix can release
 without a design-system version bump, and a design-system contract can release
@@ -25,9 +27,6 @@ requests for the lanes whose files changed.
 
 Use lane scopes:
 
-- `fix(mateo-mobile-flutter): ...` creates a patch package release.
-- `feat(mateo-mobile-flutter): ...` creates a minor package release.
-- `feat(mateo-mobile-flutter)!: ...` marks a breaking package change.
 - `fix(design-system): ...` creates a patch design-system release.
 - `feat(design-system): ...` creates a minor design-system release.
 
@@ -50,9 +49,8 @@ Do not manually bump package versions, edit `.release-please-manifest.json`, or
 create release tags during normal development.
 
 Package publishing is separate from Release Please. Publishing workflows are
-triggered by package tags and stay owned by the package ecosystem. The Flutter
-package publishes to pub.dev only after its release gate passes and the
-publication environment is approved.
+triggered by package tags and stay owned by the package ecosystem. A publishable package requires a release gate and an approved publication
+environment.
 
 ## Human flow
 

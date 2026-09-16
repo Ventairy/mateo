@@ -48,24 +48,24 @@ release notes.
 Use one of these title shapes:
 
 ```text
-fix(mateo-mobile-flutter): correct toast positioning
-feat(mateo-mobile-flutter): add a segmented control
+fix(mateo-mobile): correct toast positioning
+feat(mateo-mobile): add a segmented control
 feat(design-system): define segmented control behavior
 docs(design-system): clarify reduced-motion guidance
-test(mateo-mobile-flutter): cover large text scaling
+test(mateo-mobile): cover large text scaling
 chore(repo): improve contribution checks
 ```
 
 Use `!` before the colon for a breaking public change, for example
-`feat(mateo-mobile-flutter)!: simplify the button API`. Release-producing
+`feat(mateo-mobile)!: simplify the button API`. Release-producing
 changes (`feat`, `fix`, `perf`, and `refactor`) require a scope. Titles are
 validated automatically, and maintainers can help correct one before merge.
 
 ## Flutter package
 
-For setup, validation, testing, and other package-specific expectations, see
-the
-[Flutter package contribution guide](packages/flutter/mateo-mobile-flutter/CONTRIBUTING.md).
+Run Flutter commands through FVM from `packages/flutter/mateo-mobile/`.
+Use `fvm flutter analyze` and `fvm flutter test` to validate package changes.
+See the [package README](packages/flutter/mateo-mobile/README.md) for usage.
 
 ## Release files
 

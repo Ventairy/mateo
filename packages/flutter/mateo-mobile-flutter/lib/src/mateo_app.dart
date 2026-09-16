@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'components/mateo_toast/mateo_toast.dart';
 import 'theme/mateo_theme.dart';
-import 'widgets/mateo_toast/mateo_toast.dart';
 
 /// The Mateo Mobile application shell.
 ///
@@ -14,8 +14,8 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 /// ```dart
 /// MateoApp(
 ///   title: 'My App',
-///   color: (
-///     accent: Color(0xFFFF4A4B),
+///   theme: MateoTheme.light(
+///     accentColor: Color(0xFFFF4A4B),
 ///     onAccent: Color(0xFFFFFFFF),
 ///   ),
 ///   home: HomePage(),
@@ -25,8 +25,8 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 /// ```dart
 /// MateoApp.router(
 ///   title: 'My App',
-///   color: (
-///     accent: Color(0xFFFF4A4B),
+///   theme: MateoTheme.adaptive(
+///     accentColor: Color(0xFFFF4A4B),
 ///     onAccent: Color(0xFFFFFFFF),
 ///   ),
 ///   routerConfig: goRouter,
@@ -39,12 +39,11 @@ import 'widgets/mateo_toast/mateo_toast.dart';
 class MateoApp extends StatelessWidget {
   /// Creates a Mateo Mobile application shell that uses a [Navigator].
   ///
-  /// The [color] record configures the accent palette and the foreground used
-  /// on accent surfaces. Provide [home], [routes], [onGenerateRoute], or
-  /// [builder] for app content.
+  /// The [theme] configures both appearance branches and their selection mode.
+  /// Provide [home], [routes], [onGenerateRoute], or [builder] for app content.
   const MateoApp({
     required this.title,
-    required this.color,
+    required this.theme,
     super.key,
     this.navigatorKey,
     this.scaffoldMessengerKey,
@@ -81,12 +80,11 @@ class MateoApp extends StatelessWidget {
 
   /// Creates a Mateo Mobile application shell that uses a [Router].
   ///
-  /// The [color] record configures the accent palette and the foreground used
-  /// on accent surfaces. The [routerConfig] and [routerDelegate] parameters
-  /// must not both be null.
+  /// The [theme] configures both appearance branches and their selection mode.
+  /// The [routerConfig] and [routerDelegate] parameters must not both be null.
   const MateoApp.router({
     required this.title,
-    required this.color,
+    required this.theme,
     super.key,
     this.scaffoldMessengerKey,
     this.routeInformationProvider,
@@ -179,12 +177,8 @@ class MateoApp extends StatelessWidget {
   /// The callback that generates the application title from context.
   final GenerateAppTitle? onGenerateTitle;
 
-  /// The package-level accent color configuration.
-  ///
-  /// `accent` seeds the accent and neutral palette scales. `onAccent` is the
-  /// foreground placed on accent surfaces, including primary button text and
-  /// icons. Consumers must verify that the pair has sufficient contrast.
-  final ({Color accent, Color onAccent}) color;
+  /// The package-level theme configuration.
+  final MateoTheme theme;
 
   /// The locale used for localized widgets.
   final Locale? locale;
@@ -263,9 +257,10 @@ class MateoApp extends StatelessWidget {
         title: title,
         onGenerateTitle: onGenerateTitle,
         onNavigationNotification: onNavigationNotification,
-        color: color.accent,
-        theme: _theme,
-        themeMode: ThemeMode.light,
+        color: theme.lightTheme.colorScheme.primary,
+        theme: theme.lightTheme,
+        darkTheme: theme.darkTheme,
+        themeMode: theme.themeMode,
         locale: locale,
         localizationsDelegates: localizationsDelegates,
         localeListResolutionCallback: localeListResolutionCallback,
@@ -298,9 +293,10 @@ class MateoApp extends StatelessWidget {
       builder: _buildContent,
       title: title ?? '',
       onGenerateTitle: onGenerateTitle,
-      color: color.accent,
-      theme: _theme,
-      themeMode: ThemeMode.light,
+      color: theme.lightTheme.colorScheme.primary,
+      theme: theme.lightTheme,
+      darkTheme: theme.darkTheme,
+      themeMode: theme.themeMode,
       locale: locale,
       localizationsDelegates: localizationsDelegates,
       localeListResolutionCallback: localeListResolutionCallback,
@@ -317,9 +313,4 @@ class MateoApp extends StatelessWidget {
       restorationScopeId: restorationScopeId,
     );
   }
-
-  ThemeData get _theme => MateoTheme.light(
-    accentColor: color.accent,
-    onAccent: color.onAccent,
-  );
 }

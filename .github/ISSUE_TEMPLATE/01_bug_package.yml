@@ -23,7 +23,7 @@ body:
     attributes:
       label: Framework or SDK version
       description: Share the relevant framework or platform SDK version.
-      placeholder: Flutter 3.44.0, React 20.0.0, or iOS SDK 26.0
+      placeholder: Flutter 3.47.0, React 20.0.0, or iOS SDK 26.0
     validations:
       required: true
   - type: input

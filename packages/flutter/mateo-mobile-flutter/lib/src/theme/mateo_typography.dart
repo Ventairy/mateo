@@ -5,7 +5,7 @@
 /// [fontFamily] and [letterSpacing].
 abstract final class MateoTypography {
   /// The bundled Inter family used by Mateo Mobile.
-  static const String fontFamily = 'packages/mateo_mobile/Inter';
+  static const String fontFamily = 'packages/mateo_mobile_old/Inter';
 
   /// Fixed logical-pixel letter spacing applied to Mateo Mobile text.
   static const double letterSpacing = -0.2;

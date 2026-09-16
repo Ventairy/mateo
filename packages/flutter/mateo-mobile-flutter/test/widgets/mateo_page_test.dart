@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 void main() {
   group('MateoPage', () {
@@ -368,9 +366,7 @@ void main() {
         final animatedAncestors = find.ancestor(
           of: find.byKey(_destinationKey),
           matching: find.byWidgetPredicate(
-            (widget) =>
-                widget is AnimatedWidget &&
-                widget.runtimeType.toString() == '_MateoPushPageTransitionView',
+            (widget) => widget is AnimatedWidget && widget.runtimeType.toString() == '_MateoPushPageTransitionView',
           ),
         );
 
@@ -866,16 +862,12 @@ void main() {
         final appKey = GlobalKey<_DeclarativePageAppState>();
 
         await tester.pumpWidget(_DeclarativePageApp(key: appKey));
-        final originalRoute =
-            ModalRoute.of(tester.element(find.text('First child')))!
-                as PageRoute<void>;
+        final originalRoute = ModalRoute.of(tester.element(find.text('First child')))! as PageRoute<void>;
 
         appKey.currentState!.updateWashSettings();
         await tester.pump();
 
-        final updatedRoute =
-            ModalRoute.of(tester.element(find.text('First child')))!
-                as PageRoute<void>;
+        final updatedRoute = ModalRoute.of(tester.element(find.text('First child')))! as PageRoute<void>;
         expect(updatedRoute, same(originalRoute));
         expect(
           updatedRoute.transitionDuration,
@@ -895,16 +887,12 @@ void main() {
         final appKey = GlobalKey<_DeclarativePageAppState>();
 
         await tester.pumpWidget(_DeclarativePageApp(key: appKey));
-        final originalRoute =
-            ModalRoute.of(tester.element(find.text('First child')))!
-                as PageRoute<void>;
+        final originalRoute = ModalRoute.of(tester.element(find.text('First child')))! as PageRoute<void>;
 
         appKey.currentState!.usePushTransition();
         await tester.pumpAndSettle();
 
-        final updatedRoute =
-            ModalRoute.of(tester.element(find.text('First child')))!
-                as PageRoute<void>;
+        final updatedRoute = ModalRoute.of(tester.element(find.text('First child')))! as PageRoute<void>;
         expect(updatedRoute, isNot(same(originalRoute)));
         expect(updatedRoute.transitionDuration, Duration.zero);
       },
@@ -1149,7 +1137,7 @@ Future<void> _pumpPushApp(
     final context = tester.element(find.byKey(_openKey));
     final route = page.createRoute(context) as PageRoute<void>;
     onRouteCreated?.call(route);
-    unawaited(Navigator.of(context).push(route));
+    Navigator.of(context).push(route);
   }
   await tester.pump();
   if (settle) await tester.pumpAndSettle();
@@ -1204,7 +1192,7 @@ class _PushApp extends StatelessWidget {
                 onPressed: () {
                   final route = page.createRoute(context) as PageRoute<void>;
                   onRouteCreated?.call(route);
-                  unawaited(Navigator.of(context).push(route));
+                  Navigator.of(context).push(route);
                 },
                 child: const Text('Open'),
               ),
@@ -1235,25 +1223,23 @@ class _PushTransitionApp extends StatelessWidget {
               child: TextButton(
                 key: _openKey,
                 onPressed: () {
-                  unawaited(
-                    Navigator.of(context).push(
-                      MateoPage<void>(
-                        transition: MateoPageTransition.push(
-                          direction: direction,
-                        ),
-                        child: ColoredBox(
-                          key: _destinationKey,
-                          color: Colors.blue,
-                          child: Center(
-                            child: TextButton(
-                              key: _closeKey,
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('Close'),
-                            ),
+                  Navigator.of(context).push(
+                    MateoPage<void>(
+                      transition: MateoPageTransition.push(
+                        direction: direction,
+                      ),
+                      child: ColoredBox(
+                        key: _destinationKey,
+                        color: Colors.blue,
+                        child: Center(
+                          child: TextButton(
+                            key: _closeKey,
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Close'),
                           ),
                         ),
-                      ).createRoute(context),
-                    ),
+                      ),
+                    ).createRoute(context),
                   );
                 },
                 child: const Text('Open'),

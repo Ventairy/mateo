@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import 'test_app.dart';
 
@@ -9,7 +9,7 @@ void main() {
     'when TestApp receives a custom theme, it should expose that exact Mateo color scheme',
     (tester) async {
       final customColorScheme = mateoTestColorScheme.copyWith(
-        background: mateoTestColorScheme.buttons.accent.secondary.background,
+        background: mateoTestColorScheme.buttons.secondary.accent.background,
       );
       final customMateoThemeData = mateoTestThemeData.copyWith(
         colorScheme: customColorScheme,

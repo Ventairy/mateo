@@ -8,6 +8,13 @@ analyzer:
   exclude:
     - lib/**/*.freezed.dart
     - lib/**/*.g.dart
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
   errors:
     invalid_annotation_target: ignore
   language:
@@ -22,5 +29,4 @@ linter:
     avoid_redundant_argument_values: false
     lines_longer_than_80_chars: false
     no_leading_underscores_for_local_identifiers: false
-    one_member_abstracts: false
     public_member_api_docs: false

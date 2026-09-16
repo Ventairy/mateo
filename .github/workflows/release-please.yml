@@ -17,6 +17,8 @@ concurrency:
 jobs:
   release-please:
     name: Create release PRs and GitHub Releases
+    # Re-enable when Mateo is ready to leave development.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Run Release Please

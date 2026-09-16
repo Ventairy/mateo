@@ -2,9 +2,11 @@
 
 > The raw primitive color scales for Mateo, a warm and simple design system. These are **pure colors**, not semantic assignments. Each platform's color scheme defines its semantic roles.
 >
-> The palette contains: **2 foundation colors** (pure white, pure black) + **13 color scales** (accent, neutral, green, amber, red, blue, cyan, violet, teal, orange, pink, yellow, whatsapp), each with 12 steps.
+> The palette contains: **2 foundation colors** (pure white, pure black) + **12 color scales** (accent, neutral, green, amber, red, blue, cyan, violet, teal, orange, pink, yellow), each with 12 steps.
 >
-> **Mateo's default `accent` seed is `#4A5CFF`.** The `accent` scale is the active product accent slot. Consuming products may replace the seed and regenerate both `accent` and `neutral` using the contract below.
+> **Mateo's default `accent` seed is `#4A5CFF`.** The `accent` scale is the
+> active product accent slot. Consumers may replace the accent without changing
+> Mateo's fixed achromatic neutral scale.
 
 ---
 
@@ -44,7 +46,7 @@ numbered scales.
 **Anchor:** Step 9 = `#4A5CFF` = `oklch(56.50% 0.239 271.36)`
 
 This is Mateo's default accent scale. Consumers may replace the step-9 seed and
-regenerate the entire accent and neutral scales together.
+regenerate the accent scale without changing the neutral scale.
 
 | Step | Hex           | OKLCH                      |
 | ---- | ------------- | -------------------------- |
@@ -94,57 +96,37 @@ adjust the generated scale.
 
 ---
 
-## 2. Neutral — Accent-tinted
+## 2. Neutral — Achromatic
 
-**Hue:** ~271 by default; always inherited from the current accent seed
-**Chroma:** 0.002–0.008 with Mateo's vivid seed
+**Hue:** none
+**Chroma:** `0`
 
-Its low chroma carries a trace of the current accent hue while remaining
-visually neutral.
+Mateo's structural gray family is fixed and independent from the active
+product accent. Its lightness curve provides consistent separation between
+backgrounds, borders, disabled states, secondary text, and primary text
+without introducing a color cast.
 
-| Step | Hex       | OKLCH                      |
-| ---- | --------- | -------------------------- |
-| 1    | `#FBFCFD` | `oklch(99.0% 0.002 271.4)` |
-| 2    | `#F4F5F7` | `oklch(97.0% 0.003 271.4)` |
-| 3    | `#EAEBEF` | `oklch(94.0% 0.005 271.4)` |
-| 4    | `#E0E1E5` | `oklch(91.0% 0.006 271.4)` |
-| 5    | `#D6D7DC` | `oklch(88.0% 0.007 271.4)` |
-| 6    | `#CCCDD3` | `oklch(85.0% 0.008 271.4)` |
-| 7    | `#BFC1C6` | `oklch(81.0% 0.008 271.4)` |
-| 8    | `#909297` | `oklch(66.0% 0.007 271.4)` |
-| 9    | `#707175` | `oklch(55.0% 0.006 271.4)` |
-| 10   | `#626367` | `oklch(50.0% 0.006 271.4)` |
-| 11   | `#3E4043` | `oklch(37.0% 0.006 271.4)` |
-| 12   | `#17181B` | `oklch(21.0% 0.006 271.4)` |
-
-### Regenerate neutral with accent
-
-Let `tint = min(1, C9 / 0.20)`. Set every neutral step to the accent seed hue
-and multiply each maximum chroma below by `tint`. This makes lower-chroma seeds
-produce quieter neutrals instead of exaggerating their color. If the accent
-seed is achromatic, set neutral chroma to `0`; hue is then irrelevant.
-
-| Step | Lightness | Maximum chroma |
-| ---- | --------- | -------------- |
-| 1    | `0.99`    | `0.002`        |
-| 2    | `0.97`    | `0.003`        |
-| 3    | `0.94`    | `0.005`        |
-| 4    | `0.91`    | `0.006`        |
-| 5    | `0.88`    | `0.007`        |
-| 6    | `0.85`    | `0.008`        |
-| 7    | `0.81`    | `0.008`        |
-| 8    | `0.66`    | `0.007`        |
-| 9    | `0.55`    | `0.006`        |
-| 10   | `0.50`    | `0.006`        |
-| 11   | `0.37`    | `0.006`        |
-| 12   | `0.21`    | `0.006`        |
+| Step | Hex       | OKLCH                |
+| ---- | --------- | -------------------- |
+| 1    | `#FCFCFC` | `oklch(99.0% 0 0)`  |
+| 2    | `#F5F5F5` | `oklch(97.0% 0 0)`  |
+| 3    | `#EBEBEB` | `oklch(94.0% 0 0)`  |
+| 4    | `#E1E1E1` | `oklch(91.0% 0 0)`  |
+| 5    | `#D7D7D7` | `oklch(88.0% 0 0)`  |
+| 6    | `#CECECE` | `oklch(85.0% 0 0)`  |
+| 7    | `#C1C1C1` | `oklch(81.0% 0 0)`  |
+| 8    | `#929292` | `oklch(66.0% 0 0)`  |
+| 9    | `#717171` | `oklch(55.0% 0 0)`  |
+| 10   | `#636363` | `oklch(50.0% 0 0)`  |
+| 11   | `#404040` | `oklch(37.0% 0 0)`  |
+| 12   | `#181818` | `oklch(21.0% 0 0)`  |
 
 ---
 
 ## 3. Green
 
 **Hue:** ~148
-**Anchor:** Step 9 = `#00D757` = `oklch(76.7% 0.222 147.9)`
+**Anchor:** Step 9 = `#00C950` = `oklch(72.9% 0.212 147.8)`
 
 | Step | Hex           | OKLCH                      |
 | ---- | ------------- | -------------------------- |
@@ -156,7 +138,7 @@ seed is achromatic, set neutral chroma to `0`; hue is then irrelevant.
 | 6    | `#C8F2CD`     | `oklch(92.2% 0.067 147.9)` |
 | 7    | `#B2F1BA`     | `oklch(90.1% 0.098 147.9)` |
 | 8    | `#78E18A`     | `oklch(82.4% 0.156 147.9)` |
-| 9    | **`#00D757`** | `oklch(76.7% 0.222 147.9)` |
+| 9    | **`#00C950`** | `oklch(72.9% 0.212 147.8)` |
 | 10   | `#00B849`     | `oklch(68.3% 0.198 147.9)` |
 | 11   | `#006F29`     | `oklch(47.2% 0.137 147.9)` |
 | 12   | `#001F06`     | `oklch(21.0% 0.061 147.9)` |
@@ -358,31 +340,6 @@ seed is achromatic, set neutral chroma to `0`; hue is then irrelevant.
 | 10   | `#D9B100`     | `oklch(77.4% 0.158 92.2)` |
 | 11   | `#7F6700`     | `oklch(52.2% 0.107 92.2)` |
 | 12   | `#1F1700`     | `oklch(21.0% 0.043 92.2)` |
-
----
-
-## 13. WhatsApp
-
-**Hue:** ~150 (green — WhatsApp brand green, slightly more blue-green than `green`)
-**Anchor:** Step 9 = `#25D366` (Mateo's fixed WhatsApp reference green)
-
-A fixed external-brand reference. Unlike `accent`, this scale is not
-regenerated from the consuming brand's seed.
-
-| Step | Hex           | OKLCH                      |
-| ---- | ------------- | -------------------------- |
-| 1    | `#F9FDFA`     | `oklch(99.0% 0.005 151)`   |
-| 2    | `#F4FAF5`     | `oklch(98.0% 0.009 151)`   |
-| 3    | `#ECF7ED`     | `oklch(96.5% 0.017 150)`   |
-| 4    | `#E2F3E5`     | `oklch(94.9% 0.026 150)`   |
-| 5    | `#D6F2DA`     | `oklch(93.4% 0.044 149)`   |
-| 6    | `#C9F0CE`     | `oklch(91.9% 0.062 149)`   |
-| 7    | `#B5EFBE`     | `oklch(89.9% 0.088 149)`   |
-| 8    | `#7FDE92`     | `oklch(82.3% 0.141 149)`   |
-| 9    | **`#25D366`** | `oklch(76.0% 0.201 149.7)` |
-| 10   | `#01B950`     | `oklch(68.5% 0.193 149)`   |
-| 11   | `#126E2A`     | `oklch(47.2% 0.132 147)`   |
-| 12   | `#002002`     | `oklch(21.0% 0.070 146)`   |
 
 ---
 

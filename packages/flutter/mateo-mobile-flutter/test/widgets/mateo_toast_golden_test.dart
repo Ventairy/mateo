@@ -1,7 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
@@ -16,7 +16,10 @@ void main() {
           GoldenTestScenario(
             name: 'error',
             child: _ToastGoldenFrame(
-              child: MateoToast(message: 'Nao foi possivel carregar agora'),
+              child: MateoToast(
+                message: 'Nao foi possivel carregar agora',
+                presentation: .error(),
+              ),
             ),
           ),
           GoldenTestScenario(
@@ -24,7 +27,7 @@ void main() {
             child: _ToastGoldenFrame(
               child: MateoToast(
                 message: 'Usando dados salvos',
-                type: MateoToastType.warning,
+                presentation: .warning(),
               ),
             ),
           ),
@@ -33,7 +36,7 @@ void main() {
             child: _ToastGoldenFrame(
               child: MateoToast(
                 message: 'Uma copia foi salva offline',
-                type: MateoToastType.info,
+                presentation: .info(),
               ),
             ),
           ),
@@ -42,7 +45,7 @@ void main() {
             child: _ToastGoldenFrame(
               child: MateoToast(
                 message: 'Download concluido',
-                type: MateoToastType.success,
+                presentation: .success(),
               ),
             ),
           ),
@@ -51,8 +54,9 @@ void main() {
             child: _ToastGoldenFrame(
               child: MateoToast(
                 message: 'Fones de ouvido em 80%',
-                type: MateoToastType.neutral,
-                iconBuilder: _buildTestCustomIcon,
+                presentation: .neutral(
+                  iconBuilder: _buildTestCustomIcon,
+                ),
               ),
             ),
           ),
@@ -64,21 +68,28 @@ void main() {
                   10,
                   'Tente novamente em alguns segundos',
                 ).join(' '),
+                presentation: .error(),
               ),
             ),
           ),
           GoldenTestScenario(
             name: 'strong shadow',
             child: _ToastGoldenFrame(
-              backgroundColor: mateoTestColorScheme.buttons.accent.secondary.background,
-              child: MateoToast(message: 'O mapa perdeu a conexao'),
+              backgroundColor: mateoTestColorScheme.buttons.secondary.accent.background,
+              child: MateoToast(
+                message: 'O mapa perdeu a conexao',
+                presentation: .error(),
+              ),
             ),
           ),
           GoldenTestScenario(
             name: 'custom padding',
             child: _ToastGoldenFrame(
               padding: EdgeInsets.fromLTRB(54, 48, 20, 16),
-              child: MateoToast(message: 'uh lala'),
+              child: MateoToast(
+                message: 'uh lala',
+                presentation: .error(),
+              ),
             ),
           ),
           GoldenTestScenario(
@@ -86,7 +97,9 @@ void main() {
             child: _ToastGoldenFrame(
               child: MateoToast(
                 message: 'Com icone personalizado',
-                iconBuilder: _buildTestCustomIcon,
+                presentation: .error(
+                  iconBuilder: _buildTestCustomIcon,
+                ),
               ),
             ),
           ),

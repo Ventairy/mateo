@@ -3,69 +3,45 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
+import 'package:mateo_mobile_old/src/components/mateo_button/mateo_button.dart' show MateoButton, MateoButtonScope;
 
 import '../test_app.dart';
 
 final _colorScheme = MateoColorScheme.light();
 
 void main() {
+  testWidgets('when icon builders add padding, it should add to the shared gap', (tester) async {
+    for (final variant in <MateoButtonVariant>[MateoButtonVariant.primary, MateoButtonVariant.tertiary]) {
+      await tester.pumpWidget(
+        TestApp(
+          child: Center(
+            child: MateoButton(
+              presentation: MateoButtonPresentation.label(
+                label: 'Action',
+                variant: variant,
+                leadingIconBuilder: (_) => const Padding(
+                  padding: EdgeInsets.only(right: 4),
+                  child: Icon(Icons.search),
+                ),
+                trailingIconBuilder: (_) => const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Icon(Icons.arrow_forward),
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final label = tester.getRect(find.text('Action'));
+      expect(label.left - tester.getRect(find.byIcon(Icons.search)).right, 14);
+      expect(tester.getRect(find.byIcon(Icons.arrow_forward)).left - label.right, 18);
+    }
+  });
+
   group('MateoButton', () {
-    group('tone', () {
-      test(
-        'when tone is omitted, it should default to accent in both constructors',
-        () {
-          final button = MateoButton(
-            variant: MateoButtonVariant.primary,
-            label: 'Continue',
-            onPressed: () {},
-          );
-          final actionBloomButton = MateoButton.actionBloom(
-            variant: MateoButtonVariant.primary,
-            label: 'Choose',
-            actions: _actionBloomActions(),
-          );
-
-          expect(button.tone, MateoButtonTone.accent);
-          expect(actionBloomButton.tone, MateoButtonTone.accent);
-        },
-      );
-
-      test(
-        'when accent tone is explicit, it should be retained by both constructors',
-        () {
-          final button = MateoButton(
-            variant: MateoButtonVariant.secondary,
-            tone: MateoButtonTone.accent,
-            label: 'Continue',
-            onPressed: () {},
-          );
-          final actionBloomButton = MateoButton.actionBloom(
-            variant: MateoButtonVariant.secondary,
-            tone: MateoButtonTone.accent,
-            label: 'Choose',
-            actions: _actionBloomActions(),
-          );
-
-          expect(button.tone, MateoButtonTone.accent);
-          expect(actionBloomButton.tone, MateoButtonTone.accent);
-        },
-      );
-
-      test('when accent tone resolves variants, it should use accent colors', () {
-        final accent = MateoButtonTone.accent.colorScheme(_colorScheme);
-
-        expect(
-          MateoButtonVariant.primary.colorScheme(accent),
-          _colorScheme.buttons.accent.primary,
-        );
-        expect(
-          MateoButtonVariant.secondary.colorScheme(accent),
-          _colorScheme.buttons.accent.secondary,
-        );
-      });
-    });
-
     group('tap behavior', () {
       testWidgets(
         'when tapped with a sync callback, it should invoke onPressed',
@@ -75,8 +51,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () => tapCount += 1,
               ),
             ),
@@ -95,8 +73,10 @@ void main() {
         await tester.pumpWidget(
           const TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Indisponivel',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Indisponivel',
+              ),
             ),
           ),
         );
@@ -113,8 +93,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -133,8 +115,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -158,8 +142,10 @@ void main() {
         await tester.pumpWidget(
           const TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Indisponivel',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Indisponivel',
+              ),
             ),
           ),
         );
@@ -182,8 +168,10 @@ void main() {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Ver oportunidades',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Ver oportunidades',
+              ),
               onPressed: () {},
             ),
           ),
@@ -205,8 +193,10 @@ void main() {
         await tester.pumpWidget(
           const TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Indisponivel',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Indisponivel',
+              ),
             ),
           ),
         );
@@ -227,9 +217,11 @@ void main() {
         await tester.pumpWidget(
           const TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Encaixar',
-              fit: MateoButtonFit.fit,
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Encaixar',
+                fit: MateoButtonFit.fit,
+              ),
               onPressed: null,
             ),
           ),
@@ -248,9 +240,11 @@ void main() {
             child: SizedBox(
               width: 300,
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Expandir',
-                fit: MateoButtonFit.expand,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Expandir',
+                  fit: MateoButtonFit.expand,
+                ),
                 onPressed: null,
               ),
             ),
@@ -274,9 +268,11 @@ void main() {
                   maxHeight: 200,
                 ),
                 child: const MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Expandir',
-                  fit: MateoButtonFit.expand,
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Expandir',
+                    fit: MateoButtonFit.expand,
+                  ),
                   onPressed: null,
                 ),
               ),
@@ -296,9 +292,11 @@ void main() {
           await tester.pumpWidget(
             const TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Compacto',
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Compacto',
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
                 onPressed: null,
               ),
             ),
@@ -317,8 +315,10 @@ void main() {
           await tester.pumpWidget(
             const TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Padrao',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Padrao',
+                ),
                 onPressed: null,
               ),
             ),
@@ -339,8 +339,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -348,7 +350,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.accent.primary.background),
+            equals(_colorScheme.buttons.primary.accent.background),
           );
         },
       );
@@ -359,8 +361,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.secondary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.secondary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -368,7 +372,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.accent.secondary.background),
+            equals(_colorScheme.buttons.secondary.accent.background),
           );
         },
       );
@@ -379,8 +383,10 @@ void main() {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Ver oportunidades',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Ver oportunidades',
+              ),
               onPressed: () {},
             ),
           ),
@@ -391,7 +397,7 @@ void main() {
 
         expect(
           _buttonBackgroundColor(tester),
-          equals(_colorScheme.buttons.accent.primary.background),
+          equals(_colorScheme.buttons.primary.accent.background),
         );
       });
 
@@ -401,8 +407,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -417,7 +425,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.accent.primary.background),
+            equals(_colorScheme.buttons.primary.accent.background),
           );
         },
       );
@@ -426,20 +434,21 @@ void main() {
         'when color scheme is customized, it should use the provided background color',
         (tester) async {
           final customColorScheme = MateoButtonColorScheme(
-            background: mateoTestColorScheme.buttons.success.background,
-            backgroundPressed: mateoTestColorScheme.buttons.success.background,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            background: mateoTestThemeData.palette.green[9],
+            backgroundPressed: mateoTestThemeData.palette.green[9],
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                tone: MateoButtonTone.accent,
-                label: 'Mapa',
-                colorScheme: customColorScheme,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary.neutral,
+                  label: 'Mapa',
+                  colorScheme: customColorScheme,
+                ),
                 onPressed: () {},
               ),
             ),
@@ -447,7 +456,7 @@ void main() {
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(mateoTestColorScheme.buttons.success.background),
+            equals(mateoTestThemeData.palette.green[9]),
           );
         },
       );
@@ -458,15 +467,17 @@ void main() {
           await tester.pumpWidget(
             const TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Indisponivel',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Indisponivel',
+                ),
               ),
             ),
           );
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(_colorScheme.buttons.accent.primary.backgroundDisabled),
+            equals(_colorScheme.buttons.primary.accent.backgroundDisabled),
           );
         },
       );
@@ -475,29 +486,184 @@ void main() {
         'when color scheme is customized and disabled, it should use the disabled background color',
         (tester) async {
           final customColorScheme = MateoButtonColorScheme(
-            background: mateoTestColorScheme.buttons.success.background,
-            backgroundPressed: mateoTestColorScheme.buttons.success.backgroundPressed,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            background: mateoTestThemeData.palette.green[9],
+            backgroundPressed: mateoTestThemeData.palette.green[9],
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
             foreground: mateoTestColorScheme.background,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Fechado',
-                colorScheme: customColorScheme,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Fechado',
+                  colorScheme: customColorScheme,
+                ),
               ),
             ),
           );
 
           expect(
             _buttonBackgroundColor(tester),
-            equals(mateoTestColorScheme.buttons.accent.primary.backgroundDisabled),
+            equals(mateoTestColorScheme.buttons.primary.accent.backgroundDisabled),
           );
         },
       );
+    });
+
+    group('background builder', () {
+      testWidgets(
+        'when customized, it should pass one shared resolved state and preserve the content bounds',
+        (tester) async {
+          MateoButtonState? backgroundState;
+          MateoButtonState? leadingState;
+          MateoButtonState? trailingState;
+
+          await tester.pumpWidget(
+            TestApp(
+              child: MateoButtonScope(
+                backgroundBuilder: (state, child) {
+                  backgroundState = state;
+                  return DecoratedBox(
+                    key: const Key('custom_button_background'),
+                    decoration: BoxDecoration(
+                      color: state.backgroundColor,
+                      borderRadius: state.borderRadius,
+                    ),
+                    child: child,
+                  );
+                },
+                child: MateoButton(
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Continue',
+                    leadingIconBuilder: (state) {
+                      leadingState = state;
+                      return const Icon(Icons.arrow_back);
+                    },
+                    trailingIconBuilder: (state) {
+                      trailingState = state;
+                      return const Icon(Icons.arrow_forward);
+                    },
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          );
+
+          expect(backgroundState, isNotNull);
+          expect(identical(backgroundState, leadingState), isTrue);
+          expect(identical(backgroundState, trailingState), isTrue);
+          expect(backgroundState!.isEnabled, isTrue);
+          expect(backgroundState!.isInteractive, isTrue);
+          expect(backgroundState!.isPressed, isFalse);
+          expect(backgroundState!.isLoading, isFalse);
+          expect(backgroundState!.backgroundColor, _colorScheme.buttons.primary.accent.background);
+          expect(backgroundState!.foregroundColor, _colorScheme.buttons.primary.accent.foreground);
+          expect(backgroundState!.borderRadius, const BorderRadius.all(Radius.circular(34)));
+          expect(find.text('Continue'), findsOneWidget);
+          expect(
+            tester.getSize(find.byKey(const Key('custom_button_background'))),
+            tester.getSize(find.byKey(const Key('mateo_button_container'))),
+          );
+        },
+      );
+
+      testWidgets('when pressed, it should report the pressed presentation state', (tester) async {
+        MateoButtonState? backgroundState;
+        final customColorScheme = MateoButtonColorScheme(
+          background: mateoTestColorScheme.background,
+          backgroundPressed: mateoTestColorScheme.toast.warning.background,
+          backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
+          foreground: mateoTestColorScheme.text.primary,
+          foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
+        );
+
+        await tester.pumpWidget(
+          TestApp(
+            child: MateoButtonScope(
+              backgroundBuilder: (state, child) {
+                backgroundState = state;
+                return child;
+              },
+              child: MateoButton(
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Press',
+                  colorScheme: customColorScheme,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        );
+
+        final gesture = await tester.startGesture(tester.getCenter(find.text('Press')));
+        addTearDown(gesture.removePointer);
+        await tester.pump();
+
+        expect(backgroundState!.isPressed, isTrue);
+        expect(backgroundState!.backgroundColor, customColorScheme.backgroundPressed);
+      });
+
+      testWidgets('when disabled, it should report disabled presentation state', (tester) async {
+        MateoButtonState? backgroundState;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: MateoButtonScope(
+              backgroundBuilder: (state, child) {
+                backgroundState = state;
+                return child;
+              },
+              child: MateoButton(
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Disabled',
+                ),
+              ),
+            ),
+          ),
+        );
+
+        expect(backgroundState!.isEnabled, isFalse);
+        expect(backgroundState!.isInteractive, isFalse);
+        expect(backgroundState!.backgroundColor, _colorScheme.buttons.primary.accent.backgroundDisabled);
+        expect(backgroundState!.foregroundColor, _colorScheme.buttons.primary.accent.foregroundDisabled);
+      });
+
+      testWidgets('when loading, it should report loading and non-interactive state', (tester) async {
+        MateoButtonState? backgroundState;
+
+        await tester.pumpWidget(
+          TestApp(
+            child: MediaQuery(
+              data: const MediaQueryData(disableAnimations: true),
+              child: MateoButtonScope(
+                backgroundBuilder: (state, child) {
+                  backgroundState = state;
+                  return child;
+                },
+                child: MateoButton(
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Loading',
+                  ),
+                  isLoading: true,
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(backgroundState!.isLoading, isTrue);
+        expect(backgroundState!.isInteractive, isFalse);
+      });
     });
 
     group('label style', () {
@@ -507,8 +673,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -526,8 +694,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -535,7 +705,7 @@ void main() {
 
           expect(
             _labelStyle(tester).color,
-            equals(_colorScheme.buttons.accent.primary.foreground),
+            equals(_colorScheme.buttons.primary.accent.foreground),
           );
         },
       );
@@ -546,8 +716,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.secondary,
-                label: 'Ver oportunidades',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.secondary,
+                  label: 'Ver oportunidades',
+                ),
                 onPressed: () {},
               ),
             ),
@@ -555,7 +727,7 @@ void main() {
 
           expect(
             _labelStyle(tester).color,
-            equals(_colorScheme.buttons.accent.secondary.foreground),
+            equals(_colorScheme.buttons.secondary.accent.foreground),
           );
         },
       );
@@ -566,17 +738,19 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.toast.warning.icon,
             backgroundPressed: mateoTestColorScheme.toast.warning.icon,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar',
-                colorScheme: customColorScheme,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar',
+                  colorScheme: customColorScheme,
+                ),
                 onPressed: () {},
               ),
             ),
@@ -593,8 +767,10 @@ void main() {
           await tester.pumpWidget(
             const TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Indisponivel',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Indisponivel',
+                ),
               ),
             ),
           );
@@ -602,7 +778,7 @@ void main() {
           final style = tester.widget<Text>(find.text('Indisponivel')).style!;
           expect(
             style.color,
-            equals(_colorScheme.buttons.accent.primary.foregroundDisabled),
+            equals(_colorScheme.buttons.primary.accent.foregroundDisabled),
           );
         },
       );
@@ -610,15 +786,16 @@ void main() {
 
     group('icon builders', () {
       testWidgets(
-        'when leading icon spacing is customized, it should use the provided spacing',
+        'when a leading icon is supplied, it should use the shared 10px gap',
         (tester) async {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Buscar',
-                leadingIconBuilder: (state) => const Icon(Icons.search),
-                leadingIconSpacing: 10,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Buscar',
+                  leadingIconBuilder: (state) => const Icon(Icons.search),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -636,15 +813,16 @@ void main() {
       );
 
       testWidgets(
-        'when trailing icon spacing is customized, it should use the provided spacing',
+        'when a trailing icon is supplied, it should use the shared 10px gap',
         (tester) async {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Continuar',
-                trailingIconBuilder: (state) => const Icon(Icons.arrow_forward),
-                trailingIconSpacing: 12,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Continuar',
+                  trailingIconBuilder: (state) => const Icon(Icons.arrow_forward),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -657,19 +835,21 @@ void main() {
             ),
           );
 
-          expect(padding.padding, equals(const EdgeInsets.only(left: 12)));
+          expect(padding.padding, equals(const EdgeInsets.only(left: 10)));
         },
       );
 
-      testWidgets('when leading icon spacing is default, it should use 8px', (
+      testWidgets('when leading icon spacing is default, it should use 10px', (
         tester,
       ) async {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Buscar',
-              leadingIconBuilder: (state) => const Icon(Icons.search),
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Buscar',
+                leadingIconBuilder: (state) => const Icon(Icons.search),
+              ),
               onPressed: () {},
             ),
           ),
@@ -679,7 +859,7 @@ void main() {
           find.descendant(of: find.byType(Row), matching: find.byType(Padding)),
         );
 
-        expect(padding.padding, equals(const EdgeInsets.only(right: 8)));
+        expect(padding.padding, equals(const EdgeInsets.only(right: 10)));
       });
 
       testWidgets(
@@ -688,22 +868,24 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
-            foreground: mateoTestColorScheme.buttons.accent.primary.background,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
+            foreground: mateoTestColorScheme.buttons.primary.accent.background,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
           Color? foregroundColor;
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Buscar',
-                colorScheme: customColorScheme,
-                leadingIconBuilder: (state) {
-                  foregroundColor = state.foregroundColor;
-                  return const Icon(Icons.search);
-                },
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Buscar',
+                  colorScheme: customColorScheme,
+                  leadingIconBuilder: (state) {
+                    foregroundColor = state.foregroundColor;
+                    return const Icon(Icons.search);
+                  },
+                ),
                 onPressed: () {},
               ),
             ),
@@ -711,7 +893,7 @@ void main() {
 
           expect(
             foregroundColor,
-            equals(mateoTestColorScheme.buttons.accent.primary.background),
+            equals(mateoTestColorScheme.buttons.primary.accent.background),
           );
         },
       );
@@ -724,12 +906,14 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Indisponivel',
-                leadingIconBuilder: (state) {
-                  isEnabled = state.isEnabled;
-                  return const Icon(Icons.lock);
-                },
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Indisponivel',
+                  leadingIconBuilder: (state) {
+                    isEnabled = state.isEnabled;
+                    return const Icon(Icons.lock);
+                  },
+                ),
               ),
             ),
           );
@@ -746,19 +930,21 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Indisponivel',
-                leadingIconBuilder: (state) {
-                  foregroundColor = state.foregroundColor;
-                  return const Icon(Icons.lock);
-                },
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Indisponivel',
+                  leadingIconBuilder: (state) {
+                    foregroundColor = state.foregroundColor;
+                    return const Icon(Icons.lock);
+                  },
+                ),
               ),
             ),
           );
 
           expect(
             foregroundColor,
-            equals(_colorScheme.buttons.accent.primary.foregroundDisabled),
+            equals(_colorScheme.buttons.primary.accent.foregroundDisabled),
           );
         },
       );
@@ -769,10 +955,12 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Filtrar',
-                leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Filtrar',
+                  leadingIconBuilder: (state) => const Icon(Icons.tune),
+                  trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -789,10 +977,12 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Filtrar',
-                leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Filtrar',
+                  leadingIconBuilder: (state) => const Icon(Icons.tune),
+                  trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -808,10 +998,12 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Filtrar',
-                leadingIconBuilder: (state) => const Icon(Icons.tune),
-                trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Filtrar',
+                  leadingIconBuilder: (state) => const Icon(Icons.tune),
+                  trailingIconBuilder: (state) => const Icon(Icons.arrow_drop_down),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -827,9 +1019,11 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Continuar',
-                trailingIconBuilder: (state) => const Icon(Icons.arrow_forward),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Continuar',
+                  trailingIconBuilder: (state) => const Icon(Icons.arrow_forward),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -846,9 +1040,11 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Voltar',
-                leadingIconBuilder: (state) => const Icon(Icons.arrow_back),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Voltar',
+                  leadingIconBuilder: (state) => const Icon(Icons.arrow_back),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -869,8 +1065,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -891,8 +1089,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -915,8 +1115,10 @@ void main() {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Salvar agora',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Salvar agora',
+              ),
               onPressed: () => completer.future,
             ),
           ),
@@ -937,8 +1139,10 @@ void main() {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Salvar agora',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Salvar agora',
+              ),
               onPressed: () {
                 tapCount += 1;
                 return completer.future;
@@ -963,18 +1167,20 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
           final completer = Completer<void>();
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
-                colorScheme: customColorScheme,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                  colorScheme: customColorScheme,
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -998,8 +1204,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Rapido',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Rapido',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1023,8 +1231,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Enviar',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Enviar',
+                ),
                 onPressed: () {
                   callCount += 1;
                   return firstCompleter.future;
@@ -1056,8 +1266,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Enviar candidatura completa',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Enviar candidatura completa',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1083,9 +1295,11 @@ void main() {
               child: SizedBox(
                 width: 300,
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Enviar candidatura completa',
-                  fit: MateoButtonFit.expand,
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Enviar candidatura completa',
+                    fit: MateoButtonFit.expand,
+                  ),
                   onPressed: () => completer.future,
                 ),
               ),
@@ -1114,8 +1328,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1139,9 +1355,11 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ligar agora',
-                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ligar agora',
+                  leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1162,9 +1380,11 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Ligar agora',
-                leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Ligar agora',
+                  leadingIconBuilder: (state) => const SizedBox.square(dimension: 24),
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1191,8 +1411,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1227,8 +1449,10 @@ void main() {
               child: MediaQuery(
                 data: const MediaQueryData(disableAnimations: true),
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Salvar agora',
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Salvar agora',
+                  ),
                   onPressed: () => completer.future,
                 ),
               ),
@@ -1252,8 +1476,10 @@ void main() {
               child: MediaQuery(
                 data: const MediaQueryData(disableAnimations: true),
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Salvar agora',
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Salvar agora',
+                  ),
                   onPressed: () => completer.future,
                 ),
               ),
@@ -1287,8 +1513,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: true,
                 onPressed: () {},
               ),
@@ -1307,8 +1535,10 @@ void main() {
         await tester.pumpWidget(
           TestApp(
             child: MateoButton(
-              variant: MateoButtonVariant.primary,
-              label: 'Carregando',
+              presentation: MateoButtonPresentation.label(
+                variant: MateoButtonVariant.primary,
+                label: 'Carregando',
+              ),
               isLoading: true,
               onPressed: () {},
             ),
@@ -1326,8 +1556,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Normal',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Normal',
+                ),
                 isLoading: false,
                 onPressed: () {},
               ),
@@ -1347,8 +1579,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: false,
                 onPressed: () {},
               ),
@@ -1360,8 +1594,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: true,
                 onPressed: () {},
               ),
@@ -1380,8 +1616,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: true,
                 onPressed: () {},
               ),
@@ -1393,8 +1631,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: false,
                 onPressed: () {},
               ),
@@ -1414,8 +1654,10 @@ void main() {
           await tester.pumpWidget(
             const TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: true,
               ),
             ),
@@ -1433,17 +1675,19 @@ void main() {
           final customColorScheme = MateoButtonColorScheme(
             background: mateoTestColorScheme.background,
             backgroundPressed: mateoTestColorScheme.skeleton.bone,
-            backgroundDisabled: mateoTestColorScheme.buttons.accent.primary.backgroundDisabled,
+            backgroundDisabled: mateoTestColorScheme.buttons.primary.accent.backgroundDisabled,
             foreground: mateoTestColorScheme.text.primary,
-            foregroundDisabled: mateoTestColorScheme.text.disabled,
+            foregroundDisabled: mateoTestColorScheme.buttons.primary.accent.foregroundDisabled,
           );
 
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Desabilitado',
-                colorScheme: customColorScheme,
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Desabilitado',
+                  colorScheme: customColorScheme,
+                ),
                 isLoading: true,
               ),
             ),
@@ -1453,7 +1697,7 @@ void main() {
 
           expect(
             _loadingIndicator(tester).color,
-            equals(mateoTestColorScheme.text.disabled),
+            equals(mateoTestColorScheme.buttons.primary.accent.foregroundDisabled),
           );
         },
       );
@@ -1466,8 +1710,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Carregando',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Carregando',
+                ),
                 isLoading: true,
                 onPressed: () => tapCount += 1,
               ),
@@ -1491,8 +1737,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 isLoading: true,
                 onPressed: () => completer.future,
               ),
@@ -1517,8 +1765,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 isLoading: true,
                 onPressed: () => completer.future,
               ),
@@ -1545,8 +1795,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 isLoading: false,
                 onPressed: () => completer.future,
               ),
@@ -1561,8 +1813,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 isLoading: true,
                 onPressed: () => completer.future,
               ),
@@ -1575,8 +1829,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 isLoading: false,
                 onPressed: () => completer.future,
               ),
@@ -1601,8 +1857,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Inicial',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Inicial',
+                ),
                 isLoading: true,
                 onPressed: () {},
               ),
@@ -1623,8 +1881,10 @@ void main() {
               child: MediaQuery(
                 data: const MediaQueryData(disableAnimations: true),
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Rapido',
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Rapido',
+                  ),
                   isLoading: true,
                   onPressed: () {},
                 ),
@@ -1651,8 +1911,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1678,8 +1940,10 @@ void main() {
           await tester.pumpWidget(
             TestApp(
               child: MateoButton(
-                variant: MateoButtonVariant.primary,
-                label: 'Salvar agora',
+                presentation: MateoButtonPresentation.label(
+                  variant: MateoButtonVariant.primary,
+                  label: 'Salvar agora',
+                ),
                 onPressed: () => completer.future,
               ),
             ),
@@ -1706,10 +1970,12 @@ void main() {
               child: SizedBox(
                 width: 300,
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Esquerda',
-                  fit: MateoButtonFit.expand,
-                  alignment: MateoButtonAlignment.left,
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Esquerda',
+                    fit: MateoButtonFit.expand,
+                    alignment: MateoButtonAlignment.left,
+                  ),
                   onPressed: () {},
                 ),
               ),
@@ -1735,10 +2001,12 @@ void main() {
               child: SizedBox(
                 width: 300,
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Direita',
-                  fit: MateoButtonFit.expand,
-                  alignment: MateoButtonAlignment.right,
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Direita',
+                    fit: MateoButtonFit.expand,
+                    alignment: MateoButtonAlignment.right,
+                  ),
                   onPressed: () {},
                 ),
               ),
@@ -1764,10 +2032,12 @@ void main() {
               child: SizedBox(
                 width: 300,
                 child: MateoButton(
-                  variant: MateoButtonVariant.primary,
-                  label: 'Centro',
-                  fit: MateoButtonFit.expand,
-                  alignment: MateoButtonAlignment.center,
+                  presentation: MateoButtonPresentation.label(
+                    variant: MateoButtonVariant.primary,
+                    label: 'Centro',
+                    fit: MateoButtonFit.expand,
+                    alignment: MateoButtonAlignment.center,
+                  ),
                   onPressed: () {},
                 ),
               ),
@@ -1787,19 +2057,6 @@ void main() {
     });
   });
 }
-
-List<MateoActionBloomAction> _actionBloomActions() => [
-  MateoActionBloomAction(
-    iconBuilder: (_) => const SizedBox.shrink(),
-    title: 'First',
-    onPressed: (_) async {},
-  ),
-  MateoActionBloomAction(
-    iconBuilder: (_) => const SizedBox.shrink(),
-    title: 'Second',
-    onPressed: (_) async {},
-  ),
-];
 
 Color? _buttonBackgroundColor(WidgetTester tester) {
   final decorated = tester.widget<DecoratedBox>(

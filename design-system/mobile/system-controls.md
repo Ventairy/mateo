@@ -7,9 +7,9 @@ handle, and the iOS home indicator.
 
 Mateo gives these regions no separate background. They are fully transparent
 so the app remains visually continuous from one physical edge of the display
-to the other. The [viewport edge fade](../foundation/viewport-edges.md) paints
-behind the controls and gives them a clean, readable surface without creating
-a hard system bar.
+to the other. The [boundary fade foundation](../foundation/boundaries.md)
+paints behind the controls and gives them a clean, readable surface without
+creating a hard system bar.
 
 ## Required layering
 

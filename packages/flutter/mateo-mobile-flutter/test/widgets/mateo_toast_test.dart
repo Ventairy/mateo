@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
+import 'package:mateo_mobile_old/src/foundation/mateo_elevation.dart';
 
 import '../test_app.dart';
 
@@ -26,7 +27,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Something went wrong');
+        MateoToast.show(toastContext, message: 'Something went wrong', presentation: .error());
         await tester.pump();
 
         expect(find.text('Something went wrong'), findsOneWidget);
@@ -51,10 +52,10 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'First error');
+        MateoToast.show(toastContext, message: 'First error', presentation: .error());
         await tester.pump();
 
-        MateoToast.show(toastContext, message: 'Second error');
+        MateoToast.show(toastContext, message: 'Second error', presentation: .error());
         await tester.pump();
 
         expect(find.text('First error'), findsNothing);
@@ -77,7 +78,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Tap me');
+        MateoToast.show(toastContext, message: 'Tap me', presentation: .error());
         await tester.pump();
         await tester.tap(find.byKey(const Key('mateo_toast_surface')));
         await tester.pump(const Duration(milliseconds: 500));
@@ -95,7 +96,10 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: MateoTheme.light(),
+            theme: MateoTheme.light(
+              accentColor: const Color(0xFF4A5CFF),
+              onAccent: const Color(0xFFFFFFFF),
+            ).lightTheme,
             home: Stack(
               children: [
                 Align(
@@ -123,7 +127,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Keep me', dismissible: false);
+        MateoToast.show(toastContext, message: 'Keep me', presentation: .error(), dismissible: false);
         await tester.pump();
         await tester.tap(find.byKey(const Key('mateo_toast_surface')));
         await tester.pump(const Duration(milliseconds: 500));
@@ -142,7 +146,10 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: MateoTheme.light(),
+            theme: MateoTheme.light(
+              accentColor: const Color(0xFF4A5CFF),
+              onAccent: const Color(0xFFFFFFFF),
+            ).lightTheme,
             home: Scaffold(
               body: Stack(
                 children: [
@@ -172,7 +179,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Tap me');
+        MateoToast.show(toastContext, message: 'Tap me', presentation: .error());
         await tester.pump();
         await tester.tap(find.byKey(const Key('mateo_toast_surface')));
 
@@ -190,7 +197,10 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: MateoTheme.light(),
+            theme: MateoTheme.light(
+              accentColor: const Color(0xFF4A5CFF),
+              onAccent: const Color(0xFFFFFFFF),
+            ).lightTheme,
             home: MateoToastMessenger(
               child: Overlay(
                 key: childOverlayKey,
@@ -207,7 +217,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Above heroes');
+        MateoToast.show(toastContext, message: 'Above heroes', presentation: .error());
         await tester.pump();
         childOverlayKey.currentState!.insert(
           OverlayEntry(
@@ -242,7 +252,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Hold me');
+        MateoToast.show(toastContext, message: 'Hold me', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         final gesture = await tester.startGesture(
@@ -275,7 +285,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Pull me');
+        MateoToast.show(toastContext, message: 'Pull me', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         final gesture = await tester.startGesture(
@@ -309,7 +319,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Pull me');
+        MateoToast.show(toastContext, message: 'Pull me', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         final gesture = await tester.startGesture(
@@ -343,7 +353,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Pull me');
+        MateoToast.show(toastContext, message: 'Pull me', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         final gesture = await tester.startGesture(
@@ -375,7 +385,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Swipe me');
+        MateoToast.show(toastContext, message: 'Swipe me', presentation: .error());
         await tester.pump();
         await tester.fling(
           find.byKey(const Key('mateo_toast_gesture_target')),
@@ -406,7 +416,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Swipe me');
+        MateoToast.show(toastContext, message: 'Swipe me', presentation: .error());
         await tester.pump();
         await tester.fling(
           find.byKey(const Key('mateo_toast_gesture_target')),
@@ -437,7 +447,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Swipe me');
+        MateoToast.show(toastContext, message: 'Swipe me', presentation: .error());
         await tester.pump();
         final gesture = await tester.startGesture(
           tester.getCenter(find.byKey(const Key('mateo_toast_gesture_target'))),
@@ -467,7 +477,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Resist me', dismissible: false);
+        MateoToast.show(toastContext, message: 'Resist me', presentation: .error(), dismissible: false);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         final gesture = await tester.startGesture(
@@ -513,6 +523,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Resist the swipe',
+          presentation: .error(),
           dismissible: false,
         );
         await tester.pump();
@@ -543,7 +554,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'uh lala');
+        MateoToast.show(toastContext, message: 'uh lala', presentation: .error());
         await tester.pump();
 
         expect(
@@ -572,6 +583,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'uh lala',
+          presentation: .error(),
           padding: const EdgeInsets.fromLTRB(36, 40, 4, 16),
         );
         await tester.pump();
@@ -602,6 +614,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Short error',
+          presentation: .error(),
           duration: const Duration(milliseconds: 20),
         );
         await tester.pump();
@@ -630,6 +643,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Timed only',
+          presentation: .error(),
           duration: const Duration(milliseconds: 20),
           dismissible: false,
         );
@@ -661,6 +675,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Programmatic only',
+          presentation: .error(),
           dismissible: false,
         );
         await tester.pump();
@@ -691,6 +706,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Hold past timer',
+          presentation: .error(),
           duration: const Duration(milliseconds: 2000),
         );
         await tester.pump();
@@ -730,6 +746,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Hold under timer',
+          presentation: .error(),
           duration: const Duration(milliseconds: 5000),
         );
         await tester.pump();
@@ -763,7 +780,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'No');
+        MateoToast.show(toastContext, message: 'No', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 2400));
 
@@ -787,7 +804,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'No');
+        MateoToast.show(toastContext, message: 'No', presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 3000));
 
@@ -812,7 +829,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: longMessage);
+        MateoToast.show(toastContext, message: longMessage, presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 3000));
 
@@ -837,7 +854,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: longMessage);
+        MateoToast.show(toastContext, message: longMessage, presentation: .error());
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 8500));
 
@@ -849,7 +866,12 @@ void main() {
       'when rendered as error, it should resolve the toast error background color',
       (tester) async {
         await tester.pumpWidget(
-          const TestApp(child: MateoToast(message: 'Error')),
+          const TestApp(
+            child: MateoToast(
+              message: 'Error',
+              presentation: .error(),
+            ),
+          ),
         );
 
         final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
@@ -865,7 +887,12 @@ void main() {
       'when rendered as error, it should resolve the toast error foreground color',
       (tester) async {
         await tester.pumpWidget(
-          const TestApp(child: MateoToast(message: 'Error')),
+          const TestApp(
+            child: MateoToast(
+              message: 'Error',
+              presentation: .error(),
+            ),
+          ),
         );
 
         final text = tester.widget<Text>(
@@ -883,7 +910,12 @@ void main() {
       'when rendered outside the material text tree, it should not inherit fallback text decoration',
       (tester) async {
         await tester.pumpWidget(
-          const TestApp(child: MateoToast(message: 'Error')),
+          const TestApp(
+            child: MateoToast(
+              message: 'Error',
+              presentation: .error(),
+            ),
+          ),
         );
 
         final text = tester.widget<Text>(
@@ -895,7 +927,7 @@ void main() {
     );
 
     testWidgets(
-      'when shown from a custom Mateo Mobile theme, it should use the caller toast error background color',
+      'when shown from a custom Mateo Mobile theme, it should use the caller background and authored elevation',
       (tester) async {
         late BuildContext toastContext;
 
@@ -927,7 +959,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Themed error');
+        MateoToast.show(toastContext, message: 'Themed error', presentation: .error());
         await tester.pump();
 
         final decoration = tester.widget<DecoratedBox>(find.byKey(const Key('mateo_toast_surface'))).decoration;
@@ -938,6 +970,7 @@ void main() {
             _MateoToastTestFixtures.customToastColorScheme.error.background,
           ),
         );
+        expect(decoration.boxShadow, MateoElevation.toShadows(elevation: 2, palette: mateoTestPalette));
       },
     );
 
@@ -974,7 +1007,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'Themed error');
+        MateoToast.show(toastContext, message: 'Themed error', presentation: .error());
         await tester.pump();
 
         final text = tester.widget<Text>(
@@ -1009,7 +1042,7 @@ void main() {
           ),
         );
 
-        MateoToast.show(toastContext, message: 'No motion');
+        MateoToast.show(toastContext, message: 'No motion', presentation: .error());
         await tester.pump();
 
         final transition = tester.widget<FadeTransition>(
@@ -1027,7 +1060,7 @@ void main() {
           const TestApp(
             child: MateoToast(
               message: 'Custom icon',
-              iconBuilder: _buildTestCustomIcon,
+              presentation: .error(iconBuilder: _buildTestCustomIcon),
             ),
           ),
         );
@@ -1048,10 +1081,12 @@ void main() {
           TestApp(
             child: MateoToast(
               message: 'Check size',
-              iconBuilder: (state) {
-                capturedIconSize = state.iconSize;
-                return const SizedBox.shrink();
-              },
+              presentation: .error(
+                iconBuilder: (state) {
+                  capturedIconSize = state.iconSize;
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
           ),
         );
@@ -1061,7 +1096,7 @@ void main() {
     );
 
     testWidgets(
-      'when a custom iconBuilder is provided, it should pass the design-system icon color for the toast type',
+      'when a custom iconBuilder is provided, it should pass the presentation icon color',
       (tester) async {
         Color? capturedIconColor;
 
@@ -1069,10 +1104,12 @@ void main() {
           TestApp(
             child: MateoToast(
               message: 'Check color',
-              iconBuilder: (state) {
-                capturedIconColor = state.iconColor;
-                return const SizedBox.shrink();
-              },
+              presentation: .error(
+                iconBuilder: (state) {
+                  capturedIconColor = state.iconColor;
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
           ),
         );
@@ -1085,23 +1122,42 @@ void main() {
     );
 
     testWidgets(
-      'when a semantic type has no iconBuilder, it should render the matching default icon',
+      'when a semantic presentation has no iconBuilder, it should render the matching default icon',
       (tester) async {
-        const defaultIconKeys = <MateoToastType, Key>{
-          MateoToastType.error: Key('mateo_toast_default_icon_error'),
-          MateoToastType.warning: Key('mateo_toast_default_icon_warning'),
-          MateoToastType.info: Key('mateo_toast_default_icon_info'),
-          MateoToastType.success: Key('mateo_toast_default_icon_success'),
-        };
+        const presentations = <({MateoToastPresentation presentation, Key iconKey, String message})>[
+          (
+            presentation: MateoToastPresentation.error(),
+            iconKey: Key('mateo_toast_default_icon_error'),
+            message: 'Error',
+          ),
+          (
+            presentation: MateoToastPresentation.warning(),
+            iconKey: Key('mateo_toast_default_icon_warning'),
+            message: 'Warning',
+          ),
+          (
+            presentation: MateoToastPresentation.info(),
+            iconKey: Key('mateo_toast_default_icon_info'),
+            message: 'Info',
+          ),
+          (
+            presentation: MateoToastPresentation.success(),
+            iconKey: Key('mateo_toast_default_icon_success'),
+            message: 'Success',
+          ),
+        ];
 
-        for (final MapEntry(key: type, value: iconKey) in defaultIconKeys.entries) {
+        for (final (:presentation, :iconKey, :message) in presentations) {
           await tester.pumpWidget(
             TestApp(
-              child: MateoToast(message: type.name, type: type),
+              child: MateoToast(
+                message: message,
+                presentation: presentation,
+              ),
             ),
           );
 
-          expect(find.byKey(iconKey), findsOneWidget, reason: '$type');
+          expect(find.byKey(iconKey), findsOneWidget, reason: message);
         }
       },
     );
@@ -1115,11 +1171,12 @@ void main() {
           TestApp(
             child: MateoToast(
               message: 'Headphones at 80%',
-              type: MateoToastType.neutral,
-              iconBuilder: (state) {
-                capturedIconColor = state.iconColor;
-                return const SizedBox.shrink();
-              },
+              presentation: .neutral(
+                iconBuilder: (state) {
+                  capturedIconColor = state.iconColor;
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
           ),
         );
@@ -1127,46 +1184,6 @@ void main() {
         expect(
           capturedIconColor,
           equals(MateoColorScheme.light().toast.neutral.icon),
-        );
-      },
-    );
-
-    testWidgets(
-      'when neutral is constructed without an iconBuilder, it should fail fast',
-      (tester) async {
-        expect(
-          () => MateoToast(
-            message: 'Headphones at 80%',
-            type: MateoToastType.neutral,
-          ),
-          throwsAssertionError,
-        );
-      },
-    );
-
-    testWidgets(
-      'when neutral is shown without an iconBuilder, it should throw an argument error',
-      (tester) async {
-        late BuildContext toastContext;
-
-        await tester.pumpWidget(
-          TestApp(
-            child: Builder(
-              builder: (context) {
-                toastContext = context;
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-        );
-
-        expect(
-          () => MateoToast.show(
-            toastContext,
-            message: 'Headphones at 80%',
-            type: MateoToastType.neutral,
-          ),
-          throwsArgumentError,
         );
       },
     );
@@ -1180,7 +1197,7 @@ void main() {
           const TestApp(
             child: MateoToast(
               message: 'Download complete',
-              type: MateoToastType.success,
+              presentation: .success(),
             ),
           ),
         );
@@ -1197,7 +1214,7 @@ void main() {
     );
 
     testWidgets(
-      'when MateoToast.show is called with an iconBuilder, it should render the custom icon in the overlay',
+      'when MateoToast.show receives a presentation with a custom icon, it should render the icon in the overlay',
       (tester) async {
         late BuildContext toastContext;
 
@@ -1215,7 +1232,7 @@ void main() {
         MateoToast.show(
           toastContext,
           message: 'Custom overlay icon',
-          iconBuilder: _buildTestCustomIcon,
+          presentation: .error(iconBuilder: _buildTestCustomIcon),
         );
         await tester.pump();
 

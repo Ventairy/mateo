@@ -1,7 +1,7 @@
 # Mateo Public Packages
 
 This directory contains the public library implementations of the Mateo Design
-System. Packages here turn Mateo's foundations and platform design guidance into
+System for flutter. Packages here turn Mateo's foundations and platform design guidance into
 reusable APIs that product teams can install and use in their applications.
 
 The repository-level `AGENTS.md` still applies. These instructions take
@@ -29,8 +29,7 @@ consumer branding also belong outside this directory.
 - Group implementations by ecosystem or framework, such as `flutter/`.
 - Give each publishable library its own package directory, manifest, tests,
   documentation, changelog, license metadata, and validation commands.
-- `flutter/mateo-mobile-flutter/` is the Flutter implementation of Mateo's
-  mobile design system.
+- `flutter/mateo-mobile/` owns the current `mateo_mobile` implementation for flutter
 - Add a nested `AGENTS.md` when an ecosystem or package needs instructions that
   do not apply to every public Mateo library.
 
@@ -52,6 +51,23 @@ consumer branding also belong outside this directory.
   small, semantic, documented, and difficult to misuse.
 - Name APIs around Mateo concepts and user-facing purpose, not internal layout
   or rendering details.
+- Keep shared components consistent in user-facing purpose, anatomy, variants,
+  states, accessibility, and Mateo character wherever they belong. Consistency
+  does not require identical APIs or implementations across ecosystems.
+- Design every package API to feel native to its language, UI framework, and
+  platform. Use the ecosystem's established types, composition patterns,
+  lifecycle, navigation, input, and accessibility conventions.
+- Do not add wrappers, abstractions, emulation, or workarounds solely to make one
+  package match another package's API or feature set. Prefer a direct native
+  implementation, even when its public shape differs.
+- Treat framework-specific foundations and integration components as local to
+  that framework. Re-evaluate whether each concept belongs before porting it;
+  existence in one package is not a requirement for another. For example,
+  Flutter's `MateoPage` may remain Flutter-only when its page-transition role is
+  already handled natively by SwiftUI or UIKit.
+- When a shared component conflicts with platform conventions, preserve its
+  Mateo purpose and character while adapting the interaction and API to feel
+  native on that platform.
 - Do not expose raw styling knobs when a stable semantic option can express the
   supported design decision.
 - Preserve native platform conventions, accessibility APIs, localization,

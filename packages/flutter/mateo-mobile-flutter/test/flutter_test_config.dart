@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 import 'package:test_api/scaffolding.dart' as test_package;
 
 import 'test_app.dart';
@@ -33,7 +33,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
 
 Future<ByteData> _loadFontAsset(String path) async {
   try {
-    return await rootBundle.load('packages/mateo_mobile/assets/fonts/$path');
+    return await rootBundle.load('packages/mateo_mobile_old/assets/fonts/$path');
   } catch (_) {
     return rootBundle.load('assets/fonts/$path');
   }

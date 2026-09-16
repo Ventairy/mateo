@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 void main() {
   group('MateoPalette', () {
@@ -22,25 +22,25 @@ void main() {
         Color(0xFF0C123E),
       ]);
       expect(palette.neutral.colors, const [
-        Color(0xFFFBFCFD),
-        Color(0xFFF4F5F7),
-        Color(0xFFEAEBEF),
-        Color(0xFFE0E1E5),
-        Color(0xFFD6D7DC),
-        Color(0xFFCCCDD3),
-        Color(0xFFBFC1C6),
-        Color(0xFF909297),
-        Color(0xFF707175),
-        Color(0xFF626367),
-        Color(0xFF3E4043),
-        Color(0xFF17181B),
+        Color(0xFFFCFCFC),
+        Color(0xFFF5F5F5),
+        Color(0xFFEBEBEB),
+        Color(0xFFE1E1E1),
+        Color(0xFFD7D7D7),
+        Color(0xFFCECECE),
+        Color(0xFFC1C1C1),
+        Color(0xFF929292),
+        Color(0xFF717171),
+        Color(0xFF636363),
+        Color(0xFF404040),
+        Color(0xFF181818),
       ]);
     });
 
     test('ships Mateo vivid step-9 anchors', () {
       final palette = MateoPalette();
 
-      expect(palette.green[9], const Color(0xFF00D757));
+      expect(palette.green[9], const Color(0xFF00C950));
       expect(palette.amber[9], const Color(0xFFFFAA00));
       expect(palette.red[9], const Color(0xFFFB2C36));
       expect(palette.blue[9], const Color(0xFF2B7FFF));
@@ -50,7 +50,6 @@ void main() {
       expect(palette.orange[9], const Color(0xFFFF6900));
       expect(palette.pink[9], const Color(0xFFF6339A));
       expect(palette.yellow[9], const Color(0xFFFFD000));
-      expect(palette.whatsapp[9], const Color(0xFF25D366));
     });
 
     test('preserves a custom opaque seed exactly at accent step 9', () {
@@ -79,14 +78,21 @@ void main() {
       }
     });
 
-    test('creates untinted neutrals from an achromatic seed', () {
-      final neutral = MateoPalette(
-        accentColor: const Color(0xFF555555),
+    test('when only the accent seed changes, it should keep Mateo neutrals', () {
+      final defaultNeutral = MateoPalette().neutral;
+      final customAccentNeutral = MateoPalette(
+        accentColor: const Color(0xFFE53935),
       ).neutral;
 
+      expect(customAccentNeutral.colors, defaultNeutral.colors);
+    });
+
+    test('ships achromatic neutrals', () {
+      final neutral = MateoPalette().neutral;
+
       for (final color in neutral.colors) {
-        expect(color.r, closeTo(color.g, 0.0001));
-        expect(color.g, closeTo(color.b, 0.0001));
+        expect(color.r, color.g);
+        expect(color.g, color.b);
       }
     });
 
@@ -97,11 +103,15 @@ void main() {
       );
     });
 
-    test('compares palettes by their accent seed', () {
+    test('when palettes are compared, it should use the accent seed', () {
       expect(MateoPalette(), MateoPalette());
       expect(
         MateoPalette(accentColor: const Color(0xFF00A86B)),
         isNot(MateoPalette()),
+      );
+      expect(
+        MateoPalette(accentColor: const Color(0xFF00A86B)).hashCode,
+        MateoPalette(accentColor: const Color(0xFF00A86B)).hashCode,
       );
     });
   });

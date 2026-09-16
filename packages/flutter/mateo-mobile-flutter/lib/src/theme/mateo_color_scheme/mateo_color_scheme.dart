@@ -1,32 +1,34 @@
 /// Semantic color contract for Mateo Mobile.
-///
-/// Its roles follow the authored mobile specification in the
-/// [Mateo Mobile color scheme](https://github.com/Ventairy/mateo/blob/main/design-system/mobile/color-scheme.md).
 library;
 
 import 'package:flutter/material.dart';
 
 import '../mateo_palette/mateo_palette.dart';
 
-part 'mateo_bottom_sheet_color_scheme.dart';
-part 'mateo_branded_button_color_scheme.dart';
+part 'mateo_sheet_color_scheme.dart';
 part 'mateo_button_color_scheme.dart';
-part 'mateo_button_panel_color_scheme.dart';
-part 'mateo_button_tone_color_scheme.dart';
+part 'mateo_primary_button_color_scheme.dart';
+part 'mateo_secondary_button_color_scheme.dart';
+part 'mateo_tertiary_button_color_scheme.dart';
 part 'mateo_buttons_color_scheme.dart';
+part 'mateo_character_counter_color_scheme.dart';
+part 'mateo_character_counter_variant_color_scheme.dart';
 part 'mateo_color_scheme_light.dart';
 part 'mateo_color_variant_color_scheme.dart';
-part 'mateo_colors_color_scheme.dart';
 part 'mateo_controls_color_scheme.dart';
-part 'mateo_floating_button_color_scheme.dart';
 part 'mateo_inverse_color_scheme.dart';
-part 'mateo_map_color_scheme.dart';
+part 'mateo_menu_color_scheme.dart';
+part 'mateo_menus_color_scheme.dart';
+part 'mateo_message_bubble_color_scheme.dart';
 part 'mateo_overlay_color_scheme.dart';
-part 'mateo_scrollbar_color_scheme.dart';
-part 'mateo_search_bar_button_color_scheme.dart';
+part 'mateo_select_color_scheme.dart';
+part 'mateo_select_variant_color_scheme.dart';
 part 'mateo_skeleton_color_scheme.dart';
 part 'mateo_text_color_scheme.dart';
+part 'mateo_text_field_color_scheme.dart';
+part 'mateo_text_field_variant_color_scheme.dart';
 part 'mateo_toast_color_scheme.dart';
+part 'mateo_toggle_color_scheme.dart';
 
 /// {@template mateo_color_scheme_copy_with}
 /// Returns a copy with the supplied values replaced.
@@ -45,19 +47,20 @@ class MateoColorScheme {
   /// Creates a complete Mateo Mobile color scheme.
   const MateoColorScheme({
     required this.background,
-    required this.colors,
     required this.text,
-    required this.selectionHighlight,
     required this.buttons,
-    required this.buttonPanel,
     required this.overlay,
-    required this.bottomSheet,
+    required this.sheet,
     required this.toast,
-    required this.scrollbar,
     required this.skeleton,
     required this.inverse,
     required this.controls,
-    required this.map,
+    required this.toggle,
+    required this.messageBubble,
+    required this.menu,
+    required this.characterCounter,
+    required this.textField,
+    required this.select,
   });
 
   /// {@macro mateo_color_scheme_lerp}
@@ -67,31 +70,32 @@ class MateoColorScheme {
     double t,
   ) => MateoColorScheme(
     background: Color.lerp(a.background, b.background, t)!,
-    colors: MateoColorsColorScheme.lerp(a.colors, b.colors, t),
     text: MateoTextColorScheme.lerp(a.text, b.text, t),
-    selectionHighlight: Color.lerp(
-      a.selectionHighlight,
-      b.selectionHighlight,
-      t,
-    )!,
     buttons: MateoButtonsColorScheme.lerp(a.buttons, b.buttons, t),
-    buttonPanel: MateoButtonPanelColorScheme.lerp(
-      a.buttonPanel,
-      b.buttonPanel,
-      t,
-    ),
     overlay: MateoOverlayColorScheme.lerp(a.overlay, b.overlay, t),
-    bottomSheet: MateoBottomSheetColorScheme.lerp(
-      a.bottomSheet,
-      b.bottomSheet,
+    sheet: MateoSheetColorScheme.lerp(
+      a.sheet,
+      b.sheet,
       t,
     ),
     toast: MateoToastColorScheme.lerp(a.toast, b.toast, t),
-    scrollbar: MateoScrollbarColorScheme.lerp(a.scrollbar, b.scrollbar, t),
     skeleton: MateoSkeletonColorScheme.lerp(a.skeleton, b.skeleton, t),
     inverse: MateoInverseColorScheme.lerp(a.inverse, b.inverse, t),
     controls: MateoControlsColorScheme.lerp(a.controls, b.controls, t),
-    map: MateoMapColorScheme.lerp(a.map, b.map, t),
+    toggle: MateoToggleColorScheme.lerp(a.toggle, b.toggle, t),
+    messageBubble: MateoMessageBubbleColorScheme.lerp(
+      a.messageBubble,
+      b.messageBubble,
+      t,
+    ),
+    menu: MateoMenusColorScheme.lerp(
+      a.menu,
+      b.menu,
+      t,
+    ),
+    characterCounter: MateoCharacterCounterColorScheme.lerp(a.characterCounter, b.characterCounter, t),
+    textField: MateoTextFieldColorScheme.lerp(a.textField, b.textField, t),
+    select: MateoSelectColorScheme.lerp(a.select, b.select, t),
   );
 
   /// Creates Mateo's light color scheme.
@@ -99,41 +103,28 @@ class MateoColorScheme {
   /// [onAccent] is a package-only input used as the foreground on accent
   /// component surfaces. It is supplied by the consuming app rather than the
   /// platform-independent Mateo color scheme.
-  factory MateoColorScheme.light({MateoPalette? palette, Color? onAccent}) =>
-      _LightMateoColorScheme(
-        palette: palette ?? MateoPalette(),
-        onAccent: onAccent ?? Colors.white,
-      );
+  factory MateoColorScheme.light({MateoPalette? palette, Color? onAccent}) => _LightMateoColorScheme(
+    palette: palette ?? MateoPalette(),
+    onAccent: onAccent ?? Colors.white,
+  );
 
   /// App background.
   final Color background;
 
-  /// Theme-authored semantic color variants.
-  final MateoColorsColorScheme colors;
-
   /// Shared text colors.
   final MateoTextColorScheme text;
-
-  /// Text-selection highlight.
-  final Color selectionHighlight;
 
   /// Button component colors.
   final MateoButtonsColorScheme buttons;
 
-  /// Button-panel component colors.
-  final MateoButtonPanelColorScheme buttonPanel;
-
   /// Overlay colors.
   final MateoOverlayColorScheme overlay;
 
-  /// Bottom-sheet colors.
-  final MateoBottomSheetColorScheme bottomSheet;
+  /// Sheet colors.
+  final MateoSheetColorScheme sheet;
 
   /// Toast colors grouped by message type.
   final MateoToastColorScheme toast;
-
-  /// Scrollbar colors.
-  final MateoScrollbarColorScheme scrollbar;
 
   /// Skeleton and shimmer colors.
   final MateoSkeletonColorScheme skeleton;
@@ -144,40 +135,57 @@ class MateoColorScheme {
   /// Control colors.
   final MateoControlsColorScheme controls;
 
-  /// Map colors.
-  final MateoMapColorScheme map;
+  /// Toggle component colors.
+  final MateoToggleColorScheme toggle;
+
+  /// Message-bubble colors grouped by direction.
+  final MateoMessageBubbleColorScheme messageBubble;
+
+  /// Shared menu colors, independent of the application appearance.
+  final MateoMenusColorScheme menu;
+
+  /// Character-counter colors grouped by variant.
+  final MateoCharacterCounterColorScheme characterCounter;
+
+  /// Text-field colors grouped by variant.
+  final MateoTextFieldColorScheme textField;
+
+  /// Select colors grouped by variant.
+  final MateoSelectColorScheme select;
 
   /// {@macro mateo_color_scheme_copy_with}
   MateoColorScheme copyWith({
     Color? background,
-    MateoColorsColorScheme? colors,
     MateoTextColorScheme? text,
-    Color? selectionHighlight,
     MateoButtonsColorScheme? buttons,
-    MateoButtonPanelColorScheme? buttonPanel,
     MateoOverlayColorScheme? overlay,
-    MateoBottomSheetColorScheme? bottomSheet,
+    MateoSheetColorScheme? sheet,
     MateoToastColorScheme? toast,
-    MateoScrollbarColorScheme? scrollbar,
     MateoSkeletonColorScheme? skeleton,
     MateoInverseColorScheme? inverse,
     MateoControlsColorScheme? controls,
-    MateoMapColorScheme? map,
+    MateoToggleColorScheme? toggle,
+    MateoMessageBubbleColorScheme? messageBubble,
+    MateoMenusColorScheme? menu,
+    MateoCharacterCounterColorScheme? characterCounter,
+    MateoTextFieldColorScheme? textField,
+    MateoSelectColorScheme? select,
   }) => MateoColorScheme(
     background: background ?? this.background,
-    colors: colors ?? this.colors,
     text: text ?? this.text,
-    selectionHighlight: selectionHighlight ?? this.selectionHighlight,
     buttons: buttons ?? this.buttons,
-    buttonPanel: buttonPanel ?? this.buttonPanel,
     overlay: overlay ?? this.overlay,
-    bottomSheet: bottomSheet ?? this.bottomSheet,
+    sheet: sheet ?? this.sheet,
     toast: toast ?? this.toast,
-    scrollbar: scrollbar ?? this.scrollbar,
     skeleton: skeleton ?? this.skeleton,
     inverse: inverse ?? this.inverse,
     controls: controls ?? this.controls,
-    map: map ?? this.map,
+    toggle: toggle ?? this.toggle,
+    messageBubble: messageBubble ?? this.messageBubble,
+    menu: menu ?? this.menu,
+    characterCounter: characterCounter ?? this.characterCounter,
+    textField: textField ?? this.textField,
+    select: select ?? this.select,
   );
 
   @override
@@ -185,35 +193,39 @@ class MateoColorScheme {
       identical(this, other) ||
       other is MateoColorScheme &&
           background == other.background &&
-          colors == other.colors &&
           text == other.text &&
-          selectionHighlight == other.selectionHighlight &&
           buttons == other.buttons &&
-          buttonPanel == other.buttonPanel &&
           overlay == other.overlay &&
-          bottomSheet == other.bottomSheet &&
+          sheet == other.sheet &&
           toast == other.toast &&
-          scrollbar == other.scrollbar &&
           skeleton == other.skeleton &&
           inverse == other.inverse &&
           controls == other.controls &&
-          map == other.map;
+          toggle == other.toggle &&
+          messageBubble == other.messageBubble &&
+          menu == other.menu &&
+          characterCounter == other.characterCounter &&
+          textField == other.textField &&
+          select == other.select;
 
   @override
   int get hashCode => Object.hashAll([
     background,
-    colors,
     text,
-    selectionHighlight,
     buttons,
-    buttonPanel,
+
     overlay,
-    bottomSheet,
+    sheet,
     toast,
-    scrollbar,
     skeleton,
     inverse,
     controls,
-    map,
+    toggle,
+    messageBubble,
+
+    menu,
+    characterCounter,
+    textField,
+    select,
   ]);
 }

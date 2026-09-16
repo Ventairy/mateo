@@ -5,41 +5,105 @@ import 'mateo_palette/mateo_palette.dart';
 import 'mateo_theme_data.dart';
 import 'mateo_typography.dart';
 
-/// Factory for Mateo [ThemeData] objects.
+/// A complete Mateo theme configuration for a mobile application.
 ///
-/// Material components and Mateo widgets resolve from the same semantic scheme,
-/// preventing framework defaults from drifting away from package tokens.
-abstract final class MateoTheme {
-  /// Creates a Mateo Mobile light theme from [accentColor] and [onAccent].
+/// The configuration contains both appearance branches and the mode Flutter
+/// uses to select between them. [MateoTheme.adaptive] follows system brightness
+/// without requiring a [BuildContext]. Mateo currently authors only a light
+/// appearance, so its dark branch intentionally uses the light theme until a
+/// dark color scheme is available.
+@immutable
+final class MateoTheme {
+  /// Creates a Mateo configuration that always uses the light appearance.
   ///
-  /// When omitted, Mateo violet and white are used. A custom [accentColor]
-  /// regenerates both the accent and neutral scales. [onAccent] defines the
-  /// foreground on accent surfaces and must be contrast-checked by consumers.
+  /// The [accentColor] is preserved at accent step 9. Mateo's neutral scale is
+  /// fixed and achromatic. The [onAccent] color is used on accent surfaces and
+  /// must be contrast-checked by consumers.
+  factory MateoTheme.light({
+    required Color accentColor,
+    required Color onAccent,
+  }) {
+    final lightTheme = _buildLight(
+      accentColor: accentColor,
+      onAccent: onAccent,
+    );
+
+    return MateoTheme._(
+      lightTheme: lightTheme,
+      darkTheme: lightTheme,
+      themeMode: ThemeMode.light,
+    );
+  }
+
+  /// Creates a Mateo configuration that follows system brightness.
   ///
-  /// ```dart
-  /// MaterialApp(
-  ///   theme: MateoTheme.light(),
-  ///   home: const HomeScreen(),
-  /// )
-  /// ```
-  static ThemeData light({Color? accentColor, Color? onAccent}) {
+  /// The [accentColor] is preserved at accent step 9. Mateo's neutral scale is
+  /// fixed and achromatic. The [onAccent] color is used on accent surfaces and
+  /// must be contrast-checked by consumers.
+  ///
+  /// Both appearance branches currently contain Mateo's light theme. The dark
+  /// branch is already part of this configuration so a future authored dark
+  /// appearance can replace it without changing consumer APIs.
+  factory MateoTheme.adaptive({
+    required Color accentColor,
+    required Color onAccent,
+  }) {
+    final lightTheme = _buildLight(
+      accentColor: accentColor,
+      onAccent: onAccent,
+    );
+
+    return MateoTheme._(
+      lightTheme: lightTheme,
+      darkTheme: lightTheme,
+      themeMode: ThemeMode.system,
+    );
+  }
+
+  const MateoTheme._({
+    required this.lightTheme,
+    required this.darkTheme,
+    required this.themeMode,
+  });
+
+  /// The theme used when Flutter selects the light appearance.
+  final ThemeData lightTheme;
+
+  /// The theme used when Flutter selects the dark appearance.
+  ///
+  /// This currently contains the light appearance until Mateo authors a dark
+  /// color scheme.
+  final ThemeData darkTheme;
+
+  /// The mode Flutter uses to select an appearance branch.
+  final ThemeMode themeMode;
+
+  static ThemeData _buildLight({
+    required Color accentColor,
+    required Color onAccent,
+  }) {
     final palette = MateoPalette(accentColor: accentColor);
     final colorScheme = MateoColorScheme.light(
       palette: palette,
       onAccent: onAccent,
     );
 
-    return _build(MateoThemeData(colorScheme: colorScheme, palette: palette));
+    return _buildThemeData(
+      MateoThemeData(
+        colorScheme: colorScheme,
+        palette: palette,
+      ),
+    );
   }
 
-  static ThemeData _build(MateoThemeData mateoData) {
+  static ThemeData _buildThemeData(MateoThemeData mateoData) {
     final mateoColorScheme = mateoData.colorScheme;
     final palette = mateoData.palette;
 
     final colorScheme = ColorScheme(
       brightness: Brightness.light,
       primary: palette.accent[9],
-      onPrimary: mateoColorScheme.buttons.accent.primary.foreground,
+      onPrimary: mateoColorScheme.buttons.primary.accent.foreground,
       primaryContainer: palette.accent[3],
       onPrimaryContainer: palette.accent[11],
       secondary: palette.teal[9],

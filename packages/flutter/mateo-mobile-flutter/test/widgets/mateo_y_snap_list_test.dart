@@ -1,14 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
 typedef _ItemLog<T> = ({T item, int index});
 typedef _ProgressLog = ({MateoYSnapListAction action, double percentage});
+
+Iterable<Layer> _descendantLayers(Layer root) sync* {
+  yield root;
+  if (root is! ContainerLayer) return;
+
+  Layer? child = root.firstChild;
+  while (child != null) {
+    yield* _descendantLayers(child);
+    child = child.nextSibling;
+  }
+}
 
 void main() {
   group('MateoYSnapList rendering', () {
@@ -165,25 +177,371 @@ void main() {
     );
 
     testWidgets(
-      'when dragging across frames, it should retain the same paint-only Flow widget',
+      'when dragging across frames, it should retain the same paint-only viewport',
       (tester) async {
         await _pumpTypedFeed<String>(
           tester,
           items: const ['first', 'second'],
           builder: (context, item, index) => _TestCard(label: item),
         );
-        final flowBeforeDrag = tester.widget<Flow>(find.byType(Flow));
+        final viewportFinder = find.byKey(
+          const ValueKey('mateo_y_snap_list_viewport'),
+        );
+        final viewportBeforeDrag = tester.renderObject(viewportFinder);
 
         final gesture = await tester.startGesture(
           tester.getCenter(find.byKey(_cardKey('first'))),
         );
         await gesture.moveBy(const Offset(0, -40));
         await tester.pump();
-        final flowDuringDrag = tester.widget<Flow>(find.byType(Flow));
+        final viewportDuringDrag = tester.renderObject(viewportFinder);
         await gesture.up();
         await tester.pumpAndSettle();
 
-        expect(identical(flowBeforeDrag, flowDuringDrag), isTrue);
+        expect(identical(viewportBeforeDrag, viewportDuringDrag), isTrue);
+      },
+    );
+
+    testWidgets(
+      'when a middle window is mounted, it should use one repaint boundary per retained card',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpFeed(
+          tester,
+          controller: controller,
+          items: const ['first', 'second', 'third'],
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+
+        final boundaries = find.descendant(
+          of: find.byType(MateoYSnapList<String>),
+          matching: find.byType(RepaintBoundary),
+        );
+
+        expect(boundaries, findsNWidgets(3));
+      },
+    );
+
+    testWidgets(
+      'when cards translate, it should not create transform layers',
+      (tester) async {
+        await _pumpFeed(tester);
+        final viewportFinder = find.byKey(
+          const ValueKey('mateo_y_snap_list_viewport'),
+        );
+
+        expect(
+          _descendantLayers(
+            tester.renderObject<RenderBox>(viewportFinder).debugLayer!,
+          ).whereType<TransformLayer>(),
+          isEmpty,
+        );
+
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_cardKey('first'))),
+        );
+        await gesture.moveBy(const Offset(0, -80));
+        await tester.pump();
+
+        expect(
+          _descendantLayers(
+            tester.renderObject<RenderBox>(viewportFinder).debugLayer!,
+          ).whereType<TransformLayer>(),
+          isEmpty,
+        );
+
+        await gesture.up();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when cards translate, it should retain their layout and paint work',
+      (tester) async {
+        final layouts = <String, int>{};
+        final paints = <String, int>{};
+        await _pumpTypedFeed<String>(
+          tester,
+          items: const ['first', 'second'],
+          builder: (context, item, index) => _RenderWorkCounter(
+            key: _cardKey(item),
+            onLayout: () => layouts.update(item, (count) => count + 1, ifAbsent: () => 1),
+            onPaint: () => paints.update(item, (count) => count + 1, ifAbsent: () => 1),
+            child: const ColoredBox(color: Color(0xFFFFFFFF)),
+          ),
+        );
+        final layoutsBeforeDrag = Map<String, int>.of(layouts);
+        final paintsBeforeDrag = Map<String, int>.of(paints);
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_cardKey('first'))),
+        );
+
+        for (var frame = 0; frame < 3; frame += 1) {
+          await gesture.moveBy(const Offset(0, -30));
+          await tester.pump();
+        }
+
+        expect(layouts, layoutsBeforeDrag);
+        expect(paints, paintsBeforeDrag);
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when loading opacity changes, it should retain one opacity layer',
+      (tester) async {
+        await _pumpFeed(
+          tester,
+          items: const ['first'],
+          onLoadMore: () => Completer<void>().future,
+        );
+        await tester.pump();
+        final viewportFinder = find.byKey(
+          const ValueKey('mateo_y_snap_list_viewport'),
+        );
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byType(GestureDetector)),
+        );
+
+        await gesture.moveBy(const Offset(0, -50));
+        await tester.pump();
+        final firstOpacityLayer = _descendantLayers(
+          tester.renderObject<RenderBox>(viewportFinder).debugLayer!,
+        ).whereType<OpacityLayer>().single;
+
+        await gesture.moveBy(const Offset(0, -50));
+        await tester.pump();
+        final secondOpacityLayer = _descendantLayers(
+          tester.renderObject<RenderBox>(viewportFinder).debugLayer!,
+        ).whereType<OpacityLayer>().single;
+
+        expect(identical(firstOpacityLayer, secondOpacityLayer), isTrue);
+        await gesture.cancel();
+        for (var frame = 0; frame < 30; frame += 1) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+        expect(
+          _descendantLayers(
+            tester.renderObject<RenderBox>(viewportFinder).debugLayer!,
+          ).whereType<OpacityLayer>(),
+          isEmpty,
+        );
+      },
+    );
+
+    testWidgets(
+      'when adjacent cards are retained, it should expose only the current card to semantics',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+        final controller = MateoYSnapListController();
+        try {
+          await _pumpFeed(
+            tester,
+            controller: controller,
+            items: const ['first', 'second', 'third'],
+          );
+
+          expect(find.bySemanticsLabel('first'), findsOneWidget);
+          expect(find.bySemanticsLabel('second'), findsNothing);
+
+          final nextFuture = controller.next();
+          await tester.pumpAndSettle();
+          await nextFuture;
+
+          expect(find.bySemanticsLabel('first'), findsNothing);
+          expect(find.bySemanticsLabel('second'), findsOneWidget);
+          expect(find.bySemanticsLabel('third'), findsNothing);
+        } finally {
+          semantics.dispose();
+        }
+      },
+    );
+
+    testWidgets(
+      'when adjacent cards are offscreen at rest, it should mute their tickers until motion starts',
+      (tester) async {
+        await _pumpTypedFeed<String>(
+          tester,
+          items: const ['first', 'second', 'third'],
+          builder: (context, item, index) => _TickerProbe(
+            key: _tickerProbeKey(item),
+            label: item,
+          ),
+        );
+        final firstState = tester.state<_TickerProbeState>(
+          find.byKey(_tickerProbeKey('first')),
+        );
+        final secondState = tester.state<_TickerProbeState>(
+          find.byKey(_tickerProbeKey('second')),
+        );
+
+        await tester.pump(const Duration(milliseconds: 64));
+
+        expect(firstState.tickCount, greaterThan(0));
+        expect(secondState.tickCount, 0);
+
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_tickerProbeKey('first'))),
+        );
+        await gesture.moveBy(const Offset(0, -80));
+        await tester.pump();
+
+        expect(
+          TickerMode.valuesOf(
+            tester.element(find.byKey(_tickerProbeKey('second'))),
+          ).enabled,
+          isTrue,
+        );
+
+        final ticksBeforeMotion = secondState.tickCount;
+        await tester.pump(const Duration(milliseconds: 32));
+        expect(secondState.tickCount, greaterThan(ticksBeforeMotion));
+
+        await gesture.cancel();
+        for (var frame = 0; frame < 20; frame += 1) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+
+        final ticksAfterSettle = secondState.tickCount;
+        await tester.pump(const Duration(milliseconds: 64));
+        expect(secondState.tickCount, ticksAfterSettle);
+      },
+    );
+
+    testWidgets(
+      'when a warm next card becomes current, it should keep its State and ticker enabled',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await tester.pumpWidget(
+          _HarnessApp(
+            child: MateoYSnapList<String>(
+              controller: controller,
+              items: (
+                count: 3,
+                provider: (index) => const ['first', 'second', 'third'][index],
+                keyBuilder: null,
+              ),
+              endBuilder: _endBuilder,
+              builder: (context, item, index) => _TickerProbe(
+                key: _tickerProbeKey(item),
+                label: item,
+              ),
+            ),
+          ),
+        );
+        final secondState = tester.state<_TickerProbeState>(
+          find.byKey(_tickerProbeKey('second')),
+        );
+        final nextFuture = controller.next();
+        await tester.pump();
+
+        expect(
+          TickerMode.valuesOf(
+            tester.element(find.byKey(_tickerProbeKey('second'))),
+          ).enabled,
+          isTrue,
+        );
+
+        for (var frame = 0; frame < 15; frame += 1) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+        await nextFuture;
+        await tester.pump();
+
+        final currentSecondState = tester.state<_TickerProbeState>(
+          find.byKey(_tickerProbeKey('second')),
+        );
+        expect(identical(secondState, currentSecondState), isTrue);
+        expect(
+          TickerMode.valuesOf(currentSecondState.context).enabled,
+          isTrue,
+        );
+        expect(
+          TickerMode.valuesOf(
+            tester.element(find.byKey(_tickerProbeKey('first'))),
+          ).enabled,
+          isFalse,
+        );
+        expect(
+          TickerMode.valuesOf(
+            tester.element(find.byKey(_tickerProbeKey('third'))),
+          ).enabled,
+          isFalse,
+        );
+      },
+    );
+
+    testWidgets(
+      'when rotating the three-card window, it should request only the newly adjacent item',
+      (tester) async {
+        final requestedIndexes = <int>[];
+        final controller = MateoYSnapListController();
+        await tester.pumpWidget(
+          _HarnessApp(
+            child: MateoYSnapList<int>(
+              controller: controller,
+              items: (
+                count: 5,
+                provider: (index) {
+                  requestedIndexes.add(index);
+                  return index;
+                },
+                keyBuilder: null,
+              ),
+              builder: (context, item, index) => _TestCard(label: '$item'),
+            ),
+          ),
+        );
+
+        expect(requestedIndexes, [0, 1]);
+        requestedIndexes.clear();
+
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+
+        expect(requestedIndexes, [2]);
+        requestedIndexes.clear();
+
+        final previousFuture = controller.previous();
+        await tester.pumpAndSettle();
+        await previousFuture;
+
+        expect(requestedIndexes, isEmpty);
+      },
+    );
+
+    testWidgets(
+      'when the item source updates, it should invalidate the fast index lookup',
+      (tester) async {
+        final requestedItems = <String>[];
+
+        Widget feed(List<String> items) {
+          return _HarnessApp(
+            child: MateoYSnapList<String>(
+              items: (
+                count: items.length,
+                provider: (index) {
+                  final item = items[index];
+                  requestedItems.add(item);
+                  return item;
+                },
+                keyBuilder: (item, index) => item,
+              ),
+              builder: (context, item, index) => _TestCard(label: item),
+            ),
+          );
+        }
+
+        await tester.pumpWidget(feed(const ['first', 'second']));
+        requestedItems.clear();
+        await tester.pumpWidget(feed(const ['replacement', 'first', 'second']));
+
+        expect(requestedItems, ['replacement', 'first']);
+        expect(find.byKey(_cardKey('replacement')), findsOneWidget);
       },
     );
 
@@ -296,6 +654,31 @@ void main() {
         await _dragCard(tester, 'first', const Offset(0, -300));
 
         expect(find.byKey(_endKey), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'when the final card has a terminal page, it should warm that page before the drag reaches it',
+      (tester) async {
+        await _pumpFeed(tester, items: const ['first']);
+
+        expect(find.byKey(_endKey), findsOneWidget);
+
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_cardKey('first'))),
+        );
+        await gesture.moveBy(const Offset(0, -320));
+        await tester.pump();
+
+        final listBottom = tester
+            .getBottomRight(
+              find.byType(MateoYSnapList<String>),
+            )
+            .dy;
+        expect(tester.getTopLeft(find.byKey(_endKey)).dy, lessThan(listBottom));
+
+        await gesture.cancel();
+        await tester.pumpAndSettle();
       },
     );
 
@@ -731,6 +1114,25 @@ void main() {
     );
 
     testWidgets(
+      'when a direct pointer drag is active, it should reject controller navigation',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpFeed(tester, controller: controller);
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_cardKey('first'))),
+        );
+        await gesture.moveBy(const Offset(0, -80));
+        await tester.pump();
+
+        expect(await controller.next(), isFalse);
+
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+        expect(_currentCardLabel(tester), 'first');
+      },
+    );
+
+    testWidgets(
       'when the widget swaps controllers, it should detach the old one and use the new one',
       (tester) async {
         final firstController = MateoYSnapListController();
@@ -900,6 +1302,72 @@ void main() {
         await tester.pumpAndSettle();
 
         expect((starts: motionStarts, ends: motionEnds), (starts: 1, ends: 1));
+      },
+    );
+
+    testWidgets(
+      'when dragging toward a missing previous page, it should provide no motion feedback',
+      (tester) async {
+        var motionStarts = 0;
+        var motionEnds = 0;
+        final progressValues = <double>[];
+        await _pumpFeed(
+          tester,
+          items: const ['first', 'second'],
+          includeEndBuilder: false,
+          onMotionStart: () => motionStarts += 1,
+          onMotionEnd: () => motionEnds += 1,
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
+        );
+        final cardFinder = find.byKey(_cardKey('first'));
+        final cardTop = tester.getTopLeft(cardFinder).dy;
+        final gesture = await tester.startGesture(tester.getCenter(cardFinder));
+
+        await gesture.moveBy(const Offset(0, 100));
+        await tester.pump();
+
+        expect(tester.getTopLeft(cardFinder).dy, cardTop);
+        expect((starts: motionStarts, ends: motionEnds), (starts: 0, ends: 0));
+        expect(progressValues, isEmpty);
+        await gesture.up();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when dragging toward a missing next page, it should provide no motion feedback',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        var motionStarts = 0;
+        var motionEnds = 0;
+        final progressValues = <double>[];
+        await _pumpFeed(
+          tester,
+          controller: controller,
+          items: const ['first', 'second'],
+          includeEndBuilder: false,
+          onMotionStart: () => motionStarts += 1,
+          onMotionEnd: () => motionEnds += 1,
+          onSwipeProgress: ({required action, required percentage}) => progressValues.add(percentage),
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        motionStarts = 0;
+        motionEnds = 0;
+        progressValues.clear();
+        final cardFinder = find.byKey(_cardKey('second'));
+        final cardTop = tester.getTopLeft(cardFinder).dy;
+        final gesture = await tester.startGesture(tester.getCenter(cardFinder));
+
+        await gesture.moveBy(const Offset(0, -100));
+        await tester.pump();
+
+        expect(tester.getTopLeft(cardFinder).dy, cardTop);
+        expect((starts: motionStarts, ends: motionEnds), (starts: 0, ends: 0));
+        expect(progressValues, isEmpty);
+        await gesture.up();
+        await tester.pumpAndSettle();
       },
     );
 
@@ -1594,7 +2062,7 @@ void main() {
     );
 
     testWidgets(
-      'when loadingMoreOffset is zero during a loading drag, it should report only finite progress values',
+      'when loadingMoreOffset is zero during a loading drag, it should keep finite progress without an invisible ticker',
       (tester) async {
         final progressValues = <double>[];
 
@@ -1613,11 +2081,16 @@ void main() {
         await gesture.moveBy(const Offset(0, -200));
         await tester.pump();
         await gesture.up();
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         expect(
-          progressValues.every((percentage) => percentage.isFinite),
-          isTrue,
+          (
+            hasOnlyFiniteProgress: progressValues.every(
+              (percentage) => percentage.isFinite,
+            ),
+            hasInvisibleSpinnerTicker: find.byType(MateoDotsLoadingIndicator).evaluate().isNotEmpty,
+          ),
+          (hasOnlyFiniteProgress: true, hasInvisibleSpinnerTicker: false),
         );
       },
     );
@@ -1659,7 +2132,7 @@ void main() {
     );
 
     testWidgets(
-      'the loading indicator Container width should match the shared size constant',
+      'the loading indicator width should match the shared size constant',
       (tester) async {
         await _pumpFeed(
           tester,
@@ -1679,16 +2152,16 @@ void main() {
           await tester.pump(const Duration(milliseconds: 16));
         }
 
-        final container = tester.widget<Container>(
+        final indicatorBox = tester.widget<SizedBox>(
           find.byKey(const ValueKey('mateo_y_snap_list_loading_indicator')),
         );
 
-        expect(container.constraints!.maxWidth, 100);
+        expect(indicatorBox.width, 100);
       },
     );
 
     testWidgets(
-      'the loading indicator Container height should match the shared size constant',
+      'the loading indicator height should match the shared size constant',
       (tester) async {
         await _pumpFeed(
           tester,
@@ -1708,11 +2181,11 @@ void main() {
           await tester.pump(const Duration(milliseconds: 16));
         }
 
-        final container = tester.widget<Container>(
+        final indicatorBox = tester.widget<SizedBox>(
           find.byKey(const ValueKey('mateo_y_snap_list_loading_indicator')),
         );
 
-        expect(container.constraints!.maxHeight, 100);
+        expect(indicatorBox.height, 100);
       },
     );
 
@@ -1749,6 +2222,51 @@ void main() {
         }
 
         expect(find.byType(MateoDotsLoadingIndicator), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'when active await motion settles or is dragged again, it should not rebuild the list',
+      (tester) async {
+        await _pumpFeed(
+          tester,
+          items: const ['first'],
+          onLoadMore: () => Completer<void>().future,
+        );
+        await tester.pump();
+        var gesture = await tester.startGesture(
+          tester.getCenter(find.byType(GestureDetector)),
+        );
+        await gesture.moveBy(const Offset(0, -100));
+        await tester.pump();
+
+        var listRebuilds = 0;
+        final previousRebuildCallback = debugOnRebuildDirtyWidget;
+        debugOnRebuildDirtyWidget = (element, builtOnce) {
+          previousRebuildCallback?.call(element, builtOnce);
+          if (element.widget is MateoYSnapList<String>) listRebuilds += 1;
+        };
+        try {
+          await gesture.up();
+          for (var frame = 0; frame < 20; frame += 1) {
+            await tester.pump(const Duration(milliseconds: 16));
+          }
+          expect(listRebuilds, 0);
+
+          gesture = await tester.startGesture(
+            tester.getCenter(find.byType(GestureDetector)),
+          );
+          await gesture.moveBy(const Offset(0, 20));
+          await tester.pump();
+          expect(listRebuilds, 0);
+        } finally {
+          debugOnRebuildDirtyWidget = previousRebuildCallback;
+        }
+
+        await gesture.cancel();
+        for (var frame = 0; frame < 20; frame += 1) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
       },
     );
 
@@ -1910,6 +2428,342 @@ void main() {
         }
 
         expect(find.byKey(_endKey), findsNothing);
+      },
+    );
+  });
+
+  group('MateoYSnapList nested vertical scrolling', () {
+    testWidgets(
+      'when an iOS first-page scrollable has no scroll extent, it should provide no leading overscroll feedback',
+      (tester) async {
+        await _pumpScrollableFeed(tester, contentHeight: 200);
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        final firstTop = tester.getTopLeft(find.text('first')).dy;
+        final gesture = await tester.startGesture(tester.getCenter(find.byKey(_scrollPageKey('first'))));
+
+        expect(position.maxScrollExtent, position.minScrollExtent);
+        await gesture.moveBy(const Offset(0, 20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 40));
+        await tester.pump();
+
+        expect(position.pixels, position.minScrollExtent);
+        expect(tester.getTopLeft(find.text('first')).dy, firstTop);
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when an iOS terminal scrollable has no scroll extent, it should provide no trailing overscroll feedback',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+          contentHeight: 200,
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final position = _scrollPosition(tester, _scrollEndKey);
+        final endTop = tester.getTopLeft(find.text('End')).dy;
+        final gesture = await tester.startGesture(tester.getCenter(find.byKey(_scrollEndKey)));
+
+        expect(position.maxScrollExtent, position.minScrollExtent);
+        await gesture.moveBy(const Offset(0, -20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, -40));
+        await tester.pump();
+
+        expect(position.pixels, position.maxScrollExtent);
+        expect(tester.getTopLeft(find.text('End')).dy, endTop);
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when an iOS scrollable is at the top with a previous page, it should suppress leading bounce',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(tester, controller: controller);
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final position = _scrollPosition(tester, _scrollPageKey('second'));
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollPageKey('second'))),
+        );
+
+        await gesture.moveBy(const Offset(0, 20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 40));
+        await tester.pump();
+
+        expect(position.pixels, position.minScrollExtent);
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when an iOS scrollable is at the bottom with a next page, it should suppress trailing bounce',
+      (tester) async {
+        await _pumpScrollableFeed(tester);
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        position.jumpTo(position.maxScrollExtent);
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollPageKey('first'))),
+        );
+
+        await gesture.moveBy(const Offset(0, -20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, -40));
+        await tester.pump();
+
+        expect(position.pixels, position.maxScrollExtent);
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when an iOS scrollable is at the top without a previous page, it should preserve leading bounce',
+      (tester) async {
+        await _pumpScrollableFeed(tester);
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollPageKey('first'))),
+        );
+
+        await gesture.moveBy(const Offset(0, 20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 40));
+        await tester.pump();
+
+        expect(position.pixels, lessThan(position.minScrollExtent));
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when an iOS terminal page is at the bottom without a next page, it should preserve trailing bounce',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final position = _scrollPosition(tester, _scrollEndKey);
+        position.jumpTo(position.maxScrollExtent);
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollEndKey)),
+        );
+
+        await gesture.moveBy(const Offset(0, -20));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, -40));
+        await tester.pump();
+
+        expect(position.pixels, greaterThan(position.maxScrollExtent));
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets(
+      'when dragging down from a scrollable terminal page, it should return to the previous page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+
+        await tester.drag(find.byKey(_scrollEndKey), const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'first');
+      },
+    );
+
+    testWidgets(
+      'when dragging up from the bottom of a scrollable page, it should advance to the next page',
+      (tester) async {
+        await _pumpScrollableFeed(tester);
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        position.jumpTo(position.maxScrollExtent);
+
+        await tester.drag(
+          find.byKey(_scrollPageKey('first')),
+          const Offset(0, -300),
+        );
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'second');
+      },
+    );
+
+    testWidgets(
+      'when flinging from a nested bottom edge below the distance threshold, it should advance',
+      (tester) async {
+        await _pumpScrollableFeed(tester);
+        final pageFinder = find.byKey(_scrollPageKey('first'));
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        position.jumpTo(position.maxScrollExtent);
+
+        await tester.fling(pageFinder, const Offset(0, -50), 900);
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'second');
+      },
+    );
+
+    testWidgets(
+      'when scrolling within a page away from an edge, it should keep the same current page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(tester, controller: controller);
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final position = _scrollPosition(tester, _scrollPageKey('second'));
+        position.jumpTo(150);
+
+        await tester.drag(
+          find.byKey(_scrollPageKey('second')),
+          const Offset(0, 50),
+        );
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'second');
+      },
+    );
+
+    testWidgets(
+      'when one downward gesture reaches the top and continues, it should return to the previous page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(tester, controller: controller);
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final position = _scrollPosition(tester, _scrollPageKey('second'));
+        position.jumpTo(80);
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollPageKey('second'))),
+        );
+
+        await gesture.moveBy(const Offset(0, 60));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 60));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 60));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, 200));
+        await tester.pump();
+        await gesture.up();
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'first');
+      },
+    );
+
+    testWidgets(
+      'when reversing a terminal handoff before release, it should restore the terminal page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_scrollEndKey)),
+        );
+
+        await gesture.moveBy(const Offset(0, 80));
+        await tester.pump();
+        await gesture.moveBy(const Offset(0, -80));
+        await tester.pump();
+        await gesture.up();
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'End');
+      },
+    );
+
+    testWidgets(
+      'when terminal content has no scroll extent, dragging down should return to the previous page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+          contentHeight: 200,
+          alwaysScrollable: false,
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+
+        await tester.drag(find.byKey(_scrollEndKey), const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'first');
+      },
+    );
+
+    testWidgets(
+      'when an always-scrollable terminal has no scroll extent, dragging down should return to the previous page',
+      (tester) async {
+        final controller = MateoYSnapListController();
+        await _pumpScrollableFeed(
+          tester,
+          controller: controller,
+          items: const ['first'],
+          contentHeight: 200,
+        );
+        final nextFuture = controller.next();
+        await tester.pumpAndSettle();
+        await nextFuture;
+
+        await tester.drag(find.byKey(_scrollEndKey), const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        expect(_currentCardLabel(tester), 'first');
+      },
+    );
+
+    testWidgets(
+      'when a ballistic scroll reaches a routed edge, it should clamp without navigating',
+      (tester) async {
+        await _pumpScrollableFeed(tester);
+        final pageFinder = find.byKey(_scrollPageKey('first'));
+        final position = _scrollPosition(tester, _scrollPageKey('first'));
+        position.jumpTo(position.maxScrollExtent - 100);
+
+        await tester.fling(pageFinder, const Offset(0, -80), 4000);
+        await tester.pump(const Duration(milliseconds: 16));
+
+        expect(position.pixels, lessThanOrEqualTo(position.maxScrollExtent));
+        await tester.pumpAndSettle();
+        expect(_currentCardLabel(tester), 'first');
       },
     );
   });
@@ -2142,6 +2996,7 @@ void main() {
 }
 
 const _listSize = Size(400, 600);
+const _scrollEndKey = Key('mateo_y_snap_list_scroll_end');
 const _rebuildButtonKey = Key('rebuild_button');
 const _shrinkButtonKey = Key('shrink_button');
 const _replaceButtonKey = Key('replace_button');
@@ -2154,7 +3009,11 @@ const _endKey = Key('mateo_y_snap_list_end');
 
 Key _cardKey(String item) => Key('card_$item');
 
+Key _scrollPageKey(String item) => Key('scroll_page_$item');
+
 Key _stateButtonKey(String item) => Key('state_button_$item');
+
+Key _tickerProbeKey(String item) => Key('ticker_probe_$item');
 
 Future<void> _pumpFeed(
   WidgetTester tester, {
@@ -2200,6 +3059,40 @@ Future<void> _pumpFeed(
         loadMoreErrorBuilder: loadMoreErrorBuilder,
         endBuilder: includeEndBuilder ? endBuilder ?? _endBuilder : null,
         builder: _defaultCardBuilder,
+      ),
+    ),
+  );
+}
+
+Future<void> _pumpScrollableFeed(
+  WidgetTester tester, {
+  List<String> items = const ['first', 'second'],
+  MateoYSnapListController? controller,
+  double contentHeight = 900,
+  bool alwaysScrollable = true,
+}) {
+  return tester.pumpWidget(
+    _HarnessApp(
+      targetPlatform: TargetPlatform.iOS,
+      child: MateoYSnapList<String>(
+        controller: controller,
+        items: (
+          count: items.length,
+          provider: (index) => items[index],
+          keyBuilder: null,
+        ),
+        endBuilder: (context) => _ScrollableTestPage(
+          label: 'End',
+          pageKey: _scrollEndKey,
+          contentHeight: contentHeight,
+          alwaysScrollable: alwaysScrollable,
+        ),
+        builder: (context, item, index) => _ScrollableTestPage(
+          label: item,
+          pageKey: _scrollPageKey(item),
+          contentHeight: contentHeight,
+          alwaysScrollable: alwaysScrollable,
+        ),
       ),
     ),
   );
@@ -2271,6 +3164,17 @@ String _currentCardLabel(WidgetTester tester) {
   return texts.first.data ?? '';
 }
 
+ScrollPosition _scrollPosition(WidgetTester tester, Key pageKey) {
+  return tester
+      .state<ScrollableState>(
+        find.descendant(
+          of: find.byKey(pageKey),
+          matching: find.byType(Scrollable),
+        ),
+      )
+      .position;
+}
+
 Widget _defaultCardBuilder(BuildContext context, String item, int index) {
   return _TestCard(label: item);
 }
@@ -2290,15 +3194,23 @@ Widget _endBuilder(BuildContext context) {
 }
 
 class _HarnessApp extends StatelessWidget {
-  const _HarnessApp({required this.child, this.disableAnimations = false});
+  const _HarnessApp({
+    required this.child,
+    this.disableAnimations = false,
+    this.targetPlatform,
+  });
 
   final Widget child;
   final bool disableAnimations;
+  final TargetPlatform? targetPlatform;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: MateoTheme.light(),
+      theme: MateoTheme.light(
+        accentColor: const Color(0xFF4A5CFF),
+        onAccent: const Color(0xFFFFFFFF),
+      ).lightTheme.copyWith(platform: targetPlatform),
       home: MediaQuery(
         data: const MediaQueryData(
           size: Size(800, 800),
@@ -2308,6 +3220,34 @@ class _HarnessApp extends StatelessWidget {
             child: SizedBox.fromSize(size: _listSize, child: child),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ScrollableTestPage extends StatelessWidget {
+  const _ScrollableTestPage({
+    required this.label,
+    required this.pageKey,
+    this.contentHeight = 900,
+    this.alwaysScrollable = true,
+  });
+
+  final String label;
+  final Key pageKey;
+  final double contentHeight;
+  final bool alwaysScrollable;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      key: pageKey,
+      physics: BouncingScrollPhysics(
+        parent: alwaysScrollable ? const AlwaysScrollableScrollPhysics() : null,
+      ),
+      child: SizedBox(
+        height: contentHeight,
+        child: Center(child: Text(label)),
       ),
     );
   }
@@ -2326,6 +3266,102 @@ class _TestCard extends StatelessWidget {
       color: mateoTestColorScheme.background,
       child: Text(label),
     );
+  }
+}
+
+class _TickerProbe extends StatefulWidget {
+  const _TickerProbe({required this.label, super.key});
+
+  final String label;
+
+  @override
+  State<_TickerProbe> createState() => _TickerProbeState();
+}
+
+class _TickerProbeState extends State<_TickerProbe> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  var tickCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..addListener(_handleTick);
+    _controller.repeat();
+  }
+
+  void _handleTick() {
+    tickCount += 1;
+  }
+
+  @override
+  void dispose() {
+    _controller
+      ..removeListener(_handleTick)
+      ..dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: mateoTestColorScheme.background,
+      child: Center(child: Text(widget.label)),
+    );
+  }
+}
+
+class _RenderWorkCounter extends SingleChildRenderObjectWidget {
+  const _RenderWorkCounter({
+    required this.onLayout,
+    required this.onPaint,
+    super.child,
+    super.key,
+  });
+
+  final VoidCallback onLayout;
+  final VoidCallback onPaint;
+
+  @override
+  _RenderWorkCounterBox createRenderObject(BuildContext context) {
+    return _RenderWorkCounterBox(
+      onLayout: onLayout,
+      onPaint: onPaint,
+    );
+  }
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderWorkCounterBox renderObject,
+  ) {
+    renderObject
+      ..onLayout = onLayout
+      ..onPaint = onPaint;
+  }
+}
+
+class _RenderWorkCounterBox extends RenderProxyBox {
+  _RenderWorkCounterBox({
+    required this.onLayout,
+    required this.onPaint,
+  });
+
+  VoidCallback onLayout;
+  VoidCallback onPaint;
+
+  @override
+  void performLayout() {
+    onLayout();
+    super.performLayout();
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    onPaint();
+    super.paint(context, offset);
   }
 }
 

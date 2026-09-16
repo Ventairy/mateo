@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile_old/mateo_mobile_old.dart';
 
 import '../test_app.dart';
 
@@ -49,84 +49,97 @@ RouterConfig<Object> _createConfig({void Function(BuildContext)? onBuild}) {
   );
 }
 
+MateoTheme _lightTheme({
+  Color accentColor = const Color(0xFF4A5CFF),
+  Color onAccent = const Color(0xFFFFFFFF),
+}) {
+  return MateoTheme.light(
+    accentColor: accentColor,
+    onAccent: onAccent,
+  );
+}
+
 void main() {
   group('MateoApp', () {
-    testWidgets(
-      'when configured with home, it should render without a router',
-      (tester) async {
-        await tester.pumpWidget(
-          MateoApp(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.success.background,
-              onAccent: mateoTestColorScheme.text.inverse,
-            ),
-            home: Scaffold(body: Text('Home')),
-          ),
-        );
+    testWidgets('when configured with home, it should render without a router', (tester) async {
+      final configuration = _lightTheme(
+        accentColor: mateoTestThemeData.palette.green[9],
+        onAccent: mateoTestColorScheme.inverse.onBackground,
+      );
 
-        final messengerContext = tester.element(
-          find.byType(MateoToastMessenger),
-        );
-        final mateoTheme = Theme.of(
-          messengerContext,
-        ).extension<MateoThemeData>()!;
-        final expectedPalette = MateoPalette(
-          accentColor: mateoTestColorScheme.buttons.success.background,
-        );
+      await tester.pumpWidget(
+        MateoApp(
+          title: 'Test App',
+          theme: configuration,
+          home: Scaffold(body: Text('Home')),
+        ),
+      );
 
-        expect(find.text('Home'), findsOneWidget);
-        expect(find.byType(Navigator), findsOneWidget);
-        expect(find.byType(MateoToastMessenger), findsOneWidget);
-        expect(mateoTheme.palette.accent[9], expectedPalette.accent[9]);
-        expect(
-          mateoTheme.colorScheme.buttons.accent.primary.foreground,
-          mateoTestColorScheme.text.inverse,
-        );
-      },
-    );
+      final messengerContext = tester.element(find.byType(MateoToastMessenger));
+      final mateoTheme = Theme.of(messengerContext).extension<MateoThemeData>()!;
 
-    testWidgets(
-      'when a named route is pushed, it should render the configured route',
-      (tester) async {
-        await tester.pumpWidget(
-          MateoApp(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.danger.background,
-              onAccent: mateoTestColorScheme.background,
-            ),
-            home: Builder(
-              builder: (context) => Scaffold(
-                body: TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/details'),
-                  child: const Text('Open details'),
-                ),
+      expect(find.text('Home'), findsOneWidget);
+      expect(find.byType(Navigator), findsOneWidget);
+      expect(find.byType(MateoToastMessenger), findsOneWidget);
+      expect(mateoTheme.palette, configuration.lightTheme.extension<MateoThemeData>()!.palette);
+      expect(
+        mateoTheme.colorScheme.buttons.primary.accent.foreground,
+        mateoTestColorScheme.inverse.onBackground,
+      );
+    });
+
+    testWidgets('when configured with a theme, it should forward the complete configuration', (tester) async {
+      final configuration = _lightTheme();
+
+      await tester.pumpWidget(
+        MateoApp(
+          title: 'Test App',
+          theme: configuration,
+          home: const SizedBox.shrink(),
+        ),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      final context = tester.element(find.byType(MateoToastMessenger));
+      final palette = Theme.of(context).extension<MateoThemeData>()!.palette;
+
+      expect(materialApp.theme, same(configuration.lightTheme));
+      expect(materialApp.darkTheme, same(configuration.darkTheme));
+      expect(materialApp.themeMode, configuration.themeMode);
+      expect(materialApp.color, configuration.lightTheme.colorScheme.primary);
+      expect(palette.neutral.colors, MateoPalette().neutral.colors);
+    });
+
+    testWidgets('when a named route is pushed, it should render the configured route', (tester) async {
+      await tester.pumpWidget(
+        MateoApp(
+          title: 'Test App',
+          theme: _lightTheme(),
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: TextButton(
+                onPressed: () => Navigator.pushNamed(context, '/details'),
+                child: const Text('Open details'),
               ),
             ),
-            routes: {'/details': (_) => const Scaffold(body: Text('Details'))},
           ),
-        );
+          routes: {'/details': (_) => const Scaffold(body: Text('Details'))},
+        ),
+      );
 
-        await tester.tap(find.text('Open details'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Open details'));
+      await tester.pumpAndSettle();
 
-        expect(find.text('Details'), findsOneWidget);
-      },
-    );
+      expect(find.text('Details'), findsOneWidget);
+    });
 
-    testWidgets('when showing a toast from home, it should show the message', (
-      tester,
-    ) async {
+    testWidgets('when showing a toast from home, it should show the message', (tester) async {
       late BuildContext homeContext;
 
       await tester.pumpWidget(
         MateoApp(
           title: 'Test App',
-          color: (
-            accent: mateoTestColorScheme.buttons.danger.background,
-            onAccent: mateoTestColorScheme.background,
-          ),
+          theme: _lightTheme(),
           home: Builder(
             builder: (context) {
               homeContext = context;
@@ -136,7 +149,7 @@ void main() {
         ),
       );
 
-      MateoToast.show(homeContext, message: 'Hello from MateoApp');
+      MateoToast.show(homeContext, message: 'Hello from MateoApp', presentation: .error());
       await tester.pump();
 
       expect(find.text('Hello from MateoApp'), findsOneWidget);
@@ -144,130 +157,119 @@ void main() {
   });
 
   group('MateoApp.router', () {
-    testWidgets(
-      'when configured with a color, it should render the child widget',
-      (tester) async {
-        await tester.pumpWidget(
-          MateoApp.router(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.danger.background,
-              onAccent: mateoTestColorScheme.background,
-            ),
-            routerConfig: _createConfig(),
+    testWidgets('when configured with a theme, it should render the child widget', (tester) async {
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: _lightTheme(),
+          routerConfig: _createConfig(),
+        ),
+      );
+
+      expect(find.byType(MaterialApp), findsOneWidget);
+    });
+
+    testWidgets('when adaptive under light brightness, it should use the light appearance', (tester) async {
+      tester.binding.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+      addTearDown(tester.binding.platformDispatcher.clearPlatformBrightnessTestValue);
+      final configuration = MateoTheme.adaptive(
+        accentColor: const Color(0xFF4A5CFF),
+        onAccent: const Color(0xFFFFFFFF),
+      );
+
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: configuration,
+          routerConfig: _createConfig(),
+        ),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      final context = tester.element(find.byType(MateoToastMessenger));
+
+      expect(materialApp.themeMode, ThemeMode.system);
+      expect(Theme.of(context).brightness, Brightness.light);
+    });
+
+    testWidgets('when adaptive under dark brightness, it should select the current light fallback branch', (
+      tester,
+    ) async {
+      tester.binding.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      addTearDown(tester.binding.platformDispatcher.clearPlatformBrightnessTestValue);
+      final configuration = MateoTheme.adaptive(
+        accentColor: const Color(0xFF4A5CFF),
+        onAccent: const Color(0xFFFFFFFF),
+      );
+
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: configuration,
+          routerConfig: _createConfig(),
+        ),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      final context = tester.element(find.byType(MateoToastMessenger));
+
+      expect(materialApp.darkTheme, same(configuration.darkTheme));
+      expect(materialApp.themeMode, ThemeMode.system);
+      expect(Theme.of(context).brightness, Brightness.light);
+    });
+
+    testWidgets('when configured with a builder, it should auto-inject the MateoToastMessenger', (tester) async {
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: _lightTheme(),
+          routerConfig: _createConfig(),
+          builder: (context, child) => child ?? const SizedBox.shrink(),
+        ),
+      );
+
+      expect(find.byType(MateoToastMessenger), findsOneWidget);
+    });
+
+    testWidgets('when inside the router, it should find the MateoToastMessenger via context lookup', (tester) async {
+      late BuildContext routerContext;
+
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: _lightTheme(),
+          routerConfig: _createConfig(
+            onBuild: (context) {
+              routerContext = context;
+            },
           ),
-        );
+        ),
+      );
 
-        expect(find.byType(MaterialApp), findsOneWidget);
-      },
-    );
+      expect(MateoToastMessenger.maybeOf(routerContext), isNotNull);
+    });
 
-    testWidgets(
-      'when configured with a color, it should apply the Mateo Mobile palette from the given accent',
-      (tester) async {
-        await tester.pumpWidget(
-          MateoApp.router(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.success.background,
-              onAccent: mateoTestColorScheme.text.inverse,
-            ),
-            routerConfig: _createConfig(),
-            builder: (context, child) => child ?? const SizedBox.shrink(),
+    testWidgets('when showing a toast from inside the router, it should find the messenger and show the message', (
+      tester,
+    ) async {
+      late BuildContext routerContext;
+
+      await tester.pumpWidget(
+        MateoApp.router(
+          title: 'Test App',
+          theme: _lightTheme(),
+          routerConfig: _createConfig(
+            onBuild: (context) {
+              routerContext = context;
+            },
           ),
-        );
+        ),
+      );
 
-        final messengerContext = tester.element(
-          find.byType(MateoToastMessenger),
-        );
-        final mateoTheme = Theme.of(
-          messengerContext,
-        ).extension<MateoThemeData>()!;
-        final expectedPalette = MateoPalette(
-          accentColor: mateoTestColorScheme.buttons.success.background,
-        );
+      MateoToast.show(routerContext, message: 'Hello from MateoApp', presentation: .error());
+      await tester.pump();
 
-        expect(
-          mateoTheme.palette.accent[9],
-          equals(expectedPalette.accent[9]),
-        );
-        expect(
-          mateoTheme.colorScheme.buttons.accent.primary.foreground,
-          mateoTestColorScheme.text.inverse,
-        );
-      },
-    );
-
-    testWidgets(
-      'when configured with a builder, it should auto-inject the MateoToastMessenger',
-      (tester) async {
-        await tester.pumpWidget(
-          MateoApp.router(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.danger.background,
-              onAccent: mateoTestColorScheme.background,
-            ),
-            routerConfig: _createConfig(),
-            builder: (context, child) => child ?? const SizedBox.shrink(),
-          ),
-        );
-
-        expect(find.byType(MateoToastMessenger), findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'when inside the router, it should find the MateoToastMessenger via context lookup',
-      (tester) async {
-        late BuildContext routerContext;
-
-        await tester.pumpWidget(
-          MateoApp.router(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.danger.background,
-              onAccent: mateoTestColorScheme.background,
-            ),
-            routerConfig: _createConfig(
-              onBuild: (context) {
-                routerContext = context;
-              },
-            ),
-          ),
-        );
-
-        final messenger = MateoToastMessenger.maybeOf(routerContext);
-
-        expect(messenger, isNotNull);
-      },
-    );
-
-    testWidgets(
-      'when showing a toast from inside the router, it should find the messenger and show the message',
-      (tester) async {
-        late BuildContext routerContext;
-
-        await tester.pumpWidget(
-          MateoApp.router(
-            title: 'Test App',
-            color: (
-              accent: mateoTestColorScheme.buttons.danger.background,
-              onAccent: mateoTestColorScheme.background,
-            ),
-            routerConfig: _createConfig(
-              onBuild: (context) {
-                routerContext = context;
-              },
-            ),
-          ),
-        );
-
-        MateoToast.show(routerContext, message: 'Hello from MateoApp');
-        await tester.pump();
-
-        expect(find.text('Hello from MateoApp'), findsOneWidget);
-      },
-    );
+      expect(find.text('Hello from MateoApp'), findsOneWidget);
+    });
   });
 }

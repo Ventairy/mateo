@@ -1,0 +1,5 @@
+dependency_overrides:
+  dotdart:
+    path: ../../../../ventairy/dotdart
+  oh_my_flutter:
+    path: ../../../../ventairy/flutter/oh_my_flutter

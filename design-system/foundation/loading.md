@@ -45,9 +45,10 @@ or information density.
 
 Skeleton shapes are neutral and non-semantic. Preserve the final component's
 recognizable geometry while removing readable text, icons, imagery, and
-interactive styling. Text bones use deeply rounded or pill-shaped lines;
-containers and media areas follow the geometry defined by their component and
-the [border-radius foundation](border-radius.md).
+interactive styling. Rectangular bones, including text lines, use a restrained
+Material-style corner radius rather than becoming pills. Circular and freeform
+bones keep the final content's geometry. Follow the skeleton rules in the
+[border-radius foundation](border-radius.md).
 
 Animate the skeleton in normal motion settings so it cannot be mistaken for
 disabled or already loaded content. Use one restrained, continuous effect
@@ -205,9 +206,12 @@ Loading must remain understandable without seeing its color or animation.
 - Announce meaningful state changes without announcing every animation cycle
   or progress update. Completion, failure, and a significant change in status
   matter; each painted frame does not.
-- Preserve focus and reading position while content loads. A replacement must
-  not steal focus unless the completed navigation or action explicitly
-  requires it.
+- Never activate a skeleton over a region that already contains keyboard or
+  accessibility focus. Existing focused content is usable content, so keep it
+  visible during refresh and report the pending state separately. An initial
+  skeleton excludes its unavailable descendants from focus and reading order.
+  When content replaces it, preserve the surrounding focus and reading position
+  unless the completed navigation or action explicitly requires a move.
 - Keep the pending control's accessible name meaningful, such as the action in
   progress, rather than replacing it with an unlabeled indicator.
 

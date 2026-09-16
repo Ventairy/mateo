@@ -1,0 +1,211 @@
+# Icons - Mateo Design System
+
+Mateo icons are simple, expressive, and immediately understandable. Their job
+is to make an interface feel obvious and alive without adding visual noise.
+Each icon represents one familiar concept, object, or action with the least
+detail needed to recognize it confidently.
+
+Icons should feel friendly and purposeful. Use them to clarify an action,
+reinforce a message, show direction, or make a state easier to notice. Do not
+use them as decoration or as a substitute for a clearer text label.
+
+The available icon assets live in [assets/icons](assets/icons/), grouped by visual treatment.
+Use the asset appropriate to the component and platform, or the equivalent icon
+API provided by the package for your platform.
+
+## Principles
+
+Mateo icons follow these principles:
+
+- **Obvious at a glance.** Prefer familiar metaphors that people can recognize
+  without learning Mateo first.
+- **One clear idea.** Each icon expresses one primary concept. Remove detail
+  that does not improve recognition at the rendered size.
+- **Warm, not ornamental.** Friendly geometry and confident visual weight give
+  the set personality, but clarity always comes before decoration.
+- **One visual family.** Icons using the same treatment should share a coherent
+  level of detail, visual weight, geometry, and finish. Choose the Mateo
+  treatment appropriate to the context and use it consistently within a
+  component or repeated set.
+- **Self-descriptive in context.** Pair an icon with text whenever the action or
+  state is not immediately clear. Mateo should help people understand, not make
+  them decode a private visual language.
+- **Native to the platform.** Size, target, direction, motion, and accessibility
+  behavior belong to the component and must respect the intended platform.
+- **Named by appearance.** Name an icon for what it depicts, not for a single
+  product behavior. A `clock` can support time or waiting; it is not named
+  `pending`.
+
+## Icon catalog
+
+The name in this table is the canonical icon name. An icon may be available in
+more than one visual treatment. Platform APIs may adapt the name to their
+language conventions, such as `arrowLeft` in Dart.
+
+| Icon                                                             | Name                    | Use                                                                                                           | Do not use for                                                                            |
+| ---------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| ![Arrow pointing down](assets/icons/svg/arrow-down.svg)                       | `arrow-down`            | Downward direction or a downward gesture. Pair gesture instructions with motion or text.                      | Download, collapse, or sort descending unless the component clearly establishes that meaning. |
+| ![Arrow pointing left](assets/icons/svg/arrow-left.svg)                       | `arrow-left`            | Back or previous navigation when the destination is clear from context.                                       | Undo, reply, or an arbitrary leftward action.                                             |
+| ![Arrow pointing right](assets/icons/svg/arrow-right.svg)                     | `arrow-right`           | Forward or next navigation when the destination is clear from context.                                        | Redo, send, sign out, or an arbitrary rightward action.                                   |
+| ![Clockwise circular arrow](assets/icons/svg/arrow-rotate-clockise.svg)       | `arrow-rotate-clockise` | Retry, reload, refresh, or repeat when the surrounding label or component makes the action explicit.          | History, undo, or automatic synchronization without supporting context.                   |
+| ![Arrow pointing up](assets/icons/svg/arrow-up.svg)                           | `arrow-up`              | Upward direction or an upward gesture. It may support a swipe-up instruction when paired with motion or text. | Upload, send, or sort ascending unless the component clearly establishes that meaning.    |
+| ![Bank building](assets/icons/svg/bank-building.svg)                          | `bank-building`         | A bank, financial institution, or branch location when the surrounding text identifies it.                   | Money, payment, or finance in general without an institution or place.                     |
+| ![Banknote with a pin](assets/icons/svg/banknote-pin.svg)                     | `banknote-pin`           | A fixed or pinned monetary value, such as an agreed payment, set budget, or target amount. Pair it with the value or label. | An estimated, flexible, or negotiable amount, a generic payment action, or a geographic location. |
+| ![Beer mug](assets/icons/svg/beer-mug.svg)                                    | `beer-mug`              | Beer, a brewery, a pub, or an option that specifically includes beer.                                         | Drinks in general, alcohol-free choices, or celebration without a beverage context.        |
+| ![Bicycle](assets/icons/svg/bicycle.svg)                                      | `bicycle`               | A bicycle, cycling, or bicycle-based transport when the surrounding text names the context.                    | Motorcycles, exercise in general, or transport when the vehicle type is unknown.            |
+| <img src="assets/icons/svg/bidirecional-horizontal-arrow.svg" alt="Bidirectional horizontal arrows" width="20"> <img src="assets/icons/3d/bidirecional-horizontal-arrow.webp" alt="3D bidirectional horizontal arrows" width="20"> | `bidirecional-horizontal-arrow` | A horizontal range, two possible directions, or movement that may happen toward either side. Pair it with context that names the range or choice. | One-way navigation, exchange or transfer between items, or an unlabeled action.            |
+| ![Book](assets/icons/svg/book.svg)                                            | `book`                  | Reading, books, a library, or written learning material.                                                       | A generic list, file, or documentation action when a clearer label or metaphor is available. |
+| ![Box with a pencil](assets/icons/svg/box-pencil.svg)                         | `box-pencil`            | Edit or compose content when the component or label identifies what will change.                              | Save, settings, or a generic indication that content is editable without an action.       |
+| ![Broom](assets/icons/svg/broom.svg)                                         | `broom`                 | Clear all entered content, clean up a collection, or start a cleanup action when the affected content is clear. | Close, undo, or permanently delete saved content without an explicit destructive label.    |
+| ![Bus viewed from the front](assets/icons/svg/bus-front.svg)                  | `bus-front`             | A bus, bus stop, or bus-based public transport option.                                                         | Trains, private cars, or transport in general when the mode is unknown.                     |
+| ![Checkered flag](assets/icons/svg/checkered-flag.svg)                        | `checkered-flag`        | A finish line, the end of a race or route, or completion when the surrounding component names what finished.  | A generic success state, a starting point, or a decorative racing motif.                   |
+| ![Chevron pointing down](assets/icons/svg/chevron-down.svg)                   | `chevron-down`          | Reveal content below, expand a collapsed region, or indicate a downward selection control.                    | Download or a general down arrow.                                                         |
+| ![Chevron pointing left](assets/icons/svg/chevron-left.svg)                   | `chevron-left`          | Back or previous navigation, or collapse toward the left, when the surrounding component makes the action clear. | Undo, reply, or general leftward movement where `arrow-left` communicates direction more clearly. |
+| ![Circle with a slash](assets/icons/svg/circle-block.svg)                     | `circle-block`          | Blocked, prohibited, unavailable, or not allowed. Pair it with a reason when the state affects a task.        | Delete, cancel, or a generic error.                                                       |
+| ![Checkmark in a circle](assets/icons/svg/circle-check.svg)                   | `circle-check`          | Successful completion or a confirmed positive result. Pair it with text that names what completed.            | Selection, approval, or a decorative checkmark without a completed outcome.               |
+| ![Information mark in a circle](assets/icons/svg/circle-info.svg)             | `circle-info`           | Contextual information or a timely fact that helps explain the current state. Pair it with the information.   | Help, a warning, or decoration that does not communicate useful information.              |
+| ![Classical columned building](assets/icons/svg/classic-building.svg)         | `classic-building`      | A historic, cultural, or institutional building when its exact kind is named nearby.                          | A bank or government office when the more specific building icon applies.                  |
+| ![Clock](assets/icons/svg/clock.svg)                                          | `clock`                 | Time, schedule, duration, waiting, or a pending state.                                                        | History unless the surrounding control explicitly establishes history.                    |
+| ![Cross](assets/icons/svg/cross.svg)                                          | `cross`                 | Close, dismiss, clear, or remove from a reversible context. The component must make the exact action clear.   | Error status by itself or an unlabeled destructive action.                                |
+| ![Disco ball](assets/icons/svg/disco-ball.svg)                                | `disco-ball`            | Dancing, nightlife, a party, or a venue centered on those activities.                                         | Entertainment or celebration in general when dancing or nightlife is not involved.        |
+| ![Two crosses](assets/icons/svg/double-cross.svg)                             | `double-cross`          | Two unavailable, incorrect, or excluded items when each cross corresponds to something visible and named.     | Close, delete, or a generic error without two distinct subjects.                           |
+| ![Drop](assets/icons/svg/drop.svg)                                            | `drop`                  | Water, a liquid, moisture, or a measured amount of fluid when the surrounding text identifies it.              | Fuel, tears, or a generic status without a liquid context.                                  |
+| ![Drop with foam](assets/icons/svg/drop-foam.svg)                             | `drop-foam`             | Washing, soap, foam, or a foaming liquid when the surrounding text identifies the substance or action.         | Water, rain, or a generic liquid when foam is not relevant.                                 |
+| ![Dumbbell](assets/icons/svg/dumbbell.svg)                                    | `dumbbell`              | Strength training, a gym, exercise equipment, or a workout.                                                    | Health, wellbeing, or sport in general without an exercise context.                        |
+| ![Eraser](assets/icons/svg/eraser.svg)                                       | `eraser`                | Clear entered content or erase an editable value when the surrounding control makes the affected content clear. | Close, delete a saved item, undo, or remove content that cannot be restored by typing again. |
+| ![Electric vehicle plug](assets/icons/svg/ev-plug.svg)                        | `ev-plug`               | Electric-vehicle charging, a charging connector, or a place where an electric vehicle can charge.             | Fuel, electricity in general, or a generic cable connection.                               |
+| ![Exclamation mark in a circle](assets/icons/svg/exclamation-circle.svg)      | `exclamation-circle`    | A problem, exception, or important status that needs attention. Pair it with an explanation.                  | General information or a warning about a possible future risk.                            |
+| ![Exclamation mark in a triangle](assets/icons/svg/exclamation-triangle.svg)  | `exclamation-triangle`  | Warning, caution, risk, or a condition that may require care before continuing. Pair it with an explanation.  | A confirmed error when `exclamation-circle` is the established status symbol.             |
+| ![Ferris wheel](assets/icons/svg/ferris-wheel.svg)                            | `ferris-wheel`          | An amusement park, fairground, or Ferris-wheel attraction.                                                     | Travel, sightseeing, or entertainment in general without an amusement-ride context.        |
+| ![Flame](assets/icons/svg/flame.svg)                                         | `flame`                 | Fire, heat, burning, or a flame-based source of energy.                                                        | Popularity, urgency, or danger unless the surrounding component explicitly establishes it. |
+| ![Fork and knife](assets/icons/svg/fork-knife.svg)                            | `fork-knife`            | Food, dining, a restaurant, or a meal.                                                                          | Groceries, drinks, or cooking instructions when a more specific symbol is available.       |
+| ![Gas station](assets/icons/svg/gas-station.svg)                              | `gas-station`           | A fuel station, refueling, or fuel availability for a vehicle.                                                | Electric charging, parking, or vehicle service without fuel.                              |
+| ![Gear](assets/icons/svg/gear.svg)                                           | `gear`                  | Settings, preferences, or configuration when the surrounding component names what can be adjusted.           | Repair, maintenance, loading, or an unlabeled action whose result is unclear.              |
+| ![Gift](assets/icons/svg/gift.svg)                                           | `gift`                  | A gift, present, reward, or benefit when the surrounding component names what is being given or received.     | Payment, shopping, or celebration in general without an actual gift or reward.             |
+| ![Government building](assets/icons/svg/government-building.svg)              | `government-building`   | Government, a civic office, or a public institution when the surrounding text names it.                      | A bank, historic building, or authority in general without a civic institution.            |
+| ![Graduation cap](assets/icons/svg/graduate-cap.svg)                          | `graduate-cap`          | Graduation, formal education, academic study, or a qualification.                                             | Achievement or success in general without an education context.                            |
+| <img src="assets/icons/svg/handshake.svg" alt="Handshake" width="20"> <img src="assets/icons/3d/handshake.webp" alt="3D handshake" width="20"> | `handshake`             | Agreement, partnership, collaboration, or a completed deal when the surrounding text names the relationship. | A greeting, generic people, or approval without a shared commitment.                      |
+| ![Helicopter viewed from the front](assets/icons/svg/helicopter-front.svg)    | `helicopter-front`      | A helicopter, helicopter transport, or a location or service specifically involving helicopters.             | Air travel in general, an airplane, or emergency response without a helicopter context.    |
+| ![Hookah](assets/icons/svg/hookah.svg)                                       | `hookah`                | A hookah, shisha, or a venue or activity specifically involving a water pipe.                                 | Smoking or tobacco in general, a lamp, or decoration without a hookah context.              |
+| ![Hot coffee cup](assets/icons/svg/hot-coffee-cup.svg)                        | `hot-coffee-cup`        | Coffee, a hot drink, a café, or a refreshment break.                                                           | Drinks or food in general, or temperature without a beverage context.                      |
+| ![Lightning bolt](assets/icons/svg/lightning-bolt.svg)                        | `lightning-bolt`        | Electricity, power, charging, or an instant action when the component names that action.                      | Weather, danger, or speed without supporting context.                                     |
+| ![Location pin](assets/icons/svg/location-pin.svg)                            | `location-pin`          | A place, address, or point on a map.                                                                          | The person's current location or navigation direction without additional cues.            |
+| ![Magnifying glass](assets/icons/svg/magnifying-glass.svg)                    | `magnifying-glass`      | Search or find.                                                                                               | Zoom unless the surrounding component explicitly establishes zoom.                        |
+| ![Magnifying glass with a sad face](assets/icons/svg/magnifying-glass-sad-face.svg) | `magnifying-glass-sad-face` | A search that found no suitable results or ended disappointingly. Pair it with text that explains the outcome and next step. | A generic error, an empty state unrelated to search, or the search action itself.           |
+| ![Martini glass](assets/icons/svg/matini-glass.svg)                           | `matini-glass`          | A cocktail, martini, cocktail bar, or option that specifically includes mixed alcoholic drinks.              | Drinks in general, wine, or alcohol-free choices without clear supporting context.         |
+| ![Medical cross](assets/icons/svg/medical-cross.svg)                          | `medical-cross`         | Medical care, healthcare, first aid, or a place that provides treatment.                                      | Add, create, or a generic positive state.                                                  |
+| <img src="assets/icons/svg/padlock.svg" alt="Padlock" width="20"> <img src="assets/icons/3d/padlock.webp" alt="3D padlock" width="20"> | `padlock`               | Security, privacy, locked content, or a protected action when the surrounding text names what is protected.   | A general warning, unavailable content, or proof that a system is secure.                  |
+| ![Paper plane pointing up and right](assets/icons/svg/paper-plane-up-right.svg) | `paper-plane-up-right` | Send or submit a message when the surrounding control names what will be sent and where it will go.           | Air travel, sharing without sending, or an unlabeled forward action.                        |
+| ![Parking sign](assets/icons/svg/parking-sign.svg)                            | `parking-sign`         | Parking, a parking area, or a parking rule when nearby text provides any restrictions.                        | A vehicle, destination, or road rule unrelated to parking.                                 |
+| <img src="assets/icons/svg/pencil.svg" alt="Pencil" width="20"> <img src="assets/icons/3d/pencil.webp" alt="3D pencil" width="20"> | `pencil`                | Writing, drawing, or editing when the surrounding component or label identifies what will change.             | Save, settings, or a generic indication that content is editable without an action.       |
+| ![Phone handset](assets/icons/svg/phone.svg)                                  | `phone`                 | Calling or a phone number.                                                                                    | A mobile device; use `smartphone` for the device itself.                                  |
+| ![Pills](assets/icons/svg/pills.svg)                                          | `pills`                 | Medication, a pharmacy, or medicine in pill form.                                                              | Healthcare in general or dosage instructions without supporting text.                      |
+| ![Plane pointing up and right](assets/icons/svg/plane-up-right.svg)           | `plane-up-right`        | A flight, departure, air travel, or an airport connection.                                                     | Upload, send, or diagonal movement unrelated to an aircraft.                               |
+| ![Plus sign](assets/icons/svg/plus-signal.svg)                                | `plus-signal`           | Add or create something, or increase a quantity when the surrounding component makes the operation explicit.  | Close, remove, expand, or a positive status without supporting text or context.           |
+| ![Hand with index finger pointing up](assets/icons/svg/pointer-hand-up.svg)   | `pointer-hand-up`       | A tap, touch, press, or gesture instruction. Use it in guidance where the interaction is demonstrated.        | A general cursor, selection state, or permanent navigation icon.                          |
+| ![Police badge](assets/icons/svg/police-badge.svg)                            | `police-badge`          | Police, law enforcement, or an official police service.                                                       | Security, safety, verification, or authority in general.                                   |
+| ![Popcorn](assets/icons/svg/popcorn.svg)                                      | `popcorn`               | Cinema, popcorn, or an entertainment experience centered on watching a show.                                  | Food, events, or entertainment in general without that context.                            |
+| ![Figure praying](assets/icons/svg/praying-figure.svg)                        | `praying-figure`        | Prayer, worship, or a spiritual practice when the surrounding text names it.                                  | Thanks, hope, asking, or a generic person.                                                  |
+| ![Question mark](assets/icons/svg/questionmark.svg)                           | `questionmark`          | Help, support, or an answer to a question when the surrounding component makes the destination clear.         | General information, an unknown status, or punctuation within text.                       |
+| ![Stack of rectangles](assets/icons/svg/rectangle-stack.svg)                  | `rectangle-stack`       | A collection, layered content, or a stack of cards or pages.                                                   | Copy, duplicate, window switching, or a single item without supporting context.            |
+| ![Road with a dashed center line](assets/icons/svg/road.svg)                  | `road`                  | A road, route, or road-based travel context.                                                                   | Turn-by-turn direction, current location, or a generic path or process.                    |
+| ![Figure running](assets/icons/svg/running-figure.svg)                        | `running-figure`        | Running, jogging, or a person moving quickly as a physical activity.                                          | Emergency exit, escape, or movement in general without a running context.                  |
+| ![Sad emoticon](assets/icons/svg/sad-emoticon.svg)                            | `sad-emoticon`          | Sadness, disappointment, or an unhappy response when paired with text that explains the feeling or outcome.    | A generic error, dislike action, or serious distress without clear supporting language.    |
+| ![Sad and happy theatre masks](assets/icons/svg/sad-mask-happy-mask.svg)      | `sad-mask-happy-mask`   | Theatre, drama, acting, or the performing arts.                                                                | A mood selector, emotional wellbeing, or opposing states without a performance context.    |
+| ![Scissors](assets/icons/svg/scissors.svg)                                    | `scissors`              | Cut, trim, or clip content or material when the surrounding component names what will be changed.              | Delete, close, or a generic edit action when no cutting or trimming occurs.                 |
+| ![Shopping bag](assets/icons/svg/shopping-bag.svg)                            | `shopping-bag`          | Shopping, retail, purchases, or a store.                                                                        | A cart action, order status, luggage, or a generic container.                              |
+| ![Shopping cart](assets/icons/svg/shopping-cart.svg)                          | `shopping-cart`         | A shopping cart, items selected for purchase, or the path to checkout.                                        | A completed purchase, delivery, or a retail location without cart behavior.                |
+| ![Figure sleeping](assets/icons/svg/sleeping-figure.svg)                      | `sleeping-figure`       | Sleep, rest, or a sleeping person when the surrounding text names the context.                                | Offline, inactive, unavailable, or accommodation in general.                               |
+| ![Smartphone](assets/icons/svg/smartphone.svg)                                | `smartphone`            | A mobile device, mobile experience, or interaction happening on a phone.                                      | Calling; use `phone` for the call action.                                                 |
+| ![Stadium](assets/icons/svg/stadium.svg)                                      | `stadium`               | A stadium, arena, or large sports venue.                                                                        | Sport or events in general when the venue is not relevant.                                 |
+| ![Star](assets/icons/svg/star.svg)                                            | `star`                  | A favorite, rating, or featured item when the component makes the exact state clear.                          | Success, a required field, or decoration without a defined meaning.                        |
+| ![Tire](assets/icons/svg/tire.svg)                                            | `tire`                  | A vehicle tire, tire service, wheel maintenance, or a tire-related condition named by nearby text.             | A vehicle, driving, or movement in general when the tire itself is not relevant.            |
+| ![Train viewed from the front](assets/icons/svg/train-front.svg)              | `train-front`           | A train, railway station, or rail-based transport option.                                                      | A bus, road route, or transport in general when the mode is unknown.                        |
+| ![Trash can](assets/icons/svg/trash.svg)                                      | `trash`                 | Permanently delete an item when the surrounding control names what will be removed and provides appropriate confirmation. | Clear editable content, close, archive, or remove something temporarily.                    |
+| ![Tree](assets/icons/svg/tree.svg)                                            | `tree`                  | Trees, parks, vegetation, or a natural outdoor place.                                                          | Generic sustainability, growth, or success without supporting context.                    |
+| ![WhatsApp mark](assets/icons/svg/whatsapp.svg)                               | `whatsapp`              | An action or destination that is specifically WhatsApp. Keep an accessible label naming WhatsApp.             | Generic messaging, calling, or Mateo-owned communication.                                 |
+| ![Wi-Fi](assets/icons/svg/wifi.svg)                                           | `wifi`                  | Wi-Fi availability, a wireless network, or a wireless connection when the surrounding component names it.     | Internet access in general, signal strength measurement, or a connection problem.          |
+| ![Wi-Fi with an exclamation mark](assets/icons/svg/wifi-exclamation-mark.svg) | `wifi-exclamation-mark` | No internet, unreliable connectivity, or a network connection that needs attention.                           | A server, account, or generic application error without evidence of a connection problem. |
+| ![Wine glass](assets/icons/svg/wine-glass.svg)                                | `wine-glass`            | Wine, a winery, wine service, or an option that specifically includes wine.                                   | Drinks in general, cocktails, or alcohol-free choices without clear supporting context.    |
+| ![Wrench](assets/icons/svg/wrench.svg)                                        | `wrench`                | Tools, repair, maintenance, or technical configuration.                                                       | Generic settings when the action is not about tools or maintenance.                       |
+
+## Usage rules
+
+### Labels and accessibility
+
+- An interactive icon must receive an accessible name from its component. The
+  name describes the action, such as “Close” or “Retry”, not the picture, such
+  as “Cross” or “Circular arrow”.
+- Hide a purely decorative or repeated icon from assistive technology.
+- Pair status icons with text. Do not rely on the symbol or its color alone to
+  communicate an error, warning, blocked state, or connection problem.
+- Do not bake explanatory copy into an icon asset. Text belongs to the component
+  so it can be translated, resized, and announced correctly.
+
+### Size and placement
+
+- SVG icons use a 20 × 20 frame with optical sizing built into the artwork. Preserve this internal spacing
+  when using the assets.
+- Preserve the icon's aspect ratio. Do not stretch it to fill a square.
+- Choose icon size in the component or platform specification, and test the
+  result at its actual rendered size. Small icons must remain recognizable.
+- Treat icon size and interactive target size as separate decisions. A small
+  icon still needs the touch or pointer target required by its platform.
+- Align icons by perceived visual weight, not only by their raw asset bounds.
+  When an icon sits beside text, center it optically with the text line.
+- Keep the icon asset unchanged. Add any spacing or alignment adjustment around
+  the icon in the component that uses it.
+
+#### Optical sizing
+
+Icons balance visible mass and apparent span at a displayed size of 20px.
+Their internal bounds intentionally differ: open contours, enclosed shapes,
+and narrow symbols can need different spans to look balanced. The SVG artwork
+is the source of truth for each icon's scale and internal spacing.
+
+Judge the set together at its displayed size. Compare how strongly each icon
+stands out beside its neighbors, including its filled regions, negative space,
+and longest strokes. Equal visible widths or equal enclosed areas alone do not
+make different shapes feel equally large. Do not trim the built-in whitespace
+to force matching bounds. Compare directional variants inside identical
+buttons as well. A tall chevron can need a smaller visible span than a wide
+chevron to balance their presence. Keep the component's icon box the same;
+the correction is already included in the artwork.
+
+Scaling an icon also scales its strokes. This sizing keeps the authored visual
+family while balancing its presence; it does not make every stroke identical.
+Check smaller or larger displayed sizes in context, where fine gaps, adjacent
+text, and contrast can change the apparent balance.
+
+### Color and state
+
+- Mateo icons may use a monochrome or authored full-color treatment.
+  Implementations must allow the component's semantic color to recolor a
+  monochrome icon without hardcoding a palette primitive in the asset.
+- Black is the base color of monochrome assets, not a required displayed color.
+  The component's color scheme determines the displayed color and must provide
+  sufficient contrast against its background. Preserve the authored colors of
+  full-color assets and verify that the complete icon remains distinguishable
+  against its background.
+- Interaction states belong to the component, not the icon asset. Show pressed,
+  disabled, selected, or focus states through the component instead of using a
+  recolored asset as the only state cue.
+- Use motion only when it explains state or action, such as retry progress or a
+  gesture hint. The owning component defines timing and reduced-motion behavior.
+
+### Direction and localization
+
+- Mirror `arrow-left`, `arrow-right`, or `chevron-left` only when the
+  component's navigation or disclosure direction and locale require it. Do not
+  assume every horizontal directional icon should mirror globally.
+- Do not mirror `arrow-down`, `arrow-rotate-clockise`, `arrow-up`,
+  `chevron-down`, status symbols, objects, or brand marks.
+- Validate metaphors in the languages and cultures where a product ships.
+  Replace or support an icon with text when its meaning is not dependable.
+
+### External brand mark
+
+`whatsapp` is an external brand mark, not a Mateo system metaphor. Use it only
+to identify WhatsApp, keep the name visible or accessible, and follow the
+current WhatsApp brand requirements. Never redraw it to match a different icon
+style or use it as a generic communication symbol.

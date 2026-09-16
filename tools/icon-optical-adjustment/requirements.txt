@@ -1,0 +1,8 @@
+numpy==2.2.6
+scipy==1.15.3
+Pillow==11.2.1
+resvg-py==0.3.3
+scikit-image==0.25.2
+torch==2.14.0
+torchvision==0.29.0
+lpips==0.1.4
