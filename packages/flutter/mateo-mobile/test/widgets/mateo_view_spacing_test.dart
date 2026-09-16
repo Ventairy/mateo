@@ -41,6 +41,82 @@ void main() {
     );
   }
 
+  testWidgets('when slots or surface padding change, it should apply spacing once on every edge', (tester) async {
+    for (final scrollable in [false, true]) {
+      for (final hasHeader in [false, true]) {
+        for (final hasFooter in [false, true]) {
+          for (final padding in <EdgeInsetsGeometry?>[
+            null,
+            EdgeInsets.zero,
+            const EdgeInsetsDirectional.fromSTEB(7, 8, 9, 10),
+          ]) {
+            await tester.pumpWidget(
+              Directionality(
+                textDirection: .rtl,
+                child: MediaQuery(
+                  data: const MediaQueryData(size: Size(800, 600)),
+                  child: Align(
+                    alignment: .topLeft,
+                    child: SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: MateoView(
+                        padding: const EdgeInsets.fromLTRB(31, 32, 33, 34),
+                        header: hasHeader
+                            ? const MateoViewHeader(padding: EdgeInsets.zero, principal: SizedBox(height: 30))
+                            : null,
+                        footer: hasFooter
+                            ? const MateoViewFooter(padding: EdgeInsets.zero, principal: SizedBox(height: 40))
+                            : null,
+                        surface: scrollable
+                            ? MateoViewSurface.scrollable(
+                                color: const Color(0xFF123456),
+                                padding: padding,
+                                child: const SizedBox(key: content, height: 600),
+                              )
+                            : MateoViewSurface(
+                                color: const Color(0xFF123456),
+                                padding: padding,
+                                child: const SizedBox(key: content, height: 600),
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+            await tester.pumpAndSettle();
+            final explicit = padding?.resolve(TextDirection.rtl);
+            final top = (hasHeader ? 30 : 0) + (explicit?.top ?? (hasHeader ? 20 : 32));
+            final bottom = (hasFooter ? 40 : 0) + (explicit?.bottom ?? (hasFooter ? 20 : 34));
+            expect(tester.getTopLeft(find.byKey(content)), Offset(explicit?.left ?? 31, top.toDouble()));
+            expect(tester.getSize(find.byKey(content)).width, 300 - (explicit?.horizontal ?? 64));
+            if (scrollable) {
+              final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
+              controller.jumpTo(controller.position.maxScrollExtent);
+              await tester.pump();
+            }
+            expect(tester.getBottomLeft(find.byKey(content)).dy, 300 - bottom);
+            await tester.pumpWidget(const SizedBox());
+          }
+        }
+      }
+    }
+  });
+
+  testWidgets('when explicit surface padding changes during scrolling, it should preserve the controller and offset', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host(scrollable: true, surfacePadding: const .all(8)));
+    await tester.pumpAndSettle();
+    final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!..jumpTo(100);
+    await tester.pumpWidget(host(scrollable: true, surfacePadding: const .all(16)));
+    await tester.pumpAndSettle();
+    expect(tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller, same(controller));
+    expect(controller.offset, 100);
+    expect(tester.getTopLeft(find.byKey(content)), const Offset(16, -42));
+  });
+
   testWidgets('when padding is inherited, it should align content and keep the surface full size', (tester) async {
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
@@ -49,14 +125,14 @@ void main() {
     expect(tester.getRect(find.byType(MateoViewSurface)), const Rect.fromLTWH(0, 0, 300, 300));
   });
 
-  testWidgets('when padding is explicit, it should replace every inherited edge but retain the header gap', (
+  testWidgets('when padding is explicit, it should replace every inherited edge including the header gap', (
     tester,
   ) async {
     for (final scrollable in [false, true]) {
       await tester.pumpWidget(host(headerPadding: .zero, surfacePadding: .zero, scrollable: scrollable));
       await tester.pumpAndSettle();
       expect(tester.getRect(find.byKey(header)), const Rect.fromLTWH(0, 0, 300, 30));
-      expect(tester.getTopLeft(find.byKey(content)), const Offset(0, 50));
+      expect(tester.getTopLeft(find.byKey(content)), const Offset(0, 30));
       await tester.pumpWidget(
         host(
           headerPadding: const .fromLTRB(3, 5, 7, 9),
@@ -66,7 +142,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.getRect(find.byKey(header)), const Rect.fromLTWH(3, 5, 290, 30));
-      expect(tester.getTopLeft(find.byKey(content)), const Offset(11, 77));
+      expect(tester.getTopLeft(find.byKey(content)), const Offset(11, 57));
       expect(tester.getSize(find.byKey(content)).width, 272);
     }
   });

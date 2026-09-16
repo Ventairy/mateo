@@ -108,10 +108,10 @@ void main() {
           );
           await tester.pumpAndSettle();
           final bounds = tester.getRect(find.byKey(_viewKey));
-          expect(bounds.size, Size(300, 70 + (header ? 50 : 12) + (footer ? 60 : 12)));
+          expect(bounds.size, Size(300, 70 + (header ? 30 : 0) + (footer ? 40 : 0)));
           final content = tester.getRect(find.byKey(_contentKey));
           expect(content.height, 60);
-          expect(content.top - bounds.top, 5 + (header ? 50 : 12));
+          expect(content.top - bounds.top, 5 + (header ? 30 : 0));
           if (footer) expect(tester.getRect(find.byKey(_footerKey)).bottom, bounds.bottom);
           await tester.pumpAndSettle();
           expect(tester.getRect(find.byKey(_viewKey)), bounds);
@@ -124,9 +124,9 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(_host(_fittedView(child: _view(header: true, footer: true))));
-    expect(tester.getSize(find.byKey(_viewKey)).height, 180);
+    expect(tester.getSize(find.byKey(_viewKey)).height, 140);
     await tester.pumpAndSettle();
-    expect(tester.getSize(find.byKey(_viewKey)).height, 180);
+    expect(tester.getSize(find.byKey(_viewKey)).height, 140);
   });
 
   testWidgets('when reading clearance during content layout, it should provide the current cached slot measurements', (
@@ -156,7 +156,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(measurements.last, EdgeInsets.only(top: headerHeight + 20, bottom: 60));
+      expect(measurements.last, EdgeInsets.only(top: headerHeight, bottom: 40));
       expect(tester.takeException(), isNull);
     }
   });
@@ -172,7 +172,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(tester.getSize(find.byKey(_viewKey)).height, height + 34);
+        expect(tester.getSize(find.byKey(_viewKey)).height, height + 10);
       }
     }
   });
@@ -204,7 +204,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         tester.getSize(find.byKey(_viewKey)).height,
-        height + 10 + (height != 20 ? 50 : 12) + (height == 130 ? 60 : 12),
+        height + 10 + (height != 20 ? 30 : 0) + (height == 130 ? 40 : 0),
       );
     }
   });
@@ -229,7 +229,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(tester.getSize(find.byKey(_viewKey)).height, 94);
+    expect(tester.getSize(find.byKey(_viewKey)).height, 70);
     expect(tester.getRect(find.byKey(overlayKey)), tester.getRect(find.byKey(_viewKey)));
     await tester.tap(find.byKey(overlayKey));
     expect(taps, 1);
@@ -269,11 +269,11 @@ void main() {
     final bounds = tester.getRect(find.byKey(_viewKey));
     expect(
       tester.getRect(find.byKey(_contentKey)).top,
-      greaterThanOrEqualTo(tester.getRect(find.byKey(_headerKey)).bottom + 20),
+      greaterThanOrEqualTo(tester.getRect(find.byKey(_headerKey)).bottom + 5),
     );
     expect(
       tester.getRect(find.byKey(_contentKey)).bottom,
-      lessThanOrEqualTo(tester.getRect(find.byKey(_footerKey)).top - 20),
+      lessThanOrEqualTo(tester.getRect(find.byKey(_footerKey)).top - 5),
     );
     await tester.pump(const Duration(seconds: 1));
     expect(tester.getRect(find.byKey(_viewKey)), bounds);

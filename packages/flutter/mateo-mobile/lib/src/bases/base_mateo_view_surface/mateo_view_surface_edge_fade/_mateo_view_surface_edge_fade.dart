@@ -3,6 +3,7 @@ part of '../base_mateo_view_surface.dart';
 final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
   _MateoViewSurfaceEdgeFade({
     required this.surfaceColor,
+    required this.contentTopPadding,
     required Set<MateoEdgeEffectSide> sides,
     required this.child,
     this.leadingScrollDistance,
@@ -16,6 +17,7 @@ final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
 
   final ValueListenable<double>? leadingScrollDistance;
   final Color surfaceColor;
+  final double contentTopPadding;
   final Set<MateoEdgeEffectSide> sides;
   final Widget child;
 
@@ -38,11 +40,12 @@ final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
     final bands = [...defaults];
 
     if (contextualTop) {
-      final obstructionDepth = view.headerObstructionExtent;
+      final obstructionDepth = view.headerObstructionExtent + contentTopPadding;
       if (obstructionDepth > 0) {
         final protectedDepth = header.bottomOffset / _headerFractionOfFade;
         final extension = (protectedDepth - obstructionDepth).clamp(0, double.infinity);
-        final progress = ((leadingScrollDistance?.value ?? 0) / view.headerToContentGap).clamp(0, 1);
+        final growthDistance = contentTopPadding > 0 ? contentTopPadding : view.defaultContentGap;
+        final progress = ((leadingScrollDistance?.value ?? 0) / growthDistance).clamp(0, 1);
         final growth = progress * (2 - progress);
         bands.insert(
           0,

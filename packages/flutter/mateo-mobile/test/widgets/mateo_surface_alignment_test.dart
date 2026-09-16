@@ -83,7 +83,7 @@ void main() {
         );
         final expected =
             tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy +
-            32;
+            12;
         expect(tester.getTopLeft(find.byKey(contentKey)).dy, expected);
         expect(tester.getTopLeft(find.byKey(contentKey)).dx, 120);
         await tester.pumpAndSettle();
@@ -116,9 +116,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(
       tester.getTopLeft(find.byKey(contentKey)).dy,
-      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy + 30,
+      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy + 10,
     );
-    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 278);
+    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 290);
   });
 
   testWidgets('when tall aligned content scrolls, it should pass behind the header and retain bottom reachability', (
@@ -138,7 +138,7 @@ void main() {
     expect(tester.getTopLeft(find.byKey(contentKey)).dy, initialTop - 120);
     controller.jumpTo(controller.position.maxScrollExtent);
     await tester.pump();
-    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 278);
+    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 290);
   });
 
   testWidgets('when header geometry changes, it should preserve scrolling and apply the new initial clearance', (
@@ -154,9 +154,7 @@ void main() {
     expect(controller.offset, 120);
     expect(
       tester.getTopLeft(find.byKey(contentKey)).dy,
-      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy +
-          20 -
-          120,
+      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy - 120,
     );
   });
 
@@ -164,12 +162,12 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(host(header: false, alignment: .topCenter));
-    expect(tester.getTopLeft(find.byKey(contentKey)), const Offset(130, 12));
+    expect(tester.getTopLeft(find.byKey(contentKey)), const Offset(130, 0));
     await tester.pumpWidget(host(top: 100, alignment: .topCenter));
     await tester.pumpAndSettle();
     expect(
       tester.getTopLeft(find.byKey(contentKey)).dy,
-      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy + 20,
+      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy,
     );
   });
 

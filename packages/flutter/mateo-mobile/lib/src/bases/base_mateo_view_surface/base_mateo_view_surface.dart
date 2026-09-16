@@ -43,12 +43,11 @@ class BaseMateoViewSurface extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final MateoEdgeEffect edgeEffect;
 
-  Widget _buildFadeEdgeEffect(Color surfaceColor, Widget viewport, ValueListenable<double>? leadingScrollDistance) =>
-      _MateoViewSurfaceEdgeFade(
-        surfaceColor: surfaceColor,
-        leadingScrollDistance: leadingScrollDistance,
-        sides: edgeEffect.at,
-        child: viewport,
+  EdgeInsets _resolvePadding(MateoViewLayoutScope view, TextDirection direction) =>
+      padding?.resolve(direction) ??
+      view.padding.copyWith(
+        top: view.header != null && view.reserveHeaderSpace ? view.defaultContentGap : view.padding.top,
+        bottom: view.footer != null ? view.defaultContentGap : view.padding.bottom,
       );
 
   @override
@@ -61,9 +60,20 @@ class BaseMateoViewSurface extends StatelessWidget {
     final view = MateoViewLayoutScope.maybeOf(context);
     assert(view != null, 'BaseMateoViewSurface requires a BaseMateoView.');
 
-    final edgeEffectBuilder = switch (edgeEffect.type) {
+    final resolvedPadding = _resolvePadding(view!, Directionality.of(context));
+
+    final Widget Function(Color, Widget, ValueListenable<double>?)? edgeEffectBuilder = switch (edgeEffect.type) {
       .none => null,
-      .fade => edgeEffect.at.isEmpty ? null : _buildFadeEdgeEffect,
+      .fade =>
+        edgeEffect.at.isEmpty
+            ? null
+            : (surfaceColor, viewport, leadingScrollDistance) => _MateoViewSurfaceEdgeFade(
+                surfaceColor: surfaceColor,
+                contentTopPadding: resolvedPadding.top,
+                leadingScrollDistance: leadingScrollDistance,
+                sides: edgeEffect.at,
+                child: viewport,
+              ),
     };
 
     if (scrollable) {
@@ -74,9 +84,9 @@ class BaseMateoViewSurface extends StatelessWidget {
         color: color,
         elevation: elevation,
         shape: shape,
-        padding: padding ?? view!.padding.copyWith(top: 0, bottom: 0),
+        padding: resolvedPadding,
         obstructionInsets: () => view.obstructionInsets,
-        obstructionInsetsChanges: view!.obstructionInsetsChanges,
+        obstructionInsetsChanges: view.obstructionInsetsChanges,
         alignment: alignment,
         edgeEffectBuilder: edgeEffectBuilder,
         child: scopedChild,
@@ -85,12 +95,12 @@ class BaseMateoViewSurface extends StatelessWidget {
 
     return BaseMateoSurface(
       width: const .fill(),
-      height: view!.fitHeight ? const .fit() : const .fill(),
+      height: view.fitHeight ? const .fit() : const .fill(),
       animation: animation,
       color: color,
       elevation: elevation,
       shape: shape,
-      padding: padding ?? view.padding.copyWith(top: 0, bottom: 0),
+      padding: resolvedPadding,
       obstructionInsets: () => view.obstructionInsets,
       obstructionInsetsChanges: view.obstructionInsetsChanges,
       alignment: alignment,

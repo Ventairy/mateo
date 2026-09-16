@@ -47,6 +47,49 @@ double _sample(MateoEdgeFadeProfile p, double t) {
 }
 
 void main() {
+  testWidgets('when top padding is custom or zero, it should size the fade and grow smoothly while scrolling', (
+    tester,
+  ) async {
+    for (final topPadding in [0.0, 8.0, 32.0]) {
+      await tester.pumpWidget(
+        _host(
+          MateoView(
+            padding: EdgeInsets.zero,
+            header: const MateoViewHeader(padding: EdgeInsets.zero, principal: SizedBox(height: 80)),
+            surface: MateoViewSurface.scrollable(
+              padding: EdgeInsets.only(top: topPadding),
+              edgeEffect: .fade(at: const [.top]),
+              child: const SizedBox(height: 800),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      double extent() => tester
+          .widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade))
+          .resolveBands(const Size(240, 400))
+          .single
+          .extent;
+      final resting = extent();
+      expect(resting, 80 + topPadding);
+      final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
+      final distance = topPadding == 0 ? 20.0 : topPadding;
+      controller.jumpTo(distance / 2);
+      await tester.pump();
+      final intermediate = extent();
+      expect(intermediate.isFinite, isTrue);
+      expect(intermediate, greaterThan(resting));
+      controller.jumpTo(distance);
+      await tester.pump();
+      expect(extent(), greaterThan(intermediate));
+      expect(extent(), closeTo(80 / .55, .001));
+      controller.jumpTo(0);
+      await tester.pump();
+      expect(extent(), resting);
+      await tester.pumpWidget(const SizedBox());
+    }
+  });
+
   testWidgets('when sampling header profiles, it should preserve anchors monotonicity and interpolation accuracy', (
     tester,
   ) async {
@@ -156,10 +199,10 @@ void main() {
         final finder = find.byType(BaseMateoEdgeFade);
         final bands = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(tester.getSize(finder));
         final inset = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstructionInsets!().top;
-        expect(bands.first.extent, present ? inset : 60);
+        expect(bands.first.extent, present ? inset + 20 : 60);
         expect(bands.last.extent, 60);
         if (present) {
-          expect(inset, greaterThan(safeTop + 20));
+          expect(inset, greaterThan(safeTop));
           expect(bands.first.profile.visibility.first, 0);
         }
         await tester.pump();

@@ -83,7 +83,7 @@ void main() {
       expect(bottom.extent, present ? view.footer!.height - view.footer!.topOffset : 60);
       if (present) {
         final clearance = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstructionInsets!().bottom;
-        expect(clearance, bottom.extent + 20);
+        expect(clearance, bottom.extent);
         final profile = bottom.profile;
         expect(profile.stops.length, 33);
         expect(profile.visibility.first, 0);

@@ -25,11 +25,12 @@ class MateoView extends StatelessWidget {
     super.key,
   });
 
-  /// The general view spacing that surface, header, footer etc. will inherit.
+  /// The general view spacing that surface, header, footer will inherit.
   ///
   /// defaults to 20 horizontal and 12 vertical logical pixels.
   /// At edges without a header or footer, vertical padding reserves space
-  /// between the surface content and the view boundary.
+  /// between the surface content and the view boundary when surface padding
+  /// is omitted. Explicit surface padding replaces that inherited spacing.
   final EdgeInsetsGeometry? padding;
 
   /// The surface filling the view and owning its visible appearance and content.

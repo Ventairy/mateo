@@ -9,6 +9,7 @@ class MateoSheetViewSurface extends StatelessWidget {
   const MateoSheetViewSurface({
     required this.child,
     this.color,
+    this.padding,
     this.alignment,
     this.edgeEffect = const .none(),
     super.key,
@@ -21,6 +22,7 @@ class MateoSheetViewSurface extends StatelessWidget {
   const MateoSheetViewSurface.scrollable({
     required this.child,
     this.color,
+    this.padding,
     this.alignment,
     this.edgeEffect = const .none(),
     super.key,
@@ -31,6 +33,13 @@ class MateoSheetViewSurface extends StatelessWidget {
 
   /// The background color, defaulting to the Mateo theme background.
   final Color? color;
+
+  /// The space between content and the header, footer, or unobstructed view edges.
+  ///
+  /// Defaults to 20 logical pixels on every edge. Explicit padding replaces
+  /// these defaults; zero removes spacing while retaining reserved header and
+  /// footer clearance. Must be nonnegative. Scrollable padding moves with content.
+  final EdgeInsetsGeometry? padding;
 
   /// The content alignment within the surface, respecting its fixed slots.
   final AlignmentGeometry? alignment;
@@ -45,6 +54,7 @@ class MateoSheetViewSurface extends StatelessWidget {
     return BaseMateoViewSurface(
       scrollable: _scrollable,
       color: color,
+      padding: padding,
       alignment: alignment,
       edgeEffect: edgeEffect,
       child: child,

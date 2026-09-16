@@ -5,6 +5,7 @@ class MateoViewLayoutScope extends InheritedWidget {
   const MateoViewLayoutScope._({
     required this.padding,
     required this.fitHeight,
+    required this.reserveHeaderSpace,
     required this._layout,
     required super.child,
   });
@@ -12,6 +13,7 @@ class MateoViewLayoutScope extends InheritedWidget {
   final _MateoViewLayoutData _layout;
   final EdgeInsets padding;
   final bool fitHeight;
+  final bool reserveHeaderSpace;
 
   ({double height, double bottomOffset, Listenable changes})? get header {
     final header = _layout.header;
@@ -25,7 +27,7 @@ class MateoViewLayoutScope extends InheritedWidget {
     return (height: footer.height, topOffset: footer.topOffset, changes: footer.changes);
   }
 
-  double get headerToContentGap => _MateoViewLayoutData._headerToContentGap;
+  double get defaultContentGap => _MateoViewLayoutData._defaultContentGap;
 
   double get headerObstructionExtent => _layout.headerObstructionExtent;
 

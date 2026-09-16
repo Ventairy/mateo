@@ -10,9 +10,9 @@ import 'mateo_view_surface_shape.dart';
 
 /// The content surface supplied to [MateoView.surface].
 ///
-/// Inherits horizontal view padding and keeps content clear of its header and
-/// footer. Where a header or footer is absent, reserves the view’s padding at
-/// that edge instead. Explicit surface padding adds spacing inside this clearance.
+/// Keeps content clear of its header and footer, with spacing
+/// at each occupied edge. Other edges inherit view padding. Explicit
+/// surface padding replaces this spacing on all edges.
 ///
 /// ```dart
 /// const MateoView(
@@ -98,7 +98,19 @@ class MateoViewSurface extends StatelessWidget {
   /// The shape treatment used for the background and content clipping.
   final MateoViewSurfaceShape? shape;
 
-  /// The local content padding, or null to inherit horizontal view padding.
+  /// The space between content and the header, footer, or unobstructed view edges.
+  ///
+  /// When omitted, uses 20 logical pixels below the header and above the footer,
+  /// and inherits view padding at other edges. Explicit padding replaces all
+  /// four defaults, without adding view padding or an automatic gap.
+  /// Zero removes spacing while retaining measured header and footer clearance.
+  ///
+  /// ```dart
+  /// MateoViewSurface(
+  ///   padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+  ///   child: Text('Content with 12 pixels below the header'),
+  /// )
+  /// ```
   final EdgeInsetsGeometry? padding;
 
   /// The preferred position of [child] within the full padded surface.

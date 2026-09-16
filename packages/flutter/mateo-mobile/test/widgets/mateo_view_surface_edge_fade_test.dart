@@ -87,7 +87,7 @@ void main() {
           expect(size, Size(240, height));
           final bands = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(size);
           expect(bands.map((band) => band.extent), [
-            tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstructionInsets!().top,
+            tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstructionInsets!().top + 20,
             42, // The 30-pixel footer and its inherited bottom padding.
           ]);
           if (scrollable) {

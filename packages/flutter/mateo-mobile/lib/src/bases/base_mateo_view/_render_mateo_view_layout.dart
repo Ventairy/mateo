@@ -8,7 +8,6 @@ class _RenderMateoViewLayout extends RenderBox
     required this._layout,
     required this._fitHeight,
     required this._reserveHeaderSpace,
-    required this._padding,
   });
 
   _MateoViewLayoutData _layout;
@@ -17,16 +16,6 @@ class _RenderMateoViewLayout extends RenderBox
   set layoutData(_MateoViewLayoutData value) {
     _layout = value;
     // Slot presence and measurements can change within the same data instance.
-    markNeedsLayout();
-  }
-
-  EdgeInsets _padding;
-
-  EdgeInsets get padding => _padding;
-
-  set padding(EdgeInsets value) {
-    if (_padding == value) return;
-    _padding = value;
     markNeedsLayout();
   }
 
@@ -76,7 +65,6 @@ class _RenderMateoViewLayout extends RenderBox
     _layout.header?.height = header.size.height;
     footer.layout(slotConstraints, parentUsesSize: true);
     _layout.footer?.height = footer.size.height;
-    _layout.padding = _padding;
     _layout.reserveHeaderSpace = _reserveHeaderSpace;
     _layout.updateObstructionInsets();
     _position(header, .zero);

@@ -91,10 +91,10 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     return MateoViewScope(
       child: MateoViewLayoutScope._(
         fitHeight: fitHeight,
+        reserveHeaderSpace: widget.reserveHeaderSpace,
         padding: resolvedPadding,
         layout: _layoutData,
         child: _MateoViewLayout(
-          padding: resolvedPadding,
           layout: _layoutData,
           fitHeight: fitHeight,
           reserveHeaderSpace: widget.reserveHeaderSpace,

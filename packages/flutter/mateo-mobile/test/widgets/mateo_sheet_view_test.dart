@@ -29,6 +29,68 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('when sheet padding is explicit, it should replace defaults with or without reserved header space', (
+    tester,
+  ) async {
+    for (final scrollable in [false, true]) {
+      for (final reserveHeaderSpace in [false, true]) {
+        for (final padding in [EdgeInsets.zero, const EdgeInsets.fromLTRB(7, 8, 9, 10)]) {
+          await tester.pumpWidget(
+            MateoTheme(
+              data: surfaceTransformTheme,
+              child: Directionality(
+                textDirection: .ltr,
+                child: MediaQuery(
+                  data: const MediaQueryData(size: Size(800, 600)),
+                  child: Align(
+                    alignment: .topLeft,
+                    child: SizedBox(
+                      width: 320,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 400),
+                        child: MateoSheetView(
+                          reserveHeaderSpace: reserveHeaderSpace,
+                          header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+                          footer: const MateoSheetViewFooter(principal: SizedBox(height: 30)),
+                          surface: scrollable
+                              ? MateoSheetViewSurface.scrollable(
+                                  padding: padding,
+                                  child: const SizedBox(key: ValueKey('padded-content'), height: 800),
+                                )
+                              : MateoSheetViewSurface(
+                                  padding: padding,
+                                  child: const SizedBox(key: ValueKey('padded-content'), height: 80),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          final surface = tester.getRect(find.byType(MateoSheetViewSurface));
+          final header = tester.getRect(find.byType(MateoSheetViewHeader));
+          expect(
+            tester.getTopLeft(find.byKey(const ValueKey('padded-content'))),
+            Offset(surface.left + padding.left, (reserveHeaderSpace ? header.bottom : surface.top) + padding.top),
+          );
+          if (scrollable) {
+            final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
+            controller.jumpTo(controller.position.maxScrollExtent);
+            await tester.pump();
+          }
+          expect(
+            tester.getBottomLeft(find.byKey(const ValueKey('padded-content'))).dy,
+            tester.getTopLeft(find.byType(MateoSheetViewFooter)).dy - padding.bottom,
+          );
+          await tester.pumpWidget(const SizedBox());
+        }
+      }
+    }
+  });
+
   test('reserves header space by default', () {
     const view = MateoSheetView(surface: MateoSheetViewSurface(child: SizedBox()));
     expect(view.reserveHeaderSpace, isTrue);
@@ -78,7 +140,7 @@ void main() {
         find.descendant(of: find.byType(MateoSheetViewSurface), matching: find.byType(BaseMateoSurface)),
       );
       expect(surface.shape, const MateoRoundedShapeBorder(radius: 44));
-      expect(surface.padding, const EdgeInsets.symmetric(horizontal: 20));
+      expect(surface.padding, const EdgeInsets.all(20));
     },
   );
 
@@ -117,7 +179,7 @@ void main() {
       final surfaces = tester.widgetList<BaseMateoSurface>(find.byType(BaseMateoSurface)).toList();
       expect(surfaces.first.shape, const MateoRoundedShapeBorder(radius: 44));
       expect(surfaces.first.animation, const MateoSurfaceAnimation.none());
-      expect(surfaces.first.padding, const EdgeInsets.symmetric(horizontal: 20));
+      expect(surfaces.first.padding, const EdgeInsets.all(20));
       expect(surfaces.first.elevation, isNull);
       expect(surfaces.last.shape, const MateoRoundedShapeBorder(radius: 8));
       expect(surfaces.last.animation, const MateoSurfaceAnimation.pop());
@@ -171,7 +233,7 @@ void main() {
 
       final unreservedLayout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
       expect(reservedTop, greaterThan(unreservedLayout.padding.top));
-      expect(unreservedLayout.obstructionInsets.top, unreservedLayout.padding.top);
+      expect(unreservedLayout.obstructionInsets.top, 0);
       expect(unreservedLayout.obstructionInsets.bottom, reservedBottom);
       expect(tester.getRect(find.byType(MateoSheetViewHeader)), headerRect);
       expect(tester.getRect(find.byType(MateoSheetViewFooter)), footerRect);

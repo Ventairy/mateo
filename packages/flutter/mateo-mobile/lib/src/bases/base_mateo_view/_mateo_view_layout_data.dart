@@ -1,11 +1,8 @@
 part of 'base_mateo_view.dart';
 
 class _MateoViewLayoutData extends ChangeNotifier {
-  static const double _headerToContentGap = 20;
+  static const double _defaultContentGap = 20;
 
-  static const double _contentToFooterGap = 20;
-
-  EdgeInsets padding = EdgeInsets.zero;
   bool reserveHeaderSpace = true;
 
   EdgeInsets _obstructionInsets = EdgeInsets.zero;
@@ -41,13 +38,13 @@ class _MateoViewLayoutData extends ChangeNotifier {
   double get headerObstructionExtent {
     final header = this.header;
     if (header == null) return 0;
-    return header.height + _headerSafeAreaAdjustment + _headerToContentGap;
+    return header.height + _headerSafeAreaAdjustment;
   }
 
   void updateObstructionInsets() {
     _obstructionInsets = EdgeInsets.only(
-      top: header == null || !reserveHeaderSpace ? padding.top : headerObstructionExtent,
-      bottom: footer == null ? padding.bottom : footer!.height + _footerSafeAreaAdjustment + _contentToFooterGap,
+      top: header == null || !reserveHeaderSpace ? 0 : headerObstructionExtent,
+      bottom: footer == null ? 0 : footer!.height + _footerSafeAreaAdjustment,
     );
     if (_obstructionInsets == _notifiedObstructionInsets) return;
     // Safe-area handles already notify after the frame. Deliver their changes
