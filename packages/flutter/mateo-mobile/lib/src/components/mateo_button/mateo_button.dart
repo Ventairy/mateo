@@ -33,7 +33,7 @@ part 'presentations/mateo_button_presentation.dart';
 ///
 /// ```dart
 /// MateoButton(
-///   presentation: const .label(label: 'Save changes', variant: .primary),
+///   presentation: const .label(label: 'Save changes'),
 ///   onPressed: saveChanges,
 /// )
 /// ```

@@ -126,20 +126,30 @@ void main() {
     });
   }
 
-  testWidgets('when defaults are used, the button should fill the available width and use the standard size', (
+  testWidgets('when defaults are used, label and icon buttons should retain null and use the primary treatment', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      _host(
-        MateoButton(
-          presentation: const .label(label: 'Save', variant: .primary),
-          onPressed: () {},
+    for (final (presentation, iconOnly) in <(MateoButtonPresentation, bool)>[
+      (const .label(label: 'Save'), false),
+      (const .icon(icon: MateoIcon(.cross)), true),
+    ]) {
+      expect(presentation.variant, isNull);
+      await tester.pumpWidget(
+        _host(
+          MateoButton(presentation: presentation, onPressed: () {}),
         ),
-      ),
-    );
-    expect(tester.getSize(_surface()).height, 56);
-    expect(tester.getSize(_surface()).width, 320);
-    expect(tester.widget<MateoButton>(find.byType(MateoButton)).presentation.size, MateoButtonSize.standard);
+      );
+      expect(tester.getSize(_surface()).height, 56);
+      if (iconOnly) {
+        expect(MateoIconScope.of(tester.element(find.byType(MateoIcon))).color, _theme.colorScheme.onAccent);
+      } else {
+        expect(tester.getSize(_surface()).width, 320);
+        expect(tester.widget<Text>(find.text('Save')).style!.color, _theme.colorScheme.onAccent);
+      }
+      expect(presentation.size, MateoButtonSize.standard);
+      expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, _theme.colorScheme.accent);
+      expect(tester.widget<MateoPress>(find.byType(MateoPress)).animation, MateoPressAnimationType.scale);
+    }
   });
 
   testWidgets('when fill is explicit, the surface should occupy the available width', (tester) async {

@@ -3,7 +3,7 @@ part of '../mateo_button.dart';
 final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
   const _MateoLabelButtonPresentation({
     required this.label,
-    required this.variant,
+    this.variant,
     this.colorScheme,
     this.size = .standard,
     this.width = .fill,
@@ -15,7 +15,7 @@ final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
 
   final String label;
   @override
-  final MateoButtonVariant variant;
+  final MateoButtonVariant? variant;
   @override
   final MateoButtonColorScheme? colorScheme;
   @override
@@ -149,7 +149,8 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
     final dimensions = _dimensions;
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
-    final colors = widget.colorScheme ?? widget.variant.resolveColorScheme(theme.colorScheme.buttons);
+    final variant = widget.variant ?? MateoButtonVariant.primary;
+    final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
     final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
     final contentAlignment = switch (widget.alignment) {
       .left => Alignment.centerLeft,
@@ -237,7 +238,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
     return MateoPress(
       semanticLabel: widget.label,
       onPressed: scope.interactive ? (_) => scope.onPressed() : null,
-      animation: widget.variant.pressAnimation,
+      animation: variant.pressAnimation,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: math.max(0, (48 - widget.size.height) / 2)),
         child: MateoSurface(

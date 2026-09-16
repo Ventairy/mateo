@@ -3,7 +3,7 @@ part of '../mateo_button.dart';
 final class _MateoIconButtonPresentation extends MateoButtonPresentation {
   const _MateoIconButtonPresentation({
     required this.icon,
-    required this.variant,
+    this.variant,
     this.colorScheme,
     this.size = .standard,
     this.elevation = 0,
@@ -12,7 +12,7 @@ final class _MateoIconButtonPresentation extends MateoButtonPresentation {
 
   final Widget icon;
   @override
-  final MateoButtonVariant variant;
+  final MateoButtonVariant? variant;
   @override
   final MateoButtonColorScheme? colorScheme;
   @override
@@ -81,13 +81,14 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
     final dimensions = _dimensions;
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
-    final colors = widget.colorScheme ?? widget.variant.resolveColorScheme(theme.colorScheme.buttons);
+    final variant = widget.variant ?? MateoButtonVariant.primary;
+    final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
     final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
 
     return MateoPress(
       semanticLabel: widget.semanticLabel,
       onPressed: scope.interactive ? (_) => scope.onPressed() : null,
-      animation: widget.variant.pressAnimation,
+      animation: variant.pressAnimation,
       child: SizedBox.square(
         dimension: math.max(48, widget.size.height),
         child: Center(

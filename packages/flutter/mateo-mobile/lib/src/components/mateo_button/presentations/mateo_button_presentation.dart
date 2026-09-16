@@ -8,7 +8,7 @@ sealed class MateoButtonPresentation extends StatefulWidget {
   /// Creates a labeled button with optional supporting icons.
   const factory MateoButtonPresentation.label({
     required String label,
-    required MateoButtonVariant variant,
+    MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,
     MateoButtonSize size,
     MateoButtonWidth width,
@@ -21,7 +21,7 @@ sealed class MateoButtonPresentation extends StatefulWidget {
   /// Creates a circular action without labels.
   const factory MateoButtonPresentation.icon({
     required Widget icon,
-    required MateoButtonVariant variant,
+    MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,
     MateoButtonSize size,
     double elevation,
@@ -29,7 +29,10 @@ sealed class MateoButtonPresentation extends StatefulWidget {
   }) = _MateoIconButtonPresentation;
 
   /// The semantic emphasis and color treatment of this action.
-  MateoButtonVariant get variant;
+  ///
+  /// When omitted, the button uses the contextual default, currently
+  /// [MateoButtonVariant.primary].
+  MateoButtonVariant? get variant;
 
   /// The optional colors replacing the variant's theme treatment.
   ///
