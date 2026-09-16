@@ -38,7 +38,7 @@ final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
     final bands = [...defaults];
 
     if (contextualTop) {
-      final obstructionDepth = view.obstructionInsets.top;
+      final obstructionDepth = view.headerObstructionExtent;
       if (obstructionDepth > 0) {
         final protectedDepth = header.bottomOffset / _headerFractionOfFade;
         final extension = (protectedDepth - obstructionDepth).clamp(0, double.infinity);

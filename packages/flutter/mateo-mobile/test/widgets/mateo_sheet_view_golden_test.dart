@@ -60,4 +60,65 @@ Future<void> main() async {
       ),
     ),
   );
+
+  late BuildContext unreservedLauncher;
+  await goldenTest(
+    'when a sheet does not reserve header space, it should let the surface begin beneath the fixed header',
+    fileName: 'mateo_sheet_view_unreserved_header',
+    constraints: const BoxConstraints.tightFor(width: 390, height: 844),
+    pumpBeforeTest: (tester) async {
+      await tester.pumpAndSettle();
+      final foreground = surfaceTransformTheme.colorScheme.onAccent;
+      unawaited(
+        showMateoSheet<void>(
+          context: unreservedLauncher,
+          view: MateoSheetView(
+            reserveHeaderSpace: false,
+            header: MateoSheetViewHeader(
+              leading: Text('Back', style: TextStyle(color: foreground)),
+              principal: Text(
+                'Garden room',
+                style: TextStyle(color: foreground, fontWeight: FontWeight.w700),
+              ),
+              trailing: Text('Close', style: TextStyle(color: foreground)),
+            ),
+            surface: MateoSheetViewSurface(
+              color: surfaceTransformTheme.colorScheme.accent,
+              edgeEffect: .fade(at: const [.top]),
+              child: ColoredBox(
+                color: surfaceTransformTheme.colorScheme.background,
+                child: SizedBox(
+                  height: 260,
+                  child: Align(
+                    alignment: .bottomCenter,
+                    child: Padding(
+                      padding: const .only(bottom: 28),
+                      child: Text(
+                        'A quiet place to arrive',
+                        style: TextStyle(
+                          color: surfaceTransformTheme.colorScheme.text.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    },
+    builder: () => MateoApp(
+      theme: surfaceTransformTheme,
+      home: Builder(
+        builder: (context) {
+          unreservedLauncher = context;
+          return const SizedBox.expand();
+        },
+      ),
+    ),
+  );
 }

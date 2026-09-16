@@ -4,7 +4,12 @@ class _RenderMateoViewLayout extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, MultiChildLayoutParentData> {
-  _RenderMateoViewLayout({required this._layout, required this._fitHeight, required this._padding});
+  _RenderMateoViewLayout({
+    required this._layout,
+    required this._fitHeight,
+    required this._reserveHeaderSpace,
+    required this._padding,
+  });
 
   _MateoViewLayoutData _layout;
   _MateoViewLayoutData get layoutData => _layout;
@@ -30,6 +35,16 @@ class _RenderMateoViewLayout extends RenderBox
   set fitHeight(bool value) {
     if (_fitHeight == value) return;
     _fitHeight = value;
+    markNeedsLayout();
+  }
+
+  bool _reserveHeaderSpace;
+
+  bool get reserveHeaderSpace => _reserveHeaderSpace;
+
+  set reserveHeaderSpace(bool value) {
+    if (_reserveHeaderSpace == value) return;
+    _reserveHeaderSpace = value;
     markNeedsLayout();
   }
 
@@ -62,6 +77,7 @@ class _RenderMateoViewLayout extends RenderBox
     footer.layout(slotConstraints, parentUsesSize: true);
     _layout.footer?.height = footer.size.height;
     _layout.padding = _padding;
+    _layout.reserveHeaderSpace = _reserveHeaderSpace;
     _layout.updateObstructionInsets();
     _position(header, .zero);
     _position(surface, .zero);

@@ -15,7 +15,14 @@ part of '../show_mateo_sheet.dart';
 /// ```
 class MateoSheetView extends StatelessWidget {
   /// Creates a sheet with [surface] and optional fixed content.
-  const MateoSheetView({required this.surface, this.header, this.footer, this.overlay, super.key});
+  const MateoSheetView({
+    required this.surface,
+    this.header,
+    this.footer,
+    this.overlay,
+    this.reserveHeaderSpace = true,
+    super.key,
+  });
 
   static const _shape = MateoRoundedShapeBorder(radius: 44);
 
@@ -31,6 +38,14 @@ class MateoSheetView extends StatelessWidget {
   /// Full-view content painted above the surface and fixed slots.
   final Widget? overlay;
 
+  /// Whether surface content reserves space for [header].
+  ///
+  /// When false, surface content uses the same top spacing it would have
+  /// without a header. The header remains fixed, safe-area aware, and painted
+  /// above the surface. Use this for content intended to begin beneath the
+  /// header, such as imagery, maps, or decorative canvases.
+  final bool reserveHeaderSpace;
+
   @override
   Widget build(BuildContext context) {
     final stackEntry = _MateoSheetStackScope.stackEntryOf(context);
@@ -39,6 +54,7 @@ class MateoSheetView extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: BaseMateoView(
         fitHeight: !surface._scrollable,
+        reserveHeaderSpace: reserveHeaderSpace,
         surface: MateoSurfaceScope(
           shape: _shape,
           child: surface,

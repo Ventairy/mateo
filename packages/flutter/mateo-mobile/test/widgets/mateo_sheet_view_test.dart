@@ -29,6 +29,11 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  test('reserves header space by default', () {
+    const view = MateoSheetView(surface: MateoSheetViewSurface(child: SizedBox()));
+    expect(view.reserveHeaderSpace, isTrue);
+  });
+
   testWidgets(
     'when a sheet inherits view and surface defaults, it should keep its spacing and limit its shape to the surface',
     (tester) async {
@@ -118,6 +123,139 @@ void main() {
       expect(surfaces.last.animation, const MateoSurfaceAnimation.pop());
     },
   );
+
+  testWidgets('when header space is not reserved, content should use headerless spacing', (tester) async {
+    for (final scrollable in [false, true]) {
+      final reserveHeaderSpace = ValueNotifier(true);
+      addTearDown(reserveHeaderSpace.dispose);
+      await tester.pumpWidget(
+        MateoApp(
+          theme: surfaceTransformTheme,
+          home: Center(
+            child: SizedBox(
+              width: 320,
+              height: 400,
+              child: ValueListenableBuilder<bool>(
+                valueListenable: reserveHeaderSpace,
+                builder: (context, reserveHeaderSpace, child) => MateoSheetView(
+                  reserveHeaderSpace: reserveHeaderSpace,
+                  header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+                  footer: const MateoSheetViewFooter(principal: SizedBox(height: 30)),
+                  surface: scrollable
+                      ? const MateoSheetViewSurface.scrollable(
+                          child: SizedBox(key: ValueKey('content'), height: 800),
+                        )
+                      : const MateoSheetViewSurface(
+                          child: SizedBox(key: ValueKey('content'), height: 80),
+                        ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final reservedLayout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
+      final reservedTop = reservedLayout.obstructionInsets.top;
+      final reservedBottom = reservedLayout.obstructionInsets.bottom;
+      final headerRect = tester.getRect(find.byType(MateoSheetViewHeader));
+      final footerRect = tester.getRect(find.byType(MateoSheetViewFooter));
+      final scrollController = scrollable
+          ? tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller
+          : null;
+      scrollController?.jumpTo(40);
+      await tester.pump();
+
+      reserveHeaderSpace.value = false;
+      await tester.pumpAndSettle();
+
+      final unreservedLayout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
+      expect(reservedTop, greaterThan(unreservedLayout.padding.top));
+      expect(unreservedLayout.obstructionInsets.top, unreservedLayout.padding.top);
+      expect(unreservedLayout.obstructionInsets.bottom, reservedBottom);
+      expect(tester.getRect(find.byType(MateoSheetViewHeader)), headerRect);
+      expect(tester.getRect(find.byType(MateoSheetViewFooter)), footerRect);
+      if (scrollController == null) {
+        expect(
+          tester.getTopLeft(find.byKey(const ValueKey('content'))).dy,
+          tester.getTopLeft(find.byType(MateoSheetViewSurface)).dy + unreservedLayout.padding.top,
+        );
+      } else {
+        expect(tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller, same(scrollController));
+        expect(scrollController.offset, 40);
+      }
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    }
+  });
+
+  testWidgets('when header space is not reserved, a fitted sheet should size as though the header were absent', (
+    tester,
+  ) async {
+    await host(tester);
+
+    Future<double> sheetHeight({required bool includeHeader, required bool reserveHeaderSpace}) async {
+      unawaited(
+        showMateoSheet<void>(
+          context: launcher,
+          view: MateoSheetView(
+            reserveHeaderSpace: reserveHeaderSpace,
+            header: includeHeader ? const MateoSheetViewHeader(principal: SizedBox(height: 40)) : null,
+            surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final height = tester.getSize(find.byType(MateoSheetView)).height;
+      Navigator.of(tester.element(find.byType(MateoSheetView))).pop();
+      await tester.pumpAndSettle();
+      return height;
+    }
+
+    final reserved = await sheetHeight(includeHeader: true, reserveHeaderSpace: true);
+    final unreserved = await sheetHeight(includeHeader: true, reserveHeaderSpace: false);
+    final headerless = await sheetHeight(includeHeader: false, reserveHeaderSpace: true);
+    expect(reserved, greaterThan(unreserved));
+    expect(unreserved, headerless);
+  });
+
+  testWidgets('when header space is not reserved, a top fade should retain the header protection depth', (
+    tester,
+  ) async {
+    final reserveHeaderSpace = ValueNotifier(true);
+    addTearDown(reserveHeaderSpace.dispose);
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        home: SizedBox(
+          width: 320,
+          height: 400,
+          child: ValueListenableBuilder<bool>(
+            valueListenable: reserveHeaderSpace,
+            builder: (context, reserveHeaderSpace, child) => MateoSheetView(
+              reserveHeaderSpace: reserveHeaderSpace,
+              header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+              surface: MateoSheetViewSurface.scrollable(
+                edgeEffect: .fade(at: [.top]),
+                child: const SizedBox(height: 800),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final fadeFinder = find.byType(BaseMateoEdgeFade);
+    final reservedBand = tester.widget<BaseMateoEdgeFade>(fadeFinder).resolveBands(tester.getSize(fadeFinder)).single;
+
+    reserveHeaderSpace.value = false;
+    await tester.pumpAndSettle();
+
+    final unreservedBand = tester.widget<BaseMateoEdgeFade>(fadeFinder).resolveBands(tester.getSize(fadeFinder)).single;
+    expect(unreservedBand.extent, reservedBand.extent);
+    expect(unreservedBand.profile, same(reservedBand.profile));
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets(
     'when sheet content specifies color alignment and fades, it should adapt to both fixed slots while scrolling',

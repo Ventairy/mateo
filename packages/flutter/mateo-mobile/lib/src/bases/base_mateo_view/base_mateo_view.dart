@@ -18,6 +18,7 @@ class BaseMateoView extends StatefulWidget {
   const BaseMateoView({
     required this.surface,
     required this.fitHeight,
+    this.reserveHeaderSpace = true,
     this.padding,
     this.header,
     this.footer,
@@ -27,6 +28,7 @@ class BaseMateoView extends StatefulWidget {
 
   final EdgeInsetsGeometry? padding;
   final bool fitHeight;
+  final bool reserveHeaderSpace;
   final Widget surface;
   final Widget? header;
   final Widget? footer;
@@ -95,6 +97,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
           padding: resolvedPadding,
           layout: _layoutData,
           fitHeight: fitHeight,
+          reserveHeaderSpace: widget.reserveHeaderSpace,
           children: [
             LayoutId(
               id: _MateoViewSlot.surface,

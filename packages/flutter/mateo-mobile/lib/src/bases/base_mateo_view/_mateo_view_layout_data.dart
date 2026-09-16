@@ -6,6 +6,7 @@ class _MateoViewLayoutData extends ChangeNotifier {
   static const double _contentToFooterGap = 20;
 
   EdgeInsets padding = EdgeInsets.zero;
+  bool reserveHeaderSpace = true;
 
   EdgeInsets _obstructionInsets = EdgeInsets.zero;
   EdgeInsets _notifiedObstructionInsets = EdgeInsets.zero;
@@ -37,9 +38,15 @@ class _MateoViewLayoutData extends ChangeNotifier {
   EdgeInsets get obstructionInsets => _obstructionInsets;
   Listenable get obstructionInsetsChanges => this;
 
+  double get headerObstructionExtent {
+    final header = this.header;
+    if (header == null) return 0;
+    return header.height + _headerSafeAreaAdjustment + _headerToContentGap;
+  }
+
   void updateObstructionInsets() {
     _obstructionInsets = EdgeInsets.only(
-      top: header == null ? padding.top : header!.height + _headerSafeAreaAdjustment + _headerToContentGap,
+      top: header == null || !reserveHeaderSpace ? padding.top : headerObstructionExtent,
       bottom: footer == null ? padding.bottom : footer!.height + _footerSafeAreaAdjustment + _contentToFooterGap,
     );
     if (_obstructionInsets == _notifiedObstructionInsets) return;

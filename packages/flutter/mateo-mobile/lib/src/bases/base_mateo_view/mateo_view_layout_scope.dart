@@ -27,6 +27,8 @@ class MateoViewLayoutScope extends InheritedWidget {
 
   double get headerToContentGap => _MateoViewLayoutData._headerToContentGap;
 
+  double get headerObstructionExtent => _layout.headerObstructionExtent;
+
   EdgeInsets get obstructionInsets => _layout.obstructionInsets;
   Listenable get obstructionInsetsChanges => _layout.obstructionInsetsChanges;
 
