@@ -13,12 +13,12 @@ import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
 
 part '_base_mateo_surface_content_layout.dart';
-part '_base_mateo_surface_size.dart';
-part '_render_base_mateo_surface_size.dart';
 part '_base_mateo_surface_scroll.dart';
 part '_base_mateo_surface_scroll_controller.dart';
 part '_base_mateo_surface_scroll_position.dart';
+part '_base_mateo_surface_size.dart';
 part '_render_base_mateo_surface_content_layout.dart';
+part '_render_base_mateo_surface_size.dart';
 part 'transform_animation/_surface_transform_animation_flight_content.dart';
 part 'transform_animation/_surface_transform_animation_flight_delegate.dart';
 part 'transform_animation/_surface_transform_animation_flight_frame.dart';
@@ -45,6 +45,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.obstructionInsets,
     this.obstructionInsetsChanges,
     this.edgeEffectBuilder,
+    this.contentGroup,
     super.key,
   }) : _scrollable = false;
 
@@ -61,11 +62,14 @@ class BaseMateoSurface extends StatefulWidget {
     this.obstructionInsets,
     this.obstructionInsetsChanges,
     this.edgeEffectBuilder,
+    this.contentGroup,
     super.key,
   }) : _scrollable = true;
 
   final Widget Function(Color surfaceColor, Widget viewport, ValueListenable<double>? leadingScrollDistance)?
   edgeEffectBuilder;
+
+  final GroupLink? contentGroup;
 
   final ValueGetter<EdgeInsets>? obstructionInsets;
 
@@ -99,6 +103,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   // Preserve subtree state when toggling the Morph wrapper.
   final GlobalKey _surfaceKey = GlobalKey();
   MorphTarget? _transformTarget;
+  final GroupLink _contentGroup = GroupLink();
 
   // Preserve viewport state when an effect wrapper is added or replaced.
   final GlobalKey _viewportKey = GlobalKey();
@@ -148,15 +153,31 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       alignment: widget.alignment?.resolve(Directionality.maybeOf(context)),
       child: widget.child,
     );
-    final viewport = MorphDescendant(
-      key: ValueKey(_viewportKey),
-      flightBehavior: .snapshot,
-      child: KeyedSubtree(
-        key: _viewportKey,
-        child: widget._scrollable ? _BaseMateoSurfaceScroll(controller: _scrollController!, child: content) : content,
-      ),
+    final viewport = KeyedSubtree(
+      key: _viewportKey,
+      child: widget._scrollable ? _BaseMateoSurfaceScroll(controller: _scrollController!, child: content) : content,
     );
     final surfaceColor = widget.color ?? MateoTheme.of(context).colorScheme.background;
+    Widget withEdgeEffect(Widget child) =>
+        widget.edgeEffectBuilder?.call(
+          surfaceColor,
+          child,
+          widget._scrollable ? _scrollController!.leadingScrollDistance : null,
+        ) ??
+        child;
+    final contentGroup = widget.contentGroup ?? _contentGroup;
+    final capturedContent = Group(
+      link: contentGroup,
+      child: _clipContent(withEdgeEffect(viewport)),
+    );
+    final presentation = Stack(
+      fit: StackFit.passthrough,
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(child: _clipContent(ColoredBox(color: surfaceColor))),
+        capturedContent,
+      ],
+    );
     final surface = _BaseMateoSurfaceSize(
       key: _surfaceKey,
       width: widget.width,
@@ -168,18 +189,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
               ? const []
               : widget.elevation!.toShadowList(palette: MateoTheme.of(context).palette),
         ),
-        child: _clipContent(
-          ColoredBox(
-            color: surfaceColor,
-            child:
-                widget.edgeEffectBuilder?.call(
-                  surfaceColor,
-                  viewport,
-                  widget._scrollable ? _scrollController!.leadingScrollDistance : null,
-                ) ??
-                viewport,
-          ),
-        ),
+        child: presentation,
       ),
     );
 
@@ -195,7 +205,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
           _SurfaceTransformAnimationFlightDelegate(
             color: surfaceColor,
             shape: widget.shape,
-            content: viewport,
+            content: contentGroup,
             animation: animation,
           ),
         ),

@@ -11,7 +11,7 @@ final class _SurfaceTransformAnimationFlightDelegate
 
   final Color color;
   final MateoRoundedShapeBorder shape;
-  final Widget content;
+  final GroupLink content;
   final _SurfaceTransformAnimationContentEffects _effects;
 
   @override

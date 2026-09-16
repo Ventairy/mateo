@@ -13,7 +13,7 @@ final class _SurfaceTransformAnimationFlightFrame {
     MorphEndpointContext endpoint, {
     required Color color,
     required MateoRoundedShapeBorder shape,
-    required Widget content,
+    required GroupLink content,
   }) {
     final localSize = endpoint.localSize;
     final overlaySize = endpoint.overlayBounds.size;

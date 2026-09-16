@@ -8,12 +8,14 @@ class MateoViewLayoutScope extends InheritedWidget {
     required this.reserveHeaderSpace,
     required this._layout,
     required super.child,
+    required this.contentGroup,
   });
 
   final _MateoViewLayoutData _layout;
   final EdgeInsets padding;
   final bool fitHeight;
   final bool reserveHeaderSpace;
+  final GroupLink contentGroup;
 
   ({double height, double bottomOffset, Listenable changes})? get header {
     final header = _layout.header;

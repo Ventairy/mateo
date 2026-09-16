@@ -63,16 +63,44 @@ Future<void> main() async {
                       final navigatorKey = GlobalKey<NavigatorState>();
                       navigators.add(navigatorKey);
                       destinations.add(
-                        surfaceTransformEndpoint(
-                          bounds: const Rect.fromLTWH(20, 20, 260, 300),
-                          shape: destinationShape,
-                          viewShape: viewShape,
-                          view: view,
-                          color: theme.colorScheme.inverse.background,
-                          child: Center(
-                            child: Text('Details', style: TextStyle(color: theme.colorScheme.inverse.onBackground)),
-                          ),
-                        ),
+                        view
+                            ? Stack(
+                                children: [
+                                  Positioned(
+                                    left: 20,
+                                    top: 20,
+                                    width: 260,
+                                    height: 300,
+                                    child: DefaultTextStyle(
+                                      style: TextStyle(color: theme.colorScheme.inverse.onBackground),
+                                      child: MateoView(
+                                        header: const MateoViewHeader(principal: Text('Header')),
+                                        footer: const MateoViewFooter(principal: Text('Footer')),
+                                        overlay: const Align(alignment: Alignment.centerRight, child: Text('Overlay')),
+                                        surface: MateoViewSurface(
+                                          shape: viewShape,
+                                          animation: const MateoSurfaceAnimation.transform(id: 'details'),
+                                          color: theme.colorScheme.inverse.background,
+                                          child: const Center(child: Text('Body')),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : surfaceTransformEndpoint(
+                                bounds: const Rect.fromLTWH(20, 20, 260, 300),
+                                shape: destinationShape,
+                                viewShape: viewShape,
+                                view: view,
+                                color: theme.colorScheme.inverse.background,
+                                child: Center(
+                                  child: Text(
+                                    'Details',
+                                    style: TextStyle(color: theme.colorScheme.inverse.onBackground),
+                                  ),
+                                ),
+                              ),
                       );
                       return ClipRect(
                         child: MateoApp(

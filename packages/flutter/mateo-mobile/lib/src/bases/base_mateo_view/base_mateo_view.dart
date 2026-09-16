@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:oh_my_flutter/oh_my_flutter.dart' show MaybeSafeArea, MaybeSafeAreaHandle;
+import 'package:oh_my_flutter/oh_my_flutter.dart' show Group, GroupLink, MaybeSafeArea, MaybeSafeAreaHandle;
 
 import 'mateo_view_scope.dart';
 
@@ -40,6 +40,7 @@ class BaseMateoView extends StatefulWidget {
 
 class _BaseMateoViewState extends State<BaseMateoView> {
   final _layoutData = _MateoViewLayoutData();
+  final _contentGroup = GroupLink();
 
   @override
   void initState() {
@@ -94,43 +95,52 @@ class _BaseMateoViewState extends State<BaseMateoView> {
         reserveHeaderSpace: widget.reserveHeaderSpace,
         padding: resolvedPadding,
         layout: _layoutData,
-        child: _MateoViewLayout(
-          layout: _layoutData,
-          fitHeight: fitHeight,
-          reserveHeaderSpace: widget.reserveHeaderSpace,
-          children: [
-            LayoutId(
-              id: _MateoViewSlot.surface,
-              child: widget.surface,
-            ),
-            LayoutId(
-              id: _MateoViewSlot.header,
-              child: widget.header == null
-                  ? const SizedBox.shrink()
-                  : MaybeSafeArea(
-                      bottom: false,
-                      handle: _layoutData.header!.safeAreaHandle,
-                      child: widget.header,
-                    ),
-            ),
-            LayoutId(
-              id: _MateoViewSlot.footer,
-              child: widget.footer == null
-                  ? const SizedBox.shrink()
-                  : MaybeSafeArea(
-                      top: false,
-                      handle: _layoutData.footer!.safeAreaHandle,
-                      child: widget.footer,
-                    ),
-            ),
-            if (widget.overlay case final overlay?)
-              LayoutId(
-                id: _MateoViewSlot.overlay,
-                child: PrimaryScrollController.none(child: overlay),
-              ),
-          ],
-        ),
+        contentGroup: _contentGroup,
+        child: _buildContent(),
       ),
+    );
+  }
+
+  Widget _buildContent() {
+    return _MateoViewLayout(
+      layout: _layoutData,
+      fitHeight: widget.fitHeight,
+      reserveHeaderSpace: widget.reserveHeaderSpace,
+      children: [
+        LayoutId(
+          id: _MateoViewSlot.surface,
+          child: widget.surface,
+        ),
+        LayoutId(
+          id: _MateoViewSlot.header,
+          child: widget.header == null
+              ? const SizedBox.shrink()
+              : MaybeSafeArea(
+                  bottom: false,
+                  handle: _layoutData.header!.safeAreaHandle,
+                  child: Group(link: _contentGroup, zIndex: 1, child: widget.header),
+                ),
+        ),
+        LayoutId(
+          id: _MateoViewSlot.footer,
+          child: widget.footer == null
+              ? const SizedBox.shrink()
+              : MaybeSafeArea(
+                  top: false,
+                  handle: _layoutData.footer!.safeAreaHandle,
+                  child: Group(link: _contentGroup, zIndex: 2, child: widget.footer),
+                ),
+        ),
+        if (widget.overlay case final overlay?)
+          LayoutId(
+            id: _MateoViewSlot.overlay,
+            child: Group(
+              link: _contentGroup,
+              zIndex: 3,
+              child: PrimaryScrollController.none(child: overlay),
+            ),
+          ),
+      ],
     );
   }
 }

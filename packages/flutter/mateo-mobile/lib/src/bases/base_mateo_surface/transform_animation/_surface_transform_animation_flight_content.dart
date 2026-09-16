@@ -7,7 +7,7 @@ final class _SurfaceTransformAnimationFlightContent {
     required Iterable<_SurfaceTransformAnimationFlightLayer> layers,
   }) : layers = List.unmodifiable(layers);
 
-  factory _SurfaceTransformAnimationFlightContent.capture(MorphEndpointContext endpoint, Widget content) {
+  factory _SurfaceTransformAnimationFlightContent.capture(MorphEndpointContext endpoint, GroupLink content) {
     final size = endpoint.overlayBounds.size;
     return _SurfaceTransformAnimationFlightContent(
       size: size,
@@ -15,7 +15,7 @@ final class _SurfaceTransformAnimationFlightContent {
         _SurfaceTransformAnimationFlightLayer(
           capture: SizedBox.fromSize(
             size: size,
-            child: FittedBox(fit: .fill, child: endpoint.registerDescendantWidget(content)),
+            child: FittedBox(fit: .fill, child: endpoint.groupSnapshot(content)),
           ),
           bounds: Offset.zero & size,
         ),

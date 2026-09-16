@@ -19,7 +19,9 @@ void main() {
       expect(tester.getSize(find.byType(MateoViewSurface)), const Size(240, 320));
       expect(find.byType(ColoredBox), findsOneWidget);
       expect(tester.widget<ColoredBox>(find.byType(ColoredBox)).color, color);
-      expect(find.byType(ClipRRect), findsOneWidget);
+      final backgroundClip = find.ancestor(of: find.byType(ColoredBox), matching: find.byType(ClipRect));
+      expect(backgroundClip, findsOneWidget);
+      expect(tester.getSize(backgroundClip), const Size(240, 320));
     }
   });
 

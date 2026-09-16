@@ -137,7 +137,7 @@ void main() {
         expect(surface.shape, const MateoRoundedShapeBorder(radius: 2));
       }
       final surface = tester.widget<BaseMateoSurface>(
-        find.descendant(of: find.byType(MateoSheetViewSurface), matching: find.byType(BaseMateoSurface)),
+        find.descendant(of: find.byType(MateoSheetViewSurface), matching: find.byType(BaseMateoSurface)).first,
       );
       expect(surface.shape, const MateoRoundedShapeBorder(radius: 44));
       expect(surface.padding, const EdgeInsets.all(20));
