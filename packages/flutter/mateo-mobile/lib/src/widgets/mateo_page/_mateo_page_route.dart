@@ -33,6 +33,13 @@ final class _MateoPageRoute<T> extends _MateoPageRouteBase<T> {
   @override
   DelegatedTransitionBuilder get delegatedTransition => _buildOutgoing;
 
+  @override
+  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
+    return nextRoute is ModalRoute<dynamic> &&
+        nextRoute.delegatedTransition != null &&
+        super.canTransitionTo(nextRoute);
+  }
+
   Widget? _buildOutgoing(
     BuildContext context,
     Animation<double> animation,

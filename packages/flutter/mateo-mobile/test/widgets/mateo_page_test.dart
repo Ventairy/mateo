@@ -243,6 +243,47 @@ void main() {
     );
 
     _testWidgets(
+      'when a route without delegated motion covers push, it should stay still until it is popped',
+      (tester) async {
+        await _pumpPushApp(
+          tester,
+          platform: TargetPlatform.android,
+          page: const MateoPage<void>(
+            transition: MateoPageTransition.push(),
+            child: ColoredBox(key: _destinationKey, color: Colors.blue),
+          ),
+        );
+        final destination = find.byKey(_destinationKey);
+        final navigator = Navigator.of(tester.element(destination));
+        final coveringRoute = PageRouteBuilder<void>(
+          opaque: false,
+          transitionDuration: const Duration(milliseconds: 600),
+          reverseTransitionDuration: const Duration(milliseconds: 600),
+          pageBuilder: (context, animation, secondaryAnimation) => const SizedBox(key: ValueKey('covering-route')),
+        );
+
+        navigator.push(coveringRoute);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+
+        expect(tester.getTopLeft(destination), Offset.zero);
+
+        navigator.pop();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+
+        expect(tester.getTopLeft(destination), Offset.zero);
+
+        await tester.pumpAndSettle();
+        navigator.pop();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+
+        expect(tester.getTopLeft(destination).dy, greaterThan(0));
+      },
+    );
+
+    _testWidgets(
       'when push blends pages, it should avoid translucent opacity and shader layers',
       (tester) async {
         await _pumpPushTransitionApp(
