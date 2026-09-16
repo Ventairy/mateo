@@ -146,8 +146,11 @@ void main() {
         expect(tester.getSize(_surface()).width, 320);
         expect(tester.widget<Text>(find.text('Save')).style!.color, _theme.colorScheme.onAccent);
       }
-      expect(presentation.size, MateoButtonSize.standard);
+      expect(presentation.size, isNull);
+      expect(presentation.elevation, isNull);
       expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, _theme.colorScheme.accent);
+      final decoration = tester.widget<DecoratedBox>(_surface()).decoration as ShapeDecoration;
+      expect(decoration.shadows, isEmpty);
       expect(tester.widget<MateoPress>(find.byType(MateoPress)).animation, MateoPressAnimationType.scale);
     }
   });

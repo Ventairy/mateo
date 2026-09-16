@@ -14,6 +14,7 @@ import '../mateo_loading_indicator/mateo_loading_indicator.dart';
 import '../mateo_press/mateo_press.dart';
 import '../mateo_surface/mateo_surface.dart';
 import 'mateo_button_alignment.dart';
+import 'mateo_button_appearance_scope.dart';
 import 'mateo_button_size.dart';
 import 'mateo_button_width.dart';
 import 'variants/mateo_button_variant.dart';

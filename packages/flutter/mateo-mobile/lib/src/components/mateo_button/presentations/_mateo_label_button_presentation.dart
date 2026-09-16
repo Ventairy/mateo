@@ -5,10 +5,10 @@ final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
     required this.label,
     this.variant,
     this.colorScheme,
-    this.size = .standard,
+    this.size,
     this.width = .fill,
     this.alignment = .center,
-    this.elevation = 0,
+    this.elevation,
     this.leadingIcon,
     this.trailingIcon,
   }) : super._();
@@ -19,11 +19,11 @@ final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
   @override
   final MateoButtonColorScheme? colorScheme;
   @override
-  final MateoButtonSize size;
+  final MateoButtonSize? size;
   final MateoButtonWidth width;
   final MateoButtonAlignment alignment;
   @override
-  final double elevation;
+  final double? elevation;
   final Widget? leadingIcon;
   final Widget? trailingIcon;
 
@@ -40,7 +40,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
     double verticalPadding,
     double loadingIndicatorHeight,
   })
-  get _dimensions => switch (widget.size) {
+  _dimensions(MateoButtonSize size) => switch (size) {
     .mini => (
       fontSize: 14,
       lineHeight: 20,
@@ -146,10 +146,13 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
 
   @override
   Widget build(BuildContext context) {
-    final dimensions = _dimensions;
+    final appearance = MateoButtonAppearanceScope.of(context);
+    final size = widget.size ?? appearance.size ?? MateoButtonSize.standard;
+    final elevation = widget.elevation ?? appearance.elevation ?? 0;
+    final variant = widget.variant ?? appearance.variant ?? MateoButtonVariant.primary;
+    final dimensions = _dimensions(size);
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
-    final variant = widget.variant ?? MateoButtonVariant.primary;
     final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
     final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
     final contentAlignment = switch (widget.alignment) {
@@ -240,15 +243,15 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
       onPressed: scope.interactive ? (_) => scope.onPressed() : null,
       animation: variant.pressAnimation,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: math.max(0, (48 - widget.size.height) / 2)),
+        padding: EdgeInsets.symmetric(vertical: math.max(0, (48 - size.height) / 2)),
         child: MateoSurface(
           color: scope.enabled ? colors.background : colors.backgroundDisabled,
           shape: const .capsule(),
-          elevation: MateoElevation(level: widget.elevation),
+          elevation: MateoElevation(level: elevation),
           child: SizedBox(
             width: widget.width == .fill ? double.infinity : null,
             child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: 48, minHeight: widget.size.height),
+              constraints: BoxConstraints(minWidth: 48, minHeight: size.height),
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: dimensions.horizontalPadding,

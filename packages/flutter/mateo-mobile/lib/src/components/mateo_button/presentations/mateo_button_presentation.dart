@@ -10,10 +10,10 @@ sealed class MateoButtonPresentation extends StatefulWidget {
     required String label,
     MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,
-    MateoButtonSize size,
+    MateoButtonSize? size,
     MateoButtonWidth width,
     MateoButtonAlignment alignment,
-    double elevation,
+    double? elevation,
     Widget? leadingIcon,
     Widget? trailingIcon,
   }) = _MateoLabelButtonPresentation;
@@ -23,8 +23,8 @@ sealed class MateoButtonPresentation extends StatefulWidget {
     required Widget icon,
     MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,
-    MateoButtonSize size,
-    double elevation,
+    MateoButtonSize? size,
+    double? elevation,
     String? semanticLabel,
   }) = _MateoIconButtonPresentation;
 
@@ -40,8 +40,13 @@ sealed class MateoButtonPresentation extends StatefulWidget {
   MateoButtonColorScheme? get colorScheme;
 
   /// The button's coordinated space and content proportions.
-  MateoButtonSize get size;
+  ///
+  /// When omitted, the button uses the contextual default, currently
+  /// [MateoButtonSize.standard].
+  MateoButtonSize? get size;
 
   /// The surface's lift from its surroundings, using Mateo elevation.
-  double get elevation;
+  ///
+  /// When omitted, the button uses the contextual default, currently zero.
+  double? get elevation;
 }

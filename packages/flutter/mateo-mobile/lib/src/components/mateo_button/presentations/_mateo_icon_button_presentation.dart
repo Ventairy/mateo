@@ -5,8 +5,8 @@ final class _MateoIconButtonPresentation extends MateoButtonPresentation {
     required this.icon,
     this.variant,
     this.colorScheme,
-    this.size = .standard,
-    this.elevation = 0,
+    this.size,
+    this.elevation,
     this.semanticLabel,
   }) : super._();
 
@@ -16,9 +16,9 @@ final class _MateoIconButtonPresentation extends MateoButtonPresentation {
   @override
   final MateoButtonColorScheme? colorScheme;
   @override
-  final MateoButtonSize size;
+  final MateoButtonSize? size;
   @override
-  final double elevation;
+  final double? elevation;
   final String? semanticLabel;
 
   @override
@@ -27,7 +27,7 @@ final class _MateoIconButtonPresentation extends MateoButtonPresentation {
 
 class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentation>
     with SingleTickerProviderStateMixin {
-  ({double iconSize, double loadingIndicatorSize}) get _dimensions => switch (widget.size) {
+  ({double iconSize, double loadingIndicatorSize}) _dimensions(MateoButtonSize size) => switch (size) {
     .mini => (iconSize: 22, loadingIndicatorSize: 18),
     .small => (iconSize: 26, loadingIndicatorSize: 22),
     .standard => (iconSize: 30, loadingIndicatorSize: 24),
@@ -78,10 +78,13 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
 
   @override
   Widget build(BuildContext context) {
-    final dimensions = _dimensions;
+    final appearance = MateoButtonAppearanceScope.of(context);
+    final size = widget.size ?? appearance.size ?? MateoButtonSize.standard;
+    final elevation = widget.elevation ?? appearance.elevation ?? 0;
+    final variant = widget.variant ?? appearance.variant ?? MateoButtonVariant.primary;
+    final dimensions = _dimensions(size);
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
-    final variant = widget.variant ?? MateoButtonVariant.primary;
     final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
     final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
 
@@ -90,14 +93,14 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
       onPressed: scope.interactive ? (_) => scope.onPressed() : null,
       animation: variant.pressAnimation,
       child: SizedBox.square(
-        dimension: math.max(48, widget.size.height),
+        dimension: math.max(48, size.height),
         child: Center(
           child: MateoSurface(
             color: scope.enabled ? colors.background : colors.backgroundDisabled,
             shape: const .capsule(),
-            elevation: MateoElevation(level: widget.elevation),
+            elevation: MateoElevation(level: elevation),
             child: SizedBox.square(
-              dimension: widget.size.height,
+              dimension: size.height,
               child: Center(
                 child: SizedBox.square(
                   dimension: math.max(dimensions.iconSize, dimensions.loadingIndicatorSize),
