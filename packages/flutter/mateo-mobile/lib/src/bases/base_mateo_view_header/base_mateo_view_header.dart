@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../components/mateo_button/mateo_button_appearance_scope.dart';
+import '../../components/mateo_button/mateo_button_size.dart';
 import '../base_mateo_view/base_mateo_view.dart';
 
 part '_mateo_view_header_content.dart';
@@ -26,11 +28,16 @@ class BaseMateoViewHeader extends StatelessWidget {
 
     return Padding(
       padding: padding ?? view!.padding.copyWith(bottom: 0),
-      child: _MateoViewHeaderContent(
-        principal: principal,
-        leading: leading,
-        trailing: trailing,
-        textDirection: Directionality.of(context),
+      child: MateoButtonAppearanceScope(
+        variant: .primary.base,
+        elevation: 1,
+        size: MateoButtonSize.small,
+        child: _MateoViewHeaderContent(
+          principal: principal,
+          leading: leading,
+          trailing: trailing,
+          textDirection: Directionality.of(context),
+        ),
       ),
     );
   }

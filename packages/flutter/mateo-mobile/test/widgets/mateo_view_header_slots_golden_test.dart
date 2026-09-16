@@ -15,12 +15,13 @@ Future<void> main() async {
           child: GoldenTestGroup(
             columns: 1,
             children: [
-              for (final (name, title, direction, scale) in [
-                ('Principal only', 'Messages', TextDirection.ltr, 1.0),
-                ('Asymmetric controls', 'Messages', TextDirection.ltr, 1.0),
-                ('Long principal', 'Messages from your neighborhood', TextDirection.ltr, 1.0),
-                ('RTL', 'Messages', TextDirection.rtl, 1.0),
-                ('Large text', 'Your messages', TextDirection.ltr, 2.0),
+              for (final (name, title, direction, scale, button) in [
+                ('Principal only', 'Messages', TextDirection.ltr, 1.0, false),
+                ('Asymmetric controls', 'Messages', TextDirection.ltr, 1.0, false),
+                ('Header action', 'Messages', TextDirection.ltr, 1.0, true),
+                ('Long principal', 'Messages from your neighborhood', TextDirection.ltr, 1.0, false),
+                ('RTL', 'Messages', TextDirection.rtl, 1.0, false),
+                ('Large text', 'Your messages', TextDirection.ltr, 2.0, false),
               ])
                 GoldenTestScenario(
                   name: name,
@@ -45,7 +46,11 @@ Future<void> main() async {
                                         height: 40,
                                         child: Center(child: MateoIcon(.arrowLeft)),
                                       ),
-                                trailing: name == 'Principal only'
+                                trailing: button
+                                    ? const MateoButton(
+                                        presentation: .icon(icon: MateoIcon(.cross), semanticLabel: 'Close'),
+                                      )
+                                    : name == 'Principal only'
                                     ? null
                                     : const SizedBox(width: 64, height: 40, child: Center(child: Text('Edit'))),
                               ),
