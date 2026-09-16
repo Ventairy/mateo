@@ -2410,22 +2410,23 @@ class _ArrowRotateClockisePainter extends CustomPainter {
   final Color mateoOpticalSizeColor;
 
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.716316704,
+    0.715858073,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.716316704,
+    0.715858073,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.478674609,
-    2.836832961,
+    2.483490235,
+    2.841419271,
     0.0,
     1.0,
   ]);
@@ -2470,6 +2471,14 @@ class _ArrowRotateClockisePainter extends CustomPainter {
     canvas.save();
     canvas.transform(_transform0);
     canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(
+      __path0,
+      _strokePaint
+        ..color = mateoOpticalSizeColor
+        ..strokeWidth = 0.75
+        ..strokeCap = StrokeCap.butt
+        ..strokeJoin = StrokeJoin.round,
+    );
     canvas.restore();
     canvas.restore();
   }

@@ -7,11 +7,11 @@ void main() {
   test('when resolving toggle colors, it should retain the authored semantic roles', () {
     final colors = theme.colorScheme.toggle;
     expect(colors.trackOn, theme.palette.accent[9]);
-    expect(colors.trackOff, theme.palette.neutral[3]);
+    expect(colors.trackOff, theme.palette.neutral[4]);
     expect(colors.trackDisabled, theme.palette.neutral[4]);
     expect(colors.thumbOn, theme.palette.neutral[1]);
     expect(colors.thumbOff, theme.palette.neutral[1]);
-    expect(colors.thumbDisabled, theme.palette.neutral[8]);
+    expect(colors.thumbDisabled, theme.palette.neutral[7]);
     expect(colors, theme.copyWith().colorScheme.toggle);
     expect(colors.hashCode, theme.copyWith().colorScheme.toggle.hashCode);
     final changed = theme.copyWith(accentColor: const Color(0xFFCC4422));
