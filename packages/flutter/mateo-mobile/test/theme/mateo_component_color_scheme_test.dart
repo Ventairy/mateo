@@ -25,6 +25,16 @@ void main() {
     expect(theme.copyWith().colorScheme.sheet, sheet);
   });
 
+  test('when resolving skeletons, it should expose the neutral bone color', () {
+    final skeleton = theme.colorScheme.skeleton;
+    expect(skeleton.bone, theme.palette.neutral[3]);
+    final equivalent = MateoSkeletonColorScheme(bone: skeleton.bone);
+    expect(equivalent, skeleton);
+    expect(equivalent.hashCode, skeleton.hashCode);
+    expect(MateoSkeletonColorScheme(bone: theme.palette.white), isNot(skeleton));
+    expect(theme.copyWith().colorScheme.skeleton, skeleton);
+  });
+
   test('when resolving options menus, it should expose their panel and content color roles', () {
     final menus = theme.colorScheme.menus;
     final options = menus.options;

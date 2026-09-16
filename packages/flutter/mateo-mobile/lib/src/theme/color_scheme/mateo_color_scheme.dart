@@ -15,6 +15,7 @@ part 'mateo_options_menu_color_scheme.dart';
 part 'mateo_primary_button_color_scheme.dart';
 part 'mateo_secondary_button_color_scheme.dart';
 part 'mateo_sheet_color_scheme.dart';
+part 'mateo_skeleton_color_scheme.dart';
 part 'mateo_text_color_scheme.dart';
 part 'mateo_text_input_color_scheme.dart';
 part 'mateo_text_inputs_color_scheme.dart';
@@ -125,6 +126,7 @@ final class MateoColorScheme {
       thumbDisabled: palette.neutral[7],
     ),
     sheet: .new(scrim: palette.black.withValues(alpha: 0.2)),
+    skeleton: .new(bone: palette.neutral[3]),
     text: ._(
       primary: palette.neutral[12],
       secondary: palette.neutral[10],
@@ -155,6 +157,7 @@ final class MateoColorScheme {
     required this.menus,
     required this.textInputs,
     required this.sheet,
+    required this.skeleton,
     required this.toggle,
     required this.toast,
   });
@@ -186,6 +189,9 @@ final class MateoColorScheme {
   /// The colors for sheet presentation.
   final MateoSheetColorScheme sheet;
 
+  /// The colors for skeleton loading placeholders.
+  final MateoSkeletonColorScheme skeleton;
+
   /// The colors for on/off controls.
   final MateoToggleColorScheme toggle;
 
@@ -206,11 +212,24 @@ final class MateoColorScheme {
           menus == other.menus &&
           textInputs == other.textInputs &&
           sheet == other.sheet &&
+          skeleton == other.skeleton &&
           toggle == other.toggle &&
           toast == other.toast;
 
   /// The hash of this scheme's semantic colors.
   @override
-  int get hashCode =>
-      Object.hash(background, accent, onAccent, text, inverse, buttons, menus, textInputs, sheet, toggle, toast);
+  int get hashCode => Object.hash(
+    background,
+    accent,
+    onAccent,
+    text,
+    inverse,
+    buttons,
+    menus,
+    textInputs,
+    sheet,
+    skeleton,
+    toggle,
+    toast,
+  );
 }

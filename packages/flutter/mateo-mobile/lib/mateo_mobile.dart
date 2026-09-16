@@ -82,6 +82,7 @@ export 'src/theme/color_scheme/mateo_color_scheme.dart'
         MateoPrimaryButtonColorScheme,
         MateoSecondaryButtonColorScheme,
         MateoSheetColorScheme,
+        MateoSkeletonColorScheme,
         MateoTextColorScheme,
         MateoTextInputColorScheme,
         MateoTextInputsColorScheme,
