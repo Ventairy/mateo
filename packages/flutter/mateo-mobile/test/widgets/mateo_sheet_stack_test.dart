@@ -47,14 +47,14 @@ void main() {
     WidgetTester tester,
     int index, {
     double height = 160,
-    double? maxHeight,
+    double? maxExtent,
     bool settle = true,
     bool scrollable = false,
   }) async {
     unawaited(
       showMateoSheet<void>(
         context: launcher,
-        maxHeight: maxHeight,
+        maxExtent: maxExtent,
         view: MateoSheetView(
           key: ValueKey('sheet-$index'),
           surface: scrollable
@@ -163,12 +163,12 @@ void main() {
     tester,
   ) async {
     await host(tester);
-    await push(tester, 0, scrollable: true, maxHeight: 400);
+    await push(tester, 0, scrollable: true, maxExtent: 400);
     final scroll = tester.state<ScrollableState>(find.descendant(of: sheet(0), matching: find.byType(Scrollable)));
     scroll.position.jumpTo(100);
     final original = bounds(tester, 0);
     expect(original.height, 400);
-    await push(tester, 1, scrollable: true, maxHeight: 240);
+    await push(tester, 1, scrollable: true, maxExtent: 240);
     expect(bounds(tester, 1).height, 240);
     expect(tester.getSize(frame(0)).height, 400);
     expect(scroll.position.pixels, 100);

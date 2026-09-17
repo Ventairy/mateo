@@ -17,7 +17,7 @@ Future<void> main() async {
       unawaited(
         showMateoSheet<void>(
           context: cappedLauncher,
-          maxHeight: 280,
+          maxExtent: 280,
           view: const MateoSheetView(
             header: MateoSheetViewHeader(presentation: .custom(principal: Text('Details'))),
             footer: MateoSheetViewFooter(principal: Text('Continue')),

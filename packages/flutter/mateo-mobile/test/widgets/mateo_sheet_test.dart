@@ -549,10 +549,10 @@ void main() {
     }
   });
 
-  for (final maxHeight in [0.0, -1.0, double.infinity, double.negativeInfinity, double.nan]) {
-    testWidgets('when maxHeight is $maxHeight, it should reject the limit before opening', (tester) async {
+  for (final maxExtent in [0.0, -1.0, double.infinity, double.negativeInfinity, double.nan]) {
+    testWidgets('when maxExtent is $maxExtent, it should reject the limit before opening', (tester) async {
       await host(tester);
-      expect(() => showMateoSheet<void>(context: launcher, view: view, maxHeight: maxHeight), throwsAssertionError);
+      expect(() => showMateoSheet<void>(context: launcher, view: view, maxExtent: maxExtent), throwsAssertionError);
       await tester.pumpAndSettle();
       expect(find.byType(MateoSheetView), findsNothing);
     });
@@ -560,15 +560,15 @@ void main() {
 
   for (final reducedMotion in [false, true]) {
     for (final scrollable in [false, true]) {
-      for (final maxHeight in [300.0, 1000.0]) {
+      for (final maxExtent in [300.0, 1000.0]) {
         testWidgets(
-          'when maxHeight is $maxHeight, it should cap fixed slots and content ($scrollable, $reducedMotion)',
+          'when maxExtent is $maxExtent, it should cap fixed slots and content ($scrollable, $reducedMotion)',
           (tester) async {
             await host(tester, reducedMotion: reducedMotion);
             unawaited(
               showMateoSheet<void>(
                 context: launcher,
-                maxHeight: maxHeight,
+                maxExtent: maxExtent,
                 view: MateoSheetView(
                   header: const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 20))),
                   footer: const MateoSheetViewFooter(principal: SizedBox(height: 20)),
@@ -579,7 +579,7 @@ void main() {
               ),
             );
             await tester.pumpAndSettle();
-            expect(tester.getSize(find.byType(MateoSheetView)).height, maxHeight == 300 ? 300 : 540);
+            expect(tester.getSize(find.byType(MateoSheetView)).height, maxExtent == 300 ? 300 : 540);
             expect(tester.takeException(), isNull);
           },
         );
@@ -587,9 +587,9 @@ void main() {
     }
   }
 
-  testWidgets('when maxHeight exceeds fitted content, it should keep the sheet short and dismissible', (tester) async {
+  testWidgets('when maxExtent exceeds fitted content, it should keep the sheet short and dismissible', (tester) async {
     await host(tester);
-    final result = showMateoSheet<void>(context: launcher, view: view, maxHeight: 300);
+    final result = showMateoSheet<void>(context: launcher, view: view, maxExtent: 300);
     await tester.pumpAndSettle();
     expect(tester.getSize(find.byType(MateoSheetView)).height, 120);
     await requestDismiss(tester, .drag);
@@ -602,7 +602,7 @@ void main() {
     unawaited(
       showMateoSheet<void>(
         context: launcher,
-        maxHeight: 300,
+        maxExtent: 300,
         view: const MateoSheetView(
           header: MateoSheetViewHeader(presentation: .custom(principal: Text('Header'))),
           footer: MateoSheetViewFooter(principal: Text('Footer')),
@@ -628,7 +628,7 @@ void main() {
     expect(find.byType(MateoSheetView), findsNothing);
   });
 
-  testWidgets('when the viewport changes, maxHeight should remain fixed beneath the adaptive viewport ceiling', (
+  testWidgets('when the viewport changes, maxExtent should remain fixed beneath the adaptive viewport ceiling', (
     tester,
   ) async {
     tester.view.devicePixelRatio = 1;
@@ -638,7 +638,7 @@ void main() {
     unawaited(
       showMateoSheet<void>(
         context: launcher,
-        maxHeight: 400,
+        maxExtent: 400,
         view: const MateoSheetView(surface: MateoSheetViewSurface.scrollable(child: SizedBox(height: 1000))),
       ),
     );

@@ -9,11 +9,11 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     required this.direction,
     required this.reducedMotion,
     this.shouldDismiss,
-    this.maxHeight,
+    this.maxExtent,
   }) : super(requestFocus: true);
 
   final MateoSheetView view;
-  final double? maxHeight;
+  final double? maxExtent;
   final MateoSheetShouldDismiss? shouldDismiss;
   MateoSheetDismissSource? _dismissSource;
   bool _checkingDismissal = false;
@@ -170,7 +170,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
 
   BoxConstraints _layoutConstraints(BoxConstraints viewport) => switch (from) {
     .bottom => BoxConstraints(
-      maxHeight: math.min(maxHeight ?? double.infinity, viewport.maxHeight * from._maxExtentFraction),
+      maxHeight: math.min(maxExtent ?? double.infinity, viewport.maxHeight * from._maxExtentFraction),
     ),
   };
 
