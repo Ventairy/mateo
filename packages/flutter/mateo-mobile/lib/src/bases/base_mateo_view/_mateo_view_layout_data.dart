@@ -57,7 +57,11 @@ class _MateoViewLayoutData extends ChangeNotifier {
     _notificationScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _notificationScheduled = false;
-      _notifyObstructionInsets();
+      if (_disposed) return;
+      // An incoming route can be laid out offstage before its first paint.
+      // Resolve placement now so snapshot capture receives safe-area clearance
+      // without waiting for the live view to become visible.
+      resolveObstructionInsets();
     });
     WidgetsBinding.instance.ensureVisualUpdate();
   }

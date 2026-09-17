@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +21,125 @@ Future<List<int>> _pixel(WidgetTester tester, Offset point) async => (await test
   return pixel;
 }))!;
 
+Future<List<List<int>>> _destinationSnapshotPixels(WidgetTester tester, List<Offset> points) async {
+  final snapshot = tester.widget<CustomPaint>(
+    find
+        .byWidgetPredicate(
+          (widget) => widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphGroupSnapshotPainter',
+        )
+        .last,
+  );
+  return (await tester.runAsync(() async {
+    final recorder = ui.PictureRecorder();
+    snapshot.painter!.paint(Canvas(recorder), const Size(400, 800));
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(400, 800);
+    final bytes = (await image.toByteData(format: .rawRgba))!;
+    final pixels = [
+      for (final point in points)
+        List.generate(
+          4,
+          (channel) => bytes.getUint8((point.dy.round() * image.width + point.dx.round()) * 4 + channel),
+        ),
+    ];
+    image.dispose();
+    picture.dispose();
+    return pixels;
+  }))!;
+}
+
 void main() {
+  for (final prepareOffstage in [false, true]) {
+    for (final topInset in [0.0, 24.0, 47.0]) {
+      testWidgets(
+        'when a view transforms below a $topInset safe area with the keyboard open and its route ${prepareOffstage ? "prepared offstage" : "painted immediately"}, it should capture the settled body position from the first flight frame',
+        (tester) async {
+          tester.view
+            ..devicePixelRatio = 1
+            ..physicalSize = const Size(400, 800)
+            ..padding = FakeViewPadding(top: topInset)
+            ..viewPadding = FakeViewPadding(top: topInset, bottom: 34)
+            ..viewInsets = const FakeViewPadding(bottom: 300);
+          addTearDown(tester.view.reset);
+          final navigator = GlobalKey<NavigatorState>();
+          final bodyKey = GlobalKey();
+          final centerKey = GlobalKey();
+          final headerKey = GlobalKey();
+          const animation = MateoSurfaceAnimation.transform(
+            id: 'safe-area-view',
+            duration: Duration(seconds: 1),
+            curve: Curves.linear,
+            contentEffects: [.crossfade()],
+          );
+          final bodyColor = surfaceTransformTheme.palette.red;
+          await tester.pumpWidget(
+            RepaintBoundary(
+              key: _capture,
+              child: MateoApp(
+                theme: surfaceTransformTheme,
+                navigatorKey: navigator,
+                home: surfaceTransformEndpoint(
+                  bounds: const Rect.fromLTWH(40, 200, 120, 80),
+                  animation: animation,
+                  color: _black,
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          await startSurfaceTransformAnimationFlight(
+            tester,
+            navigator.currentState!,
+            routeDuration: const Duration(milliseconds: 320),
+            prepareOffstage: prepareOffstage,
+            MateoView(
+              header: MateoViewHeader(principal: SizedBox(key: headerKey, height: 40)),
+              surface: MateoViewSurface(
+                animation: animation,
+                color: _black,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      key: bodyKey,
+                      height: 12,
+                      width: 24,
+                      child: ColoredBox(color: bodyColor),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: SizedBox(
+                          key: centerKey,
+                          width: 12,
+                          height: 12,
+                          child: ColoredBox(color: bodyColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+          await tester.pump(const Duration(milliseconds: 16));
+          final centers = [tester.getCenter(find.byKey(bodyKey)), tester.getCenter(find.byKey(centerKey))];
+          expect(tester.getTopLeft(find.byKey(bodyKey)).dy, tester.getBottomLeft(find.byKey(headerKey)).dy + 20);
+          final expectedPixel = [
+            (bodyColor.r * 255).round(),
+            (bodyColor.g * 255).round(),
+            (bodyColor.b * 255).round(),
+            255,
+          ];
+          // Inspect the actual destination raster before scaling/crossfading.
+          // Hidden live widgets alone cannot prove that the flight is aligned.
+          expect(await _destinationSnapshotPixels(tester, centers), [expectedPixel, expectedPixel]);
+          await tester.pump(const Duration(milliseconds: 964));
+          expect(await _destinationSnapshotPixels(tester, centers), [expectedPixel, expectedPixel]);
+          await tester.pumpAndSettle();
+          expect([tester.getCenter(find.byKey(bodyKey)), tester.getCenter(find.byKey(centerKey))], centers);
+        },
+      );
+    }
+  }
   for (final scrollable in [false, true]) {
     for (final interrupted in [false, true]) {
       testWidgets(

@@ -91,11 +91,16 @@ PageRoute<void> surfaceTransformRoute(Widget child, {Duration duration = Duratio
 Future<void> startSurfaceTransformAnimationFlight(
   WidgetTester tester,
   NavigatorState navigator,
-  Widget destination,
-) async {
+  Widget destination, {
+  Duration routeDuration = Duration.zero,
+  bool prepareOffstage = false,
+}) async {
   // Navigation completes on pop, not on landing.
-  navigator.push<void>(surfaceTransformRoute(destination));
+  final route = surfaceTransformRoute(destination, duration: routeDuration);
+  navigator.push<void>(route);
+  if (prepareOffstage) route.offstage = true;
   await tester.pump();
+  if (prepareOffstage) route.offstage = false;
   await tester.pump();
 }
 
