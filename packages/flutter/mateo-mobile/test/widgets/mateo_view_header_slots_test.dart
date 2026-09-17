@@ -72,15 +72,33 @@ void main() {
     }
   });
 
-  testWidgets('when side slots are absent, it should reserve no unnecessary gaps', (tester) async {
-    await tester.pumpWidget(host(_inView(const MateoViewHeader(principal: SizedBox(width: 500, height: 24)))));
-    expect(tester.getSize(find.byType(MateoViewHeader)), const Size(320, 24));
-    expect(tester.getSize(find.byWidgetPredicate((widget) => widget is SizedBox && widget.width == 500)).width, 320);
-    await tester.pumpWidget(host(_inView(const MateoViewHeader(principal: principal, leading: leading))));
-    expect(
-      tester.getCenter(find.byKey(const ValueKey('principal'))).dx,
-      tester.getCenter(find.byType(MateoViewHeader)).dx,
-    );
+  testWidgets('when sides change, principal fills the available region', (tester) async {
+    for (final direction in TextDirection.values) {
+      for (final sides in [
+        (leading: false, trailing: false, start: 0.0, end: 0.0),
+        (leading: true, trailing: false, start: 48.0, end: 0.0),
+        (leading: false, trailing: true, start: 0.0, end: 88.0),
+        (leading: true, trailing: true, start: 88.0, end: 88.0),
+      ]) {
+        await tester.pumpWidget(
+          host(
+            _inView(
+              MateoViewHeader(
+                principal: principal,
+                leading: sides.leading ? leading : null,
+                trailing: sides.trailing ? trailing : null,
+              ),
+            ),
+            direction: direction,
+          ),
+        );
+        final bounds = tester.getRect(find.byType(MateoViewHeader));
+        final middle = tester.getRect(find.byKey(const ValueKey('principal')));
+        expect(middle.width, bounds.width - sides.start - sides.end);
+        expect(middle.left, bounds.left + (direction == TextDirection.ltr ? sides.start : sides.end));
+        expect(middle.height, 24);
+      }
+    }
   });
 
   testWidgets('when width is narrow, it should constrain slots without overlapping them', (tester) async {
@@ -153,7 +171,7 @@ void main() {
         ),
       ),
     );
-    expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), const Offset(138, 24));
+    expect(tester.getRect(find.byKey(const ValueKey('principal'))), const Rect.fromLTWH(18, 24, 300, 24));
   });
 }
 

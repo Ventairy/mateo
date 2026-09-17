@@ -35,7 +35,9 @@ class BaseMateoViewHeader extends StatelessWidget {
         child: DefaultTextStyle.merge(
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           child: _MateoViewHeaderContent(
-            principal: principal,
+            principal: principal != null && leading != null && trailing != null
+                ? DefaultTextStyle.merge(textAlign: .center, child: principal!)
+                : principal,
             leading: leading,
             trailing: trailing,
             textDirection: Directionality.of(context),

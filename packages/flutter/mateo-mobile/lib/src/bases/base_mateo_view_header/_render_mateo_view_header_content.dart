@@ -23,7 +23,7 @@ final class _RenderMateoViewHeaderContent extends RenderBox
   @override
   Iterable<RenderBox> get children => [?_leading, ?childForSlot(.principal), ?_trailing];
 
-  ({Size size, double leadingSpace, double trailingSpace}) _layoutChildren(
+  ({Size size, double principalLeft}) _layoutChildren(
     BoxConstraints constraints,
     ChildLayouter layoutChild,
   ) {
@@ -36,13 +36,16 @@ final class _RenderMateoViewHeaderContent extends RenderBox
     final trailingSize = _trailing == null ? Size.zero : layoutChild(_trailing!, sideConstraints);
     final leadingSpace = _leading == null ? 0.0 : leadingSize.width + _spacing;
     final trailingSpace = _trailing == null ? 0.0 : trailingSize.width + _spacing;
-    final reservedWidth = math.max(leadingSpace, trailingSpace) * 2;
+    final hasBothSides = _leading != null && _trailing != null;
+    final principalStart = hasBothSides ? math.max(leadingSpace, trailingSpace) : leadingSpace;
+    final principalEnd = hasBothSides ? principalStart : trailingSpace;
+    final reservedWidth = principalStart + principalEnd;
     final principalSize = _principal == null
         ? Size.zero
         : layoutChild(
             _principal!,
             constraints.hasBoundedWidth
-                ? looseConstraints.copyWith(maxWidth: math.max(0, constraints.maxWidth - reservedWidth))
+                ? looseConstraints.tighten(width: math.max(0, constraints.maxWidth - reservedWidth))
                 : looseConstraints,
           );
 
@@ -53,8 +56,9 @@ final class _RenderMateoViewHeaderContent extends RenderBox
           math.max(principalSize.height, math.max(leadingSize.height, trailingSize.height)),
         ),
       ),
-      leadingSpace: leadingSpace,
-      trailingSpace: trailingSpace,
+      principalLeft: hasBothSides
+          ? (constraints.maxWidth - principalSize.width) / 2
+          : math.min(constraints.maxWidth, textDirection == TextDirection.ltr ? principalStart : principalEnd),
     );
   }
 
@@ -72,7 +76,7 @@ final class _RenderMateoViewHeaderContent extends RenderBox
     if (left != null) _positionChild(left, 0);
     if (right != null) _positionChild(right, size.width - right.size.width);
 
-    if (_principal != null) _positionChild(_principal!, (size.width - _principal!.size.width) / 2);
+    if (_principal != null) _positionChild(_principal!, layout.principalLeft);
   }
 
   void _positionChild(RenderBox child, double left) {

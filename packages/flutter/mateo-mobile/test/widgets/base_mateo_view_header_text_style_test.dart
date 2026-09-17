@@ -39,6 +39,42 @@ Widget _probe(String slot, Map<String, TextStyle> styles) => Builder(
 
 void main() {
   for (final sheet in [false, true]) {
+    testWidgets('when both sides exist, ${sheet ? 'sheet' : 'view'} principal text defaults to centered', (
+      tester,
+    ) async {
+      for (final direction in TextDirection.values) {
+        for (final alignment in <TextAlign?>[null, .start]) {
+          await tester.pumpWidget(
+            _host(
+              Directionality(
+                textDirection: direction,
+                child: _header(
+                  sheet: sheet,
+                  leading: const Text('Back'),
+                  principal: Text('Title', textAlign: alignment),
+                  trailing: const Text('Longer action'),
+                ),
+              ),
+            ),
+          );
+          final principal = tester.widget<RichText>(
+            find.descendant(
+              of: find.text('Title'),
+              matching: find.byType(RichText),
+            ),
+          );
+          expect(principal.textAlign, alignment ?? TextAlign.center);
+          final leading = tester.widget<RichText>(
+            find.descendant(
+              of: find.text('Back'),
+              matching: find.byType(RichText),
+            ),
+          );
+          expect(leading.textAlign, TextAlign.start);
+        }
+      }
+    });
+
     testWidgets('when a ${sheet ? 'sheet' : 'view'} header contains text, every slot should inherit the title style', (
       tester,
     ) async {

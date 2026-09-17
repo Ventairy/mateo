@@ -25,7 +25,7 @@ void main() {
       await tester.pumpWidget(host(view, padding: padding));
       await tester.pumpAndSettle();
       expect(tester.getRect(find.byType(MateoViewSurface)), const Rect.fromLTWH(0, 0, 300, 300));
-      expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), Offset(110 + padding.left, 12 + padding.top));
+      expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), Offset(20 + padding.left, 12 + padding.top));
       final safe = tester.widget<MaybeSafeArea>(find.byType(MaybeSafeArea));
       expect(safe.bottom, isFalse);
     }
@@ -34,7 +34,7 @@ void main() {
   testWidgets('when reaching the right unsafe edge, it should move the header inward', (tester) async {
     await tester.pumpWidget(host(view, padding: const EdgeInsets.only(right: 20), origin: const Offset(500, 60)));
     await tester.pumpAndSettle();
-    expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), const Offset(590, 72));
+    expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), const Offset(500, 72));
     expect(tester.getRect(find.byType(MateoViewSurface)), const Rect.fromLTWH(500, 60, 300, 300));
   });
 
@@ -43,7 +43,7 @@ void main() {
       host(view, padding: const EdgeInsets.only(top: 24, left: 18), origin: const Offset(40, 60)),
     );
     await tester.pumpAndSettle();
-    expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), const Offset(150, 72));
+    expect(tester.getTopLeft(find.byKey(const ValueKey('principal'))), const Offset(60, 72));
     final before = tester.getTopLeft(find.byKey(const ValueKey('principal')));
     await tester.dragFrom(const Offset(180, 250), const Offset(0, -100));
     await tester.pumpAndSettle();

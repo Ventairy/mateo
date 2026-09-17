@@ -29,6 +29,45 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('when sheet header sides change, principal fills the available region', (tester) async {
+    for (final direction in TextDirection.values) {
+      for (final sides in [
+        (leading: false, trailing: false, start: 0.0, end: 0.0),
+        (leading: true, trailing: false, start: 48.0, end: 0.0),
+        (leading: false, trailing: true, start: 0.0, end: 88.0),
+        (leading: true, trailing: true, start: 88.0, end: 88.0),
+      ]) {
+        await tester.pumpWidget(
+          MateoTheme(
+            data: surfaceTransformTheme,
+            child: Directionality(
+              textDirection: direction,
+              child: Center(
+                child: SizedBox(
+                  width: 320,
+                  child: MateoSheetView(
+                    header: MateoSheetViewHeader(
+                      principal: const SizedBox(key: ValueKey('expanding-principal'), width: 10, height: 24),
+                      leading: sides.leading ? const SizedBox(width: 32, height: 40) : null,
+                      trailing: sides.trailing ? const SizedBox(width: 72, height: 32) : null,
+                    ),
+                    surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        final header = tester.getRect(find.byType(MateoSheetViewHeader));
+        final principal = tester.getRect(find.byKey(const ValueKey('expanding-principal')));
+        expect(principal.width, 280 - sides.start - sides.end);
+        expect(principal.left, header.left + 20 + (direction == TextDirection.ltr ? sides.start : sides.end));
+        expect(principal.height, 24);
+        expect(tester.takeException(), isNull);
+      }
+    }
+  });
+
   testWidgets('when sheet padding is explicit, it should replace defaults with or without reserved header space', (
     tester,
   ) async {

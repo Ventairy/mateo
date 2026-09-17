@@ -10,7 +10,12 @@ class MateoSheetViewHeader extends StatelessWidget {
   /// The content at the directional start.
   final Widget? leading;
 
-  /// The principal content between the side slots.
+  /// The optional content that fills the available space between side slots.
+  ///
+  /// With no sides it fills the header; with one side it fills the remaining
+  /// space. With both sides it fills a region centered across the header, and
+  /// text defaults to centered alignment.
+  /// The child owns its text alignment, wrapping, and overflow behavior.
   final Widget? principal;
 
   /// The content at the directional end.

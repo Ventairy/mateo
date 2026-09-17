@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../../../bases/base_mateo_view_header/base_mateo_view_header.dart';
 import '../../mateo_view.dart';
 
-/// A transparent three-slot header for a mateo view with a principal centered across its width.
+/// A transparent three-slot header for a Mateo view.
 ///
 /// Supply this through [MateoView.header].
 ///
@@ -22,7 +22,11 @@ class MateoViewHeader extends StatelessWidget {
   /// Explicit padding replaces the inherited padding.
   final EdgeInsetsGeometry? padding;
 
-  /// The optional centered content, constrained to the symmetric space between side slots.
+  /// The optional content that fills the available space between side slots.
+  ///
+  /// With no sides it fills the header; with one side it fills the remaining
+  /// space. With both sides it fills a region centered across the header, and
+  /// text defaults to centered alignment.
   ///
   /// The child owns its text alignment, wrapping, overflow behavior, and any
   /// explicit text-style overrides.

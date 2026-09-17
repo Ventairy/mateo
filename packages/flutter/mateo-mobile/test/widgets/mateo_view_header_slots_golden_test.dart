@@ -4,7 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 
 Future<void> main() async {
   await goldenTest(
-    'when arranging header slots, it should keep principal content centered',
+    'when arranging header slots, it should fill the available principal region',
     fileName: 'mateo_view_header_slots',
     builder: () {
       final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
@@ -16,7 +16,12 @@ Future<void> main() async {
             columns: 1,
             children: [
               for (final (name, title, direction, scale, button) in [
+                ('Leading only', 'Messages', TextDirection.ltr, 1.0, false),
+                ('Trailing only', 'Messages', TextDirection.ltr, 1.0, false),
+                ('Leading only RTL', 'Messages', TextDirection.rtl, 1.0, false),
+                ('Trailing only RTL', 'Messages', TextDirection.rtl, 1.0, false),
                 ('Principal only', 'Messages', TextDirection.ltr, 1.0, false),
+                ('Default text alignment', 'Messages', TextDirection.ltr, 1.0, false),
                 ('Asymmetric controls', 'Messages', TextDirection.ltr, 1.0, false),
                 ('Header action', 'Messages', TextDirection.ltr, 1.0, true),
                 ('Long principal', 'Messages from your neighborhood', TextDirection.ltr, 1.0, false),
@@ -36,8 +41,8 @@ Future<void> main() async {
                           data: MediaQueryData(textScaler: TextScaler.linear(scale)),
                           child: _inView(
                             MateoViewHeader(
-                              principal: Text(title, textAlign: .center),
-                              leading: name == 'Principal only'
+                              principal: Text(title, textAlign: name == 'Default text alignment' ? null : .center),
+                              leading: name == 'Principal only' || name.startsWith('Trailing only')
                                   ? null
                                   : const SizedBox(
                                       width: 32,
@@ -48,7 +53,7 @@ Future<void> main() async {
                                   ? const MateoButton(
                                       presentation: .icon(icon: MateoIcon(.cross), semanticLabel: 'Close'),
                                     )
-                                  : name == 'Principal only'
+                                  : name == 'Principal only' || name.startsWith('Leading only')
                                   ? null
                                   : const SizedBox(width: 64, height: 40, child: Center(child: Text('Edit'))),
                             ),
