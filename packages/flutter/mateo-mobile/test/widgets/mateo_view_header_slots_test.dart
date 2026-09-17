@@ -99,18 +99,15 @@ void main() {
     }
   });
 
-  testWidgets('when text scales, it should grow naturally and preserve child styling', (tester) async {
+  testWidgets('when text scales, it should grow naturally from the header title style', (tester) async {
     double? original;
     for (final scale in [1.0, 2.0]) {
       await tester.pumpWidget(
         host(
           MediaQuery(
             data: MediaQueryData(textScaler: TextScaler.linear(scale)),
-            child: DefaultTextStyle(
-              style: const TextStyle(fontSize: 20),
-              child: _inView(
-                const MateoViewHeader(principal: Text('A longer heading that wraps', textAlign: .center)),
-              ),
+            child: _inView(
+              const MateoViewHeader(principal: Text('A longer heading that wraps', textAlign: .center)),
             ),
           ),
         ),

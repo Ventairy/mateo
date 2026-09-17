@@ -32,11 +32,14 @@ class BaseMateoViewHeader extends StatelessWidget {
         variant: .primary.base,
         elevation: 1,
         size: MateoButtonSize.small,
-        child: _MateoViewHeaderContent(
-          principal: principal,
-          leading: leading,
-          trailing: trailing,
-          textDirection: Directionality.of(context),
+        child: DefaultTextStyle.merge(
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          child: _MateoViewHeaderContent(
+            principal: principal,
+            leading: leading,
+            trailing: trailing,
+            textDirection: Directionality.of(context),
+          ),
         ),
       ),
     );

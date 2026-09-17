@@ -34,26 +34,23 @@ Future<void> main() async {
                         textDirection: direction,
                         child: MediaQuery(
                           data: MediaQueryData(textScaler: TextScaler.linear(scale)),
-                          child: DefaultTextStyle.merge(
-                            style: TextStyle(fontSize: 20, color: theme.colorScheme.text.primary),
-                            child: _inView(
-                              MateoViewHeader(
-                                principal: Text(title, textAlign: .center),
-                                leading: name == 'Principal only'
-                                    ? null
-                                    : const SizedBox(
-                                        width: 32,
-                                        height: 40,
-                                        child: Center(child: MateoIcon(.arrowLeft)),
-                                      ),
-                                trailing: button
-                                    ? const MateoButton(
-                                        presentation: .icon(icon: MateoIcon(.cross), semanticLabel: 'Close'),
-                                      )
-                                    : name == 'Principal only'
-                                    ? null
-                                    : const SizedBox(width: 64, height: 40, child: Center(child: Text('Edit'))),
-                              ),
+                          child: _inView(
+                            MateoViewHeader(
+                              principal: Text(title, textAlign: .center),
+                              leading: name == 'Principal only'
+                                  ? null
+                                  : const SizedBox(
+                                      width: 32,
+                                      height: 40,
+                                      child: Center(child: MateoIcon(.arrowLeft)),
+                                    ),
+                              trailing: button
+                                  ? const MateoButton(
+                                      presentation: .icon(icon: MateoIcon(.cross), semanticLabel: 'Close'),
+                                    )
+                                  : name == 'Principal only'
+                                  ? null
+                                  : const SizedBox(width: 64, height: 40, child: Center(child: Text('Edit'))),
                             ),
                           ),
                         ),

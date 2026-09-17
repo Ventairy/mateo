@@ -24,7 +24,8 @@ class MateoViewHeader extends StatelessWidget {
 
   /// The optional centered content, constrained to the symmetric space between side slots.
   ///
-  /// The child owns its text alignment, wrapping, and overflow behavior.
+  /// The child owns its text alignment, wrapping, overflow behavior, and any
+  /// explicit text-style overrides.
   final Widget? principal;
 
   /// The optional content at the directional start of the header.
