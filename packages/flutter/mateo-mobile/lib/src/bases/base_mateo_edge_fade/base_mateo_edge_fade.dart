@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'mateo_edge_fade_band.dart';
-import 'mateo_edge_fade_profile.dart';
+import 'mateo_edge_fade_band_paint.dart';
 
-part '_base_mateo_edge_fade_band_paint.dart';
-part '_base_mateo_edge_fade_painter.dart';
+import 'mateo_edge_fade_painter.dart';
 
 @internal
 class BaseMateoEdgeFade extends StatefulWidget {
@@ -31,7 +30,7 @@ class BaseMateoEdgeFade extends StatefulWidget {
 }
 
 class _BaseMateoEdgeFadeState extends State<BaseMateoEdgeFade> {
-  final List<_BaseMateoEdgeFadeBandPaint> _bands = [];
+  final List<MateoEdgeFadeBandPaint> _bands = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,7 @@ class _BaseMateoEdgeFadeState extends State<BaseMateoEdgeFade> {
       throw ArgumentError.value(color, 'color', 'An overlay requires an opaque color.');
     }
     final painted = CustomPaint(
-      foregroundPainter: _BaseMateoEdgeFadePainter(
+      foregroundPainter: MateoEdgeFadePainter(
         color: widget.color,
         resolveBands: widget.resolveBands,
         signal: widget.repaint,

@@ -80,7 +80,7 @@ class _RenderMateoViewLayout extends RenderBox
         : BoxConstraints.tight(constraints.biggest);
     surface.layout(surfaceConstraints, parentUsesSize: true);
     size = constraints.constrain(surface.size);
-    _position(footer, Offset(0, size.height - footer.size.height));
+    _position(footer, Offset(0, size.height - _layout.footerBottomInset - footer.size.height));
     final overlay = _childFor(_MateoViewSlot.overlay);
     if (overlay != null) {
       overlay.layout(BoxConstraints.tight(size));

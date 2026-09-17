@@ -22,8 +22,19 @@ class MateoView extends StatelessWidget {
     this.footer,
     this.overlay,
     this.padding,
+    this.avoidBottomInset = true,
     super.key,
   });
+
+  /// Whether content and the footer avoid the bottom system obstruction.
+  ///
+  /// Defaults to true and follows live insets, including while another route
+  /// covers the view. Set to false for views that should not accommodate input.
+  /// When disabled, bottom device safe-area spacing stays in place as the
+  /// keyboard opens or closes. Descendant media values remain unchanged.
+  /// Remove manual keyboard or bottom safe-area compensation to avoid double
+  /// spacing.
+  final bool avoidBottomInset;
 
   /// The general view spacing that surface, header, footer will inherit.
   ///
@@ -53,6 +64,8 @@ class MateoView extends StatelessWidget {
     return BaseMateoView(
       padding: padding,
       fitHeight: false,
+      avoidBottomInset: avoidBottomInset,
+      maintainBottomViewPadding: !avoidBottomInset,
       surface: surface,
       header: header,
       footer: footer,

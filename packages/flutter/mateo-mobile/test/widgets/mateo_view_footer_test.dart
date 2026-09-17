@@ -74,7 +74,7 @@ void main() {
       await tester.pumpWidget(host(header: header, keyboard: 200));
       await tester.pumpAndSettle();
       expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 338);
-      await tester.pumpWidget(host(header: header, keyboard: 200, bottom: 400));
+      await tester.pumpWidget(host(header: header, bottom: 400));
       await tester.pumpAndSettle();
       expect(tester.getBottomLeft(find.byKey(contentKey)).dy, 338);
     }

@@ -6,8 +6,8 @@ import '../../foundation/mateo_edge_effect/mateo_edge_effect_side.dart';
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
-import '../base_mateo_edge_fade/base_mateo_edge_fade.dart';
 import '../base_mateo_edge_fade/mateo_edge_fade_band.dart';
+import '../base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import '../base_mateo_edge_fade/mateo_edge_fade_profile.dart';
 import '../base_mateo_surface/base_mateo_surface.dart';
 import '../base_mateo_surface/default_mateo_surface_edge_fade/default_mateo_surface_edge_fade.dart';
@@ -15,6 +15,7 @@ import '../base_mateo_surface/mateo_surface_scope.dart';
 import '../base_mateo_view/base_mateo_view.dart';
 
 part 'mateo_view_surface_edge_fade/_mateo_view_surface_edge_fade.dart';
+part 'mateo_view_surface_edge_fade/_mateo_view_surface_edge_fade_painter.dart';
 part 'mateo_view_surface_edge_fade/_mateo_view_surface_footer_fade_profile.dart';
 part 'mateo_view_surface_edge_fade/_mateo_view_surface_header_fade_profile.dart';
 
@@ -46,8 +47,8 @@ class BaseMateoViewSurface extends StatelessWidget {
   EdgeInsets _resolvePadding(MateoViewLayoutScope view, TextDirection direction) =>
       padding?.resolve(direction) ??
       view.padding.copyWith(
-        top: view.header != null && view.reserveHeaderSpace ? view.defaultContentGap : view.padding.top,
-        bottom: view.footer != null ? view.defaultContentGap : view.padding.bottom,
+        top: view.hasHeader && view.reserveHeaderSpace ? view.defaultContentGap : view.padding.top,
+        bottom: view.hasFooter ? view.defaultContentGap : view.padding.bottom,
       );
 
   @override

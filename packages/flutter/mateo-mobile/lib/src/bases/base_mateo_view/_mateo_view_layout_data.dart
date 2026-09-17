@@ -4,6 +4,9 @@ class _MateoViewLayoutData extends ChangeNotifier implements MateoSurfaceObstruc
   static const double _defaultContentGap = 20;
 
   bool reserveHeaderSpace = true;
+  double bottomInset = 0;
+
+  double get footerBottomInset => footer == null ? 0 : bottomInset;
 
   EdgeInsets _obstructionInsets = EdgeInsets.zero;
   EdgeInsets _notifiedObstructionInsets = EdgeInsets.zero;
@@ -52,6 +55,20 @@ class _MateoViewLayoutData extends ChangeNotifier implements MateoSurfaceObstruc
     return header.height + _headerSafeAreaAdjustment;
   }
 
+  void updateBottomInset(double inset) {
+    if (bottomInset == inset) return;
+    bottomInset = inset;
+    if (footer != null) _footerSafeAreaPending = true;
+    updateObstructionInsets();
+    _scheduleObstructionResolution();
+  }
+
+  double get _footerClearance {
+    if (footer == null) return 0;
+    if (_footerSafeAreaPending && _resolvedFooterClearance != null) return _resolvedFooterClearance!;
+    return footer!.height + _footerSafeAreaAdjustment;
+  }
+
   void updateBottomSafeAreaPadding(double padding) {
     final previous = _bottomSafeAreaPadding;
     _bottomSafeAreaPadding = padding;
@@ -65,11 +82,7 @@ class _MateoViewLayoutData extends ChangeNotifier implements MateoSurfaceObstruc
   void updateObstructionInsets() {
     _obstructionInsets = EdgeInsets.only(
       top: header == null || !reserveHeaderSpace ? 0 : headerObstructionExtent,
-      bottom: footer == null
-          ? 0
-          : _footerSafeAreaPending && _resolvedFooterClearance != null
-          ? _resolvedFooterClearance!
-          : footer!.height + _footerSafeAreaAdjustment,
+      bottom: math.max(bottomInset, footerBottomInset + _footerClearance),
     );
     if (_obstructionInsets == _notifiedObstructionInsets) return;
     // Safe-area handles already notify after the frame. Deliver their changes

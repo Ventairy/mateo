@@ -39,14 +39,17 @@ class _KeyboardHost {
                 child: Builder(
                   builder: (context) {
                     final view = MateoView(
+                      avoidBottomInset: false,
                       footer: value.present
                           ? MateoViewFooter(
                               key: ValueKey(value.footerKey),
                               padding: .only(
                                 bottom:
                                     14 +
-                                    MediaQuery.viewPaddingOf(context).bottom -
-                                    MediaQuery.paddingOf(context).bottom,
+                                    (fitHeight
+                                        ? MediaQuery.viewPaddingOf(context).bottom -
+                                              MediaQuery.paddingOf(context).bottom
+                                        : 0),
                               ),
                               leading: SizedBox(width: 56, height: value.footerHeight),
                             )

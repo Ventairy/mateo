@@ -4,9 +4,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
-import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_profile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
+
+final Finder _fadeFinder = find.byWidgetPredicate(
+  (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+);
+MateoEdgeFadePainter _fade(WidgetTester tester) =>
+    tester.widget<CustomPaint>(_fadeFinder).foregroundPainter! as MateoEdgeFadePainter;
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 const ValueKey<String> _capture = ValueKey('capture');
@@ -65,11 +71,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      double extent() => tester
-          .widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade))
-          .resolveBands(const Size(240, 400))
-          .single
-          .extent;
+      double extent() => _fade(tester).resolveBands(const Size(240, 400)).single.extent;
       final resting = extent();
       expect(resting, 80 + topPadding);
       final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
@@ -111,7 +113,7 @@ void main() {
           ),
         ),
       );
-      final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+      final engine = _fade(tester);
       final band = engine.resolveBands(const Size(240, 400)).single;
       final p = band.profile;
       expect(band.extent, d);
@@ -157,15 +159,15 @@ void main() {
         ),
       ),
     );
-    final finder = find.byType(BaseMateoEdgeFade);
-    final engine = tester.widget<BaseMateoEdgeFade>(finder);
+    final finder = _fadeFinder;
+    final engine = _fade(tester);
     expect(engine.resolveBands(tester.getSize(finder)).single.extent, 60);
     tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!.jumpTo(200);
     await tester.pump();
     expect((await _pixel(tester, 120, 50))[0], closeTo(128, 3));
     height.value = 80;
     await tester.pump();
-    expect(identical(engine, tester.widget<BaseMateoEdgeFade>(finder)), isTrue);
+    expect(identical(engine, _fade(tester)), isTrue);
     expect(engine.resolveBands(tester.getSize(finder)).single.extent, closeTo(80 / .55, 1e-10));
     expect((await _pixel(tester, 120, 50))[0], closeTo(253, 3));
     expect(tester.takeException(), isNull);
@@ -196,8 +198,8 @@ void main() {
             ),
           ),
         );
-        final finder = find.byType(BaseMateoEdgeFade);
-        final bands = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(tester.getSize(finder));
+        final finder = _fadeFinder;
+        final bands = _fade(tester).resolveBands(tester.getSize(finder));
         final inset = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstruction!.layoutInsets.top;
         expect(bands.first.extent, present ? inset + 20 : 60);
         expect(bands.last.extent, 60);
@@ -239,7 +241,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
-    final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+    final engine = _fade(tester);
     final initialBuilds = builds;
     final initialLayouts = layouts;
     for (final (offset, depth) in [
@@ -261,7 +263,7 @@ void main() {
       expect((await _pixel(tester, 120, 110))[0], closeTo(expected, 3));
       expect(builds, initialBuilds);
       expect(layouts, initialLayouts);
-      expect(tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade)), same(engine));
+      expect(_fade(tester), same(engine));
     }
     await tester.pumpWidget(const SizedBox());
     expect(tester.takeException(), isNull);
@@ -291,7 +293,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
-    final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+    final engine = _fade(tester);
     controller.jumpTo(20);
     await tester.pump();
     expect((await _pixel(tester, 120, 110))[0], greaterThan(10));
@@ -320,7 +322,7 @@ void main() {
     );
     controller.jumpTo(100);
     await tester.pump();
-    final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+    final engine = _fade(tester);
     expect(engine.resolveBands(const Size(240, 400)).single.extent, 100);
   });
 
@@ -352,7 +354,7 @@ void main() {
     await tester.pumpWidget(host(present: true));
     final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
     expect(controller.offset, 10);
-    final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+    final engine = _fade(tester);
     expect(engine.resolveBands(const Size(240, 400)).single.extent, closeTo(134.0909090909, 1e-8));
     expect(await _pixel(tester, 120, 110), expectedPixel);
     expect(tester.takeException(), isNull);

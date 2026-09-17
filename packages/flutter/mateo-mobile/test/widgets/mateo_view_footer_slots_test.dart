@@ -115,14 +115,14 @@ void main() {
     expect(tester.getBottomLeft(find.byKey(principalKey)), const Offset(600, 576));
   });
 
-  testWidgets('when above a keyboard, it should move only by the actual overlap and restore on dismissal', (
+  testWidgets('when given a bottom inset, it should apply the ambient clearance and restore on dismissal', (
     tester,
   ) async {
     for (final bottom in [600.0, 450.0, 400.0, 300.0]) {
       await tester.pumpWidget(host(footer, bottom: bottom, keyboard: 200, safe: const .only(bottom: 24)));
-      expect(tester.getBottomLeft(find.byKey(leadingKey)).dy, bottom > 400 ? 400 : bottom);
+      expect(tester.getBottomLeft(find.byKey(leadingKey)).dy, bottom - 200);
       await tester.pumpAndSettle();
-      expect(tester.getBottomLeft(find.byKey(leadingKey)).dy, bottom > 400 ? 400 : bottom);
+      expect(tester.getBottomLeft(find.byKey(leadingKey)).dy, bottom - 200);
     }
     await tester.pumpWidget(host(footer, safe: const .only(bottom: 24)));
     await tester.pumpAndSettle();

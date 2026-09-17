@@ -2,10 +2,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
-import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_profile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_view/base_mateo_view.dart';
+
+final Finder _fadeFinder = find.byWidgetPredicate(
+  (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+);
+MateoEdgeFadePainter _fade(WidgetTester tester) =>
+    tester.widget<CustomPaint>(_fadeFinder).foregroundPainter! as MateoEdgeFadePainter;
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 const ValueKey<String> _capture = ValueKey('capture');
@@ -72,8 +78,8 @@ void main() {
           ),
         ),
       );
-      final finder = find.byType(BaseMateoEdgeFade);
-      final engine = tester.widget<BaseMateoEdgeFade>(finder);
+      final finder = _fadeFinder;
+      final engine = _fade(tester);
       final bands = engine.resolveBands(tester.getSize(finder));
       final view = MateoViewLayoutScope.maybeOf(tester.element(finder))!;
       expect(view.footer == null, !present);
@@ -87,7 +93,8 @@ void main() {
             .obstruction!
             .layoutInsets
             .bottom;
-        expect(clearance, bottom.extent);
+        expect(clearance, bottom.extent + view.footer!.bottomInset);
+        expect(view.footer!.bottomInset, keyboard);
         final profile = bottom.profile;
         expect(profile.stops.length, 33);
         expect(profile.visibility.first, 0);
@@ -103,6 +110,37 @@ void main() {
       expect(tester.takeException(), isNull);
     }
   });
+
+  for (final opaque in [true, false]) {
+    testWidgets(
+      'when the bottom inset changes with opaque $opaque, it should position the footer fade without stretching it',
+      (
+        tester,
+      ) async {
+        for (final inset in [100.0, 160.0, 0.0]) {
+          await tester.pumpWidget(
+            _host(
+              MediaQuery(
+                data: MediaQueryData(viewInsets: .only(bottom: inset)),
+                child: MateoView(
+                  padding: .zero,
+                  footer: const MateoViewFooter(principal: SizedBox(height: 80)),
+                  surface: MateoViewSurface.scrollable(
+                    color: opaque ? const Color(0xFFFFFFFF) : const Color(0x00000000),
+                    edgeEffect: .fade(at: const [.bottom]),
+                    child: const SizedBox(height: 1000, child: ColoredBox(color: Color(0xFF000000))),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect((await _pixel(tester, 120, (360 - inset).toInt()))[opaque ? 0 : 3], closeTo(opaque ? 130 : 125, 4));
+          expect((await _pixel(tester, 120, (319 - inset).toInt()))[opaque ? 0 : 3], opaque ? 0 : 255);
+        }
+      },
+    );
+  }
 
   testWidgets('when a footer lays out independently, it should repaint the current fade without rebuilding it', (
     tester,
@@ -127,14 +165,14 @@ void main() {
         ),
       ),
     );
-    final finder = find.byType(BaseMateoEdgeFade);
-    final engine = tester.widget<BaseMateoEdgeFade>(finder);
+    final finder = _fadeFinder;
+    final engine = _fade(tester);
     expect(engine.resolveBands(tester.getSize(finder)).single.extent, 40);
     final before = (await _pixel(tester, 120, 360))[0];
     expect(before, lessThan(3));
     height.value = 80;
     await tester.pump();
-    expect(identical(engine, tester.widget<BaseMateoEdgeFade>(finder)), isTrue);
+    expect(identical(engine, _fade(tester)), isTrue);
     expect(engine.resolveBands(tester.getSize(finder)).single.extent, 80);
     expect((await _pixel(tester, 120, 360))[0], closeTo(130, 4));
     expect((await _pixel(tester, 120, 319))[0], 0);

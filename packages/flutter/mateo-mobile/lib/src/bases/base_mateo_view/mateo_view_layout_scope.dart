@@ -17,16 +17,26 @@ class MateoViewLayoutScope extends InheritedWidget {
   final bool reserveHeaderSpace;
   final GroupLink contentGroup;
 
+  bool get hasHeader => _layout.header != null;
+  bool get hasFooter => _layout.footer != null;
+  Listenable? get headerChanges => _layout.header?.changes;
+  Listenable? get footerChanges => _layout.footer?.changes;
+
   ({double height, double bottomOffset, Listenable changes})? get header {
     final header = _layout.header;
     if (header == null) return null;
     return (height: header.height, bottomOffset: header.bottomOffset, changes: header.changes);
   }
 
-  ({double height, double topOffset, Listenable changes})? get footer {
+  ({double height, double topOffset, double bottomInset, Listenable changes})? get footer {
     final footer = _layout.footer;
     if (footer == null) return null;
-    return (height: footer.height, topOffset: footer.topOffset, changes: footer.changes);
+    return (
+      height: footer.height,
+      topOffset: footer.topOffset,
+      bottomInset: _layout.footerBottomInset,
+      changes: footer.changes,
+    );
   }
 
   double get defaultContentGap => _MateoViewLayoutData._defaultContentGap;

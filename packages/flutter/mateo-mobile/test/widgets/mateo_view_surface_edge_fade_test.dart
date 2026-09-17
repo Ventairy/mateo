@@ -1,8 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
-import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
+
+final Finder _fadeFinder = find.byWidgetPredicate(
+  (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+);
+MateoEdgeFadePainter _fade(WidgetTester tester) =>
+    tester.widget<CustomPaint>(_fadeFinder).foregroundPainter! as MateoEdgeFadePainter;
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
@@ -51,15 +57,15 @@ void main() {
           if (effect.at.isEmpty) {
             expect(base.edgeEffectBuilder, isNull);
 
-            expect(find.byType(BaseMateoEdgeFade), findsNothing);
+            expect(_fadeFinder, findsNothing);
           } else {
-            final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
-            expect(engine.resolveBands(tester.getSize(find.byType(BaseMateoEdgeFade))).map((band) => band.edge), [
+            final engine = _fade(tester);
+            expect(engine.resolveBands(tester.getSize(_fadeFinder)).map((band) => band.edge), [
               if (effect.at.contains(MateoEdgeEffectSide.top)) AxisDirection.up,
               if (effect.at.contains(MateoEdgeEffectSide.bottom)) AxisDirection.down,
             ]);
             for (final control in [find.byType(MateoViewHeader), find.byType(MateoViewFooter)]) {
-              expect(find.descendant(of: find.byType(BaseMateoEdgeFade), matching: control), findsNothing);
+              expect(find.descendant(of: _fadeFinder, matching: control), findsNothing);
             }
           }
         }
@@ -82,10 +88,10 @@ void main() {
             tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!.jumpTo(0);
             await tester.pumpAndSettle();
           }
-          final finder = find.byType(BaseMateoEdgeFade);
+          final finder = _fadeFinder;
           final size = tester.getSize(finder);
           expect(size, Size(240, height));
-          final bands = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(size);
+          final bands = _fade(tester).resolveBands(size);
           expect(bands.map((band) => band.extent), [
             tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstruction!.layoutInsets.top + 20,
             42, // The 30-pixel footer and its inherited bottom padding.
@@ -95,7 +101,7 @@ void main() {
             tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!.jumpTo(100);
             await tester.pumpAndSettle();
             expect(tester.getRect(finder), bounds);
-            final scrolled = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(size);
+            final scrolled = _fade(tester).resolveBands(size);
             expect(scrolled.first.extent, closeTo((bands.first.extent - 20) / .55, 1e-10));
             expect(scrolled.first.profile, same(bands.first.profile));
             expect(scrolled.last.extent, bands.last.extent);
@@ -158,7 +164,7 @@ void main() {
           );
           final resolved = color ?? _theme.colorScheme.background;
 
-          final engine = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+          final engine = _fade(tester);
           expect(engine.color, resolved.a == 1 ? resolved : isNull);
         }
       },
@@ -173,7 +179,7 @@ void main() {
       await tester.pumpWidget(_host(surface: surface));
       expect(surface.edgeEffect, const MateoEdgeEffect.none());
       expect(tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).edgeEffectBuilder, isNull);
-      expect(find.byType(BaseMateoEdgeFade), findsNothing);
+      expect(_fadeFinder, findsNothing);
     }
   });
 }

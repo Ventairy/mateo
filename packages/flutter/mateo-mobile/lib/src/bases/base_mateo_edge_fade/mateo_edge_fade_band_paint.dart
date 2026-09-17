@@ -1,6 +1,11 @@
-part of 'base_mateo_edge_fade.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
 
-class _BaseMateoEdgeFadeBandPaint {
+import 'mateo_edge_fade_band.dart';
+import 'mateo_edge_fade_profile.dart';
+
+@internal
+class MateoEdgeFadeBandPaint {
   MateoEdgeFadeProfile? _profile;
   Color? _color;
   AxisDirection? _edge;

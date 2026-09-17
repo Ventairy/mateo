@@ -73,19 +73,21 @@ final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
     final view = MateoViewLayoutScope.maybeOf(context);
     assert(view != null, '_MateoViewSurfaceEdgeFade requires a BaseMateoView ancestor.');
     if (sides.isEmpty) return child;
-    final repaint = Listenable.merge([view!.header?.changes, view.footer?.changes, leadingScrollDistance]);
+    final repaint = Listenable.merge([view!.headerChanges, view.footerChanges, leadingScrollDistance]);
 
-    return surfaceColor.a == 1
-        ? BaseMateoEdgeFade.overlay(
-            color: surfaceColor,
-            resolveBands: (size) => _resolveBands(size, view),
-            repaint: repaint,
-            child: child,
-          )
-        : BaseMateoEdgeFade.mask(
-            resolveBands: (size) => _resolveBands(size, view),
-            repaint: repaint,
-            child: child,
-          );
+    final painted = CustomPaint(
+      foregroundPainter: _MateoViewSurfaceEdgeFadePainter(
+        color: surfaceColor.a == 1 ? surfaceColor : null,
+        resolveBands: (size) => _resolveBands(size, view),
+        view: view,
+        repaint: repaint,
+      ),
+      child: child,
+    );
+    if (surfaceColor.a == 1) return painted;
+    return ColorFiltered(
+      colorFilter: const .mode(Color(0xFFFFFFFF), .modulate),
+      child: painted,
+    );
   }
 }

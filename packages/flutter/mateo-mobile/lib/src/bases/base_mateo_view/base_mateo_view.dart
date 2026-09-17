@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +22,8 @@ class BaseMateoView extends StatefulWidget {
     required this.surface,
     required this.fitHeight,
     this.reserveHeaderSpace = true,
+    this.avoidBottomInset = false,
+    this.maintainBottomViewPadding = false,
     this.padding,
     this.header,
     this.footer,
@@ -29,6 +33,8 @@ class BaseMateoView extends StatefulWidget {
 
   final EdgeInsetsGeometry? padding;
   final bool fitHeight;
+  final bool avoidBottomInset;
+  final bool maintainBottomViewPadding;
   final bool reserveHeaderSpace;
   final Widget surface;
   final Widget? header;
@@ -88,7 +94,13 @@ class _BaseMateoViewState extends State<BaseMateoView> {
 
     // Safe-area render transforms can change without changing the header size.
     // Subscribe here as well so the surface refreshes its measured clearance.
-    _layoutData.updateBottomSafeAreaPadding(MediaQuery.maybePaddingOf(context)?.bottom ?? 0);
+    _layoutData
+      ..updateBottomSafeAreaPadding(
+        widget.maintainBottomViewPadding
+            ? MediaQuery.maybeViewPaddingOf(context)?.bottom ?? 0
+            : MediaQuery.maybePaddingOf(context)?.bottom ?? 0,
+      )
+      ..updateBottomInset(widget.avoidBottomInset ? MediaQuery.maybeViewInsetsOf(context)?.bottom ?? 0 : 0);
     MediaQuery.maybeSizeOf(context);
     MediaQuery.maybeDevicePixelRatioOf(context);
 
@@ -129,13 +141,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
         ),
         LayoutId(
           id: _MateoViewSlot.footer,
-          child: widget.footer == null
-              ? const SizedBox.shrink()
-              : MaybeSafeArea(
-                  top: false,
-                  handle: _layoutData.footer!.safeAreaHandle,
-                  child: Group(link: _contentGroup, zIndex: 2, child: widget.footer),
-                ),
+          child: widget.footer == null ? const SizedBox.shrink() : _buildFooter(),
         ),
         if (widget.overlay case final overlay?)
           LayoutId(
@@ -147,6 +153,27 @@ class _BaseMateoViewState extends State<BaseMateoView> {
             ),
           ),
       ],
+    );
+  }
+
+  Widget _buildFooter() {
+    final child = Group(link: _contentGroup, zIndex: 2, child: widget.footer);
+    // Only the footer's safe-area owner receives the maintained padding.
+    // Restore ambient media for authored content and keep its subtree stable.
+    return Builder(
+      builder: (context) {
+        final media = MediaQuery.of(context);
+        return MediaQuery(
+          data: widget.maintainBottomViewPadding
+              ? media.copyWith(padding: media.padding.copyWith(bottom: media.viewPadding.bottom))
+              : media,
+          child: MaybeSafeArea(
+            top: false,
+            handle: _layoutData.footer!.safeAreaHandle,
+            child: MediaQuery(data: media, child: child),
+          ),
+        );
+      },
     );
   }
 }

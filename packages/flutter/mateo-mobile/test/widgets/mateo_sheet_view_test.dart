@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
-import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_scope.dart';
 
@@ -11,6 +11,12 @@ import 'package:mateo_mobile/src/bases/base_mateo_view/base_mateo_view.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_view/mateo_view_scope.dart';
 
 import '../fixtures/surface_transform_test_widgets.dart';
+
+final Finder _fadeFinder = find.byWidgetPredicate(
+  (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+);
+MateoEdgeFadePainter _fade(WidgetTester tester) =>
+    tester.widget<CustomPaint>(_fadeFinder).foregroundPainter! as MateoEdgeFadePainter;
 
 void main() {
   late BuildContext launcher;
@@ -346,13 +352,13 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final fadeFinder = find.byType(BaseMateoEdgeFade);
-    final reservedBand = tester.widget<BaseMateoEdgeFade>(fadeFinder).resolveBands(tester.getSize(fadeFinder)).single;
+    final fadeFinder = _fadeFinder;
+    final reservedBand = _fade(tester).resolveBands(tester.getSize(fadeFinder)).single;
 
     reserveHeaderSpace.value = false;
     await tester.pumpAndSettle();
 
-    final unreservedBand = tester.widget<BaseMateoEdgeFade>(fadeFinder).resolveBands(tester.getSize(fadeFinder)).single;
+    final unreservedBand = _fade(tester).resolveBands(tester.getSize(fadeFinder)).single;
     expect(unreservedBand.extent, reservedBand.extent);
     expect(unreservedBand.profile, same(reservedBand.profile));
     expect(tester.takeException(), isNull);
@@ -382,7 +388,7 @@ void main() {
       final surface = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface));
       expect(surface.color, color);
       expect(surface.alignment, Alignment.topCenter);
-      final fade = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade));
+      final fade = _fade(tester);
       final size = tester.getSize(find.byType(MateoSheetViewSurface));
       final initial = fade.resolveBands(size);
       expect(initial.length, 2);
@@ -390,7 +396,7 @@ void main() {
       final scroll = tester.state<ScrollableState>(find.byType(Scrollable));
       scroll.position.jumpTo(100);
       await tester.pump();
-      final scrolled = tester.widget<BaseMateoEdgeFade>(find.byType(BaseMateoEdgeFade)).resolveBands(size);
+      final scrolled = _fade(tester).resolveBands(size);
       expect(scrolled.first.extent, greaterThan(initial.first.extent));
       expect(scrolled.last.extent, initial.last.extent);
       expect(tester.takeException(), isNull);
