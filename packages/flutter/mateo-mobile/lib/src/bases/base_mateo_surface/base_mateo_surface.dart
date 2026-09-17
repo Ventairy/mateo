@@ -201,7 +201,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
         flightConfig: .custom(
           _SurfaceTransformAnimationFlightDelegate(
             color: surfaceColor,
-            shape: widget.shape,
+            shape: animation.shape?.border ?? widget.shape,
             content: contentGroup,
             animation: animation,
           ),

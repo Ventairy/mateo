@@ -1,6 +1,8 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
+import '../mateo_surface_shape/mateo_surface_shape.dart';
+
 part 'mateo_surface_animation_none.dart';
 part 'mateo_surface_animation_pop.dart';
 part 'mateo_surface_animation_transform.dart';
@@ -60,6 +62,7 @@ sealed class MateoSurfaceAnimation {
   /// ```
   const factory MateoSurfaceAnimation.transform({
     required Object id,
+    MateoSurfaceShape? shape,
     Duration duration,
     Curve curve,
     List<MateoSurfaceTransformAnimationContentEffect> contentEffects,

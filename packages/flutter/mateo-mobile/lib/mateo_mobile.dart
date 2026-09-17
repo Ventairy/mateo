@@ -38,7 +38,6 @@ export 'src/components/mateo_sheet/show_mateo_sheet.dart'
         MateoSheetViewSurface,
         showMateoSheet;
 export 'src/components/mateo_surface/mateo_surface.dart' show MateoSurface;
-export 'src/components/mateo_surface/mateo_surface_shape.dart' show MateoSurfaceShape;
 export 'src/components/mateo_text_input/mateo_text_input.dart' show MateoTextInput, MateoTextInputPresentation;
 export 'src/components/mateo_text_input/mateo_text_input_size.dart' show MateoTextInputSize;
 export 'src/components/mateo_text_input/mateo_text_input_variant.dart'
@@ -70,6 +69,7 @@ export 'src/foundation/mateo_surface_animation/mateo_surface_animation.dart'
         MateoSurfaceTransformAnimationContentEffectScale;
 export 'src/foundation/mateo_surface_height/mateo_surface_height.dart'
     show MateoSurfaceHeight, MateoSurfaceHeightCustom, MateoSurfaceHeightFill, MateoSurfaceHeightFit;
+export 'src/foundation/mateo_surface_shape/mateo_surface_shape.dart' show MateoSurfaceShape;
 export 'src/foundation/mateo_surface_width/mateo_surface_width.dart'
     show MateoSurfaceWidth, MateoSurfaceWidthCustom, MateoSurfaceWidthFill, MateoSurfaceWidthFit;
 export 'src/theme/color_scheme/mateo_color_scheme.dart'

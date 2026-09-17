@@ -9,6 +9,96 @@ void main() {
   const beginBounds = Rect.fromLTWH(20, 40, 144, 48);
   const endBounds = Rect.fromLTWH(260, 180, 240, 280);
 
+  for (final fromView in [false, true]) {
+    for (final toView in [false, true]) {
+      for (final scrollable in [false, true]) {
+        for (final duration in [const Duration(milliseconds: 400), const Duration(milliseconds: 600)]) {
+          testWidgets(
+            'when ${fromView ? 'view' : 'ordinary'} transforms to ${toView ? 'view' : 'ordinary'} '
+            'with scrolling $scrollable and shape overrides over ${duration.inMilliseconds} ms, '
+            'it should keep flight shapes until handoff in both directions',
+            (tester) async {
+              final navigatorKey = GlobalKey<NavigatorState>();
+              final destinationKey = GlobalKey();
+              await tester.pumpWidget(
+                MateoApp(
+                  theme: surfaceTransformTheme,
+                  navigatorKey: navigatorKey,
+                  home: surfaceTransformEndpoint(
+                    bounds: beginBounds,
+                    view: fromView,
+                    scrollable: scrollable,
+                    shape: const .none(),
+                    viewShape: const .none(),
+                    animation: .transform(id: 'details', shape: const .rounded(radius: 12), duration: duration),
+                  ),
+                ),
+              );
+              await tester.pumpAndSettle();
+              await startSurfaceTransformAnimationFlight(
+                tester,
+                navigatorKey.currentState!,
+                surfaceTransformEndpoint(
+                  key: destinationKey,
+                  bounds: endBounds,
+                  view: toView,
+                  scrollable: scrollable,
+                  shape: const .none(),
+                  viewShape: const .none(),
+                  animation: .transform(id: 'details', shape: const .rounded(radius: 42), duration: duration),
+                ),
+                routeDuration: const Duration(milliseconds: 100),
+              );
+              for (final returning in [false, true]) {
+                final start = returning ? endBounds : beginBounds;
+                final end = returning ? beginBounds : endBounds;
+                final startRadius = returning ? 42.0 : 12.0;
+                final endRadius = returning ? 12.0 : 42.0;
+                expect(surfaceFlight, findsOneWidget);
+                expectSurfaceOutline(
+                  surfaceTransformAnimationFlightDecoration(tester).shape.getOuterPath(Offset.zero & start.size),
+                  MateoRoundedShapeBorder(radius: startRadius).getOuterPath(Offset.zero & start.size),
+                );
+                await tester.pump(duration ~/ 2);
+                if (!returning) {
+                  expect(ModalRoute.of(destinationKey.currentContext!)!.animation!.status, AnimationStatus.completed);
+                }
+                final progress = Curves.easeOutCubic.transform(.5);
+                final bounds = Rect.lerp(start, end, progress)!;
+                expectSurfaceOutline(
+                  surfaceTransformAnimationFlightDecoration(tester).shape.getOuterPath(Offset.zero & bounds.size),
+                  MateoRoundedShapeBorder(radius: startRadius + (endRadius - startRadius) * progress)
+                      .getOuterPath(Offset.zero & bounds.size),
+                );
+                await tester.pump(duration ~/ 2);
+                expectSurfaceOutline(
+                  surfaceTransformAnimationFlightDecoration(tester).shape.getOuterPath(Offset.zero & end.size),
+                  MateoRoundedShapeBorder(radius: endRadius).getOuterPath(Offset.zero & end.size),
+                );
+                await tester.pumpAndSettle();
+                expect(surfaceFlight, findsNothing);
+                final restingShapes = tester
+                    .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+                    .map((box) => box.decoration)
+                    .whereType<ShapeDecoration>();
+                expect(restingShapes, isNotEmpty);
+                for (final decoration in restingShapes) {
+                  expect(decoration.shape, const MateoRoundedShapeBorder(radius: 0));
+                }
+                if (!returning) {
+                  navigatorKey.currentState!.pop();
+                  await tester.pump();
+                  await tester.pump();
+                }
+              }
+              expect(tester.takeException(), isNull);
+            },
+          );
+        }
+      }
+    }
+  }
+
   test('when animation is omitted it should inherit, while explicit values retain equality', () {
     expect(const MateoSurface(child: SizedBox()).animation, isNull);
     expect(const MateoSurface.scrollable(child: SizedBox()).animation, isNull);
@@ -252,6 +342,8 @@ void main() {
           navigatorKey.currentState!,
           surfaceTransformEndpoint(
             bounds: endBounds,
+            shape: const .none(),
+            animation: const .transform(id: 'details', shape: .rounded(radius: 42)),
             child: const Text('Arrived'),
           ),
         );
@@ -263,6 +355,8 @@ void main() {
         await tester.pumpAndSettle();
         expect(surfaceFlight, findsNothing);
         expect(find.text('Arrived').hitTestable(), findsOneWidget);
+        final destination = tester.widget<MateoSurface>(find.byType(MateoSurface));
+        expect(destination.shape, const MateoSurfaceShape.none());
         expect(tester.takeException(), isNull);
       },
     );
@@ -400,14 +494,22 @@ void main() {
       MateoApp(
         theme: surfaceTransformTheme,
         navigatorKey: navigatorKey,
-        home: surfaceTransformEndpoint(bounds: beginBounds, shape: const .capsule()),
+        home: surfaceTransformEndpoint(
+          bounds: beginBounds,
+          shape: const .none(),
+          animation: const .transform(id: 'details', shape: .capsule()),
+        ),
       ),
     );
     await tester.pumpAndSettle();
     await startSurfaceTransformAnimationFlight(
       tester,
       navigatorKey.currentState!,
-      surfaceTransformEndpoint(bounds: endBounds),
+      surfaceTransformEndpoint(
+        bounds: endBounds,
+        shape: const .none(),
+        animation: const .transform(id: 'details', shape: .rounded(radius: 42)),
+      ),
     );
     await tester.pump(const Duration(milliseconds: 90));
     final sampledBounds = tester.getRect(surfaceFlight);

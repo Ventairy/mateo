@@ -3,6 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
 void main() {
+  test('when transform shapes differ, it should retain const values and compare endpoint configuration', () {
+    const animation = MateoSurfaceAnimation.transform(id: 'details', shape: .rounded(radius: 42));
+    const equivalent = MateoSurfaceAnimationTransform(id: 'details', shape: .rounded(radius: 42));
+    expect(animation, equivalent);
+    expect(animation.hashCode, equivalent.hashCode);
+    expect(equivalent.shape, const MateoSurfaceShape.rounded(radius: 42));
+    expect(const MateoSurfaceAnimationTransform(id: 'details').shape, isNull);
+    for (final shape in <MateoSurfaceShape?>[null, const .none(), const .capsule(), const .rounded(radius: 24)]) {
+      expect(animation, isNot(MateoSurfaceAnimation.transform(id: 'details', shape: shape)));
+    }
+  });
+
   test('when typed effects have equal curves, it should compare by type and configuration', () {
     const fade = MateoSurfaceTransformAnimationContentEffect.crossfade(curve: Curves.linear);
     const scale = MateoSurfaceTransformAnimationContentEffect.scale(curve: Curves.linear);

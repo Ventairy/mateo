@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 
 /// A supported shape treatment for a Mateo surface.
 @immutable

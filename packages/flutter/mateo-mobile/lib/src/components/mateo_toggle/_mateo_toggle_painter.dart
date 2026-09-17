@@ -4,8 +4,8 @@ class _MateoTogglePainter extends CustomPainter {
   _MateoTogglePainter({required this.position, required this.colors, required this.enabled, required this.direction})
     : super(repaint: position);
 
-  static const _trackSize = Size(78, 36);
-  static const _thumbSize = Size(39, 28);
+  static const _trackSize = Size(74, 32);
+  static const _thumbSize = Size(35, 24);
   static const _inset = 4.0;
   static final double travel = _trackSize.width - _thumbSize.width - 2 * _inset;
   static const _shape = MateoRoundedShapeBorder.capsule();

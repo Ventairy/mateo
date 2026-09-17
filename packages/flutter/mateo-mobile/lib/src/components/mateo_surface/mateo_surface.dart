@@ -9,8 +9,8 @@ import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
 import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
+import '../../foundation/mateo_surface_shape/mateo_surface_shape.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
-import 'mateo_surface_shape.dart';
 
 /// A Mateo background that contains content inside.
 ///

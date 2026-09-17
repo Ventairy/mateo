@@ -5,6 +5,7 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// Creates a transform connecting surfaces with an equal [id].
   const MateoSurfaceAnimationTransform({
     required this.id,
+    this.shape,
     this.duration = const .new(milliseconds: 230),
     this.curve = Curves.easeOutCubic,
     this.contentEffects = const [.crossfade(), .scale()],
@@ -14,6 +15,13 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   ///
   /// Keep its equality and hash code stable while the surface is mounted.
   final Object id;
+
+  /// The shape this surface uses while transforming.
+  ///
+  /// Defines this endpoint's shape on both arrival and departure. The flight
+  /// interpolates between the participating endpoints' shapes. When omitted,
+  /// uses this surface's resting shape. Does not change its resting appearance.
+  final MateoSurfaceShape? shape;
 
   /// The duration of this animation style.
   @override
@@ -36,6 +44,7 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   bool operator ==(Object other) {
     return other is MateoSurfaceAnimationTransform &&
         id == other.id &&
+        shape == other.shape &&
         duration == other.duration &&
         curve == other.curve &&
         listEquals(contentEffects.toSet().toList(), other.contentEffects.toSet().toList());
@@ -44,6 +53,13 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// The hash of this surface animation.
   @override
   int get hashCode {
-    return Object.hash(MateoSurfaceAnimationTransform, id, duration, curve, Object.hashAll(contentEffects.toSet()));
+    return Object.hash(
+      MateoSurfaceAnimationTransform,
+      id,
+      shape,
+      duration,
+      curve,
+      Object.hashAll(contentEffects.toSet()),
+    );
   }
 }
