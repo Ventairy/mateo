@@ -43,6 +43,12 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 
 /// Shows a sheet view above the nearest navigator.
 ///
+/// [maxHeight] limits the whole sheet, including its fixed slots and internal
+/// spacing, in logical pixels. External margins are excluded. It must be finite
+/// and greater than zero. When omitted, the existing presentation limit applies;
+/// a supplied value can only reduce that limit.
+///
+///
 /// [shouldDismiss] decides whether a requested dismissal may proceed. When
 /// omitted, dismissal is allowed. Explicit [Navigator.pop] calls bypass this
 /// decision and can return a result.
@@ -60,12 +66,15 @@ Future<T?> showMateoSheet<T>({
   required BuildContext context,
   required MateoSheetView view,
   MateoSheetShouldDismiss? shouldDismiss,
+  double? maxHeight,
 }) {
+  assert(maxHeight == null || (maxHeight.isFinite && maxHeight > 0), 'maxHeight must be finite and greater than zero.');
   final navigator = Navigator.of(context);
 
   return navigator.push<T>(
     _MateoSheetRoute<T>(
       view: view,
+      maxHeight: maxHeight,
       shouldDismiss: shouldDismiss,
       from: .bottom,
       theme: MateoTheme.of(context),

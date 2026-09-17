@@ -47,12 +47,14 @@ void main() {
     WidgetTester tester,
     int index, {
     double height = 160,
+    double? maxHeight,
     bool settle = true,
     bool scrollable = false,
   }) async {
     unawaited(
       showMateoSheet<void>(
         context: launcher,
+        maxHeight: maxHeight,
         view: MateoSheetView(
           key: ValueKey('sheet-$index'),
           surface: scrollable
@@ -155,6 +157,26 @@ void main() {
     await tester.pumpAndSettle();
     expect(bounds(tester, 0), original);
     expect(scroll.position.pixels, 100);
+  });
+
+  testWidgets('when differently capped sheets stack, they should preserve layout and scroll position on return', (
+    tester,
+  ) async {
+    await host(tester);
+    await push(tester, 0, scrollable: true, maxHeight: 400);
+    final scroll = tester.state<ScrollableState>(find.descendant(of: sheet(0), matching: find.byType(Scrollable)));
+    scroll.position.jumpTo(100);
+    final original = bounds(tester, 0);
+    expect(original.height, 400);
+    await push(tester, 1, scrollable: true, maxHeight: 240);
+    expect(bounds(tester, 1).height, 240);
+    expect(tester.getSize(frame(0)).height, 400);
+    expect(scroll.position.pixels, 100);
+    navigator.currentState!.pop();
+    await tester.pumpAndSettle();
+    expect(bounds(tester, 0), original);
+    expect(scroll.position.pixels, 100);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('when a drag is cancelled or committed, it should continuously restore the covered frame', (

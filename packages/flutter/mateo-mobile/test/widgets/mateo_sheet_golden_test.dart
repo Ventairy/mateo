@@ -8,6 +8,51 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
+  late BuildContext cappedLauncher;
+  await goldenTest(
+    'when a scrolling sheet is capped, its fixed slots should remain visible',
+    fileName: 'mateo_sheet_capped',
+    pumpBeforeTest: (tester) async {
+      await tester.pumpAndSettle();
+      unawaited(
+        showMateoSheet<void>(
+          context: cappedLauncher,
+          maxHeight: 280,
+          view: const MateoSheetView(
+            header: MateoSheetViewHeader(presentation: .custom(principal: Text('Details'))),
+            footer: MateoSheetViewFooter(principal: Text('Continue')),
+            surface: MateoSheetViewSurface.scrollable(
+              child: Column(children: [Text('Sheet content'), SizedBox(height: 600), Text('Last item')]),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    },
+    builder: () => GoldenTestGroup(
+      children: [
+        GoldenTestScenario(
+          name: 'Maximum height with fixed slots',
+          child: SizedBox(
+            width: 320,
+            height: 480,
+            child: MateoApp(
+              theme: surfaceTransformTheme,
+              home: Builder(
+                builder: (context) {
+                  cappedLauncher = context;
+                  return ColoredBox(
+                    color: surfaceTransformTheme.colorScheme.text.primary,
+                    child: const SizedBox.expand(),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
   for (final phase in ['entering', 'resting', 'resisted']) {
     final launchers = <({BuildContext context, bool slots})>[];
     await goldenTest(
