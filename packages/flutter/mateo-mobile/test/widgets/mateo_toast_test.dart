@@ -72,6 +72,145 @@ void main() {
     });
   }
 
+  for (final router in [false, true]) {
+    testWidgets('programmatic dismissal in ${router ? 'router' : 'home'} app should animate out once', (tester) async {
+      await mount(tester, router: router);
+      dismissMateoToast(context: context);
+      show();
+      await settle(tester);
+      dismissMateoToast(context: context);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(opacity(tester), inExclusiveRange(0, 1));
+      final progress = opacity(tester);
+      dismissMateoToast(context: context);
+      await tester.pump();
+      expect(opacity(tester), progress);
+      await tester.pump(const Duration(milliseconds: 101));
+      await tester.pump();
+      expect(getToast(), findsNothing);
+      dismissMateoToast(context: context);
+      await tester.pump(const Duration(seconds: 20));
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('programmatic dismissal before the first frame should cancel the toast', (tester) async {
+    await mount(tester);
+    show();
+    dismissMateoToast(context: context);
+    await settle(tester);
+    expect(getToast(), findsNothing);
+    show(message: 'Later');
+    await settle(tester);
+    expect(find.text('Later'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('programmatic dismissal with reduced motion should remove immediately', (tester) async {
+    await mount(tester, reducedMotion: true);
+    show(dismissible: false);
+    await tester.pump();
+    dismissMateoToast(context: context);
+    await tester.pump();
+    expect(getToast(), findsNothing);
+  });
+
+  for (final dismissible in [false, true]) {
+    testWidgets('programmatic dismissal should release an active touch with dismissible $dismissible', (tester) async {
+      await mount(tester);
+      show(dismissible: dismissible, duration: const Duration(seconds: 1));
+      await settle(tester);
+      final gesture = await tester.startGesture(tester.getCenter(getToast()));
+      await tester.pump(const Duration(seconds: 2));
+      dismissMateoToast(context: context);
+      await settle(tester);
+      expect(getToast(), findsNothing);
+      await gesture.up();
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('programmatic dismissal during entry should remove the toast', (tester) async {
+    await mount(tester);
+    show();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
+    dismissMateoToast(context: context);
+    await settle(tester);
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('programmatic dismissal should cancel a waiting replacement without restarting exit', (tester) async {
+    await mount(tester);
+    show();
+    await settle(tester);
+    show(message: 'Waiting');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    final progress = opacity(tester);
+    dismissMateoToast(context: context);
+    await tester.pump();
+    expect(opacity(tester), progress);
+    await tester.pump(const Duration(milliseconds: 101));
+    await tester.pump();
+    expect(getToast(), findsNothing);
+    await tester.pump(const Duration(seconds: 20));
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('a show request during programmatic dismissal should still appear', (tester) async {
+    await mount(tester);
+    show();
+    await settle(tester);
+    dismissMateoToast(context: context);
+    show(message: 'Later');
+    await settle(tester);
+    expect(find.text('Saved'), findsNothing);
+    expect(find.text('Later'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  for (final reducedMotion in [false, true]) {
+    testWidgets('programmatic dismissal while paused should finish on resume with reduced motion $reducedMotion', (
+      tester,
+    ) async {
+      await mount(tester, reducedMotion: reducedMotion);
+      show();
+      await settle(tester);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      show(message: 'Waiting');
+      dismissMateoToast(context: context);
+      await tester.pump(const Duration(seconds: 20));
+      expect(find.text('Saved'), findsOneWidget);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await settle(tester);
+      expect(getToast(), findsNothing);
+    });
+  }
+
+  testWidgets('programmatic dismissal outside a Mateo app should explain the required context', (tester) async {
+    await tester.pumpWidget(
+      Builder(
+        builder: (value) {
+          context = value;
+          return const SizedBox();
+        },
+      ),
+    );
+    expect(
+      () => dismissMateoToast(context: context),
+      throwsA(
+        isA<FlutterError>().having(
+          (error) => error.message,
+          'message',
+          'dismissMateoToast requires a context below MateoApp or MateoApp.router.',
+        ),
+      ),
+    );
+  });
+
   for (final status in MateoToastStatus.values) {
     testWidgets('when status is ${status.name}, it should use its semantic colors and matching icon', (tester) async {
       await mount(tester);

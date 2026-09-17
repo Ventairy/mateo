@@ -1,4 +1,4 @@
-part of 'show_mateo_toast.dart';
+part of 'mateo_toast_host.dart';
 
 class _MateoToastOverlay extends StatefulWidget {
   const _MateoToastOverlay({
@@ -109,7 +109,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
     unawaited(_animateVisibility(1));
   }
 
-  void dismissForReplacement() {
+  void dismiss() {
     if (_dismissing) return;
     _clearPointer();
     _pendingTimeout = false;

@@ -1,4 +1,4 @@
-part of 'show_mateo_toast.dart';
+part of 'mateo_toast_host.dart';
 
 class _MateoToastCurve extends Curve {
   const _MateoToastCurve();
