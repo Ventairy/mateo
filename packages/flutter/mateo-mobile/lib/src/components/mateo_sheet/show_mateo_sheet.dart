@@ -24,6 +24,8 @@ part '_mateo_sheet_route.dart';
 part '_mateo_sheet_stack_scope.dart';
 part '_mateo_sheet_stack_entry.dart';
 part 'mateo_sheet_source.dart';
+part 'mateo_sheet_dismiss_source.dart';
+part 'mateo_sheet_should_dismiss.dart';
 part 'mateo_sheet_view/_mateo_sheet_frame.dart';
 part 'mateo_sheet_view/_render_mateo_sheet_frame.dart';
 part 'mateo_sheet_view/components/mateo_sheet_view_footer/mateo_sheet_view_footer.dart';
@@ -33,10 +35,14 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 
 /// Shows a sheet view above the nearest navigator.
 ///
+/// [shouldDismiss] decides whether a requested dismissal may proceed. When
+/// omitted, dismissal is allowed. Explicit [Navigator.pop] calls bypass this
+/// decision and can return a result.
 ///
 /// ```dart
 /// await showMateoSheet<void>(
 ///   context: context,
+///   shouldDismiss: (source) => source != .tapOutside,
 ///   view: const MateoSheetView(
 ///     surface: MateoSheetViewSurface(child: Text('Details')),
 ///   ),
@@ -45,12 +51,14 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 Future<T?> showMateoSheet<T>({
   required BuildContext context,
   required MateoSheetView view,
+  MateoSheetShouldDismiss? shouldDismiss,
 }) {
   final navigator = Navigator.of(context);
 
   return navigator.push<T>(
     _MateoSheetRoute<T>(
       view: view,
+      shouldDismiss: shouldDismiss,
       from: .bottom,
       theme: MateoTheme.of(context),
       textStyle: DefaultTextStyle.of(context).style,

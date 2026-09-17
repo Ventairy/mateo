@@ -10,7 +10,7 @@ class _MateoSheetDrag extends StatefulWidget {
 
   final Widget child;
   final MateoSheetSource from;
-  final bool Function() onDismiss;
+  final FutureOr<bool> Function() onDismiss;
   final void Function(Offset offset, double directionalFraction) onPositionChanged;
 
   @override

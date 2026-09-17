@@ -8,9 +8,13 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     required this.textStyle,
     required this.direction,
     required this.reducedMotion,
+    this.shouldDismiss,
   }) : super(requestFocus: true);
 
   final MateoSheetView view;
+  final MateoSheetShouldDismiss? shouldDismiss;
+  MateoSheetDismissSource? _dismissSource;
+  bool _checkingDismissal = false;
   final MateoSheetSource from;
   final MateoThemeData theme;
   final TextStyle textStyle;
@@ -95,10 +99,55 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   Duration get reverseTransitionDuration => reducedMotion ? .zero : from._reverseDuration;
 
-  bool _dismiss() {
-    if (!isCurrent || navigator == null) return false;
-    navigator!.pop();
-    return true;
+  Future<bool> _requestDismiss(MateoSheetDismissSource source) async {
+    if (_disposed || !isCurrent || navigator == null || _checkingDismissal || _dismissSource != null) return false;
+    _dismissSource = source;
+    try {
+      await navigator!.maybePop<T>();
+      // maybePop also returns true when a request was handled but vetoed.
+      return !isActive;
+    } finally {
+      _dismissSource = null;
+    }
+  }
+
+  @override
+  Future<RoutePopDisposition> willPop() async {
+    if (_disposed || !isCurrent || _checkingDismissal) return .doNotPop;
+    _checkingDismissal = true;
+    try {
+      if (shouldDismiss != null && !await shouldDismiss!(_dismissSource ?? .systemBack)) return .doNotPop;
+      if (_disposed || !isCurrent || navigator == null) return .doNotPop;
+      // Navigator.maybePop still consults this hook for asynchronous decisions.
+      // ignore: deprecated_member_use
+      return await super.willPop();
+    } on Object catch (error, stackTrace) {
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'mateo_mobile',
+          context: ErrorDescription('while deciding whether to dismiss a Mateo sheet'),
+        ),
+      );
+      return .doNotPop;
+    } finally {
+      _checkingDismissal = false;
+    }
+  }
+
+  @override
+  Widget buildModalBarrier() {
+    final color = barrierColor;
+    if (color != null && color.a != 0 && !offstage) {
+      return AnimatedModalBarrier(
+        color: animation!.drive(
+          ColorTween(begin: color.withValues(alpha: 0), end: color).chain(CurveTween(curve: barrierCurve)),
+        ),
+        onDismiss: () => unawaited(_requestDismiss(.tapOutside)),
+      );
+    }
+    return ModalBarrier(onDismiss: () => unawaited(_requestDismiss(.tapOutside)));
   }
 
   @override
@@ -109,7 +158,10 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
           data: theme,
           child: DefaultTextStyle(
             style: textStyle,
-            child: _MateoSheetStackScope(stackEntry: _stackEntry, child: view),
+            child: Semantics(
+              onDismiss: () => unawaited(_requestDismiss(.accessibilityAction)),
+              child: _MateoSheetStackScope(stackEntry: _stackEntry, child: view),
+            ),
           ),
         ),
       );
@@ -136,7 +188,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
 
         final draggableSheet = _MateoSheetDrag(
           from: from,
-          onDismiss: _dismiss,
+          onDismiss: () => _requestDismiss(.drag),
           onPositionChanged: _updatePosition,
           child: SafeArea(
             child: Padding(

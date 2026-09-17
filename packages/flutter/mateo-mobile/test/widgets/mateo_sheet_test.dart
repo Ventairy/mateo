@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
@@ -34,6 +35,184 @@ void main() {
   const view = MateoSheetView(
     surface: MateoSheetViewSurface(child: SizedBox(height: 80, child: Text('Sheet content'))),
   );
+
+  Future<void> requestDismiss(WidgetTester tester, MateoSheetDismissSource source) async {
+    switch (source) {
+      case .drag:
+        await tester.drag(find.byType(MateoSheetView).last, const Offset(0, 120));
+      case .tapOutside:
+        await tester.tapAt(const Offset(10, 10));
+      case .systemBack:
+        navigator.currentState!.maybePop();
+      case .accessibilityAction:
+        final node = tester.getSemantics(find.byType(MateoSheetView).last);
+        tester.platformDispatcher.onSemanticsActionEvent!(
+          SemanticsActionEvent(type: SemanticsAction.dismiss, nodeId: node.id, viewId: tester.view.viewId),
+        );
+    }
+    await tester.pumpAndSettle();
+  }
+
+  for (final source in MateoSheetDismissSource.values) {
+    for (final allowed in [false, true]) {
+      testWidgets('when $source returns $allowed, it should report the source and respect the decision', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await host(tester);
+        final requests = <MateoSheetDismissSource>[];
+        unawaited(
+          showMateoSheet<void>(
+            context: launcher,
+            view: view,
+            shouldDismiss: (source) {
+              requests.add(source);
+              return allowed;
+            },
+          ),
+        );
+        await tester.pumpAndSettle();
+        final origin = tester.getTopLeft(find.byType(MateoSheetView));
+        await requestDismiss(tester, source);
+        expect(requests, [source]);
+        expect(find.byType(MateoSheetView), allowed ? findsNothing : findsOneWidget);
+        if (!allowed) expect(tester.getTopLeft(find.byType(MateoSheetView)), origin);
+        semantics.dispose();
+      });
+    }
+  }
+
+  for (final allowed in [false, true]) {
+    testWidgets('when an async drag decision returns $allowed, it should ignore repeated requests and settle', (
+      tester,
+    ) async {
+      await host(tester);
+      final decision = Completer<bool>();
+      var calls = 0;
+      unawaited(
+        showMateoSheet<void>(
+          context: launcher,
+          view: view,
+          shouldDismiss: (_) {
+            calls++;
+            return decision.future;
+          },
+        ),
+      );
+      await tester.pumpAndSettle();
+      final origin = tester.getTopLeft(find.byType(MateoSheetView));
+      await requestDismiss(tester, .drag);
+      await requestDismiss(tester, .tapOutside);
+      await requestDismiss(tester, .systemBack);
+      expect(calls, 1);
+      expect(find.byType(MateoSheetView), findsOneWidget);
+      decision.complete(allowed);
+      await tester.pumpAndSettle();
+      expect(find.byType(MateoSheetView), allowed ? findsNothing : findsOneWidget);
+      if (!allowed) expect(tester.getTopLeft(find.byType(MateoSheetView)), origin);
+    });
+  }
+
+  testWidgets('when explicitly popped during a decision, it should preserve the result and ignore the stale approval', (
+    tester,
+  ) async {
+    await host(tester);
+    final decision = Completer<bool>();
+    final result = showMateoSheet<String>(context: launcher, view: view, shouldDismiss: (_) => decision.future);
+    await tester.pumpAndSettle();
+    await requestDismiss(tester, .tapOutside);
+    navigator.currentState!.pop('done');
+    await tester.pumpAndSettle();
+    expect(await result, 'done');
+    decision.complete(true);
+    await tester.pumpAndSettle();
+    expect(navigator.currentState!.canPop(), isFalse);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('when another sheet covers a pending decision, it should keep both sheets open', (tester) async {
+    await host(tester);
+    final decision = Completer<bool>();
+    unawaited(showMateoSheet<void>(context: launcher, view: view, shouldDismiss: (_) => decision.future));
+    await tester.pumpAndSettle();
+    await requestDismiss(tester, .tapOutside);
+    unawaited(showMateoSheet<void>(context: launcher, view: view));
+    await tester.pumpAndSettle();
+    decision.complete(true);
+    await tester.pumpAndSettle();
+    expect(find.byType(MateoSheetView), findsNWidgets(2));
+  });
+
+  testWidgets('when a decision throws, it should report the error and allow a later request', (tester) async {
+    await host(tester);
+    var calls = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        view: view,
+        shouldDismiss: (_) {
+          if (calls++ == 0) throw StateError('decision failed');
+          return true;
+        },
+      ),
+    );
+    await tester.pumpAndSettle();
+    await requestDismiss(tester, .drag);
+    expect(tester.takeException(), isStateError);
+    expect(find.byType(MateoSheetView), findsOneWidget);
+    await requestDismiss(tester, .tapOutside);
+    expect(find.byType(MateoSheetView), findsNothing);
+  });
+
+  testWidgets('when PopScope vetoes an approved request, it should keep the sheet open', (tester) async {
+    await host(tester);
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        shouldDismiss: (_) => true,
+        view: const MateoSheetView(
+          surface: MateoSheetViewSurface(child: PopScope(canPop: false, child: SizedBox(height: 80))),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await requestDismiss(tester, .drag);
+    expect(find.byType(MateoSheetView), findsOneWidget);
+  });
+
+  for (final reducedMotion in [false, true]) {
+    testWidgets(
+      'when a stacked drag is denied with reduced motion $reducedMotion, it should restore and consult only the top sheet',
+      (tester) async {
+        await host(tester, reducedMotion: reducedMotion);
+        var lowerCalls = 0;
+        var topCalls = 0;
+        unawaited(
+          showMateoSheet<void>(
+            context: launcher,
+            view: view,
+            shouldDismiss: (_) {
+              lowerCalls++;
+              return true;
+            },
+          ),
+        );
+        await tester.pumpAndSettle();
+        unawaited(showMateoSheet<void>(context: launcher, view: view, shouldDismiss: (_) => ++topCalls > 1));
+        await tester.pumpAndSettle();
+        final frames = tester.getRect(find.byType(MateoSheetView).first);
+        final topFrame = tester.getRect(find.byType(MateoSheetView).last);
+        await requestDismiss(tester, .drag);
+        expect(find.byType(MateoSheetView), findsNWidgets(2));
+        expect(tester.getRect(find.byType(MateoSheetView).first), frames);
+        expect(tester.getRect(find.byType(MateoSheetView).last), topFrame);
+        await requestDismiss(tester, .tapOutside);
+        expect(find.byType(MateoSheetView), findsOneWidget);
+        expect(topCalls, 2);
+        expect(lowerCalls, 0);
+      },
+    );
+  }
 
   for (final direction in <String, Offset>{
     'up': const Offset(0, -96),

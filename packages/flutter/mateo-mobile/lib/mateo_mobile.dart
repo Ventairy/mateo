@@ -29,6 +29,8 @@ export 'src/components/mateo_press/mateo_press.dart' show MateoPress;
 export 'src/components/mateo_press/mateo_press_animation_type.dart' show MateoPressAnimationType;
 export 'src/components/mateo_sheet/show_mateo_sheet.dart'
     show
+        MateoSheetDismissSource,
+        MateoSheetShouldDismiss,
         MateoSheetSource,
         MateoSheetView,
         MateoSheetViewFooter,
