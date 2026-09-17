@@ -198,7 +198,7 @@ void main() {
         );
         final finder = find.byType(BaseMateoEdgeFade);
         final bands = tester.widget<BaseMateoEdgeFade>(finder).resolveBands(tester.getSize(finder));
-        final inset = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstructionInsets!().top;
+        final inset = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).obstruction!.layoutInsets.top;
         expect(bands.first.extent, present ? inset + 20 : 60);
         expect(bands.last.extent, 60);
         if (present) {

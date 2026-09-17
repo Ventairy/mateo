@@ -257,8 +257,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       final reservedLayout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
-      final reservedTop = reservedLayout.obstructionInsets.top;
-      final reservedBottom = reservedLayout.obstructionInsets.bottom;
+      final reservedTop = reservedLayout.obstruction.layoutInsets.top;
+      final reservedBottom = reservedLayout.obstruction.layoutInsets.bottom;
       final headerRect = tester.getRect(find.byType(MateoSheetViewHeader));
       final footerRect = tester.getRect(find.byType(MateoSheetViewFooter));
       final scrollController = scrollable
@@ -272,8 +272,8 @@ void main() {
 
       final unreservedLayout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
       expect(reservedTop, greaterThan(unreservedLayout.padding.top));
-      expect(unreservedLayout.obstructionInsets.top, 0);
-      expect(unreservedLayout.obstructionInsets.bottom, reservedBottom);
+      expect(unreservedLayout.obstruction.layoutInsets.top, 0);
+      expect(unreservedLayout.obstruction.layoutInsets.bottom, reservedBottom);
       expect(tester.getRect(find.byType(MateoSheetViewHeader)), headerRect);
       expect(tester.getRect(find.byType(MateoSheetViewFooter)), footerRect);
       if (scrollController == null) {

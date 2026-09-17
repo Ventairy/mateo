@@ -33,8 +33,7 @@ class MateoViewLayoutScope extends InheritedWidget {
 
   double get headerObstructionExtent => _layout.headerObstructionExtent;
 
-  EdgeInsets get obstructionInsets => _layout.obstructionInsets;
-  Listenable get obstructionInsetsChanges => _layout.obstructionInsetsChanges;
+  MateoSurfaceObstruction get obstruction => _layout;
 
   static MateoViewLayoutScope? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<MateoViewLayoutScope>();

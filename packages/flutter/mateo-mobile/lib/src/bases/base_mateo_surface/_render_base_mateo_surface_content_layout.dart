@@ -2,8 +2,7 @@ part of 'base_mateo_surface.dart';
 
 class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
   _RenderBaseMateoSurfaceContentLayout({
-    required this._obstructionInsets,
-    required this._obstructionInsetsChanges,
+    required this._obstruction,
     required this._padding,
     required this._alignment,
   }) : super(null);
@@ -11,21 +10,33 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
   EdgeInsets _layoutInsets = EdgeInsets.zero;
   EdgeInsets _paintedInsets = EdgeInsets.zero;
   bool _layoutScheduled = false;
-
-  ValueGetter<EdgeInsets>? _obstructionInsets;
-  ValueGetter<EdgeInsets>? get obstructionInsets => _obstructionInsets;
-  set obstructionInsets(ValueGetter<EdgeInsets>? value) {
-    _obstructionInsets = value;
+  MateoSurfaceObstruction? _obstruction;
+  MateoSurfaceObstruction? get obstruction => _obstruction;
+  set obstruction(MateoSurfaceObstruction? value) {
+    // The owner can change slot measurements while retaining its identity.
     markNeedsLayout();
+    if (identical(value, _obstruction)) return;
+    final wasCoordinated = _obstruction != null;
+    if (attached) _obstruction?.removeListener(_obstructionInsetsChanged);
+    _obstruction = value;
+    if (attached) _obstruction?.addListener(_obstructionInsetsChanged);
+    if (wasCoordinated != (value != null)) markNeedsCompositingBitsUpdate();
+    markNeedsPaint();
+    markNeedsSemanticsUpdate();
   }
 
-  Listenable? _obstructionInsetsChanges;
-  Listenable? get obstructionInsetsChanges => _obstructionInsetsChanges;
-  set obstructionInsetsChanges(Listenable? value) {
-    if (identical(_obstructionInsetsChanges, value)) return;
-    if (attached) _obstructionInsetsChanges?.removeListener(_obstructionInsetsChanged);
-    _obstructionInsetsChanges = value;
-    if (attached) _obstructionInsetsChanges?.addListener(_obstructionInsetsChanged);
+  Offset _paintOffset = Offset.zero;
+  Offset _paintedContentOffset = Offset.zero;
+
+  @override
+  bool get alwaysNeedsCompositing => child != null && _obstruction != null;
+
+  Offset _resolvePaintOffset() {
+    if (attached) {
+      _updatePaintInsets();
+      _paintedContentOffset = _contentOffset(_paintedInsets);
+    }
+    return _paintOffset + _paintedContentOffset;
   }
 
   EdgeInsets _padding;
@@ -44,17 +55,17 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  EdgeInsets get _insets => _obstructionInsets?.call() ?? EdgeInsets.zero;
+  EdgeInsets get _insets => _obstruction?.layoutInsets ?? EdgeInsets.zero;
 
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
-    _obstructionInsetsChanges?.addListener(_obstructionInsetsChanged);
+    _obstruction?.addListener(_obstructionInsetsChanged);
   }
 
   @override
   void detach() {
-    _obstructionInsetsChanges?.removeListener(_obstructionInsetsChanged);
+    _obstruction?.removeListener(_obstructionInsetsChanged);
     super.detach();
   }
 
@@ -158,9 +169,8 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
     (child!.parentData! as BoxParentData).offset = _contentOffset(_layoutInsets);
   }
 
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    final insets = _insets;
+  void _updatePaintInsets() {
+    final insets = _obstruction?.resolvePaintInsets() ?? EdgeInsets.zero;
     // The owner can refine clearance after placement. Paint with the latest
     // snapshot, then reconcile layout without a visible top jump.
     if (insets != _layoutInsets && !_layoutScheduled) {
@@ -173,7 +183,19 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
       });
     }
     _paintedInsets = insets;
-    context.paintChild(child!, offset + _contentOffset(insets));
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    _paintOffset = offset;
+    _updatePaintInsets();
+    if (_obstruction == null) {
+      layer = null;
+      context.paintChild(child!, offset + _contentOffset(_paintedInsets));
+      return;
+    }
+    layer ??= _BaseMateoSurfaceContentLayer(_resolvePaintOffset);
+    context.pushLayer(layer!, (context, _) => context.paintChild(child!, Offset.zero), Offset.zero);
   }
 
   @override

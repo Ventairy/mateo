@@ -11,6 +11,7 @@ import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
 import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
+import 'mateo_surface_obstruction.dart';
 
 part '_base_mateo_surface_content_layout.dart';
 part '_base_mateo_surface_scroll.dart';
@@ -18,6 +19,7 @@ part '_base_mateo_surface_scroll_controller.dart';
 part '_base_mateo_surface_scroll_position.dart';
 part '_base_mateo_surface_size.dart';
 part '_render_base_mateo_surface_content_layout.dart';
+part '_base_mateo_surface_content_layer.dart';
 part '_render_base_mateo_surface_size.dart';
 part 'transform_animation/_surface_transform_animation_flight_content.dart';
 part 'transform_animation/_surface_transform_animation_flight_delegate.dart';
@@ -42,8 +44,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.height = const .fit(),
     this.padding,
     this.alignment,
-    this.obstructionInsets,
-    this.obstructionInsetsChanges,
+    this.obstruction,
     this.edgeEffectBuilder,
     this.contentGroup,
     super.key,
@@ -59,8 +60,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.height = const .fill(),
     this.padding,
     this.alignment,
-    this.obstructionInsets,
-    this.obstructionInsetsChanges,
+    this.obstruction,
     this.edgeEffectBuilder,
     this.contentGroup,
     super.key,
@@ -71,9 +71,7 @@ class BaseMateoSurface extends StatefulWidget {
 
   final GroupLink? contentGroup;
 
-  final ValueGetter<EdgeInsets>? obstructionInsets;
-
-  final Listenable? obstructionInsetsChanges;
+  final MateoSurfaceObstruction? obstruction;
 
   final bool _scrollable;
 
@@ -147,8 +145,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
     }
     assert(widget.padding?.isNonNegative ?? true, 'padding must be nonnegative.');
     final content = _BaseMateoSurfaceContentLayout(
-      obstructionInsets: widget.obstructionInsets,
-      obstructionInsetsChanges: widget.obstructionInsetsChanges,
+      obstruction: widget.obstruction,
       padding: widget.padding?.resolve(Directionality.maybeOf(context)) ?? EdgeInsets.zero,
       alignment: widget.alignment?.resolve(Directionality.maybeOf(context)),
       child: widget.child,

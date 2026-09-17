@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart' show Group, GroupLink, MaybeSafeArea, MaybeSafeAreaHandle;
 
+import '../base_mateo_surface/mateo_surface_obstruction.dart';
 import 'mateo_view_scope.dart';
 
 part '_mateo_view_footer_layout_data.dart';
@@ -52,6 +53,11 @@ class _BaseMateoViewState extends State<BaseMateoView> {
   @override
   void didUpdateWidget(covariant BaseMateoView oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget.footer != null && widget.footer != null && !Widget.canUpdate(oldWidget.footer!, widget.footer!)) {
+      final previousFooter = _layoutData.footer;
+      _layoutData.footer = null;
+      previousFooter?.dispose();
+    }
     if (widget.footer != null) {
       _layoutData.footer ??= .new();
     } else {
@@ -82,7 +88,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
 
     // Safe-area render transforms can change without changing the header size.
     // Subscribe here as well so the surface refreshes its measured clearance.
-    MediaQuery.maybePaddingOf(context);
+    _layoutData.updateBottomSafeAreaPadding(MediaQuery.maybePaddingOf(context)?.bottom ?? 0);
     MediaQuery.maybeSizeOf(context);
     MediaQuery.maybeDevicePixelRatioOf(context);
 

@@ -146,7 +146,7 @@ void main() {
               surface: MateoViewSurface(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    measurements.add(MateoViewLayoutScope.maybeOf(context)!.obstructionInsets);
+                    measurements.add(MateoViewLayoutScope.maybeOf(context)!.obstruction.layoutInsets);
                     return const SizedBox(height: 60);
                   },
                 ),
