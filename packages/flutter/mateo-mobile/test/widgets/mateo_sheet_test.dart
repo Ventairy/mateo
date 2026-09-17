@@ -38,6 +38,8 @@ void main() {
 
   Future<void> requestDismiss(WidgetTester tester, MateoSheetDismissSource source) async {
     switch (source) {
+      case .closeButton:
+        await tester.tap(find.byType(MateoButton).last);
       case .drag:
         await tester.drag(find.byType(MateoSheetView).last, const Offset(0, 120));
       case .tapOutside:
@@ -64,7 +66,12 @@ void main() {
         unawaited(
           showMateoSheet<void>(
             context: launcher,
-            view: view,
+            view: source == .closeButton
+                ? const MateoSheetView(
+                    header: MateoSheetViewHeader(presentation: .closeButton()),
+                    surface: MateoSheetViewSurface(child: SizedBox(height: 80)),
+                  )
+                : view,
             shouldDismiss: (source) {
               requests.add(source);
               return allowed;
@@ -498,7 +505,7 @@ void main() {
         showMateoSheet<void>(
           context: launcher,
           view: const MateoSheetView(
-            header: MateoSheetViewHeader(principal: SizedBox(height: 10)),
+            header: MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 10))),
             footer: MateoSheetViewFooter(principal: SizedBox(height: 10)),
             surface: MateoSheetViewSurface(child: SizedBox(key: ValueKey('body'), height: 40)),
           ),
@@ -526,7 +533,7 @@ void main() {
           showMateoSheet<void>(
             context: launcher,
             view: MateoSheetView(
-              header: const MateoSheetViewHeader(principal: SizedBox(height: 20)),
+              header: const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 20))),
               footer: const MateoSheetViewFooter(principal: SizedBox(height: 20)),
               surface: scrollable
                   ? const MateoSheetViewSurface.scrollable(child: SizedBox(height: 1000))

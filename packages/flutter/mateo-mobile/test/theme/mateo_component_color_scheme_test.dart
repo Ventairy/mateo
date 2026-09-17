@@ -18,10 +18,12 @@ void main() {
   test('when resolving sheets, it should expose black scrim at 20 percent opacity', () {
     final sheet = theme.colorScheme.sheet;
     expect(sheet.scrim, const Color(0x33000000));
-    final equivalent = MateoSheetColorScheme(scrim: sheet.scrim);
+    expect(sheet.handle, theme.palette.neutral[6]);
+    expect(MateoSheetColorScheme(scrim: sheet.scrim, handle: theme.palette.black), isNot(sheet));
+    final equivalent = MateoSheetColorScheme(scrim: sheet.scrim, handle: sheet.handle);
     expect(equivalent, sheet);
     expect(equivalent.hashCode, sheet.hashCode);
-    expect(MateoSheetColorScheme(scrim: theme.palette.black), isNot(sheet));
+    expect(MateoSheetColorScheme(scrim: theme.palette.black, handle: sheet.handle), isNot(sheet));
     expect(theme.copyWith().colorScheme.sheet, sheet);
   });
 

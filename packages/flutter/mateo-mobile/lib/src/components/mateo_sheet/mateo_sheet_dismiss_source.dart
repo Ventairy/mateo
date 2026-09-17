@@ -5,6 +5,9 @@ enum MateoSheetDismissSource {
   /// A committed drag toward the sheet's dismissal edge.
   drag,
 
+  /// A press on the built-in sheet header close button.
+  closeButton,
+
   /// A tap outside the sheet.
   tapOutside,
 

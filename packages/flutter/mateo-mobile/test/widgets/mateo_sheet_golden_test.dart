@@ -20,7 +20,9 @@ Future<void> main() async {
             showMateoSheet<void>(
               context: launcher.context,
               view: MateoSheetView(
-                header: launcher.slots ? const MateoSheetViewHeader(principal: Text('Details')) : null,
+                header: launcher.slots
+                    ? const MateoSheetViewHeader(presentation: .custom(principal: Text('Details')))
+                    : null,
                 footer: launcher.slots ? const MateoSheetViewFooter(principal: Text('Footer')) : null,
                 surface: MateoSheetViewSurface(
                   color: surfaceTransformTheme.colorScheme.background,

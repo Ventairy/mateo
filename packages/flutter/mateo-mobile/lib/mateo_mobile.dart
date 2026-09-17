@@ -35,6 +35,7 @@ export 'src/components/mateo_sheet/show_mateo_sheet.dart'
         MateoSheetView,
         MateoSheetViewFooter,
         MateoSheetViewHeader,
+        MateoSheetViewHeaderPresentation,
         MateoSheetViewSurface,
         showMateoSheet;
 export 'src/components/mateo_surface/mateo_surface.dart' show MateoSurface;

@@ -53,9 +53,11 @@ void main() {
                   width: 320,
                   child: MateoSheetView(
                     header: MateoSheetViewHeader(
-                      principal: const SizedBox(key: ValueKey('expanding-principal'), width: 10, height: 24),
-                      leading: sides.leading ? const SizedBox(width: 32, height: 40) : null,
-                      trailing: sides.trailing ? const SizedBox(width: 72, height: 32) : null,
+                      presentation: .custom(
+                        principal: const SizedBox(key: ValueKey('expanding-principal'), width: 10, height: 24),
+                        leading: sides.leading ? const SizedBox(width: 32, height: 40) : null,
+                        trailing: sides.trailing ? const SizedBox(width: 72, height: 32) : null,
+                      ),
                     ),
                     surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
                   ),
@@ -95,7 +97,7 @@ void main() {
                         constraints: const BoxConstraints(maxHeight: 400),
                         child: MateoSheetView(
                           reserveHeaderSpace: reserveHeaderSpace,
-                          header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+                          header: const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 40))),
                           footer: const MateoSheetViewFooter(principal: SizedBox(height: 30)),
                           surface: scrollable
                               ? MateoSheetViewSurface.scrollable(
@@ -166,7 +168,9 @@ void main() {
         showMateoSheet<void>(
           context: launcher,
           view: const MateoSheetView(
-            header: MateoSheetViewHeader(principal: MateoSurface(child: Text('Header'))),
+            header: MateoSheetViewHeader(
+              presentation: .custom(principal: MateoSurface(child: Text('Header'))),
+            ),
             footer: MateoSheetViewFooter(principal: MateoSurface(child: Text('Footer'))),
             surface: MateoSheetViewSurface(child: SizedBox(height: 80)),
           ),
@@ -193,7 +197,7 @@ void main() {
     'when internal scopes surround sheet content, it should retain fixed styling and explicit child styling',
     (tester) async {
       const view = MateoSheetView(
-        header: MateoSheetViewHeader(principal: Text('Header')),
+        header: MateoSheetViewHeader(presentation: .custom(principal: Text('Header'))),
         surface: MateoSheetViewSurface(
           child: MateoSurface(
             shape: .rounded(radius: 8),
@@ -246,7 +250,7 @@ void main() {
                 valueListenable: reserveHeaderSpace,
                 builder: (context, reserveHeaderSpace, child) => MateoSheetView(
                   reserveHeaderSpace: reserveHeaderSpace,
-                  header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+                  header: const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 40))),
                   footer: const MateoSheetViewFooter(principal: SizedBox(height: 30)),
                   surface: scrollable
                       ? const MateoSheetViewSurface.scrollable(
@@ -307,7 +311,9 @@ void main() {
           context: launcher,
           view: MateoSheetView(
             reserveHeaderSpace: reserveHeaderSpace,
-            header: includeHeader ? const MateoSheetViewHeader(principal: SizedBox(height: 40)) : null,
+            header: includeHeader
+                ? const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 40)))
+                : null,
             surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
           ),
         ),
@@ -341,7 +347,7 @@ void main() {
             valueListenable: reserveHeaderSpace,
             builder: (context, reserveHeaderSpace, child) => MateoSheetView(
               reserveHeaderSpace: reserveHeaderSpace,
-              header: const MateoSheetViewHeader(principal: SizedBox(height: 40)),
+              header: const MateoSheetViewHeader(presentation: .custom(principal: SizedBox(height: 40))),
               surface: MateoSheetViewSurface.scrollable(
                 edgeEffect: .fade(at: [.top]),
                 child: const SizedBox(height: 800),
@@ -373,7 +379,7 @@ void main() {
         showMateoSheet<void>(
           context: launcher,
           view: MateoSheetView(
-            header: const MateoSheetViewHeader(principal: Text('Header')),
+            header: const MateoSheetViewHeader(presentation: .custom(principal: Text('Header'))),
             footer: const MateoSheetViewFooter(principal: Text('Footer')),
             surface: MateoSheetViewSurface.scrollable(
               color: color,

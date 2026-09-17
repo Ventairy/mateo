@@ -9,7 +9,9 @@ Widget _content({required bool sheet, required MateoButtonPresentation presentat
   final button = MateoButton(presentation: presentation, onPressed: () {});
   if (sheet) {
     return MateoSheetView(
-      header: MateoSheetViewHeader(principal: const Text('Details'), trailing: button),
+      header: MateoSheetViewHeader(
+        presentation: .custom(principal: const Text('Details'), trailing: button),
+      ),
       surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
     );
   }

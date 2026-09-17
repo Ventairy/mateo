@@ -21,9 +21,11 @@ Future<void> main() async {
           context: launcher,
           view: MateoSheetView(
             header: MateoSheetViewHeader(
-              leading: Text('Back', style: slotStyle),
-              principal: Text('Choose a stay', style: slotStyle),
-              trailing: Text('Help', style: slotStyle),
+              presentation: .custom(
+                leading: Text('Back', style: slotStyle),
+                principal: Text('Choose a stay', style: slotStyle),
+                trailing: Text('Help', style: slotStyle),
+              ),
             ),
             footer: MateoSheetViewFooter(principal: Text('Two nights · Two guests', style: slotStyle)),
             surface: MateoSheetViewSurface.scrollable(
@@ -75,12 +77,14 @@ Future<void> main() async {
           view: MateoSheetView(
             reserveHeaderSpace: false,
             header: MateoSheetViewHeader(
-              leading: Text('Back', style: TextStyle(color: foreground)),
-              principal: Text(
-                'Garden room',
-                style: TextStyle(color: foreground, fontWeight: FontWeight.w700),
+              presentation: .custom(
+                leading: Text('Back', style: TextStyle(color: foreground)),
+                principal: Text(
+                  'Garden room',
+                  style: TextStyle(color: foreground, fontWeight: FontWeight.w700),
+                ),
+                trailing: Text('Close', style: TextStyle(color: foreground)),
               ),
-              trailing: Text('Close', style: TextStyle(color: foreground)),
             ),
             surface: MateoSheetViewSurface(
               color: surfaceTransformTheme.colorScheme.accent,

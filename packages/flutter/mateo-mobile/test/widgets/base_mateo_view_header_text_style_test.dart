@@ -12,7 +12,9 @@ Widget _header({
 }) {
   if (sheet) {
     return MateoSheetView(
-      header: MateoSheetViewHeader(leading: leading, principal: principal, trailing: trailing),
+      header: MateoSheetViewHeader(
+        presentation: .custom(leading: leading, principal: principal, trailing: trailing),
+      ),
       surface: const MateoSheetViewSurface(child: SizedBox(height: 80)),
     );
   }
