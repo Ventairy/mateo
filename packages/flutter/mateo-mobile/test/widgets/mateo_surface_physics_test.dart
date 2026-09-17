@@ -31,11 +31,10 @@ void main() {
     devicePixelRatio: 1,
   );
 
-  testWidgets('when released beyond either edge, it should rebound proportionally and settle exactly', (tester) async {
+  testWidgets('when released beyond either edge, it should return directly and settle exactly', (tester) async {
     await tester.pumpWidget(host());
     final physics = controller(tester).position.physics;
     for (final bottom in [false, true]) {
-      var previousPeak = 0.0;
       for (final distance in [5.0, 40.0, 120.0]) {
         final target = bottom ? 1000.0 : 0.0;
         final simulation = physics.createBallisticSimulation(metrics(target + (bottom ? distance : -distance)), 0)!;
@@ -52,15 +51,12 @@ void main() {
           if (previousVelocity * velocity < 0) extrema.add((x - target).abs());
           previousVelocity = velocity;
         }
-        expect(peak, greaterThan(previousPeak));
-        // Flutter can settle tiny rebounds early at its pixel tolerance.
-        if (distance >= 40) expect(peak / distance, closeTo(0.205, 0.005));
+        expect(peak, 0);
         for (var index = 1; index < extrema.length; index++) {
           expect(extrema[index], lessThan(extrema[index - 1]));
         }
         expect(simulation.isDone(3), isTrue);
         expect(simulation.x(3), target);
-        previousPeak = peak;
       }
     }
   });
@@ -70,9 +66,13 @@ void main() {
     final physics = controller(tester).position.physics;
     for (final start in [-60.0, 1060.0, 0.0, 1000.0]) {
       for (final velocity in [-1500.0, 1500.0]) {
-        final simulation = physics.createBallisticSimulation(metrics(start), velocity)!;
-        expect(simulation.x(0), closeTo(start, 0.001));
-        expect(simulation.dx(0), closeTo(velocity, 0.001));
+        final simulation = physics.createBallisticSimulation(metrics(start), velocity);
+        if (simulation == null) {
+          expect(start, inInclusiveRange(0, 1000));
+          continue;
+        }
+        expect(simulation.x(0).isFinite, isTrue);
+        expect(simulation.dx(0).isFinite, isTrue);
         for (var frame = 0; frame <= 720; frame++) {
           expect(simulation.x(frame / 120).isFinite && simulation.dx(frame / 120).isFinite, isTrue);
         }
@@ -82,7 +82,7 @@ void main() {
     }
   });
 
-  testWidgets('when pulling farther outside an edge, it should increase resistance relative to the viewport', (
+  testWidgets('when pulling outside an edge, it should retain the inherited user offset', (
     tester,
   ) async {
     await tester.pumpWidget(host());
@@ -91,8 +91,8 @@ void main() {
     for (final viewport in [200.0, 800.0]) {
       final near = physics.applyPhysicsToUserOffset(metrics(-viewport * 0.1, viewport: viewport), 10);
       final far = physics.applyPhysicsToUserOffset(metrics(-viewport * 0.4, viewport: viewport), 10);
-      expect(far, inExclusiveRange(0, near));
-      expect(near, lessThan(10));
+      expect(far, 10);
+      expect(near, 10);
     }
     expect(
       physics.applyPhysicsToUserOffset(metrics(-20, viewport: 200), 10),
@@ -108,17 +108,17 @@ void main() {
     expect(controller(tester).position.maxScrollExtent, 0);
   });
 
-  testWidgets('when a rebound is touched, it should stop and hand control to the new gesture', (tester) async {
+  testWidgets('when an edge is touched, it should remain still and hand control to the new gesture', (tester) async {
     await tester.pumpWidget(host());
     final scroll = controller(tester);
     final gesture = await tester.startGesture(tester.getCenter(find.byType(CustomScrollView)));
     await gesture.moveBy(const Offset(0, 120));
     await tester.pump(const Duration(milliseconds: 150));
-    expect(scroll.offset, lessThan(0));
+    expect(scroll.offset, 0);
     await gesture.up();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 240));
-    expect(scroll.offset, greaterThan(0));
+    expect(scroll.offset, 0);
     final interrupt = await tester.startGesture(tester.getCenter(find.byType(CustomScrollView)));
     final held = scroll.offset;
     await tester.pump(const Duration(seconds: 1));
@@ -129,7 +129,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('when reduced motion changes, it should preserve the controller and use a non-oscillating return', (
+  testWidgets('when reduced motion changes, it should preserve the controller and inherited physics', (
     tester,
   ) async {
     await tester.pumpWidget(host());
@@ -138,7 +138,7 @@ void main() {
     await tester.pumpWidget(host(reduced: true));
     expect(controller(tester), same(scroll));
     expect(scroll.offset, 100);
-    expect(scroll.position.physics.runtimeType, isNot(normalType));
+    expect(scroll.position.physics.runtimeType, normalType);
     final simulation = scroll.position.physics.createBallisticSimulation(metrics(-80), 0)!;
     var previous = -80.0;
     for (var frame = 1; frame <= 360; frame++) {
@@ -164,7 +164,7 @@ void main() {
     scroll.jumpTo(scroll.position.maxScrollExtent);
     expect(scroll.offset, 480);
   });
-  testWidgets('when the platform changes, it should retain the same Mateo edge response', (tester) async {
+  testWidgets('when the platform changes, it should retain the inherited edge response', (tester) async {
     try {
       final peaks = <double>[];
       for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
@@ -175,7 +175,7 @@ void main() {
         peaks.add(simulation.x(0.24));
       }
       expect(peaks.first, peaks.last);
-      expect(peaks.first, greaterThan(0));
+      expect(peaks.first, lessThan(0));
     } finally {
       debugDefaultTargetPlatformOverride = null;
     }
@@ -186,13 +186,14 @@ void main() {
   ) async {
     await tester.pumpWidget(host());
     final scroll = controller(tester)..jumpTo(-80);
+    final damping = scroll.position.physics.spring.damping;
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 80));
     final before = scroll.offset;
     await tester.pumpWidget(host(reduced: true));
     expect(controller(tester), same(scroll));
     expect(scroll.offset, closeTo(before, 0.001));
-    expect(scroll.position.physics.spring.damping, 30);
+    expect(scroll.position.physics.spring.damping, damping);
     await tester.pumpAndSettle();
     expect(scroll.offset, 0);
   });

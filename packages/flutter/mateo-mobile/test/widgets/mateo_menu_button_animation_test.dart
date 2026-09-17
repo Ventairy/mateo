@@ -24,8 +24,8 @@ void main() {
     expect(identical(animation, const MateoMenuButtonAnimation.pop()), isTrue);
     expect(animation.duration, const Duration(milliseconds: 400));
     expect(animation.curve, Curves.easeOutBack);
-    expect(animation.exitDuration, const Duration(milliseconds: 120));
-    expect(animation.exitCurve, Curves.linear);
+    expect(animation.exitDuration, const Duration(milliseconds: 210));
+    expect(animation.exitCurve, Curves.easeInCubic);
   });
 
   for (final animation in const <MateoMenuButtonAnimation>[.transform(), .pop()]) {
@@ -90,11 +90,12 @@ void main() {
         final scale = tester.widget<ScaleTransition>(
           find.ancestor(of: menu, matching: find.byType(ScaleTransition)).first,
         );
-        expect(scale.scale.value, closeTo(.975, .001));
+        final expectedScale = .95 + .05 * fade.opacity.value;
+        expect(scale.scale.value, closeTo(expectedScale, .001));
         final exitingBounds = tester.getRect(menu);
         expect(exitingBounds.center.dx, closeTo(settledBounds.center.dx, .001));
         expect(exitingBounds.center.dy, closeTo(settledBounds.center.dy, .001));
-        expect(exitingBounds.width, closeTo(settledBounds.width * .975, .001));
+        expect(exitingBounds.width, closeTo(settledBounds.width * expectedScale, .001));
       }
       await tester.pumpAndSettle();
       expect(menu, findsNothing);

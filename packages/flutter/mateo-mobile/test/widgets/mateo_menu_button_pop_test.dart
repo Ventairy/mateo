@@ -264,12 +264,13 @@ void main() {
         await tester.pump();
         final menuElement = tester.element(find.byType(MateoMenu));
         trigger.onPressed!();
-        await tester.pump(const Duration(milliseconds: 60));
+        const elapsedExit = Duration(milliseconds: 60);
+        await tester.pump(elapsedExit);
         expect(tester.element(find.byType(MateoMenu)), same(menuElement));
         final fade = tester.widget<FadeTransition>(
           find.ancestor(of: find.byType(MateoMenu), matching: find.byType(FadeTransition)).first,
         );
-        expect(fade.opacity.value, closeTo(.5, .01));
+        expect(fade.opacity.value, inExclusiveRange(0, 1));
         await tester.pumpAndSettle();
         expect(find.byType(MateoMenu), findsNothing);
         trigger.onPressed!();

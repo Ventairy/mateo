@@ -73,7 +73,7 @@ void main() {
     expect(pop, const MateoSurfaceAnimationPop());
     expect(pop.hashCode, const MateoSurfaceAnimationPop().hashCode);
     expect(pop, isNot(const MateoSurfaceAnimation.none()));
-    expect(pop.duration, const Duration(milliseconds: 400));
+    expect(pop.duration, const Duration(milliseconds: 320));
     expect(pop.curve, Curves.easeOutBack);
     const custom = MateoSurfaceAnimation.pop(duration: Duration(milliseconds: 200), curve: Curves.linear);
     const equal = MateoSurfaceAnimationPop(duration: Duration(milliseconds: 200), curve: Curves.linear);
@@ -88,12 +88,12 @@ void main() {
       testWidgets('pop animates view=$view scrollable=$scrollable without changing layout', (tester) async {
         await tester.pumpWidget(host(view: view, scrollable: scrollable));
         final size = tester.getSize(popTransform.first);
-        expect(scale(tester), .85);
+        expect(scale(tester), .75);
         expect(opacity(tester), 0);
         await tester.pump(const Duration(milliseconds: 60));
-        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.15), 0.000001));
+        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.1875), 0.000001));
         await tester.pump(const Duration(milliseconds: 60));
-        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.3), 0.000001));
+        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.375), 0.000001));
         await tester.pump(const Duration(milliseconds: 120));
         expect(scale(tester), greaterThan(1));
         expect(opacity(tester), greaterThan(1));
@@ -114,7 +114,7 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), closeTo(.5, .000001));
-    expect(scale(tester), closeTo(.925, .000001));
+    expect(scale(tester), closeTo(.875, .000001));
     await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), 1);
     expect(scale(tester), 1);
@@ -148,23 +148,23 @@ void main() {
     await tester.pumpWidget(host());
     expect(scale(tester), 1);
     await tester.pumpWidget(host(surfaceKey: const ValueKey('new')));
-    expect(scale(tester), .85);
+    expect(scale(tester), .75);
     await tester.pumpWidget(const SizedBox());
     expect(tester.takeException(), isNull);
   });
   testWidgets('switching to pop plays and switching away cancels', (tester) async {
     await tester.pumpWidget(host(animation: const .none()));
     await tester.pumpWidget(host());
-    expect(scale(tester), .85);
+    expect(scale(tester), .75);
     expect(opacity(tester), 0);
     await tester.pump(const Duration(milliseconds: 60));
-    expect(scale(tester), greaterThan(.85));
+    expect(scale(tester), greaterThan(.75));
     await tester.pumpWidget(host(animation: const .none()));
     expect(popTransform, findsNothing);
     await tester.pump();
     expect(tester.binding.hasScheduledFrame, isFalse);
     await tester.pumpWidget(host());
-    expect(scale(tester), .85);
+    expect(scale(tester), .75);
   });
   testWidgets('reduced motion settles immediately and never replays', (tester) async {
     await tester.pumpWidget(host(reduced: true));
@@ -181,7 +181,7 @@ void main() {
   testWidgets('muted ticker stops scheduling frames', (tester) async {
     await tester.pumpWidget(host(ticker: false));
     await tester.pump(const Duration(milliseconds: 400));
-    expect(scale(tester), .85);
+    expect(scale(tester), .75);
     expect(tester.binding.hasScheduledFrame, isFalse);
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();

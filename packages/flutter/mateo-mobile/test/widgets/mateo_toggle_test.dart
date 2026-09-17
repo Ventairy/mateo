@@ -56,7 +56,7 @@ void main() {
       ),
     );
     expect(tester.getSize(find.byType(MateoToggle)), const Size(78, 48));
-    expect(drawing(tester).last.bounds, rectMoreOrLessEquals(const Rect.fromLTWH(4, 10, 39, 28), epsilon: 0.00001));
+    expect(drawing(tester).last.bounds, rectMoreOrLessEquals(const Rect.fromLTWH(6, 12, 35, 24), epsilon: 0.00001));
     await tester.tap(find.byType(MateoToggle));
     await tester.pumpAndSettle();
     expect(calls, 1);
@@ -71,7 +71,7 @@ void main() {
         hasTapAction: true,
       ),
     );
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
     semantics.dispose();
   });
   testWidgets('when disabled, it should ignore taps and retain logical position', (tester) async {
@@ -138,7 +138,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(controller.value, isTrue);
       expect(calls, 1);
-      expect(drawing(tester).last.bounds.left, closeTo(direction == TextDirection.ltr ? 35 : 4, 0.00001));
+      expect(drawing(tester).last.bounds.left, closeTo(direction == TextDirection.ltr ? 37 : 6, 0.00001));
     });
   }
   testWidgets('when cancelled, it should return without notifying', (tester) async {
@@ -159,7 +159,7 @@ void main() {
     await gesture.cancel();
     await tester.pumpAndSettle();
     expect(calls, 0);
-    expect(drawing(tester).last.bounds.left, closeTo(4, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(6, 0.00001));
   });
   testWidgets('when reversed, it should preserve position and velocity and complete both futures', (tester) async {
     final controller = MateoToggleController();
@@ -188,7 +188,7 @@ void main() {
     expect(drawing(tester).last.bounds.left, greaterThan(before));
     await tester.pumpAndSettle();
     expect(secondDone, isTrue);
-    expect(drawing(tester).last.bounds.left, closeTo(4, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(6, 0.00001));
   });
   testWidgets('when spring motion peaks, it should rebound without extrapolating color', (tester) async {
     final controller = MateoToggleController();
@@ -197,12 +197,12 @@ void main() {
     unawaited(controller.toggle());
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 131));
-    expect(drawing(tester).last.bounds.left, inExclusiveRange(37, 39));
+    expect(drawing(tester).last.bounds.left, inExclusiveRange(39, 41));
     expect(drawing(tester).first.color, isSameColorAs(theme.colorScheme.toggle.trackOn));
     await tester.pump(const Duration(milliseconds: 269));
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.03));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.03));
     await tester.pumpAndSettle();
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
   });
   for (final mode in ['reduced', 'muted', 'disabled', 'removed']) {
     testWidgets('when $mode interrupts motion, it should settle the future and stop ticking', (tester) async {
@@ -232,7 +232,7 @@ void main() {
       await tester.pump();
       expect(done, isTrue);
       expect(tester.binding.transientCallbackCount, 0);
-      if (mode != 'removed') expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+      if (mode != 'removed') expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
     });
   }
   testWidgets('when reduced motion is active, it should complete immediately', (tester) async {
@@ -247,7 +247,7 @@ void main() {
     );
     await tester.pump();
     expect(done, isTrue);
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
   });
   testWidgets('when controllers change, it should detach, complete and preserve internal state', (tester) async {
     final first = MateoToggleController();
@@ -266,10 +266,10 @@ void main() {
     expect(done, isTrue);
     expect(first.hasClients, isFalse);
     expect(second.hasClients, isTrue);
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
     await tester.pumpWidget(host(const MateoToggle(onChanged: ignore)));
     expect(second.hasClients, isFalse);
-    expect(drawing(tester).last.bounds.left, closeTo(35, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
   });
   testWidgets('when attached twice, it should reject the second attachment', (tester) async {
     final controller = MateoToggleController();
@@ -349,7 +349,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(calls, 0);
     expect(controller.value, isFalse);
-    expect(drawing(tester).last.bounds.left, closeTo(4, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(6, 0.00001));
   });
 
   testWidgets('when dragged back before halfway, it should return without a value change', (tester) async {
@@ -370,7 +370,7 @@ void main() {
     await gesture.up();
     await tester.pumpAndSettle();
     expect(calls, 0);
-    expect(drawing(tester).last.bounds.left, closeTo(4, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(6, 0.00001));
   });
 
   testWidgets('when reversed before the first frame, it should complete without a stale ticker', (tester) async {
@@ -382,7 +382,7 @@ void main() {
     await tester.pumpAndSettle();
     await Future.wait([first, second]);
     expect(controller.value, isFalse);
-    expect(drawing(tester).last.bounds.left, closeTo(4, 0.00001));
+    expect(drawing(tester).last.bounds.left, closeTo(6, 0.00001));
   });
 
   testWidgets('when a listener retargets synchronously, each command should retain its own future', (tester) async {

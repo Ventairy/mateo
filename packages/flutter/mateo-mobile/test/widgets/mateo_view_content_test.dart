@@ -75,7 +75,7 @@ void main() {
         await tester.pumpWidget(host(view(scrollable: scrollable), top: top));
         final expected =
             tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy +
-            30;
+            10;
         expect(tester.getTopLeft(find.byKey(contentKey)).dy, expected);
         await tester.pumpAndSettle();
         expect(tester.getTopLeft(find.byKey(contentKey)).dy, expected);
@@ -92,7 +92,7 @@ void main() {
         .dy;
     final controller = tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!..jumpTo(120);
     await tester.pump();
-    expect(tester.getTopLeft(find.byKey(contentKey)).dy, headerBottom + 30 - 120);
+    expect(tester.getTopLeft(find.byKey(contentKey)).dy, headerBottom + 10 - 120);
     expect(
       tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy,
       headerBottom,
@@ -104,7 +104,7 @@ void main() {
     expect(
       tester.getTopLeft(find.byKey(contentKey)).dy,
       tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy +
-          30 -
+          10 -
           120,
     );
   });
@@ -158,9 +158,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(
       tester.getTopLeft(find.byKey(contentKey)).dy,
-      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy + 30,
+      tester.getBottomLeft(find.descendant(of: find.byKey(headerKey), matching: find.byType(Padding)).first).dy + 10,
     );
-    expect(tester.getBottomLeft(find.byKey(const ValueKey('bottom'))).dy, 278);
+    expect(tester.getBottomLeft(find.byKey(const ValueKey('bottom'))).dy, 290);
     expect(tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!.position.maxScrollExtent, 0);
   });
 
@@ -189,8 +189,8 @@ void main() {
           20 -
           30,
     );
-    expect(find.ancestor(of: find.byKey(contentKey), matching: find.byType(ClipRRect)), findsOneWidget);
-    expect(find.ancestor(of: find.byKey(contentKey), matching: find.byType(ClipRect)), findsNothing);
+    expect(find.ancestor(of: find.byKey(contentKey), matching: find.byType(ClipPath)), findsNothing);
+    expect(find.ancestor(of: find.byKey(contentKey), matching: find.byType(ClipRect)), findsOneWidget);
   });
 
   testWidgets('when the header is removed, it should restore view padding without replacing the scroll controller', (

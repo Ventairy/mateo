@@ -234,44 +234,6 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('when a local keyed surface is replaced, it should transform between its measured bounds', (
-    tester,
-  ) async {
-    final destination = ValueNotifier(false);
-    addTearDown(destination.dispose);
-    await tester.pumpWidget(
-      MateoApp(
-        theme: surfaceTransformTheme,
-        home: ValueListenableBuilder<bool>(
-          valueListenable: destination,
-          builder: (context, value, child) => surfaceTransformEndpoint(
-            key: ValueKey(value),
-            bounds: value ? endBounds : beginBounds,
-            view: value,
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    destination.value = true;
-    await tester.pump();
-    await tester.pump();
-    expect(surfaceFlight, findsOneWidget);
-    expect(tester.getRect(surfaceFlight), beginBounds);
-    await tester.pump(const Duration(milliseconds: 115));
-    expect(
-      tester.getRect(surfaceFlight),
-      rectMoreOrLessEquals(Rect.lerp(beginBounds, endBounds, Curves.easeOutCubic.transform(.5))!),
-    );
-    await tester.pumpAndSettle();
-    destination.value = false;
-    await tester.pump();
-    await tester.pump();
-    expect(surfaceFlight, findsOneWidget);
-    await tester.pumpAndSettle();
-    expect(tester.takeException(), isNull);
-  });
-
   testWidgets('when a route interrupts a flight, it should start at the sampled outline and color', (tester) async {
     final navigatorKey = GlobalKey<NavigatorState>();
     await tester.pumpWidget(

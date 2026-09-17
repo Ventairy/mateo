@@ -758,11 +758,10 @@ void main() {
     expect(getToast(), findsNothing);
   });
 
-  testWidgets('when a small slow drag is released, it should return instead of dismissing', (tester) async {
+  testWidgets('when a small slow drag passes the distance threshold, it should dismiss', (tester) async {
     await mount(tester);
     show();
     await settle(tester);
-    final rest = tester.getTopLeft(getToast()).dy;
     final gesture = await tester.startGesture(tester.getCenter(getToast()));
     for (var i = 0; i < 3; i++) {
       await tester.pump(const Duration(milliseconds: 100));
@@ -771,9 +770,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     await gesture.up(timeStamp: const Duration(milliseconds: 500));
     await settle(tester);
-    expect(getToast(), findsOneWidget);
-    expect(opacity(tester), 1);
-    expect(tester.getTopLeft(getToast()).dy, rest);
+    expect(getToast(), findsNothing);
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -891,15 +888,15 @@ void main() {
       dismiss: true,
     ),
     (name: 'a diagonal upward flick', moves: [Offset(20, -30)], spacing: 60, releaseDelay: 1, dismiss: true),
-    (name: 'a flick followed by a hold', moves: [Offset(0, -30)], spacing: 60, releaseDelay: 250, dismiss: false),
+    (name: 'a flick followed by a hold', moves: [Offset(0, -30)], spacing: 60, releaseDelay: 250, dismiss: true),
     (
       name: 'a flick reversed downward',
       moves: [Offset(0, -30), Offset(0, 10)],
       spacing: 30,
       releaseDelay: 1,
-      dismiss: false,
+      dismiss: true,
     ),
-    (name: 'a mostly horizontal flick', moves: [Offset(60, -20)], spacing: 30, releaseDelay: 1, dismiss: false),
+    (name: 'a mostly horizontal flick', moves: [Offset(60, -20)], spacing: 30, releaseDelay: 1, dismiss: true),
     (name: 'a deliberate slow drag', moves: [Offset(0, -45)], spacing: 300, releaseDelay: 250, dismiss: true),
   ]) {
     testWidgets('when performing ${scenario.name}, it should ${scenario.dismiss ? 'dismiss' : 'return to rest'}', (

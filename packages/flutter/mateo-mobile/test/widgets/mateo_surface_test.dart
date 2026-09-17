@@ -120,7 +120,10 @@ void main() {
     expect(taps, 0);
     await tester.tapAt(origin + const Offset(50, 50));
     expect(taps, 1);
-    expect(tester.widget<ClipPath>(find.byType(ClipPath)).clipBehavior, Clip.antiAlias);
+    expect(
+      tester.widgetList<ClipPath>(find.byType(ClipPath)).map((clip) => clip.clipBehavior),
+      everyElement(Clip.antiAlias),
+    );
   });
 
   testWidgets('when direction changes, it should resolve directional padding and retain its shape', (tester) async {
@@ -143,8 +146,11 @@ void main() {
         tester.getTopLeft(find.byKey(const ValueKey('content'))).dx - origin.dx,
         direction == TextDirection.ltr ? 12 : 4,
       );
-      final clip = tester.widget<ClipPath>(find.byType(ClipPath));
-      expect((clip.clipper! as ShapeBorderClipper).shape, const MateoRoundedShapeBorder.capsule());
+      final clips = tester.widgetList<ClipPath>(find.byType(ClipPath));
+      expect(
+        clips.map((clip) => (clip.clipper! as ShapeBorderClipper).shape),
+        everyElement(const MateoRoundedShapeBorder.capsule()),
+      );
     }
   });
 
@@ -189,10 +195,23 @@ void main() {
         ),
       );
       expect(tester.getSize(find.byType(MateoSurface)), const Size(100, 80));
-      final decoration = tester.widget<DecoratedBox>(find.byType(DecoratedBox)).decoration as ShapeDecoration;
+      final decoration = tester
+          .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+          .map((box) => box.decoration)
+          .whereType<ShapeDecoration>()
+          .single;
       expect(decoration.shadows, MateoElevation(level: elevation).toShadowList(palette: theme.palette));
-      expect(decoration.shape, (tester.widget<ClipPath>(find.byType(ClipPath)).clipper! as ShapeBorderClipper).shape);
-      expect(find.ancestor(of: find.byType(ClipPath), matching: find.byType(DecoratedBox)), findsOneWidget);
+      final clips = tester.widgetList<ClipPath>(find.byType(ClipPath));
+      expect(clips.map((clip) => (clip.clipper! as ShapeBorderClipper).shape), everyElement(decoration.shape));
+      expect(
+        find.ancestor(
+          of: find.byType(ClipPath).first,
+          matching: find.byWidgetPredicate(
+            (widget) => widget is DecoratedBox && widget.decoration is ShapeDecoration,
+          ),
+        ),
+        findsOneWidget,
+      );
       final origin = tester.getTopLeft(find.byType(MateoSurface));
       await tester.tapAt(origin + const Offset(50, 85));
       await tester.tapAt(origin + const Offset(1, 1));

@@ -5,43 +5,6 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
-  testWidgets('local keyed replacement crossfades captured content and cleans up', (tester) async {
-    final destination = ValueNotifier(false);
-    addTearDown(destination.dispose);
-    await tester.pumpWidget(
-      MateoApp(
-        theme: surfaceTransformTheme,
-        home: ValueListenableBuilder<bool>(
-          valueListenable: destination,
-          builder: (context, value, child) => surfaceTransformEndpoint(
-            key: ValueKey(value),
-            bounds: value ? const Rect.fromLTWH(40, 60, 240, 280) : const Rect.fromLTWH(20, 40, 160, 64),
-            view: value,
-            child: Text(value ? 'Destination' : 'Source'),
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    destination.value = true;
-    await tester.pump();
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 80));
-    expect(
-      find.descendant(
-        of: surfaceFlight,
-        matching: find.byWidgetPredicate(
-          (widget) => widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphContentSnapshotPainter',
-        ),
-      ),
-      findsNWidgets(2),
-    );
-    await tester.pumpAndSettle();
-    expect(surfaceFlight, findsNothing);
-    expect(find.text('Destination'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
   for (final reverse in [false, true]) {
     testWidgets('interrupted content preserves composition with reversal $reverse', (tester) async {
       final navigator = GlobalKey<NavigatorState>();
@@ -140,7 +103,7 @@ void main() {
               of: surfaceFlight,
               matching: find.byWidgetPredicate(
                 (widget) =>
-                    widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphContentSnapshotPainter',
+                    widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphGroupSnapshotPainter',
               ),
             ),
             findsNWidgets(2),

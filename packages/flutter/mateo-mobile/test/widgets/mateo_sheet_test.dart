@@ -517,7 +517,7 @@ void main() {
       expect(tester.getSize(find.byType(MateoSheetViewFooter)).height, 10 + spacing);
       expect(tester.getTopLeft(find.byKey(const ValueKey('body'))).dx, 16 + spacing);
       expect(tester.getSize(find.byKey(const ValueKey('body'))).width, 768 - 2 * spacing);
-      expect(tester.getBottomLeft(find.byType(MateoSheetView)).dy, 600);
+      expect(tester.getBottomLeft(find.byType(MateoSheetView)).dy, 588);
       navigator.currentState!.pop();
       await tester.pumpAndSettle();
     }
@@ -542,7 +542,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(tester.getRect(find.byType(MateoSheetView)), const Rect.fromLTWH(16, 60, 768, 540));
+        expect(tester.getRect(find.byType(MateoSheetView)), const Rect.fromLTWH(16, 48, 768, 540));
         navigator.currentState!.pop();
         await tester.pumpAndSettle();
       }
@@ -702,16 +702,16 @@ void main() {
     await host(tester);
     unawaited(showMateoSheet<void>(context: launcher, view: view));
     await tester.pump();
-    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 600);
+    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 612);
     await tester.pump(const Duration(milliseconds: 100));
     final enteringY = tester.getTopLeft(find.byType(MateoSheetView)).dy;
-    expect(enteringY, inExclusiveRange(480, 600));
+    expect(enteringY, inExclusiveRange(468, 612));
     await tester.pumpAndSettle();
-    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 480);
+    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 468);
     navigator.currentState!.pop();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
-    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, inExclusiveRange(480, 600));
+    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, inExclusiveRange(468, 612));
     await tester.pumpAndSettle();
     expect(find.byType(MateoSheetView), findsNothing);
   });
@@ -735,7 +735,7 @@ void main() {
     await host(tester, reducedMotion: true);
     unawaited(showMateoSheet<void>(context: launcher, view: view));
     await tester.pump();
-    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 480);
+    expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, 468);
     expect(find.ancestor(of: find.byType(MateoSheetView), matching: find.byType(SlideTransition)), findsNothing);
     navigator.currentState!.pop();
     await tester.pumpAndSettle();

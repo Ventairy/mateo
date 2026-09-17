@@ -39,10 +39,11 @@ void main() {
         expect(tester.widget<ClipRect>(clip).clipBehavior, Clip.hardEdge);
         expect(tester.getSize(clip), Size(width, 200));
       } else {
-        final clip = tester.widget<ClipPath>(find.byType(ClipPath));
+        final clip = tester.widget<ClipPath>(find.byType(ClipPath).first);
         final path = clip.clipper!.getClip(Size(width, 200));
         expect(path.contains(const Offset(1, 1)), isFalse);
-        expect(path.getBounds().size, Size(width, 200));
+        expect(path.getBounds().width, closeTo(width, 1e-4));
+        expect(path.getBounds().height, closeTo(200, 1e-4));
       }
     }
   });

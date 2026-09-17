@@ -39,7 +39,7 @@ void main() {
       expect(animation.contentEffects, const <MateoSurfaceTransformAnimationContentEffect>[
         .crossfade(curve: Interval(0, 0.35, curve: Curves.easeOut)),
       ]);
-      expect(animation.duration, const Duration(milliseconds: 170));
+      expect(animation.duration, const Duration(milliseconds: 230));
       expect(animation.curve, const Cubic(0.35, 1, 0.35, 1));
       expect(animation.curve.transform(0), 0);
       expect(animation.curve.transform(1), 1);

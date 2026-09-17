@@ -68,7 +68,9 @@ void main() {
         previous = bottom;
       }
       await tester.pumpAndSettle();
-      expect(controller.offset, controller.position.maxScrollExtent);
+      expect(controller.position.extentAfter, 24);
+      controller.jumpTo(controller.position.maxScrollExtent);
+      await tester.pumpAndSettle();
       expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 20);
     },
   );
@@ -79,7 +81,7 @@ void main() {
     await tester.pumpWidget(host(0, alignment: .bottomCenter, contentHeight: 40));
     await tester.pumpAndSettle();
     await tester.pumpWidget(host(200, alignment: .bottomCenter, contentHeight: 40));
-    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 20);
+    expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 44);
     await tester.pumpAndSettle();
     expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 20);
   });

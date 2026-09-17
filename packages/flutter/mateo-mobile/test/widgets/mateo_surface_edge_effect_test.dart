@@ -261,8 +261,11 @@ void main() {
           ),
         ),
       );
-      final clip = tester.widget<ClipPath>(find.byType(ClipPath));
-      expect((clip.clipper! as ShapeBorderClipper).shape, const MateoRoundedShapeBorder(radius: 32));
+      final clips = tester.widgetList<ClipPath>(find.byType(ClipPath));
+      expect(
+        clips.map((clip) => (clip.clipper! as ShapeBorderClipper).shape),
+        everyElement(const MateoRoundedShapeBorder(radius: 32)),
+      );
       expect(await _pixel(tester, 40, 40), [255, 255, 255, 255]);
       final shadowPixels = [await _pixel(tester, 90, 242), await _pixel(tester, 90, 248)];
       if (effect.at.isEmpty) {
@@ -270,9 +273,23 @@ void main() {
       } else {
         expect(shadowPixels, originalShadows);
       }
-      final decoration = tester.widget<DecoratedBox>(find.byType(DecoratedBox)).decoration as ShapeDecoration;
+      final decoration = tester
+          .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+          .map((box) => box.decoration)
+          .whereType<ShapeDecoration>()
+          .single;
       expect(decoration.shadows, isNotEmpty);
-      expect(find.descendant(of: find.byType(ClipPath), matching: find.byType(DecoratedBox)), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byWidgetPredicate(
+            (widget) => widget is ClipPath && widget.clipper is ShapeBorderClipper,
+          ),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is DecoratedBox && widget.decoration is ShapeDecoration,
+          ),
+        ),
+        findsNothing,
+      );
     }
   });
 

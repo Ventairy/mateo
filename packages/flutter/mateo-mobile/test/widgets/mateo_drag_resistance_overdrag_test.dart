@@ -99,8 +99,10 @@ void main() {
     await gesture.moveBy(const Offset(0, -96));
     await tester.pump();
     expect(tester.getTopLeft(_content), origin);
-    await gesture.moveBy(const Offset(0, 276));
-    await gesture.up();
+    await gesture.cancel();
+    final dismissalGesture = await tester.startGesture(tester.getCenter(_content));
+    await dismissalGesture.moveBy(const Offset(0, 180));
+    await dismissalGesture.up();
     await tester.pumpAndSettle();
     expect(dismissals, 1);
   });

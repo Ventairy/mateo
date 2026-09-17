@@ -50,7 +50,7 @@ void main() {
           );
           await show();
           final expected = density == MateoMenuDensity.standard
-              ? (withBackground ? 42.0 : 36.0)
+              ? (withBackground ? 44.0 : 38.0)
               : (withBackground ? 34.0 : 30.0);
           expect(tester.getSize(find.byType(MateoIcon)), Size.square(expected));
           await show(explicitSize: 22);
@@ -180,10 +180,10 @@ void main() {
       final lastContent = tester.getRect(find.byKey(lastKey));
       expect(firstContent.top - panel.top, density.verticalPadding);
       expect(panel.bottom - lastContent.bottom, density.verticalPadding);
-      expect(lastContent.top - firstContent.bottom, density == MateoMenuDensity.compact ? 12 : 16);
-      await tester.tapAt(Offset(panel.center.dx, firstContent.bottom + 4));
+      expect(lastContent.top - firstContent.bottom, density == MateoMenuDensity.compact ? 8 : 16);
+      await tester.tapAt(Offset(panel.center.dx, firstContent.bottom + 3));
       await tester.pumpAndSettle();
-      await tester.tapAt(Offset(panel.center.dx, lastContent.top - 4));
+      await tester.tapAt(Offset(panel.center.dx, lastContent.top - 3));
       await tester.pumpAndSettle();
       expect(selected, [first, last]);
       await show([first]);
@@ -214,7 +214,7 @@ void main() {
           final contentHeight = supporting == 2 ? 144 : 132;
           expect(
             tester.getSize(find.byType(MateoSurface)).height,
-            contentHeight + density.verticalPadding * 2 + (density == MateoMenuDensity.compact ? 16 : 20),
+            contentHeight + density.verticalPadding * 2 + (density == MateoMenuDensity.compact ? 12 : 24),
           );
         },
       );
@@ -239,7 +239,7 @@ void main() {
         panel.height,
         (density == MateoMenuDensity.compact ? 48 : 56) * 2 +
             density.verticalPadding * 2 +
-            (density == MateoMenuDensity.compact ? 12 : 16),
+            (density == MateoMenuDensity.compact ? 8 : 16),
       );
       expect(top.bottom, bottom.top);
       for (final point in [

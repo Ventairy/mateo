@@ -93,8 +93,8 @@ void main() {
     );
     final bounds = tester.getRect(find.byType(BaseMateoView));
     final content = tester.getRect(find.byKey(const ValueKey('content')));
-    expect(bounds.height, 150);
-    expect(content.top - bounds.top, 35);
-    expect(bounds.bottom - content.bottom, 55);
+    expect(bounds.height, 70);
+    expect(content.top - bounds.top, 5);
+    expect(bounds.bottom - content.bottom, 5);
   });
 }

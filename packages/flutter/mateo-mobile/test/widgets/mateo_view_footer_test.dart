@@ -138,7 +138,7 @@ void main() {
       retained = controller;
       controller.jumpTo(controller.position.maxScrollExtent);
       await tester.pumpAndSettle();
-      expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 28);
+      expect(tester.getBottomLeft(find.byKey(contentKey)).dy, tester.getTopLeft(find.byKey(footerKey)).dy - 8);
       expect(tester.getRect(find.byType(MateoViewSurface)), const Rect.fromLTWH(0, 0, 300, 600));
     }
   });

@@ -37,7 +37,7 @@ void main() {
         final layout = tester.widget<MateoViewLayoutScope>(find.byType(MateoViewLayoutScope));
         expect(layout.padding, padding);
         final surface = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface));
-        expect(surface.padding, padding.copyWith(top: 0, bottom: 0));
+        expect(surface.padding, padding.copyWith(top: 20, bottom: 20));
         for (final slot in [MateoViewHeader, MateoViewFooter]) {
           final inset = tester.widget<Padding>(
             find.descendant(of: find.byType(slot), matching: find.byType(Padding)).first,
