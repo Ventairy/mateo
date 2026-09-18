@@ -69,6 +69,49 @@ void main() {
     if (settle) await tester.pumpAndSettle();
   }
 
+  for (final height in [80.0, 160.0, 400.0]) {
+    testWidgets('when a $height tall sheet opens, the stack should ease into movement and land with it', (
+      tester,
+    ) async {
+      await host(tester);
+      await push(tester, 0);
+      final resting = bounds(tester, 0);
+      await push(tester, 1, height: height, settle: false);
+      final entering = bounds(tester, 1);
+      final samples = <({Rect back, Rect front})>[];
+      for (final milliseconds in [8, 8, 64, 80, 80, 80, 32, 8]) {
+        await tester.pump(Duration(milliseconds: milliseconds));
+        samples.add((back: bounds(tester, 0), front: bounds(tester, 1)));
+      }
+      final landed = samples.last;
+      double stackProgress(Rect frame) => (resting.width - frame.width) / (resting.width - landed.back.width);
+      double openingProgress(Rect frame) => (entering.top - frame.top) / (entering.top - landed.front.top);
+
+      // The covered sheet starts from rest instead of inheriting the incoming
+      // sheet's fast initial speed, including when it must grow much taller.
+      expect(stackProgress(samples.first.back), lessThan(.01));
+      expect(
+        stackProgress(samples[1].back) - stackProgress(samples.first.back),
+        greaterThan(stackProgress(samples.first.back)),
+      );
+      for (var index = 0; index < samples.length - 1; index++) {
+        final sample = samples[index];
+        expect(stackProgress(sample.back), inExclusiveRange(0, openingProgress(sample.front)));
+        expect(sample.back.width, greaterThan(samples[index + 1].back.width));
+        final verticalProgress = (sample.back.top - resting.top) / (landed.back.top - resting.top);
+        expect(verticalProgress, closeTo(stackProgress(sample.back), .00001));
+      }
+      // Both surfaces are still settling near the end, with no final snap.
+      expect((samples[6].back.top - landed.back.top).abs(), lessThan(.1));
+      expect((samples[6].front.top - landed.front.top).abs(), lessThan(.1));
+      expect(landed.back.top, closeTo(landed.front.top - 12, .01));
+      await tester.pumpAndSettle();
+      expect(bounds(tester, 0), landed.back);
+      expect(bounds(tester, 1), landed.front);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   testWidgets('when the stack scrim is tapped, it should dismiss only the top sheet and restore the one below', (
     tester,
   ) async {

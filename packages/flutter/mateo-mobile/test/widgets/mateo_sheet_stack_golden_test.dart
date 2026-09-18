@@ -7,7 +7,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
-  for (final phase in ['three', 'four', 'entering', 'returning']) {
+  for (final phase in ['three', 'four', 'entering', 'taller_entering', 'returning']) {
     late BuildContext launcher;
     await goldenTest(
       'when a stack is $phase, it should show stepped frames and preserve the front content',
@@ -23,7 +23,7 @@ Future<void> main() async {
                 surface: MateoSheetViewSurface(
                   color: surfaceTransformTheme.colorScheme.background,
                   child: SizedBox(
-                    height: 240 - index * 30,
+                    height: phase == 'taller_entering' && index == 3 ? 340 : 240 - index * 30,
                     child: Center(child: Text('Sheet ${index + 1}')),
                   ),
                 ),
@@ -31,7 +31,7 @@ Future<void> main() async {
             ),
           );
           await tester.pump();
-          if (phase == 'entering' && index == 3) {
+          if (phase.endsWith('entering') && index == 3) {
             await tester.pump(const Duration(milliseconds: 100));
           } else {
             await tester.pumpAndSettle();

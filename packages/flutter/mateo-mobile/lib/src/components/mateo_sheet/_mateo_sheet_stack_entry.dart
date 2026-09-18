@@ -65,7 +65,9 @@ class _MateoSheetStackEntry extends ChangeNotifier {
     changed();
   }
 
-  double get coverage => progress * (1 - dismissProgress.clamp(0.0, 1.0));
+  // Ease the stack into the incoming sheet's travel while retaining its clock
+  // and soft landing. Apply drag restoration afterward so it stays direct.
+  double get coverage => math.pow(progress, 2.5).toDouble() * (1 - dismissProgress.clamp(0.0, 1.0));
 
   double get depth {
     final restoringDepth = _returnDepth * (1 - _returnProgress);
