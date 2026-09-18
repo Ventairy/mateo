@@ -49,6 +49,12 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 /// than zero. When omitted, the existing presentation limit applies; a supplied
 /// value can only reduce that limit.
 ///
+/// [avoidBottomInset] moves the whole sheet above bottom system obstructions,
+/// such as the keyboard. Defaults to false, keeping bottom device safe-area
+/// spacing stable while a keyboard opens or closes. Enable it for sheets that
+/// need to remain above the keyboard. Long content still needs a
+/// [MateoSheetViewSurface.scrollable] surface to stay reachable.
+///
 /// [shouldDismiss] decides whether a requested dismissal may proceed. When
 /// omitted, dismissal is allowed. Explicit [Navigator.pop] calls bypass this
 /// decision and can return a result.
@@ -67,6 +73,7 @@ Future<T?> showMateoSheet<T>({
   required MateoSheetView view,
   MateoSheetShouldDismiss? shouldDismiss,
   double? maxExtent,
+  bool avoidBottomInset = false,
 }) {
   assert(maxExtent == null || (maxExtent.isFinite && maxExtent > 0), 'maxExtent must be finite and greater than zero.');
   final navigator = Navigator.of(context);
@@ -75,6 +82,7 @@ Future<T?> showMateoSheet<T>({
     _MateoSheetRoute<T>(
       view: view,
       maxExtent: maxExtent,
+      avoidBottomInset: avoidBottomInset,
       shouldDismiss: shouldDismiss,
       from: .bottom,
       theme: MateoTheme.of(context),

@@ -23,7 +23,7 @@ class _MateoSheetStackEntry extends ChangeNotifier {
     _departing?.removeListener(changed);
     _next = null;
     _departing = null;
-    _returnFrame = currentFrame;
+    _returnFrame = currentFrame.shift(Offset(0, -bottomOffset));
     _returnDepth = currentDepth;
     _returnController.forward(from: 0);
   }
@@ -36,6 +36,15 @@ class _MateoSheetStackEntry extends ChangeNotifier {
   set availableSize(Size value) {
     if (_availableSize == value) return;
     _availableSize = value;
+    changed();
+  }
+
+  // Distance from the shared viewport bottom to this route's bottom origin.
+  double _bottomOffset = 0;
+  double get bottomOffset => _bottomOffset;
+  set bottomOffset(double value) {
+    if (_bottomOffset == value) return;
+    _bottomOffset = value;
     changed();
   }
 
@@ -81,11 +90,15 @@ class _MateoSheetStackEntry extends ChangeNotifier {
   double get opacity => (3 - depth).clamp(0.0, 1.0);
 
   Rect get frame {
-    final natural = Rect.lerp(_returnFrame ?? _restingFrame, _restingFrame, _returnProgress)!;
+    final natural = Rect.lerp(
+      _returnFrame?.shift(Offset(0, bottomOffset)) ?? _restingFrame,
+      _restingFrame,
+      _returnProgress,
+    )!;
     return _frameBehind(_next, _frameBehind(_departing, natural));
   }
 
-  // Frames share an origin at the source edge, independently of content size.
+  // Frames use each route's source edge as their origin, independently of content size.
   Rect get _restingFrame => switch (source) {
     .bottom => Rect.fromLTWH(0, -_size.height, _size.width, _size.height),
   };
@@ -95,13 +108,13 @@ class _MateoSheetStackEntry extends ChangeNotifier {
       case .bottom:
         final width = math.max<double>(0, front.width - source._stackCrossAxisInset * 2);
         final top = math.max(-availableSize.height, front.top - source._stackEdgeGap);
-        return Rect.fromLTWH((_size.width - width) / 2, top, width, -top);
+        return Rect.fromLTWH((_size.width - width) / 2, top, width, math.max(0, front.bottom - top));
     }
   }
 
   Rect _frameBehind(_MateoSheetStackEntry? next, Rect resting) {
     if (next == null || next._size.isEmpty) return resting;
-    final covered = _coveredFrame(next.frame);
+    final covered = _coveredFrame(next.frame.shift(Offset(0, bottomOffset - next.bottomOffset)));
     return Rect.lerp(resting, covered, next.coverage)!;
   }
 

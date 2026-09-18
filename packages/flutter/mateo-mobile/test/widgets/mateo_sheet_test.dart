@@ -650,6 +650,7 @@ void main() {
     tester.view.physicalSize = const Size(800, 800);
     await tester.pumpAndSettle();
     expect(tester.getSize(find.byType(MateoSheetView)).height, 400);
+    tester.view.viewPadding = const FakeViewPadding(top: 500, bottom: 100);
     tester.view.padding = const FakeViewPadding(top: 500, bottom: 100);
     await tester.pumpAndSettle();
     final sheet = tester.getRect(find.byType(MateoSheetView));

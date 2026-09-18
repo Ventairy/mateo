@@ -3,6 +3,7 @@ part of 'show_mateo_sheet.dart';
 class _MateoSheetRoute<T> extends PopupRoute<T> {
   _MateoSheetRoute({
     required this.view,
+    required this.avoidBottomInset,
     required this.from,
     required this.theme,
     required this.textStyle,
@@ -13,6 +14,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
   }) : super(requestFocus: true);
 
   final MateoSheetView view;
+  final bool avoidBottomInset;
   final double? maxExtent;
   final MateoSheetShouldDismiss? shouldDismiss;
   MateoSheetDismissSource? _dismissSource;
@@ -181,47 +183,56 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final safePadding = MediaQuery.paddingOf(context);
+    final bottomInset = avoidBottomInset ? MediaQuery.viewInsetsOf(context).bottom : 0.0;
+    final bottomSafeArea = math.max<double>(0, MediaQuery.viewPaddingOf(context).bottom - bottomInset);
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomInset),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final safePadding = MediaQuery.paddingOf(context).copyWith(bottom: bottomSafeArea);
+          _stackEntry.bottomOffset = bottomInset + bottomSafeArea;
 
-        _stackEntry.availableSize = Size(
-          math.max(0, constraints.maxWidth - safePadding.horizontal),
-          math.max(0, constraints.maxHeight - safePadding.vertical),
-        );
+          _stackEntry.availableSize = Size(
+            math.max(0, constraints.maxWidth - safePadding.horizontal),
+            math.max(0, constraints.maxHeight - safePadding.vertical),
+          );
 
-        final draggableSheet = _MateoSheetDrag(
-          from: from,
-          onDismiss: () => _requestDismiss(.drag),
-          onPositionChanged: _updatePosition,
-          child: SafeArea(
-            child: Padding(
-              padding: from._margin,
-              child: ConstrainedBox(
-                constraints: _layoutConstraints(constraints),
-                child: child,
+          final draggableSheet = _MateoSheetDrag(
+            from: from,
+            onDismiss: () => _requestDismiss(.drag),
+            onPositionChanged: _updatePosition,
+            child: SafeArea(
+              maintainBottomViewPadding: true,
+              child: Padding(
+                padding: from._margin,
+                child: ConstrainedBox(
+                  constraints: _layoutConstraints(constraints),
+                  child: child,
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        final sheet = Builder(
-          builder: (context) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(disableAnimations: reducedMotion),
-            child: draggableSheet,
-          ),
-        );
+          final sheet = Builder(
+            builder: (context) => MediaQuery(
+              data: MediaQuery.of(context)
+                  .removeViewInsets(removeBottom: avoidBottomInset)
+                  .copyWith(disableAnimations: reducedMotion),
+              child: draggableSheet,
+            ),
+          );
 
-        if (reducedMotion) return Align(alignment: from._sheetAlignment, child: sheet);
+          if (reducedMotion) return Align(alignment: from._sheetAlignment, child: sheet);
 
-        return Align(
-          alignment: from._sheetAlignment,
-          child: SlideTransition(
-            position: Tween<Offset>(begin: from._beginOffset, end: .zero).animate(_movement),
-            child: sheet,
-          ),
-        );
-      },
+          return Align(
+            alignment: from._sheetAlignment,
+            child: SlideTransition(
+              position: Tween<Offset>(begin: from._beginOffset, end: .zero).animate(_movement),
+              child: sheet,
+            ),
+          );
+        },
+      ),
     );
   }
 
