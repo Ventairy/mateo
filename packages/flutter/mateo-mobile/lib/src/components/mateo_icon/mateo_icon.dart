@@ -33,7 +33,7 @@ class MateoIcon extends StatelessWidget {
   }) : assert(size == null || (size >= 0 && size < double.infinity), 'size must be finite and nonnegative.');
 
   static const _defaultSize = 20.0;
-  static const _backgroundArtworkScale = 0.6;
+  static const _backgroundArtworkScale = 0.65;
 
   /// The catalog artwork to display.
   final MateoIconData icon;
