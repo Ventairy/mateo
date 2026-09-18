@@ -1,11 +1,16 @@
 part of 'show_mateo_sheet.dart';
 
-/// A synchronous or asynchronous decision allowing a sheet to dismiss.
+/// A synchronous decision allowing a sheet to dismiss.
 ///
 /// Return `true` to allow the dismissal requested by [source], or `false` to
-/// keep the sheet open. A denied drag returns to its resting position.
-/// Further requests are ignored while the decision is pending. Only the
-/// current sheet is asked; sheets below it remain open.
+/// keep the sheet open. Only the current sheet is asked.
+///
+/// Keep this check quick and free of side effects. [MateoSheetDismissSource.drag]
+/// is checked at pointer down, including touches that never become drags, and
+/// again before a drag dismisses the sheet. Return `false` at pointer down to
+/// prevent dragging and resistance. If permission changes during a drag, a
+/// denied dismissal returns the sheet to its resting position.
+///
 ///
 /// Explicit [Navigator.pop] calls bypass this callback.
-typedef MateoSheetShouldDismiss = FutureOr<bool> Function(MateoSheetDismissSource source);
+typedef MateoSheetShouldDismiss = bool Function(MateoSheetDismissSource source);

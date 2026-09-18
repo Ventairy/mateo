@@ -81,7 +81,10 @@ void main() {
         await tester.pumpAndSettle();
         final origin = tester.getTopLeft(find.byType(MateoSheetView));
         await requestDismiss(tester, source);
-        expect(requests, [source]);
+        expect(requests, <MateoSheetDismissSource>[
+          if (source == .closeButton || (source == .drag && allowed)) .drag,
+          source,
+        ]);
         expect(find.byType(MateoSheetView), allowed ? findsNothing : findsOneWidget);
         if (!allowed) expect(tester.getTopLeft(find.byType(MateoSheetView)), origin);
         semantics.dispose();
@@ -89,65 +92,155 @@ void main() {
     }
   }
 
-  for (final allowed in [false, true]) {
-    testWidgets('when an async drag decision returns $allowed, it should ignore repeated requests and settle', (
-      tester,
-    ) async {
-      await host(tester);
-      final decision = Completer<bool>();
-      var calls = 0;
-      unawaited(
-        showMateoSheet<void>(
-          context: launcher,
-          view: view,
-          shouldDismiss: (_) {
-            calls++;
-            return decision.future;
-          },
-        ),
+  for (final handle in [false, true]) {
+    for (final reducedMotion in [false, true]) {
+      testWidgets(
+        'when dragging is blocked with handle $handle and reduced motion $reducedMotion, it should stay still',
+        (tester) async {
+          await host(tester, reducedMotion: reducedMotion);
+          var allowed = false;
+          var calls = 0;
+          unawaited(
+            showMateoSheet<void>(
+              context: launcher,
+              view: MateoSheetView(
+                header: handle ? const MateoSheetViewHeader(presentation: .handle()) : null,
+                surface: const MateoSheetViewSurface(child: SizedBox(height: 180)),
+              ),
+              shouldDismiss: (_) {
+                calls++;
+                return allowed;
+              },
+            ),
+          );
+          await tester.pumpAndSettle();
+          final sheet = find.byType(MateoSheetView);
+          final target = handle ? find.byType(MateoSheetViewHeader) : sheet;
+          final origin = tester.getRect(sheet);
+          for (final offset in [const Offset(0, 120), const Offset(96, -96)]) {
+            final gesture = await tester.startGesture(tester.getCenter(target));
+            await gesture.moveBy(offset);
+            await tester.pump();
+            expect(tester.getRect(sheet), origin);
+            await gesture.cancel();
+            await tester.pumpAndSettle();
+          }
+          expect(calls, 2);
+          allowed = true;
+          await tester.drag(target, const Offset(0, 120));
+          await tester.pumpAndSettle();
+          expect(sheet, findsNothing);
+          expect(calls, 4);
+        },
       );
-      await tester.pumpAndSettle();
-      final origin = tester.getTopLeft(find.byType(MateoSheetView));
-      await requestDismiss(tester, .drag);
-      await requestDismiss(tester, .tapOutside);
-      await requestDismiss(tester, .systemBack);
-      expect(calls, 1);
-      expect(find.byType(MateoSheetView), findsOneWidget);
-      decision.complete(allowed);
-      await tester.pumpAndSettle();
-      expect(find.byType(MateoSheetView), allowed ? findsNothing : findsOneWidget);
-      if (!allowed) expect(tester.getTopLeft(find.byType(MateoSheetView)), origin);
-    });
+
+      testWidgets(
+        'when permission is revoked during a drag with handle $handle and reduced motion $reducedMotion, it should restore',
+        (tester) async {
+          await host(tester, reducedMotion: reducedMotion);
+          var allowed = true;
+          var calls = 0;
+          unawaited(
+            showMateoSheet<void>(
+              context: launcher,
+              view: MateoSheetView(
+                header: handle ? const MateoSheetViewHeader(presentation: .handle()) : null,
+                surface: const MateoSheetViewSurface(child: SizedBox(height: 180)),
+              ),
+              shouldDismiss: (_) {
+                calls++;
+                return allowed;
+              },
+            ),
+          );
+          await tester.pumpAndSettle();
+          final sheet = find.byType(MateoSheetView);
+          final origin = tester.getRect(sheet);
+          final gesture = await tester.startGesture(
+            tester.getCenter(handle ? find.byType(MateoSheetViewHeader) : sheet),
+          );
+          await gesture.moveBy(const Offset(0, 120));
+          await tester.pump();
+          expect(tester.getRect(sheet), reducedMotion ? origin : origin.shift(const Offset(0, 120)));
+          allowed = false;
+          await gesture.up();
+          await tester.pumpAndSettle();
+          expect(tester.getRect(sheet), origin);
+          expect(calls, 2);
+        },
+      );
+    }
   }
 
-  testWidgets('when explicitly popped during a decision, it should preserve the result and ignore the stale approval', (
+  testWidgets('when dragging is blocked, it should preserve content taps and scrolling', (tester) async {
+    await host(tester);
+    var taps = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        shouldDismiss: (_) => false,
+        view: MateoSheetView(
+          surface: MateoSheetViewSurface.scrollable(
+            child: GestureDetector(
+              behavior: .opaque,
+              onTap: () => taps++,
+              child: const SizedBox(height: 1200),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final sheet = find.byType(MateoSheetView);
+    final origin = tester.getRect(sheet);
+    await tester.tapAt(tester.getCenter(sheet));
+    expect(taps, 1);
+    await tester.drag(sheet, const Offset(0, -120));
+    await tester.pumpAndSettle();
+    expect(tester.state<ScrollableState>(find.byType(Scrollable)).position.pixels, greaterThan(0));
+    expect(tester.getRect(sheet), origin);
+  });
+
+  testWidgets('when explicitly popped despite a blocking guard, it should preserve the result without checking', (
     tester,
   ) async {
     await host(tester);
-    final decision = Completer<bool>();
-    final result = showMateoSheet<String>(context: launcher, view: view, shouldDismiss: (_) => decision.future);
+    var calls = 0;
+    final result = showMateoSheet<String>(
+      context: launcher,
+      view: view,
+      shouldDismiss: (_) {
+        calls++;
+        return false;
+      },
+    );
     await tester.pumpAndSettle();
-    await requestDismiss(tester, .tapOutside);
     navigator.currentState!.pop('done');
     await tester.pumpAndSettle();
     expect(await result, 'done');
-    decision.complete(true);
-    await tester.pumpAndSettle();
-    expect(navigator.currentState!.canPop(), isFalse);
-    expect(tester.takeException(), isNull);
+    expect(calls, 0);
   });
 
-  testWidgets('when another sheet covers a pending decision, it should keep both sheets open', (tester) async {
+  testWidgets('when dismissal requests overlap, it should consult the guard once', (tester) async {
     await host(tester);
-    final decision = Completer<bool>();
-    unawaited(showMateoSheet<void>(context: launcher, view: view, shouldDismiss: (_) => decision.future));
+    var calls = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        view: view,
+        shouldDismiss: (_) {
+          calls++;
+          return true;
+        },
+      ),
+    );
     await tester.pumpAndSettle();
-    await requestDismiss(tester, .tapOutside);
-    unawaited(showMateoSheet<void>(context: launcher, view: view));
+    final swipe = tester.widget<InteractiveSwipeDismiss>(find.byType(InteractiveSwipeDismiss));
+    final first = swipe.onDismiss();
+    expect(await swipe.onDismiss(), isFalse);
+    expect(await first, isTrue);
     await tester.pumpAndSettle();
-    decision.complete(true);
-    await tester.pumpAndSettle();
-    expect(find.byType(MateoSheetView), findsNWidgets(2));
+    expect(calls, 1);
   });
 
   testWidgets('when a decision throws, it should report the error and allow a later request', (tester) async {
@@ -187,9 +280,31 @@ void main() {
     expect(find.byType(MateoSheetView), findsOneWidget);
   });
 
+  testWidgets('when the release check throws, it should report the error and restore the sheet', (tester) async {
+    await host(tester);
+    var calls = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        view: view,
+        shouldDismiss: (_) {
+          if (++calls == 2) throw StateError('release failed');
+          return true;
+        },
+      ),
+    );
+    await tester.pumpAndSettle();
+    final origin = tester.getRect(find.byType(MateoSheetView));
+    await requestDismiss(tester, .drag);
+    expect(tester.takeException(), isStateError);
+    expect(tester.getRect(find.byType(MateoSheetView)), origin);
+    await requestDismiss(tester, .drag);
+    expect(find.byType(MateoSheetView), findsNothing);
+  });
+
   for (final reducedMotion in [false, true]) {
     testWidgets(
-      'when a stacked drag is denied with reduced motion $reducedMotion, it should restore and consult only the top sheet',
+      'when a stacked drag is denied with reduced motion $reducedMotion, it should stay still and consult only the top sheet',
       (tester) async {
         await host(tester, reducedMotion: reducedMotion);
         var lowerCalls = 0;
@@ -209,7 +324,13 @@ void main() {
         await tester.pumpAndSettle();
         final frames = tester.getRect(find.byType(MateoSheetView).first);
         final topFrame = tester.getRect(find.byType(MateoSheetView).last);
-        await requestDismiss(tester, .drag);
+        final gesture = await tester.startGesture(tester.getCenter(find.byType(MateoSheetView).last));
+        await gesture.moveBy(const Offset(0, 120));
+        await tester.pump();
+        expect(tester.getRect(find.byType(MateoSheetView).first), frames);
+        expect(tester.getRect(find.byType(MateoSheetView).last), topFrame);
+        await gesture.up();
+        await tester.pumpAndSettle();
         expect(find.byType(MateoSheetView), findsNWidgets(2));
         expect(tester.getRect(find.byType(MateoSheetView).first), frames);
         expect(tester.getRect(find.byType(MateoSheetView).last), topFrame);
@@ -449,6 +570,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    expect(swipe.canStartDrag!(), isFalse);
     expect(await swipe.onDismiss(), isFalse);
     expect(find.byKey(const ValueKey('cover')), findsOneWidget);
     navigator.currentState!.pop();

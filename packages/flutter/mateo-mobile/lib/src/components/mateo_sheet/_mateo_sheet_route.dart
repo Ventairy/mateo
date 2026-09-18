@@ -103,6 +103,17 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   Duration get reverseTransitionDuration => reducedMotion ? .zero : from._reverseDuration;
 
+  bool _canStartDrag() {
+    if (_disposed || !isCurrent || navigator == null || _checkingDismissal || _dismissSource != null) return false;
+    _checkingDismissal = true;
+    try {
+      if (!(shouldDismiss?.call(.drag) ?? true)) return false;
+      return !_disposed && isCurrent && navigator != null;
+    } finally {
+      _checkingDismissal = false;
+    }
+  }
+
   Future<bool> _requestDismiss(MateoSheetDismissSource source) async {
     if (_disposed || !isCurrent || navigator == null || _checkingDismissal || _dismissSource != null) return false;
     _dismissSource = source;
@@ -120,9 +131,9 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     if (_disposed || !isCurrent || _checkingDismissal) return .doNotPop;
     _checkingDismissal = true;
     try {
-      if (shouldDismiss != null && !await shouldDismiss!(_dismissSource ?? .systemBack)) return .doNotPop;
+      if (!(shouldDismiss?.call(_dismissSource ?? .systemBack) ?? true)) return .doNotPop;
       if (_disposed || !isCurrent || navigator == null) return .doNotPop;
-      // Navigator.maybePop still consults this hook for asynchronous decisions.
+      // Preserve route callbacks before Navigator.maybePop checks popDisposition.
       // ignore: deprecated_member_use
       return await super.willPop();
     } on Object catch (error, stackTrace) {
@@ -199,6 +210,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
 
           final draggableSheet = _MateoSheetDrag(
             from: from,
+            canStartDrag: _canStartDrag,
             onDismiss: () => _requestDismiss(.drag),
             onPositionChanged: _updatePosition,
             child: SafeArea(

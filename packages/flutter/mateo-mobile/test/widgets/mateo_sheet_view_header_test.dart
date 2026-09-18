@@ -69,11 +69,10 @@ void main() {
   }
 
   for (final allowed in [false, true]) {
-    testWidgets('when dismissal returns $allowed, the close button should await it and ignore repeated presses', (
+    testWidgets('when dismissal returns $allowed, the close button should respect the synchronous decision', (
       tester,
     ) async {
       await host(tester);
-      final decision = Completer<bool>();
       final requests = <MateoSheetDismissSource>[];
       unawaited(
         showMateoSheet<void>(
@@ -81,19 +80,14 @@ void main() {
           view: closeView,
           shouldDismiss: (source) {
             requests.add(source);
-            return decision.future;
+            return allowed;
           },
         ),
       );
       await tester.pumpAndSettle();
       await tester.tap(find.byType(MateoButton));
-      await tester.pump();
-      await tester.tap(find.byType(MateoButton));
-      await tester.pump();
-      expect(requests, [MateoSheetDismissSource.closeButton]);
-      expect(find.byType(MateoSheetView), findsOneWidget);
-      decision.complete(allowed);
       await tester.pumpAndSettle();
+      expect(requests, [MateoSheetDismissSource.drag, MateoSheetDismissSource.closeButton]);
       expect(find.byType(MateoSheetView), allowed ? findsNothing : findsOneWidget);
     });
   }
@@ -151,7 +145,7 @@ void main() {
           final start = whitespace ? header.topLeft + const Offset(3, 3) : tester.getCenter(handleVisual);
           await tester.dragFrom(start, const Offset(0, 300));
           await tester.pumpAndSettle();
-          expect(requests, [MateoSheetDismissSource.drag]);
+          expect(requests, [MateoSheetDismissSource.drag, MateoSheetDismissSource.drag]);
           expect(find.byType(MateoSheetView), findsNothing);
         },
       );
@@ -159,7 +153,9 @@ void main() {
   }
 
   for (final cancel in [false, true]) {
-    testWidgets('when ${cancel ? 'canceled' : 'vetoed'}, the handle should restore its position', (tester) async {
+    testWidgets('when a blocked handle drag is ${cancel ? 'canceled' : 'released'}, it should stay still', (
+      tester,
+    ) async {
       await host(tester);
       final requests = <MateoSheetDismissSource>[];
       unawaited(
@@ -180,6 +176,7 @@ void main() {
       final gesture = await tester.startGesture(header.center);
       await gesture.moveBy(const Offset(0, 120));
       await tester.pump();
+      expect(tester.getRect(find.byType(MateoSheetViewHeader)), header);
       if (cancel) {
         await gesture.cancel();
       } else {
@@ -188,7 +185,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(MateoSheetView), findsOneWidget);
       expect(tester.getRect(find.byType(MateoSheetViewHeader)), header);
-      expect(requests, cancel ? isEmpty : [MateoSheetDismissSource.drag]);
+      expect(requests, [MateoSheetDismissSource.drag]);
     });
   }
 }

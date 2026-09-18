@@ -4,12 +4,14 @@ class _MateoSheetDrag extends StatefulWidget {
   const _MateoSheetDrag({
     required this.child,
     required this.from,
+    required this.canStartDrag,
     required this.onDismiss,
     required this.onPositionChanged,
   });
 
   final Widget child;
   final MateoSheetSource from;
+  final bool Function() canStartDrag;
   final FutureOr<bool> Function() onDismiss;
   final void Function(Offset offset, double directionalFraction) onPositionChanged;
 
@@ -38,6 +40,7 @@ class _MateoSheetDragState extends State<_MateoSheetDrag> {
     onPointerUp: _endPointer,
     onPointerCancel: _endPointer,
     child: InteractiveSwipeDismiss(
+      canStartDrag: widget.canStartDrag,
       direction: widget.from._dismissDirection,
       dragConfig: .new(
         dismissFraction: 0.05,
