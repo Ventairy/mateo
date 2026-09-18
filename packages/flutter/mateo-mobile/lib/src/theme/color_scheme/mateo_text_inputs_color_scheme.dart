@@ -3,17 +3,20 @@ part of 'mateo_color_scheme.dart';
 /// The semantic color treatments for Mateo text inputs.
 @immutable
 final class MateoTextInputsColorScheme {
-  const MateoTextInputsColorScheme._({required this.filled});
+  const MateoTextInputsColorScheme._({required this.filled, required this.plain});
 
   /// The filled treatments.
   final MateoFilledTextInputColorScheme filled;
 
+  /// The transparent treatment with filled-base content colors.
+  final MateoTextInputColorScheme plain;
+
   /// Whether every color role equals the other scheme.
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is MateoTextInputsColorScheme && filled == other.filled;
+      identical(this, other) || other is MateoTextInputsColorScheme && filled == other.filled && plain == other.plain;
 
   /// The hash of this scheme's color roles.
   @override
-  int get hashCode => filled.hashCode;
+  int get hashCode => Object.hash(filled, plain);
 }

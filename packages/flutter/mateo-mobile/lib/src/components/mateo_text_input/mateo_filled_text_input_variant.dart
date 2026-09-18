@@ -11,6 +11,17 @@ enum MateoFilledTextInputVariant implements MateoTextInputVariant {
   /// A white surface with the same content colors as neutral.
   MateoTextInputVariant get base => _base;
 
+  /// Resolves the typography for a supported filled input size.
+  @override
+  ({double fontSize, double lineHeight}) resolveTypography(MateoTextInputSize size) {
+    assert(size != MateoTextInputSize.large, 'Large is not supported by filled');
+    return switch (size) {
+      .small => (fontSize: 15, lineHeight: 20),
+      .standard => (fontSize: 16, lineHeight: 24),
+      .large => throw UnsupportedError('Large is not supported by filled'),
+    };
+  }
+
   @override
   MateoTextInputColorScheme resolveColorScheme(MateoTextInputsColorScheme colors) => switch (this) {
     _neutral => colors.filled.neutral,

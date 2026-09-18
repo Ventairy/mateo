@@ -16,6 +16,12 @@ sealed class MateoTextInputPresentation extends StatefulWidget {
     double elevation,
   }) = _MateoSearchTextInputPresentation;
 
+  /// Creates a phone-number input presentation.
+  const factory MateoTextInputPresentation.phone({
+    required Country initialCountry,
+    MateoTextInputSize size,
+  }) = _MateoPhoneTextInputPresentation;
+
   /// The surface lift
   ///
   /// Defaults to zero (flat).

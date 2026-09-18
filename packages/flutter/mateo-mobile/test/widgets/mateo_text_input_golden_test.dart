@@ -71,7 +71,7 @@ Future<void> main() async {
             child: GoldenTestGroup(
               columns: 2,
               children: [
-                for (final size in MateoTextInputSize.values)
+                for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard])
                   for (final direction in TextDirection.values)
                     GoldenTestScenario(
                       name: '${size.name} / ${direction.name}',
@@ -120,7 +120,7 @@ Future<void> main() async {
           child: GoldenTestGroup(
             columns: 3,
             children: [
-              for (final size in MateoTextInputSize.values)
+              for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard])
                 for (final state in ['empty', 'populated', 'disabled'])
                   GoldenTestScenario(
                     name: '${size.name} / $state',
