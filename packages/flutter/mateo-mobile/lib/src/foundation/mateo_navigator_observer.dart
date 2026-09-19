@@ -33,8 +33,8 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
       route
         ..disablePrimaryVisualMotion()
         ..setTransitionDurations(
-          forward: kSheetToViewTransformAnimation.duration,
-          reverse: kSheetToViewTransformAnimation.duration,
+          forward: kSheetToViewTransformAnimation.duration!,
+          reverse: kSheetToViewTransformAnimation.duration!,
         );
     }
   }
