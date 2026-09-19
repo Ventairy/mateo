@@ -3,6 +3,7 @@ import 'package:oh_my_flutter/oh_my_flutter.dart' show MorphNavigatorObserver;
 
 import '../bases/base_mateo_page_route/base_mateo_page_route.dart';
 import '../components/mateo_sheet/show_mateo_sheet.dart' show MateoSheetRoute;
+import 'mateo_sheet_to_view_transition.dart';
 
 /// A navigator observer to guide Mateo needed route informations.
 ///
@@ -29,7 +30,12 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route is BaseMateoPageRoute && previousRoute is MateoSheetRoute) {
-      route.disablePrimaryTransition();
+      route
+        ..disablePrimaryVisualMotion()
+        ..setTransitionDurations(
+          forward: kSheetToViewTransformAnimation.duration,
+          reverse: kSheetToViewTransformAnimation.duration,
+        );
     }
   }
 }

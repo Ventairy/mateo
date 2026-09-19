@@ -25,9 +25,11 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
   }
 
   @override
-  Duration get transitionDuration => shouldAnimatePrimary ? _builder.transitionDuration : .zero;
+  Duration get transitionDuration =>
+      reducedMotion ? .zero : transitionDurations?.forward ?? _builder.transitionDuration;
   @override
-  Duration get reverseTransitionDuration => shouldAnimatePrimary ? _builder.reverseTransitionDuration : .zero;
+  Duration get reverseTransitionDuration =>
+      reducedMotion ? .zero : transitionDurations?.reverse ?? _builder.reverseTransitionDuration;
   @override
   bool get popGestureEnabled => defaultTargetPlatform != .iOS && super.popGestureEnabled;
   @override

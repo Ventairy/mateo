@@ -7,19 +7,33 @@ import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
 abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   BaseMateoPageRoute({required MateoPage<T> page, required this.reducedMotion}) : super(settings: page);
 
-  bool _isPrimaryTransitionDisabled = false;
-  bool get isPrimaryTransitionDisabled => _isPrimaryTransitionDisabled;
-  bool get shouldAnimatePrimary => !reducedMotion && !isPrimaryTransitionDisabled;
+  bool _isPrimaryVisualMotionDisabled = false;
+  bool get isPrimaryVisualMotionDisabled => _isPrimaryVisualMotionDisabled;
+  bool get shouldAnimatePrimary => !reducedMotion && !isPrimaryVisualMotionDisabled;
   bool get shouldAnimateSecondary => !reducedMotion;
 
-  void disablePrimaryTransition() {
-    _isPrimaryTransitionDisabled = true;
+  void disablePrimaryVisualMotion() {
+    _isPrimaryVisualMotionDisabled = true;
     changedInternalState();
-    // Observer notifications arrive after the route starts its push animation.
+  }
+
+  ({Duration forward, Duration reverse})? _transitionDurations;
+  ({Duration forward, Duration reverse})? get transitionDurations => _transitionDurations;
+
+  void setTransitionDurations({required Duration forward, required Duration reverse}) {
+    assert(!forward.isNegative && !reverse.isNegative, 'Transition durations must be nonnegative.');
+    _transitionDurations = (forward: forward, reverse: reverse);
+    changedInternalState();
+
     final animationController = controller;
-    if (animationController != null && animationController.isAnimating) {
-      animationController.value = animationController.status == .reverse ? 0 : 1;
+
+    if (animationController == null || !animationController.isAnimating) return;
+    if (animationController.status == .reverse) {
+      animationController.reverse();
+      return;
     }
+
+    animationController.forward();
   }
 
   bool reducedMotion;

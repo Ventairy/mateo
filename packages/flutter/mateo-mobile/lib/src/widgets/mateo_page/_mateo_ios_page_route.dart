@@ -4,9 +4,10 @@ final class _MateoIosPageRoute<T> extends BaseMateoPageRoute<T> with CupertinoRo
   _MateoIosPageRoute({required super.page, required super.reducedMotion});
 
   @override
-  Duration get transitionDuration => shouldAnimatePrimary ? super.transitionDuration : .zero;
+  Duration get transitionDuration => reducedMotion ? .zero : transitionDurations?.forward ?? super.transitionDuration;
   @override
-  Duration get reverseTransitionDuration => shouldAnimatePrimary ? super.reverseTransitionDuration : .zero;
+  Duration get reverseTransitionDuration =>
+      reducedMotion ? .zero : transitionDurations?.reverse ?? super.reverseTransitionDuration;
   @override
   DelegatedTransitionBuilder? get delegatedTransition =>
       fullscreenDialog ? null : CupertinoPageTransition.delegatedTransition;

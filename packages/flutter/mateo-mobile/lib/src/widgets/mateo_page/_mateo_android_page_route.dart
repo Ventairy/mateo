@@ -12,10 +12,12 @@ final class _MateoAndroidPageRoute<T> extends BaseMateoPageRoute<T> {
   final FadeForwardsPageTransitionsBuilder _primaryTransitionDisabledBuilder;
 
   @override
-  Duration get transitionDuration => shouldAnimatePrimary ? _builder.transitionDuration : .zero;
+  Duration get transitionDuration =>
+      reducedMotion ? .zero : transitionDurations?.forward ?? _builder.transitionDuration;
 
   @override
-  Duration get reverseTransitionDuration => shouldAnimatePrimary ? _builder.reverseTransitionDuration : .zero;
+  Duration get reverseTransitionDuration =>
+      reducedMotion ? .zero : transitionDurations?.reverse ?? _builder.reverseTransitionDuration;
 
   @override
   DelegatedTransitionBuilder? get delegatedTransition => _builder.delegatedTransition;
