@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show MaterialLocalizations;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -24,7 +25,7 @@ import '../mateo_icon/mateo_icon.dart';
 
 part '_mateo_sheet_drag.dart';
 part '_mateo_sheet_landing_curve.dart';
-part '_mateo_sheet_route.dart';
+part 'mateo_sheet_route.dart';
 part '_mateo_sheet_stack_entry.dart';
 part '_mateo_sheet_stack_scope.dart';
 part 'mateo_sheet_dismiss_source.dart';
@@ -79,7 +80,7 @@ Future<T?> showMateoSheet<T>({
   final navigator = Navigator.of(context);
 
   return navigator.push<T>(
-    _MateoSheetRoute<T>(
+    MateoSheetRoute<T>(
       view: view,
       maxExtent: maxExtent,
       avoidBottomInset: avoidBottomInset,

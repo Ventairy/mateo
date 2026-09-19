@@ -6,7 +6,7 @@ class _MateoCloseButtonSheetViewHeaderPresentation extends MateoSheetViewHeaderP
   @override
   Widget build(BuildContext context) {
     final route = ModalRoute.of(context);
-    assert(route is _MateoSheetRoute, 'The close button requires a containing Mateo sheet.');
+    assert(route is MateoSheetRoute, 'The close button requires a containing Mateo sheet.');
     return BaseMateoViewHeader(
       trailing: Localizations.override(
         context: context,
@@ -18,7 +18,7 @@ class _MateoCloseButtonSheetViewHeaderPresentation extends MateoSheetViewHeaderP
               semanticLabel: MaterialLocalizations.of(context).closeButtonLabel,
             ),
             onPressed: () {
-              if (route is _MateoSheetRoute) unawaited(route._requestDismiss(.closeButton));
+              if (route is MateoSheetRoute) unawaited(route._requestDismiss(.closeButton));
             },
           ),
         ),

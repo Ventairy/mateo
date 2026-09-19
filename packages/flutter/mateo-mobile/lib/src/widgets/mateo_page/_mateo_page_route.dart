@@ -1,6 +1,6 @@
 part of 'mateo_page.dart';
 
-final class _MateoPageRoute<T> extends _MateoPageRouteBase<T> {
+final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
   _MateoPageRoute({
     required super.page,
     required super.reducedMotion,
@@ -25,9 +25,9 @@ final class _MateoPageRoute<T> extends _MateoPageRouteBase<T> {
   }
 
   @override
-  Duration get transitionDuration => reducedMotion ? .zero : _builder.transitionDuration;
+  Duration get transitionDuration => shouldAnimatePrimary ? _builder.transitionDuration : .zero;
   @override
-  Duration get reverseTransitionDuration => reducedMotion ? .zero : _builder.reverseTransitionDuration;
+  Duration get reverseTransitionDuration => shouldAnimatePrimary ? _builder.reverseTransitionDuration : .zero;
   @override
   bool get popGestureEnabled => defaultTargetPlatform != .iOS && super.popGestureEnabled;
   @override
@@ -47,7 +47,7 @@ final class _MateoPageRoute<T> extends _MateoPageRouteBase<T> {
     bool allowSnapshotting,
     Widget? child,
   ) {
-    if (reducedMotion) return child;
+    if (!shouldAnimateSecondary) return child;
     return _builder.delegatedTransition(context, animation, secondaryAnimation, allowSnapshotting, child) ?? child;
   }
 
@@ -63,59 +63,16 @@ final class _MateoPageRoute<T> extends _MateoPageRouteBase<T> {
     Widget child,
   ) {
     updateMotion(context);
-    final view = reducedMotion ? child : _builder.buildTransitions(this, context, animation, secondaryAnimation, child);
+    final view = !shouldAnimateSecondary
+        ? child
+        : _builder.buildTransitions(
+            this,
+            context,
+            shouldAnimatePrimary ? animation : const AlwaysStoppedAnimation<double>(1),
+            secondaryAnimation,
+            child,
+          );
     if (defaultTargetPlatform != .android) return view;
     return _MateoPredictiveBackGestureDetector(route: this, child: view);
-  }
-
-  NavigatorState? _gestureNavigator;
-  AnimationStatusListener? _gestureStatusListener;
-
-  @override
-  void handleStartBackGesture({double progress = 0}) {
-    _gestureNavigator = navigator;
-    super.handleStartBackGesture(progress: progress);
-  }
-
-  @override
-  void handleCancelBackGesture() {
-    if (isCurrent) controller?.forward();
-    _settleGesture();
-  }
-
-  @override
-  void handleCommitBackGesture() {
-    // Navigator.pop reverses from the current controller value. The framework's
-    // default predictive handler subsequently resets it to one, which would jump.
-    if (isCurrent) navigator?.pop();
-    _settleGesture();
-  }
-
-  void _settleGesture() {
-    if (!(controller?.isAnimating ?? false)) {
-      _stopGesture();
-      return;
-    }
-    final previousListener = _gestureStatusListener;
-    if (previousListener != null) controller?.removeStatusListener(previousListener);
-    _gestureStatusListener = (status) {
-      if (!status.isAnimating) _stopGesture();
-    };
-    controller?.addStatusListener(_gestureStatusListener!);
-  }
-
-  void _stopGesture() {
-    final listener = _gestureStatusListener;
-    if (listener != null) controller?.removeStatusListener(listener);
-    _gestureStatusListener = null;
-    final owner = _gestureNavigator;
-    _gestureNavigator = null;
-    if (owner != null && owner.mounted && owner.userGestureInProgress) owner.didStopUserGesture();
-  }
-
-  @override
-  void dispose() {
-    _stopGesture();
-    super.dispose();
   }
 }

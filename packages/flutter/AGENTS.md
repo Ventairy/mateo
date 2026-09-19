@@ -51,6 +51,13 @@ guidance belongs in each package's own `AGENTS.md`.
 
 ### Use Clear, Boring Names
 
+- Name functions and variables for their responsibility or meaning, not only
+  the feature or caller currently using them. Use feature-specific names only
+  when the behavior or value is inherently specific to that feature. For
+  example, use `disablePrimaryTransition()` rather than
+  `suppressPrimaryTransitionAboveSheet()`: disabling primary motion is a route
+  capability; deciding to do so above a sheet belongs to the caller. Do not
+  add speculative generalization to the implementation merely to match a name.
 - Use highly descriptive names whose purpose is understandable from the name
   alone. Name both the subject and the property when a shorter name would make
   the reader inspect nearby code to learn what it controls. For example, use
@@ -237,10 +244,11 @@ guidance belongs in each package's own `AGENTS.md`.
   variants too; do not scatter an owner's related files across the parent
   directory. For example, keep the three `MateoSurfaceAnimation` files under
   `foundation/mateo_surface_animation/`.
-- When a non-presentation implementation genuinely needs a shared base class,
-  give it a `Base` suffix, keep it under `lib/src/`, and do not export it. Do not
-  introduce a base widget to share presentation UI; follow the closest
-  component instructions for core and scope ownership.
+- Place shared implementation bases under `lib/src/bases/`, whether they are
+  widgets, routes, or other classes. Use the `BaseMateo` prefix and a same-named
+  folder, such as `bases/base_mateo_page_route/`. Keep bases internal and out of
+  package exports. Extract a base only for behavior shared by actual multiple
+  implementations; do not create speculative inheritance hierarchies.
 - Keep one class per file. The only routine exception is a `StatefulWidget` and
   its corresponding `State`, which must remain together in the widget's file;
   do not extract the `State` into a separate `part` file.

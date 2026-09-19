@@ -1,17 +1,19 @@
 # Internal Mateo Bases
 
-This folder owns shared implementation widgets composed by public Mateo
-components. Every base is internal: annotate it with `@internal`, keep it out
-of package exports, and never present it as a consumer API.
+This folder owns shared implementation bases for widgets, routes, and any
+other classes used by multiple implementations. Every base is internal:
+annotate it with `@internal`, keep it out of package exports, and never present
+it as a consumer API.
 
-- Use the `BaseMateo` prefix here, such as `BaseMateoSurface`. This is a local
-  exception to the Flutter parent rule requiring a `Base` suffix.
-- Public components compose bases and own their documented public constructors
-  and contracts. Do not expose base coordination inputs through public APIs.
-- Bases own behavior shared by every public implementation that composes them.
-  They may compose a narrowly scoped internal component scope when that
-  behavior is universal. Keep the dependency narrow and do not import the
-  public consuming wrappers that compose the base.
+- Use the `BaseMateo` prefix, such as `BaseMateoSurface` or
+  `BaseMateoPageRoute`, consistently for every kind of base.
+- Concrete implementations compose or extend bases and own their public
+  contracts. Do not expose internal base coordination through public APIs.
+- Bases own behavior shared by the implementations that compose or extend
+  them. Keep dependencies narrow: depend on configuration contracts rather
+  than concrete consuming implementations for shared behavior. Widget bases
+  may compose a narrowly scoped internal component scope when that behavior
+  is shared.
 - When behavior varies by public implementation, keep it with that consumer or
   accept only the narrow values and notifications the base needs.
 - Keep each base in a same-named folder. Tightly coupled helpers are private

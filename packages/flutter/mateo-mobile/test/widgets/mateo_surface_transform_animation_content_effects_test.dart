@@ -33,7 +33,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final target = tester.widget<Morph>(find.byType(Morph)).target;
+    final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
     final childState = childKey.currentState;
     animation.value = const .transform(
       id: 'stable',
@@ -41,7 +41,7 @@ void main() {
       contentEffects: [.crossfade(curve: Curves.easeIn)],
     );
     await tester.pumpAndSettle();
-    expect(tester.widget<Morph>(find.byType(Morph)).target, same(target));
+    expect(tester.widget<Morph>(find.byType(Morph)).targets.single, same(target));
     expect(childKey.currentState, same(childState));
     expect(surfaceFlight, findsNothing);
     expect(tester.takeException(), isNull);

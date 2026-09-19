@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show PredictiveBackPageTransitionsBuilder;
+import 'package:flutter/material.dart' show FadeForwardsPageTransitionsBuilder, PredictiveBackPageTransitionsBuilder;
 import 'package:flutter/services.dart';
 
+import '../../bases/base_mateo_page_route/base_mateo_page_route.dart';
 import '../../components/mateo_page_transition/mateo_page_transition.dart';
 import '../../components/mateo_page_transition/mateo_page_transitions_builder.dart';
 import '../../theme/mateo_theme.dart';
 
 part '_mateo_android_page_route.dart';
 part '_mateo_ios_page_route.dart';
-part '_mateo_page_route_base.dart';
-part '_mateo_predictive_back_gesture_detector.dart';
 part '_mateo_page_route.dart';
+part '_mateo_predictive_back_gesture_detector.dart';
 
 /// A Flutter page with native navigation or explicit Mateo motion.
 ///
@@ -41,7 +41,7 @@ class MateoPage<T> extends Page<T> {
   /// The content of the destination.
   final Widget child;
 
-  /// The explicit Mateo motion, or null for platform-native navigation.
+  /// The explicit Mateo motion, or null for automatic behavior.
   final MateoPageTransition? transition;
 
   /// The title used by native iOS navigation.

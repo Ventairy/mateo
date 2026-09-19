@@ -1,7 +1,8 @@
 part of 'show_mateo_sheet.dart';
 
-class _MateoSheetRoute<T> extends PopupRoute<T> {
-  _MateoSheetRoute({
+@internal
+class MateoSheetRoute<T> extends PopupRoute<T> {
+  MateoSheetRoute({
     required this.view,
     required this.avoidBottomInset,
     required this.from,
@@ -43,7 +44,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   void didChangePrevious(Route<dynamic>? previousRoute) {
     super.didChangePrevious(previousRoute);
-    _hasSheetBelow = previousRoute is _MateoSheetRoute;
+    _hasSheetBelow = previousRoute is MateoSheetRoute;
     changedInternalState();
   }
 
@@ -52,7 +53,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     super.didChangeNext(nextRoute);
     _coveringRoute = nextRoute;
     _stackEntry.covered = nextRoute != null;
-    _stackEntry.next = nextRoute is _MateoSheetRoute ? nextRoute._stackEntry : null;
+    _stackEntry.next = nextRoute is MateoSheetRoute ? nextRoute._stackEntry : null;
     _stackEntry.changed();
   }
 
@@ -62,7 +63,7 @@ class _MateoSheetRoute<T> extends PopupRoute<T> {
     // Input follows navigation ownership; the frame can keep restoring below.
     _stackEntry.covered = false;
 
-    if (nextRoute is _MateoSheetRoute && identical(_stackEntry.next, nextRoute._stackEntry)) {
+    if (nextRoute is MateoSheetRoute && identical(_stackEntry.next, nextRoute._stackEntry)) {
       _stackEntry.restore();
     }
 

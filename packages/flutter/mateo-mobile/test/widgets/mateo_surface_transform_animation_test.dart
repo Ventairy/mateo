@@ -223,13 +223,13 @@ void main() {
     await tester.pumpAndSettle();
     final state = childKey.currentState;
     expect(tester.widget<Morph>(find.byType(Morph)).animateChildChanges, isFalse);
-    final target = tester.widget<Morph>(find.byType(Morph)).target;
+    final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
     for (final value in [1, 2, 3, 4]) {
       revision.value = value;
       await tester.pumpAndSettle();
       expect(surfaceFlight, findsNothing);
       expect(childKey.currentState, same(state));
-      if (value == 1) expect(tester.widget<Morph>(find.byType(Morph)).target, same(target));
+      if (value == 1) expect(tester.widget<Morph>(find.byType(Morph)).targets.single, same(target));
     }
     expect(tester.takeException(), isNull);
   });

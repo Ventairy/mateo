@@ -194,7 +194,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       MateoSurfaceAnimationNone() => surface,
       final MateoSurfaceAnimationPop animation => _buildPop(animation, surface),
       final MateoSurfaceAnimationTransform animation => Morph(
-        target: _transformTarget!,
+        targets: [_transformTarget!],
         animateChildChanges: false,
         duration: animation.duration,
         curve: animation.curve,
