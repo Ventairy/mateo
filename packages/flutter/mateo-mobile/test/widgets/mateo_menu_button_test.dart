@@ -34,8 +34,8 @@ void main() {
       await tester.pumpAndSettle();
       final animation =
           tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).animation as MateoSurfaceAnimationTransform;
-      id ??= animation.id;
-      expect(animation.id, same(id));
+      id ??= animation.target;
+      expect(animation.target, same(id));
       expect(animation.contentEffects, const <MateoSurfaceTransformAnimationContentEffect>[
         .crossfade(curve: Interval(0, 0.35, curve: Curves.easeOut)),
       ]);
@@ -67,7 +67,7 @@ void main() {
       expect(find.text('Menu item'), findsOneWidget);
       final endpoints = tester.widgetList<BaseMateoSurface>(find.byType(BaseMateoSurface)).toList();
       final panelAnimation = endpoints.last.animation as MateoSurfaceAnimationTransform;
-      expect(panelAnimation.id, same(animation.id));
+      expect(panelAnimation.target, same(animation.target));
       expect(panelAnimation.curve, animation.curve);
       expect(panelAnimation.duration, animation.duration);
       expect(
@@ -107,8 +107,8 @@ void main() {
         .toList();
     expect(animations, hasLength(4));
     expect(
-      (animations[0] as MateoSurfaceAnimationTransform).id,
-      isNot((animations[2] as MateoSurfaceAnimationTransform).id),
+      (animations[0] as MateoSurfaceAnimationTransform).target,
+      isNot((animations[2] as MateoSurfaceAnimationTransform).target),
     );
     expect(animations[1], const MateoSurfaceAnimation.none());
     expect(animations[3], const MateoSurfaceAnimation.none());

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 List<Positioned> layers(WidgetTester tester) => tester
@@ -15,7 +16,11 @@ void main() {
   testWidgets('when only effect settings change, it should retain the mounted transform target and child state', (
     tester,
   ) async {
-    final animation = ValueNotifier<MateoSurfaceAnimation>(const .transform(id: 'stable'));
+    final animation = ValueNotifier<MateoSurfaceAnimation>(
+      .transform(
+        target: surfaceTransformTarget('stable'),
+      ),
+    );
     addTearDown(animation.dispose);
     final childKey = GlobalKey();
     await tester.pumpWidget(
@@ -35,10 +40,9 @@ void main() {
     await tester.pumpAndSettle();
     final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
     final childState = childKey.currentState;
-    animation.value = const .transform(
-      id: 'stable',
-      curve: Curves.linear,
-      contentEffects: [.crossfade(curve: Curves.easeIn)],
+    animation.value = .transform(
+      target: surfaceTransformTarget('stable'),
+      contentEffects: [const .crossfade(curve: Curves.easeIn)],
     );
     await tester.pumpAndSettle();
     expect(tester.widget<Morph>(find.byType(Morph)).targets.single, same(target));
@@ -53,9 +57,7 @@ void main() {
     ) async {
       final navigator = GlobalKey<NavigatorState>();
       final animation = MateoSurfaceAnimation.transform(
-        id: 'overshoot',
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.linear,
+        target: surfaceTransformTarget('overshoot', duration: const Duration(milliseconds: 1000), curve: Curves.linear),
         contentEffects: [
           const .crossfade(),
           .scale(curve: curve),
@@ -99,11 +101,13 @@ void main() {
       'when effects use independent curves with retarget $retarget, it should sample their actual visible state',
       (tester) async {
         final navigator = GlobalKey<NavigatorState>();
-        const animation = MateoSurfaceAnimation.transform(
-          id: 'independent',
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.easeOutCubic,
-          contentEffects: [
+        final animation = MateoSurfaceAnimation.transform(
+          target: surfaceTransformTarget(
+            'independent',
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeOutCubic,
+          ),
+          contentEffects: const [
             .scale(curve: Curves.easeInCubic),
             .crossfade(curve: Curves.linear),
           ],
@@ -166,15 +170,13 @@ void main() {
       'when endpoint curves differ and interruption is $interrupt, it should use the source flight configuration',
       (tester) async {
         final navigator = GlobalKey<NavigatorState>();
-        const trigger = MateoSurfaceAnimation.transform(
-          id: 'owned',
-          duration: Duration(milliseconds: 1000),
-          contentEffects: [.crossfade(curve: Curves.linear)],
+        final trigger = MateoSurfaceAnimation.transform(
+          target: surfaceTransformTarget('owned', duration: const Duration(milliseconds: 1000)),
+          contentEffects: const [.crossfade(curve: Curves.linear)],
         );
-        const panel = MateoSurfaceAnimation.transform(
-          id: 'owned',
-          duration: Duration(milliseconds: 1000),
-          contentEffects: [.crossfade(curve: Interval(0, .35, curve: Curves.easeOut))],
+        final panel = MateoSurfaceAnimation.transform(
+          target: surfaceTransformTarget('owned', duration: const Duration(milliseconds: 1000)),
+          contentEffects: const [.crossfade(curve: Interval(0, .35, curve: Curves.easeOut))],
         );
         await tester.pumpWidget(
           MateoApp(
@@ -224,10 +226,10 @@ void main() {
           home: surfaceTransformEndpoint(
             bounds: const Rect.fromLTWH(20, 40, 160, 64),
             animation: MateoSurfaceAnimation.transform(
-              id: 'conflict',
+              target: surfaceTransformTarget('conflict'),
               contentEffects: scale
-                  ? const [.scale(), .scale(curve: Curves.linear)]
-                  : const [.crossfade(), .crossfade(curve: Curves.linear)],
+                  ? [const .scale(), const .scale(curve: Curves.linear)]
+                  : [const .crossfade(), const .crossfade(curve: Curves.linear)],
             ),
           ),
         ),
@@ -238,9 +240,9 @@ void main() {
 
   testWidgets('when identical effects repeat, it should render a single pair of content layers', (tester) async {
     final navigator = GlobalKey<NavigatorState>();
-    const animation = MateoSurfaceAnimation.transform(
-      id: 'duplicates',
-      contentEffects: [.crossfade(), .scale(), .crossfade(), .scale()],
+    final animation = MateoSurfaceAnimation.transform(
+      target: surfaceTransformTarget('duplicates'),
+      contentEffects: const [.crossfade(), .scale(), .crossfade(), .scale()],
     );
     Widget endpoint(double width) =>
         surfaceTransformEndpoint(bounds: Rect.fromLTWH(20, 40, width, 80), animation: animation);
@@ -265,9 +267,11 @@ void main() {
           (tester) async {
             final navigator = GlobalKey<NavigatorState>();
             final animation = MateoSurfaceAnimation.transform(
-              id: 'effects',
-              duration: const Duration(milliseconds: 1000),
-              curve: Curves.linear,
+              target: surfaceTransformTarget(
+                'effects',
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.linear,
+              ),
               contentEffects: effects,
             );
             Widget endpoint(Rect bounds) => surfaceTransformEndpoint(
@@ -360,7 +364,10 @@ void main() {
     tester,
   ) async {
     final navigator = GlobalKey<NavigatorState>();
-    const animation = MateoSurfaceAnimation.transform(id: 'scaled', contentEffects: [.crossfade()]);
+    final animation = MateoSurfaceAnimation.transform(
+      target: surfaceTransformTarget('scaled'),
+      contentEffects: const [.crossfade()],
+    );
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
@@ -404,7 +411,10 @@ void main() {
     tester,
   ) async {
     final navigator = GlobalKey<NavigatorState>();
-    const animation = MateoSurfaceAnimation.transform(id: 'eased', contentEffects: []);
+    final animation = MateoSurfaceAnimation.transform(
+      target: surfaceTransformTarget('eased'),
+      contentEffects: const [],
+    );
     Widget endpoint(Size size) => surfaceTransformEndpoint(
       bounds: Offset.zero & size,
       animation: animation,
@@ -424,7 +434,9 @@ void main() {
 
   testWidgets('when transform duration is zero, it should complete without a remaining flight', (tester) async {
     final navigator = GlobalKey<NavigatorState>();
-    const animation = MateoSurfaceAnimation.transform(id: 'zero', duration: Duration.zero);
+    final animation = MateoSurfaceAnimation.transform(
+      target: surfaceTransformTarget('zero', duration: Duration.zero),
+    );
     Widget endpoint(double width) => surfaceTransformEndpoint(
       bounds: Rect.fromLTWH(20, 40, width, 80),
       animation: animation,

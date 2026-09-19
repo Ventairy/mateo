@@ -7,6 +7,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/components/mateo_menu/overlay/show_mateo_menu.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
@@ -148,9 +149,7 @@ void main() {
     await host(tester);
     final transformId = Object();
     final suppliedSurfaceAnimation = MateoSurfaceAnimation.transform(
-      id: transformId,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.linear,
+      target: surfaceTransformTarget(transformId, duration: const Duration(milliseconds: 400), curve: Curves.linear),
       contentEffects: const [.crossfade()],
     );
     unawaited(
@@ -164,7 +163,7 @@ void main() {
     await tester.pumpAndSettle();
     final panel = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface));
     final surfaceAnimation = panel.animation as MateoSurfaceAnimationTransform;
-    expect(surfaceAnimation.id, same(transformId));
+    expect(surfaceAnimation.target, same((suppliedSurfaceAnimation as MateoSurfaceAnimationTransform).target));
     expect(surfaceAnimation, same(suppliedSurfaceAnimation));
     final route = ModalRoute.of(tester.element(find.byType(MateoMenu)))!;
     expect(route.transitionDuration, suppliedSurfaceAnimation.duration);

@@ -4,6 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_scope.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Widget host({
@@ -68,7 +69,7 @@ double opacity(WidgetTester tester) =>
         as double;
 
 void main() {
-  test('pop has const public configuration and value equality', () {
+  test('pop has public configuration and value equality', () {
     const pop = MateoSurfaceAnimation.pop();
     expect(pop, const MateoSurfaceAnimationPop());
     expect(pop.hashCode, const MateoSurfaceAnimationPop().hashCode);
@@ -209,7 +210,9 @@ void main() {
     scrollState.position.jumpTo(80);
     for (final animation in [
       const MateoSurfaceAnimation.none(),
-      const MateoSurfaceAnimation.transform(id: 'surface'),
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('surface'),
+      ),
       const MateoSurfaceAnimation.pop(),
     ]) {
       await tester.pumpWidget(host(animation: animation, scrollable: true, child: content));

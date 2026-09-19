@@ -5,11 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
-const ValueKey<String> _capture = ValueKey('capture');
+ValueKey<String> _capture = const ValueKey('capture');
 const _black = Color(0xFF000000);
-const _colors = [Color(0xFFFF0000), Color(0xFF00FF00), Color(0xFF0000FF), Color(0xFFFFFF00)];
+final _colors = [const Color(0xFFFF0000), const Color(0xFF00FF00), const Color(0xFF0000FF), const Color(0xFFFFFF00)];
 
 Future<List<int>> _pixel(WidgetTester tester, Offset point) async => (await tester.runAsync(() async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(find.byKey(_capture));
@@ -65,11 +66,13 @@ void main() {
           final bodyKey = GlobalKey();
           final centerKey = GlobalKey();
           final headerKey = GlobalKey();
-          const animation = MateoSurfaceAnimation.transform(
-            id: 'safe-area-view',
-            duration: Duration(seconds: 1),
-            curve: Curves.linear,
-            contentEffects: [.crossfade()],
+          final animation = MateoSurfaceAnimation.transform(
+            target: surfaceTransformTarget(
+              'safe-area-view',
+              duration: const Duration(seconds: 1),
+              curve: Curves.linear,
+            ),
+            contentEffects: const [.crossfade()],
           );
           final bodyColor = surfaceTransformTheme.palette.red;
           await tester.pumpWidget(
@@ -151,10 +154,8 @@ void main() {
             key: keys[index],
             builder: (context, setState) => SizedBox(width: 24, height: 24, child: ColoredBox(color: _colors[index])),
           );
-          const animation = MateoSurfaceAnimation.transform(
-            id: 'complete-view',
-            duration: Duration(seconds: 1),
-            curve: Curves.linear,
+          final animation = MateoSurfaceAnimation.transform(
+            target: surfaceTransformTarget('complete-view', duration: const Duration(seconds: 1), curve: Curves.linear),
           );
           const sourceBounds = Rect.fromLTWH(40, 40, 120, 80);
           const destinationBounds = Rect.fromLTWH(40, 40, 320, 400);

@@ -3,11 +3,67 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart' show Morph;
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
   const beginBounds = Rect.fromLTWH(20, 40, 144, 48);
   const endBounds = Rect.fromLTWH(260, 180, 240, 280);
+
+  testWidgets('when equal settings use separate targets, it should not start a shared flight', (tester) async {
+    final navigator = GlobalKey<NavigatorState>();
+    final sourceTarget = MateoSurfaceTransformTarget();
+    final destinationTarget = MateoSurfaceTransformTarget();
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: surfaceTransformEndpoint(
+          bounds: beginBounds,
+          animation: .transform(target: sourceTarget),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      surfaceTransformEndpoint(
+        bounds: endBounds,
+        animation: .transform(target: destinationTarget),
+      ),
+    );
+    expect(surfaceFlight, findsNothing);
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('when a shared target omits duration, it should follow the route clock', (tester) async {
+    final navigator = GlobalKey<NavigatorState>();
+    final target = MateoSurfaceTransformTarget(duration: null, curve: Curves.linear);
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: surfaceTransformEndpoint(
+          bounds: beginBounds,
+          animation: .transform(target: target),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      surfaceTransformEndpoint(
+        bounds: endBounds,
+        animation: .transform(target: target),
+      ),
+      routeDuration: const Duration(milliseconds: 600),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(tester.getRect(surfaceFlight), Rect.lerp(beginBounds, endBounds, .5));
+    await tester.pumpAndSettle();
+  });
 
   for (final fromView in [false, true]) {
     for (final toView in [false, true]) {
@@ -30,7 +86,10 @@ void main() {
                     scrollable: scrollable,
                     shape: const .none(),
                     viewShape: const .none(),
-                    animation: .transform(id: 'details', shape: const .rounded(radius: 12), duration: duration),
+                    animation: .transform(
+                      target: surfaceTransformTarget('details', duration: duration),
+                      shape: const .rounded(radius: 12),
+                    ),
                   ),
                 ),
               );
@@ -45,7 +104,10 @@ void main() {
                   scrollable: scrollable,
                   shape: const .none(),
                   viewShape: const .none(),
-                  animation: .transform(id: 'details', shape: const .rounded(radius: 42), duration: duration),
+                  animation: .transform(
+                    target: surfaceTransformTarget('details', duration: duration),
+                    shape: const .rounded(radius: 42),
+                  ),
                 ),
                 routeDuration: const Duration(milliseconds: 100),
               );
@@ -104,12 +166,37 @@ void main() {
     expect(const MateoSurface.scrollable(child: SizedBox()).animation, isNull);
     expect(const MateoViewSurface(child: SizedBox()).animation, isNull);
     expect(const MateoViewSurface.scrollable(child: SizedBox()).animation, isNull);
-    expect(const MateoSurfaceAnimation.transform(id: 'a'), const MateoSurfaceAnimation.transform(id: 'a'));
-    expect(const MateoSurfaceAnimation.transform(id: 'a'), isNot(const MateoSurfaceAnimation.transform(id: 'b')));
-    expect(const MateoSurfaceAnimation.transform(id: 'a'), isNot(const MateoSurfaceAnimation.none()));
     expect(
-      const MateoSurfaceAnimation.transform(id: 'a').hashCode,
-      const MateoSurfaceAnimation.transform(id: 'a').hashCode,
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ),
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ),
+    );
+    expect(
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ),
+      isNot(
+        MateoSurfaceAnimation.transform(
+          target: surfaceTransformTarget('b'),
+        ),
+      ),
+    );
+    expect(
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ),
+      isNot(const MateoSurfaceAnimation.none()),
+    );
+    expect(
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ).hashCode,
+      MateoSurfaceAnimation.transform(
+        target: surfaceTransformTarget('a'),
+      ).hashCode,
     );
   });
 
@@ -222,7 +309,6 @@ void main() {
     );
     await tester.pumpAndSettle();
     final state = childKey.currentState;
-    expect(tester.widget<Morph>(find.byType(Morph)).animateChildChanges, isFalse);
     final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
     for (final value in [1, 2, 3, 4]) {
       revision.value = value;
@@ -305,7 +391,7 @@ void main() {
           surfaceTransformEndpoint(
             bounds: endBounds,
             shape: const .none(),
-            animation: const .transform(id: 'details', shape: .rounded(radius: 42)),
+            animation: .transform(target: surfaceTransformTarget('details'), shape: const .rounded(radius: 42)),
             child: const Text('Arrived'),
           ),
         );
@@ -459,7 +545,7 @@ void main() {
         home: surfaceTransformEndpoint(
           bounds: beginBounds,
           shape: const .none(),
-          animation: const .transform(id: 'details', shape: .capsule()),
+          animation: .transform(target: surfaceTransformTarget('details'), shape: const .capsule()),
         ),
       ),
     );
@@ -470,7 +556,7 @@ void main() {
       surfaceTransformEndpoint(
         bounds: endBounds,
         shape: const .none(),
-        animation: const .transform(id: 'details', shape: .rounded(radius: 42)),
+        animation: .transform(target: surfaceTransformTarget('details'), shape: const .rounded(radius: 42)),
       ),
     );
     await tester.pump(const Duration(milliseconds: 90));

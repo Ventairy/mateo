@@ -2,6 +2,7 @@ import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
@@ -76,10 +77,15 @@ Future<void> main() async {
                                       child: MateoView(
                                         header: const MateoViewHeader(principal: Text('Header')),
                                         footer: const MateoViewFooter(principal: Text('Footer')),
-                                        overlay: const Align(alignment: Alignment.centerRight, child: Text('Overlay')),
+                                        overlay: const Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text('Overlay'),
+                                        ),
                                         surface: MateoViewSurface(
                                           shape: viewShape,
-                                          animation: const MateoSurfaceAnimation.transform(id: 'details'),
+                                          animation: MateoSurfaceAnimation.transform(
+                                            target: surfaceTransformTarget('details'),
+                                          ),
                                           color: theme.colorScheme.inverse.background,
                                           child: const Center(child: Text('Body')),
                                         ),

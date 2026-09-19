@@ -2,6 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
 import '../mateo_surface_shape/mateo_surface_shape.dart';
+import 'mateo_surface_transform_target.dart';
 
 part 'mateo_surface_animation_none.dart';
 part 'mateo_surface_animation_pop.dart';
@@ -31,45 +32,18 @@ sealed class MateoSurfaceAnimation {
   /// ```
   const factory MateoSurfaceAnimation.pop({Duration duration, Curve curve}) = MateoSurfaceAnimationPop;
 
-  /// Morph between different surfaces by animating their properties with an equal [id].
+  /// Connects surfaces using the same transform target.
   ///
-  /// Keep the ID's equality and hash code stable while the surface is mounted.
-  /// Ordinary and view surfaces can share the same ID.
-  ///
-  /// Example of a card morphing into a view surface:
-  ///
-  /// ```dart
-  /// final card = MateoSurface(
-  ///   animation: const .transform(id: 'details'),
-  ///   shape: const .capsule(),
-  ///   child: const Text('Open details'),
-  /// );
-  /// final screen = MateoView(
-  ///   surface: MateoViewSurface(
-  ///     animation: const .transform(id: 'details'),
-  ///     child: const Text('Details'),
-  ///   ),
-  /// );
-  /// ```
-  ///
-  /// For content that should only crossfade while the surface transforms instead of default effects:
-  ///
-  /// ```dart
-  /// const animation = MateoSurfaceAnimation.transform(
-  ///   id: 'details',
-  ///   contentEffects: [.crossfade()],
-  /// );
-  /// ```
+  /// Retain a [MateoSurfaceTransformTarget] in a shared owner and pass it to
+  /// both surfaces. The target owns timing; each surface defines its appearance.
   const factory MateoSurfaceAnimation.transform({
-    required Object id,
+    required MateoSurfaceTransformTarget target,
     MateoSurfaceShape? shape,
-    Duration duration,
-    Curve curve,
     List<MateoSurfaceTransformAnimationContentEffect> contentEffects,
   }) = MateoSurfaceAnimationTransform;
 
-  /// The duration of this animation style.
-  Duration get duration;
+  /// The duration of this animation style, or null for inherited timing.
+  Duration? get duration;
 
   /// The easing curve of this animation style.
   Curve get curve;

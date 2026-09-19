@@ -1,20 +1,16 @@
 part of 'mateo_surface_animation.dart';
 
-/// A transform connecting Mateo surfaces with equal identities.
+/// A transform connecting Mateo surfaces with a shared target.
 final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
-  /// Creates a transform connecting surfaces with an equal [id].
+  /// Creates a transform connecting surfaces with the same [target].
   const MateoSurfaceAnimationTransform({
-    required this.id,
+    required this.target,
     this.shape,
-    this.duration = const .new(milliseconds: 230),
-    this.curve = Curves.easeOutCubic,
     this.contentEffects = const [.crossfade(), .scale()],
   }) : super._();
 
-  /// The identity shared by matching ordinary and view surfaces.
-  ///
-  /// Keep its equality and hash code stable while the surface is mounted.
-  final Object id;
+  /// The connection shared by the participating surfaces.
+  final MateoSurfaceTransformTarget target;
 
   /// The shape this surface uses while transforming.
   ///
@@ -23,13 +19,13 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// uses this surface's resting shape. Does not change its resting appearance.
   final MateoSurfaceShape? shape;
 
-  /// The duration of this animation style.
+  /// The shared target duration, or null for inherited timing.
   @override
-  final Duration duration;
+  Duration? get duration => target.duration;
 
   /// The easing curve of this animation style.
   @override
-  final Curve curve;
+  Curve get curve => target.curve;
 
   /// Effects applied to the descendant content during the transform.
   ///
@@ -39,14 +35,12 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// Without crossfading, content switches at the midpoint of eased flight progress.
   final List<MateoSurfaceTransformAnimationContentEffect> contentEffects;
 
-  /// Whether both transforms have equal identities and configuration.
+  /// Whether both transforms have a shared target and configuration.
   @override
   bool operator ==(Object other) {
     return other is MateoSurfaceAnimationTransform &&
-        id == other.id &&
+        identical(target, other.target) &&
         shape == other.shape &&
-        duration == other.duration &&
-        curve == other.curve &&
         listEquals(contentEffects.toSet().toList(), other.contentEffects.toSet().toList());
   }
 
@@ -55,10 +49,8 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   int get hashCode {
     return Object.hash(
       MateoSurfaceAnimationTransform,
-      id,
+      target,
       shape,
-      duration,
-      curve,
       Object.hashAll(contentEffects.toSet()),
     );
   }

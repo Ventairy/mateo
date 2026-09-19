@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
+import '../../foundation/mateo_surface_animation/mateo_surface_transform_target.dart';
 import '../mateo_button/mateo_button.dart';
 import '../mateo_menu/mateo_menu.dart';
 import '../mateo_menu/overlay/show_mateo_menu.dart';
@@ -55,7 +56,13 @@ class MateoMenuButton extends StatefulWidget {
 }
 
 class _MateoMenuButtonState extends State<MateoMenuButton> {
-  final Object _transformId = Object();
+  MateoSurfaceTransformTarget? _transformTarget;
+
+  MateoSurfaceTransformTarget _targetFor(Duration duration, Curve curve) {
+    final target = _transformTarget;
+    if (target != null && target.duration == duration && target.curve == curve) return target;
+    return _transformTarget = MateoSurfaceTransformTarget(duration: duration, curve: curve);
+  }
 
   final GlobalKey _anchorKey = GlobalKey();
   bool _menuIsOpen = false;
@@ -63,9 +70,7 @@ class _MateoMenuButtonState extends State<MateoMenuButton> {
   MateoSurfaceAnimation get _buttonSurfaceAnimation => switch (widget.animation) {
     MateoMenuButtonAnimationPop() => const .none(),
     MateoMenuButtonAnimationTransform(:final duration, :final curve, :final buttonContentEffects) => .transform(
-      id: _transformId,
-      duration: duration,
-      curve: curve,
+      target: _targetFor(duration, curve),
       contentEffects: buttonContentEffects,
     ),
   };
@@ -73,9 +78,7 @@ class _MateoMenuButtonState extends State<MateoMenuButton> {
   MateoSurfaceAnimation get _menuSurfaceAnimation => switch (widget.animation) {
     MateoMenuButtonAnimationPop(:final duration, :final curve) => .pop(duration: duration, curve: curve),
     MateoMenuButtonAnimationTransform(:final duration, :final curve, :final menuContentEffects) => .transform(
-      id: _transformId,
-      duration: duration,
-      curve: curve,
+      target: _targetFor(duration, curve),
       contentEffects: menuContentEffects,
     ),
   };

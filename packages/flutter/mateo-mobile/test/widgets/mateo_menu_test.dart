@@ -8,6 +8,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_scope.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Widget host(Widget child, {TextDirection direction = TextDirection.ltr, double scale = 1}) => Directionality(
@@ -62,11 +63,13 @@ void main() {
   testWidgets('when a menu inherits surface animation, it should isolate nested surfaces and react to scope changes', (
     tester,
   ) async {
-    const inherited = MateoSurfaceAnimation.transform(id: 'menu-scope');
+    final inherited = MateoSurfaceAnimation.transform(
+      target: surfaceTransformTarget('menu-scope'),
+    );
     final menu = MateoMenu(
       presentation: .options(
-        items: const [
-          MateoMenuOptionsPresentationItem(
+        items: [
+          const MateoMenuOptionsPresentationItem(
             principal: MateoSurface(child: SizedBox(width: 40, height: 40)),
           ),
         ],
@@ -118,7 +121,7 @@ void main() {
         presentation: .options(
           density: density,
           width: width,
-          items: const [MateoMenuOptionsPresentationItem(principal: Text('Go'))],
+          items: [const MateoMenuOptionsPresentationItem(principal: Text('Go'))],
         ),
       );
       await tester.pumpWidget(host(menu()));
@@ -144,8 +147,8 @@ void main() {
             child: MateoMenu(
               presentation: .options(
                 density: density,
-                items: const [
-                  MateoMenuOptionsPresentationItem(
+                items: [
+                  const MateoMenuOptionsPresentationItem(
                     principal: Text('A long menu option that wraps within the available device width'),
                   ),
                 ],
@@ -269,7 +272,7 @@ void main() {
         host(
           MateoMenu(
             presentation: .options(
-              items: const [MateoMenuOptionsPresentationItem(principal: Text('Disabled'))],
+              items: [const MateoMenuOptionsPresentationItem(principal: Text('Disabled'))],
             ),
           ),
         ),
@@ -312,19 +315,19 @@ void main() {
             width: 220,
             child: MateoMenu(
               presentation: .options(
-                items: const [
-                  MateoMenuOptionsPresentationItem(
+                items: [
+                  const MateoMenuOptionsPresentationItem(
                     leading: SizedBox(key: ValueKey('leading'), width: 24, height: 24),
                     principal: Text('Long principal content wraps naturally'),
                     supporting: Text('Supporting'),
                   ),
-                  MateoMenuOptionsPresentationItem(
+                  const MateoMenuOptionsPresentationItem(
                     leading: SizedBox(key: ValueKey('single-line-leading'), width: 24, height: 24),
                     principal: Text('One'),
                   ),
-                  MateoMenuOptionsPresentationItem(supporting: Text('Supporting alone')),
-                  MateoMenuOptionsPresentationItem(leading: SizedBox(width: 30, height: 60)),
-                  MateoMenuOptionsPresentationItem(),
+                  const MateoMenuOptionsPresentationItem(supporting: Text('Supporting alone')),
+                  const MateoMenuOptionsPresentationItem(leading: SizedBox(width: 30, height: 60)),
+                  const MateoMenuOptionsPresentationItem(),
                 ],
               ),
               onItemPressed: (_) {},

@@ -4,6 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_scope.dart';
 
+import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Widget _surface({
@@ -28,8 +29,12 @@ List<MateoSurfaceAnimation> _animations(WidgetTester tester) =>
     tester.widgetList<BaseMateoSurface>(find.byType(BaseMateoSurface)).map((surface) => surface.animation).toList();
 
 void main() {
-  const inherited = MateoSurfaceAnimation.transform(id: 'inherited');
-  const explicit = MateoSurfaceAnimation.transform(id: 'explicit');
+  final inherited = MateoSurfaceAnimation.transform(
+    target: surfaceTransformTarget('inherited'),
+  );
+  final explicit = MateoSurfaceAnimation.transform(
+    target: surfaceTransformTarget('explicit'),
+  );
   const none = MateoSurfaceAnimation.none();
 
   testWidgets('lookup without a scope returns none', (tester) async {
@@ -75,12 +80,12 @@ void main() {
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
-        home: const MateoSurfaceScope(
+        home: MateoSurfaceScope(
           animation: inherited,
           child: MateoSurface(
             child: MateoSurfaceScope(
               animation: explicit,
-              child: MateoSurface(child: SizedBox(width: 20, height: 20)),
+              child: const MateoSurface(child: SizedBox(width: 20, height: 20)),
             ),
           ),
         ),

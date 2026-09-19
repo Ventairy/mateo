@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
+import 'surface_transform_targets.dart';
+
 final surfaceTransformTheme = MateoThemeData.light(
   accentColor: const Color(0xFF4A5CFF),
   onAccent: MateoPalette().white,
@@ -32,7 +34,11 @@ Widget surfaceTransformEndpoint({
   MateoEdgeEffect edgeEffect = const .none(),
   Widget child = const SizedBox(),
 }) {
-  animation ??= disabled ? const MateoSurfaceAnimation.none() : MateoSurfaceAnimation.transform(id: id);
+  animation ??= disabled
+      ? const MateoSurfaceAnimation.none()
+      : MateoSurfaceAnimation.transform(
+          target: surfaceTransformTarget(id),
+        );
   final Widget surface;
   if (view) {
     surface = MateoView(
