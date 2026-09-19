@@ -71,6 +71,7 @@ export 'src/foundation/mateo_surface_animation/mateo_surface_animation.dart'
         MateoSurfaceTransformAnimationContentEffect,
         MateoSurfaceTransformAnimationContentEffectCrossfade,
         MateoSurfaceTransformAnimationContentEffectScale;
+export 'src/foundation/mateo_surface_animation/mateo_surface_transform_target.dart' show MateoSurfaceTransformTarget;
 export 'src/foundation/mateo_surface_height/mateo_surface_height.dart'
     show MateoSurfaceHeight, MateoSurfaceHeightCustom, MateoSurfaceHeightFill, MateoSurfaceHeightFit;
 export 'src/foundation/mateo_surface_shape/mateo_surface_shape.dart' show MateoSurfaceShape;
