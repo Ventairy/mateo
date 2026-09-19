@@ -209,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.13"
+  diacritic:
+    dependency: transitive
+    description:
+      name: diacritic
+      sha256: "12981945ec38931748836cd76f2b38773118d0baef3c68404bdfde9566147876"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   dio:
     dependency: transitive
     description:
@@ -225,13 +233,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  dlibphonenumber:
+    dependency: transitive
+    description:
+      name: dlibphonenumber
+      sha256: bd19797bba652e30f1ef61ebb1bf48142b4ff235ee5ca31cc97d1f1f35d38a49
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.71"
   dotdart:
     dependency: "direct overridden"
     description:
       path: "/Users/personal/Developer/ventairy/flutter/dotdart"
       relative: false
     source: path
-    version: "0.11.1"
+    version: "0.11.2"
   equatable:
     dependency: transitive
     description:
@@ -498,7 +514,7 @@ packages:
       path: "/Users/personal/Developer/ventairy/flutter/oh_my_flutter"
       relative: false
     source: path
-    version: "0.23.0"
+    version: "0.24.0"
   package_config:
     dependency: transitive
     description:
@@ -523,14 +539,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.2"
-  phone_numbers_parser:
-    dependency: transitive
-    description:
-      name: phone_numbers_parser
-      sha256: "5c4367d9874927c517ee042241fd31af0fc91d099c69bcc5525ed6b368c3026a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.26"
   platform:
     dependency: transitive
     description:
@@ -579,6 +587,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "13b6717366aa7ec3792dd62c19c7d33a785708224365f2db23c5ca01f1c1a0f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
   pub_semver:
     dependency: transitive
     description:
@@ -611,6 +627,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  serial_csv:
+    dependency: transitive
+    description:
+      name: serial_csv
+      sha256: "2d62bb70cb3ce7251383fc86ea9aae1298ab1e57af6ef4e93b6a9751c5c268dd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.2"
   shelf:
     dependency: transitive
     description:
@@ -632,6 +656,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slang:
+    dependency: transitive
+    description:
+      name: slang
+      sha256: "6091c2b4cd9f663080ede24fde6bcb9ee43f9fad1f9eaa66e2801eee47684e24"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.19.2"
+  slang_build_runner:
+    dependency: transitive
+    description:
+      name: slang_build_runner
+      sha256: f2b6c5fc1f5bc41de80b05e95e7d5d03b5c3041082877ce931fc7ba61cd08afe
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.19.0"
   source_span:
     dependency: transitive
     description:

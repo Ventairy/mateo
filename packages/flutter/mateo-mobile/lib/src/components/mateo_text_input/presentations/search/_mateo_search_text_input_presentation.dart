@@ -1,8 +1,9 @@
-part of '../mateo_text_input.dart';
+part of '../../mateo_text_input.dart';
 
 final class _MateoSearchTextInputPresentation extends MateoTextInputPresentation {
   const _MateoSearchTextInputPresentation({required this.variant, this.size = .standard, this.elevation = 0})
-    : super._();
+    : assert(variant != MateoTextInputVariant.plain, 'Plain is not supported by search'),
+      super._();
 
   @override
   final MateoTextInputVariant variant;
@@ -48,11 +49,12 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
     final scope = _MateoTextInputPresentationScope.of(context);
     final theme = MateoTheme.of(context);
     final colors = widget.variant.resolveColorScheme(theme.colorScheme.textInputs);
+    final typography = widget.variant.resolveTypography(widget.size);
     final style = TextStyle(
       fontFamily: MateoTypography.fontFamily,
       letterSpacing: MateoTypography.letterSpacing,
-      fontSize: widget.size.fontSize,
-      height: widget.size.lineHeight / widget.size.fontSize,
+      fontSize: typography.fontSize,
+      height: typography.lineHeight / typography.fontSize,
       fontWeight: .w500,
       color: scope.enabled ? colors.text : colors.textDisabled,
     );
@@ -110,15 +112,8 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
                                 enabled: scope.enabled,
                                 onChanged: scope.onChanged,
                                 onSubmitted: scope.onSubmitted,
-                                contextMenuBuilder: (context, editable) => Localizations.override(
-                                  context: context,
-                                  delegates: const [GlobalCupertinoLocalizations.delegate],
-                                  child: SystemContextMenu.isSupportedByField(editable)
-                                      ? SystemContextMenu.editableText(editableTextState: editable)
-                                      : CupertinoAdaptiveTextSelectionToolbar.editableText(
-                                          editableTextState: editable,
-                                        ),
-                                ),
+                                selectionControls: _MateoTextInputEditingControls.selectionControls,
+                                contextMenuBuilder: _MateoTextInputEditingControls.buildContextMenu,
                                 textInputAction: .search,
                                 placeholder: scope.placeholder,
                                 style: style,
@@ -132,8 +127,8 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
                                 padding: EdgeInsetsDirectional.only(
                                   start: _iconTextGap,
                                   end: _iconTextGap,
-                                  top: (widget.size.height - widget.size.lineHeight) / 2,
-                                  bottom: (widget.size.height - widget.size.lineHeight) / 2,
+                                  top: (widget.size.height - typography.lineHeight) / 2,
+                                  bottom: (widget.size.height - typography.lineHeight) / 2,
                                 ),
                                 prefix: SizedBox(width: leadingWidth),
                                 suffix: hasText ? SizedBox(width: trailingWidth) : null,

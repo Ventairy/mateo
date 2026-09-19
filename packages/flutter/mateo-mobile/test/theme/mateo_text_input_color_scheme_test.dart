@@ -5,6 +5,31 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 void main() {
   final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
+  test('when plain is resolved, it should expose transparent backgrounds and filled-base content colors', () {
+    final colors = theme.colorScheme.textInputs.plain;
+    final expected = MateoTextInputColorScheme(
+      background: const Color(0x00000000),
+      text: theme.palette.black,
+      placeholder: theme.palette.neutral[7],
+      icon: theme.palette.neutral[9],
+      backgroundDisabled: const Color(0x00000000),
+      textDisabled: theme.palette.neutral[9],
+      placeholderDisabled: theme.palette.neutral[9],
+      iconDisabled: theme.palette.neutral[9],
+    );
+    expect(MateoTextInputVariant.plain.resolveColorScheme(theme.colorScheme.textInputs), same(colors));
+    expect(colors, expected);
+    expect(colors.hashCode, expected.hashCode);
+    expect(colors, isNot(theme.colorScheme.textInputs.filled.base));
+  });
+
+  test('when search uses plain, it should reject the unsupported variant', () {
+    expect(
+      () => MateoTextInputPresentation.search(variant: .plain),
+      throwsA(isA<AssertionError>().having((error) => error.message, 'message', 'Plain is not supported by search')),
+    );
+  });
+
   test('when nested filled variants resolve, they should retain their authored color roles', () {
     final filled = theme.colorScheme.textInputs.filled;
     expect(MateoTextInputVariant.filled, same(MateoTextInputVariant.filled.neutral));
@@ -49,6 +74,8 @@ void main() {
   test('when search is configured, it should retain the selected variant', () {
     const presentation = MateoTextInputPresentation.search(variant: .filled);
     expect(presentation.variant, MateoTextInputVariant.filled);
+    final basePresentation = MateoTextInputPresentation.search(variant: .filled.base);
+    expect(basePresentation.variant, MateoTextInputVariant.filled.base);
   });
 
   test('when the accent changes, it should preserve text input colors and their hashes', () {
@@ -56,6 +83,8 @@ void main() {
     expect(changed.colorScheme.textInputs, theme.colorScheme.textInputs);
     expect(changed.colorScheme.textInputs.hashCode, theme.colorScheme.textInputs.hashCode);
     expect(changed.colorScheme.textInputs.filled.hashCode, theme.colorScheme.textInputs.filled.hashCode);
+    expect(changed.colorScheme.textInputs.plain, theme.colorScheme.textInputs.plain);
+    expect(changed.colorScheme.textInputs.plain.hashCode, theme.colorScheme.textInputs.plain.hashCode);
     expect(theme.copyWith(), theme);
     expect(theme.copyWith().hashCode, theme.hashCode);
   });

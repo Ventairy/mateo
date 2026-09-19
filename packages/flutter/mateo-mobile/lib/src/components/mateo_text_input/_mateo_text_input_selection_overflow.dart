@@ -1,4 +1,4 @@
-part of '../mateo_text_input.dart';
+part of 'mateo_text_input.dart';
 
 /// Extends Flutter's selection highlight past the paragraph's left paint bound.
 class _MateoTextInputSelectionOverflow extends SingleChildRenderObjectWidget {

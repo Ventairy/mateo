@@ -2,6 +2,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show TextEditingValue, TextInputFormatter;
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,7 +25,9 @@ import '../mateo_surface/mateo_surface.dart';
 import 'mateo_text_input_size.dart';
 import 'mateo_text_input_variant.dart';
 
+part '_mateo_text_input_editing_controls.dart';
 part '_mateo_text_input_presentation_scope.dart';
+part '_mateo_text_input_selection_overflow.dart';
 part 'presentations/mateo_text_input_presentation.dart';
 part 'presentations/phone/_mateo_phone_country_picker.dart';
 part 'presentations/phone/_mateo_phone_country_row.dart';
@@ -32,7 +35,6 @@ part 'presentations/phone/_mateo_phone_text_input_country_selector.dart';
 part 'presentations/phone/_mateo_phone_text_input_presentation.dart';
 part 'presentations/search/_mateo_search_text_input_fade_profile.dart';
 part 'presentations/search/_mateo_search_text_input_presentation.dart';
-part 'presentations/search/_mateo_text_input_selection_overflow.dart';
 
 /// A Mateo text input with a presentation-owned appearance.
 ///
@@ -118,14 +120,17 @@ class _MateoTextInputState extends State<MateoTextInput> {
   }
 
   @override
-  Widget build(BuildContext context) => _MateoTextInputPresentationScope(
-    controller: _controller,
-    focusNode: _focusNode,
-    autofocus: widget.autofocus,
-    placeholder: widget.placeholder,
-    onChanged: widget.onChanged,
-    onSubmitted: widget.onSubmitted,
-    onClear: _clear,
-    child: widget.presentation,
+  Widget build(BuildContext context) => material.TextSelectionTheme(
+    data: material.TextSelectionThemeData(selectionHandleColor: MateoTheme.of(context).colorScheme.accent),
+    child: _MateoTextInputPresentationScope(
+      controller: _controller,
+      focusNode: _focusNode,
+      autofocus: widget.autofocus,
+      placeholder: widget.placeholder,
+      onChanged: widget.onChanged,
+      onSubmitted: widget.onSubmitted,
+      onClear: _clear,
+      child: widget.presentation,
+    ),
   );
 }

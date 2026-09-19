@@ -1,0 +1,9 @@
+{
+  "phone": {
+    "changeCountryAccessibilityLabel": "Change country, currently $country",
+    "closeCountryPickerAccessibilityLabel": "Close country picker",
+    "countrySelectedAccessibilityLabel": "$country, selected",
+    "noCountriesFound": "No countries found",
+    "searchCountries": "Search countries"
+  }
+}

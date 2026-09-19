@@ -1,4 +1,4 @@
-part of '../mateo_text_input.dart';
+part of '../../mateo_text_input.dart';
 
 final class _MateoSearchTextInputFadeProfile {
   static const _segments = 32;

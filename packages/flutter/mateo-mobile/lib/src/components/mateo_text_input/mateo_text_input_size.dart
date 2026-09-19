@@ -21,7 +21,7 @@ enum MateoTextInputSize {
   /// A prominent input supported by the plain treatment only.
   large(
     height: 57,
-    leadingIconSize: 30,
+    leadingIconSize: 32,
     trailingIconSize: 25,
     leadingPadding: 14,
     trailingPadding: 14,

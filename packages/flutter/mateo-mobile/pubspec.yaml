@@ -13,11 +13,14 @@ environment:
   flutter: ">=3.47.0"
 
 dependencies:
+  diacritic: ^0.1.6
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  oh_my_flutter: ^0.19.0
+  intl: ^0.20.3
+  oh_my_flutter: ^0.24.0
+  slang: ^4.19.2
 
 dev_dependencies:
   alchemist: ^0.14.0
@@ -25,14 +28,17 @@ dev_dependencies:
   dotdart: ^0.10.2
   flutter_test:
     sdk: flutter
+  slang_build_runner: ^4.19.0
 
 dotdart:
   output: lib/src/gen/
   svg:
     - assets/icons/
+    - assets/flags/
 
 flutter:
   assets:
+    - assets/flags/
     - assets/icons/
   fonts:
     - family: Inter

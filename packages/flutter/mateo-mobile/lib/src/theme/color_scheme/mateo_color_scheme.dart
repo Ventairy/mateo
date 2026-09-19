@@ -88,6 +88,16 @@ final class MateoColorScheme {
       ),
     ),
     textInputs: ._(
+      plain: .new(
+        background: const Color(0x00000000),
+        text: palette.black,
+        placeholder: palette.neutral[7],
+        icon: palette.neutral[9],
+        backgroundDisabled: const Color(0x00000000),
+        textDisabled: palette.neutral[8],
+        placeholderDisabled: palette.neutral[8],
+        iconDisabled: palette.neutral[8],
+      ),
       filled: ._(
         neutral: .new(
           background: palette.neutral[2],

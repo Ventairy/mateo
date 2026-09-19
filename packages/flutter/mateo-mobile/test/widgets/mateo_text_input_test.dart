@@ -157,7 +157,7 @@ void main() {
   }
 
   for (final direction in TextDirection.values) {
-    for (final size in MateoTextInputSize.values) {
+    for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard]) {
       testWidgets('when $size $direction text does not overflow, fades should stop at the actual text insets', (
         tester,
       ) async {
@@ -197,7 +197,7 @@ void main() {
   }
 
   for (final direction in TextDirection.values) {
-    for (final size in MateoTextInputSize.values) {
+    for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard]) {
       testWidgets('when $size $direction text is selected, its highlight should continue through both fades', (
         tester,
       ) async {
@@ -437,7 +437,7 @@ void main() {
   }
 
   for (final direction in TextDirection.values) {
-    for (final size in MateoTextInputSize.values) {
+    for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard]) {
       testWidgets('when clearing ${size.name} text in ${direction.name}, it should notify once and retain focus', (
         tester,
       ) async {
@@ -530,7 +530,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  for (final size in MateoTextInputSize.values) {
+  for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard]) {
     testWidgets('when ${size.name} is used, it should align with its button height and grow for large text', (
       tester,
     ) async {
