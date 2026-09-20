@@ -44,7 +44,7 @@ final class _MateoAndroidPageRoute<T> extends BaseMateoPageRoute<T> {
       child: _primaryTransitionDisabledBuilder.buildTransitions(
         this,
         context,
-        const AlwaysStoppedAnimation<double>(1),
+        kAlwaysCompleteAnimation,
         secondaryAnimation,
         child,
       ),

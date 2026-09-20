@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,15 +38,24 @@ void main() {
       debugDefaultTargetPlatformOverride = .iOS;
       final navigator = await _sheet(tester);
       _push(navigator, withSlots: true);
+      ui.Image? firstFrame;
+      if (!intermediate) {
+        // Snapshot the submitted frame before post-frame flight capture changes
+        // the retained layer tree in preparation for the following frame.
+        tester.binding.addPostFrameCallback((_) {
+          firstFrame = tester.renderObject<RenderRepaintBoundary>(find.byKey(const ValueKey('capture'))).toImageSync();
+        });
+      }
       await tester.pump();
       if (intermediate) {
         await _start(tester);
         await tester.pump(const Duration(milliseconds: 160));
       }
       await expectLater(
-        find.byKey(const ValueKey('capture')),
+        firstFrame ?? find.byKey(const ValueKey('capture')),
         matchesGoldenFile('goldens/ci/sheet_view_slots_${intermediate ? "midpoint" : "first_frame"}.png'),
       );
+      firstFrame?.dispose();
       await tester.pumpAndSettle();
       expect(find.text('Close'), findsOneWidget);
       expect(find.text('Save'), findsOneWidget);

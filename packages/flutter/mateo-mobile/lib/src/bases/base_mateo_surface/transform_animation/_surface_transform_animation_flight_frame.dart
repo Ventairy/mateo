@@ -7,6 +7,7 @@ final class _SurfaceTransformAnimationFlightFrame {
     required this.shape,
     required this.shapeSize,
     required this.content,
+    required this.effects,
   });
 
   factory _SurfaceTransformAnimationFlightFrame.capture(
@@ -14,6 +15,7 @@ final class _SurfaceTransformAnimationFlightFrame {
     required Color color,
     required MateoRoundedShapeBorder shape,
     required GroupLink content,
+    required _SurfaceTransformAnimationContentEffects effects,
   }) {
     final localSize = endpoint.localSize;
     final overlaySize = endpoint.overlayBounds.size;
@@ -27,6 +29,7 @@ final class _SurfaceTransformAnimationFlightFrame {
       shape: .new(radius: shape.resolveRadius(localSize) * (uniformScale ? scaleX : 1)),
       shapeSize: uniformScale ? overlaySize : localSize,
       content: .capture(endpoint, content),
+      effects: effects,
     );
   }
 
@@ -47,9 +50,11 @@ final class _SurfaceTransformAnimationFlightFrame {
       shape: outline.border,
       shapeSize: outline.size,
       content: content,
+      effects: source.effects,
     );
   }
 
+  final _SurfaceTransformAnimationContentEffects effects;
   final Color color;
   final MateoRoundedShapeBorder shape;
   final Size shapeSize;

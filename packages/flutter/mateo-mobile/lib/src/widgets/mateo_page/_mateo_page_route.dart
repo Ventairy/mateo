@@ -70,7 +70,7 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
         : _builder.buildTransitions(
             this,
             context,
-            shouldAnimatePrimary ? animation : const AlwaysStoppedAnimation<double>(1),
+            shouldAnimatePrimary ? animation : kAlwaysCompleteAnimation,
             secondaryAnimation,
             child,
           );

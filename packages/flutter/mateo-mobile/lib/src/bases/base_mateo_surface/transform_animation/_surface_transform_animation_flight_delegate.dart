@@ -4,19 +4,37 @@ final class _SurfaceTransformAnimationFlightDelegate
     extends MorphFlightDelegate<_SurfaceTransformAnimationFlightFrame> {
   _SurfaceTransformAnimationFlightDelegate({
     required this.color,
-    required this.shape,
+    required MateoRoundedShapeBorder shape,
     required this.content,
-    required MateoSurfaceAnimationTransform animation,
-  }) : _effects = _SurfaceTransformAnimationContentEffects(animation.contentEffects);
+    required Map<MorphTarget, MateoSurfaceAnimationTransform> animations,
+  }) : _transforms = animations.map(
+         (target, animation) => MapEntry(
+           target,
+           (
+             shape: animation.shape?.border ?? shape,
+             effects: _SurfaceTransformAnimationContentEffects(animation.contentEffects),
+           ),
+         ),
+       );
 
   final Color color;
-  final MateoRoundedShapeBorder shape;
   final GroupLink content;
-  final _SurfaceTransformAnimationContentEffects _effects;
+  final Map<MorphTarget, ({MateoRoundedShapeBorder shape, _SurfaceTransformAnimationContentEffects effects})>
+  _transforms;
+
+  @override
+  Iterable<GroupLink> get contentGroups => [content];
 
   @override
   _SurfaceTransformAnimationFlightFrame properties(MorphEndpointContext endpoint) {
-    return _SurfaceTransformAnimationFlightFrame.capture(endpoint, color: color, shape: shape, content: content);
+    final transform = _transforms[endpoint.target]!;
+    return _SurfaceTransformAnimationFlightFrame.capture(
+      endpoint,
+      color: color,
+      shape: transform.shape,
+      content: content,
+      effects: transform.effects,
+    );
   }
 
   @override
@@ -28,7 +46,7 @@ final class _SurfaceTransformAnimationFlightDelegate
     source,
     destination,
     progress.curvedProgress,
-    content: _effects.interpolate(source.content, destination.content, progress),
+    content: source.effects.interpolate(source.content, destination.content, progress),
   );
 
   @override

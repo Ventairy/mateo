@@ -1,14 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../../foundation/mateo_edge_effect/mateo_edge_effect.dart';
 import '../../foundation/mateo_edge_effect/mateo_edge_effect_side.dart';
 import '../../foundation/mateo_elevation.dart';
+import '../../foundation/mateo_navigator_observer.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
 import '../base_mateo_edge_fade/mateo_edge_fade_band.dart';
 import '../base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 import '../base_mateo_edge_fade/mateo_edge_fade_profile.dart';
+import '../base_mateo_page_route/base_mateo_page_route.dart';
 import '../base_mateo_surface/base_mateo_surface.dart';
 import '../base_mateo_surface/default_mateo_surface_edge_fade/default_mateo_surface_edge_fade.dart';
 import '../base_mateo_surface/mateo_surface_scope.dart';
@@ -56,6 +59,13 @@ class BaseMateoViewSurface extends StatelessWidget {
     final scope = MateoSurfaceScope.of(context);
     final shape = this.shape ?? scope.shape ?? const MateoRoundedShapeBorder(radius: 0);
     final animation = this.animation ?? scope.animation;
+    final navigator = Navigator.maybeOf(context);
+    final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
+    final sheetToViewTarget = observer is MateoNavigatorObserver ? observer.sheetToViewTarget : null;
+    final route = ModalRoute.of(context);
+    final animationStartup = route is BaseMateoPageRoute && !route.shouldAnimateSurfaceEntrance
+        ? MotionStartup.skip
+        : MotionStartup.play;
 
     final scopedChild = MateoSurfaceScope(animation: const .none(), child: child);
     final view = MateoViewLayoutScope.maybeOf(context);
@@ -82,6 +92,8 @@ class BaseMateoViewSurface extends StatelessWidget {
         width: const .fill(),
         height: const .fill(),
         animation: animation,
+        sheetToViewTarget: sheetToViewTarget,
+        animationStartup: animationStartup,
         contentGroup: view.contentGroup,
         color: color,
         elevation: elevation,
@@ -98,6 +110,8 @@ class BaseMateoViewSurface extends StatelessWidget {
       width: const .fill(),
       height: view.fitHeight ? const .fit() : const .fill(),
       animation: animation,
+      sheetToViewTarget: sheetToViewTarget,
+      animationStartup: animationStartup,
       contentGroup: view.contentGroup,
       color: color,
       elevation: elevation,

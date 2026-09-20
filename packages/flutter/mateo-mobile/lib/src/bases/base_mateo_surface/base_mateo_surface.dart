@@ -7,19 +7,21 @@ import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../../foundation/mateo_sheet_to_view_transition.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
+import '../../foundation/mateo_surface_animation/mateo_surface_transform_target.dart';
 import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
 import 'mateo_surface_obstruction.dart';
 
+part '_base_mateo_surface_content_layer.dart';
 part '_base_mateo_surface_content_layout.dart';
 part '_base_mateo_surface_scroll.dart';
 part '_base_mateo_surface_scroll_controller.dart';
 part '_base_mateo_surface_scroll_position.dart';
 part '_base_mateo_surface_size.dart';
 part '_render_base_mateo_surface_content_layout.dart';
-part '_base_mateo_surface_content_layer.dart';
 part '_render_base_mateo_surface_size.dart';
 part 'transform_animation/_surface_transform_animation_flight_content.dart';
 part 'transform_animation/_surface_transform_animation_flight_delegate.dart';
@@ -47,6 +49,8 @@ class BaseMateoSurface extends StatefulWidget {
     this.obstruction,
     this.edgeEffectBuilder,
     this.contentGroup,
+    this.sheetToViewTarget,
+    this.animationStartup = .play,
     super.key,
   }) : _scrollable = false;
 
@@ -63,6 +67,8 @@ class BaseMateoSurface extends StatefulWidget {
     this.obstruction,
     this.edgeEffectBuilder,
     this.contentGroup,
+    this.sheetToViewTarget,
+    this.animationStartup = .play,
     super.key,
   }) : _scrollable = true;
 
@@ -70,6 +76,9 @@ class BaseMateoSurface extends StatefulWidget {
   edgeEffectBuilder;
 
   final GroupLink? contentGroup;
+
+  final MorphTarget? sheetToViewTarget;
+  final MotionStartup animationStartup;
 
   final MateoSurfaceObstruction? obstruction;
 
@@ -100,36 +109,17 @@ class BaseMateoSurface extends StatefulWidget {
 class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   // Preserve subtree state when toggling the Morph wrapper.
   final GlobalKey _surfaceKey = GlobalKey();
-  MorphTarget? _transformTarget;
+  static final _transformTargets = Expando<MorphTarget>();
+
+  static MorphTarget _transformTarget(MateoSurfaceTransformTarget target) =>
+      _transformTargets[target] ??= MorphTarget(tag: target, duration: target.duration, curve: target.curve);
+
   final GroupLink _contentGroup = GroupLink();
 
   // Preserve viewport state when an effect wrapper is added or replaced.
   final GlobalKey _viewportKey = GlobalKey();
 
   _BaseMateoSurfaceScrollController? _scrollController;
-
-  void _updateTransformTarget() {
-    if (widget.animation case MateoSurfaceAnimationTransform(:final id)) {
-      final tag = (_BaseMateoSurfaceState, id);
-      if (_transformTarget?.tag == tag) return;
-      _transformTarget = MorphTarget(tag: tag);
-      return;
-    }
-
-    _transformTarget = null;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _updateTransformTarget();
-  }
-
-  @override
-  void didUpdateWidget(BaseMateoSurface oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.animation != widget.animation) _updateTransformTarget();
-  }
 
   @override
   void dispose() {
@@ -190,35 +180,50 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       ),
     );
 
-    return switch (widget.animation) {
-      MateoSurfaceAnimationNone() => surface,
-      final MateoSurfaceAnimationPop animation => _buildPop(animation, surface),
-      final MateoSurfaceAnimationTransform animation => Morph(
-        targets: [_transformTarget!],
-        animateChildChanges: false,
-        duration: animation.duration,
-        curve: animation.curve,
-        flightConfig: .custom(
-          _SurfaceTransformAnimationFlightDelegate(
-            color: surfaceColor,
-            shape: animation.shape?.border ?? widget.shape,
-            content: contentGroup,
-            animation: animation,
-          ),
-        ),
-        child: surface,
-      ),
-    };
+    return _buildAnimation(surface: surface, color: surfaceColor, contentGroup: contentGroup);
   }
 
-  Widget _buildPop(MateoSurfaceAnimationPop animation, Widget surface) => Motion.list(
-    interactive: true,
-    effects: [
-      ScaleInMotionEffect(scale: animation.beginScale, duration: animation.duration, curve: animation.curve),
-      FadeInMotionEffect(duration: animation.duration, curve: animation.curve),
-    ],
-    child: surface,
-  );
+  Widget _buildAnimation({required Widget surface, required Color color, required GroupLink contentGroup}) {
+    final animation = widget.animation;
+    final child = animation is MateoSurfaceAnimationPop
+        ? Motion.list(
+            startup: widget.animationStartup,
+            interactive: true,
+            effects: [
+              ScaleInMotionEffect(scale: animation.beginScale, duration: animation.duration, curve: animation.curve),
+              FadeInMotionEffect(duration: animation.duration, curve: animation.curve),
+            ],
+            child: surface,
+          )
+        : surface;
+    final transforms = <MorphTarget, MateoSurfaceAnimationTransform>{
+      ?widget.sheetToViewTarget: kSheetToViewTransformAnimation,
+      if (animation is MateoSurfaceAnimationTransform) _transformTarget(animation.target): animation,
+    };
+    if (transforms.isEmpty) return child;
+
+    return Morph(
+      targets: transforms.keys.toList(),
+      canMatch: _canMatch,
+      flightConfig: .custom(
+        _SurfaceTransformAnimationFlightDelegate(
+          color: color,
+          shape: widget.shape,
+          content: contentGroup,
+          animations: transforms,
+        ),
+      ),
+      child: child,
+    );
+  }
+
+  bool _canMatch(MorphTarget target, MorphMatchContext match) {
+    final automaticTarget = widget.sheetToViewTarget;
+    if (automaticTarget == null || identical(target, automaticTarget)) return true;
+    // A supplied transform cannot replace sheet/view motion, even when the
+    // automatic endpoint cannot be captured.
+    return !(automaticTarget.canMatch?.call(match) ?? false);
+  }
 
   Widget _clipContent(Widget child) {
     if (widget.shape == const MateoRoundedShapeBorder(radius: 0)) {

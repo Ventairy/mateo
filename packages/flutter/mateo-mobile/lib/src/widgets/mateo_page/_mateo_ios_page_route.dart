@@ -22,7 +22,7 @@ final class _MateoIosPageRoute<T> extends BaseMateoPageRoute<T> with CupertinoRo
     if (!shouldAnimateSecondary) return child;
     return super.buildTransitions(
       context,
-      shouldAnimatePrimary ? animation : const AlwaysStoppedAnimation<double>(1),
+      shouldAnimatePrimary ? animation : kAlwaysCompleteAnimation,
       secondaryAnimation,
       child,
     );

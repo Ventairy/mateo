@@ -22,16 +22,18 @@ void main() {
         ).createRoute(navigator.context) as BaseMateoPageRoute<void>;
         navigator.push(route);
         await tester.pump();
-        expect(route.isPrimaryTransitionDisabled, isTrue);
-        expect(route.transitionDuration, Duration.zero);
-        expect(route.reverseTransitionDuration, Duration.zero);
-        expect(route.animation!.value, 1);
+        expect(route.isPrimaryVisualMotionDisabled, isTrue);
+        expect(route.transitionDuration, const Duration(milliseconds: 320));
+        expect(route.reverseTransitionDuration, const Duration(milliseconds: 320));
+        expect(route.animation!.value, 0);
         _expectSettled(tester);
         await tester.pumpAndSettle();
         navigator.pop();
         await tester.pump();
 
         expect(tester.element(find.byType(MateoSheetView)), same(sheetElement));
+        _expectSettled(tester);
+        await tester.pumpAndSettle();
         expect(find.byKey(_pageKey), findsNothing);
       });
     }
@@ -51,13 +53,13 @@ void main() {
         navigator.push(route);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 80));
-        expect(route.isPrimaryTransitionDisabled, sheet);
+        expect(route.isPrimaryVisualMotionDisabled, sheet);
         if (sheet) _expectSettled(tester);
         await tester.pumpAndSettle();
         navigator.pop();
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 80));
-        if (sheet) expect(find.byKey(_pageKey), findsNothing);
+        if (sheet) _expectSettled(tester);
         await tester.pumpAndSettle();
       });
     }
