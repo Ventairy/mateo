@@ -51,7 +51,9 @@ class MateoPress extends StatefulWidget {
 
   /// The action invoked on a successful press, or null to disable this control.
   ///
-  /// The callback runs immediately and may return synchronously or asynchronously.
+  /// The callback may return synchronously or asynchronously. Animated pointer
+  /// taps wait for their next feedback frame before invoking it; other
+  /// activations run immediately.
   /// Its animation argument completes when release feedback finishes or is interrupted,
   /// including when this control is removed. Await it to sequence navigation
   /// after feedback; check the caller's mounted state before using its context.
@@ -94,8 +96,10 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
   bool _tickerEnabled = true;
   ValueChanged<bool>? _pressChanged;
   Completer<void>? _release;
+  int _activationSequence = 0;
+  ({FutureOr<void> Function(Future<void> animation) callback, Future<void> animation})? _pendingActivation;
 
-  bool get _enabled => widget.onPressed != null;
+  bool get _enabled => widget.onPressed != null && _pendingActivation == null;
   bool get _animates => widget.animation != .none && !_disableAnimations && _tickerEnabled;
 
   @override
@@ -125,7 +129,9 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
   @override
   void didUpdateWidget(covariant MateoPress oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if ((!_enabled && _release == null) || widget.animation != oldWidget.animation) _resetFeedback();
+    if ((widget.onPressed == null && _release == null) || widget.animation != oldWidget.animation) {
+      _resetFeedback();
+    }
     if (widget.animation != oldWidget.animation) {
       _controller.duration = widget.animation.pressDuration;
       _controller.reverseDuration = widget.animation.releaseDuration;
@@ -179,6 +185,21 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
     _pressChanged?.call(true);
   }
 
+  void _scheduleActivation(
+    FutureOr<void> Function(Future<void> animation) callback,
+    Future<void> animation,
+  ) {
+    _pendingActivation = (callback: callback, animation: animation);
+    final activationSequence = ++_activationSequence;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || activationSequence != _activationSequence) return;
+      final activation = _pendingActivation;
+      if (activation == null) return;
+      _pendingActivation = null;
+      _invoke(activation.callback, activation.animation);
+    });
+  }
+
   Future<void> _releaseFeedback() {
     if (!_animates || _controller.isDismissed) {
       _resetFeedback();
@@ -197,11 +218,16 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
 
   void _tapUp(TapUpDetails details) {
     if (!_enabled || !_pressed) return;
+    final callback = widget.onPressed!;
     final animation = _releaseFeedback();
     try {
       _endPress();
     } finally {
-      _activate(animation);
+      if (!_animates) {
+        _invoke(callback, animation);
+      } else {
+        _scheduleActivation(callback, animation);
+      }
     }
   }
 
@@ -211,8 +237,13 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
     _endPress();
   }
 
-  void _activate(Future<void> animation) {
-    final result = widget.onPressed?.call(animation);
+  void _activate() {
+    if (!_enabled) return;
+    _invoke(widget.onPressed!, Future<void>.value());
+  }
+
+  void _invoke(FutureOr<void> Function(Future<void> animation) callback, Future<void> animation) {
+    final result = callback(animation);
     if (result is Future<void>) unawaited(result);
   }
 
@@ -231,6 +262,8 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    _activationSequence++;
+    _pendingActivation = null;
     _completeRelease();
     _controller.dispose();
     super.dispose();
@@ -243,7 +276,7 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
       enabled: _enabled,
       label: widget.semanticLabel,
       excludeSemantics: widget.semanticLabel != null,
-      onTap: _enabled ? () => _activate(Future<void>.value()) : null,
+      onTap: _enabled ? _activate : null,
       child: MouseRegion(
         cursor: _enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
         child: GestureDetector(

@@ -50,6 +50,7 @@ void main() {
     controller.selection = const TextSelection.collapsed(offset: 5);
     final originalValue = controller.value;
     await tester.tap(find.byType(MateoCountryFlag));
+    await tester.pump();
     await tester.pumpAndSettle();
     final search = find.byType(CupertinoTextField).last;
     await tester.enterText(search, 'zzzz');
@@ -391,6 +392,7 @@ void main() {
     controller.selection = const TextSelection.collapsed(offset: 7);
 
     await tester.tap(find.byType(MateoCountryFlag));
+    await tester.pump();
     await tester.pumpAndSettle();
     expect(find.byType(MateoSheetView), findsOneWidget);
     expect(find.text('Buscar países'), findsOneWidget);

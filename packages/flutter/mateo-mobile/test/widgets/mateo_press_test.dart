@@ -67,6 +67,8 @@ void main() {
         expect(opacityLayers(tester), isEmpty);
       }
       await gesture.up();
+      expect(calls, animation == .none ? 1 : 0);
+      await tester.pump();
       expect(calls, 1);
       await tester.pumpAndSettle();
       expect(completed, isTrue);
@@ -99,6 +101,100 @@ void main() {
     expect(scale(tester), 1);
     expect(completed, isTrue);
   });
+
+  testWidgets('when an animated tap ends, it should activate after its next feedback frame', (tester) async {
+    var calls = 0;
+    await tester.pumpWidget(
+      host(
+        MateoPress(
+          onPressed: (_) => calls++,
+          child: const Text('Press'),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(MateoPress));
+    await tester.tap(find.byType(MateoPress), warnIfMissed: false);
+    expect(calls, 0);
+
+    await tester.pump();
+    expect(calls, 1);
+  });
+
+  testWidgets('when animated feedback has presented, it should still activate after its next frame', (tester) async {
+    var calls = 0;
+    await tester.pumpWidget(
+      host(
+        MateoPress(
+          onPressed: (_) => calls++,
+          child: const Text('Press'),
+        ),
+      ),
+    );
+    final gesture = await tester.startGesture(tester.getCenter(find.byType(MateoPress)));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 16));
+    expect(scale(tester), lessThan(1));
+
+    await gesture.up();
+    expect(calls, 0);
+    await tester.pump();
+    expect(calls, 1);
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('when an animated tap wins inside a scrollable, it should use the same next-frame timing', (
+    tester,
+  ) async {
+    var calls = 0;
+    await tester.pumpWidget(
+      host(
+        ListView(
+          children: [
+            MateoPress(
+              onPressed: (_) => calls++,
+              child: const SizedBox(height: 64, child: Text('Press')),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(MateoPress));
+    expect(calls, 0);
+
+    await tester.pump();
+    expect(calls, 1);
+  });
+
+  for (final condition in [
+    (name: 'animation is absent', animation: MateoPressAnimationType.none, reducedMotion: false, tickerEnabled: true),
+    (name: 'motion is reduced', animation: MateoPressAnimationType.scale, reducedMotion: true, tickerEnabled: true),
+    (
+      name: 'tickers are disabled',
+      animation: MateoPressAnimationType.scale,
+      reducedMotion: false,
+      tickerEnabled: false,
+    ),
+  ]) {
+    testWidgets('when ${condition.name}, a quick tap should activate immediately', (tester) async {
+      var calls = 0;
+      await tester.pumpWidget(
+        host(
+          MateoPress(
+            animation: condition.animation,
+            onPressed: (_) => calls++,
+            child: const Text('Press'),
+          ),
+          reducedMotion: condition.reducedMotion,
+          tickerEnabled: condition.tickerEnabled,
+        ),
+      );
+
+      await tester.tap(find.byType(MateoPress));
+      expect(calls, 1);
+    });
+  }
 
   testWidgets('when re-pressed during release, it should settle both futures without getting stuck', (tester) async {
     var completed = 0;
@@ -246,6 +342,7 @@ void main() {
       ),
     );
     await tester.tap(find.byType(MateoPress));
+    await tester.pump();
     expect(tester.takeException(), isA<StateError>());
     var completed = false;
     unawaited(release!.then((_) => completed = true));
@@ -289,6 +386,7 @@ void main() {
       ),
     );
     await tester.tapAt(tester.getTopLeft(find.byType(MateoPress)) + const Offset(2, 2));
+    await tester.pump();
     expect(calls, 1);
     await tester.pumpAndSettle();
   });

@@ -114,7 +114,7 @@ class _MateoPhoneCountryPicker extends StatelessWidget {
                           letterSpacing: MateoTypography.letterSpacing,
                           fontSize: 15,
                           height: 1.4,
-                          fontWeight: .w600,
+                          fontWeight: .w500,
                           color: MateoTheme.of(context).colorScheme.text.tertiary,
                         ),
                       ),
