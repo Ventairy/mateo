@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -198,6 +199,7 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
       _pendingActivation = null;
       _invoke(activation.callback, activation.animation);
     });
+    SchedulerBinding.instance.ensureVisualUpdate();
   }
 
   Future<void> _releaseFeedback() {
