@@ -5,6 +5,8 @@ import '../../gen/flags.g.dart';
 
 /// Displays a circular country flag using bundled artwork.
 ///
+/// See [country flag guidance](https://github.com/Ventairy/mateo/blob/main/design-system/mobile/country-flags.md).
+///
 /// Use alongside a country name or in a control that identifies the country.
 /// Provide [semanticLabel] when the flag conveys information on its own.
 ///

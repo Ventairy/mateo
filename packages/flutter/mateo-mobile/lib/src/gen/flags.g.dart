@@ -6207,16 +6207,16 @@ class _Abw extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -6247,10 +6247,10 @@ class _Abw extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AbwPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff2994ff),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -6387,16 +6387,16 @@ class _Afg extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -6427,10 +6427,10 @@ class _Afg extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AfgPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff397c24),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -6744,13 +6744,13 @@ class _Ago extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -6781,9 +6781,9 @@ class _Ago extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AgoPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -7029,7 +7029,9 @@ class _AgoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AgoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -7068,22 +7070,22 @@ class _Aia extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffff9811.
+  /// Color 5 — defaults to 0xffff9200.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xff338af3.
+  /// Color 6 — defaults to 0xff2994ff.
   final Color? color6;
 
   @override
@@ -7114,12 +7116,12 @@ class _Aia extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AiaPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff496e2d),
-            color5: color5 ?? const Color(0xffff9811),
-            color6: color6 ?? const Color(0xff338af3),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff397c24),
+            color5: color5 ?? const Color(0xffff9200),
+            color6: color6 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -7432,13 +7434,13 @@ class _Ala extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -7469,9 +7471,9 @@ class _Ala extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AlaPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -7572,7 +7574,9 @@ class _AlaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AlaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -7607,7 +7611,7 @@ class _Alb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
@@ -7641,7 +7645,7 @@ class _Alb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AlbPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -7888,16 +7892,16 @@ class _And extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffff9811.
+  /// Color 4 — defaults to 0xffff9200.
   final Color? color4;
 
   @override
@@ -7928,10 +7932,10 @@ class _And extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AndPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -8199,13 +8203,13 @@ class _Are extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffa2001d.
+  /// Color 1 — defaults to 0xffbf1230.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -8239,9 +8243,9 @@ class _Are extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ArePainter(
-            color1: color1 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xffbf1230),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xff62b52b),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -8354,13 +8358,13 @@ class _Arg extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -8391,9 +8395,9 @@ class _Arg extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ArgPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -8475,7 +8479,9 @@ class _ArgPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArgPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -8511,13 +8517,13 @@ class _Arm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffff9811.
+  /// Color 3 — defaults to 0xffff9200.
   final Color? color3;
 
   @override
@@ -8548,9 +8554,9 @@ class _Arm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ArmPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -8612,7 +8618,9 @@ class _ArmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -8652,25 +8660,25 @@ class _Asc extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
   /// Color 5 — defaults to 0xffacabb1.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xff338af3.
+  /// Color 6 — defaults to 0xff2994ff.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xffff9811.
+  /// Color 7 — defaults to 0xffff9200.
   final Color? color7;
 
   @override
@@ -8701,13 +8709,13 @@ class _Asc extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AscPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff62b52b),
             color5: color5 ?? const Color(0xffacabb1),
-            color6: color6 ?? const Color(0xff338af3),
-            color7: color7 ?? const Color(0xffff9811),
+            color6: color6 ?? const Color(0xff2994ff),
+            color7: color7 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -8900,16 +8908,16 @@ class _Asm extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -8941,10 +8949,10 @@ class _Asm extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _AsmPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -9149,7 +9157,7 @@ class _Ata extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -9183,7 +9191,7 @@ class _Ata extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AtaPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -9283,13 +9291,13 @@ class _Atf extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -9320,9 +9328,9 @@ class _Atf extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AtfPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -9459,7 +9467,9 @@ class _AtfPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AtfPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -9500,16 +9510,16 @@ class _Atg extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffa2001d.
+  /// Color 5 — defaults to 0xffbf1230.
   final Color? color5;
 
   @override
@@ -9541,10 +9551,10 @@ class _Atg extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _AtgPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff0866db),
             color4: color4 ?? const Color(0xffeeeeee),
-            color5: color5 ?? const Color(0xffa2001d),
+            color5: color5 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -9673,13 +9683,13 @@ class _Aus extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -9710,9 +9720,9 @@ class _Aus extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AusPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -9886,7 +9896,9 @@ class _AusPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AusPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -9921,7 +9933,7 @@ class _Aut extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -9955,7 +9967,7 @@ class _Aut extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AutPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -10046,13 +10058,13 @@ class _Aze extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -10086,9 +10098,9 @@ class _Aze extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _AzePainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff338af3),
-            color3: color3 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff2994ff),
+            color3: color3 ?? const Color(0xff62b52b),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -10358,10 +10370,10 @@ class _Bdi extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -10393,8 +10405,8 @@ class _Bdi extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _BdiPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -10524,7 +10536,9 @@ class _BdiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BdiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -10563,10 +10577,10 @@ class _Bel extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -10598,8 +10612,8 @@ class _Bel extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _BelPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -10661,7 +10675,9 @@ class _BelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BelPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -10697,13 +10713,13 @@ class _Ben extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -10734,9 +10750,9 @@ class _Ben extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BenPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -10798,7 +10814,9 @@ class _BenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BenPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -10839,16 +10857,16 @@ class _Bes extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -10880,10 +10898,10 @@ class _Bes extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _BesPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff0866db),
             color4: color4 ?? const Color(0xff333333),
-            color5: color5 ?? const Color(0xffd80027),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -11205,13 +11223,13 @@ class _Bfa extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -11242,9 +11260,9 @@ class _Bfa extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BfaPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -11311,7 +11329,9 @@ class _BfaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BfaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -11346,10 +11366,10 @@ class _Bgd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -11380,8 +11400,8 @@ class _Bgd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BgdPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -11462,13 +11482,13 @@ class _Bgr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -11499,9 +11519,9 @@ class _Bgr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BgrPainter(
-            color1: color1 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff397c24),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -11563,7 +11583,9 @@ class _BgrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BgrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -11601,7 +11623,7 @@ class _Bhr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -11633,7 +11655,7 @@ class _Bhr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _BhrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -11729,10 +11751,10 @@ class _Bhs extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
@@ -11766,8 +11788,8 @@ class _Bhs extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BhsPainter(
-            color1: color1 ?? const Color(0xff338af3),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff2994ff),
+            color2: color2 ?? const Color(0xffffd000),
             color3: color3 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -11832,7 +11854,9 @@ class _BhsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BhsPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -11868,10 +11892,10 @@ class _Bih extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -11905,8 +11929,8 @@ class _Bih extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BihPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -12048,7 +12072,9 @@ class _BihPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BihPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -12092,13 +12118,13 @@ class _Blm extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xffacabb1.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -12131,9 +12157,9 @@ class _Blm extends StatelessWidget with _DotdartSvgSizing {
           painter: _BlmPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xffacabb1),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -12483,10 +12509,10 @@ class _Blr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -12518,8 +12544,8 @@ class _Blr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _BlrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -12624,7 +12650,9 @@ class _BlrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BlrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -12662,19 +12690,19 @@ class _Blz extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffa2001d.
+  /// Color 5 — defaults to 0xffbf1230.
   final Color? color5;
 
   @override
@@ -12705,11 +12733,11 @@ class _Blz extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BlzPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xffa2001d),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -12852,25 +12880,25 @@ class _Bmu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff6da544.
+  /// Color 5 — defaults to 0xff62b52b.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffa2001d.
+  /// Color 6 — defaults to 0xffbf1230.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xff338af3.
+  /// Color 7 — defaults to 0xff2994ff.
   final Color? color7;
 
   @override
@@ -12901,13 +12929,13 @@ class _Bmu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BmuPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff496e2d),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xff6da544),
-            color6: color6 ?? const Color(0xffa2001d),
-            color7: color7 ?? const Color(0xff338af3),
+            color3: color3 ?? const Color(0xff397c24),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xff62b52b),
+            color6: color6 ?? const Color(0xffbf1230),
+            color7: color7 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -13098,13 +13126,13 @@ class _Bol extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -13135,9 +13163,9 @@ class _Bol extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BolPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -13199,7 +13227,9 @@ class _BolPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BolPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -13236,16 +13266,16 @@ class _Bra extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -13276,10 +13306,10 @@ class _Bra extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BraPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff0052b4),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -13526,10 +13556,10 @@ class _Brb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
@@ -13563,8 +13593,8 @@ class _Brb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BrbPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
             color3: color3 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -13657,7 +13687,9 @@ class _BrbPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BrbPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -13694,7 +13726,7 @@ class _Brn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -13703,7 +13735,7 @@ class _Brn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -13734,10 +13766,10 @@ class _Brn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BrnPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -14077,10 +14109,10 @@ class _Btn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -14114,8 +14146,8 @@ class _Btn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BtnPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xffff9200),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -14215,7 +14247,9 @@ class _BtnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BtnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -14251,13 +14285,13 @@ class _Bvt extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -14288,9 +14322,9 @@ class _Bvt extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BvtPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -14390,7 +14424,9 @@ class _BvtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BvtPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -14426,7 +14462,7 @@ class _Bwa extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
@@ -14463,7 +14499,7 @@ class _Bwa extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _BwaPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xff333333),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
@@ -14538,7 +14574,9 @@ class _BwaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BwaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -14576,19 +14614,19 @@ class _Caf extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -14619,11 +14657,11 @@ class _Caf extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CafPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff62b52b),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -14765,7 +14803,7 @@ class _Can extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -14799,7 +14837,7 @@ class _Can extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CanPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -14914,13 +14952,13 @@ class _Cck extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
   @override
@@ -14951,9 +14989,9 @@ class _Cck extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CckPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -15333,7 +15371,9 @@ class _CckPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CckPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -15368,7 +15408,7 @@ class _Che extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -15402,7 +15442,7 @@ class _Che extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ChePainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -15494,10 +15534,10 @@ class _Chl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -15531,8 +15571,8 @@ class _Chl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ChlPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -15606,7 +15646,9 @@ class _ChlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -15641,10 +15683,10 @@ class _Chn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -15675,8 +15717,8 @@ class _Chn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ChnPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -15812,10 +15854,10 @@ class _Civ extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -15847,8 +15889,8 @@ class _Civ extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _CivPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffff9811),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xffff9200),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -15910,7 +15952,9 @@ class _CivPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CivPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -15946,13 +15990,13 @@ class _Cmr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
   @override
@@ -15983,9 +16027,9 @@ class _Cmr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CmrPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -16061,7 +16105,9 @@ class _CmrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CmrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -16097,13 +16143,13 @@ class _Cod extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -16134,9 +16180,9 @@ class _Cod extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CodPainter(
-            color1: color1 ?? const Color(0xff338af3),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff2994ff),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -16219,7 +16265,9 @@ class _CodPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CodPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -16255,13 +16303,13 @@ class _Cog extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -16292,9 +16340,9 @@ class _Cog extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CogPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -16356,7 +16404,9 @@ class _CogPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CogPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -16392,13 +16442,13 @@ class _Cok extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -16429,9 +16479,9 @@ class _Cok extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CokPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -16616,7 +16666,9 @@ class _CokPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CokPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -16652,13 +16704,13 @@ class _Col extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -16689,9 +16741,9 @@ class _Col extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ColPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -16753,7 +16805,9 @@ class _ColPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ColPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -16791,19 +16845,19 @@ class _Com extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff6da544.
+  /// Color 5 — defaults to 0xff62b52b.
   final Color? color5;
 
   @override
@@ -16834,11 +16888,11 @@ class _Com extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ComPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -17105,16 +17159,16 @@ class _Cpv extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -17145,10 +17199,10 @@ class _Cpv extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CpvPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -17374,13 +17428,13 @@ class _Cri extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -17411,9 +17465,9 @@ class _Cri extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CriPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -17485,7 +17539,9 @@ class _CriPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CriPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -17522,16 +17578,16 @@ class _Cub extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -17562,10 +17618,10 @@ class _Cub extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CubPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffff9200),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -17701,13 +17757,13 @@ class _Cuw extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -17738,9 +17794,9 @@ class _Cuw extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CuwPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -17823,7 +17879,9 @@ class _CuwPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CuwPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -17860,13 +17918,13 @@ class _Cxr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -17900,9 +17958,9 @@ class _Cxr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CxrPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -18174,25 +18232,25 @@ class _Cym extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff496e2d.
+  /// Color 5 — defaults to 0xff397c24.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffffda44.
+  /// Color 6 — defaults to 0xffffd000.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xff338af3.
+  /// Color 7 — defaults to 0xff2994ff.
   final Color? color7;
 
   @override
@@ -18223,13 +18281,13 @@ class _Cym extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CymPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xff496e2d),
-            color6: color6 ?? const Color(0xffffda44),
-            color7: color7 ?? const Color(0xff338af3),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xff397c24),
+            color6: color6 ?? const Color(0xffffd000),
+            color7: color7 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -18473,10 +18531,10 @@ class _Cyp extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -18508,8 +18566,8 @@ class _Cyp extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _CypPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -18690,7 +18748,9 @@ class _CypPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CypPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -18729,10 +18789,10 @@ class _Cze extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -18764,8 +18824,8 @@ class _Cze extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _CzePainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -18825,7 +18885,9 @@ class _CzePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CzePainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -18861,10 +18923,10 @@ class _Deu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
@@ -18898,8 +18960,8 @@ class _Deu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DeuPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -18962,7 +19024,9 @@ class _DeuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DeuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -18999,16 +19063,16 @@ class _Dji extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -19039,10 +19103,10 @@ class _Dji extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DjiPainter(
-            color1: color1 ?? const Color(0xff338af3),
-            color2: color2 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff2994ff),
+            color2: color2 ?? const Color(0xff62b52b),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -19159,19 +19223,19 @@ class _Dma extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -19202,11 +19266,11 @@ class _Dma extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DmaPainter(
-            color1: color1 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff397c24),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
             color4: color4 ?? const Color(0xffeeeeee),
-            color5: color5 ?? const Color(0xffd80027),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -19590,7 +19654,7 @@ class _Dnk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -19624,7 +19688,7 @@ class _Dnk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DnkPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -19730,16 +19794,16 @@ class _Dom extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   @override
@@ -19770,10 +19834,10 @@ class _Dom extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DomPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff496e2d),
+            color4: color4 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -20061,13 +20125,13 @@ class _Dza extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -20098,9 +20162,9 @@ class _Dza extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _DzaPainter(
-            color1: color1 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff397c24),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -20311,7 +20375,9 @@ class _DzaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DzaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -20349,16 +20415,16 @@ class _Ecu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff338af3.
+  /// Color 4 — defaults to 0xff2994ff.
   final Color? color4;
 
   /// Color 5 — defaults to 0xff333333.
@@ -20392,10 +20458,10 @@ class _Ecu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _EcuPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff2994ff),
             color5: color5 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -20685,13 +20751,13 @@ class _Egy extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffff9811.
+  /// Color 4 — defaults to 0xffff9200.
   final Color? color4;
 
   @override
@@ -20723,9 +20789,9 @@ class _Egy extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _EgyPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffff9811),
+            color4: color4 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -20849,16 +20915,16 @@ class _Eri extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -20889,10 +20955,10 @@ class _Eri extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _EriPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xff338af3),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xff2994ff),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -21140,10 +21206,10 @@ class _Esh extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -21176,8 +21242,8 @@ class _Esh extends StatelessWidget with _DotdartSvgSizing {
           painter: _EshPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xff496e2d),
-            color4: color4 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xff397c24),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -21406,19 +21472,19 @@ class _Esp extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffff9811.
+  /// Color 3 — defaults to 0xffff9200.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff338af3.
+  /// Color 5 — defaults to 0xff2994ff.
   final Color? color5;
 
   @override
@@ -21449,11 +21515,11 @@ class _Esp extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _EspPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffff9811),
-            color4: color4 ?? const Color(0xffd80027),
-            color5: color5 ?? const Color(0xff338af3),
+            color3: color3 ?? const Color(0xffff9200),
+            color4: color4 ?? const Color(0xfff20d32),
+            color5: color5 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -23561,7 +23627,7 @@ class _Est extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -23596,7 +23662,7 @@ class _Est extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _EstPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -23659,7 +23725,9 @@ class _EstPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _EstPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -23696,16 +23764,16 @@ class _Eth extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -23736,10 +23804,10 @@ class _Eth extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _EthPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -23879,7 +23947,7 @@ class _Fin extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   @override
@@ -23911,7 +23979,7 @@ class _Fin extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _FinPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -24016,16 +24084,16 @@ class _Fji extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -24056,10 +24124,10 @@ class _Fji extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _FjiPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -24243,19 +24311,19 @@ class _Flk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff338af3.
+  /// Color 5 — defaults to 0xff2994ff.
   final Color? color5;
 
   @override
@@ -24286,11 +24354,11 @@ class _Flk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _FlkPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xff338af3),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -24484,10 +24552,10 @@ class _Fra extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -24519,8 +24587,8 @@ class _Fra extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _FraPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -24582,7 +24650,9 @@ class _FraPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FraPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -24621,10 +24691,10 @@ class _Fro extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -24656,8 +24726,8 @@ class _Fro extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _FroPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -24758,7 +24828,9 @@ class _FroPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FroPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -24793,7 +24865,7 @@ class _Fsm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -24827,7 +24899,7 @@ class _Fsm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _FsmPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -24950,13 +25022,13 @@ class _Gab extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -24987,9 +25059,9 @@ class _Gab extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GabPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -25051,7 +25123,9 @@ class _GabPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GabPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -25090,10 +25164,10 @@ class _Gbr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -25125,8 +25199,8 @@ class _Gbr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GbrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -25291,7 +25365,9 @@ class _GbrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GbrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -25329,7 +25405,7 @@ class _Geo extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -25361,7 +25437,7 @@ class _Geo extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GeoPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -25524,10 +25600,10 @@ class _Ggy extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -25559,8 +25635,8 @@ class _Ggy extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GgyPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -25656,7 +25732,9 @@ class _GgyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GgyPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -25693,13 +25771,13 @@ class _Gha extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -25733,9 +25811,9 @@ class _Gha extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GhaPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff397c24),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -25848,13 +25926,13 @@ class _Gib extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -25885,9 +25963,9 @@ class _Gib extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GibPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -26189,7 +26267,9 @@ class _GibPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GibPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -26225,13 +26305,13 @@ class _Gin extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -26262,9 +26342,9 @@ class _Gin extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GinPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -26326,7 +26406,9 @@ class _GinPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GinPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -26366,13 +26448,13 @@ class _Glp extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -26404,9 +26486,9 @@ class _Glp extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GlpPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -27088,13 +27170,13 @@ class _Gmb extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   @override
@@ -27126,9 +27208,9 @@ class _Gmb extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GmbPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xff496e2d),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -27246,13 +27328,13 @@ class _Gnb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -27286,9 +27368,9 @@ class _Gnb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GnbPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff62b52b),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -27411,16 +27493,16 @@ class _Gnq extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffff9811.
+  /// Color 5 — defaults to 0xffff9200.
   final Color? color5;
 
   @override
@@ -27452,10 +27534,10 @@ class _Gnq extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _GnqPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xffff9811),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -27736,7 +27818,7 @@ class _Grc extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -27770,7 +27852,7 @@ class _Grc extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GrcPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -27905,13 +27987,13 @@ class _Grd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
   @override
@@ -27942,9 +28024,9 @@ class _Grd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GrdPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff496e2d),
-            color3: color3 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff397c24),
+            color3: color3 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -28163,7 +28245,9 @@ class _GrdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GrdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -28198,7 +28282,7 @@ class _Grl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -28232,7 +28316,7 @@ class _Grl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GrlPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -28429,7 +28513,7 @@ class _Gtm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -28438,7 +28522,7 @@ class _Gtm extends StatelessWidget with _DotdartSvgSizing {
   /// Color 3 — defaults to 0xffacabb1.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
   @override
@@ -28469,10 +28553,10 @@ class _Gtm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GtmPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xffacabb1),
-            color4: color4 ?? const Color(0xff6da544),
+            color4: color4 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -28746,13 +28830,13 @@ class _Guf extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -28783,9 +28867,9 @@ class _Guf extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GufPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -28845,7 +28929,9 @@ class _GufPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GufPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -28884,22 +28970,22 @@ class _Gum extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff6da544.
+  /// Color 5 — defaults to 0xff62b52b.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffa2001d.
+  /// Color 6 — defaults to 0xffbf1230.
   final Color? color6;
 
   @override
@@ -28930,12 +29016,12 @@ class _Gum extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GumPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xff338af3),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xff6da544),
-            color6: color6 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xff2994ff),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xff62b52b),
+            color6: color6 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -29125,19 +29211,19 @@ class _Guy extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
   @override
@@ -29168,11 +29254,11 @@ class _Guy extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _GuyPainter(
-            color1: color1 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff62b52b),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
             color4: color4 ?? const Color(0xff333333),
-            color5: color5 ?? const Color(0xffd80027),
+            color5: color5 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -29297,7 +29383,7 @@ class _Hkg extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -29331,7 +29417,7 @@ class _Hkg extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _HkgPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -29673,13 +29759,13 @@ class _Hmd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -29710,9 +29796,9 @@ class _Hmd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _HmdPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -29886,7 +29972,9 @@ class _HmdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HmdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -29921,7 +30009,7 @@ class _Hnd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -29955,7 +30043,7 @@ class _Hnd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _HndPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -30107,13 +30195,13 @@ class _Hrv extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff338af3.
+  /// Color 4 — defaults to 0xff2994ff.
   final Color? color4;
 
   @override
@@ -30145,9 +30233,9 @@ class _Hrv extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _HrvPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xff338af3),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -30426,19 +30514,19 @@ class _Hti extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffa2001d.
+  /// Color 1 — defaults to 0xffbf1230.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   @override
@@ -30469,11 +30557,11 @@ class _Hti extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _HtiPainter(
-            color1: color1 ?? const Color(0xffa2001d),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xffbf1230),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -30617,10 +30705,10 @@ class _Hun extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -30652,8 +30740,8 @@ class _Hun extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _HunPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -30715,7 +30803,9 @@ class _HunPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HunPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -30753,7 +30843,7 @@ class _Idn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -30785,7 +30875,7 @@ class _Idn extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IdnPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -30868,7 +30958,7 @@ class _Imn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -30902,7 +30992,7 @@ class _Imn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ImnPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -31010,13 +31100,13 @@ class _Ind extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -31048,9 +31138,9 @@ class _Ind extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IndPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffff9811),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xffff9200),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -31177,19 +31267,19 @@ class _Iot extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffa2001d.
+  /// Color 5 — defaults to 0xffbf1230.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffffda44.
+  /// Color 6 — defaults to 0xffffd000.
   final Color? color6;
 
   @override
@@ -31221,11 +31311,11 @@ class _Iot extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IotPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffa2001d),
-            color6: color6 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffbf1230),
+            color6: color6 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -31756,10 +31846,10 @@ class _Irl extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffff9811.
+  /// Color 3 — defaults to 0xffff9200.
   final Color? color3;
 
   @override
@@ -31791,8 +31881,8 @@ class _Irl extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IrlPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffff9811),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -31854,7 +31944,9 @@ class _IrlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IrlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -31893,10 +31985,10 @@ class _Irn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -31928,8 +32020,8 @@ class _Irn extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IrnPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -32048,7 +32140,9 @@ class _IrnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IrnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -32088,13 +32182,13 @@ class _Irq extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   @override
@@ -32126,9 +32220,9 @@ class _Irq extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IrqPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
+            color2: color2 ?? const Color(0xffbf1230),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xff496e2d),
+            color4: color4 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -32412,13 +32506,13 @@ class _Isl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -32449,9 +32543,9 @@ class _Isl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _IslPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -32551,7 +32645,9 @@ class _IslPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IslPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -32589,7 +32685,7 @@ class _Isr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   @override
@@ -32621,7 +32717,7 @@ class _Isr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _IsrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -32770,10 +32866,10 @@ class _Ita extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -32805,8 +32901,8 @@ class _Ita extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _ItaPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -32868,7 +32964,9 @@ class _ItaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ItaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -32907,10 +33005,10 @@ class _Jam extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -32942,8 +33040,8 @@ class _Jam extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _JamPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -33023,7 +33121,9 @@ class _JamPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _JamPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -33062,10 +33162,10 @@ class _Jey extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -33097,8 +33197,8 @@ class _Jey extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _JeyPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -33187,7 +33287,9 @@ class _JeyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _JeyPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -33230,10 +33332,10 @@ class _Jor extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -33266,8 +33368,8 @@ class _Jor extends StatelessWidget with _DotdartSvgSizing {
           painter: _JorPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -33397,7 +33499,7 @@ class _Jpn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -33429,7 +33531,7 @@ class _Jpn extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _JpnPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -33509,10 +33611,10 @@ class _Kaz extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -33543,8 +33645,8 @@ class _Kaz extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _KazPainter(
-            color1: color1 ?? const Color(0xff338af3),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff2994ff),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -33719,10 +33821,10 @@ class _Ken extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   @override
@@ -33755,8 +33857,8 @@ class _Ken extends StatelessWidget with _DotdartSvgSizing {
           painter: _KenPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffa2001d),
-            color4: color4 ?? const Color(0xff496e2d),
+            color3: color3 ?? const Color(0xffbf1230),
+            color4: color4 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -33952,10 +34054,10 @@ class _Kgz extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -33986,8 +34088,8 @@ class _Kgz extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _KgzPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -34216,10 +34318,10 @@ class _Khm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -34253,8 +34355,8 @@ class _Khm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _KhmPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -34336,7 +34438,9 @@ class _KhmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _KhmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -34373,16 +34477,16 @@ class _Kir extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -34413,10 +34517,10 @@ class _Kir extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _KirPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff0052b4),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -34701,13 +34805,13 @@ class _Kna extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -34744,9 +34848,9 @@ class _Kna extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _KnaPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xff333333),
             color5: color5 ?? const Color(0xffeeeeee),
           ),
@@ -34898,10 +35002,10 @@ class _Kor extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -34934,8 +35038,8 @@ class _Kor extends StatelessWidget with _DotdartSvgSizing {
           painter: _KorPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -35239,10 +35343,10 @@ class _Kwt extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -35277,8 +35381,8 @@ class _Kwt extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _KwtPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -35388,10 +35492,10 @@ class _Lao extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -35425,8 +35529,8 @@ class _Lao extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LaoPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -35491,7 +35595,9 @@ class _LaoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LaoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -35527,13 +35633,13 @@ class _Lbn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -35564,9 +35670,9 @@ class _Lbn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LbnPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -35635,7 +35741,9 @@ class _LbnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LbnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -35674,10 +35782,10 @@ class _Lbr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -35709,8 +35817,8 @@ class _Lbr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _LbrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -35831,7 +35939,9 @@ class _LbrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LbrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -35871,10 +35981,10 @@ class _Lby extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -35909,8 +36019,8 @@ class _Lby extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _LbyPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff496e2d),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff397c24),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -36173,7 +36283,7 @@ class _Lca extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -36182,7 +36292,7 @@ class _Lca extends StatelessWidget with _DotdartSvgSizing {
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -36213,10 +36323,10 @@ class _Lca extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LcaPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -36322,13 +36432,13 @@ class _Lie extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -36359,9 +36469,9 @@ class _Lie extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LiePainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -36521,7 +36631,9 @@ class _LiePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LiePainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -36558,16 +36670,16 @@ class _Lka extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffff9811.
+  /// Color 1 — defaults to 0xffff9200.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -36598,10 +36710,10 @@ class _Lka extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LkaPainter(
-            color1: color1 ?? const Color(0xffff9811),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffa2001d),
-            color4: color4 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffff9200),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffbf1230),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -36806,10 +36918,10 @@ class _Lso extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -36844,8 +36956,8 @@ class _Lso extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _LsoPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xff62b52b),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -36991,13 +37103,13 @@ class _Ltu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -37028,9 +37140,9 @@ class _Ltu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LtuPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -37092,7 +37204,9 @@ class _LtuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LtuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -37131,10 +37245,10 @@ class _Lux extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
   @override
@@ -37166,8 +37280,8 @@ class _Lux extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _LuxPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff338af3),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -37229,7 +37343,9 @@ class _LuxPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LuxPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -37264,7 +37380,7 @@ class _Lva extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffa2001d.
+  /// Color 1 — defaults to 0xffbf1230.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -37298,7 +37414,7 @@ class _Lva extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LvaPainter(
-            color1: color1 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xffbf1230),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -37388,13 +37504,13 @@ class _Mac extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -37425,9 +37541,9 @@ class _Mac extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MacPainter(
-            color1: color1 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff397c24),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -37564,7 +37680,9 @@ class _MacPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MacPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -37604,13 +37722,13 @@ class _Maf extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -37642,9 +37760,9 @@ class _Maf extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MafPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -37763,10 +37881,10 @@ class _Mar extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
   @override
@@ -37797,8 +37915,8 @@ class _Mar extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MarPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -37916,7 +38034,7 @@ class _Mco extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
   @override
@@ -37948,7 +38066,7 @@ class _Mco extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _McoPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
+            color2: color2 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -38033,16 +38151,16 @@ class _Mda extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffff9811.
+  /// Color 4 — defaults to 0xffff9200.
   final Color? color4;
 
   @override
@@ -38073,10 +38191,10 @@ class _Mda extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MdaPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -38400,10 +38518,10 @@ class _Mdg extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -38435,8 +38553,8 @@ class _Mdg extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MdgPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -38498,7 +38616,9 @@ class _MdgPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MdgPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -38534,10 +38654,10 @@ class _Mdv extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -38571,8 +38691,8 @@ class _Mdv extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MdvPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff62b52b),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -38770,7 +38890,9 @@ class _MdvPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MdvPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -38814,25 +38936,25 @@ class _Mex extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff751a46.
+  /// Color 3 — defaults to 0xff861c48.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff496e2d.
+  /// Color 5 — defaults to 0xff397c24.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xff338af3.
+  /// Color 6 — defaults to 0xff2994ff.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xffff9811.
+  /// Color 7 — defaults to 0xffff9200.
   final Color? color7;
 
-  /// Color 8 — defaults to 0xffffda44.
+  /// Color 8 — defaults to 0xffffd000.
   final Color? color8;
 
   @override
@@ -38864,13 +38986,13 @@ class _Mex extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MexPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff751a46),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xff496e2d),
-            color6: color6 ?? const Color(0xff338af3),
-            color7: color7 ?? const Color(0xffff9811),
-            color8: color8 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff861c48),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xff397c24),
+            color6: color6 ?? const Color(0xff2994ff),
+            color7: color7 ?? const Color(0xffff9200),
+            color8: color8 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -39904,13 +40026,13 @@ class _Mhl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffff9811.
+  /// Color 3 — defaults to 0xffff9200.
   final Color? color3;
 
   @override
@@ -39941,9 +40063,9 @@ class _Mhl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MhlPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffff9811),
+            color3: color3 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -40027,7 +40149,9 @@ class _MhlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MhlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -40062,10 +40186,10 @@ class _Mkd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   @override
@@ -40096,8 +40220,8 @@ class _Mkd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MkdPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -40243,13 +40367,13 @@ class _Mli extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -40280,9 +40404,9 @@ class _Mli extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MliPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -40344,7 +40468,9 @@ class _MliPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MliPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -40383,7 +40509,7 @@ class _Mlt extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffacabb1.
@@ -40418,7 +40544,7 @@ class _Mlt extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MltPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xffacabb1),
           ),
           size: Size(width, height),
@@ -40488,7 +40614,9 @@ class _MltPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MltPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -40525,13 +40653,13 @@ class _Mmr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -40565,9 +40693,9 @@ class _Mmr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MmrPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -40686,16 +40814,16 @@ class _Mne extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -40726,10 +40854,10 @@ class _Mne extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MnePainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -41014,13 +41142,13 @@ class _Mng extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffa2001d.
+  /// Color 1 — defaults to 0xffbf1230.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -41051,9 +41179,9 @@ class _Mng extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MngPainter(
-            color1: color1 ?? const Color(0xffa2001d),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffbf1230),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -41353,7 +41481,9 @@ class _MngPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MngPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -41389,7 +41519,7 @@ class _Mnp extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -41426,7 +41556,7 @@ class _Mnp extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MnpPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xffacabb1),
           ),
@@ -42599,7 +42729,9 @@ class _MnpPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MnpPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -42640,16 +42772,16 @@ class _Moz extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffa2001d.
+  /// Color 5 — defaults to 0xffbf1230.
   final Color? color5;
 
   @override
@@ -42681,10 +42813,10 @@ class _Moz extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MozPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff496e2d),
+            color2: color2 ?? const Color(0xff397c24),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xffa2001d),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -42844,13 +42976,13 @@ class _Mrt extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -42881,9 +43013,9 @@ class _Mrt extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MrtPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -43052,7 +43184,9 @@ class _MrtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MrtPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -43091,19 +43225,19 @@ class _Msr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff338af3.
+  /// Color 4 — defaults to 0xff2994ff.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffa2001d.
+  /// Color 5 — defaults to 0xffbf1230.
   final Color? color5;
 
   /// Color 6 — defaults to 0xff333333.
@@ -43137,11 +43271,11 @@ class _Msr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MsrPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff338af3),
-            color5: color5 ?? const Color(0xffa2001d),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff2994ff),
+            color5: color5 ?? const Color(0xffbf1230),
             color6: color6 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -43317,13 +43451,13 @@ class _Mtq extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -43354,9 +43488,9 @@ class _Mtq extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MtqPainter(
-            color1: color1 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff62b52b),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -43416,7 +43550,9 @@ class _MtqPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MtqPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -43453,16 +43589,16 @@ class _Mus extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -43493,10 +43629,10 @@ class _Mus extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MusPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -43608,13 +43744,13 @@ class _Mwi extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff496e2d.
+  /// Color 3 — defaults to 0xff397c24.
   final Color? color3;
 
   @override
@@ -43645,9 +43781,9 @@ class _Mwi extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _MwiPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xff496e2d),
+            color3: color3 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -43724,7 +43860,9 @@ class _MwiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MwiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -43764,13 +43902,13 @@ class _Mys extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -43802,9 +43940,9 @@ class _Mys extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _MysPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -44103,13 +44241,13 @@ class _Myt extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xffacabb1.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   @override
@@ -44142,9 +44280,9 @@ class _Myt extends StatelessWidget with _DotdartSvgSizing {
           painter: _MytPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xffacabb1),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffd80027),
-            color5: color5 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xfff20d32),
+            color5: color5 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -45870,16 +46008,16 @@ class _Nam extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   @override
@@ -45911,10 +46049,10 @@ class _Nam extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _NamPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xff496e2d),
-            color5: color5 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xff397c24),
+            color5: color5 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -46058,16 +46196,16 @@ class _Ncl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   /// Color 5 — defaults to 0xff333333.
@@ -46101,10 +46239,10 @@ class _Ncl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NclPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xffffd000),
             color5: color5 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -46788,10 +46926,10 @@ class _Ner extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -46823,8 +46961,8 @@ class _Ner extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _NerPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffff9811),
-            color3: color3 ?? const Color(0xff6da544),
+            color2: color2 ?? const Color(0xffff9200),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -46892,7 +47030,9 @@ class _NerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NerPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -46927,7 +47067,7 @@ class _Nfk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -46961,7 +47101,7 @@ class _Nfk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NfkPainter(
-            color1: color1 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff62b52b),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -47061,7 +47201,7 @@ class _Nga extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -47095,7 +47235,7 @@ class _Nga extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NgaPainter(
-            color1: color1 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff62b52b),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -47187,19 +47327,19 @@ class _Nic extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff6da544.
+  /// Color 5 — defaults to 0xff62b52b.
   final Color? color5;
 
   @override
@@ -47230,11 +47370,11 @@ class _Nic extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NicPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff0052b4),
-            color5: color5 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff0866db),
+            color5: color5 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -47567,16 +47707,16 @@ class _Niu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -47607,10 +47747,10 @@ class _Niu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NiuPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -47789,10 +47929,10 @@ class _Nld extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -47824,8 +47964,8 @@ class _Nld extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _NldPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffa2001d),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xffbf1230),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -47887,7 +48027,9 @@ class _NldPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NldPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -47923,13 +48065,13 @@ class _Nor extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -47960,9 +48102,9 @@ class _Nor extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NorPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -48062,7 +48204,9 @@ class _NorPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NorPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -48101,10 +48245,10 @@ class _Npl extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -48136,8 +48280,8 @@ class _Npl extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _NplPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -48290,7 +48434,9 @@ class _NplPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NplPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -48326,13 +48472,13 @@ class _Nru extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -48363,9 +48509,9 @@ class _Nru extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NruPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -48447,7 +48593,9 @@ class _NruPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NruPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -48483,13 +48631,13 @@ class _Nzl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -48520,9 +48668,9 @@ class _Nzl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _NzlPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -48707,7 +48855,9 @@ class _NzlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NzlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -48746,10 +48896,10 @@ class _Omn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -48781,8 +48931,8 @@ class _Omn extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _OmnPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -48862,7 +49012,9 @@ class _OmnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _OmnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -48900,7 +49052,7 @@ class _Pak extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
   @override
@@ -48932,7 +49084,7 @@ class _Pak extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _PakPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff496e2d),
+            color2: color2 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -49176,10 +49328,10 @@ class _Pan extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -49211,8 +49363,8 @@ class _Pan extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _PanPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -49302,7 +49454,9 @@ class _PanPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PanPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -49342,25 +49496,25 @@ class _Pcn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffacabb1.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   /// Color 6 — defaults to 0xffeeeeee.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xffd80027.
+  /// Color 7 — defaults to 0xfff20d32.
   final Color? color7;
 
   @override
@@ -49391,13 +49545,13 @@ class _Pcn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PcnPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffacabb1),
-            color3: color3 ?? const Color(0xff338af3),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xff2994ff),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffffd000),
             color6: color6 ?? const Color(0xffeeeeee),
-            color7: color7 ?? const Color(0xffd80027),
+            color7: color7 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -49596,7 +49750,7 @@ class _Per extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -49630,7 +49784,7 @@ class _Per extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PerPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -49721,16 +49875,16 @@ class _Phl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -49761,10 +49915,10 @@ class _Phl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PhlPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -49920,10 +50074,10 @@ class _Plw extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -49954,8 +50108,8 @@ class _Plw extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PlwPainter(
-            color1: color1 ?? const Color(0xff338af3),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff2994ff),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -50040,13 +50194,13 @@ class _Png extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xff333333.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffa2001d.
+  /// Color 2 — defaults to 0xffbf1230.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -50078,9 +50232,9 @@ class _Png extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _PngPainter(
             color1: color1 ?? const Color(0xff333333),
-            color2: color2 ?? const Color(0xffa2001d),
+            color2: color2 ?? const Color(0xffbf1230),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -50469,7 +50623,7 @@ class _Pol extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -50503,7 +50657,7 @@ class _Pol extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PolPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -50591,10 +50745,10 @@ class _Pri extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -50626,8 +50780,8 @@ class _Pri extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _PriPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -50713,7 +50867,9 @@ class _PriPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PriPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -50749,13 +50905,13 @@ class _Prk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -50786,9 +50942,9 @@ class _Prk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PrkPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -50880,7 +51036,9 @@ class _PrkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PrkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -50917,13 +51075,13 @@ class _Prt extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -50957,9 +51115,9 @@ class _Prt extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PrtPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -51133,16 +51291,16 @@ class _Pry extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   @override
@@ -51174,10 +51332,10 @@ class _Pry extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _PryPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -51461,10 +51619,10 @@ class _Pse extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -51497,8 +51655,8 @@ class _Pse extends StatelessWidget with _DotdartSvgSizing {
           painter: _PsePainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -51607,16 +51765,16 @@ class _Pyf extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff0052b4.
+  /// Color 4 — defaults to 0xff0866db.
   final Color? color4;
 
   @override
@@ -51647,10 +51805,10 @@ class _Pyf extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _PyfPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -51879,7 +52037,7 @@ class _Qat extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff751a46.
+  /// Color 2 — defaults to 0xff861c48.
   final Color? color2;
 
   @override
@@ -51911,7 +52069,7 @@ class _Qat extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _QatPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff751a46),
+            color2: color2 ?? const Color(0xff861c48),
           ),
           size: Size(width, height),
         ),
@@ -52010,13 +52168,13 @@ class _Reu extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -52047,9 +52205,9 @@ class _Reu extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ReuPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -52138,7 +52296,9 @@ class _ReuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ReuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -52174,13 +52334,13 @@ class _Rou extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -52211,9 +52371,9 @@ class _Rou extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _RouPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -52275,7 +52435,9 @@ class _RouPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RouPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -52311,13 +52473,13 @@ class _Rus extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -52348,9 +52510,9 @@ class _Rus extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _RusPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -52412,7 +52574,9 @@ class _RusPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RusPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -52448,13 +52612,13 @@ class _Rwa extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
   @override
@@ -52485,9 +52649,9 @@ class _Rwa extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _RwaPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -52573,7 +52737,9 @@ class _RwaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RwaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -52608,7 +52774,7 @@ class _Sau extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -52642,7 +52808,7 @@ class _Sau extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SauPainter(
-            color1: color1 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff397c24),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -53179,13 +53345,13 @@ class _Sdn extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   @override
@@ -53217,9 +53383,9 @@ class _Sdn extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _SdnPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xff496e2d),
+            color4: color4 ?? const Color(0xff397c24),
           ),
           size: Size(width, height),
         ),
@@ -53327,13 +53493,13 @@ class _Sen extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -53364,9 +53530,9 @@ class _Sen extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SenPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff496e2d),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff397c24),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -53442,7 +53608,9 @@ class _SenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SenPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -53477,7 +53645,7 @@ class _Sgp extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -53511,7 +53679,7 @@ class _Sgp extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SgpPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -53756,31 +53924,31 @@ class _Sgs extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffff9811.
+  /// Color 5 — defaults to 0xffff9200.
   final Color? color5;
 
   /// Color 6 — defaults to 0xffacabb1.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xff338af3.
+  /// Color 7 — defaults to 0xff2994ff.
   final Color? color7;
 
   /// Color 8 — defaults to 0xff333333.
   final Color? color8;
 
-  /// Color 9 — defaults to 0xffffda44.
+  /// Color 9 — defaults to 0xffffd000.
   final Color? color9;
 
   @override
@@ -53811,15 +53979,15 @@ class _Sgs extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SgsPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffff9811),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffff9200),
             color6: color6 ?? const Color(0xffacabb1),
-            color7: color7 ?? const Color(0xff338af3),
+            color7: color7 ?? const Color(0xff2994ff),
             color8: color8 ?? const Color(0xff333333),
-            color9: color9 ?? const Color(0xffffda44),
+            color9: color9 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -54033,19 +54201,19 @@ class _Shn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff338af3.
+  /// Color 5 — defaults to 0xff2994ff.
   final Color? color5;
 
   @override
@@ -54076,11 +54244,11 @@ class _Shn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ShnPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xff333333),
-            color5: color5 ?? const Color(0xff338af3),
+            color5: color5 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -54494,13 +54662,13 @@ class _Sjm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -54531,9 +54699,9 @@ class _Sjm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SjmPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -54633,7 +54801,9 @@ class _SjmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SjmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -54670,13 +54840,13 @@ class _Slb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -54710,9 +54880,9 @@ class _Slb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SlbPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffffd000),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -54877,10 +55047,10 @@ class _Sle extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
   @override
@@ -54912,8 +55082,8 @@ class _Sle extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _SlePainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff6da544),
-            color3: color3 ?? const Color(0xff338af3),
+            color2: color2 ?? const Color(0xff62b52b),
+            color3: color3 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -54975,7 +55145,9 @@ class _SlePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SlePainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -55012,16 +55184,16 @@ class _Slv extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
   @override
@@ -55052,10 +55224,10 @@ class _Slv extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SlvPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -55328,16 +55500,16 @@ class _Smr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -55368,10 +55540,10 @@ class _Smr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SmrPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -55822,7 +55994,7 @@ class _Som extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -55856,7 +56028,7 @@ class _Som extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SomPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -55948,19 +56120,19 @@ class _Spm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffffda44.
+  /// Color 5 — defaults to 0xffffd000.
   final Color? color5;
 
   @override
@@ -55991,11 +56163,11 @@ class _Spm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SpmPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -56210,16 +56382,16 @@ class _Srb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -56250,10 +56422,10 @@ class _Srb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SrbPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -56574,16 +56746,16 @@ class _Ssd extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff0052b4.
+  /// Color 5 — defaults to 0xff0866db.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffffda44.
+  /// Color 6 — defaults to 0xffffd000.
   final Color? color6;
 
   @override
@@ -56616,10 +56788,10 @@ class _Ssd extends StatelessWidget with _DotdartSvgSizing {
           painter: _SsdPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffa2001d),
-            color4: color4 ?? const Color(0xff496e2d),
-            color5: color5 ?? const Color(0xff0052b4),
-            color6: color6 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffbf1230),
+            color4: color4 ?? const Color(0xff397c24),
+            color5: color5 ?? const Color(0xff0866db),
+            color6: color6 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -56759,13 +56931,13 @@ class _Stp extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xff333333.
@@ -56799,9 +56971,9 @@ class _Stp extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _StpPainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -56932,16 +57104,16 @@ class _Sur extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -56972,10 +57144,10 @@ class _Sur extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SurPainter(
-            color1: color1 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xff62b52b),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffa2001d),
-            color4: color4 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffbf1230),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -57102,13 +57274,13 @@ class _Svk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -57139,9 +57311,9 @@ class _Svk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SvkPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -57340,7 +57512,9 @@ class _SvkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SvkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -57376,13 +57550,13 @@ class _Svn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -57413,9 +57587,9 @@ class _Svn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SvnPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -57498,7 +57672,9 @@ class _SvnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SvnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -57533,10 +57709,10 @@ class _Swe extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -57567,8 +57743,8 @@ class _Swe extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SwePainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -57673,13 +57849,13 @@ class _Swz extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffa2001d.
+  /// Color 3 — defaults to 0xffbf1230.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -57716,9 +57892,9 @@ class _Swz extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SwzPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff0052b4),
-            color3: color3 ?? const Color(0xffa2001d),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff0866db),
+            color3: color3 ?? const Color(0xffbf1230),
             color4: color4 ?? const Color(0xffeeeeee),
             color5: color5 ?? const Color(0xff333333),
           ),
@@ -57894,19 +58070,19 @@ class _Sxm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff338af3.
+  /// Color 5 — defaults to 0xff2994ff.
   final Color? color5;
 
   @override
@@ -57937,11 +58113,11 @@ class _Sxm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SxmPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xff338af3),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -58238,19 +58414,19 @@ class _Syc extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff6da544.
+  /// Color 5 — defaults to 0xff62b52b.
   final Color? color5;
 
   @override
@@ -58281,11 +58457,11 @@ class _Syc extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SycPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xffeeeeee),
-            color5: color5 ?? const Color(0xff6da544),
+            color5: color5 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -58412,13 +58588,13 @@ class _Syr extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff496e2d.
+  /// Color 2 — defaults to 0xff397c24.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -58450,9 +58626,9 @@ class _Syr extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _SyrPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff496e2d),
+            color2: color2 ?? const Color(0xff397c24),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -58578,19 +58754,19 @@ class _Taa extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff338af3.
+  /// Color 4 — defaults to 0xff2994ff.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffff9811.
+  /// Color 5 — defaults to 0xffff9200.
   final Color? color5;
 
   @override
@@ -58621,11 +58797,11 @@ class _Taa extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TaaPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xff338af3),
-            color5: color5 ?? const Color(0xffff9811),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xff2994ff),
+            color5: color5 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -58834,25 +59010,25 @@ class _Tca extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffff9811.
+  /// Color 5 — defaults to 0xffff9200.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffa2001d.
+  /// Color 6 — defaults to 0xffbf1230.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xff6da544.
+  /// Color 7 — defaults to 0xff62b52b.
   final Color? color7;
 
   @override
@@ -58883,13 +59059,13 @@ class _Tca extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TcaPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xffff9811),
-            color6: color6 ?? const Color(0xffa2001d),
-            color7: color7 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xffff9200),
+            color6: color6 ?? const Color(0xffbf1230),
+            color7: color7 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -59147,13 +59323,13 @@ class _Tcd extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff002266.
+  /// Color 2 — defaults to 0xff073780.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   @override
@@ -59184,9 +59360,9 @@ class _Tcd extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TcdPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff002266),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff073780),
+            color3: color3 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -59248,7 +59424,9 @@ class _TcdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TcdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -59286,16 +59464,16 @@ class _Tgo extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   /// Color 5 — defaults to 0xffeeeeee.
@@ -59329,10 +59507,10 @@ class _Tgo extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TgoPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffff9811),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xffff9200),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xfff20d32),
             color5: color5 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -59474,13 +59652,13 @@ class _Tha extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -59511,9 +59689,9 @@ class _Tha extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ThaPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -59585,7 +59763,9 @@ class _ThaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ThaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -59625,13 +59805,13 @@ class _Tjk extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -59663,9 +59843,9 @@ class _Tjk extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _TjkPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xffffda44),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -59856,13 +60036,13 @@ class _Tkl extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -59893,9 +60073,9 @@ class _Tkl extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TklPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -60066,7 +60246,9 @@ class _TklPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TklPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -60103,16 +60285,16 @@ class _Tkm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffff9811.
+  /// Color 4 — defaults to 0xffff9200.
   final Color? color4;
 
   @override
@@ -60143,10 +60325,10 @@ class _Tkm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TkmPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xffff9811),
+            color4: color4 ?? const Color(0xffff9200),
           ),
           size: Size(width, height),
         ),
@@ -60837,10 +61019,10 @@ class _Tls extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
@@ -60877,8 +61059,8 @@ class _Tls extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TlsPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xff333333),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
@@ -60994,7 +61176,7 @@ class _Ton extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -61028,7 +61210,7 @@ class _Ton extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TonPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -61129,7 +61311,7 @@ class _Tto extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -61166,7 +61348,7 @@ class _Tto extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TtoPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xff333333),
           ),
@@ -61236,7 +61418,9 @@ class _TtoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TtoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -61271,7 +61455,7 @@ class _Tun extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -61305,7 +61489,7 @@ class _Tun extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TunPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -61543,7 +61727,7 @@ class _Tur extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -61577,7 +61761,7 @@ class _Tur extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TurPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -61805,19 +61989,19 @@ class _Tuv extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff0052b4.
+  /// Color 5 — defaults to 0xff0866db.
   final Color? color5;
 
   @override
@@ -61848,11 +62032,11 @@ class _Tuv extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TuvPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffd80027),
-            color4: color4 ?? const Color(0xffffda44),
-            color5: color5 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xfff20d32),
+            color4: color4 ?? const Color(0xffffd000),
+            color5: color5 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -62106,10 +62290,10 @@ class _Twn extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -62143,8 +62327,8 @@ class _Twn extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TwnPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -62234,7 +62418,9 @@ class _TwnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TwnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -62271,16 +62457,16 @@ class _Tza extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff338af3.
+  /// Color 3 — defaults to 0xff2994ff.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
   @override
@@ -62311,10 +62497,10 @@ class _Tza extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _TzaPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xff338af3),
-            color4: color4 ?? const Color(0xff6da544),
+            color3: color3 ?? const Color(0xff2994ff),
+            color4: color4 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -62428,13 +62614,13 @@ class _Uga extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -62468,9 +62654,9 @@ class _Uga extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _UgaPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffd80027),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -62699,10 +62885,10 @@ class _Ukr extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
   @override
@@ -62733,8 +62919,8 @@ class _Ukr extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _UkrPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff2994ff),
           ),
           size: Size(width, height),
         ),
@@ -62821,10 +63007,10 @@ class _Umi extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -62856,8 +63042,8 @@ class _Umi extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _UmiPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -63003,7 +63189,9 @@ class _UmiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UmiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -63039,13 +63227,13 @@ class _Ury extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff338af3.
+  /// Color 1 — defaults to 0xff2994ff.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -63076,9 +63264,9 @@ class _Ury extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _UryPainter(
-            color1: color1 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xff2994ff),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -63191,7 +63379,9 @@ class _UryPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UryPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -63230,10 +63420,10 @@ class _Usa extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -63265,8 +63455,8 @@ class _Usa extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _UsaPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
-            color3: color3 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xfff20d32),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -63412,7 +63602,9 @@ class _UsaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UsaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -63449,16 +63641,16 @@ class _Uzb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
   @override
@@ -63489,10 +63681,10 @@ class _Uzb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _UzbPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff338af3),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff2994ff),
             color3: color3 ?? const Color(0xffeeeeee),
-            color4: color4 ?? const Color(0xff6da544),
+            color4: color4 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -63826,7 +64018,7 @@ class _Vat extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
@@ -63863,7 +64055,7 @@ class _Vat extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VatPainter(
-            color1: color1 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xffffd000),
             color2: color2 ?? const Color(0xffeeeeee),
             color3: color3 ?? const Color(0xffacabb1),
           ),
@@ -64322,7 +64514,9 @@ class _VatPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _VatPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -64358,13 +64552,13 @@ class _Vct extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffffda44.
+  /// Color 1 — defaults to 0xffffd000.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
   @override
@@ -64395,9 +64589,9 @@ class _Vct extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VctPainter(
-            color1: color1 ?? const Color(0xffffda44),
-            color2: color2 ?? const Color(0xff338af3),
-            color3: color3 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xffffd000),
+            color2: color2 ?? const Color(0xff2994ff),
+            color3: color3 ?? const Color(0xff62b52b),
           ),
           size: Size(width, height),
         ),
@@ -64474,7 +64668,9 @@ class _VctPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _VctPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -64511,13 +64707,13 @@ class _Ven extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -64551,9 +64747,9 @@ class _Ven extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VenPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -64752,25 +64948,25 @@ class _Vgb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff6da544.
+  /// Color 3 — defaults to 0xff62b52b.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff496e2d.
+  /// Color 4 — defaults to 0xff397c24.
   final Color? color4;
 
   /// Color 5 — defaults to 0xffeeeeee.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xffd80027.
+  /// Color 6 — defaults to 0xfff20d32.
   final Color? color6;
 
-  /// Color 7 — defaults to 0xffa2001d.
+  /// Color 7 — defaults to 0xffbf1230.
   final Color? color7;
 
   @override
@@ -64801,13 +64997,13 @@ class _Vgb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VgbPainter(
-            color1: color1 ?? const Color(0xff0052b4),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xff6da544),
-            color4: color4 ?? const Color(0xff496e2d),
+            color1: color1 ?? const Color(0xff0866db),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xff62b52b),
+            color4: color4 ?? const Color(0xff397c24),
             color5: color5 ?? const Color(0xffeeeeee),
-            color6: color6 ?? const Color(0xffd80027),
-            color7: color7 ?? const Color(0xffa2001d),
+            color6: color6 ?? const Color(0xfff20d32),
+            color7: color7 ?? const Color(0xffbf1230),
           ),
           size: Size(width, height),
         ),
@@ -65061,16 +65257,16 @@ class _Vir extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff338af3.
+  /// Color 2 — defaults to 0xff2994ff.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xff0052b4.
+  /// Color 5 — defaults to 0xff0866db.
   final Color? color5;
 
   @override
@@ -65102,10 +65298,10 @@ class _Vir extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _VirPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xff338af3),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xffd80027),
-            color5: color5 ?? const Color(0xff0052b4),
+            color2: color2 ?? const Color(0xff2994ff),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xfff20d32),
+            color5: color5 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -65306,10 +65502,10 @@ class _Vnm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
   @override
@@ -65340,8 +65536,8 @@ class _Vnm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VnmPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xffffda44),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -65426,16 +65622,16 @@ class _Vut extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff6da544.
+  /// Color 2 — defaults to 0xff62b52b.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffffda44.
+  /// Color 4 — defaults to 0xffffd000.
   final Color? color4;
 
   @override
@@ -65466,10 +65662,10 @@ class _Vut extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _VutPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff6da544),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff62b52b),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffffda44),
+            color4: color4 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -65750,13 +65946,13 @@ class _Wlf extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xff0052b4.
+  /// Color 3 — defaults to 0xff0866db.
   final Color? color3;
 
   @override
@@ -65787,9 +65983,9 @@ class _Wlf extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _WlfPainter(
-            color1: color1 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xfff20d32),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -65877,7 +66073,9 @@ class _WlfPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _WlfPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -65913,10 +66111,10 @@ class _Wsm extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xffd80027.
+  /// Color 1 — defaults to 0xfff20d32.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xff0052b4.
+  /// Color 2 — defaults to 0xff0866db.
   final Color? color2;
 
   /// Color 3 — defaults to 0xffeeeeee.
@@ -65950,8 +66148,8 @@ class _Wsm extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _WsmPainter(
-            color1: color1 ?? const Color(0xffd80027),
-            color2: color2 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xfff20d32),
+            color2: color2 ?? const Color(0xff0866db),
             color3: color3 ?? const Color(0xffeeeeee),
           ),
           size: Size(width, height),
@@ -66063,7 +66261,9 @@ class _WsmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _WsmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -66099,13 +66299,13 @@ class _Xkk extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff0052b4.
+  /// Color 1 — defaults to 0xff0866db.
   final Color? color1;
 
   /// Color 2 — defaults to 0xffeeeeee.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
   @override
@@ -66136,9 +66336,9 @@ class _Xkk extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _XkkPainter(
-            color1: color1 ?? const Color(0xff0052b4),
+            color1: color1 ?? const Color(0xff0866db),
             color2: color2 ?? const Color(0xffeeeeee),
-            color3: color3 ?? const Color(0xffffda44),
+            color3: color3 ?? const Color(0xffffd000),
           ),
           size: Size(width, height),
         ),
@@ -66289,7 +66489,9 @@ class _XkkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _XkkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -66328,7 +66530,7 @@ class _Yem extends StatelessWidget with _DotdartSvgSizing {
   /// Color 1 — defaults to 0xffeeeeee.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffd80027.
+  /// Color 2 — defaults to 0xfff20d32.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
@@ -66363,7 +66565,7 @@ class _Yem extends StatelessWidget with _DotdartSvgSizing {
         child: CustomPaint(
           painter: _YemPainter(
             color1: color1 ?? const Color(0xffeeeeee),
-            color2: color2 ?? const Color(0xffd80027),
+            color2: color2 ?? const Color(0xfff20d32),
             color3: color3 ?? const Color(0xff333333),
           ),
           size: Size(width, height),
@@ -66426,7 +66628,9 @@ class _YemPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _YemPainter oldDelegate) {
-    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.color3 != color3;
   }
 }
 
@@ -66471,16 +66675,16 @@ class _Zaf extends StatelessWidget with _DotdartSvgSizing {
   /// Color 2 — defaults to 0xff333333.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffffda44.
+  /// Color 3 — defaults to 0xffffd000.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xff6da544.
+  /// Color 4 — defaults to 0xff62b52b.
   final Color? color4;
 
-  /// Color 5 — defaults to 0xffd80027.
+  /// Color 5 — defaults to 0xfff20d32.
   final Color? color5;
 
-  /// Color 6 — defaults to 0xff0052b4.
+  /// Color 6 — defaults to 0xff0866db.
   final Color? color6;
 
   @override
@@ -66513,10 +66717,10 @@ class _Zaf extends StatelessWidget with _DotdartSvgSizing {
           painter: _ZafPainter(
             color1: color1 ?? const Color(0xffeeeeee),
             color2: color2 ?? const Color(0xff333333),
-            color3: color3 ?? const Color(0xffffda44),
-            color4: color4 ?? const Color(0xff6da544),
-            color5: color5 ?? const Color(0xffd80027),
-            color6: color6 ?? const Color(0xff0052b4),
+            color3: color3 ?? const Color(0xffffd000),
+            color4: color4 ?? const Color(0xff62b52b),
+            color5: color5 ?? const Color(0xfff20d32),
+            color6: color6 ?? const Color(0xff0866db),
           ),
           size: Size(width, height),
         ),
@@ -66660,16 +66864,16 @@ class _Zmb extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff496e2d.
+  /// Color 1 — defaults to 0xff397c24.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffff9811.
+  /// Color 2 — defaults to 0xffff9200.
   final Color? color2;
 
   /// Color 3 — defaults to 0xff333333.
   final Color? color3;
 
-  /// Color 4 — defaults to 0xffd80027.
+  /// Color 4 — defaults to 0xfff20d32.
   final Color? color4;
 
   @override
@@ -66700,10 +66904,10 @@ class _Zmb extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ZmbPainter(
-            color1: color1 ?? const Color(0xff496e2d),
-            color2: color2 ?? const Color(0xffff9811),
+            color1: color1 ?? const Color(0xff397c24),
+            color2: color2 ?? const Color(0xffff9200),
             color3: color3 ?? const Color(0xff333333),
-            color4: color4 ?? const Color(0xffd80027),
+            color4: color4 ?? const Color(0xfff20d32),
           ),
           size: Size(width, height),
         ),
@@ -66930,13 +67134,13 @@ class _Zwe extends StatelessWidget with _DotdartSvgSizing {
   /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
   final bool maintainAspectRatio;
 
-  /// Color 1 — defaults to 0xff6da544.
+  /// Color 1 — defaults to 0xff62b52b.
   final Color? color1;
 
-  /// Color 2 — defaults to 0xffffda44.
+  /// Color 2 — defaults to 0xffffd000.
   final Color? color2;
 
-  /// Color 3 — defaults to 0xffd80027.
+  /// Color 3 — defaults to 0xfff20d32.
   final Color? color3;
 
   /// Color 4 — defaults to 0xffeeeeee.
@@ -66973,9 +67177,9 @@ class _Zwe extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _ZwePainter(
-            color1: color1 ?? const Color(0xff6da544),
-            color2: color2 ?? const Color(0xffffda44),
-            color3: color3 ?? const Color(0xffd80027),
+            color1: color1 ?? const Color(0xff62b52b),
+            color2: color2 ?? const Color(0xffffd000),
+            color3: color3 ?? const Color(0xfff20d32),
             color4: color4 ?? const Color(0xffeeeeee),
             color5: color5 ?? const Color(0xff333333),
           ),

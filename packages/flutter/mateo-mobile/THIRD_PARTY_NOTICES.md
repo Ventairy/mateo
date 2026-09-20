@@ -16,8 +16,8 @@ No Reserved Font Name is declared in the upstream license notice.
 
 ## Circle Flags
 
-`mateo_mobile` redistributes country flag artwork from Circle Flags in
-`assets/flags/`, pinned to commit
+`mateo_mobile` includes Mateo-maintained country flag artwork in
+`assets/flags/`, derived from Circle Flags at commit
 `379588b5da95482d6bbf10bd45644a35b0609ea6`.
 
 - Copyright Circle Flags contributors
@@ -25,4 +25,6 @@ No Reserved Font Name is declared in the upstream license notice.
 - Upstream: https://github.com/HatScripts/circle-flags
 - License text: [assets/flags/LICENSE.md](assets/flags/LICENSE.md)
 
+Mateo modifies the artwork colors for its vivid flag treatment. The bundled
+SVG files are maintained independently; the upstream commit records their origin.
 The artwork remains under the MIT license included with the assets.
