@@ -781,7 +781,7 @@ void main() {
     expect(sheet.bottom, lessThanOrEqualTo(688));
   });
 
-  testWidgets('when the sheet animates, it should use the approved landing curve and separate timings', (tester) async {
+  testWidgets('when the sheet animates, it should use dedicated entrance and exit curves', (tester) async {
     await host(tester);
     unawaited(showMateoSheet<void>(context: launcher, view: view));
     await tester.pump();
@@ -794,14 +794,19 @@ void main() {
     );
     final movement = (slide.position as AnimationWithParentMixin<double>).parent as CurvedAnimation;
     final curve = movement.curve;
+    double exitTravel(double t) => 1 - movement.reverseCurve!.transform(1 - t);
     var previous = 0.0;
+    var previousExit = 0.0;
     for (var i = 0; i <= 10000; i++) {
       final t = i / 10000;
       final value = curve.transform(t);
+      final exitValue = exitTravel(t);
       expect(value, inInclusiveRange(0.0, 1.0));
       expect(value, greaterThanOrEqualTo(previous - 1e-12));
-      expect(1 - movement.reverseCurve!.transform(1 - t), closeTo(value, 1e-12));
+      expect(exitValue, inInclusiveRange(0.0, 1.0));
+      expect(exitValue, greaterThanOrEqualTo(previousExit - 1e-12));
       previous = value;
+      previousExit = exitValue;
     }
     const join = 0.48300052620708006;
     const e = .00001;
@@ -816,6 +821,11 @@ void main() {
     expect(accelerationBefore, closeTo(accelerationAfter, .001));
     expect((1 - curve.transform(1 - e)) / e, closeTo(0, .000001));
     expect((1 - 2 * curve.transform(1 - e) + curve.transform(1 - 2 * e)) / (e * e), closeTo(0, .001));
+    expect(exitTravel(1 / 18), closeTo(0.04183183685828823, 1e-12));
+    expect(exitTravel(1 / 3), closeTo(0.34339277549154096, 1e-12));
+    expect(exitTravel(.5), closeTo(0.62890625, 1e-12));
+    expect(exitTravel(5 / 6), closeTo(0.98780614140375, 1e-12));
+    expect(exitTravel(1 / 18), lessThan(curve.transform(1 / 18)));
     await tester.pumpAndSettle();
     navigator.currentState!.pop();
     await tester.pumpAndSettle();

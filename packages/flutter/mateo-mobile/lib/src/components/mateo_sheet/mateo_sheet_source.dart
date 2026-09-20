@@ -11,10 +11,10 @@ enum MateoSheetSource {
     maxExtentFraction: 0.9,
     stackCrossAxisInset: 16,
     stackEdgeGap: 12,
-    duration: Duration(milliseconds: 360),
-    reverseDuration: Duration(milliseconds: 300),
+    duration: Duration(milliseconds: 390),
+    reverseDuration: Duration(milliseconds: 200),
     curve: _MateoSheetLandingCurve(),
-    reverseCurve: FlippedCurve(_MateoSheetLandingCurve()),
+    reverseCurve: FlippedCurve(_MateoSheetExitCurve()),
   );
 
   const MateoSheetSource({
