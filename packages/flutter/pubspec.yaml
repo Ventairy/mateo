@@ -22,6 +22,9 @@ melos:
     bootstrap:
       environment: *environment
   scripts:
+    get:
+      description: Fetch dependencies for the Flutter workspace.
+      run: flutter pub get
     analyze:
       description: Analyze registered packages with the shared lint rules.
       exec: dart analyze --fatal-infos .

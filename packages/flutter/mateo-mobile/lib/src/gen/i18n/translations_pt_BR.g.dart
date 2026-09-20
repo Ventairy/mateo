@@ -76,9 +76,9 @@ class Translations$textInput$phone$pt_BR extends Translations$textInput$phone$en
   @override
   String countrySelectedAccessibilityLabel({required Object country}) => '${country}, selecionado';
   @override
-  String get noCountriesFound => 'Nenhum país encontrado';
+  String get noCountriesFound => 'Não encontramos nada';
   @override
-  String get searchCountries => 'Buscar países';
+  String get searchCountries => 'Buscar país';
 }
 
 /// The flat map containing all translations for locale <pt-BR>.
@@ -94,8 +94,8 @@ extension on TranslationsPtBr {
       }) => 'Alterar país, atualmente ${country}',
       'textInput.phone.closeCountryPickerAccessibilityLabel' => 'Fechar seletor de países',
       'textInput.phone.countrySelectedAccessibilityLabel' => ({required Object country}) => '${country}, selecionado',
-      'textInput.phone.noCountriesFound' => 'Nenhum país encontrado',
-      'textInput.phone.searchCountries' => 'Buscar países',
+      'textInput.phone.noCountriesFound' => 'Não encontramos nada',
+      'textInput.phone.searchCountries' => 'Buscar país',
       _ => null,
     };
   }

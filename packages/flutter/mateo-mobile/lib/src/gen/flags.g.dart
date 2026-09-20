@@ -7029,9 +7029,7 @@ class _AgoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AgoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -7574,9 +7572,7 @@ class _AlaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AlaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -8479,9 +8475,7 @@ class _ArgPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArgPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -8618,9 +8612,7 @@ class _ArmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -9467,9 +9459,7 @@ class _AtfPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AtfPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -9896,9 +9886,7 @@ class _AusPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AusPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -10536,9 +10524,7 @@ class _BdiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BdiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -10675,9 +10661,7 @@ class _BelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BelPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -10814,9 +10798,7 @@ class _BenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BenPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -11329,9 +11311,7 @@ class _BfaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BfaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -11583,9 +11563,7 @@ class _BgrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BgrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -11854,9 +11832,7 @@ class _BhsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BhsPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -12072,9 +12048,7 @@ class _BihPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BihPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -12650,9 +12624,7 @@ class _BlrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BlrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -13227,9 +13199,7 @@ class _BolPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BolPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -13687,9 +13657,7 @@ class _BrbPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BrbPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -14247,9 +14215,7 @@ class _BtnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BtnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -14424,9 +14390,7 @@ class _BvtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BvtPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -14574,9 +14538,7 @@ class _BwaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BwaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -15371,9 +15333,7 @@ class _CckPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CckPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -15646,9 +15606,7 @@ class _ChlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -15952,9 +15910,7 @@ class _CivPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CivPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -16105,9 +16061,7 @@ class _CmrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CmrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -16265,9 +16219,7 @@ class _CodPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CodPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -16404,9 +16356,7 @@ class _CogPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CogPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -16666,9 +16616,7 @@ class _CokPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CokPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -16805,9 +16753,7 @@ class _ColPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ColPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -17539,9 +17485,7 @@ class _CriPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CriPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -17879,9 +17823,7 @@ class _CuwPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CuwPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -18748,9 +18690,7 @@ class _CypPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CypPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -18885,9 +18825,7 @@ class _CzePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CzePainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -19024,9 +18962,7 @@ class _DeuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DeuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -20375,9 +20311,7 @@ class _DzaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DzaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -23725,9 +23659,7 @@ class _EstPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _EstPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -24650,9 +24582,7 @@ class _FraPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FraPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -24828,9 +24758,7 @@ class _FroPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FroPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -25123,9 +25051,7 @@ class _GabPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GabPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -25365,9 +25291,7 @@ class _GbrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GbrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -25732,9 +25656,7 @@ class _GgyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GgyPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -26267,9 +26189,7 @@ class _GibPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GibPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -26406,9 +26326,7 @@ class _GinPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GinPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -28245,9 +28163,7 @@ class _GrdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GrdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -28929,9 +28845,7 @@ class _GufPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GufPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -29972,9 +29886,7 @@ class _HmdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HmdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -30803,9 +30715,7 @@ class _HunPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HunPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -31944,9 +31854,7 @@ class _IrlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IrlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -32140,9 +32048,7 @@ class _IrnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IrnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -32645,9 +32551,7 @@ class _IslPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _IslPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -32964,9 +32868,7 @@ class _ItaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ItaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -33121,9 +33023,7 @@ class _JamPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _JamPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -33287,9 +33187,7 @@ class _JeyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _JeyPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -34438,9 +34336,7 @@ class _KhmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _KhmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -35595,9 +35491,7 @@ class _LaoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LaoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -35741,9 +35635,7 @@ class _LbnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LbnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -35939,9 +35831,7 @@ class _LbrPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LbrPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -36631,9 +36521,7 @@ class _LiePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LiePainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -37204,9 +37092,7 @@ class _LtuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LtuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -37343,9 +37229,7 @@ class _LuxPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LuxPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -37680,9 +37564,7 @@ class _MacPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MacPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -38616,9 +38498,7 @@ class _MdgPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MdgPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -38890,9 +38770,7 @@ class _MdvPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MdvPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -40149,9 +40027,7 @@ class _MhlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MhlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -40468,9 +40344,7 @@ class _MliPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MliPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -40614,9 +40488,7 @@ class _MltPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MltPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -41481,9 +41353,7 @@ class _MngPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MngPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -42729,9 +42599,7 @@ class _MnpPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MnpPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -43184,9 +43052,7 @@ class _MrtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MrtPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -43550,9 +43416,7 @@ class _MtqPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MtqPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -43860,9 +43724,7 @@ class _MwiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MwiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -47030,9 +46892,7 @@ class _NerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NerPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -48027,9 +47887,7 @@ class _NldPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NldPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -48204,9 +48062,7 @@ class _NorPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NorPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -48434,9 +48290,7 @@ class _NplPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NplPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -48593,9 +48447,7 @@ class _NruPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NruPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -48855,9 +48707,7 @@ class _NzlPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NzlPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -49012,9 +48862,7 @@ class _OmnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _OmnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -49454,9 +49302,7 @@ class _PanPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PanPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -50867,9 +50713,7 @@ class _PriPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PriPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -51036,9 +50880,7 @@ class _PrkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PrkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -52296,9 +52138,7 @@ class _ReuPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ReuPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -52435,9 +52275,7 @@ class _RouPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RouPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -52574,9 +52412,7 @@ class _RusPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RusPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -52737,9 +52573,7 @@ class _RwaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RwaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -53608,9 +53442,7 @@ class _SenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SenPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -54801,9 +54633,7 @@ class _SjmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SjmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -55145,9 +54975,7 @@ class _SlePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SlePainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -57512,9 +57340,7 @@ class _SvkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SvkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -57672,9 +57498,7 @@ class _SvnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SvnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -59424,9 +59248,7 @@ class _TcdPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TcdPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -59763,9 +59585,7 @@ class _ThaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ThaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -60246,9 +60066,7 @@ class _TklPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TklPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -61418,9 +61236,7 @@ class _TtoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TtoPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -62418,9 +62234,7 @@ class _TwnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TwnPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -63189,9 +63003,7 @@ class _UmiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UmiPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -63379,9 +63191,7 @@ class _UryPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UryPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -63602,9 +63412,7 @@ class _UsaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _UsaPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -64514,9 +64322,7 @@ class _VatPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _VatPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -64668,9 +64474,7 @@ class _VctPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _VctPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -66073,9 +65877,7 @@ class _WlfPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _WlfPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -66261,9 +66063,7 @@ class _WsmPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _WsmPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -66489,9 +66289,7 @@ class _XkkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _XkkPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 
@@ -66628,9 +66426,7 @@ class _YemPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _YemPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.color3 != color3;
+    return oldDelegate.color1 != color1 || oldDelegate.color2 != color2 || oldDelegate.color3 != color3;
   }
 }
 

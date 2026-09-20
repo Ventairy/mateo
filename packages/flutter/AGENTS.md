@@ -23,6 +23,7 @@ guidance belongs in each package's own `AGENTS.md`.
 - Commit the workspace-root `pubspec.lock`; do not commit member lockfiles.
 - Package SDK constraints remain in each manifest for Dart and publication.
   `melos bootstrap` synchronizes them with the root environment configuration.
+- Run `fvm dart run melos get` from this directory to fetch workspace dependencies.
 
 ## Coding Rules
 

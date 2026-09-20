@@ -533,4 +533,41 @@ void main() {
     await tester.pump();
     expect(find.text('No countries found'), findsOneWidget);
   });
+
+  testWidgets('country search preserves the not-found animation across empty queries', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(MateoCountryFlag));
+    await tester.pumpAndSettle();
+    final searchField = find.byType(CupertinoTextField).last;
+    await tester.enterText(searchField, 'zzzz');
+    await tester.pump();
+
+    final animatedEarth = find.byWidgetPredicate(
+      (widget) => widget.runtimeType.toString() == '_EarthRotating',
+      description: 'earth rotating animated icon',
+    );
+    final animationState = tester.state(animatedEarth);
+
+    await tester.enterText(searchField, 'xxxx');
+    await tester.pump();
+    expect(tester.state(animatedEarth), same(animationState));
+
+    await tester.enterText(searchField, 'Brazil');
+    await tester.pump();
+    expect(animatedEarth, findsNothing);
+
+    await tester.enterText(searchField, 'zzzz');
+    await tester.pump();
+    expect(tester.state(animatedEarth), isNot(same(animationState)));
+  });
 }

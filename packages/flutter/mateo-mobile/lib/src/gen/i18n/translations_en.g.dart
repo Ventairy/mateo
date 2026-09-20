@@ -73,11 +73,11 @@ class Translations$textInput$phone$en {
   /// en: '$country, selected'
   String countrySelectedAccessibilityLabel({required Object country}) => '${country}, selected';
 
-  /// en: 'No countries found'
-  String get noCountriesFound => 'No countries found';
+  /// en: 'We couldn't find it'
+  String get noCountriesFound => 'We couldn\'t find it';
 
-  /// en: 'Search countries'
-  String get searchCountries => 'Search countries';
+  /// en: 'Search country'
+  String get searchCountries => 'Search country';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -93,8 +93,8 @@ extension on Translations {
       }) => 'Change country, currently ${country}',
       'textInput.phone.closeCountryPickerAccessibilityLabel' => 'Close country picker',
       'textInput.phone.countrySelectedAccessibilityLabel' => ({required Object country}) => '${country}, selected',
-      'textInput.phone.noCountriesFound' => 'No countries found',
-      'textInput.phone.searchCountries' => 'Search countries',
+      'textInput.phone.noCountriesFound' => 'We couldn\'t find it',
+      'textInput.phone.searchCountries' => 'Search country',
       _ => null,
     };
   }

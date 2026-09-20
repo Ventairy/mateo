@@ -19,12 +19,11 @@ part '_mateo_menu_overlay.dart';
 part '_mateo_menu_route.dart';
 
 @internal
-typedef MateoMenuPlacement =
-    Offset Function(
-      Rect anchorBounds,
-      Size menuSize,
-      Rect availableBounds,
-    );
+typedef MateoMenuPlacement = Offset Function(
+  Rect anchorBounds,
+  Size menuSize,
+  Rect availableBounds,
+);
 
 @internal
 typedef MateoMenuExitTransition = ({

@@ -35,11 +35,14 @@ dotdart:
   svg:
     - assets/icons/
     - assets/flags/
+  lottie:
+    - assets/animated_icons/
 
 flutter:
   assets:
     - assets/flags/
     - assets/icons/
+    - assets/animated_icons/
   fonts:
     - family: Inter
       fonts:

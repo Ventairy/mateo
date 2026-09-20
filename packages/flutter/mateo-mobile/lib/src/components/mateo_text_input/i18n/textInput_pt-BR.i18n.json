@@ -3,7 +3,7 @@
     "changeCountryAccessibilityLabel": "Alterar país, atualmente $country",
     "closeCountryPickerAccessibilityLabel": "Fechar seletor de países",
     "countrySelectedAccessibilityLabel": "$country, selecionado",
-    "noCountriesFound": "Nenhum país encontrado",
-    "searchCountries": "Buscar países"
+    "noCountriesFound": "Não encontramos nada",
+    "searchCountries": "Buscar país"
   }
 }

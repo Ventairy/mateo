@@ -46,11 +46,7 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
     PluralResolver? cardinalResolver,
     PluralResolver? ordinalResolver,
   }) async {
-    return buildSync(
-      overrides: overrides,
-      cardinalResolver: cardinalResolver,
-      ordinalResolver: ordinalResolver,
-    );
+    return buildSync(overrides: overrides, cardinalResolver: cardinalResolver, ordinalResolver: ordinalResolver);
   }
 
   @override
@@ -78,11 +74,7 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 
 /// Provides utility functions without any side effects.
 class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
-  AppLocaleUtils._()
-    : super(
-        baseLocale: AppLocale.en,
-        locales: AppLocale.values,
-      );
+  AppLocaleUtils._() : super(baseLocale: AppLocale.en, locales: AppLocale.values);
 
   static final instance = AppLocaleUtils._();
 
