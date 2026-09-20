@@ -135,6 +135,25 @@ guidance belongs in each package's own `AGENTS.md`.
   behavior only when existing consumers actually need the same algorithm;
   do not use a shared enum as a container for consumer-specific utilities.
 
+### Design Shared Contracts Around Intent
+
+- Avoid designing a shared contract by forwarding whatever the current
+  implementation accepts. The root mistake is treating a convenient
+  implementation detail as the abstraction's responsibility: this couples
+  every caller and alternative implementation to today's mechanism.
+- Define inputs by the behavior the owner needs to express. Translate that
+  intent into implementation-specific options inside the implementation that
+  uses them. Do not require unrelated variants to understand another variant's
+  engine, lifecycle, or configuration types.
+- Before adding a shared parameter, ask whether its meaning would remain valid
+  if the implementation changed. If it describes only how one implementation
+  works, keep it with that implementation. Use framework or dependency types
+  directly when they genuinely represent the shared contract.
+- Apply this to all shared boundaries, including widgets, services, bases,
+  configuration types, and helpers. This does not justify speculative adapters
+  or extension points; express today's requirements with the smallest accurate
+  contract.
+
 ### Keep Named-Constructor Configuration In Its Class
 
 - When named constructors represent distinct configurations, initialize each
@@ -158,6 +177,13 @@ guidance belongs in each package's own `AGENTS.md`.
   for incompatible configurations. Consumers narrow the type before accessing
   variant-specific fields; use exhaustive pattern matching to interpret variants.
 - Constructors that share the same field structure do not require separate types.
+- When dispatching behavior across a sealed family or enum, handle every
+  supported variant explicitly with exhaustive matching. Do not use a
+  one-variant check followed by a catch-all no-op or default behavior: it makes
+  new variants silently inherit behavior that was never chosen for them.
+  Omit wildcard/default branches when the compiler can enforce completeness.
+  A check for a capability relevant to only one variant may remain selective;
+  dispatching the family's behavior must be exhaustive.
 
 ### Share Types Through Foundation
 

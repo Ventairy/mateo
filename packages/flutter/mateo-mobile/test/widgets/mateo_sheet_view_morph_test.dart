@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../fixtures/surface_transform_targets.dart';
@@ -23,7 +24,7 @@ void main() {
         navigator.pop();
       }
       await _start(tester);
-      await tester.pump(const Duration(milliseconds: 160));
+      await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
       expect(surfaceFlight, findsOneWidget);
       await expectLater(
         find.byKey(const ValueKey('capture')),
@@ -49,7 +50,7 @@ void main() {
       await tester.pump();
       if (intermediate) {
         await _start(tester);
-        await tester.pump(const Duration(milliseconds: 160));
+        await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
       }
       await expectLater(
         firstFrame ?? find.byKey(const ValueKey('capture')),
@@ -64,6 +65,32 @@ void main() {
       expect(find.text('Sheet'), findsOneWidget);
     });
   }
+
+  _test('the page behind the sheet remains painted after a page round trip', (tester) async {
+    final navigator = await _sheet(
+      tester,
+      home: const MateoView(
+        surface: MateoViewSurface(
+          color: Color(0xFF2468AC),
+          child: Center(child: Text('Home')),
+        ),
+      ),
+    );
+    Future<List<int>> backgroundPixels() async {
+      final image = await tester.renderObject<RenderRepaintBoundary>(find.byKey(const ValueKey('capture'))).toImage();
+      final bytes = await image.toByteData();
+      final pixels = bytes!.buffer.asUint8List().take(image.width * 300 * 4).toList();
+      image.dispose();
+      return pixels;
+    }
+
+    final before = (await tester.runAsync(backgroundPixels))!;
+    _push(navigator);
+    await tester.pumpAndSettle();
+    navigator.pop();
+    await tester.pumpAndSettle();
+    expect(await tester.runAsync(backgroundPixels), before);
+  });
 
   _test('a sheet above a morphed page uses ordinary sheet presentation', (tester) async {
     final navigator = await _sheet(tester);
@@ -162,10 +189,10 @@ void main() {
         final bounds = tester.getRect(find.byType(MateoSheetViewSurface));
         final route = _push(navigator, fullscreen: fullscreen);
         await _start(tester);
-        expect(route.transitionDuration, const Duration(milliseconds: 320));
+        expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
         expect(surfaceFlight, findsOneWidget);
         expect(tester.getRect(surfaceFlight), bounds);
-        await tester.pump(const Duration(milliseconds: 160));
+        await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
         expect(tester.getRect(surfaceFlight).height, greaterThan(bounds.height));
         expect(route.overlayEntries.first.opaque, isFalse);
         expect(find.text('Home'), findsOneWidget);
@@ -350,6 +377,7 @@ Future<NavigatorState> _sheet(
   NavigatorObserver? observer,
   bool reducedMotion = false,
   bool scrollable = false,
+  Widget home = const Text('Home'),
 }) async {
   tester.view
     ..devicePixelRatio = 1
@@ -368,7 +396,7 @@ Future<NavigatorState> _sheet(
           child: child!,
         ),
       ),
-      home: const Text('Home'),
+      home: home,
     ),
   );
   unawaited(

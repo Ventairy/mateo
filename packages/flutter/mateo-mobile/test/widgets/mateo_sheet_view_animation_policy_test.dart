@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../fixtures/surface_transform_test_widgets.dart';
@@ -303,11 +304,11 @@ void main() {
       expect(results, [
         [
           [matchesSize(sourceSize), matchesSize(destinationSize)],
-          const Duration(milliseconds: 320),
+          kSheetToViewTransformAnimation.duration,
         ],
         [
           [matchesSize(destinationSize), matchesSize(sourceSize)],
-          const Duration(milliseconds: 320),
+          kSheetToViewTransformAnimation.duration,
         ],
       ]);
     },

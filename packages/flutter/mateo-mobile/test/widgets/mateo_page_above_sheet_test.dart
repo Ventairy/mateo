@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_page_route/base_mateo_page_route.dart';
+import 'package:mateo_mobile/src/foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 
 const ValueKey<String> _pageKey = .new('page');
 
@@ -23,8 +24,8 @@ void main() {
         navigator.push(route);
         await tester.pump();
         expect(route.isPrimaryVisualMotionDisabled, isTrue);
-        expect(route.transitionDuration, const Duration(milliseconds: 320));
-        expect(route.reverseTransitionDuration, const Duration(milliseconds: 320));
+        expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
+        expect(route.reverseTransitionDuration, kSheetToViewTransformAnimation.duration);
         expect(route.animation!.value, 0);
         _expectSettled(tester);
         await tester.pumpAndSettle();

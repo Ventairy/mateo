@@ -63,9 +63,7 @@ class BaseMateoViewSurface extends StatelessWidget {
     final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
     final sheetToViewTarget = observer is MateoNavigatorObserver ? observer.sheetToViewTarget : null;
     final route = ModalRoute.of(context);
-    final animationStartup = route is BaseMateoPageRoute && !route.shouldAnimateSurfaceEntrance
-        ? MotionStartup.skip
-        : MotionStartup.play;
+    final animateEntrance = route is! BaseMateoPageRoute || route.shouldAnimateSurfaceEntrance;
 
     final scopedChild = MateoSurfaceScope(animation: const .none(), child: child);
     final view = MateoViewLayoutScope.maybeOf(context);
@@ -93,7 +91,7 @@ class BaseMateoViewSurface extends StatelessWidget {
         height: const .fill(),
         animation: animation,
         sheetToViewTarget: sheetToViewTarget,
-        animationStartup: animationStartup,
+        animateEntrance: animateEntrance,
         contentGroup: view.contentGroup,
         color: color,
         elevation: elevation,
@@ -111,7 +109,7 @@ class BaseMateoViewSurface extends StatelessWidget {
       height: view.fitHeight ? const .fit() : const .fill(),
       animation: animation,
       sheetToViewTarget: sheetToViewTarget,
-      animationStartup: animationStartup,
+      animateEntrance: animateEntrance,
       contentGroup: view.contentGroup,
       color: color,
       elevation: elevation,
