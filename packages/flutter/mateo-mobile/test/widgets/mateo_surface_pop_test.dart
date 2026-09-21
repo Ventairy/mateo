@@ -14,15 +14,8 @@ Widget host({
   Key? surfaceKey,
   Widget child = const Text('Welcome'),
   bool scrollable = false,
-  bool view = false,
 }) {
-  final surface = view
-      ? MateoView(
-          surface: scrollable
-              ? MateoViewSurface.scrollable(animation: animation, child: child)
-              : MateoViewSurface(animation: animation, child: child),
-        )
-      : scrollable
+  final surface = scrollable
       ? MateoSurface.scrollable(
           key: surfaceKey,
           animation: animation,
@@ -84,28 +77,26 @@ void main() {
     expect(pop, isNot(const MateoSurfaceAnimation.pop(duration: Duration(milliseconds: 200))));
     expect(pop, isNot(const MateoSurfaceAnimation.pop(curve: Curves.linear)));
   });
-  for (final view in [false, true]) {
-    for (final scrollable in [false, true]) {
-      testWidgets('pop animates view=$view scrollable=$scrollable without changing layout', (tester) async {
-        await tester.pumpWidget(host(view: view, scrollable: scrollable));
-        final size = tester.getSize(popTransform.first);
-        expect(scale(tester), .75);
-        expect(opacity(tester), 0);
-        await tester.pump(const Duration(milliseconds: 60));
-        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.1875), 0.000001));
-        await tester.pump(const Duration(milliseconds: 60));
-        expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.375), 0.000001));
-        await tester.pump(const Duration(milliseconds: 120));
-        expect(scale(tester), greaterThan(1));
-        expect(opacity(tester), greaterThan(1));
-        expect(tester.takeException(), isNull);
-        expect(tester.getSize(popTransform.first), size);
-        await tester.pump(const Duration(milliseconds: 160));
-        expect(scale(tester), 1);
-        await tester.pump(const Duration(milliseconds: 1));
-        expect(tester.hasRunningAnimations, isFalse);
-      });
-    }
+  for (final scrollable in [false, true]) {
+    testWidgets('pop animates scrollable=$scrollable without changing layout', (tester) async {
+      await tester.pumpWidget(host(scrollable: scrollable));
+      final size = tester.getSize(popTransform.first);
+      expect(scale(tester), .75);
+      expect(opacity(tester), 0);
+      await tester.pump(const Duration(milliseconds: 60));
+      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.1875), 0.000001));
+      await tester.pump(const Duration(milliseconds: 60));
+      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.375), 0.000001));
+      await tester.pump(const Duration(milliseconds: 120));
+      expect(scale(tester), greaterThan(1));
+      expect(opacity(tester), greaterThan(1));
+      expect(tester.takeException(), isNull);
+      expect(tester.getSize(popTransform.first), size);
+      await tester.pump(const Duration(milliseconds: 160));
+      expect(scale(tester), 1);
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(tester.hasRunningAnimations, isFalse);
+    });
   }
   testWidgets('custom linear duration coordinates fade and scale', (tester) async {
     await tester.pumpWidget(

@@ -8,14 +8,12 @@ class MateoViewLayoutScope extends InheritedWidget {
     required this.reserveHeaderSpace,
     required this._layout,
     required super.child,
-    required this.contentGroup,
   });
 
   final _MateoViewLayoutData _layout;
   final EdgeInsets padding;
   final bool fitHeight;
   final bool reserveHeaderSpace;
-  final GroupLink contentGroup;
 
   bool get hasHeader => _layout.header != null;
   bool get hasFooter => _layout.footer != null;

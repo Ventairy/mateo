@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
-import '../../foundation/mateo_surface_animation/mateo_surface_transform_target.dart';
+import '../../foundation/mateo_transform_target/mateo_transform_target.dart';
 import '../mateo_button/mateo_button.dart';
 import '../mateo_menu/mateo_menu.dart';
 import '../mateo_menu/overlay/show_mateo_menu.dart';
@@ -56,12 +56,12 @@ class MateoMenuButton extends StatefulWidget {
 }
 
 class _MateoMenuButtonState extends State<MateoMenuButton> {
-  MateoSurfaceTransformTarget? _transformTarget;
+  MateoTransformTarget? _transformTarget;
 
-  MateoSurfaceTransformTarget _targetFor(Duration duration, Curve curve) {
+  MateoTransformTarget _targetFor(Duration duration, Curve curve) {
     final target = _transformTarget;
     if (target != null && target.duration == duration && target.curve == curve) return target;
-    return _transformTarget = MateoSurfaceTransformTarget(duration: duration, curve: curve);
+    return _transformTarget = MateoTransformTarget(duration: duration, curve: curve);
   }
 
   final GlobalKey _anchorKey = GlobalKey();

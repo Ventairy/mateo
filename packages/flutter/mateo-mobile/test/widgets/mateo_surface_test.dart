@@ -14,11 +14,11 @@ void main() {
     expect(const MateoSurface.scrollable(child: SizedBox()).shape, isNull);
     expect(const MateoViewSurface(child: SizedBox()).shape, isNull);
     expect(const MateoViewSurface.scrollable(child: SizedBox()).shape, isNull);
-    expect(const MateoSurfaceShape.capsule(), const MateoSurfaceShape.capsule());
-    expect(const MateoSurfaceShape.none(), isNot(const MateoSurfaceShape.capsule()));
-    expect((const MateoSurfaceShape.none()).hashCode, (const MateoSurfaceShape.none()).hashCode);
-    expect((const MateoSurfaceShape.capsule()).hashCode, (const MateoSurfaceShape.capsule()).hashCode);
-    expect((const MateoViewSurfaceShape.none()).hashCode, (const MateoViewSurfaceShape.none()).hashCode);
+    expect(const MateoShape.capsule(), const MateoShape.capsule());
+    expect(const MateoShape.none(), isNot(const MateoShape.capsule()));
+    expect((const MateoShape.none()).hashCode, (const MateoShape.none()).hashCode);
+    expect((const MateoShape.capsule()).hashCode, (const MateoShape.capsule()).hashCode);
+    expect((const MateoShape.none()).hashCode, (const MateoShape.none()).hashCode);
   });
 
   testWidgets('when capsule proportions change, it should clip hit testing to the current outline', (tester) async {

@@ -15,9 +15,7 @@ Widget _surface({
 }) {
   if (view) {
     return MateoView(
-      surface: scrollable
-          ? MateoViewSurface.scrollable(animation: animation, child: child)
-          : MateoViewSurface(animation: animation, child: child),
+      surface: scrollable ? MateoViewSurface.scrollable(child: child) : MateoViewSurface(child: child),
     );
   }
   return scrollable
@@ -69,7 +67,7 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
-          expect(_animations(tester), [animation ?? inherited, none]);
+          expect(_animations(tester), view ? [none, none] : [animation ?? inherited, none]);
           expect(tester.takeException(), isNull);
         });
       }

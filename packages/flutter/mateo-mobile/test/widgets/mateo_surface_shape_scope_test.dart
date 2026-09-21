@@ -35,7 +35,7 @@ void main() {
         (tester) async {
           final contentKey = GlobalKey();
           Element? previous;
-          for (final configuration in <(MateoRoundedShapeBorder?, MateoViewSurfaceShape?, double)>[
+          for (final configuration in <(MateoRoundedShapeBorder?, MateoShape?, double)>[
             (null, null, 0),
             (const MateoRoundedShapeBorder(radius: 44), null, 44),
             (const MateoRoundedShapeBorder(radius: 44), const .none(), 0),
@@ -70,13 +70,13 @@ void main() {
                                   ? MateoSurface.scrollable(
                                       shape: configuration.$2 == null
                                           ? null
-                                          : MateoSurfaceShape.rounded(radius: configuration.$3),
+                                          : MateoShape.rounded(radius: configuration.$3),
                                       child: child,
                                     )
                                   : MateoSurface(
                                       shape: configuration.$2 == null
                                           ? null
-                                          : MateoSurfaceShape.rounded(radius: configuration.$3),
+                                          : MateoShape.rounded(radius: configuration.$3),
                                       child: child,
                                     ))
                             : MateoView(

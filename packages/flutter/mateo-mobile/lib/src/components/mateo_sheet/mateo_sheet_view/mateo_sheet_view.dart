@@ -55,6 +55,11 @@ class MateoSheetView extends StatelessWidget {
       child: BaseMateoView(
         fitHeight: !surface._scrollable,
         reserveHeaderSpace: reserveHeaderSpace,
+        surfacePresentation: (
+          color: surface.color,
+          elevation: null,
+          shape: _shape,
+        ),
         surface: MateoSurfaceScope(
           shape: _shape,
           child: surface,

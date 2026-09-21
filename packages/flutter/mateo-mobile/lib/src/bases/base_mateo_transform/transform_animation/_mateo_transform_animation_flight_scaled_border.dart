@@ -1,9 +1,10 @@
-part of '../base_mateo_surface.dart';
+part of '../base_mateo_transform.dart';
 
-// Prepare the outline as it was painted, preserving radii under an ancestor's
-// scale rather than rebuilding the native shape at the scaled dimensions.
-final class _SurfaceTransformAnimationFlightScaledBorder extends ShapeBorder {
-  const _SurfaceTransformAnimationFlightScaledBorder({required this.shape, required this.size});
+final class _MateoTransformAnimationFlightScaledBorder extends ShapeBorder {
+  const _MateoTransformAnimationFlightScaledBorder({
+    required this.shape,
+    required this.size,
+  });
 
   final ShapeBorder shape;
   final Size size;
@@ -20,7 +21,12 @@ final class _SurfaceTransformAnimationFlightScaledBorder extends ShapeBorder {
       .transform(
         (Matrix4.identity()
               ..translateByDouble(rect.left, rect.top, 0, 1)
-              ..scaleByDouble(rect.width / size.width, rect.height / size.height, 1, 1))
+              ..scaleByDouble(
+                rect.width / size.width,
+                rect.height / size.height,
+                1,
+                1,
+              ))
             .storage,
       );
 

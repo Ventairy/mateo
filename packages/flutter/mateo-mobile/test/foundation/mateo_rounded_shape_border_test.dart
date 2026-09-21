@@ -111,8 +111,8 @@ void main() {
     expect(capsule.scale(2), capsule);
     expect(border.dimensions, EdgeInsets.zero);
     expect(border.hashCode, const MateoRoundedShapeBorder(radius: 24).hashCode);
-    expect(const MateoSurfaceShape.rounded(radius: 24), const MateoSurfaceShape.rounded(radius: 24));
-    expect(const MateoViewSurfaceShape.rounded(radius: 24), isNot(const MateoViewSurfaceShape.rounded(radius: 32)));
+    expect(const MateoShape.rounded(radius: 24), const MateoShape.rounded(radius: 24));
+    expect(const MateoShape.rounded(radius: 24), isNot(const MateoShape.rounded(radius: 32)));
     const rect = Rect.fromLTWH(13, -7, 180, 120);
     expect(
       Path.combine(.xor, border.getInnerPath(rect), border.getOuterPath(rect, textDirection: .rtl)).getBounds().isEmpty,

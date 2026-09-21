@@ -11,10 +11,10 @@ void main() {
     expect(identical(animation, const MateoMenuButtonAnimation.transform()), isTrue);
     expect(animation.duration, const Duration(milliseconds: 230));
     expect(animation.curve, const Cubic(.35, 1, .35, 1));
-    expect(animation.buttonContentEffects, const <MateoSurfaceTransformAnimationContentEffect>[
+    expect(animation.buttonContentEffects, const <MateoTransformAnimationContentEffect>[
       .crossfade(curve: Interval(0, .35, curve: Curves.easeOut)),
     ]);
-    expect(animation.menuContentEffects, const <MateoSurfaceTransformAnimationContentEffect>[
+    expect(animation.menuContentEffects, const <MateoTransformAnimationContentEffect>[
       .crossfade(curve: Interval(0, .3, curve: Curves.easeOut)),
     ]);
   });

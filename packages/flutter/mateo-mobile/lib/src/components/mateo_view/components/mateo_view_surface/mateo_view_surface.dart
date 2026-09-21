@@ -4,9 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../../bases/base_mateo_view_surface/base_mateo_view_surface.dart';
 import '../../../../foundation/mateo_edge_effect/mateo_edge_effect.dart';
 import '../../../../foundation/mateo_elevation.dart';
-import '../../../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
+import '../../../../foundation/mateo_shape/mateo_shape.dart';
 import '../../mateo_view.dart';
-import 'mateo_view_surface_shape.dart';
 
 /// The content surface supplied to [MateoView.surface].
 ///
@@ -33,7 +32,6 @@ class MateoViewSurface extends StatelessWidget {
     this.padding,
     this.alignment,
     this.edgeEffect = const .none(),
-    this.animation,
   }) : _scrollable = false;
 
   /// Creates a surface that owns vertical scrolling around [child].
@@ -66,16 +64,12 @@ class MateoViewSurface extends StatelessWidget {
     this.padding,
     this.alignment,
     this.edgeEffect = const .none(),
-    this.animation,
   }) : _scrollable = true;
 
   /// The treatment applied at selected content edges, or none by default.
   ///
   /// This automatically adapts the effect to the obstructions at the edges such as header and footer
   final MateoEdgeEffect edgeEffect;
-
-  /// The animation style for this surface.
-  final MateoSurfaceAnimation? animation;
 
   final bool _scrollable;
 
@@ -96,7 +90,7 @@ class MateoViewSurface extends StatelessWidget {
   final MateoElevation? elevation;
 
   /// The shape treatment used for the background and content clipping.
-  final MateoViewSurfaceShape? shape;
+  final MateoShape? shape;
 
   /// The space between content and the header, footer, or unobstructed view edges.
   ///
@@ -131,9 +125,7 @@ class MateoViewSurface extends StatelessWidget {
     return BaseMateoViewSurface(
       scrollable: _scrollable,
       shape: shape?.border,
-      animation: animation,
       color: color,
-      elevation: elevation,
       padding: padding,
       alignment: alignment,
       edgeEffect: edgeEffect,

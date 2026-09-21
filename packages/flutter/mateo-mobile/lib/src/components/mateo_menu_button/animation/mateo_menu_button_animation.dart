@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
+import '../../../foundation/mateo_transform_animation_content_effect/mateo_transform_animation_content_effect.dart';
 
 part 'mateo_menu_button_animation_pop.dart';
 part 'mateo_menu_button_animation_transform.dart';

@@ -19,6 +19,16 @@ final Finder surfaceFlight = find.byWidgetPredicate(
   description: 'the filled surface transform animation flight',
 );
 
+MateoViewAnimation? viewAnimationFor(MateoSurfaceAnimation? animation) => switch (animation) {
+  MateoSurfaceAnimationTransform(:final target, :final shape, :final contentEffects) => MateoViewAnimation.transform(
+    target: target,
+    shape: shape,
+    contentEffects: contentEffects,
+  ),
+  MateoSurfaceAnimationNone() || MateoSurfaceAnimationPop() => null,
+  null => null,
+};
+
 Widget surfaceTransformEndpoint({
   required Rect bounds,
   Key? key,
@@ -28,8 +38,8 @@ Widget surfaceTransformEndpoint({
   bool scrollable = false,
   bool disabled = false,
   Color? color,
-  MateoSurfaceShape shape = const .rounded(radius: 24),
-  MateoViewSurfaceShape viewShape = const .rounded(radius: 24),
+  MateoShape shape = const .rounded(radius: 24),
+  MateoShape viewShape = const .rounded(radius: 24),
   MateoElevation? elevation,
   MateoEdgeEffect edgeEffect = const .none(),
   Widget child = const SizedBox(),
@@ -41,14 +51,15 @@ Widget surfaceTransformEndpoint({
         );
   final Widget surface;
   if (view) {
+    final viewAnimation = viewAnimationFor(animation);
     surface = MateoView(
       key: key,
+      animation: viewAnimation,
       padding: .zero,
       surface: scrollable
           ? MateoViewSurface.scrollable(
               color: color,
               shape: viewShape,
-              animation: animation,
               elevation: elevation,
               edgeEffect: edgeEffect,
               child: child,
@@ -56,7 +67,6 @@ Widget surfaceTransformEndpoint({
           : MateoViewSurface(
               color: color,
               shape: viewShape,
-              animation: animation,
               elevation: elevation,
               edgeEffect: edgeEffect,
               child: child,

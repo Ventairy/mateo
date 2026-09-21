@@ -20,8 +20,8 @@ final class MateoMenuButtonAnimationTransform extends MateoMenuButtonAnimation {
   final Curve curve;
 
   /// The content effects for flights leaving the trigger.
-  final List<MateoSurfaceTransformAnimationContentEffect> buttonContentEffects;
+  final List<MateoTransformAnimationContentEffect> buttonContentEffects;
 
   /// The content effects for flights leaving the menu.
-  final List<MateoSurfaceTransformAnimationContentEffect> menuContentEffects;
+  final List<MateoTransformAnimationContentEffect> menuContentEffects;
 }

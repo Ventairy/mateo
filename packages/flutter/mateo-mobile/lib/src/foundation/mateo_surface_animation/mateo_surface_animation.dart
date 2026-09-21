@@ -1,15 +1,13 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
-import '../mateo_surface_shape/mateo_surface_shape.dart';
-import 'mateo_surface_transform_target.dart';
+import '../mateo_shape/mateo_shape.dart';
+import '../mateo_transform_animation_content_effect/mateo_transform_animation_content_effect.dart';
+import '../mateo_transform_target/mateo_transform_target.dart';
 
 part 'mateo_surface_animation_none.dart';
 part 'mateo_surface_animation_pop.dart';
 part 'mateo_surface_animation_transform.dart';
-part 'mateo_surface_transform_animation_content_effect.dart';
-part 'mateo_surface_transform_animation_content_effect_crossfade.dart';
-part 'mateo_surface_transform_animation_content_effect_scale.dart';
 
 /// An animation style for a Mateo surface.
 @immutable
@@ -34,12 +32,12 @@ sealed class MateoSurfaceAnimation {
 
   /// Connects surfaces using the same transform target.
   ///
-  /// Retain a [MateoSurfaceTransformTarget] in a shared owner and pass it to
+  /// Retain a [MateoTransformTarget] in a shared owner and pass it to
   /// both surfaces. The target owns timing; each surface defines its appearance.
   const factory MateoSurfaceAnimation.transform({
-    required MateoSurfaceTransformTarget target,
-    MateoSurfaceShape? shape,
-    List<MateoSurfaceTransformAnimationContentEffect> contentEffects,
+    required MateoTransformTarget target,
+    MateoShape? shape,
+    List<MateoTransformAnimationContentEffect> contentEffects,
   }) = MateoSurfaceAnimationTransform;
 
   /// The duration of this animation style, or null for inherited timing.

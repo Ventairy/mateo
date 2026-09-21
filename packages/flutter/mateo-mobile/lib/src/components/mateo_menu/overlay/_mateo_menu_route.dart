@@ -29,7 +29,7 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
   Duration get transitionDuration => reducedMotion
       ? Duration.zero
       : switch (surfaceAnimation) {
-          MateoSurfaceAnimationTransform(:final duration) => duration ?? MateoSurfaceTransformTarget.defaultDuration,
+          MateoSurfaceAnimationTransform(:final duration) => duration ?? MateoTransformTarget.defaultDuration,
           MateoSurfaceAnimationNone() || MateoSurfaceAnimationPop() => Duration.zero,
         };
 

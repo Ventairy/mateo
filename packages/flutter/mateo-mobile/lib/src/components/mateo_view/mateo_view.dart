@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 
+import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
 import '../../bases/base_mateo_view/base_mateo_view.dart';
+import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../../foundation/mateo_view_animation/mateo_view_animation.dart';
 import 'components/mateo_view_footer/mateo_view_footer.dart';
 import 'components/mateo_view_header/mateo_view_header.dart';
 import 'components/mateo_view_surface/mateo_view_surface.dart';
@@ -21,6 +24,7 @@ class MateoView extends StatelessWidget {
     this.header,
     this.footer,
     this.overlay,
+    this.animation,
     this.padding,
     this.avoidBottomInset = true,
     super.key,
@@ -59,13 +63,24 @@ class MateoView extends StatelessWidget {
   /// insets. The child owns alignment, hit testing, focus, and semantics.
   final Widget? overlay;
 
+  /// The transform animation connecting this view to another Mateo element.
+  final MateoViewAnimation? animation;
+
   @override
   Widget build(BuildContext context) {
+    final surfaceScope = MateoSurfaceScope.of(context);
+
     return BaseMateoView(
       padding: padding,
       fitHeight: false,
       avoidBottomInset: avoidBottomInset,
       maintainBottomViewPadding: !avoidBottomInset,
+      animation: animation,
+      surfacePresentation: (
+        color: surface.color,
+        elevation: surface.elevation,
+        shape: surface.shape?.border ?? surfaceScope.shape ?? const MateoRoundedShapeBorder(radius: 0),
+      ),
       surface: surface,
       header: header,
       footer: footer,

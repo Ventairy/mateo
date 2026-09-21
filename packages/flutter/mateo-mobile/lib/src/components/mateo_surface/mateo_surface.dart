@@ -7,9 +7,9 @@ import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
 import '../../foundation/mateo_edge_effect/mateo_edge_effect.dart';
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../../foundation/mateo_shape/mateo_shape.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
 import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
-import '../../foundation/mateo_surface_shape/mateo_surface_shape.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 
 /// A Mateo background that contains content inside.
@@ -108,7 +108,7 @@ class MateoSurface extends StatelessWidget {
   final MateoElevation? elevation;
 
   /// The shape treatment used for the background and content clipping.
-  final MateoSurfaceShape? shape;
+  final MateoShape? shape;
 
   /// The requested total width, including padding, subject to parent constraints.
   final MateoSurfaceWidth width;

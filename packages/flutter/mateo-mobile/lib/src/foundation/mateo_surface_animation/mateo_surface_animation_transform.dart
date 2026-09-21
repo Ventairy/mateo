@@ -2,7 +2,7 @@ part of 'mateo_surface_animation.dart';
 
 /// A transform connecting Mateo surfaces with a shared target.
 final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
-  /// Creates a transform connecting surfaces with the same [target].
+  /// Creates a transform connecting elements with the same [target].
   const MateoSurfaceAnimationTransform({
     required this.target,
     this.shape,
@@ -10,14 +10,14 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   }) : super._();
 
   /// The connection shared by the participating surfaces.
-  final MateoSurfaceTransformTarget target;
+  final MateoTransformTarget target;
 
   /// The shape this surface uses while transforming.
   ///
   /// Defines this endpoint's shape on both arrival and departure. The flight
   /// interpolates between the participating endpoints' shapes. When omitted,
   /// uses this surface's resting shape. Does not change its resting appearance.
-  final MateoSurfaceShape? shape;
+  final MateoShape? shape;
 
   /// The shared target duration, or null for inherited timing.
   @override
@@ -33,7 +33,7 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// type are rejected when the effects are applied.
   /// Without scaling, content keeps its captured size and is clipped by the surface.
   /// Without crossfading, content switches at the midpoint of eased flight progress.
-  final List<MateoSurfaceTransformAnimationContentEffect> contentEffects;
+  final List<MateoTransformAnimationContentEffect> contentEffects;
 
   /// Whether both transforms have a shared target and configuration.
   @override

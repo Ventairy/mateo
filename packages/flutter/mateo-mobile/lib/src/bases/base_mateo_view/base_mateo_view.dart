@@ -3,9 +3,16 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:oh_my_flutter/oh_my_flutter.dart' show Group, GroupLink, MaybeSafeArea, MaybeSafeAreaHandle;
+import 'package:oh_my_flutter/oh_my_flutter.dart';
 
+import '../../foundation/mateo_elevation.dart';
+import '../../foundation/mateo_navigator_observer.dart';
+import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../../foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
+import '../../foundation/mateo_view_animation/mateo_view_animation.dart';
+import '../../theme/mateo_theme.dart';
 import '../base_mateo_surface/mateo_surface_obstruction.dart';
+import '../base_mateo_transform/base_mateo_transform.dart';
 import 'mateo_view_scope.dart';
 
 part '_mateo_view_footer_layout_data.dart';
@@ -21,6 +28,11 @@ class BaseMateoView extends StatefulWidget {
   const BaseMateoView({
     required this.surface,
     required this.fitHeight,
+    this.surfacePresentation = const (
+      color: null,
+      elevation: null,
+      shape: MateoRoundedShapeBorder(radius: 0),
+    ),
     this.reserveHeaderSpace = true,
     this.avoidBottomInset = false,
     this.maintainBottomViewPadding = false,
@@ -28,6 +40,7 @@ class BaseMateoView extends StatefulWidget {
     this.header,
     this.footer,
     this.overlay,
+    this.animation,
     super.key,
   });
 
@@ -37,9 +50,16 @@ class BaseMateoView extends StatefulWidget {
   final bool maintainBottomViewPadding;
   final bool reserveHeaderSpace;
   final Widget surface;
+  final ({
+    Color? color,
+    MateoElevation? elevation,
+    MateoRoundedShapeBorder shape,
+  })
+  surfacePresentation;
   final Widget? header;
   final Widget? footer;
   final Widget? overlay;
+  final MateoViewAnimation? animation;
 
   @override
   State<BaseMateoView> createState() => _BaseMateoViewState();
@@ -47,7 +67,6 @@ class BaseMateoView extends StatefulWidget {
 
 class _BaseMateoViewState extends State<BaseMateoView> {
   final _layoutData = _MateoViewLayoutData();
-  final _contentGroup = GroupLink();
 
   @override
   void initState() {
@@ -106,6 +125,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
 
     final fitHeight = widget.fitHeight;
     final resolvedPadding = padding.resolve(Directionality.of(context));
+    final surfaceColor = widget.surfacePresentation.color ?? MateoTheme.of(context).colorScheme.background;
 
     return MateoViewScope(
       child: MateoViewLayoutScope._(
@@ -113,9 +133,104 @@ class _BaseMateoViewState extends State<BaseMateoView> {
         reserveHeaderSpace: widget.reserveHeaderSpace,
         padding: resolvedPadding,
         layout: _layoutData,
-        contentGroup: _contentGroup,
-        child: _buildContent(),
+        child: _buildPresentation(
+          context,
+          surfaceColor: surfaceColor,
+        ),
       ),
+    );
+  }
+
+  Widget _buildPresentation(
+    BuildContext context, {
+    required Color surfaceColor,
+  }) {
+    final content = MorphDescendant(
+      key: const ValueKey('Mateo view transform content'),
+      flightBehavior: .snapshot,
+      child: _buildContent(),
+    );
+    final shape = widget.surfacePresentation.shape;
+    final presentation = DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: shape,
+        shadows: widget.surfacePresentation.elevation == null || widget.surfacePresentation.elevation!.level == 0
+            ? const []
+            : widget.surfacePresentation.elevation!.toShadowList(
+                palette: MateoTheme.of(context).palette,
+              ),
+      ),
+      child: Stack(
+        fit: .passthrough,
+        clipBehavior: .none,
+        children: [
+          Positioned.fill(
+            child: _clipBackground(
+              context,
+              shape: shape,
+              child: ColoredBox(color: surfaceColor),
+            ),
+          ),
+          content,
+        ],
+      ),
+    );
+    return _buildTransform(
+      context,
+      presentation: presentation,
+      content: content,
+      color: surfaceColor,
+      shape: shape,
+    );
+  }
+
+  Widget _buildTransform(
+    BuildContext context, {
+    required Widget presentation,
+    required Widget content,
+    required Color color,
+    required MateoRoundedShapeBorder shape,
+  }) {
+    final navigator = Navigator.maybeOf(context);
+    final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
+    final automaticTarget = observer is MateoNavigatorObserver ? observer.sheetToViewMorphTarget : null;
+    final candidates = <BaseMateoTransformCandidate>[
+      if (automaticTarget != null)
+        BaseMateoTransformCandidate.view(
+          target: automaticTarget,
+          shape: kSheetToViewTransformAnimation.shape?.border ?? shape,
+          contentEffects: kSheetToViewTransformAnimation.contentEffects,
+        ),
+      if (widget.animation case final animation?) ...[
+        BaseMateoTransformCandidate.view(
+          target: BaseMateoTransformTargets(
+            animation.target,
+          ).viewToView,
+          shape: animation.shape?.border ?? shape,
+          contentEffects: animation.contentEffects,
+        ),
+        BaseMateoTransformCandidate.view(
+          target: BaseMateoTransformTargets(
+            animation.target,
+          ).surfaceToView,
+          shape: animation.shape?.border ?? shape,
+          contentEffects: animation.contentEffects,
+        ),
+      ],
+    ];
+    if (candidates.isEmpty) return presentation;
+
+    return BaseMateoTransform(
+      color: color,
+      content: content,
+      candidates: candidates,
+      canMatch: (target, match) {
+        if (automaticTarget == null || identical(target, automaticTarget)) {
+          return true;
+        }
+        return !(automaticTarget.canMatch?.call(match) ?? false);
+      },
+      child: presentation,
     );
   }
 
@@ -136,7 +251,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
               : MaybeSafeArea(
                   bottom: false,
                   handle: _layoutData.header!.safeAreaHandle,
-                  child: Group(link: _contentGroup, zIndex: 1, child: widget.header),
+                  child: widget.header,
                 ),
         ),
         LayoutId(
@@ -146,18 +261,13 @@ class _BaseMateoViewState extends State<BaseMateoView> {
         if (widget.overlay case final overlay?)
           LayoutId(
             id: _MateoViewSlot.overlay,
-            child: Group(
-              link: _contentGroup,
-              zIndex: 3,
-              child: PrimaryScrollController.none(child: overlay),
-            ),
+            child: PrimaryScrollController.none(child: overlay),
           ),
       ],
     );
   }
 
   Widget _buildFooter() {
-    final child = Group(link: _contentGroup, zIndex: 2, child: widget.footer);
     // Only the footer's safe-area owner receives the maintained padding.
     // Restore ambient media for authored content and keep its subtree stable.
     return Builder(
@@ -170,10 +280,27 @@ class _BaseMateoViewState extends State<BaseMateoView> {
           child: MaybeSafeArea(
             top: false,
             handle: _layoutData.footer!.safeAreaHandle,
-            child: MediaQuery(data: media, child: child),
+            child: MediaQuery(data: media, child: widget.footer!),
           ),
         );
       },
+    );
+  }
+
+  Widget _clipBackground(
+    BuildContext context, {
+    required MateoRoundedShapeBorder shape,
+    required Widget child,
+  }) {
+    if (shape == const MateoRoundedShapeBorder(radius: 0)) {
+      return ClipRect(child: child);
+    }
+    return ClipPath(
+      clipper: ShapeBorderClipper(
+        shape: shape,
+        textDirection: Directionality.maybeOf(context),
+      ),
+      child: child,
     );
   }
 }

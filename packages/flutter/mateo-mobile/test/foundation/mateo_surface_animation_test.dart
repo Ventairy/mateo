@@ -6,21 +6,21 @@ import '../fixtures/surface_transform_targets.dart';
 
 void main() {
   test('when targets have identical timing, it should still treat them as separate connections', () {
-    final first = MateoSurfaceTransformTarget();
-    final second = MateoSurfaceTransformTarget();
+    final first = MateoTransformTarget();
+    final second = MateoTransformTarget();
     expect(first, isNot(same(second)));
     expect(MateoSurfaceAnimation.transform(target: first), isNot(MateoSurfaceAnimation.transform(target: second)));
   });
 
   test('when route timing is requested, it should retain an omitted target duration', () {
-    final target = MateoSurfaceTransformTarget(duration: null, curve: Curves.linear);
+    final target = MateoTransformTarget(duration: null, curve: Curves.linear);
     final animation = MateoSurfaceAnimation.transform(target: target);
     expect(animation.duration, isNull);
     expect(animation.curve, Curves.linear);
   });
 
   test('when a target duration is negative, it should reject the configuration', () {
-    expect(() => MateoSurfaceTransformTarget(duration: const Duration(milliseconds: -1)), throwsAssertionError);
+    expect(() => MateoTransformTarget(duration: const Duration(milliseconds: -1)), throwsAssertionError);
   });
 
   test('when transform shapes differ, it should retain values and compare endpoint configuration', () {
@@ -34,9 +34,9 @@ void main() {
     );
     expect(animation, equivalent);
     expect(animation.hashCode, equivalent.hashCode);
-    expect(equivalent.shape, const MateoSurfaceShape.rounded(radius: 42));
+    expect(equivalent.shape, const MateoShape.rounded(radius: 42));
     expect(MateoSurfaceAnimationTransform(target: surfaceTransformTarget('details')).shape, isNull);
-    for (final shape in <MateoSurfaceShape?>[null, const .none(), const .capsule(), const .rounded(radius: 24)]) {
+    for (final shape in <MateoShape?>[null, const .none(), const .capsule(), const .rounded(radius: 24)]) {
       expect(
         animation,
         isNot(MateoSurfaceAnimation.transform(target: surfaceTransformTarget('details'), shape: shape)),
@@ -45,17 +45,17 @@ void main() {
   });
 
   test('when typed effects have equal curves, it should compare by type and configuration', () {
-    const fade = MateoSurfaceTransformAnimationContentEffect.crossfade(curve: Curves.linear);
-    const scale = MateoSurfaceTransformAnimationContentEffect.scale(curve: Curves.linear);
-    expect(fade, const MateoSurfaceTransformAnimationContentEffectCrossfade(curve: Curves.linear));
-    expect(scale, const MateoSurfaceTransformAnimationContentEffectScale(curve: Curves.linear));
-    expect(fade.hashCode, const MateoSurfaceTransformAnimationContentEffectCrossfade(curve: Curves.linear).hashCode);
-    expect(scale.hashCode, const MateoSurfaceTransformAnimationContentEffectScale(curve: Curves.linear).hashCode);
+    const fade = MateoTransformAnimationContentEffect.crossfade(curve: Curves.linear);
+    const scale = MateoTransformAnimationContentEffect.scale(curve: Curves.linear);
+    expect(fade, const MateoTransformAnimationContentEffectCrossfade(curve: Curves.linear));
+    expect(scale, const MateoTransformAnimationContentEffectScale(curve: Curves.linear));
+    expect(fade.hashCode, const MateoTransformAnimationContentEffectCrossfade(curve: Curves.linear).hashCode);
+    expect(scale.hashCode, const MateoTransformAnimationContentEffectScale(curve: Curves.linear).hashCode);
     expect(fade, isNot(scale));
-    expect(fade, isNot(const MateoSurfaceTransformAnimationContentEffect.crossfade()));
-    expect(scale, isNot(const MateoSurfaceTransformAnimationContentEffect.scale(curve: Curves.easeIn)));
-    expect(const MateoSurfaceTransformAnimationContentEffectCrossfade().curve, isNull);
-    expect(const MateoSurfaceTransformAnimationContentEffectScale().curve, isNull);
+    expect(fade, isNot(const MateoTransformAnimationContentEffect.crossfade()));
+    expect(scale, isNot(const MateoTransformAnimationContentEffect.scale(curve: Curves.easeIn)));
+    expect(const MateoTransformAnimationContentEffectCrossfade().curve, isNull);
+    expect(const MateoTransformAnimationContentEffectScale().curve, isNull);
   });
 
   test('surface constructors accept transform configuration', () {
@@ -73,40 +73,34 @@ void main() {
         child: const SizedBox(),
       ),
     ];
-    final viewSurfaces = <MateoViewSurface>[
+    final views = <MateoView>[
       .new(
         animation: .transform(
           target: surfaceTransformTarget('details'),
         ),
-        child: const SizedBox(),
+        surface: const MateoViewSurface(child: SizedBox()),
       ),
-      .scrollable(
+      .new(
         animation: .transform(
           target: surfaceTransformTarget('details'),
         ),
-        child: const SizedBox(),
+        surface: const MateoViewSurface.scrollable(child: SizedBox()),
       ),
     ];
-    for (final animation in [
-      ...surfaces.map((surface) => surface.animation),
-      ...viewSurfaces.map((surface) => surface.animation),
+    for (final target in [
+      ...surfaces.map((surface) => (surface.animation! as MateoSurfaceAnimationTransform).target),
+      ...views.map((view) => view.animation!.target),
     ]) {
-      final id = switch (animation) {
-        null => null,
-        MateoSurfaceAnimationNone() || MateoSurfaceAnimationPop() => null,
-        MateoSurfaceAnimationTransform(:final target) => target,
-      };
+      final id = target;
       expect(id, same(surfaceTransformTarget('details')));
-      if (animation case MateoSurfaceAnimationTransform(:final duration, :final curve)) {
-        expect(duration, const Duration(milliseconds: 230));
-        expect(curve, Curves.easeOutCubic);
-      }
+      expect(target.duration, const Duration(milliseconds: 230));
+      expect(target.curve, Curves.easeOutCubic);
     }
   });
 
   test('when transform settings differ, it should compare all configuration', () {
     final defaults = MateoSurfaceAnimationTransform(target: surfaceTransformTarget('details'));
-    expect(defaults.contentEffects, <MateoSurfaceTransformAnimationContentEffect>[const .crossfade(), const .scale()]);
+    expect(defaults.contentEffects, <MateoTransformAnimationContentEffect>[const .crossfade(), const .scale()]);
     final reordered = MateoSurfaceAnimationTransform(
       target: surfaceTransformTarget('details'),
       contentEffects: const [.scale(), .crossfade(), .scale()],

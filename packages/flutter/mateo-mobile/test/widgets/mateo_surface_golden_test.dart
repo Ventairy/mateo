@@ -17,9 +17,9 @@ Future<void> main() async {
             columns: 3,
             children: [
               for (final (name, shape, padding) in [
-                ('None', const MateoSurfaceShape.none(), EdgeInsets.zero),
-                ('Capsule', const MateoSurfaceShape.capsule(), EdgeInsets.zero),
-                ('Padding', const MateoSurfaceShape.capsule(), const EdgeInsets.all(16)),
+                ('None', const MateoShape.none(), EdgeInsets.zero),
+                ('Capsule', const MateoShape.capsule(), EdgeInsets.zero),
+                ('Padding', const MateoShape.capsule(), const EdgeInsets.all(16)),
               ])
                 GoldenTestScenario(
                   name: name,

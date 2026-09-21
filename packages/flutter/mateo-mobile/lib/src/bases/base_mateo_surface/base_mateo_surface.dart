@@ -7,12 +7,11 @@ import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
-import '../../foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
-import '../../foundation/mateo_surface_animation/mateo_surface_transform_target.dart';
 import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
+import '../base_mateo_transform/base_mateo_transform.dart';
 import 'mateo_surface_obstruction.dart';
 
 part '_base_mateo_surface_content_layer.dart';
@@ -23,16 +22,6 @@ part '_base_mateo_surface_scroll_position.dart';
 part '_base_mateo_surface_size.dart';
 part '_render_base_mateo_surface_content_layout.dart';
 part '_render_base_mateo_surface_size.dart';
-part 'transform_animation/_surface_transform_animation_flight_content.dart';
-part 'transform_animation/_surface_transform_animation_flight_delegate.dart';
-part 'transform_animation/_surface_transform_animation_flight_frame.dart';
-part 'transform_animation/_surface_transform_animation_flight_layer.dart';
-part 'transform_animation/_surface_transform_animation_flight_scaled_border.dart';
-part 'transform_animation/effects/_surface_transform_animation_content_crossfade.dart';
-part 'transform_animation/effects/_surface_transform_animation_content_effect.dart';
-part 'transform_animation/effects/_surface_transform_animation_content_effects.dart';
-part 'transform_animation/effects/_surface_transform_animation_content_scale.dart';
-part 'transform_animation/effects/_surface_transform_animation_content_switch.dart';
 
 @internal
 class BaseMateoSurface extends StatefulWidget {
@@ -48,9 +37,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.alignment,
     this.obstruction,
     this.edgeEffectBuilder,
-    this.contentGroup,
-    this.sheetToViewTarget,
-    this.animateEntrance = true,
+    this.paintBackground = true,
     super.key,
   }) : _scrollable = false;
 
@@ -66,19 +53,14 @@ class BaseMateoSurface extends StatefulWidget {
     this.alignment,
     this.obstruction,
     this.edgeEffectBuilder,
-    this.contentGroup,
-    this.sheetToViewTarget,
-    this.animateEntrance = true,
+    this.paintBackground = true,
     super.key,
   }) : _scrollable = true;
 
   final Widget Function(Color surfaceColor, Widget viewport, ValueListenable<double>? leadingScrollDistance)?
   edgeEffectBuilder;
 
-  final GroupLink? contentGroup;
-
-  final MorphTarget? sheetToViewTarget;
-  final bool animateEntrance;
+  final bool paintBackground;
 
   final MateoSurfaceObstruction? obstruction;
 
@@ -109,13 +91,6 @@ class BaseMateoSurface extends StatefulWidget {
 class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   // Preserve subtree state when toggling the Morph wrapper.
   final GlobalKey _surfaceKey = GlobalKey();
-  static final _transformTargets = Expando<MorphTarget>();
-
-  static MorphTarget _transformTarget(MateoSurfaceTransformTarget target) =>
-      _transformTargets[target] ??= MorphTarget(tag: target, duration: target.duration, curve: target.curve);
-
-  final GroupLink _contentGroup = GroupLink();
-
   // Preserve viewport state when an effect wrapper is added or replaced.
   final GlobalKey _viewportKey = GlobalKey();
 
@@ -152,70 +127,95 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
           widget._scrollable ? _scrollController!.leadingScrollDistance : null,
         ) ??
         child;
-    final contentGroup = widget.contentGroup ?? _contentGroup;
-    final capturedContent = Group(
-      link: contentGroup,
+    final capturedContent = MorphDescendant(
+      key: const ValueKey('Mateo surface transform content'),
+      flightBehavior: .snapshot,
       child: _clipContent(withEdgeEffect(viewport)),
     );
-    final presentation = Stack(
-      fit: StackFit.passthrough,
-      clipBehavior: Clip.none,
-      children: [
-        Positioned.fill(child: _clipContent(ColoredBox(color: surfaceColor))),
-        capturedContent,
-      ],
-    );
+    final presentation = widget.paintBackground
+        ? Stack(
+            fit: StackFit.passthrough,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: _clipContent(ColoredBox(color: surfaceColor)),
+              ),
+              capturedContent,
+            ],
+          )
+        : capturedContent;
     final surface = _BaseMateoSurfaceSize(
       key: _surfaceKey,
       width: widget.width,
       height: widget.height,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          shape: widget.shape,
-          shadows: widget.elevation == null || widget.elevation!.level == 0
-              ? const []
-              : widget.elevation!.toShadowList(palette: MateoTheme.of(context).palette),
-        ),
-        child: presentation,
-      ),
+      child: widget.paintBackground
+          ? DecoratedBox(
+              decoration: ShapeDecoration(
+                shape: widget.shape,
+                shadows: widget.elevation == null || widget.elevation!.level == 0
+                    ? const []
+                    : widget.elevation!.toShadowList(
+                        palette: MateoTheme.of(context).palette,
+                      ),
+              ),
+              child: presentation,
+            )
+          : presentation,
     );
 
-    return _buildAnimation(surface: surface, color: surfaceColor, contentGroup: contentGroup);
+    return _buildAnimation(
+      surface: surface,
+      content: capturedContent,
+      color: surfaceColor,
+    );
   }
 
-  Widget _buildAnimation({required Widget surface, required Color color, required GroupLink contentGroup}) {
-    final (:child, :transform) = switch (widget.animation) {
-      MateoSurfaceAnimationNone() => (child: surface, transform: null),
-      MateoSurfaceAnimationPop animation => (
-        child: _buildPopAnimation(animation: animation, child: surface),
-        transform: null,
+  Widget _buildAnimation({
+    required Widget surface,
+    required Widget content,
+    required Color color,
+  }) {
+    return switch (widget.animation) {
+      MateoSurfaceAnimationNone() => surface,
+      final MateoSurfaceAnimationPop animation => _buildPopAnimation(animation: animation, child: surface),
+      final MateoSurfaceAnimationTransform animation => _buildTransformAnimation(
+        animation: animation,
+        surface: surface,
+        content: content,
+        color: color,
       ),
-      MateoSurfaceAnimationTransform animation => (child: surface, transform: animation),
     };
-    final transforms = <MorphTarget, MateoSurfaceAnimationTransform>{
-      ?widget.sheetToViewTarget: kSheetToViewTransformAnimation,
-      if (transform case final MateoSurfaceAnimationTransform animation) _transformTarget(animation.target): animation,
-    };
-    if (transforms.isEmpty) return child;
+  }
 
-    return Morph(
-      targets: transforms.keys.toList(),
-      canMatch: _canMatch,
-      flightConfig: .custom(
-        _SurfaceTransformAnimationFlightDelegate(
-          color: color,
-          shape: widget.shape,
-          content: contentGroup,
-          animations: transforms,
+  Widget _buildTransformAnimation({
+    required MateoSurfaceAnimationTransform animation,
+    required Widget surface,
+    required Widget content,
+    required Color color,
+  }) {
+    final targets = BaseMateoTransformTargets(animation.target);
+    final shape = animation.shape?.border ?? widget.shape;
+    return BaseMateoTransform(
+      color: color,
+      content: content,
+      candidates: [
+        BaseMateoTransformCandidate.surface(
+          target: targets.surfaceToSurface,
+          shape: shape,
+          contentEffects: animation.contentEffects,
         ),
-      ),
-      child: child,
+        BaseMateoTransformCandidate.view(
+          target: targets.surfaceToView,
+          shape: shape,
+          contentEffects: animation.contentEffects,
+        ),
+      ],
+      child: surface,
     );
   }
 
   Widget _buildPopAnimation({required MateoSurfaceAnimationPop animation, required Widget child}) {
     return Motion.list(
-      startup: widget.animateEntrance ? .play : .skip,
       interactive: true,
       effects: [
         ScaleInMotionEffect(scale: animation.beginScale, duration: animation.duration, curve: animation.curve),
@@ -223,14 +223,6 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       ],
       child: child,
     );
-  }
-
-  bool _canMatch(MorphTarget target, MorphMatchContext match) {
-    final automaticTarget = widget.sheetToViewTarget;
-    if (automaticTarget == null || identical(target, automaticTarget)) return true;
-    // A supplied transform cannot replace sheet/view motion, even when the
-    // automatic endpoint cannot be captured.
-    return !(automaticTarget.canMatch?.call(match) ?? false);
   }
 
   Widget _clipContent(Widget child) {

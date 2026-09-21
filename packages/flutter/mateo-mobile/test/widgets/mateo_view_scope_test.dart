@@ -99,7 +99,6 @@ void main() {
           child: MateoView(
             surface: MateoViewSurface(
               shape: .rounded(radius: 8),
-              animation: .none(),
               padding: EdgeInsets.all(6),
               child: MateoSurface(child: Text('Nested')),
             ),

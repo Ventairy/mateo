@@ -34,23 +34,23 @@ Future<void> main() async {
             for (final (name, sourceShape, destinationShape, viewShape, view) in [
               (
                 'Capsule to rounded',
-                const MateoSurfaceShape.capsule(),
-                const MateoSurfaceShape.none(),
-                const MateoViewSurfaceShape.rounded(radius: 28),
+                const MateoShape.capsule(),
+                const MateoShape.none(),
+                const MateoShape.rounded(radius: 28),
                 true,
               ),
               (
                 'Rounded to rectangle',
-                const MateoSurfaceShape.rounded(radius: 16),
-                const MateoSurfaceShape.none(),
-                const MateoViewSurfaceShape.none(),
+                const MateoShape.rounded(radius: 16),
+                const MateoShape.none(),
+                const MateoShape.none(),
                 true,
               ),
               (
                 'Rounded to capsule',
-                const MateoSurfaceShape.rounded(radius: 12),
-                const MateoSurfaceShape.capsule(),
-                const MateoViewSurfaceShape.none(),
+                const MateoShape.rounded(radius: 12),
+                const MateoShape.capsule(),
+                const MateoShape.none(),
                 false,
               ),
             ])
@@ -75,6 +75,9 @@ Future<void> main() async {
                                     child: DefaultTextStyle(
                                       style: TextStyle(color: theme.colorScheme.inverse.onBackground),
                                       child: MateoView(
+                                        animation: MateoViewAnimation.transform(
+                                          target: surfaceTransformTarget('details'),
+                                        ),
                                         header: const MateoViewHeader(principal: Text('Header')),
                                         footer: const MateoViewFooter(principal: Text('Footer')),
                                         overlay: const Align(
@@ -83,9 +86,6 @@ Future<void> main() async {
                                         ),
                                         surface: MateoViewSurface(
                                           shape: viewShape,
-                                          animation: MateoSurfaceAnimation.transform(
-                                            target: surfaceTransformTarget('details'),
-                                          ),
                                           color: theme.colorScheme.inverse.background,
                                           child: const Center(child: Text('Body')),
                                         ),

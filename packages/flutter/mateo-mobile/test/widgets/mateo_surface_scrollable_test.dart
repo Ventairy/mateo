@@ -15,7 +15,7 @@ void main() {
   testWidgets('when shape and bounds change while scrolled, it should retain its viewport and update clipping', (
     tester,
   ) async {
-    Widget surface(MateoSurfaceShape shape, double width) => host(
+    Widget surface(MateoShape shape, double width) => host(
       MateoSurface.scrollable(
         color: color,
         width: .custom(width),
@@ -27,13 +27,13 @@ void main() {
     await tester.pumpWidget(surface(const .none(), 200));
     final owned = controller(tester)..jumpTo(100);
     for (final (shape, width) in [
-      (const MateoSurfaceShape.capsule(), 300.0),
-      (const MateoSurfaceShape.none(), 160.0),
+      (const MateoShape.capsule(), 300.0),
+      (const MateoShape.none(), 160.0),
     ]) {
       await tester.pumpWidget(surface(shape, width));
       expect(controller(tester), same(owned));
       expect(owned.offset, 100);
-      if (shape == const MateoSurfaceShape.none()) {
+      if (shape == const MateoShape.none()) {
         expect(find.byType(ClipPath), findsNothing);
         final clip = find.ancestor(of: find.byType(ColoredBox), matching: find.byType(ClipRect)).first;
         expect(tester.widget<ClipRect>(clip).clipBehavior, Clip.hardEdge);

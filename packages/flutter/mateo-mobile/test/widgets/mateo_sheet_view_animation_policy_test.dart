@@ -13,8 +13,6 @@ import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
   const destinationKey = ValueKey('destination surface');
-  const pop = MateoSurfaceAnimation.pop(duration: Duration(seconds: 2), curve: Curves.linear);
-
   void testPolicy(String description, WidgetTesterCallback callback) {
     testWidgets(description, (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
@@ -67,9 +65,10 @@ void main() {
     return navigator;
   }
 
-  Widget view(MateoSurfaceAnimation animation, {Widget child = const Text('Destination')}) => MateoView(
+  Widget view(MateoViewAnimation? animation, {Widget child = const Text('Destination')}) => MateoView(
     padding: .zero,
-    surface: MateoViewSurface(key: destinationKey, animation: animation, child: child),
+    animation: animation,
+    surface: MateoViewSurface(key: destinationKey, child: child),
   );
 
   PageRoute<void> push(NavigatorState navigator, Widget child, {MateoPageTransition? transition}) {
@@ -121,7 +120,7 @@ void main() {
           push(
             navigator,
             view(
-              explicit ? MateoSurfaceAnimation.transform(target: MateoSurfaceTransformTarget()) : pop,
+              explicit ? MateoViewAnimation.transform(target: MateoTransformTarget()) : null,
               child: Align(
                 alignment: .topCenter,
                 child: Padding(
@@ -199,79 +198,13 @@ void main() {
     );
   }
 
-  for (final morphs in [true, false]) {
-    testPolicy('when a sheet opens a pop-animated view with morphs=$morphs, it should skip the entrance immediately', (
-      tester,
-    ) async {
-      final navigator = await openSheet(tester, morphs: morphs);
-      push(navigator, view(pop));
-      await tester.pump();
-      final firstFrame = entrance(tester, find.byKey(destinationKey));
-      await start(tester);
-      await tester.pump(const Duration(milliseconds: 100));
-      final intermediate = entrance(tester, find.byKey(destinationKey));
-      final flights = surfaceFlight.evaluate().length;
-      await tester.pumpAndSettle();
-      expect(
-        (firstFrame, intermediate, entrance(tester, find.byKey(destinationKey)), flights),
-        ((scale: 1.0, opacity: 1.0), (scale: 1.0, opacity: 1.0), (scale: 1.0, opacity: 1.0), morphs ? 1 : 0),
-      );
-    });
-  }
-
-  testPolicy('when Back returns to the sheet, it should preserve it without restarting the view entrance', (
-    tester,
-  ) async {
-    final navigator = await openSheet(tester);
-    final sheet = find.byType(MateoSheetViewSurface);
-    final originalSheet = tester.element(sheet);
-    push(navigator, view(pop));
-    await tester.pumpAndSettle();
-    navigator.pop();
-    await start(tester);
-    final pageEntrance = entrance(tester, find.byKey(destinationKey));
-    final flights = surfaceFlight.evaluate().length;
-    await tester.pumpAndSettle();
-    expect(
-      (
-        pageEntrance,
-        find.descendant(of: sheet, matching: find.byType(Motion)).evaluate().length,
-        identical(tester.element(sheet), originalSheet),
-        flights,
-      ),
-      ((scale: 1.0, opacity: 1.0), 0, true, 1),
-    );
-  });
-
-  testPolicy('when Back is cancelled, it should leave the skipped entrance settled', (tester) async {
-    final navigator = await openSheet(tester);
-    push(navigator, view(pop));
-    await tester.pumpAndSettle();
-    final originalContent = tester.element(find.text('Destination'));
-    final gesture = await tester.startGesture(const Offset(1, 250));
-    await gesture.moveBy(const Offset(140, 0));
-    await tester.pump();
-    await tester.pump();
-    await gesture.moveBy(const Offset(-130, 0));
-    await tester.pump(const Duration(milliseconds: 300));
-    await gesture.up();
-    await tester.pumpAndSettle();
-    expect(
-      (
-        entrance(tester, find.byKey(destinationKey)),
-        identical(tester.element(find.text('Destination')), originalContent),
-      ),
-      ((scale: 1.0, opacity: 1.0), true),
-    );
-  });
-
   testPolicy(
     'when automatic motion wins, it should ignore explicit timing shape and content effects in both directions',
     (
       tester,
     ) async {
-      final target = MateoSurfaceTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
-      final animation = MateoSurfaceAnimation.transform(
+      final target = MateoTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
+      final animation = MateoViewAnimation.transform(
         target: target,
         shape: const .rounded(radius: 8),
         contentEffects: const [],
@@ -317,15 +250,15 @@ void main() {
   testPolicy('when ordinary views share an explicit target, it should use their shape effects and timing', (
     tester,
   ) async {
-    final target = MateoSurfaceTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
-    final animation = MateoSurfaceAnimation.transform(
+    final target = MateoTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
+    final animation = MateoViewAnimation.transform(
       target: target,
       shape: const .rounded(radius: 8),
       contentEffects: const [],
     );
     final navigator = await mount(tester, home: view(animation, child: const Text('Source')));
     final firstMorph = tester.widget<Morph>(find.byType(Morph));
-    final explicitTarget = firstMorph.targets.last;
+    final explicitTarget = firstMorph.targets[1];
     push(navigator, view(animation));
     await start(tester);
     await tester.pump(const Duration(milliseconds: 500));
@@ -337,42 +270,12 @@ void main() {
       (
         shape is MateoRoundedShapeBorder ? shape.resolveRadius(tester.getSize(surfaceFlight)) : null,
         flightLayers(tester).length,
-        identical(destinationMorph.targets.last, explicitTarget),
+        identical(destinationMorph.targets[1], explicitTarget),
         explicitTarget.duration,
         explicitTarget.curve,
         explicitTarget.status.value,
       ),
       (8.0, 1, true, const Duration(seconds: 2), Curves.linear, MorphTagStatus.flying),
-    );
-    await tester.pumpAndSettle();
-  });
-
-  testPolicy('when a settled automatic view deliberately changes to pop, it should play the new entrance', (
-    tester,
-  ) async {
-    final animation = ValueNotifier<MateoSurfaceAnimation>(const .none());
-    addTearDown(animation.dispose);
-    final navigator = await openSheet(tester);
-    push(
-      navigator,
-      ValueListenableBuilder<MateoSurfaceAnimation>(
-        valueListenable: animation,
-        builder: (_, value, _) => view(value),
-      ),
-    );
-    await tester.pumpAndSettle();
-    final originalContent = tester.element(find.text('Destination'));
-    animation.value = pop;
-    await tester.pump();
-    final initial = entrance(tester, find.byKey(destinationKey));
-    await tester.pump(const Duration(seconds: 1));
-    expect(
-      (
-        initial,
-        entrance(tester, find.byKey(destinationKey)),
-        identical(tester.element(find.text('Destination')), originalContent),
-      ),
-      ((scale: .75, opacity: 0.0), (scale: .875, opacity: .5), true),
     );
     await tester.pumpAndSettle();
   });
@@ -389,13 +292,18 @@ void main() {
       await mount(
         tester,
         home: view(
-          const .none(),
+          null,
           child: ValueListenableBuilder<bool>(
             valueListenable: visible,
             builder: (_, showPop, _) => Column(
               children: [
                 const MateoSurface(key: plainKey, animation: .none(), child: Text('Plain')),
-                if (showPop) const MateoSurface(key: popKey, animation: pop, child: Text('Nested entrance')),
+                if (showPop)
+                  const MateoSurface(
+                    key: popKey,
+                    animation: .pop(duration: Duration(seconds: 2), curve: Curves.linear),
+                    child: Text('Nested entrance'),
+                  ),
               ],
             ),
           ),
@@ -421,17 +329,17 @@ void main() {
 
   for (final retainSource in [false, true]) {
     testPolicy(
-      'when a nested ordinary transform has retained source=$retainSource, it should ${retainSource ? "animate" : "show the live replacement when capture is unavailable"}',
+      'when a nested ordinary transform has retained source=$retainSource, it should animate',
       (
         tester,
       ) async {
-        final target = MateoSurfaceTransformTarget(duration: const Duration(seconds: 1), curve: Curves.linear);
+        final target = MateoTransformTarget(duration: const Duration(seconds: 1), curve: Curves.linear);
         final expanded = ValueNotifier(false);
         addTearDown(expanded.dispose);
         await mount(
           tester,
           home: view(
-            const .none(),
+            null,
             child: ValueListenableBuilder<bool>(
               valueListenable: expanded,
               builder: (_, value, _) => Stack(
@@ -463,25 +371,8 @@ void main() {
         );
         expanded.value = true;
         await start(tester);
-        if (!retainSource) {
-          // Existing grouped-capture behavior: detached sources without a
-          // retained snapshot show the destination immediately.
-          final failure = tester.takeException();
-          expect(
-            [surfaceFlight.evaluate().length, find.text('Nested transform').hitTestable().evaluate().length, failure],
-            [
-              0,
-              1,
-              isA<FlutterError>().having(
-                (error) => error.message,
-                'diagnostic',
-                contains('did not have usable layout'),
-              ),
-            ],
-          );
-          await tester.pumpAndSettle();
-          return;
-        }
+        expect(surfaceFlight, findsOneWidget);
+        expect(tester.takeException(), isNull);
         await tester.pump(const Duration(milliseconds: 500));
         final shape = surfaceTransformAnimationFlightDecoration(tester).shape;
         expect(

@@ -38,14 +38,14 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
+    final target = tester.widget<Morph>(find.byType(Morph)).targets.first;
     final childState = childKey.currentState;
     animation.value = .transform(
       target: surfaceTransformTarget('stable'),
       contentEffects: [const .crossfade(curve: Curves.easeIn)],
     );
     await tester.pumpAndSettle();
-    expect(tester.widget<Morph>(find.byType(Morph)).targets.single, same(target));
+    expect(tester.widget<Morph>(find.byType(Morph)).targets.first, same(target));
     expect(childKey.currentState, same(childState));
     expect(surfaceFlight, findsNothing);
     expect(tester.takeException(), isNull);
@@ -257,7 +257,7 @@ void main() {
 
   for (final scale in [false, true]) {
     for (final crossfade in [false, true]) {
-      final effects = <MateoSurfaceTransformAnimationContentEffect>[
+      final effects = <MateoTransformAnimationContentEffect>[
         if (scale) const .scale(),
         if (crossfade) const .crossfade(),
       ];

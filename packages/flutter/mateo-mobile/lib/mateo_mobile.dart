@@ -53,8 +53,6 @@ export 'src/components/mateo_toggle/mateo_toggle.dart' show MateoToggle, MateoTo
 export 'src/components/mateo_view/components/mateo_view_footer/mateo_view_footer.dart' show MateoViewFooter;
 export 'src/components/mateo_view/components/mateo_view_header/mateo_view_header.dart' show MateoViewHeader;
 export 'src/components/mateo_view/components/mateo_view_surface/mateo_view_surface.dart' show MateoViewSurface;
-export 'src/components/mateo_view/components/mateo_view_surface/mateo_view_surface_shape.dart'
-    show MateoViewSurfaceShape;
 export 'src/components/mateo_view/mateo_view.dart' show MateoView;
 export 'src/foundation/mateo_edge_effect/mateo_edge_effect.dart' show MateoEdgeEffect;
 export 'src/foundation/mateo_edge_effect/mateo_edge_effect_side.dart' show MateoEdgeEffectSide;
@@ -62,21 +60,20 @@ export 'src/foundation/mateo_edge_effect/mateo_edge_effect_type.dart' show Mateo
 export 'src/foundation/mateo_elevation.dart' show MateoElevation;
 export 'src/foundation/mateo_navigator_observer.dart' show MateoNavigatorObserver;
 export 'src/foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart' show MateoRoundedShapeBorder;
+export 'src/foundation/mateo_shape/mateo_shape.dart' show MateoShape;
 export 'src/foundation/mateo_surface_animation/mateo_surface_animation.dart'
-    show
-        MateoSurfaceAnimation,
-        MateoSurfaceAnimationNone,
-        MateoSurfaceAnimationPop,
-        MateoSurfaceAnimationTransform,
-        MateoSurfaceTransformAnimationContentEffect,
-        MateoSurfaceTransformAnimationContentEffectCrossfade,
-        MateoSurfaceTransformAnimationContentEffectScale;
-export 'src/foundation/mateo_surface_animation/mateo_surface_transform_target.dart' show MateoSurfaceTransformTarget;
+    show MateoSurfaceAnimation, MateoSurfaceAnimationNone, MateoSurfaceAnimationPop, MateoSurfaceAnimationTransform;
 export 'src/foundation/mateo_surface_height/mateo_surface_height.dart'
     show MateoSurfaceHeight, MateoSurfaceHeightCustom, MateoSurfaceHeightFill, MateoSurfaceHeightFit;
-export 'src/foundation/mateo_surface_shape/mateo_surface_shape.dart' show MateoSurfaceShape;
 export 'src/foundation/mateo_surface_width/mateo_surface_width.dart'
     show MateoSurfaceWidth, MateoSurfaceWidthCustom, MateoSurfaceWidthFill, MateoSurfaceWidthFit;
+export 'src/foundation/mateo_transform_animation_content_effect/mateo_transform_animation_content_effect.dart'
+    show
+        MateoTransformAnimationContentEffect,
+        MateoTransformAnimationContentEffectCrossfade,
+        MateoTransformAnimationContentEffectScale;
+export 'src/foundation/mateo_transform_target/mateo_transform_target.dart' show MateoTransformTarget;
+export 'src/foundation/mateo_view_animation/mateo_view_animation.dart' show MateoViewAnimation;
 export 'src/theme/color_scheme/mateo_color_scheme.dart'
     show
         MateoButtonColorScheme,

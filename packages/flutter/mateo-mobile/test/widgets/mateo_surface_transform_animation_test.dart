@@ -12,8 +12,8 @@ void main() {
 
   testWidgets('when equal settings use separate targets, it should not start a shared flight', (tester) async {
     final navigator = GlobalKey<NavigatorState>();
-    final sourceTarget = MateoSurfaceTransformTarget();
-    final destinationTarget = MateoSurfaceTransformTarget();
+    final sourceTarget = MateoTransformTarget();
+    final destinationTarget = MateoTransformTarget();
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
@@ -39,7 +39,7 @@ void main() {
 
   testWidgets('when a shared target omits duration, it should follow the route clock', (tester) async {
     final navigator = GlobalKey<NavigatorState>();
-    final target = MateoSurfaceTransformTarget(duration: null, curve: Curves.linear);
+    final target = MateoTransformTarget(duration: null, curve: Curves.linear);
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
@@ -164,8 +164,7 @@ void main() {
   test('when animation is omitted it should inherit, while explicit values retain equality', () {
     expect(const MateoSurface(child: SizedBox()).animation, isNull);
     expect(const MateoSurface.scrollable(child: SizedBox()).animation, isNull);
-    expect(const MateoViewSurface(child: SizedBox()).animation, isNull);
-    expect(const MateoViewSurface.scrollable(child: SizedBox()).animation, isNull);
+    expect(const MateoView(surface: MateoViewSurface(child: SizedBox())).animation, isNull);
     expect(
       MateoSurfaceAnimation.transform(
         target: surfaceTransformTarget('a'),
@@ -309,13 +308,13 @@ void main() {
     );
     await tester.pumpAndSettle();
     final state = childKey.currentState;
-    final target = tester.widget<Morph>(find.byType(Morph)).targets.single;
+    final target = tester.widget<Morph>(find.byType(Morph)).targets.first;
     for (final value in [1, 2, 3, 4]) {
       revision.value = value;
       await tester.pumpAndSettle();
       expect(surfaceFlight, findsNothing);
       expect(childKey.currentState, same(state));
-      if (value == 1) expect(tester.widget<Morph>(find.byType(Morph)).targets.single, same(target));
+      if (value == 1) expect(tester.widget<Morph>(find.byType(Morph)).targets.first, same(target));
     }
     expect(tester.takeException(), isNull);
   });
@@ -404,7 +403,7 @@ void main() {
         expect(surfaceFlight, findsNothing);
         expect(find.text('Arrived').hitTestable(), findsOneWidget);
         final destination = tester.widget<MateoSurface>(find.byType(MateoSurface));
-        expect(destination.shape, const MateoSurfaceShape.none());
+        expect(destination.shape, const MateoShape.none());
         expect(tester.takeException(), isNull);
       },
     );
@@ -439,16 +438,7 @@ void main() {
       }
       expect(surfaceFlight, findsNothing);
       expect(find.text('Resting'), findsOneWidget);
-      if (kind == 'zero size') {
-        expect(
-          tester.takeException(),
-          isA<FlutterError>().having(
-            (error) => error.message,
-            'diagnostic',
-            contains('did not have usable layout'),
-          ),
-        );
-      }
+      expect(tester.takeException(), isNull);
       expect(tester.takeException(), isNull);
     });
   }

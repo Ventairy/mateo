@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -65,6 +66,70 @@ void main() {
       expect(find.text('Sheet'), findsOneWidget);
     });
   }
+
+  _test('autofocus keyboard layout stays continuous through the automatic handoff', (tester) async {
+    final navigator = await _sheet(tester);
+    const titleColor = Color(0xFF00FF00);
+    const bodyColor = Color(0xFF0000FF);
+    const footerColor = Color(0xFFFF0000);
+    _push(
+      navigator,
+      header: const MateoViewHeader(
+        principal: SizedBox(
+          width: 120,
+          height: 20,
+          child: ColoredBox(color: titleColor),
+        ),
+      ),
+      footer: const MateoViewFooter(
+        principal: SizedBox(
+          width: 200,
+          height: 40,
+          child: ColoredBox(color: footerColor),
+        ),
+      ),
+      child: const Column(
+        children: [
+          SizedBox.square(
+            dimension: 40,
+            child: ColoredBox(color: bodyColor),
+          ),
+          MateoTextInput(
+            placeholder: 'Autofocus field',
+            presentation: .search(variant: .filled),
+          ),
+        ],
+      ),
+    );
+    await _start(tester);
+    await tester.pump(const Duration(milliseconds: 16));
+
+    tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+    await tester.pump(const Duration(milliseconds: 16));
+    await tester.pump(const Duration(milliseconds: 16));
+    final midpointAdvance = kSheetToViewTransformAnimation.duration! ~/ 2;
+    await tester.pump(midpointAdvance);
+    expect(await _renderedColorBounds(tester, titleColor), isNotNull);
+    expect(await _renderedColorBounds(tester, bodyColor), isNotNull);
+
+    final remaining = kSheetToViewTransformAnimation.duration! - midpointAdvance - const Duration(milliseconds: 49);
+    await tester.pump(remaining);
+    final flightTitle = await _renderedColorBounds(tester, titleColor);
+    final flightBody = await _renderedColorBounds(tester, bodyColor);
+    final flightFooter = await _renderedColorBounds(tester, footerColor);
+    await tester.pumpAndSettle();
+    final settledTitle = await _renderedColorBounds(tester, titleColor);
+    final settledBody = await _renderedColorBounds(tester, bodyColor);
+    final settledFooter = await _renderedColorBounds(tester, footerColor);
+
+    expect(flightTitle, isNotNull);
+    expect(flightBody, isNotNull);
+    expect(settledTitle, isNotNull);
+    expect(settledBody, isNotNull);
+    expect(flightFooter, isNotNull);
+    expect(settledFooter, isNotNull);
+    expect((flightFooter!.top - settledFooter!.top).abs(), lessThanOrEqualTo(2));
+  });
 
   _test('the page behind the sheet remains painted after a page round trip', (tester) async {
     final navigator = await _sheet(
@@ -237,10 +302,9 @@ void main() {
     }
   }
 
-  for (final motion in <MateoSurfaceAnimation>[
-    const .none(),
-    const .pop(),
-    .transform(
+  for (final motion in <MateoViewAnimation?>[
+    null,
+    MateoViewAnimation.transform(
       target: surfaceTransformTarget('explicit'),
     ),
   ]) {
@@ -251,8 +315,12 @@ void main() {
       expect(surfaceFlight, findsOneWidget);
       await tester.pumpAndSettle();
       final morph = tester.widget<Morph>(find.ancestor(of: find.text('Destination'), matching: find.byType(Morph)));
-      expect(morph.targets.length, motion is MateoSurfaceAnimationTransform ? 2 : 1);
+      expect(morph.targets.length, motion == null ? 1 : 3);
       final target = morph.targets.first;
+      expect(target.watchDestination, isTrue);
+      if (motion != null) {
+        expect(morph.targets.last.watchDestination, isFalse);
+      }
       tester.element(find.byType(MateoViewSurface)).markNeedsBuild();
       await tester.pump();
       expect(
@@ -353,23 +421,66 @@ void main() {
 
 PageRoute<void> _push(
   NavigatorState navigator, {
-  MateoSurfaceAnimation? animation,
+  MateoViewAnimation? animation,
   bool fullscreen = false,
   bool withSlots = false,
+  MateoViewHeader? header,
+  MateoViewFooter? footer,
+  Widget child = const Center(child: Text('Destination')),
 }) {
   final route = MateoPage<void>(
     fullscreenDialog: fullscreen,
     child: MateoView(
-      header: withSlots ? const MateoViewHeader(leading: Text('Close')) : null,
-      footer: withSlots ? const MateoViewFooter(principal: Text('Save')) : null,
-      surface: MateoViewSurface(
-        animation: animation,
-        child: const Center(child: Text('Destination')),
-      ),
+      animation: animation,
+      header: header ?? (withSlots ? const MateoViewHeader(leading: Text('Close')) : null),
+      footer: footer ?? (withSlots ? const MateoViewFooter(principal: Text('Save')) : null),
+      surface: MateoViewSurface(child: child),
     ),
   ).createRoute(navigator.context);
   navigator.push(route);
   return route;
+}
+
+Future<Rect?> _renderedColorBounds(WidgetTester tester, Color color) async {
+  final boundary = tester.renderObject<RenderRepaintBoundary>(
+    find.byKey(const ValueKey('capture')),
+  );
+  final argb = color.toARGB32();
+  return tester.runAsync<Rect?>(() async {
+    final image = await boundary.toImage();
+    final bytes = (await image.toByteData(format: .rawRgba))!;
+    final red = (argb >> 16) & 0xff;
+    final green = (argb >> 8) & 0xff;
+    final blue = argb & 0xff;
+    final alpha = (argb >> 24) & 0xff;
+    int? left;
+    int? top;
+    int? right;
+    int? bottom;
+    for (var y = 0; y < image.height; y += 1) {
+      for (var x = 0; x < image.width; x += 1) {
+        final offset = (y * image.width + x) * 4;
+        if ((bytes.getUint8(offset) - red).abs() > 32 ||
+            (bytes.getUint8(offset + 1) - green).abs() > 32 ||
+            (bytes.getUint8(offset + 2) - blue).abs() > 32 ||
+            (bytes.getUint8(offset + 3) - alpha).abs() > 32) {
+          continue;
+        }
+        left = left == null ? x : math.min(left, x);
+        top = top == null ? y : math.min(top, y);
+        right = right == null ? x : math.max(right, x);
+        bottom = bottom == null ? y : math.max(bottom, y);
+      }
+    }
+    image.dispose();
+    if (left == null) return null;
+    return Rect.fromLTRB(
+      left.toDouble(),
+      top!.toDouble(),
+      (right! + 1).toDouble(),
+      (bottom! + 1).toDouble(),
+    );
+  });
 }
 
 Future<NavigatorState> _sheet(

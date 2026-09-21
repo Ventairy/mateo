@@ -26,7 +26,7 @@ Future<List<List<int>>> _destinationSnapshotPixels(WidgetTester tester, List<Off
   final snapshot = tester.widget<CustomPaint>(
     find
         .byWidgetPredicate(
-          (widget) => widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphGroupSnapshotPainter',
+          (widget) => widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphContentSnapshotPainter',
         )
         .last,
   );
@@ -96,9 +96,9 @@ void main() {
             routeDuration: const Duration(milliseconds: 320),
             prepareOffstage: prepareOffstage,
             MateoView(
+              animation: viewAnimationFor(animation),
               header: MateoViewHeader(principal: SizedBox(key: headerKey, height: 40)),
               surface: MateoViewSurface(
-                animation: animation,
                 color: _black,
                 child: Column(
                   children: [
@@ -154,9 +154,13 @@ void main() {
             key: keys[index],
             builder: (context, setState) => SizedBox(width: 24, height: 24, child: ColoredBox(color: _colors[index])),
           );
-          final animation = MateoSurfaceAnimation.transform(
-            target: surfaceTransformTarget('complete-view', duration: const Duration(seconds: 1), curve: Curves.linear),
+          final target = surfaceTransformTarget(
+            'complete-view',
+            duration: const Duration(seconds: 1),
+            curve: Curves.linear,
           );
+          final surfaceAnimation = MateoSurfaceAnimation.transform(target: target);
+          final viewAnimation = MateoViewAnimation.transform(target: target);
           const sourceBounds = Rect.fromLTWH(40, 40, 120, 80);
           const destinationBounds = Rect.fromLTWH(40, 40, 320, 400);
           final content = Center(child: marker(0));
@@ -165,6 +169,7 @@ void main() {
               Positioned.fromRect(
                 rect: destinationBounds,
                 child: MateoView(
+                  animation: viewAnimation,
                   padding: EdgeInsets.zero,
                   header: MateoViewHeader(principal: marker(1)),
                   footer: MateoViewFooter(principal: marker(2)),
@@ -173,8 +178,8 @@ void main() {
                     child: Padding(padding: const EdgeInsets.only(right: 20), child: marker(3)),
                   ),
                   surface: scrollable
-                      ? MateoViewSurface.scrollable(animation: animation, color: _black, child: content)
-                      : MateoViewSurface(animation: animation, color: _black, child: content),
+                      ? MateoViewSurface.scrollable(color: _black, child: content)
+                      : MateoViewSurface(color: _black, child: content),
                 ),
               ),
             ],
@@ -185,7 +190,7 @@ void main() {
               child: MateoApp(
                 theme: surfaceTransformTheme,
                 navigatorKey: navigator,
-                home: surfaceTransformEndpoint(bounds: sourceBounds, animation: animation, color: _black),
+                home: surfaceTransformEndpoint(bounds: sourceBounds, animation: surfaceAnimation, color: _black),
               ),
             ),
           );

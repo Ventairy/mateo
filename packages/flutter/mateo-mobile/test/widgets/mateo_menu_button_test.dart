@@ -36,7 +36,7 @@ void main() {
           tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).animation as MateoSurfaceAnimationTransform;
       id ??= animation.target;
       expect(animation.target, same(id));
-      expect(animation.contentEffects, const <MateoSurfaceTransformAnimationContentEffect>[
+      expect(animation.contentEffects, const <MateoTransformAnimationContentEffect>[
         .crossfade(curve: Interval(0, 0.35, curve: Curves.easeOut)),
       ]);
       expect(animation.duration, const Duration(milliseconds: 230));
@@ -71,7 +71,7 @@ void main() {
       expect(panelAnimation.curve, animation.curve);
       expect(panelAnimation.duration, animation.duration);
       expect(
-        (panelAnimation.contentEffects.single as MateoSurfaceTransformAnimationContentEffectCrossfade).curve,
+        (panelAnimation.contentEffects.single as MateoTransformAnimationContentEffectCrossfade).curve,
         const Interval(0, 0.3, curve: Curves.easeOut),
       );
       navigator.currentState!.pop();

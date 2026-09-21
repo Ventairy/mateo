@@ -30,9 +30,10 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
   @internal
   // Internal coordination is not part of the consumer API.
   // ignore: public_member_api_docs
-  final sheetToViewTarget = MorphTarget(
+  final sheetToViewMorphTarget = MorphTarget(
     tag: #mateoSheetToView,
     curve: kSheetToViewTransformAnimation.curve,
+    watchDestination: true,
     canMatch: _isSheetViewTransition,
   );
 
