@@ -70,6 +70,7 @@ void main() {
         for (final transition in [
           const MateoPageTransition.wash(),
           const MateoPageTransition.push(),
+          const MateoPageTransition.slide(),
         ]) {
           await _pumpPushApp(
             tester,
@@ -369,6 +370,7 @@ void main() {
         for (final transition in [
           const MateoPageTransition.wash(),
           const MateoPageTransition.push(),
+          const MateoPageTransition.slide(),
         ]) {
           var sourcePaintCount = 0;
           var destinationPaintCount = 0;
@@ -623,6 +625,37 @@ void main() {
       },
     );
 
+    test('when slide settings are omitted, they should use the default direction and timing', () {
+      const transition = MateoPageTransition.slide();
+
+      expect(transition.direction, MateoPageTransitionDirection.up);
+      expect(transition.duration, const Duration(milliseconds: 390));
+      expect(transition.reverseDuration, const Duration(milliseconds: 200));
+      const slide = transition as MateoPageTransitionSlide;
+      expect(slide.openingCurve, isNot(slide.closingCurve));
+      expect(slide.openingCurve.transform(.5), closeTo(0.888290707184, 1e-12));
+      expect(slide.closingCurve.transform(.5), closeTo(0.62890625, 1e-12));
+    });
+
+    test('when slide curves approach their destination, they should settle without a hard stop', () {
+      const transition = MateoPageTransition.slide();
+      const slide = transition as MateoPageTransitionSlide;
+
+      for (final curve in [slide.openingCurve, slide.closingCurve]) {
+        var previous = curve.transform(0);
+        for (var sample = 1; sample <= 1000; sample++) {
+          final value = curve.transform(sample / 1000);
+          expect(value, inInclusiveRange(previous, 1));
+          previous = value;
+        }
+
+        const landingWindow = 0.01;
+        final fullWindowTravel = 1 - curve.transform(1 - landingWindow);
+        final halfWindowTravel = 1 - curve.transform(1 - landingWindow / 2);
+        expect(halfWindowTravel / fullWindowTravel, lessThan(0.1));
+      }
+    });
+
     _testWidgets(
       'when push durations are configured, it should use them for push and pop',
       (tester) async {
@@ -783,6 +816,24 @@ void main() {
       },
     );
 
+    test('when slide duration is negative, it should reject the transition', () {
+      expect(
+        () => const MateoPageTransitionsBuilder(
+          transition: MateoPageTransition.slide(duration: Duration(milliseconds: -1)),
+        ).transitionDuration,
+        throwsArgumentError,
+      );
+    });
+
+    test('when slide reverse duration is negative, it should reject the transition', () {
+      expect(
+        () => const MateoPageTransitionsBuilder(
+          transition: MateoPageTransition.slide(reverseDuration: Duration(milliseconds: -1)),
+        ).transitionDuration,
+        throwsArgumentError,
+      );
+    });
+
     _testWidgets(
       'when reduced motion is enabled, it should show the wash destination immediately',
       (tester) async {
@@ -836,6 +887,30 @@ void main() {
         expect(tester.getTopLeft(find.byKey(_destinationKey)), Offset.zero);
       },
     );
+
+    _testWidgets('when reduced motion is enabled, it should show the slide destination immediately', (tester) async {
+      PageRoute<void>? capturedRoute;
+
+      await tester.pumpWidget(
+        _PushApp(
+          platform: TargetPlatform.android,
+          disableAnimations: true,
+          page: const MateoPage<void>(
+            transition: MateoPageTransition.slide(),
+            child: ColoredBox(key: _destinationKey, color: Colors.blue),
+          ),
+          onRouteCreated: (route) {
+            capturedRoute = route;
+          },
+        ),
+      );
+      await tester.tap(find.byKey(_openKey));
+      await tester.pump();
+
+      expect(capturedRoute!.transitionDuration, Duration.zero);
+      expect(capturedRoute!.reverseTransitionDuration, Duration.zero);
+      expect(tester.getTopLeft(find.byKey(_destinationKey)), Offset.zero);
+    });
 
     _testWidgets(
       'when a page with the same key updates, it should display the latest child',

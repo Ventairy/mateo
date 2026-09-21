@@ -4,16 +4,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
 Future<void> main() async {
-  for (final wash in [true, false]) {
+  for (final transition in _PageTransition.values) {
     await goldenTest(
-      'when ${wash ? 'wash reveals' : 'push moves'} in each direction, it should preserve the page relationship',
-      fileName: 'mateo_page_${wash ? 'wash' : 'push'}_directions',
+      'when ${transition.description} in each direction, it should preserve the page relationship',
+      fileName: 'mateo_page_${transition.name}_directions',
       whilePerforming: (tester) async {
         for (final direction in MateoPageTransitionDirection.values) {
           await tester.tap(find.byKey(ValueKey('open-${direction.name}')));
         }
         await tester.pump();
-        await tester.pump(Duration(milliseconds: wash ? 120 : 300));
+        await tester.pump(transition.goldenDuration);
         return null;
       },
       builder: () => GoldenTestGroup(
@@ -25,13 +25,33 @@ Future<void> main() async {
               child: SizedBox(
                 width: 240,
                 height: 320,
-                child: _Scene(direction: direction, wash: wash),
+                child: _Scene(direction: direction, transition: transition),
               ),
             ),
         ],
       ),
     );
   }
+  await goldenTest(
+    'when slide returns, it should move toward its source edge over the stationary page',
+    fileName: 'mateo_page_slide_reverse',
+    whilePerforming: (tester) async {
+      await tester.tap(find.byKey(const ValueKey('open-up')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('close')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      return null;
+    },
+    builder: () => GoldenTestGroup(
+      children: [
+        GoldenTestScenario(
+          name: 'Return',
+          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .up, transition: .slide)),
+        ),
+      ],
+    ),
+  );
   await goldenTest(
     'when wash finishes returning, it should fade out without a solid circle',
     fileName: 'mateo_page_wash_reverse_tail',
@@ -47,7 +67,7 @@ Future<void> main() async {
       children: [
         GoldenTestScenario(
           name: 'Return',
-          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .up, wash: true)),
+          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .up, transition: .wash)),
         ),
       ],
     ),
@@ -70,12 +90,12 @@ Future<void> main() async {
           child: const SizedBox(
             width: 240,
             height: 320,
-            child: _Scene(direction: .up, wash: true, snapshotting: false),
+            child: _Scene(direction: .up, transition: .wash, snapshotting: false),
           ),
         ),
         GoldenTestScenario(
           name: 'Reduced motion',
-          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .down, wash: true, reduced: true)),
+          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .down, transition: .wash, reduced: true)),
         ),
       ],
     ),
@@ -84,10 +104,27 @@ Future<void> main() async {
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF7551FF), onAccent: const Color(0xFFFFFFFF));
 
+enum _PageTransition {
+  wash(description: 'wash reveals', goldenDuration: Duration(milliseconds: 120)),
+  push(description: 'push moves', goldenDuration: Duration(milliseconds: 300)),
+  slide(description: 'slide moves the destination', goldenDuration: Duration(milliseconds: 195));
+
+  const _PageTransition({required this.description, required this.goldenDuration});
+
+  final String description;
+  final Duration goldenDuration;
+
+  MateoPageTransition transition(MateoPageTransitionDirection direction) => switch (this) {
+    .wash => .wash(direction: direction),
+    .push => .push(direction: direction),
+    .slide => .slide(direction: direction),
+  };
+}
+
 class _Scene extends StatelessWidget {
-  const _Scene({required this.direction, required this.wash, this.snapshotting = true, this.reduced = false});
+  const _Scene({required this.direction, required this.transition, this.snapshotting = true, this.reduced = false});
   final MateoPageTransitionDirection direction;
-  final bool wash;
+  final _PageTransition transition;
   final bool snapshotting;
   final bool reduced;
 
@@ -106,7 +143,7 @@ class _Scene extends StatelessWidget {
             key: ValueKey('open-${direction.name}'),
             onTap: () => Navigator.of(context).push(
               MateoPage<void>(
-                transition: wash ? .wash(direction: direction) : .push(direction: direction),
+                transition: transition.transition(direction),
                 allowSnapshotting: snapshotting,
                 child: Builder(
                   builder: (context) => ColoredBox(

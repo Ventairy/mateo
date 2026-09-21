@@ -11,6 +11,10 @@ part '_mateo_page_transition_motion.dart';
 part 'transitions/push/_mateo_push_page_transition_view.dart';
 part 'transitions/push/_render_mateo_push_page_transition.dart';
 part 'transitions/push/mateo_page_transition_push.dart';
+part 'transitions/slide/_mateo_slide_closing_curve.dart';
+part 'transitions/slide/_mateo_slide_opening_curve.dart';
+part 'transitions/slide/_mateo_slide_page_transition_view.dart';
+part 'transitions/slide/mateo_page_transition_slide.dart';
 part 'transitions/wash/_mateo_wash_page_transition_painter.dart';
 part 'transitions/wash/_mateo_wash_page_transition_view.dart';
 part 'transitions/wash/mateo_page_transition_wash.dart';
@@ -35,6 +39,13 @@ sealed class MateoPageTransition {
     Duration duration,
     Duration? reverseDuration,
   }) = MateoPageTransitionPush;
+
+  /// Creates page movement from a screen edge while the previous page stays still.
+  const factory MateoPageTransition.slide({
+    MateoPageTransitionDirection direction,
+    Duration duration,
+    Duration reverseDuration,
+  }) = MateoPageTransitionSlide;
 
   /// The physical direction of forward travel.
   final MateoPageTransitionDirection direction;

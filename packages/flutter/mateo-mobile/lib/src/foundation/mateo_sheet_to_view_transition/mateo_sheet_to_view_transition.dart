@@ -23,6 +23,7 @@ final _sheetViewSpring = SpringSimulation(
 final MateoViewAnimationTransform kSheetToViewTransformAnimation = .new(
   target: MateoTransformTarget(
     duration: .custom(duration: const Duration(milliseconds: 280)),
+    reverseDuration: .custom(duration: const Duration(milliseconds: 250)),
     curve: const _SheetToViewCurve(),
     reverseCurve: const _ViewToSheetCurve(),
   ),

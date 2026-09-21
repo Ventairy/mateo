@@ -25,7 +25,7 @@ export 'src/components/mateo_menu_button/animation/mateo_menu_button_animation.d
     show MateoMenuButtonAnimation, MateoMenuButtonAnimationPop, MateoMenuButtonAnimationTransform;
 export 'src/components/mateo_menu_button/mateo_menu_button.dart' show MateoMenuButton;
 export 'src/components/mateo_page_transition/mateo_page_transition.dart'
-    show MateoPageTransition, MateoPageTransitionPush, MateoPageTransitionWash;
+    show MateoPageTransition, MateoPageTransitionPush, MateoPageTransitionSlide, MateoPageTransitionWash;
 export 'src/components/mateo_page_transition/mateo_page_transition_direction.dart' show MateoPageTransitionDirection;
 export 'src/components/mateo_page_transition/mateo_page_transitions_builder.dart' show MateoPageTransitionsBuilder;
 export 'src/components/mateo_press/mateo_press.dart' show MateoPress;

@@ -7,11 +7,59 @@ void main() {
   test('when equivalent configurations are created, they should have value equality', () {
     expect(const MateoPageTransition.wash(), const MateoPageTransition.wash());
     expect(const MateoPageTransition.wash(), isNot(const MateoPageTransition.push()));
+    expect(const MateoPageTransition.slide(), const MateoPageTransition.slide());
+    expect(const MateoPageTransition.slide(), isNot(const MateoPageTransition.push()));
     expect(
       const MateoPageTransition.push(duration: Duration(milliseconds: 80)).reverseDuration,
       const Duration(milliseconds: 80),
     );
   });
+
+  for (final direction in MateoPageTransitionDirection.values) {
+    testWidgets('when application routes share a $direction slide builder, it should move only the destination', (
+      tester,
+    ) async {
+      final builder = MateoPageTransitionsBuilder(transition: .slide(direction: direction));
+      final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+      addTearDown(pages.dispose);
+      await tester.pumpWidget(_app(pages));
+      pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 195));
+
+      final transition = builder.transition as MateoPageTransitionSlide;
+      final source = tester.getRect(find.byKey(const ValueKey('source')));
+      final destination = tester.getRect(find.byKey(const ValueKey('destination')));
+      expect(source.topLeft, Offset.zero);
+      expect(
+        destination.topLeft,
+        _slideOffset(
+          direction: direction,
+          size: source.size,
+          remainingFraction: 1 - transition.openingCurve.transform(0.5),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      Navigator.of(tester.element(find.byKey(const ValueKey('destination')))).pop();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(tester.getRect(find.byKey(const ValueKey('source'))).topLeft, Offset.zero);
+      expect(
+        tester.getRect(find.byKey(const ValueKey('destination'))).topLeft,
+        _slideOffset(
+          direction: direction,
+          size: source.size,
+          remainingFraction: transition.closingCurve.transform(0.5),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('source')), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   for (final direction in MateoPageTransitionDirection.values) {
     testWidgets('when application routes share a $direction push builder, it should keep their pages attached', (
@@ -63,7 +111,31 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  for (final transition in [const MateoPageTransition.push(), const MateoPageTransition.wash()]) {
+  testWidgets('when slide interrupts its opening, it should return from its current position without a jump', (
+    tester,
+  ) async {
+    const builder = MateoPageTransitionsBuilder(transition: .slide());
+    final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+    addTearDown(pages.dispose);
+    await tester.pumpWidget(_app(pages));
+    pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+    final before = tester.getRect(find.byKey(const ValueKey('destination')));
+    Navigator.of(tester.element(find.byKey(const ValueKey('destination')))).pop();
+    await tester.pump();
+    expect(tester.getRect(find.byKey(const ValueKey('destination'))), before);
+    await tester.pump(const Duration(milliseconds: 40));
+    expect(tester.getTopLeft(find.byKey(const ValueKey('destination'))).dy, greaterThan(before.top));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
+  for (final transition in [
+    const MateoPageTransition.push(),
+    const MateoPageTransition.slide(),
+    const MateoPageTransition.wash(),
+  ]) {
     testWidgets(
       'when ${transition.runtimeType} predictive back cancels, it should keep the drag mapping until settled',
       (tester) async {
@@ -143,6 +215,17 @@ void main() {
     await tester.pumpAndSettle();
   });
 }
+
+Offset _slideOffset({
+  required MateoPageTransitionDirection direction,
+  required Size size,
+  required double remainingFraction,
+}) => switch (direction) {
+  .up => Offset(0, size.height * remainingFraction),
+  .down => Offset(0, -size.height * remainingFraction),
+  .left => Offset(size.width * remainingFraction, 0),
+  .right => Offset(-size.width * remainingFraction, 0),
+};
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF7551FF), onAccent: const Color(0xFFFFFFFF));
 
