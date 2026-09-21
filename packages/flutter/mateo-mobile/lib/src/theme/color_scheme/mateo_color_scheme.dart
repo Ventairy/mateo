@@ -102,7 +102,7 @@ final class MateoColorScheme {
         neutral: .new(
           background: palette.neutral[2],
           text: palette.black,
-          placeholder: palette.neutral[7],
+          placeholder: palette.neutral[8],
           icon: palette.neutral[10],
           backgroundDisabled: palette.neutral[4],
           textDisabled: palette.neutral[10],
