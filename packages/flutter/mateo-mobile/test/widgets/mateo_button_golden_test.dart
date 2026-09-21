@@ -16,6 +16,7 @@ Widget _matrix({bool disabled = false, bool loading = false}) => _appearance(
     children: [
       for (final (name, variant) in [
         ('Primary accent', MateoButtonVariant.primary),
+        ('Primary success', MateoButtonVariant.primary.success),
         ('Primary neutral', MateoButtonVariant.primary.neutral),
         ('Primary base', MateoButtonVariant.primary.base),
         ('Secondary accent', MateoButtonVariant.secondary),

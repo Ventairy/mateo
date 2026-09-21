@@ -733,6 +733,7 @@ void main() {
 
   for (final variant in [
     MateoButtonVariant.primary,
+    MateoButtonVariant.primary.success,
     MateoButtonVariant.primary.neutral,
     MateoButtonVariant.primary.base,
     MateoButtonVariant.secondary,
@@ -764,9 +765,9 @@ void main() {
       final ratio = foreground > background
           ? (foreground + 0.05) / (background + 0.05)
           : (background + 0.05) / (foreground + 0.05);
-      // Secondary accent uses the product's step-9 seed, which does not
-      // guarantee 4.5:1 contrast against its tinted background.
-      if (variant != MateoButtonVariant.secondary) {
+      if (variant == MateoButtonVariant.primary.success) {
+        expect(ratio, closeTo(2.22, 0.01));
+      } else if (variant != MateoButtonVariant.secondary) {
         expect(ratio, greaterThanOrEqualTo(4.5));
       }
       expect(

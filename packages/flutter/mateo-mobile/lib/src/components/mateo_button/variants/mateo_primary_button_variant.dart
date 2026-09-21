@@ -3,11 +3,15 @@ part of 'mateo_button_variant.dart';
 /// The supported prominent button treatments.
 enum MateoPrimaryButtonVariant implements MateoButtonVariant {
   _accent,
+  _success,
   _neutral,
   _base;
 
   /// The product-accent surface and its matching foreground.
   MateoButtonVariant get accent => _accent;
+
+  /// The green surface for a clearly positive action.
+  MateoButtonVariant get success => _success;
 
   /// The dark neutral surface with a light foreground.
   MateoButtonVariant get neutral => _neutral;
@@ -19,6 +23,7 @@ enum MateoPrimaryButtonVariant implements MateoButtonVariant {
   @override
   MateoButtonColorScheme resolveColorScheme(MateoButtonsColorScheme colors) => switch (this) {
     ._accent => colors.primary.accent,
+    ._success => colors.primary.success,
     ._neutral => colors.primary.neutral,
     ._base => colors.primary.base,
   };

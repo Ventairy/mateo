@@ -3,10 +3,18 @@ part of 'mateo_color_scheme.dart';
 /// The colors of the prominent button treatments.
 @immutable
 final class MateoPrimaryButtonColorScheme {
-  const MateoPrimaryButtonColorScheme._({required this.accent, required this.neutral, required this.base});
+  const MateoPrimaryButtonColorScheme._({
+    required this.accent,
+    required this.success,
+    required this.neutral,
+    required this.base,
+  });
 
   /// The product-accent treatment.
   final MateoButtonColorScheme accent;
+
+  /// The treatment for clearly positive actions.
+  final MateoButtonColorScheme success;
 
   /// The dark neutral treatment.
   final MateoButtonColorScheme neutral;
@@ -20,10 +28,11 @@ final class MateoPrimaryButtonColorScheme {
       identical(this, other) ||
       other is MateoPrimaryButtonColorScheme &&
           accent == other.accent &&
+          success == other.success &&
           neutral == other.neutral &&
           base == other.base;
 
   /// The hash of this scheme's color roles.
   @override
-  int get hashCode => Object.hash(accent, neutral, base);
+  int get hashCode => Object.hash(accent, success, neutral, base);
 }

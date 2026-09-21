@@ -73,6 +73,7 @@ void main() {
     expect(colors.buttons.primary.accent.foreground, colors.onAccent);
     expect(colors.buttons.secondary.accent.background, changed.palette.accent[2]);
     expect(colors.buttons.secondary.accent.foreground, changed.palette.accent[9]);
+    expect(colors.buttons.primary.success, theme.colorScheme.buttons.primary.success);
     expect(colors.buttons.primary.neutral, theme.colorScheme.buttons.primary.neutral);
   });
 
@@ -80,6 +81,7 @@ void main() {
     final colors = theme.colorScheme.buttons;
     for (final (variant, expected) in [
       (MateoButtonVariant.primary, colors.primary.accent),
+      (MateoButtonVariant.primary.success, colors.primary.success),
       (MateoButtonVariant.primary.neutral, colors.primary.neutral),
       (MateoButtonVariant.primary.base, colors.primary.base),
       (MateoButtonVariant.secondary, colors.secondary.accent),
@@ -90,6 +92,8 @@ void main() {
       expect(expected.foregroundDisabled, theme.palette.neutral[9]);
     }
     expect(colors.primary.neutral.backgroundDisabled, theme.palette.neutral[5]);
+    expect(colors.primary.success.background, theme.palette.green[9]);
+    expect(colors.primary.success.foreground, theme.palette.white);
     expect(colors.primary.accent.backgroundDisabled, theme.palette.neutral[4]);
     expect(colors.tertiary.background.a, 0);
     expect(colors.tertiary.backgroundDisabled.a, 0);
