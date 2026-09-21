@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../mateo_shape/mateo_shape.dart';
 import '../mateo_transform_animation_content_effect/mateo_transform_animation_content_effect.dart';
+import '../mateo_transform_duration/mateo_transform_duration.dart';
 import '../mateo_transform_target/mateo_transform_target.dart';
 
 part 'mateo_surface_animation_none.dart';
@@ -39,10 +40,4 @@ sealed class MateoSurfaceAnimation {
     MateoShape? shape,
     List<MateoTransformAnimationContentEffect> contentEffects,
   }) = MateoSurfaceAnimationTransform;
-
-  /// The duration of this animation style, or null for inherited timing.
-  Duration? get duration;
-
-  /// The easing curve of this animation style.
-  Curve get curve;
 }

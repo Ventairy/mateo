@@ -19,13 +19,17 @@ final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// uses this surface's resting shape. Does not change its resting appearance.
   final MateoShape? shape;
 
-  /// The shared target duration, or null for inherited timing.
-  @override
-  Duration? get duration => target.duration;
+  /// The timing used when moving to a newer appearance.
+  MateoTransformDuration get duration => target.duration;
 
-  /// The easing curve of this animation style.
-  @override
+  /// The timing used when returning to an earlier appearance.
+  MateoTransformDuration get reverseDuration => target.reverseDuration;
+
+  /// The easing used when moving to a newer appearance.
   Curve get curve => target.curve;
+
+  /// The easing used when returning to an earlier appearance.
+  Curve get reverseCurve => target.reverseCurve;
 
   /// Effects applied to the descendant content during the transform.
   ///

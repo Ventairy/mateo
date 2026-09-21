@@ -13,13 +13,11 @@ final class MateoSurfaceAnimationPop extends MateoSurfaceAnimation {
        super._();
 
   /// The shared duration of the fade and scale entrance.
-  @override
   final Duration duration;
 
   /// The shared easing curve of the fade and scale entrance.
   ///
   /// Scale preserves overshoot; rendered opacity stays between zero and one.
-  @override
   final Curve curve;
 
   /// The initial scale relative to the surface's laid-out size.

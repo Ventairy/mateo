@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
-import 'package:oh_my_flutter/oh_my_flutter.dart' show Morph;
+import 'package:oh_my_flutter/oh_my_flutter.dart' show Morph, MorphTarget;
 
 import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
@@ -37,9 +37,9 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('when a shared target omits duration, it should follow the route clock', (tester) async {
+  testWidgets('when a shared target uses automatic timing, it should follow the route clock', (tester) async {
     final navigator = GlobalKey<NavigatorState>();
-    final target = MateoTransformTarget(duration: null, curve: Curves.linear);
+    final target = MateoTransformTarget(curve: Curves.linear);
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
@@ -62,6 +62,151 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 300));
     expect(tester.getRect(surfaceFlight), Rect.lerp(beginBounds, endBounds, .5));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('when automatic route timing differs by direction, it should follow each route clock', (tester) async {
+    final navigator = GlobalKey<NavigatorState>();
+    final target = MateoTransformTarget(curve: Curves.linear);
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: surfaceTransformEndpoint(
+          bounds: beginBounds,
+          animation: .transform(target: target),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      surfaceTransformEndpoint(
+        bounds: endBounds,
+        animation: .transform(target: target),
+      ),
+      routeDuration: const Duration(milliseconds: 600),
+      routeReverseDuration: const Duration(milliseconds: 200),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(tester.getRect(surfaceFlight), Rect.lerp(beginBounds, endBounds, .5));
+    await tester.pumpAndSettle();
+
+    navigator.currentState!.pop();
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(tester.getRect(surfaceFlight), Rect.lerp(endBounds, beginBounds, .5));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('when timing is directional, it should forward all configuration to each Morph target', (
+    tester,
+  ) async {
+    final transformTarget = MateoTransformTarget(
+      duration: .custom(duration: const Duration(milliseconds: 400)),
+      reverseDuration: const .auto(),
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    );
+    final morphTargets = <MorphTarget>{};
+    for (final view in [false, true]) {
+      await tester.pumpWidget(
+        MateoApp(
+          theme: surfaceTransformTheme,
+          home: surfaceTransformEndpoint(
+            bounds: beginBounds,
+            animation: .transform(target: transformTarget),
+            view: view,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      morphTargets.addAll(tester.widget<Morph>(find.byType(Morph)).targets);
+    }
+    final relationshipTargets = morphTargets.where(
+      (morphTarget) => switch (morphTarget.tag) {
+        (target: final target, relationship: _) => identical(target, transformTarget),
+        _ => false,
+      },
+    );
+    expect(relationshipTargets.map((target) => target.tag).toSet(), hasLength(3));
+    for (final morphTarget in relationshipTargets) {
+      expect(morphTarget.duration, const Duration(milliseconds: 400));
+      expect(morphTarget.reverseDuration, isNull);
+      expect(morphTarget.curve, Curves.easeOut);
+      expect(morphTarget.reverseCurve, Curves.easeIn);
+    }
+  });
+
+  testWidgets('when automatic timing is local, it should use the Morph default clock', (tester) async {
+    final target = MateoTransformTarget(curve: Curves.linear);
+    late StateSetter update;
+    var expanded = false;
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        home: StatefulBuilder(
+          builder: (context, setState) {
+            update = setState;
+            return surfaceTransformEndpoint(
+              key: ValueKey(expanded),
+              bounds: expanded ? endBounds : beginBounds,
+              animation: .transform(target: target),
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    update(() => expanded = true);
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 150));
+    expect(tester.getRect(surfaceFlight), Rect.lerp(beginBounds, endBounds, .5));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('when reverse timing is custom, it should use its independent duration and curve', (tester) async {
+    final navigator = GlobalKey<NavigatorState>();
+    final target = MateoTransformTarget(
+      duration: .custom(duration: const Duration(milliseconds: 400)),
+      reverseDuration: .custom(duration: const Duration(milliseconds: 200)),
+      curve: Curves.linear,
+      reverseCurve: Curves.easeIn,
+    );
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: surfaceTransformEndpoint(
+          bounds: beginBounds,
+          animation: .transform(target: target),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      surfaceTransformEndpoint(
+        bounds: endBounds,
+        animation: .transform(target: target),
+      ),
+      routeDuration: const Duration(milliseconds: 100),
+      routeReverseDuration: const Duration(milliseconds: 500),
+    );
+    await tester.pumpAndSettle();
+
+    navigator.currentState!.pop();
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(
+      tester.getRect(surfaceFlight),
+      Rect.lerp(endBounds, beginBounds, Curves.easeIn.transform(.5)),
+    );
     await tester.pumpAndSettle();
   });
 

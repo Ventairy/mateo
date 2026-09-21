@@ -6,11 +6,9 @@ final class MateoSurfaceAnimationNone extends MateoSurfaceAnimation {
   const MateoSurfaceAnimationNone() : super._();
 
   /// The fixed duration of this animation style.
-  @override
   Duration get duration => .zero;
 
   /// The easing curve of this animation style.
-  @override
   Curve get curve => Curves.linear;
 
   /// Whether both values describe no surface animation.

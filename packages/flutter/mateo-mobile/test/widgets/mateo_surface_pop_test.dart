@@ -63,13 +63,13 @@ double opacity(WidgetTester tester) =>
 
 void main() {
   test('pop has public configuration and value equality', () {
-    const pop = MateoSurfaceAnimation.pop();
+    const pop = MateoSurfaceAnimationPop();
     expect(pop, const MateoSurfaceAnimationPop());
     expect(pop.hashCode, const MateoSurfaceAnimationPop().hashCode);
     expect(pop, isNot(const MateoSurfaceAnimation.none()));
     expect(pop.duration, const Duration(milliseconds: 320));
     expect(pop.curve, Curves.easeOutBack);
-    const custom = MateoSurfaceAnimation.pop(duration: Duration(milliseconds: 200), curve: Curves.linear);
+    const custom = MateoSurfaceAnimationPop(duration: Duration(milliseconds: 200), curve: Curves.linear);
     const equal = MateoSurfaceAnimationPop(duration: Duration(milliseconds: 200), curve: Curves.linear);
     expect(custom, equal);
     expect(custom.hashCode, equal.hashCode);

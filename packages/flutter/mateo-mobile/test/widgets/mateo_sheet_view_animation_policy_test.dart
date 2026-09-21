@@ -203,7 +203,10 @@ void main() {
     (
       tester,
     ) async {
-      final target = MateoTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
+      final target = MateoTransformTarget(
+        duration: .custom(duration: const Duration(seconds: 2)),
+        curve: Curves.linear,
+      );
       final animation = MateoViewAnimation.transform(
         target: target,
         shape: const .rounded(radius: 8),
@@ -228,20 +231,21 @@ void main() {
           shape.getOuterPath(Offset.zero & bounds),
           const MateoRoundedShapeBorder(radius: 42).getOuterPath(Offset.zero & bounds),
         );
+        final routeDuration = returning ? route.reverseTransitionDuration : route.transitionDuration;
         results.add([
           layers.map((layer) => Size(layer.width!, layer.height!)).toList(),
-          route.transitionDuration,
+          routeDuration,
         ]);
         await tester.pumpAndSettle();
       }
       expect(results, [
         [
           [matchesSize(sourceSize), matchesSize(destinationSize)],
-          kSheetToViewTransformAnimation.duration,
+          sheetToViewTransformDurations.forward,
         ],
         [
           [matchesSize(destinationSize), matchesSize(sourceSize)],
-          kSheetToViewTransformAnimation.duration,
+          sheetToViewTransformDurations.reverse,
         ],
       ]);
     },
@@ -250,7 +254,10 @@ void main() {
   testPolicy('when ordinary views share an explicit target, it should use their shape effects and timing', (
     tester,
   ) async {
-    final target = MateoTransformTarget(duration: const Duration(seconds: 2), curve: Curves.linear);
+    final target = MateoTransformTarget(
+      duration: .custom(duration: const Duration(seconds: 2)),
+      curve: Curves.linear,
+    );
     final animation = MateoViewAnimation.transform(
       target: target,
       shape: const .rounded(radius: 8),
@@ -333,7 +340,10 @@ void main() {
       (
         tester,
       ) async {
-        final target = MateoTransformTarget(duration: const Duration(seconds: 1), curve: Curves.linear);
+        final target = MateoTransformTarget(
+          duration: .custom(duration: const Duration(seconds: 1)),
+          curve: Curves.linear,
+        );
         final expanded = ValueNotifier(false);
         addTearDown(expanded.dispose);
         await mount(

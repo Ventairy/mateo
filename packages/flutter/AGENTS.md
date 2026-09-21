@@ -36,6 +36,9 @@ guidance belongs in each package's own `AGENTS.md`.
   written solely to exercise a speculative capability does not justify it.
 - Keep the implementation limited to today's supported behavior; do not build
   infrastructure for hypothetical future variants or consumers.
+- Structural separation required by an API that already represents a variant
+  family is not speculative. Add only today's concrete variants and shared
+  contracts; do not add placeholder siblings, fields, or behavior.
 
 ### Subscribe Only To Needed MediaQuery Properties
 
@@ -169,6 +172,20 @@ guidance belongs in each package's own `AGENTS.md`.
 
 ### Give Variants Their Own Configuration Types
 
+- Decide whether a type is a specific concept or a family before adding its
+  first configuration. A specifically named type may own that concept's fields
+  directly. Treat a type as a family when its name represents a category and a
+  configuration introduces a distinct required-field or behavior contract. A
+  named constructor alone does not make a family; parsing constructors,
+  convenience constructors, and presets for the same contract may remain on
+  one specific type.
+- A variant family must use a sealed parent with concrete variant types from
+  its first variant, even when only one variant exists today.
+- Do not flatten the first variant into its parent because no sibling exists
+  yet. That makes adding the next variant require moving public fields and
+  rewriting every consumer. The parent may expose only contracts meaningful
+  for every variant; configuration specific to the current variant belongs on
+  its concrete type from the start.
 - When named constructor variants require different fields, use a sealed parent
   with concrete variant types and named redirecting factories.
 - Put variant-specific required fields and fixed configuration on the concrete
@@ -177,7 +194,12 @@ guidance belongs in each package's own `AGENTS.md`.
 - Avoid nullable catch-all fields, dummy values, and assertions that compensate
   for incompatible configurations. Consumers narrow the type before accessing
   variant-specific fields; use exhaustive pattern matching to interpret variants.
-- Constructors that share the same field structure do not require separate types.
+- Constructors that differ only by preset values for the same contract do not
+  require separate types. Semantically distinct behavior contracts need
+  distinct variant types even when their fields currently have the same shape.
+- Export concrete variants when public consumers need their fields or must
+  match the family exhaustively. Keep variants private only when all narrowing
+  and interpretation remain inside the owning library.
 - When dispatching behavior across a sealed family or enum, handle every
   supported variant explicitly with exhaustive matching. Do not use a
   one-variant check followed by a catch-all no-op or default behavior: it makes

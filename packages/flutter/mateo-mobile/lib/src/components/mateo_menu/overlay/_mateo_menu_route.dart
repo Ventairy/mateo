@@ -29,14 +29,25 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
   Duration get transitionDuration => reducedMotion
       ? Duration.zero
       : switch (surfaceAnimation) {
-          MateoSurfaceAnimationTransform(:final duration) => duration ?? MateoTransformTarget.defaultDuration,
+          MateoSurfaceAnimationTransform(:final duration) => _routeDuration(duration),
           MateoSurfaceAnimationNone() || MateoSurfaceAnimationPop() => Duration.zero,
         };
 
   @override
   Duration get reverseTransitionDuration {
-    return reducedMotion ? Duration.zero : exitTransition?.duration ?? transitionDuration;
+    if (reducedMotion) return Duration.zero;
+    final exitDuration = exitTransition?.duration;
+    if (exitDuration != null) return exitDuration;
+    return switch (surfaceAnimation) {
+      MateoSurfaceAnimationTransform(:final reverseDuration) => _routeDuration(reverseDuration),
+      MateoSurfaceAnimationNone() || MateoSurfaceAnimationPop() => transitionDuration,
+    };
   }
+
+  Duration _routeDuration(MateoTransformDuration duration) => switch (duration) {
+    MateoTransformDurationAuto() => MateoTransformTarget.defaultDuration,
+    MateoTransformDurationCustom(:final duration) => duration,
+  };
 
   @override
   bool didPop(MateoMenuOptionsPresentationItem? result) {

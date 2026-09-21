@@ -72,8 +72,11 @@ export 'src/foundation/mateo_transform_animation_content_effect/mateo_transform_
         MateoTransformAnimationContentEffect,
         MateoTransformAnimationContentEffectCrossfade,
         MateoTransformAnimationContentEffectScale;
+export 'src/foundation/mateo_transform_duration/mateo_transform_duration.dart'
+    show MateoTransformDuration, MateoTransformDurationAuto, MateoTransformDurationCustom;
 export 'src/foundation/mateo_transform_target/mateo_transform_target.dart' show MateoTransformTarget;
-export 'src/foundation/mateo_view_animation/mateo_view_animation.dart' show MateoViewAnimation;
+export 'src/foundation/mateo_view_animation/mateo_view_animation.dart'
+    show MateoViewAnimation, MateoViewAnimationTransform;
 export 'src/theme/color_scheme/mateo_color_scheme.dart'
     show
         MateoButtonColorScheme,

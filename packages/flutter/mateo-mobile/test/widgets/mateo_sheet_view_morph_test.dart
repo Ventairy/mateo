@@ -25,7 +25,8 @@ void main() {
         navigator.pop();
       }
       await _start(tester);
-      await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
+      final duration = returning ? sheetToViewTransformDurations.reverse : sheetToViewTransformDurations.forward;
+      await tester.pump(duration ~/ 2);
       expect(surfaceFlight, findsOneWidget);
       await expectLater(
         find.byKey(const ValueKey('capture')),
@@ -51,7 +52,7 @@ void main() {
       await tester.pump();
       if (intermediate) {
         await _start(tester);
-        await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
+        await tester.pump(sheetToViewTransformDurations.forward ~/ 2);
       }
       await expectLater(
         firstFrame ?? find.byKey(const ValueKey('capture')),
@@ -107,12 +108,12 @@ void main() {
     tester.view.viewInsets = const FakeViewPadding(bottom: 300);
     await tester.pump(const Duration(milliseconds: 16));
     await tester.pump(const Duration(milliseconds: 16));
-    final midpointAdvance = kSheetToViewTransformAnimation.duration! ~/ 2;
+    final midpointAdvance = sheetToViewTransformDurations.forward ~/ 2;
     await tester.pump(midpointAdvance);
     expect(await _renderedColorBounds(tester, titleColor), isNotNull);
     expect(await _renderedColorBounds(tester, bodyColor), isNotNull);
 
-    final remaining = kSheetToViewTransformAnimation.duration! - midpointAdvance - const Duration(milliseconds: 49);
+    final remaining = sheetToViewTransformDurations.forward - midpointAdvance - const Duration(milliseconds: 49);
     await tester.pump(remaining);
     final flightTitle = await _renderedColorBounds(tester, titleColor);
     final flightBody = await _renderedColorBounds(tester, bodyColor);
@@ -254,10 +255,10 @@ void main() {
         final bounds = tester.getRect(find.byType(MateoSheetViewSurface));
         final route = _push(navigator, fullscreen: fullscreen);
         await _start(tester);
-        expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
+        expect(route.transitionDuration, sheetToViewTransformDurations.forward);
         expect(surfaceFlight, findsOneWidget);
         expect(tester.getRect(surfaceFlight), bounds);
-        await tester.pump(kSheetToViewTransformAnimation.duration! ~/ 2);
+        await tester.pump(sheetToViewTransformDurations.forward ~/ 2);
         expect(tester.getRect(surfaceFlight).height, greaterThan(bounds.height));
         expect(route.overlayEntries.first.opaque, isFalse);
         expect(find.text('Home'), findsOneWidget);

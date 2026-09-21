@@ -12,15 +12,72 @@ void main() {
     expect(MateoSurfaceAnimation.transform(target: first), isNot(MateoSurfaceAnimation.transform(target: second)));
   });
 
-  test('when route timing is requested, it should retain an omitted target duration', () {
-    final target = MateoTransformTarget(duration: null, curve: Curves.linear);
-    final animation = MateoSurfaceAnimation.transform(target: target);
-    expect(animation.duration, isNull);
+  test('when timing is omitted, it should use automatic timing in both directions', () {
+    final target = MateoTransformTarget(curve: Curves.linear);
+    final animation = MateoSurfaceAnimation.transform(target: target) as MateoSurfaceAnimationTransform;
+    expect(animation.duration, const MateoTransformDuration.auto());
+    expect(animation.reverseDuration, const MateoTransformDuration.auto());
     expect(animation.curve, Curves.linear);
+    expect(animation.reverseCurve, Curves.linear);
   });
 
-  test('when a target duration is negative, it should reject the configuration', () {
-    expect(() => MateoTransformTarget(duration: const Duration(milliseconds: -1)), throwsAssertionError);
+  test('when reverse timing is omitted, it should retain the forward configuration', () {
+    final duration = MateoTransformDuration.custom(duration: const Duration(milliseconds: 400));
+    final target = MateoTransformTarget(duration: duration, curve: Curves.easeIn);
+    final surface = MateoSurfaceAnimation.transform(target: target) as MateoSurfaceAnimationTransform;
+    final view = MateoViewAnimation.transform(target: target) as MateoViewAnimationTransform;
+    expect(surface.duration, duration);
+    expect(surface.reverseDuration, duration);
+    expect(surface.curve, Curves.easeIn);
+    expect(surface.reverseCurve, Curves.easeIn);
+    expect(view.duration, duration);
+    expect(view.reverseDuration, duration);
+    expect(view.curve, Curves.easeIn);
+    expect(view.reverseCurve, Curves.easeIn);
+  });
+
+  test('when reverse timing is supplied, it should retain independent configuration', () {
+    final duration = MateoTransformDuration.custom(duration: const Duration(milliseconds: 400));
+    final reverseDuration = MateoTransformDuration.custom(duration: const Duration(milliseconds: 180));
+    final target = MateoTransformTarget(
+      duration: duration,
+      reverseDuration: reverseDuration,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    );
+    expect(target.duration, duration);
+    expect(target.reverseDuration, reverseDuration);
+    expect(target.curve, Curves.easeOut);
+    expect(target.reverseCurve, Curves.easeIn);
+  });
+
+  test('when a custom duration is negative, it should reject the configuration', () {
+    expect(
+      () => MateoTransformDuration.custom(duration: const Duration(milliseconds: -1)),
+      throwsAssertionError,
+    );
+  });
+
+  test('duration policies compare by kind and custom value', () {
+    const automatic = MateoTransformDuration.auto();
+    final custom = MateoTransformDuration.custom(
+      duration: const Duration(milliseconds: 230),
+    );
+    expect(automatic, const MateoTransformDurationAuto());
+    expect(automatic.value, isNull);
+    expect(
+      custom,
+      MateoTransformDurationCustom(duration: const Duration(milliseconds: 230)),
+    );
+    expect(custom.value, const Duration(milliseconds: 230));
+    expect(
+      MateoTransformDuration.custom(duration: const Duration(milliseconds: 230)),
+      isNot(MateoTransformDuration.custom(duration: const Duration(milliseconds: 180))),
+    );
+    expect(
+      const MateoTransformDuration.auto(),
+      isNot(MateoTransformDuration.custom(duration: const Duration(milliseconds: 230))),
+    );
   });
 
   test('when transform shapes differ, it should retain values and compare endpoint configuration', () {
@@ -89,12 +146,19 @@ void main() {
     ];
     for (final target in [
       ...surfaces.map((surface) => (surface.animation! as MateoSurfaceAnimationTransform).target),
-      ...views.map((view) => view.animation!.target),
+      ...views.map(
+        (view) => (view.animation! as MateoViewAnimationTransform).target,
+      ),
     ]) {
       final id = target;
       expect(id, same(surfaceTransformTarget('details')));
-      expect(target.duration, const Duration(milliseconds: 230));
+      expect(
+        target.duration,
+        MateoTransformDuration.custom(duration: const Duration(milliseconds: 230)),
+      );
+      expect(target.reverseDuration, target.duration);
       expect(target.curve, Curves.easeOutCubic);
+      expect(target.reverseCurve, target.curve);
     }
   });
 
@@ -113,10 +177,17 @@ void main() {
     expect(defaults, repeated);
     expect(defaults.hashCode, repeated.hashCode);
     final custom = MateoSurfaceAnimation.transform(
-      target: surfaceTransformTarget('details', duration: const Duration(milliseconds: 400), curve: Curves.linear),
+      target: surfaceTransformTarget(
+        'details',
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.linear,
+      ),
       contentEffects: const [],
+    ) as MateoSurfaceAnimationTransform;
+    expect(
+      custom.duration,
+      MateoTransformDuration.custom(duration: const Duration(milliseconds: 400)),
     );
-    expect(custom.duration, const Duration(milliseconds: 400));
     expect(custom.curve, Curves.linear);
     for (final other in [
       MateoSurfaceAnimation.transform(

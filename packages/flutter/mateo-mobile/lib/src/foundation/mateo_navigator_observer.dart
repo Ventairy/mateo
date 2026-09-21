@@ -32,7 +32,10 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
   // ignore: public_member_api_docs
   final sheetToViewMorphTarget = MorphTarget(
     tag: #mateoSheetToView,
+    duration: kSheetToViewTransformAnimation.duration.value,
+    reverseDuration: kSheetToViewTransformAnimation.reverseDuration.value,
     curve: kSheetToViewTransformAnimation.curve,
+    reverseCurve: kSheetToViewTransformAnimation.reverseCurve,
     watchDestination: true,
     canMatch: _isSheetViewTransition,
   );
@@ -47,9 +50,11 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route is BaseMateoPageRoute && previousRoute is MateoSheetRoute) {
+      final durations = sheetToViewTransformDurations;
       route.useSurfaceTransition(
         sourceRoute: previousRoute,
-        duration: kSheetToViewTransformAnimation.duration!,
+        forwardDuration: durations.forward,
+        reverseDuration: durations.reverse,
       );
     }
   }

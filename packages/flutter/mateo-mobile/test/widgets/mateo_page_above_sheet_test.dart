@@ -24,8 +24,8 @@ void main() {
         navigator.push(route);
         await tester.pump();
         expect(route.isPrimaryVisualMotionDisabled, isTrue);
-        expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
-        expect(route.reverseTransitionDuration, kSheetToViewTransformAnimation.duration);
+        expect(route.transitionDuration, sheetToViewTransformDurations.forward);
+        expect(route.reverseTransitionDuration, sheetToViewTransformDurations.reverse);
         expect(route.animation!.value, 0);
         _expectSettled(tester);
         await tester.pumpAndSettle();
@@ -49,8 +49,8 @@ void main() {
       navigator.push(route);
       await tester.pump();
       expect(route.isPrimaryVisualMotionDisabled, isTrue);
-      expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
-      expect(route.reverseTransitionDuration, kSheetToViewTransformAnimation.duration);
+      expect(route.transitionDuration, sheetToViewTransformDurations.forward);
+      expect(route.reverseTransitionDuration, sheetToViewTransformDurations.reverse);
       await tester.pumpAndSettle();
 
       navigator.removeRouteBelow(route);

@@ -1,9 +1,18 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mateo_mobile/mateo_mobile.dart' show MateoNavigatorObserver;
 import 'package:mateo_mobile/src/foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 
 void main() {
   final curve = kSheetToViewTransformAnimation.curve;
+
+  test('when automatic matching is configured, it should use all authored timing', () {
+    final target = MateoNavigatorObserver().sheetToViewMorphTarget;
+    expect(target.duration, sheetToViewTransformDurations.forward);
+    expect(target.reverseDuration, sheetToViewTransformDurations.reverse);
+    expect(target.curve, kSheetToViewTransformAnimation.curve);
+    expect(target.reverseCurve, kSheetToViewTransformAnimation.reverseCurve);
+  });
 
   test('when the transition runs, it should advance without overshoot or reversal', () {
     var previous = 0.0;
@@ -52,7 +61,7 @@ void main() {
 
   for (final refreshRate in [60, 120]) {
     test('when landing at $refreshRate Hz, it should have less final-frame travel than the previous curve', () {
-      final duration = kSheetToViewTransformAnimation.duration!;
+      final duration = sheetToViewTransformDurations.forward;
       final penultimateTime = 1 - Duration.microsecondsPerSecond / (refreshRate * duration.inMicroseconds);
       final travel = 1 - curve.transform(penultimateTime);
       final previousTravel = 1 - Curves.easeOutCubic.transform(penultimateTime);

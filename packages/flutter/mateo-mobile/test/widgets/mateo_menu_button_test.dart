@@ -39,8 +39,13 @@ void main() {
       expect(animation.contentEffects, const <MateoTransformAnimationContentEffect>[
         .crossfade(curve: Interval(0, 0.35, curve: Curves.easeOut)),
       ]);
-      expect(animation.duration, const Duration(milliseconds: 230));
+      expect(
+        animation.duration,
+        MateoTransformDuration.custom(duration: const Duration(milliseconds: 230)),
+      );
+      expect(animation.reverseDuration, animation.duration);
       expect(animation.curve, const Cubic(0.35, 1, 0.35, 1));
+      expect(animation.reverseCurve, animation.curve);
       expect(animation.curve.transform(0), 0);
       expect(animation.curve.transform(1), 1);
       var previous = 0.0;
@@ -70,6 +75,8 @@ void main() {
       expect(panelAnimation.target, same(animation.target));
       expect(panelAnimation.curve, animation.curve);
       expect(panelAnimation.duration, animation.duration);
+      expect(panelAnimation.reverseCurve, animation.reverseCurve);
+      expect(panelAnimation.reverseDuration, animation.reverseDuration);
       expect(
         (panelAnimation.contentEffects.single as MateoTransformAnimationContentEffectCrossfade).curve,
         const Interval(0, 0.3, curve: Curves.easeOut),

@@ -7,7 +7,6 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/base_mateo_surface.dart';
 import 'package:mateo_mobile/src/components/mateo_menu/overlay/show_mateo_menu.dart';
 
-import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
@@ -147,9 +146,14 @@ void main() {
     tester,
   ) async {
     await host(tester);
-    final transformId = Object();
+    final target = MateoTransformTarget(
+      duration: .custom(duration: const Duration(milliseconds: 400)),
+      reverseDuration: .custom(duration: const Duration(milliseconds: 180)),
+      curve: Curves.linear,
+      reverseCurve: Curves.easeIn,
+    );
     final suppliedSurfaceAnimation = MateoSurfaceAnimation.transform(
-      target: surfaceTransformTarget(transformId, duration: const Duration(milliseconds: 400), curve: Curves.linear),
+      target: target,
       contentEffects: const [.crossfade()],
     );
     unawaited(
@@ -166,7 +170,9 @@ void main() {
     expect(surfaceAnimation.target, same((suppliedSurfaceAnimation as MateoSurfaceAnimationTransform).target));
     expect(surfaceAnimation, same(suppliedSurfaceAnimation));
     final route = ModalRoute.of(tester.element(find.byType(MateoMenu)))!;
-    expect(route.transitionDuration, suppliedSurfaceAnimation.duration);
+    expect(route.transitionDuration, const Duration(milliseconds: 400));
+    expect(route.reverseTransitionDuration, const Duration(milliseconds: 180));
+    expect(surfaceAnimation.reverseCurve, Curves.easeIn);
     navigator.currentState!.pop();
     await tester.pumpAndSettle();
     expect(find.byType(MateoMenu), findsNothing);

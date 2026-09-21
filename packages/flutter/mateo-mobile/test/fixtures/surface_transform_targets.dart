@@ -9,5 +9,8 @@ MateoTransformTarget surfaceTransformTarget(
   Curve curve = Curves.easeOutCubic,
 }) => _targets.putIfAbsent(
   (scenario, duration, curve),
-  () => MateoTransformTarget(duration: duration, curve: curve),
+  () => MateoTransformTarget(
+    duration: .custom(duration: duration),
+    curve: curve,
+  ),
 );

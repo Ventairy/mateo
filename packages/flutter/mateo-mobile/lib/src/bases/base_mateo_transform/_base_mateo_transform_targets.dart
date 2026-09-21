@@ -23,8 +23,10 @@ final class BaseMateoTransformTargets {
     _MateoTransformRelationship relationship,
   ) => MorphTarget(
     tag: (target: target, relationship: relationship),
-    duration: target.duration,
+    duration: target.duration.value,
+    reverseDuration: target.reverseDuration.value,
     curve: target.curve,
+    reverseCurve: target.reverseCurve,
   );
 
   final MorphTarget surfaceToSurface;

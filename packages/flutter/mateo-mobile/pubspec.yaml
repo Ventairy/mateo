@@ -19,7 +19,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.3
-  oh_my_flutter: ^0.24.0
+  oh_my_flutter: ^0.25.0
   slang: ^4.19.2
 
 dev_dependencies:

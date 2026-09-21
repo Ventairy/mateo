@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:ui' show Tristate;
 
 import 'package:flutter/rendering.dart';
@@ -116,6 +117,51 @@ void main() {
     expect(tester.getSize(find.byType(MateoSurface)).width, lessThan(300));
   });
   for (final density in MateoMenuDensity.values) {
+    for (final direction in TextDirection.values) {
+      testWidgets('when $density in $direction has tall leading content, it should preserve every panel inset', (
+        tester,
+      ) async {
+        const leadingKey = ValueKey('tall-leading');
+        const item = MateoMenuOptionsPresentationItem(
+          leading: SizedBox(key: leadingKey, width: 90, height: 90),
+          principal: Text('Option'),
+          supporting: Text('Supporting'),
+        );
+        final selected = <MateoMenuOptionsPresentationItem>[];
+
+        await tester.pumpWidget(
+          host(
+            MateoMenu(
+              presentation: .options(density: density, items: const [item]),
+              onItemPressed: selected.add,
+            ),
+            direction: direction,
+          ),
+        );
+
+        final panel = tester.getRect(find.byType(MateoSurface));
+        final leading = tester.getRect(find.byKey(leadingKey));
+        final principal = tester.getRect(find.text('Option'));
+        final supporting = tester.getRect(find.text('Supporting'));
+        final visibleLeft = [leading.left, principal.left, supporting.left].reduce(math.min);
+        final visibleRight = [leading.right, principal.right, supporting.right].reduce(math.max);
+        expect(leading.top - panel.top, density.verticalPadding);
+        expect(panel.bottom - leading.bottom, density.verticalPadding);
+        expect(visibleLeft - panel.left, greaterThanOrEqualTo(density.horizontalPadding));
+        expect(panel.right - visibleRight, greaterThanOrEqualTo(density.horizontalPadding));
+        expect(
+          direction == TextDirection.ltr ? leading.left - panel.left : panel.right - leading.right,
+          density.horizontalPadding,
+        );
+
+        await tester.tapAt(Offset(leading.center.dx, panel.top + 1));
+        await tester.pumpAndSettle();
+        await tester.tapAt(Offset(leading.center.dx, panel.bottom - 1));
+        await tester.pumpAndSettle();
+        expect(selected, [item, item]);
+        expect(tester.takeException(), isNull);
+      });
+    }
     testWidgets('when $density has short content, it should fit content and fill available width', (tester) async {
       Widget menu({MateoMenuWidth width = .fit}) => MateoMenu(
         presentation: .options(

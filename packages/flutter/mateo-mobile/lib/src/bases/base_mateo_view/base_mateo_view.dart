@@ -201,22 +201,26 @@ class _BaseMateoViewState extends State<BaseMateoView> {
           shape: kSheetToViewTransformAnimation.shape?.border ?? shape,
           contentEffects: kSheetToViewTransformAnimation.contentEffects,
         ),
-      if (widget.animation case final animation?) ...[
-        BaseMateoTransformCandidate.view(
-          target: BaseMateoTransformTargets(
-            animation.target,
-          ).viewToView,
-          shape: animation.shape?.border ?? shape,
-          contentEffects: animation.contentEffects,
-        ),
-        BaseMateoTransformCandidate.view(
-          target: BaseMateoTransformTargets(
-            animation.target,
-          ).surfaceToView,
-          shape: animation.shape?.border ?? shape,
-          contentEffects: animation.contentEffects,
-        ),
-      ],
+      ...switch (widget.animation) {
+        null => <BaseMateoTransformCandidate>[],
+        MateoViewAnimationTransform(
+          :final target,
+          shape: final animationShape,
+          :final contentEffects,
+        ) =>
+          [
+            BaseMateoTransformCandidate.view(
+              target: BaseMateoTransformTargets(target).viewToView,
+              shape: animationShape?.border ?? shape,
+              contentEffects: contentEffects,
+            ),
+            BaseMateoTransformCandidate.view(
+              target: BaseMateoTransformTargets(target).surfaceToView,
+              shape: animationShape?.border ?? shape,
+              contentEffects: contentEffects,
+            ),
+          ],
+      },
     ];
     if (candidates.isEmpty) return presentation;
 

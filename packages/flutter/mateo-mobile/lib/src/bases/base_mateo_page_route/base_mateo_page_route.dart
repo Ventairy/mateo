@@ -7,10 +7,14 @@ import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
 abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   BaseMateoPageRoute({required MateoPage<T> page, required this.reducedMotion}) : super(settings: page);
 
-  void useSurfaceTransition({required Route<dynamic> sourceRoute, required Duration duration}) {
+  void useSurfaceTransition({
+    required Route<dynamic> sourceRoute,
+    required Duration forwardDuration,
+    required Duration reverseDuration,
+  }) {
     _surfaceTransitionSourceRoute = sourceRoute;
     disablePrimaryVisualMotion();
-    setTransitionDurations(forward: duration, reverse: duration);
+    setTransitionDurations(forward: forwardDuration, reverse: reverseDuration);
   }
 
   bool _isPrimaryVisualMotionDisabled = false;

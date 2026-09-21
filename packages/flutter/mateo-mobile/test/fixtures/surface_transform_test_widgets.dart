@@ -98,9 +98,13 @@ Widget surfaceTransformEndpoint({
   );
 }
 
-PageRoute<void> surfaceTransformRoute(Widget child, {Duration duration = Duration.zero}) => PageRouteBuilder<void>(
+PageRoute<void> surfaceTransformRoute(
+  Widget child, {
+  Duration duration = Duration.zero,
+  Duration? reverseDuration,
+}) => PageRouteBuilder<void>(
   transitionDuration: duration,
-  reverseTransitionDuration: duration,
+  reverseTransitionDuration: reverseDuration ?? duration,
   pageBuilder: (context, animation, secondaryAnimation) => child,
 );
 
@@ -109,10 +113,15 @@ Future<void> startSurfaceTransformAnimationFlight(
   NavigatorState navigator,
   Widget destination, {
   Duration routeDuration = Duration.zero,
+  Duration? routeReverseDuration,
   bool prepareOffstage = false,
 }) async {
   // Navigation completes on pop, not on landing.
-  final route = surfaceTransformRoute(destination, duration: routeDuration);
+  final route = surfaceTransformRoute(
+    destination,
+    duration: routeDuration,
+    reverseDuration: routeReverseDuration,
+  );
   navigator.push<void>(route);
   if (prepareOffstage) route.offstage = true;
   await tester.pump();
