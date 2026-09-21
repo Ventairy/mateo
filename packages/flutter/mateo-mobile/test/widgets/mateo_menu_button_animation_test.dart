@@ -50,8 +50,10 @@ void main() {
       final trigger = tester.widget<BaseMateoSurface>(find.byType(BaseMateoSurface)).animation;
       if (animation case MateoMenuButtonAnimationTransform()) {
         final transform = trigger as MateoSurfaceAnimationTransform;
-        expect(transform.duration, animation.duration);
+        expect(transform.duration, MateoTransformDuration.custom(duration: animation.duration));
+        expect(transform.reverseDuration, transform.duration);
         expect(transform.curve, animation.curve);
+        expect(transform.reverseCurve, transform.curve);
         expect(identical(transform.contentEffects, animation.buttonContentEffects), isTrue);
       } else {
         expect(trigger, const MateoSurfaceAnimation.none());
@@ -66,8 +68,10 @@ void main() {
       switch (animation) {
         case MateoMenuButtonAnimationTransform():
           final transform = surface as MateoSurfaceAnimationTransform;
-          expect(transform.duration, animation.duration);
+          expect(transform.duration, MateoTransformDuration.custom(duration: animation.duration));
+          expect(transform.reverseDuration, transform.duration);
           expect(transform.curve, animation.curve);
+          expect(transform.reverseCurve, transform.curve);
           expect(identical(transform.contentEffects, animation.menuContentEffects), isTrue);
           expect(route.transitionDuration, animation.duration);
           expect(route.reverseTransitionDuration, animation.duration);

@@ -41,7 +41,7 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
 
   double get _iconSizeWithBackground => switch (density) {
     .compact => 34,
-    .standard => 44,
+    .standard => 48,
   };
 
   double get _principalFontSize => switch (density) {

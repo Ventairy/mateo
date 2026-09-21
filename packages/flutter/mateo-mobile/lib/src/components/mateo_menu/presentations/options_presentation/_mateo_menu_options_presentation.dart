@@ -14,14 +14,14 @@ final class _MateoMenuOptionsPresentation extends MateoMenuPresentation {
 
   double get _radius => switch (density) {
     .compact => 34,
-    .standard => 38,
+    .standard => 40,
   };
 
   double _itemGap(int index) {
     final hasSupporting = items[index].supporting != null || items[index + 1].supporting != null;
     return switch (density) {
       .compact => hasSupporting ? 12 : 8,
-      .standard => hasSupporting ? 24 : 16,
+      .standard => hasSupporting ? 18 : 18,
     };
   }
 
