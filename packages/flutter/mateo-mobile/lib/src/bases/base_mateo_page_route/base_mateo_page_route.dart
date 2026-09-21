@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
@@ -49,6 +50,7 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
 
   bool reducedMotion;
   bool _disposed = false;
+  bool _primaryVisualMotionWasRestored = false;
   bool _settlementScheduled = false;
   MateoPage<T> get page => settings as MateoPage<T>;
   Widget buildContent(BuildContext context) => page.child;
@@ -72,8 +74,30 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
 
     _surfaceTransitionSourceRoute = null;
     _isPrimaryVisualMotionDisabled = false;
+    _primaryVisualMotionWasRestored = true;
     _transitionDurations = null;
     changedInternalState();
+  }
+
+  @override
+  bool didPop(T? result) {
+    final accepted = super.didPop(result);
+    if (!accepted) return false;
+
+    final restartAfterFrame =
+        _primaryVisualMotionWasRestored &&
+        SchedulerBinding.instance.schedulerPhase.index > SchedulerPhase.idle.index &&
+        SchedulerBinding.instance.schedulerPhase.index < SchedulerPhase.postFrameCallbacks.index;
+    _primaryVisualMotionWasRestored = false;
+    if (!restartAfterFrame) return true;
+
+    final animationController = controller;
+    animationController?.stop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_disposed || animationController == null) return;
+      animationController.reverse();
+    });
+    return accepted;
   }
 
   @override

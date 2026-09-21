@@ -19,7 +19,7 @@ part '_mateo_predictive_back_gesture_detector.dart';
 /// Explicit transitions support Android predictive back and omit iOS edge-swipe.
 ///
 /// ```dart
-/// const MateoPage<void>(transition: .wash(), child: Text('Details'))
+/// const MateoPage<void>(transition: .slide(), child: Text('Details'))
 /// ```
 class MateoPage<T> extends Page<T> {
   /// Creates a page with [child] as its route content.

@@ -9,10 +9,11 @@ import 'package:mateo_mobile/src/bases/base_mateo_page_route/base_mateo_page_rou
 import 'package:mateo_mobile/src/foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 
 const ValueKey<String> _pageKey = .new('page');
+const ValueKey<String> _declarativePageKey = .new('declarative-page');
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
-    for (final transition in <MateoPageTransition?>[null, const .wash(), const .push()]) {
+    for (final transition in <MateoPageTransition?>[null, const .wash(), const .push(), const .slide()]) {
       _testWidgets('$platform $transition suppresses push and pop above a sheet', (tester) async {
         debugDefaultTargetPlatformOverride = platform;
         final navigator = await _openSheet(tester);
@@ -66,6 +67,46 @@ void main() {
       expect(tester.getTopLeft(find.byKey(_pageKey)).dy, greaterThan(0));
       await tester.pumpAndSettle();
       expect(find.byKey(_pageKey), findsNothing);
+      expect(find.byType(MateoSheetView), findsNothing);
+      expect(find.text('Home'), findsOneWidget);
+    });
+
+    _testWidgets('$platform restored declarative pop starts from the completed frame', (tester) async {
+      debugDefaultTargetPlatformOverride = platform;
+      final harnessKey = GlobalKey<_DeclarativeNavigatorHarnessState>();
+      await tester.pumpWidget(
+        MateoApp(
+          theme: MateoThemeData.light(
+            accentColor: const Color(0xFF4A5CFF),
+            onAccent: const Color(0xFFFFFFFF),
+          ),
+          home: _DeclarativeNavigatorHarness(key: harnessKey),
+        ),
+      );
+      unawaited(
+        showMateoSheet<void>(
+          context: tester.element(find.text('Home')),
+          view: const MateoSheetView(
+            surface: MateoSheetViewSurface(child: SizedBox(height: 180, child: Text('Sheet'))),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      harnessKey.currentState!._showPage();
+      await tester.pumpAndSettle();
+      final route = ModalRoute.of(tester.element(find.byKey(_declarativePageKey)))!;
+      final renderedValues = <double>[];
+      route.animation!.addListener(() => renderedValues.add(route.animation!.value));
+
+      await tester.tap(find.byKey(_declarativePageKey));
+      await tester.pump();
+      await tester.pump();
+      expect(route.animation!.status, AnimationStatus.reverse);
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(renderedValues.first, 1);
+      await tester.pumpAndSettle();
+      expect(find.byKey(_declarativePageKey), findsNothing);
       expect(find.byType(MateoSheetView), findsNothing);
       expect(find.text('Home'), findsOneWidget);
     });
@@ -222,4 +263,49 @@ void _testWidgets(String description, WidgetTesterCallback callback) {
       debugDefaultTargetPlatformOverride = null;
     }
   });
+}
+
+class _DeclarativeNavigatorHarness extends StatefulWidget {
+  const _DeclarativeNavigatorHarness({super.key});
+
+  @override
+  State<_DeclarativeNavigatorHarness> createState() => _DeclarativeNavigatorHarnessState();
+}
+
+class _DeclarativeNavigatorHarnessState extends State<_DeclarativeNavigatorHarness> {
+  bool _isPageShown = false;
+
+  void _showPage() => setState(() => _isPageShown = true);
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      observers: [MateoNavigatorObserver()],
+      pages: [
+        const MateoPage<void>(key: ValueKey('home-page'), child: Text('Home')),
+        if (_isPageShown)
+          MateoPage<void>(
+            key: const ValueKey('detail-page'),
+            transition: const .slide(),
+            child: Builder(
+              builder: (context) => GestureDetector(
+                key: _declarativePageKey,
+                behavior: .opaque,
+                onTap: () {
+                  final route = ModalRoute.of(context)!;
+                  Navigator.of(context)
+                    ..removeRouteBelow(route)
+                    ..pop();
+                },
+                child: const SizedBox.expand(),
+              ),
+            ),
+          ),
+      ],
+      onDidRemovePage: (page) {
+        if (page.key != const ValueKey('detail-page') || !_isPageShown) return;
+        setState(() => _isPageShown = false);
+      },
+    );
+  }
 }
