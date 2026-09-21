@@ -229,6 +229,38 @@ void main() {
     expect(find.text('Sheet'), findsOneWidget);
   });
 
+  _test('rapid return uses the authored return curve from its visible progress', (tester) async {
+    final navigator = await _sheet(tester);
+    final sheetBounds = tester.getRect(find.byType(MateoSheetViewSurface));
+    _push(navigator);
+    await _start(tester);
+    final destinationBounds = tester.getRect(
+      find.ancestor(
+        of: find.text('Destination'),
+        matching: find.byType(MateoViewSurface),
+      ),
+    );
+    await tester.pump(sheetToViewTransformDurations.forward ~/ 4);
+    final forwardProgress = kSheetToViewTransformAnimation.curve.transform(0.25);
+
+    navigator.pop();
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(sheetToViewTransformDurations.reverse ~/ 8);
+    final expectedProgress = forwardProgress * (1 - kSheetToViewTransformAnimation.reverseCurve.transform(0.5));
+    final expectedHeight = ui.lerpDouble(
+      sheetBounds.height,
+      destinationBounds.height,
+      expectedProgress,
+    )!;
+
+    expect(
+      tester.getRect(surfaceFlight).height,
+      closeTo(expectedHeight, 0.001),
+    );
+    await tester.pumpAndSettle();
+  });
+
   _test('pop veto retains the destination', (tester) async {
     final navigator = await _sheet(tester);
     final route = const MateoPage<void>(

@@ -7,12 +7,24 @@ import '../mateo_transform_target/mateo_transform_target.dart';
 import '../mateo_view_animation/mateo_view_animation.dart';
 
 part '_sheet_to_view_curve.dart';
+part '_view_to_sheet_curve.dart';
+
+// One second normalizes the spring to curve progress; the route owns timing.
+final _sheetViewSpring = SpringSimulation(
+  SpringDescription.withDurationAndBounce(
+    duration: const Duration(seconds: 1),
+  ),
+  0,
+  1,
+  0,
+);
 
 @internal
 final MateoViewAnimationTransform kSheetToViewTransformAnimation = .new(
   target: MateoTransformTarget(
     duration: .custom(duration: const Duration(milliseconds: 280)),
     curve: const _SheetToViewCurve(),
+    reverseCurve: const _ViewToSheetCurve(),
   ),
   shape: const .rounded(radius: 42),
   contentEffects: const [.crossfade()],
