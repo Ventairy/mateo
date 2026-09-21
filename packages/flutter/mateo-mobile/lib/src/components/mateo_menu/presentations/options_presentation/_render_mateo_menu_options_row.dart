@@ -36,7 +36,9 @@ class _RenderMateoMenuOptionsRow extends RenderFlex {
 
     final leadingParentData = leading.parentData! as FlexParentData;
     final contentParentData = content.parentData! as FlexParentData;
-    leadingParentData.offset = Offset(leadingParentData.offset.dx, contentParentData.offset.dy);
+    final top = math.min(leadingParentData.offset.dy, contentParentData.offset.dy);
+    leadingParentData.offset = Offset(leadingParentData.offset.dx, top);
+    contentParentData.offset = Offset(contentParentData.offset.dx, top);
   }
 
   bool _hasMultipleLines(RenderBox content) {
