@@ -14,6 +14,7 @@ import '../../bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
 import '../../bases/base_mateo_edge_fade/mateo_edge_fade_band.dart';
 import '../../bases/base_mateo_edge_fade/mateo_edge_fade_profile.dart';
 import '../../foundation/mateo_elevation.dart';
+import '../../foundation/mateo_environment/mateo_environment.dart';
 import '../../i18n/mateo_translations.dart';
 import '../../theme/mateo_theme.dart';
 import '../../theme/mateo_typography.dart';

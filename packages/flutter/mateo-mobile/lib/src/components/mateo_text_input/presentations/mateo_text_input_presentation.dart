@@ -17,8 +17,11 @@ sealed class MateoTextInputPresentation extends StatefulWidget {
   }) = _MateoSearchTextInputPresentation;
 
   /// Creates a phone-number input presentation.
+  ///
+  /// When [initialCountry] is omitted, Mateo selects a likely country from
+  /// device knowledge, the resolved app locale, or a fallback (United States)
   const factory MateoTextInputPresentation.phone({
-    required Country initialCountry,
+    Country? initialCountry,
     MateoTextInputSize size,
   }) = _MateoPhoneTextInputPresentation;
 

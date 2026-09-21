@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart' show MorphNavigatorObserver;
 
 import '../../components/mateo_toast/mateo_toast_host.dart' show MateoToastHost;
+import '../../foundation/mateo_environment/mateo_environment.dart';
 import '../../foundation/mateo_navigator_observer.dart';
 import '../../theme/mateo_theme.dart';
 import '../../theme/mateo_theme_data.dart';
@@ -181,40 +182,42 @@ class _MateoAppState extends State<MateoApp> {
   );
 
   @override
-  Widget build(BuildContext context) => MateoTheme(
-    data: widget.theme,
-    child: widget.routerConfig != null
-        ? WidgetsApp.router(
-            routerConfig: widget.routerConfig,
-            title: widget.title,
-            color: widget.theme.colorScheme.accent,
-            builder: _buildContent,
-            locale: widget.locale,
-            supportedLocales: widget.supportedLocales,
-            localizationsDelegates: [...?widget.localizationsDelegates, GlobalWidgetsLocalizations.delegate],
-            localeListResolutionCallback: widget.localeListResolutionCallback,
-            restorationScopeId: widget.restorationScopeId,
-            shortcuts: widget.shortcuts,
-            actions: widget.actions,
-            debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-          )
-        : WidgetsApp(
-            home: widget.home,
-            initialRoute: Navigator.defaultRouteName,
-            pageRouteBuilder: _buildHomeRoute,
-            navigatorKey: widget.navigatorKey,
-            navigatorObservers: _navigatorObservers,
-            title: widget.title,
-            color: widget.theme.colorScheme.accent,
-            builder: _buildContent,
-            locale: widget.locale,
-            supportedLocales: widget.supportedLocales,
-            localizationsDelegates: [...?widget.localizationsDelegates, GlobalWidgetsLocalizations.delegate],
-            localeListResolutionCallback: widget.localeListResolutionCallback,
-            restorationScopeId: widget.restorationScopeId,
-            shortcuts: widget.shortcuts,
-            actions: widget.actions,
-            debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-          ),
+  Widget build(BuildContext context) => MateoEnvironment(
+    child: MateoTheme(
+      data: widget.theme,
+      child: widget.routerConfig != null
+          ? WidgetsApp.router(
+              routerConfig: widget.routerConfig,
+              title: widget.title,
+              color: widget.theme.colorScheme.accent,
+              builder: _buildContent,
+              locale: widget.locale,
+              supportedLocales: widget.supportedLocales,
+              localizationsDelegates: [...?widget.localizationsDelegates, GlobalWidgetsLocalizations.delegate],
+              localeListResolutionCallback: widget.localeListResolutionCallback,
+              restorationScopeId: widget.restorationScopeId,
+              shortcuts: widget.shortcuts,
+              actions: widget.actions,
+              debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+            )
+          : WidgetsApp(
+              home: widget.home,
+              initialRoute: Navigator.defaultRouteName,
+              pageRouteBuilder: _buildHomeRoute,
+              navigatorKey: widget.navigatorKey,
+              navigatorObservers: _navigatorObservers,
+              title: widget.title,
+              color: widget.theme.colorScheme.accent,
+              builder: _buildContent,
+              locale: widget.locale,
+              supportedLocales: widget.supportedLocales,
+              localizationsDelegates: [...?widget.localizationsDelegates, GlobalWidgetsLocalizations.delegate],
+              localeListResolutionCallback: widget.localeListResolutionCallback,
+              restorationScopeId: widget.restorationScopeId,
+              shortcuts: widget.shortcuts,
+              actions: widget.actions,
+              debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+            ),
+    ),
   );
 }

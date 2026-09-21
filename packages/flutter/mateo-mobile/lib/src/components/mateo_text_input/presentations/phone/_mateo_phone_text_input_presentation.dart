@@ -2,11 +2,11 @@ part of '../../mateo_text_input.dart';
 
 final class _MateoPhoneTextInputPresentation extends MateoTextInputPresentation {
   const _MateoPhoneTextInputPresentation({
-    required this.initialCountry,
+    this.initialCountry,
     this.size = .standard,
   }) : super._();
 
-  final Country initialCountry;
+  final Country? initialCountry;
 
   @override
   final MateoTextInputSize size;
@@ -26,15 +26,15 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   late final TextInputFormatter _textInputFormatter;
   late PhoneNumberTextInputFormatterResult _latestFormattingResult;
   TextEditingController? _initializedController;
+  bool _hasPhoneNumberFormatter = false;
+  bool _countryConfigurationChanged = true;
+  bool _hasUserInteracted = false;
 
   static const _callingCodeTrailingPadding = 4.0;
 
   @override
   void initState() {
     super.initState();
-    _phoneNumberFormatter = PhoneNumberTextInputFormatter(
-      country: widget.initialCountry,
-    );
     _textInputFormatter = TextInputFormatter.withFunction(
       _formatPhoneNumberEdit,
     );
@@ -44,9 +44,47 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   void didUpdateWidget(_MateoPhoneTextInputPresentation oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialCountry == widget.initialCountry) return;
-    _phoneNumberFormatter = PhoneNumberTextInputFormatter(
-      country: widget.initialCountry,
-    );
+    _countryConfigurationChanged = true;
+    _hasUserInteracted = false;
+    _initializedController = null;
+  }
+
+  Country _automaticCountryOf(BuildContext context) {
+    final environmentCountry = MateoEnvironment.likelyPhoneCountryOf(context);
+    if (environmentCountry != null) return environmentCountry;
+
+    final countryCode = Localizations.maybeLocaleOf(context)?.countryCode;
+    final localeCountry = countryCode == null ? null : Country.tryFromIso2(countryCode);
+    if (localeCountry?.callingCode != null) return localeCountry!;
+    return .unitedStates;
+  }
+
+  void _synchronizeCountry(
+    BuildContext context,
+    _MateoTextInputPresentationScope scope,
+  ) {
+    final explicitCountry = widget.initialCountry;
+    final resolvedCountry = explicitCountry ?? _automaticCountryOf(context);
+
+    if (!_hasPhoneNumberFormatter || _countryConfigurationChanged) {
+      _replaceInitialCountry(resolvedCountry);
+      _countryConfigurationChanged = false;
+      return;
+    }
+
+    if (explicitCountry != null ||
+        _hasUserInteracted ||
+        scope.controller.text.isNotEmpty ||
+        _phoneNumberFormatter.country == resolvedCountry) {
+      return;
+    }
+
+    _replaceInitialCountry(resolvedCountry);
+  }
+
+  void _replaceInitialCountry(Country country) {
+    _phoneNumberFormatter = PhoneNumberTextInputFormatter(country: country);
+    _hasPhoneNumberFormatter = true;
     _initializedController = null;
   }
 
@@ -67,6 +105,7 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
+    _hasUserInteracted = true;
     final result = _phoneNumberFormatter.formatEditUpdateWithResult(
       oldValue,
       newValue,
@@ -89,6 +128,7 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   }
 
   void _handleCountryChanged(Country selectedCountry) {
+    _hasUserInteracted = true;
     final scope = _MateoTextInputPresentationScope.of(context);
     _phoneNumberFormatter = PhoneNumberTextInputFormatter(
       country: selectedCountry,
@@ -105,6 +145,7 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   @override
   Widget build(BuildContext context) {
     final scope = _MateoTextInputPresentationScope.of(context);
+    _synchronizeCountry(context, scope);
     _initializeController(scope);
     final theme = MateoTheme.of(context);
     final plainColors = theme.colorScheme.textInputs.plain;

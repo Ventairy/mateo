@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/gen/flags.g.dart';
+import 'package:oh_my_flutter/src/device/device_locale/device_locale_platform.dart';
+import 'package:oh_my_flutter/src/device/device_sim/device_sim_platform.dart';
+
+import '../fixtures/fake_device_country_platform.dart';
 
 final _theme = MateoThemeData.light(
   accentColor: const Color(0xFFFF4A4B),
@@ -27,6 +33,165 @@ Widget _host(
 );
 
 void main() {
+  testWidgets(
+    'omitted country uses the app locale without native test channels',
+    (tester) async {
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            autofocus: false,
+            placeholder: 'Phone number',
+            presentation: const .phone(),
+            onChanged: (_) {},
+          ),
+          locale: const Locale('pt', 'BR'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('+55'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('omitted country falls back to the United States', (tester) async {
+    final originalSimPlatform = DeviceSimPlatform.instance;
+    final originalLocalePlatform = DeviceLocalePlatform.instance;
+    addTearDown(() {
+      DeviceSimPlatform.instance = originalSimPlatform;
+      DeviceLocalePlatform.instance = originalLocalePlatform;
+    });
+    DeviceSimPlatform.instance = FakeDeviceCountryPlatform(() async => null);
+    DeviceLocalePlatform.instance = FakeDeviceCountryPlatform(() async => null);
+
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(),
+          onChanged: (_) {},
+        ),
+        locale: const Locale('en'),
+      ),
+    );
+
+    expect(find.text('+1'), findsOneWidget);
+  });
+
+  testWidgets(
+    'untouched automatic country updates when SIM knowledge arrives',
+    (tester) async {
+      final originalSimPlatform = DeviceSimPlatform.instance;
+      final originalLocalePlatform = DeviceLocalePlatform.instance;
+      addTearDown(() {
+        DeviceSimPlatform.instance = originalSimPlatform;
+        DeviceLocalePlatform.instance = originalLocalePlatform;
+      });
+      final simCountry = Completer<String?>();
+      final localePlatform = FakeDeviceCountryPlatform(() async => 'CA');
+      DeviceSimPlatform.instance = FakeDeviceCountryPlatform(
+        () => simCountry.future,
+      );
+      DeviceLocalePlatform.instance = localePlatform;
+
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            autofocus: false,
+            placeholder: 'Phone number',
+            presentation: const .phone(),
+            onChanged: (_) {},
+          ),
+          locale: const Locale('pt', 'BR'),
+        ),
+      );
+
+      expect(find.text('+55'), findsOneWidget);
+
+      simCountry.complete('US');
+      await tester.pumpAndSettle();
+
+      expect(find.text('+1'), findsOneWidget);
+      expect(localePlatform.calls, 0);
+    },
+  );
+
+  testWidgets(
+    'automatic country does not replace a country after user input',
+    (tester) async {
+      final originalSimPlatform = DeviceSimPlatform.instance;
+      final originalLocalePlatform = DeviceLocalePlatform.instance;
+      addTearDown(() {
+        DeviceSimPlatform.instance = originalSimPlatform;
+        DeviceLocalePlatform.instance = originalLocalePlatform;
+      });
+      final simCountry = Completer<String?>();
+      DeviceSimPlatform.instance = FakeDeviceCountryPlatform(
+        () => simCountry.future,
+      );
+      DeviceLocalePlatform.instance = FakeDeviceCountryPlatform(
+        () async => null,
+      );
+
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            autofocus: false,
+            placeholder: 'Phone number',
+            presentation: const .phone(),
+            onChanged: (_) {},
+          ),
+          locale: const Locale('pt', 'BR'),
+        ),
+      );
+      await tester.enterText(find.byType(CupertinoTextField), '119');
+
+      simCountry.complete('US');
+      await tester.pumpAndSettle();
+
+      expect(find.text('+55'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'automatic country falls back from SIM to the device region',
+    (tester) async {
+      final originalSimPlatform = DeviceSimPlatform.instance;
+      final originalLocalePlatform = DeviceLocalePlatform.instance;
+      addTearDown(() {
+        DeviceSimPlatform.instance = originalSimPlatform;
+        DeviceLocalePlatform.instance = originalLocalePlatform;
+      });
+      final localeCountry = Completer<String?>();
+      DeviceSimPlatform.instance = FakeDeviceCountryPlatform(
+        () async => null,
+      );
+      DeviceLocalePlatform.instance = FakeDeviceCountryPlatform(
+        () => localeCountry.future,
+      );
+
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            autofocus: false,
+            placeholder: 'Phone number',
+            presentation: const .phone(),
+            onChanged: (_) {},
+          ),
+          locale: const Locale('pt', 'BR'),
+        ),
+      );
+
+      expect(find.text('+55'), findsOneWidget);
+
+      localeCountry.complete('US');
+      await tester.pumpAndSettle();
+
+      expect(find.text('+1'), findsOneWidget);
+    },
+  );
+
   testWidgets('language changes update an open picker without resetting input', (tester) async {
     final semantics = tester.ensureSemantics();
     final locale = ValueNotifier(const Locale('en', 'US'));
@@ -115,7 +280,7 @@ void main() {
   });
 
   test('phone presentation resolves its fixed treatment and defaults', () {
-    const presentation = MateoTextInputPresentation.phone(initialCountry: .brazil);
+    const presentation = MateoTextInputPresentation.phone();
 
     expect(presentation.variant, MateoTextInputVariant.plain);
     expect(presentation.elevation, 0);
