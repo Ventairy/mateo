@@ -39,6 +39,37 @@ void main() {
       });
     }
 
+    _testWidgets('$platform restores configured motion when the sheet below is removed', (tester) async {
+      debugDefaultTargetPlatformOverride = platform;
+      final navigator = await _openSheet(tester);
+      final route = const MateoPage<void>(
+        transition: .push(duration: Duration(milliseconds: 200)),
+        child: SizedBox.expand(key: _pageKey),
+      ).createRoute(navigator.context) as BaseMateoPageRoute<void>;
+      navigator.push(route);
+      await tester.pump();
+      expect(route.isPrimaryVisualMotionDisabled, isTrue);
+      expect(route.transitionDuration, kSheetToViewTransformAnimation.duration);
+      expect(route.reverseTransitionDuration, kSheetToViewTransformAnimation.duration);
+      await tester.pumpAndSettle();
+
+      navigator.removeRouteBelow(route);
+      expect(route.isPrimaryVisualMotionDisabled, isFalse);
+      expect(route.transitionDuration, const Duration(milliseconds: 200));
+      expect(route.reverseTransitionDuration, const Duration(milliseconds: 200));
+
+      navigator.pop();
+      await tester.pump();
+      expect(find.byType(MateoSheetView), findsNothing);
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(route.animation!.value, closeTo(0.75, 0.01));
+      expect(tester.getTopLeft(find.byKey(_pageKey)).dy, greaterThan(0));
+      await tester.pumpAndSettle();
+      expect(find.byKey(_pageKey), findsNothing);
+      expect(find.byType(MateoSheetView), findsNothing);
+      expect(find.text('Home'), findsOneWidget);
+    });
+
     for (final sheet in [false, true]) {
       _testWidgets('$platform suppresses motion only above a sheet, fullscreen=$sheet', (tester) async {
         debugDefaultTargetPlatformOverride = platform;

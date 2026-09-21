@@ -47,7 +47,10 @@ class MateoNavigatorObserver extends MorphNavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route is BaseMateoPageRoute && previousRoute is MateoSheetRoute) {
-      route.useSurfaceTransition(duration: kSheetToViewTransformAnimation.duration!);
+      route.useSurfaceTransition(
+        sourceRoute: previousRoute,
+        duration: kSheetToViewTransformAnimation.duration!,
+      );
     }
   }
 }

@@ -7,7 +7,8 @@ import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
 abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   BaseMateoPageRoute({required MateoPage<T> page, required this.reducedMotion}) : super(settings: page);
 
-  void useSurfaceTransition({required Duration duration}) {
+  void useSurfaceTransition({required Route<dynamic> sourceRoute, required Duration duration}) {
+    _surfaceTransitionSourceRoute = sourceRoute;
     disablePrimaryVisualMotion();
     setTransitionDurations(forward: duration, reverse: duration);
   }
@@ -24,6 +25,7 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
 
   ({Duration forward, Duration reverse})? _transitionDurations;
   ({Duration forward, Duration reverse})? get transitionDurations => _transitionDurations;
+  Route<dynamic>? _surfaceTransitionSourceRoute;
 
   void setTransitionDurations({required Duration forward, required Duration reverse}) {
     assert(!forward.isNegative && !reverse.isNegative, 'Transition durations must be nonnegative.');
@@ -57,6 +59,18 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   Color? get barrierColor => null;
   @override
   String? get barrierLabel => null;
+
+  @override
+  void didChangePrevious(Route<dynamic>? previousRoute) {
+    super.didChangePrevious(previousRoute);
+    final surfaceTransitionSourceRoute = _surfaceTransitionSourceRoute;
+    if (surfaceTransitionSourceRoute == null || identical(previousRoute, surfaceTransitionSourceRoute)) return;
+
+    _surfaceTransitionSourceRoute = null;
+    _isPrimaryVisualMotionDisabled = false;
+    _transitionDurations = null;
+    changedInternalState();
+  }
 
   @override
   void changedExternalState() {
