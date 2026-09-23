@@ -196,6 +196,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.ferrisWheel(<params>);
 /// ```
 /// ```dart
+/// $Icons.figureCropCircle(<params>);
+/// ```
+/// ```dart
 /// $Icons.flame(<params>);
 /// ```
 /// ```dart
@@ -896,6 +899,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _FerrisWheel(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `FigureCropCircle` widget from `figureCropCircle.svg`.
+  static Widget figureCropCircle({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _FigureCropCircle(
     key: key,
     width: width,
     height: height,
@@ -1805,6 +1823,11 @@ abstract final class $Icons {
       height: height,
     ),
     'ferris-wheel.svg' => ferrisWheel(key: key, width: width, height: height),
+    'figure-crop-circle.svg' => figureCropCircle(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'flame.svg' => flame(key: key, width: width, height: height),
     'fork-knife.svg' => forkKnife(key: key, width: width, height: height),
     'gas-station.svg' => gasStation(key: key, width: width, height: height),
@@ -8177,6 +8200,181 @@ class _FerrisWheelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FerrisWheelPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/figure-crop-circle.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _FigureCropCircle extends StatelessWidget with _DotdartSvgSizing {
+  const _FigureCropCircle({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _FigureCropCircle._svgWidth;
+
+  @override
+  double get svgNativeHeight => _FigureCropCircle._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _FigureCropCircle._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _FigureCropCircle._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _FigureCropCirclePainter(
+            mateoOpticalSizeColor:
+                mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _FigureCropCirclePainter extends CustomPainter {
+  _FigureCropCirclePainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.795934967,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.795934967,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.040650334,
+    2.040650334,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 0)
+    ..cubicTo(15.5234, 0, 20, 4.4772, 20, 10)
+    ..cubicTo(20, 15.5228, 15.5234, 20, 10, 20)
+    ..cubicTo(4.4766, 20, 0, 15.5228, 0, 10)
+    ..cubicTo(0, 4.4772, 4.4766, 0, 10, 0)
+    ..close()
+    ..moveTo(10, 13)
+    ..cubicTo(7.6055, 13, 5.6172, 14.0055, 4.2852, 15.5996)
+    ..cubicTo(5.7383, 17.081, 7.7618, 18, 10, 18)
+    ..cubicTo(12.2382, 18, 14.2617, 17.081, 15.7148, 15.5996)
+    ..cubicTo(14.3828, 14.0055, 12.3945, 13, 10, 13)
+    ..close()
+    ..moveTo(10, 4.75)
+    ..cubicTo(8.2045, 4.75, 6.75, 6.2051, 6.75, 8)
+    ..cubicTo(6.75, 9.7949, 8.2045, 11.25, 10, 11.25)
+    ..cubicTo(11.7955, 11.25, 13.25, 9.7949, 13.25, 8)
+    ..cubicTo(13.25, 6.2051, 11.7955, 4.75, 10, 4.75)
+    ..close();
+
+  static final Path __clip0 = _buildClip0();
+
+  static Path _buildClip0() {
+    final path = Path();
+    final clipShape0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+    path.addPath(
+      clipShape0,
+      Offset.zero,
+      matrix4: Float64List.fromList([
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        20.0,
+        0.0,
+        0.0,
+        1.0,
+      ]),
+    );
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _FigureCropCircle._viewBoxWidth;
+    final scaleY = size.height / _FigureCropCircle._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_FigureCropCircle._viewBoxMinX,
+        -_FigureCropCircle._viewBoxMinY,
+      );
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _FigureCropCirclePainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
