@@ -145,6 +145,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.chevronLeft(<params>);
 /// ```
 /// ```dart
+/// $Icons.circle(<params>);
+/// ```
+/// ```dart
 /// $Icons.circleBlock(<params>);
 /// ```
 /// ```dart
@@ -644,6 +647,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _ChevronLeft(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Circle` widget from `circle.svg`.
+  static Widget circle({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Circle(
     key: key,
     width: width,
     height: height,
@@ -1794,6 +1812,7 @@ abstract final class $Icons {
     'checkmark.svg' => checkmark(key: key, width: width, height: height),
     'chevron-down.svg' => chevronDown(key: key, width: width, height: height),
     'chevron-left.svg' => chevronLeft(key: key, width: width, height: height),
+    'circle.svg' => circle(key: key, width: width, height: height),
     'circle-block.svg' => circleBlock(key: key, width: width, height: height),
     'circle-check.svg' => circleCheck(key: key, width: width, height: height),
     'circle-info.svg' => circleInfo(key: key, width: width, height: height),
@@ -5164,6 +5183,166 @@ class _ChevronLeftPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChevronLeftPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/circle.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Circle extends StatelessWidget with _DotdartSvgSizing {
+  const _Circle({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Circle._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Circle._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Circle._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Circle._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CirclePainter(
+            mateoOpticalSizeColor:
+                mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CirclePainter extends CustomPainter {
+  _CirclePainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.774999966,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.774999966,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.250000338,
+    2.250000338,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 0)
+    ..cubicTo(4.4771, 0, 0, 4.4771, 0, 10)
+    ..cubicTo(0, 15.5228, 4.4771, 20, 10, 20)
+    ..cubicTo(15.5228, 20, 20, 15.5228, 20, 10)
+    ..cubicTo(20, 4.4771, 15.5228, 0, 10, 0)
+    ..close();
+
+  static final Path __clip0 = _buildClip0();
+
+  static Path _buildClip0() {
+    final path = Path();
+    final clipShape0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+    path.addPath(
+      clipShape0,
+      Offset.zero,
+      matrix4: Float64List.fromList([
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        20.0,
+        0.0,
+        0.0,
+        1.0,
+      ]),
+    );
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Circle._viewBoxWidth;
+    final scaleY = size.height / _Circle._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Circle._viewBoxMinX, -_Circle._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CirclePainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
