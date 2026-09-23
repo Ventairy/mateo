@@ -1,6 +1,7 @@
 part of 'mateo_icon.dart';
 
 /// An icon from the Mateo catalog.
+@RecordUse()
 enum MateoIconData {
   /// The arrow down icon.
   arrowDown,
@@ -267,9 +268,15 @@ enum MateoIconData {
   wrench,
 
   /// The plus signal icon.
-  plusSignal;
+  plusSignal,
 
-  Widget _build({Color? color}) => switch (this) {
+  /// The closed padlock icon.
+  padlock,
+
+  /// The open padlock icon.
+  padlockOpen;
+
+  Widget _buildSvg({Color? color}) => switch (this) {
     arrowDown => $Icons.arrowDown(mateoOpticalSizeColor: color),
     arrowLeft => $Icons.arrowLeft(mateoOpticalSizeColor: color),
     arrowRight => $Icons.arrowRight(mateoOpticalSizeColor: color),
@@ -326,6 +333,8 @@ enum MateoIconData {
     matiniGlass => $Icons.matiniGlass(mateoOpticalSizeColor: color),
     medicalCross => $Icons.medicalCross(mateoOpticalSizeColor: color),
     numbers => $Icons.numbers(mateoOpticalSizeColor: color),
+    padlock => $Icons.padlock(mateoOpticalSizeColor: color),
+    padlockOpen => $Icons.padlockOpen(mateoOpticalSizeColor: color),
     paperPlaneUpRight => $Icons.paperPlaneUpRight(mateoOpticalSizeColor: color),
     parkingSign => $Icons.parkingSign(mateoOpticalSizeColor: color),
     pencil => $Icons.pencil(mateoOpticalSizeColor: color),
@@ -359,5 +368,15 @@ enum MateoIconData {
     wineGlass => $Icons.wineGlass(mateoOpticalSizeColor: color),
     wrench => $Icons.wrench(mateoOpticalSizeColor: color),
     plusSignal => $Icons.plusSignal(mateoOpticalSizeColor: color),
+  };
+
+  Widget _buildThreeD() => switch (this) {
+    bidirecionalHorizontalArrow => $ThreeDIcons.bidirecionalHorizontalArrow(package: 'mateo_mobile'),
+    handshake => $ThreeDIcons.handshake(package: 'mateo_mobile'),
+    padlock => $ThreeDIcons.padlock(package: 'mateo_mobile'),
+    padlockOpen => $ThreeDIcons.padlockOpen(package: 'mateo_mobile'),
+    pencil => $ThreeDIcons.pencil(package: 'mateo_mobile'),
+    pointerHandUp => $ThreeDIcons.pointerHandUp(package: 'mateo_mobile'),
+    _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
   };
 }

@@ -14,6 +14,7 @@ export 'src/components/mateo_drag_resistance/mateo_drag_resistance.dart' show Ma
 export 'src/components/mateo_drag_resistance/mateo_drag_resistance_config.dart' show MateoDragResistanceConfig;
 export 'src/components/mateo_icon/mateo_icon.dart' show MateoIcon, MateoIconData;
 export 'src/components/mateo_icon/mateo_icon_scope.dart' show MateoIconScope;
+export 'src/components/mateo_icon/mateo_icon_style.dart' show MateoIconStyle;
 export 'src/components/mateo_loading_indicator/mateo_loading_indicator.dart'
     show MateoLoadingIndicator, MateoLoadingIndicatorPresentation;
 export 'src/components/mateo_menu/mateo_menu.dart' show MateoMenu, MateoMenuPresentation;

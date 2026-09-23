@@ -271,6 +271,11 @@ void main() {
     expect(find.byType(Transform), findsNothing);
   });
 
+  testWidgets('when 3D artwork is unavailable, it should throw for that icon', (tester) async {
+    await tester.pumpWidget(host(const MateoIcon(.cross, style: .threeD)));
+    expect(tester.takeException(), isA<UnsupportedError>());
+  });
+
   test('when dimensions are invalid, it should reject them', () {
     expect(() => MateoIcon(.cross, size: -1), throwsAssertionError);
     expect(() => MateoIcon(.cross, size: double.nan), throwsAssertionError);

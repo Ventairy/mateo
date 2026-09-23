@@ -1,8 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart' show RecordUse;
 
 import '../../gen/icons.g.dart';
+import '../../gen/three_d_icons.g.dart';
 import '../../theme/mateo_theme.dart';
 import 'mateo_icon_scope.dart';
+import 'mateo_icon_style.dart';
 
 part 'mateo_icon_data.dart';
 
@@ -21,11 +24,13 @@ part 'mateo_icon_data.dart';
 ///
 /// See the [icon guidance](https://github.com/Ventairy/mateo/blob/main/design-system/foundation/icons.md)
 /// for sizing, color, and accessibility.
-class MateoIcon extends StatelessWidget {
+@RecordUse()
+final class MateoIcon extends StatelessWidget {
   /// Creates a catalog icon with optional size, foreground, background, and label.
   const MateoIcon(
     this.icon, {
     super.key,
+    this.style = .svg,
     this.size,
     this.color,
     this.backgroundColor,
@@ -38,6 +43,9 @@ class MateoIcon extends StatelessWidget {
   /// The catalog artwork to display.
   final MateoIconData icon;
 
+  /// The visual treatment. Icons without the style throw when built
+  final MateoIconStyle style;
+
   /// The requested square size, including the background when present.
   ///
   /// Overrides the inherited size when supplied, otherwise uses [MateoIconScope]
@@ -45,7 +53,7 @@ class MateoIcon extends StatelessWidget {
   /// finite and nonnegative; zero renders empty.
   final double? size;
 
-  /// The monochrome foreground color, overriding inherited colors when supplied.
+  /// The SVG foreground color, overriding inherited colors when supplied.
   ///
   /// Otherwise follows [MateoIconScope], surrounding text, the Mateo primary
   /// text color, then the asset's authored color.
@@ -71,7 +79,10 @@ class MateoIcon extends StatelessWidget {
         context.dependOnInheritedWidgetOfExactType<DefaultTextStyle>()?.style.color ??
         MateoTheme.maybeOf(context)?.colorScheme.text.primary;
 
-    var artwork = icon._build(color: resolvedColor);
+    var artwork = switch (style) {
+      .svg => icon._buildSvg(color: resolvedColor),
+      .threeD => icon._buildThreeD(),
+    };
     if (background != null) {
       artwork = SizedBox.square(
         dimension: _defaultSize,

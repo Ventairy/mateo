@@ -13,19 +13,23 @@ environment:
   flutter: ">=3.47.0"
 
 dependencies:
+  data_assets: ^0.20.0
   diacritic: ^0.1.6
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  hooks: ^2.2.0
   intl: ^0.20.3
+  meta: ^1.17.0
   oh_my_flutter: ^0.25.0
+  record_use: ^1.1.1
   slang: ^4.19.2
 
 dev_dependencies:
   alchemist: ^0.14.0
   build_runner: ^2.15.0
-  dotdart: ^0.10.2
+  dotdart: ^0.11.3
   flutter_test:
     sdk: flutter
   slang_build_runner: ^4.19.0
@@ -37,6 +41,8 @@ dotdart:
     - assets/flags/
   lottie:
     - assets/animated_icons/
+  image:
+    - assets/three_d_icons/
 
 flutter:
   assets:
