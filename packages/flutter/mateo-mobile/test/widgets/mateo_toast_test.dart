@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
@@ -36,9 +37,10 @@ void main() {
     Duration? duration = const Duration(seconds: 10),
     bool dismissible = true,
     Widget? icon,
+    VoidCallback? onPressed,
   }) => showMateoToast(
     context: context,
-    toast: MateoToast(message: message, status: status, icon: icon),
+    toast: MateoToast(message: message, status: status, icon: icon, onPressed: onPressed),
     duration: duration,
     dismissible: dismissible,
   );
@@ -296,6 +298,104 @@ void main() {
     expect(underlyingTaps, 0);
   });
 
+  testWidgets('when embedded directly, a completed tap should call onPressed and leave the toast mounted', (
+    tester,
+  ) async {
+    var presses = 0;
+    await tester.pumpWidget(
+      MateoTheme(
+        data: theme,
+        child: Directionality(
+          textDirection: .ltr,
+          child: Center(
+            child: MateoToast(message: 'Open details', status: .info, onPressed: () => presses++),
+          ),
+        ),
+      ),
+    );
+    final gesture = await tester.startGesture(tester.getCenter(getToast()));
+    expect(presses, 0);
+    await gesture.up();
+    await tester.pump();
+    expect(presses, 1);
+    expect(getToast(), findsOneWidget);
+  });
+
+  for (final dismissible in [false, true]) {
+    testWidgets('a hosted press should call onPressed once with dismissible $dismissible', (tester) async {
+      var presses = 0;
+      await mount(tester);
+      show(dismissible: dismissible, onPressed: () => presses++);
+      await settle(tester);
+      await tester.tap(getToast());
+      expect(presses, 1);
+      await settle(tester);
+      expect(getToast(), dismissible ? findsNothing : findsOneWidget);
+      expect(presses, 1);
+    });
+  }
+
+  testWidgets('a hosted press should allow its callback to show a replacement toast', (tester) async {
+    var presses = 0;
+    await mount(tester);
+    show(
+      onPressed: () {
+        presses++;
+        show(message: 'Next');
+      },
+    );
+    await settle(tester);
+    await tester.tap(getToast());
+    await settle(tester);
+    expect(presses, 1);
+    expect(find.text('Saved'), findsNothing);
+    expect(find.text('Next'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('a hosted non-dismissible press should call onPressed without dismissing with reduced motion', (
+    tester,
+  ) async {
+    var presses = 0;
+    await mount(tester, reducedMotion: true);
+    show(dismissible: false, onPressed: () => presses++);
+    await tester.pump();
+    await tester.tap(getToast());
+    await tester.pump();
+    expect(presses, 1);
+    expect(getToast(), findsOneWidget);
+  });
+
+  testWidgets('swipes, cancelled touches, timeouts, and programmatic dismissal should not call onPressed', (
+    tester,
+  ) async {
+    var presses = 0;
+    await mount(tester);
+    show(onPressed: () => presses++);
+    await settle(tester);
+    await tester.drag(getToast(), const Offset(0, -60));
+    await settle(tester);
+    expect(presses, 0);
+
+    show(onPressed: () => presses++);
+    await settle(tester);
+    final gesture = await tester.startGesture(tester.getCenter(getToast()));
+    await gesture.cancel();
+    await settle(tester);
+    expect(presses, 0);
+
+    dismissMateoToast(context: context);
+    await settle(tester);
+    expect(presses, 0);
+
+    show(duration: const Duration(seconds: 1), onPressed: () => presses++);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 1));
+    await settle(tester);
+    expect(getToast(), findsNothing);
+    expect(presses, 0);
+  });
+
   testWidgets('when touched outside the toast, it should leave underlying controls interactive', (tester) async {
     var taps = 0;
     await mount(
@@ -477,6 +577,46 @@ void main() {
     expect(tester.widget<Semantics>(nodes).properties.label, 'A complete announcement');
     expect(tester.widget<Semantics>(nodes).excludeSemantics, isTrue);
     await tester.pumpWidget(const SizedBox());
+    semantics.dispose();
+  });
+
+  testWidgets('an embedded onPressed toast should expose a button action to accessibility', (tester) async {
+    final semantics = tester.ensureSemantics();
+    var presses = 0;
+    await tester.pumpWidget(
+      MateoTheme(
+        data: theme,
+        child: Directionality(
+          textDirection: .ltr,
+          child: Center(
+            child: MateoToast(message: 'Open details', status: .info, onPressed: () => presses++),
+          ),
+        ),
+      ),
+    );
+    final node = tester.getSemantics(getToast());
+    expect(node, matchesSemantics(label: 'Open details', isButton: true, isLiveRegion: true, hasTapAction: true));
+    tester.renderObject(getToast()).owner!.semanticsOwner!.performAction(node.id, SemanticsAction.tap);
+    await tester.pump();
+    expect(presses, 1);
+    expect(getToast(), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('a hosted non-dismissible accessibility action should invoke onPressed without dismissing', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    var presses = 0;
+    await mount(tester);
+    show(message: 'Open details', dismissible: false, onPressed: () => presses++);
+    await settle(tester);
+    final node = tester.getSemantics(getToast());
+    expect(node, matchesSemantics(label: 'Open details', isButton: true, isLiveRegion: true, hasTapAction: true));
+    tester.renderObject(getToast()).owner!.semanticsOwner!.performAction(node.id, SemanticsAction.tap);
+    expect(presses, 1);
+    await settle(tester);
+    expect(getToast(), findsOneWidget);
     semantics.dispose();
   });
 

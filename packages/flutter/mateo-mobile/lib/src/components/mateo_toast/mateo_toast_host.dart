@@ -1,25 +1,14 @@
-import 'dart:async';
-import 'dart:math' as math;
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/widgets.dart';
-
-import '../../theme/mateo_theme.dart';
-import '../mateo_drag_resistance/mateo_drag_resistance.dart';
-import 'mateo_toast.dart';
-
-part '_mateo_toast_curve.dart';
-part '_mateo_toast_overlay.dart';
+part of 'mateo_toast.dart';
 
 /// Shows [toast] above the navigation of the enclosing Mateo app.
 ///
 /// Lets the current toast leave before bringing in the new toast. During a
 /// handoff, only the latest waiting toast is retained. Reduced motion switches
 /// immediately. [duration] overrides the estimated
-/// reading time. [dismissible] controls touch dismissal only; automatic dismissal
-/// and [dismissMateoToast] remain enabled. [padding] is applied inside the top and
-/// side safe areas.
+/// reading time. [dismissible] controls swipe and tap dismissal. A toast's
+/// [MateoToast.onPressed] action still runs when [dismissible] is false.
+/// Automatic dismissal and [dismissMateoToast] remain enabled. [padding] is
+/// applied inside the top and side safe areas.
 /// Throws [FlutterError] when [context] is not below a Mateo app's toast host.
 ///
 /// ```dart

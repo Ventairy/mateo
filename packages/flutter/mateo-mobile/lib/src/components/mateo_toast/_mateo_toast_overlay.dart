@@ -1,4 +1,4 @@
-part of 'mateo_toast_host.dart';
+part of 'mateo_toast.dart';
 
 class _MateoToastOverlay extends StatefulWidget {
   const _MateoToastOverlay({
@@ -198,9 +198,15 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
         upwardTravel >= kTouchSlop && velocity.dy <= -_swipeDismissMinVelocity && velocity.dy.abs() > velocity.dx.abs();
     final draggedToDismiss = upwardTravel >= _dragDismissOffset;
     _clearPointer();
-    if (_pendingTimeout || (widget.dismissible && (tapped || swipeUp || draggedToDismiss))) {
+    if (_pendingTimeout || (widget.dismissible && !tapped && (swipeUp || draggedToDismiss))) {
       _pendingTimeout = false;
       _dismiss();
+      return;
+    }
+    if (tapped && (widget.dismissible || widget.toast.onPressed != null)) {
+      scheduleMicrotask(() {
+        if (mounted && !_dismissing) _restore();
+      });
       return;
     }
     _restore();
@@ -289,7 +295,10 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
                     onPointerMove: _pointerMove,
                     onPointerUp: _pointerUp,
                     onPointerCancel: _pointerCancel,
-                    child: widget.toast,
+                    child: _MateoToastHostScope(
+                      dismissOnPress: widget.dismissible,
+                      child: widget.toast,
+                    ),
                   ),
                 ),
               ),

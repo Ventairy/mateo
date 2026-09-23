@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart' show MorphNavigatorObserver;
 
-import '../../components/mateo_toast/mateo_toast_host.dart' show MateoToastHost;
+import '../../components/mateo_toast/mateo_toast.dart' show MateoToastHost;
 import '../../foundation/mateo_environment/mateo_environment.dart';
 import '../../foundation/mateo_navigator_observer.dart';
 import '../../theme/mateo_theme.dart';
