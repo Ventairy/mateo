@@ -49,6 +49,8 @@ class MateoSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stackEntry = _MateoSheetStackScope.stackEntryOf(context);
+    final colorScheme = stackEntry == null ? null : MateoTheme.of(context).colorScheme;
+    final surfaceColor = surface.color ?? colorScheme?.background;
 
     final content = MateoViewScope(
       padding: const EdgeInsets.all(20),
@@ -60,6 +62,13 @@ class MateoSheetView extends StatelessWidget {
           elevation: null,
           shape: _shape,
         ),
+        // The stack frame already fills opaque covered sheets. Keep the inner
+        // background for the front sheet and for transparent surfaces.
+        surfaceBackgroundVisibility: stackEntry != null && surfaceColor!.a == 1.0
+            ? (listenable: stackEntry, isVisible: () => stackEntry.depth == 0)
+            : null,
+        // Background visibility can change without repainting the content.
+        isolateContentPaint: stackEntry != null,
         surface: MateoSurfaceScope(
           shape: _shape,
           child: surface,
@@ -71,27 +80,12 @@ class MateoSheetView extends StatelessWidget {
     );
 
     if (stackEntry == null) return content;
-    return ListenableBuilder(
-      listenable: stackEntry,
+    return _MateoSheetViewPresentation(
+      stackEntry: stackEntry,
+      color: surfaceColor!,
+      dimColor: colorScheme!.sheet.scrim,
+      // The frame changes while another sheet covers it; its content does not.
       child: content,
-      builder: (context, content) => Opacity(
-        opacity: stackEntry.opacity,
-        child: ExcludeSemantics(
-          excluding: stackEntry.covered,
-          child: ExcludeFocus(
-            excluding: stackEntry.covered,
-            child: IgnorePointer(
-              ignoring: stackEntry.covered,
-              child: _MateoSheetFrame(
-                stackEntry: stackEntry,
-                color: surface.color ?? MateoTheme.of(context).colorScheme.background,
-                dimColor: MateoTheme.of(context).colorScheme.sheet.scrim,
-                child: content,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

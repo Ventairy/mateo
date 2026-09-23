@@ -18,6 +18,7 @@ import 'mateo_view_scope.dart';
 
 part '_mateo_view_footer_layout_data.dart';
 part '_mateo_view_header_layout_data.dart';
+part '_conditional_surface_background.dart';
 part '_mateo_view_layout.dart';
 part '_mateo_view_layout_data.dart';
 part '_mateo_view_slot.dart';
@@ -34,6 +35,8 @@ class BaseMateoView extends StatefulWidget {
       elevation: null,
       shape: MateoRoundedShapeBorder(radius: 0),
     ),
+    this.surfaceBackgroundVisibility,
+    this.isolateContentPaint = false,
     this.reserveHeaderSpace = true,
     this.avoidBottomInset = false,
     this.maintainBottomViewPadding = false,
@@ -57,6 +60,8 @@ class BaseMateoView extends StatefulWidget {
     MateoRoundedShapeBorder shape,
   })
   surfacePresentation;
+  final ({Listenable listenable, bool Function() isVisible})? surfaceBackgroundVisibility;
+  final bool isolateContentPaint;
   final Widget? header;
   final Widget? footer;
   final Widget? overlay;
@@ -151,12 +156,26 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     final automaticTarget = observer is MateoNavigatorObserver ? observer.sheetToViewMorphTarget : null;
     // Automatic flights retain content pixels while the covered view is not
     // interactive. Keep geometry and keyboard-driven clearance live at handoff.
-    final content = MorphDescendant(
+    final morphContent = MorphDescendant(
       key: const ValueKey('Mateo view transform content'),
       flightBehavior: .snapshot(changes: automaticTarget != null ? _layoutData : null),
       child: _buildContent(),
     );
+    final content = widget.isolateContentPaint ? RepaintBoundary(child: morphContent) : morphContent;
     final shape = widget.surfacePresentation.shape;
+    final background = _clipBackground(
+      context,
+      shape: shape,
+      child: ColoredBox(color: surfaceColor),
+    );
+    final paintedBackground = switch (widget.surfaceBackgroundVisibility) {
+      final visibility? => _ConditionalSurfaceBackground(
+        listenable: visibility.listenable,
+        isVisible: visibility.isVisible,
+        child: background,
+      ),
+      null => background,
+    };
     final presentation = DecoratedBox(
       decoration: ShapeDecoration(
         shape: shape,
@@ -170,13 +189,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
         fit: .passthrough,
         clipBehavior: .none,
         children: [
-          Positioned.fill(
-            child: _clipBackground(
-              context,
-              shape: shape,
-              child: ColoredBox(color: surfaceColor),
-            ),
-          ),
+          Positioned.fill(child: paintedBackground),
           content,
         ],
       ),

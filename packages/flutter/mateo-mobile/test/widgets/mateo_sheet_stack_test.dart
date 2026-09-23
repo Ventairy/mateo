@@ -79,7 +79,7 @@ void main() {
       await push(tester, 1, height: height, settle: false);
       final entering = bounds(tester, 1);
       final samples = <({Rect back, Rect front})>[];
-      for (final milliseconds in [8, 8, 64, 80, 80, 80, 32, 8]) {
+      for (final milliseconds in [8, 8, 64, 80, 80, 80, 62, 8]) {
         await tester.pump(Duration(milliseconds: milliseconds));
         samples.add((back: bounds(tester, 0), front: bounds(tester, 1)));
       }
@@ -138,7 +138,7 @@ void main() {
     await push(tester, 1);
     final covered = bounds(tester, 0);
     final route = ModalRoute.of(tester.element(sheet(1)))!;
-    expect(route.reverseTransitionDuration, const Duration(milliseconds: 300));
+    expect(route.reverseTransitionDuration, const Duration(milliseconds: 200));
 
     navigator.currentState!.pop();
     await tester.pump();
@@ -147,7 +147,7 @@ void main() {
     await tester.pump();
     expect(sheet(1), findsNothing);
     expect(bounds(tester, 0).width, inExclusiveRange(covered.width, resting.width));
-    await tester.pump(const Duration(milliseconds: 120));
+    await tester.pumpAndSettle();
     expect(bounds(tester, 0), resting);
     expect(tester.takeException(), isNull);
   });

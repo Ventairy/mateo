@@ -500,11 +500,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(
       tester.getTopLeft(find.byType(MateoSheetView)).dy,
-      closeTo(start + 20 * (1 - swipe.dragConfig.returnCurve.transform(100 / 360)), .001),
+      closeTo(start + 20 * (1 - swipe.dragConfig.returnCurve.transform(100 / 390)), .001),
     );
     await tester.pumpAndSettle();
     expect(tester.getTopLeft(find.byType(MateoSheetView)).dy, start);
-    expect(swipe.dragConfig.returnDuration, const Duration(milliseconds: 360));
+    expect(swipe.dragConfig.returnDuration, const Duration(milliseconds: 390));
     navigator.currentState!.pop();
     await tester.pumpAndSettle();
   });
@@ -787,8 +787,8 @@ void main() {
     await tester.pump();
     final context = tester.element(find.byType(MateoSheetView));
     final route = ModalRoute.of(context)!;
-    expect(route.transitionDuration, const Duration(milliseconds: 360));
-    expect(route.reverseTransitionDuration, const Duration(milliseconds: 300));
+    expect(route.transitionDuration, const Duration(milliseconds: 390));
+    expect(route.reverseTransitionDuration, const Duration(milliseconds: 200));
     final slide = tester.widget<SlideTransition>(
       find.ancestor(of: find.byType(MateoSheetView), matching: find.byType(SlideTransition)).first,
     );

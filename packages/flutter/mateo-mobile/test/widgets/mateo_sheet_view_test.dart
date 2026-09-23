@@ -35,6 +35,58 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('when a capped sheet contains a lazy list, it should build visible rows and scroll within fixed slots', (
+    tester,
+  ) async {
+    await host(tester);
+    var itemBuilds = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        maxExtent: 320,
+        view: MateoSheetView(
+          header: const MateoSheetViewHeader(presentation: .custom(principal: Text('Details'))),
+          footer: const MateoSheetViewFooter(principal: Text('Continue')),
+          surface: MateoSheetViewSurface(
+            child: ListView.builder(
+              primary: false,
+              padding: EdgeInsets.zero,
+              itemCount: 100,
+              itemExtent: 56,
+              itemBuilder: (context, index) {
+                itemBuilds++;
+                return SizedBox(key: ValueKey('row-$index'), child: Text('Row $index'));
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final list = find.byType(ListView);
+    final position = tester
+        .state<ScrollableState>(find.descendant(of: list, matching: find.byType(Scrollable)))
+        .position;
+    final sheetRect = tester.getRect(find.byType(MateoSheetView));
+    final headerRect = tester.getRect(find.byType(MateoSheetViewHeader));
+    final footerRect = tester.getRect(find.byType(MateoSheetViewFooter));
+    expect(itemBuilds, lessThan(100));
+    expect(position.maxScrollExtent, greaterThan(0));
+
+    await tester.drag(list, const Offset(0, -150));
+    await tester.pumpAndSettle();
+    expect(position.pixels, greaterThan(0));
+    expect(tester.getRect(find.byType(MateoSheetView)), sheetRect);
+    expect(tester.getRect(find.byType(MateoSheetViewHeader)), headerRect);
+    expect(tester.getRect(find.byType(MateoSheetViewFooter)), footerRect);
+
+    position.jumpTo(position.maxScrollExtent);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('row-99')), findsOneWidget);
+    expect(tester.getBottomLeft(find.byKey(const ValueKey('row-99'))).dy, lessThanOrEqualTo(footerRect.top));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('when sheet header sides change, principal fills the available region', (tester) async {
     for (final direction in TextDirection.values) {
       for (final sides in [

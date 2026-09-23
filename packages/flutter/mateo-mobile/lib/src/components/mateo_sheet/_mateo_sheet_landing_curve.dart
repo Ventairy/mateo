@@ -11,18 +11,13 @@ class _MateoSheetLandingCurve extends Curve {
   double transformInternal(double t) {
     const splice = 0.48300052620708006;
     if (t <= splice) {
-      var lo = 0.0;
-      var hi = 1.0;
-      for (var i = 0; i < 48; i++) {
-        final u = (lo + hi) / 2;
-        final x = 0.96 * (1 - u) * (1 - u) * u + u * u * u;
-        if (x < t) {
-          lo = u;
-        } else {
-          hi = u;
-        }
+      var u = t;
+      for (var i = 0; i < 6; i++) {
+        final remaining = 1 - u;
+        final x = 0.96 * remaining * remaining * u + u * u * u;
+        final derivative = 0.96 + u * (-3.84 + 5.88 * u);
+        u -= (x - t) / derivative;
       }
-      final u = (lo + hi) / 2;
       return 2.16 * (1 - u) * (1 - u) * u + 3 * (1 - u) * u * u + u * u * u;
     }
     final q = (t - splice) / (1 - splice);

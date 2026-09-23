@@ -33,6 +33,7 @@ part 'mateo_sheet_dismiss_source.dart';
 part 'mateo_sheet_should_dismiss.dart';
 part 'mateo_sheet_source.dart';
 part 'mateo_sheet_view/_mateo_sheet_frame.dart';
+part 'mateo_sheet_view/_mateo_sheet_view_presentation.dart';
 part 'mateo_sheet_view/_render_mateo_sheet_frame.dart';
 part 'mateo_sheet_view/components/mateo_sheet_view_footer/mateo_sheet_view_footer.dart';
 part 'mateo_sheet_view/components/mateo_sheet_view_header/mateo_sheet_view_header.dart';
@@ -54,8 +55,9 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 /// [avoidBottomInset] moves the whole sheet above bottom system obstructions,
 /// such as the keyboard. Defaults to false, keeping bottom device safe-area
 /// spacing stable while a keyboard opens or closes. Enable it for sheets that
-/// need to remain above the keyboard. Long content still needs a
-/// [MateoSheetViewSurface.scrollable] surface to stay reachable.
+/// need to remain above the keyboard. Long content must scroll within the
+/// surface, using [MateoSheetViewSurface.scrollable] for box content or a
+/// lazily built [ListView] child for long lists.
 ///
 /// [shouldDismiss] decides whether a requested dismissal may proceed. When
 /// omitted, dismissal is allowed. Explicit [Navigator.pop] calls bypass this

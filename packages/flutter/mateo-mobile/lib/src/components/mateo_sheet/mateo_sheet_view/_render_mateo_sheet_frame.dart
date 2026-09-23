@@ -4,12 +4,23 @@ class _RenderMateoSheetFrame extends RenderProxyBox {
   _RenderMateoSheetFrame({required this._stackEntry, required this._color, required this._dimColor});
 
   _MateoSheetStackEntry _stackEntry;
+  Rect? _paintedFrame;
+  double? _paintedDepth;
+
+  void _handleStackChange() {
+    // Entry progress also drives sheets below this one without changing this frame.
+    if (_paintedDepth == _stackEntry.depth && _paintedFrame == _frame) return;
+    markNeedsPaint();
+  }
+
   _MateoSheetStackEntry get stackEntry => _stackEntry;
   set stackEntry(_MateoSheetStackEntry value) {
     if (identical(value, _stackEntry)) return;
-    if (attached) _stackEntry.removeListener(markNeedsPaint);
+    if (attached) _stackEntry.removeListener(_handleStackChange);
     _stackEntry = value;
-    if (attached) _stackEntry.addListener(markNeedsPaint);
+    _paintedFrame = null;
+    _paintedDepth = null;
+    if (attached) _stackEntry.addListener(_handleStackChange);
     markNeedsLayout();
   }
 
@@ -32,12 +43,12 @@ class _RenderMateoSheetFrame extends RenderProxyBox {
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
-    _stackEntry.addListener(markNeedsPaint);
+    _stackEntry.addListener(_handleStackChange);
   }
 
   @override
   void detach() {
-    _stackEntry.removeListener(markNeedsPaint);
+    _stackEntry.removeListener(_handleStackChange);
     super.detach();
   }
 
@@ -63,17 +74,25 @@ class _RenderMateoSheetFrame extends RenderProxyBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    if (child == null || size.isEmpty || _stackEntry.opacity == 0) return;
-    if (_stackEntry.depth == 0) {
+    final depth = _stackEntry.depth;
+    final frame = _frame;
+    _paintedFrame = frame;
+    _paintedDepth = depth;
+    if (child == null || size.isEmpty || depth >= 3) return;
+    if (depth == 0) {
       super.paint(context, offset);
       return;
     }
-    final frame = _frame;
     final scale = _contentScale(frame);
     final shape = MateoSheetView._shape.scale(scale);
     final path = shape.getOuterPath(frame);
-    context.pushClipPath(needsCompositing, offset, paintBounds, path, (context, offset) {
-      context.canvas.drawPath(path.shift(offset), Paint()..color = _color);
+    final shiftedPath = path.shift(offset);
+    context.pushClipPath(needsCompositing, offset, (Offset.zero & size).expandToInclude(frame), path, (
+      context,
+      offset,
+    ) {
+      // The clip supplies the sheet outline; filling it avoids another path draw.
+      context.canvas.drawRect(frame.shift(offset), Paint()..color = _color);
       final transform = Matrix4.identity()
         ..translateByDouble(frame.left, frame.top, 0, 1)
         ..scaleByDouble(scale, scale, 1, 1);
@@ -84,8 +103,8 @@ class _RenderMateoSheetFrame extends RenderProxyBox {
         (context, offset) => context.paintChild(child!, offset),
       );
       context.canvas.drawPath(
-        path.shift(offset),
-        Paint()..color = _dimColor.withValues(alpha: 0.08 * _stackEntry.depth.clamp(0, 2)),
+        shiftedPath,
+        Paint()..color = _dimColor.withValues(alpha: 0.08 * depth.clamp(0, 2)),
       );
     }, clipBehavior: Clip.antiAlias);
   }
