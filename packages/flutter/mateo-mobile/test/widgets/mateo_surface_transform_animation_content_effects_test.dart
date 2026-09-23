@@ -315,7 +315,7 @@ void main() {
                 expect(layer.left! + layer.width! / 2, closeTo(flightSize.width / 2, 1e-6));
                 expect(layer.top! + layer.height! / 2, closeTo(flightSize.height / 2, 1e-6));
               }
-              expect(find.descendant(of: surfaceFlight, matching: find.byType(ClipPath)), findsOneWidget);
+              expect(tester.widget<ClipPath>(surfaceFlight).clipper, isA<ShapeBorderClipper>());
               expect(
                 tester.getRect(surfaceFlight),
                 rectMoreOrLessEquals(

@@ -13,9 +13,10 @@ final surfaceTransformTheme = MateoThemeData.light(
 
 final Finder surfaceFlight = find.byWidgetPredicate(
   (widget) =>
-      widget is DecoratedBox &&
-      widget.decoration is ShapeDecoration &&
-      (widget.decoration as ShapeDecoration).color != null,
+      widget is ClipPath &&
+      widget.clipper is ShapeBorderClipper &&
+      widget.child is ColoredBox &&
+      (widget.child! as ColoredBox).child is Stack,
   description: 'the filled surface transform animation flight',
 );
 
@@ -129,8 +130,13 @@ Future<void> startSurfaceTransformAnimationFlight(
   await tester.pump();
 }
 
-ShapeDecoration surfaceTransformAnimationFlightDecoration(WidgetTester tester) =>
-    tester.widget<DecoratedBox>(surfaceFlight).decoration as ShapeDecoration;
+ShapeDecoration surfaceTransformAnimationFlightDecoration(WidgetTester tester) {
+  final flight = tester.widget<ClipPath>(surfaceFlight);
+  return ShapeDecoration(
+    color: (flight.child! as ColoredBox).color,
+    shape: (flight.clipper! as ShapeBorderClipper).shape,
+  );
+}
 
 void expectSurfaceOutline(Path actual, Path expected, {double tolerance = .03}) {
   expect(actual.computeMetrics().single.isClosed, isTrue);

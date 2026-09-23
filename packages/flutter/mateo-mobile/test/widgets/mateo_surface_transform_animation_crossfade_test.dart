@@ -103,7 +103,7 @@ void main() {
               of: surfaceFlight,
               matching: find.byWidgetPredicate(
                 (widget) =>
-                    widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphGroupSnapshotPainter',
+                    widget is CustomPaint && widget.painter.runtimeType.toString() == '_MorphContentSnapshotPainter',
               ),
             ),
             findsNWidgets(2),

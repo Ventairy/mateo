@@ -11,6 +11,7 @@ class _MateoViewLayoutData extends ChangeNotifier implements MateoSurfaceObstruc
   EdgeInsets _obstructionInsets = EdgeInsets.zero;
   EdgeInsets _notifiedObstructionInsets = EdgeInsets.zero;
   bool _notificationScheduled = false;
+  bool _postFrameNotificationScheduled = false;
   bool _disposed = false;
   double _headerSafeAreaAdjustment = 0;
   double _footerSafeAreaAdjustment = 0;
@@ -85,10 +86,20 @@ class _MateoViewLayoutData extends ChangeNotifier implements MateoSurfaceObstruc
       bottom: math.max(bottomInset, footerBottomInset + _footerClearance),
     );
     if (_obstructionInsets == _notifiedObstructionInsets) return;
-    // Safe-area handles already notify after the frame. Deliver their changes
-    // now so retained views repaint on the next frame, without another delay.
+    // The footer's keyboard-driven placement can be resolved while an
+    // offscreen flight snapshot is being painted. Notify after that capture
+    // returns so it cannot invalidate itself.
     if (WidgetsBinding.instance.schedulerPhase == .postFrameCallbacks) {
-      _notifyObstructionInsets();
+      if (footer == null || bottomInset == 0) {
+        _notifyObstructionInsets();
+        return;
+      }
+      if (_postFrameNotificationScheduled) return;
+      _postFrameNotificationScheduled = true;
+      scheduleMicrotask(() {
+        _postFrameNotificationScheduled = false;
+        _notifyObstructionInsets();
+      });
       return;
     }
     _scheduleObstructionResolution();

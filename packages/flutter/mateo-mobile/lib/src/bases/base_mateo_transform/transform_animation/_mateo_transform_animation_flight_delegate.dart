@@ -72,24 +72,21 @@ final class _MateoTransformAnimationFlightDelegate extends MorphFlightDelegate<_
     builder: (context, child) {
       final frame = flight.properties;
       final border = frame.borderFor(flight.bounds.size);
-
-      return DecoratedBox(
-        decoration: ShapeDecoration(color: frame.color, shape: border),
-        child: ClipPath(
-          clipper: ShapeBorderClipper(shape: border),
-          child: Stack(
-            children: [
-              for (final layer in frame.content.layers)
-                Positioned.fromRect(
-                  rect: layer.bounds,
-                  child: Opacity(
-                    opacity: layer.opacity,
-                    child: FittedBox(fit: .contain, child: layer.capture),
-                  ),
-                ),
-            ],
-          ),
-        ),
+      final content = Stack(
+        children: [
+          for (final layer in frame.content.layers)
+            Positioned.fromRect(
+              rect: layer.bounds,
+              child: Opacity(
+                opacity: layer.opacity,
+                child: FittedBox(fit: .contain, child: layer.capture),
+              ),
+            ),
+        ],
+      );
+      return ClipPath(
+        clipper: ShapeBorderClipper(shape: border),
+        child: ColoredBox(color: frame.color, child: content),
       );
     },
   );

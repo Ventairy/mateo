@@ -101,8 +101,8 @@ void main() {
       .having((size) => size.height, 'height', closeTo(expected.height, .000001));
 
   List<Positioned> flightLayers(WidgetTester tester) {
-    final flight = tester.widget<DecoratedBox>(surfaceFlight);
-    return ((flight.child! as ClipPath).child! as Stack).children.cast<Positioned>();
+    final flight = tester.widget<ClipPath>(surfaceFlight);
+    return ((flight.child! as ColoredBox).child! as Stack).children.cast<Positioned>();
   }
 
   for (final explicit in [false, true]) {

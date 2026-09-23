@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -145,9 +146,14 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     BuildContext context, {
     required Color surfaceColor,
   }) {
+    final navigator = Navigator.maybeOf(context);
+    final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
+    final automaticTarget = observer is MateoNavigatorObserver ? observer.sheetToViewMorphTarget : null;
+    // Automatic flights retain content pixels while the covered view is not
+    // interactive. Keep geometry and keyboard-driven clearance live at handoff.
     final content = MorphDescendant(
       key: const ValueKey('Mateo view transform content'),
-      flightBehavior: .snapshot,
+      flightBehavior: .snapshot(changes: automaticTarget != null ? _layoutData : null),
       child: _buildContent(),
     );
     final shape = widget.surfacePresentation.shape;
@@ -181,6 +187,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
       content: content,
       color: surfaceColor,
       shape: shape,
+      automaticTarget: automaticTarget,
     );
   }
 
@@ -190,10 +197,8 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     required Widget content,
     required Color color,
     required MateoRoundedShapeBorder shape,
+    required MorphTarget? automaticTarget,
   }) {
-    final navigator = Navigator.maybeOf(context);
-    final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
-    final automaticTarget = observer is MateoNavigatorObserver ? observer.sheetToViewMorphTarget : null;
     final candidates = <BaseMateoTransformCandidate>[
       if (automaticTarget != null)
         BaseMateoTransformCandidate.view(

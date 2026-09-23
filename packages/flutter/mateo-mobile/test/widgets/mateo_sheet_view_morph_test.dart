@@ -110,8 +110,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 16));
     final midpointAdvance = sheetToViewTransformDurations.forward ~/ 2;
     await tester.pump(midpointAdvance);
-    expect(await _renderedColorBounds(tester, titleColor), isNotNull);
-    expect(await _renderedColorBounds(tester, bodyColor), isNotNull);
+    expect(await _renderedColorBounds(tester, titleColor, tolerance: 220), isNotNull);
+    expect(await _renderedColorBounds(tester, bodyColor, tolerance: 220), isNotNull);
 
     final remaining = sheetToViewTransformDurations.forward - midpointAdvance - const Duration(milliseconds: 49);
     await tester.pump(remaining);
@@ -130,6 +130,31 @@ void main() {
     expect(flightFooter, isNotNull);
     expect(settledFooter, isNotNull);
     expect((flightFooter!.top - settledFooter!.top).abs(), lessThanOrEqualTo(2));
+  });
+
+  _test('footer crossfades above a keyboard opening during the sheet-to-view flight', (tester) async {
+    debugDefaultTargetPlatformOverride = .iOS;
+    final navigator = await _sheet(tester);
+    const footerColor = Color(0xFFFF0000);
+    _push(
+      navigator,
+      transition: const .slide(direction: .up),
+      footer: const MateoViewFooter(
+        principal: SizedBox(width: 200, height: 40, child: ColoredBox(color: footerColor)),
+      ),
+    );
+    await _start(tester);
+    for (final inset in [50.0, 100.0, 150.0, 300.0]) {
+      tester.view.viewInsets = FakeViewPadding(bottom: inset);
+      await tester.pump(const Duration(milliseconds: 40));
+    }
+    await tester.pump(const Duration(milliseconds: 40));
+
+    expect(surfaceFlight, findsOneWidget);
+    final footerBounds = await _renderedColorBounds(tester, footerColor, tolerance: 220, minimumRedDominance: 40);
+    expect(footerBounds, isNotNull);
+    expect(footerBounds!.bottom, lessThanOrEqualTo(500));
+    await tester.pumpAndSettle();
   });
 
   _test('the page behind the sheet remains painted after a page round trip', (tester) async {
@@ -450,31 +475,69 @@ void main() {
     expect(find.text('Header'), findsOneWidget);
     expect(find.text('Overlay'), findsOneWidget);
   });
+
+  _test('unchanged scrollable destination is not recaptured each flight frame', (tester) async {
+    final navigator = await _sheet(tester);
+    _push(navigator, scrollable: true);
+    await _start(tester);
+    expect(surfaceFlight, findsOneWidget);
+
+    var imageCreations = 0;
+    final previousOnCreate = ui.Image.onCreate;
+    void handleImageCreated(ui.Image image) {
+      previousOnCreate?.call(image);
+      imageCreations += 1;
+    }
+
+    ui.Image.onCreate = handleImageCreated;
+    addTearDown(() {
+      if (identical(ui.Image.onCreate, handleImageCreated)) {
+        ui.Image.onCreate = previousOnCreate;
+      }
+    });
+    for (var frame = 0; frame < 5; frame += 1) {
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+    ui.Image.onCreate = previousOnCreate;
+
+    expect(imageCreations, 0);
+    await tester.pumpAndSettle();
+  });
 }
 
 PageRoute<void> _push(
   NavigatorState navigator, {
+  MateoPageTransition? transition,
   MateoViewAnimation? animation,
   bool fullscreen = false,
   bool withSlots = false,
+  bool scrollable = false,
   MateoViewHeader? header,
   MateoViewFooter? footer,
   Widget child = const Center(child: Text('Destination')),
 }) {
   final route = MateoPage<void>(
     fullscreenDialog: fullscreen,
+    transition: transition,
     child: MateoView(
       animation: animation,
       header: header ?? (withSlots ? const MateoViewHeader(leading: Text('Close')) : null),
       footer: footer ?? (withSlots ? const MateoViewFooter(principal: Text('Save')) : null),
-      surface: MateoViewSurface(child: child),
+      surface: scrollable
+          ? MateoViewSurface.scrollable(child: Column(children: [child, const SizedBox(height: 1400)]))
+          : MateoViewSurface(child: child),
     ),
   ).createRoute(navigator.context);
   navigator.push(route);
   return route;
 }
 
-Future<Rect?> _renderedColorBounds(WidgetTester tester, Color color) async {
+Future<Rect?> _renderedColorBounds(
+  WidgetTester tester,
+  Color color, {
+  int tolerance = 32,
+  int minimumRedDominance = 0,
+}) async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(
     find.byKey(const ValueKey('capture')),
   );
@@ -493,10 +556,13 @@ Future<Rect?> _renderedColorBounds(WidgetTester tester, Color color) async {
     for (var y = 0; y < image.height; y += 1) {
       for (var x = 0; x < image.width; x += 1) {
         final offset = (y * image.width + x) * 4;
-        if ((bytes.getUint8(offset) - red).abs() > 32 ||
-            (bytes.getUint8(offset + 1) - green).abs() > 32 ||
-            (bytes.getUint8(offset + 2) - blue).abs() > 32 ||
-            (bytes.getUint8(offset + 3) - alpha).abs() > 32) {
+        if ((bytes.getUint8(offset) - red).abs() > tolerance ||
+            (bytes.getUint8(offset + 1) - green).abs() > tolerance ||
+            (bytes.getUint8(offset + 2) - blue).abs() > tolerance ||
+            (bytes.getUint8(offset + 3) - alpha).abs() > tolerance ||
+            (minimumRedDominance > 0 &&
+                (bytes.getUint8(offset) - bytes.getUint8(offset + 1) < minimumRedDominance ||
+                    bytes.getUint8(offset) - bytes.getUint8(offset + 2) < minimumRedDominance))) {
           continue;
         }
         left = left == null ? x : math.min(left, x);

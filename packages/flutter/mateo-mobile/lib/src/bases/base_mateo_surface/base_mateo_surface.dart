@@ -129,7 +129,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
         child;
     final capturedContent = MorphDescendant(
       key: const ValueKey('Mateo surface transform content'),
-      flightBehavior: .snapshot,
+      flightBehavior: const .snapshot(),
       child: _clipContent(withEdgeEffect(viewport)),
     );
     final presentation = widget.paintBackground
