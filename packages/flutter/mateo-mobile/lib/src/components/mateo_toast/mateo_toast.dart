@@ -19,6 +19,7 @@ import 'mateo_toast_status.dart';
 part '_mateo_toast_curve.dart';
 part '_mateo_toast_overlay.dart';
 part '_mateo_toast_host_scope.dart';
+part 'mateo_toast_controller.dart';
 part 'mateo_toast_host.dart';
 
 /// A compact status message for transient feedback.

@@ -7,23 +7,33 @@ part of 'mateo_toast.dart';
 /// immediately. [duration] selects estimated reading time, a custom timeout,
 /// or no timeout. [dismissible] controls swipe and tap dismissal. A toast's
 /// [MateoToast.onPressed] action still runs when [dismissible] is false.
-/// [dismissMateoToast] remains enabled for every duration. [padding] is
-/// applied inside the top and side safe areas.
+/// [delay] waits before requesting the toast. A delayed toast can replace a
+/// newer toast when its delay ends. The returned [MateoToastController] can
+/// cancel that request or dismiss only its toast. [dismissMateoToast] remains
+/// enabled for every duration. [padding] is applied inside the top and side
+/// safe areas.
+///
+/// [delay] must be nonnegative. The visible [duration] begins when the toast
+/// appears, including after a handoff from an earlier toast.
 /// Throws [FlutterError] when [context] is not below a Mateo app's toast host.
 ///
 /// ```dart
-/// showMateoToast(
+/// final toastController = showMateoToast(
 ///   context: context,
 ///   toast: const MateoToast(message: 'Changes saved', status: .success),
+///   delay: const Duration(seconds: 1),
 /// );
+/// // If the message becomes irrelevant: toastController.dismiss();
 /// ```
-void showMateoToast({
+MateoToastController showMateoToast({
   required BuildContext context,
   required MateoToast toast,
   MateoToastDuration duration = const .auto(),
+  Duration delay = Duration.zero,
   bool dismissible = true,
   EdgeInsetsGeometry padding = const .symmetric(horizontal: 20, vertical: 12),
 }) {
+  if (delay.isNegative) throw ArgumentError.value(delay, 'delay', 'must be nonnegative');
   final host = context.findAncestorStateOfType<_MateoToastHostState>();
   if (host == null) {
     throw FlutterError('showMateoToast requires a context below MateoApp or MateoApp.router.');
@@ -33,7 +43,7 @@ void showMateoToast({
   final textScaler = MediaQuery.textScalerOf(context);
   final reducedMotion = MediaQuery.disableAnimationsOf(context);
   final locale = Localizations.maybeLocaleOf(context);
-  host.show(
+  return host.show(
     (overlayKey, onDismissed) => MateoTheme(
       data: theme,
       child: Builder(
@@ -56,12 +66,14 @@ void showMateoToast({
         },
       ),
     ),
+    delay: delay,
   );
 }
 
 /// Dismisses the current toast in the enclosing Mateo app.
 ///
 /// Cancels any waiting replacement and lets the current toast animate out.
+/// Independently delayed toasts can still appear later.
 /// Reduced motion removes the toast immediately. Does nothing when no toast
 /// exists. Touch dismissal settings do not prevent programmatic dismissal.
 /// Throws [FlutterError] when [context] is not below a Mateo app's toast host.
@@ -78,6 +90,7 @@ void dismissMateoToast({required BuildContext context}) {
 }
 
 typedef _MateoToastBuilder = Widget Function(GlobalKey<_MateoToastOverlayState> overlayKey, VoidCallback onDismissed);
+typedef _MateoToastRequest = ({MateoToastController controller, _MateoToastBuilder builder});
 
 @internal
 class MateoToastHost extends StatefulWidget {
@@ -91,21 +104,41 @@ class MateoToastHost extends StatefulWidget {
 class _MateoToastHostState extends State<MateoToastHost> {
   Widget? _toast;
   GlobalKey<_MateoToastOverlayState>? _overlayKey;
-  _MateoToastBuilder? _pendingToast;
+  _MateoToastRequest? _currentRequest;
+  _MateoToastRequest? _pendingRequest;
+  final Set<MateoToastController> _controllers = {};
+  final Map<MateoToastController, Timer> _delayTimers = {};
 
-  void show(_MateoToastBuilder builder) {
+  MateoToastController show(_MateoToastBuilder builder, {required Duration delay}) {
+    final controller = MateoToastController._(this);
+    final request = (controller: controller, builder: builder);
+    _controllers.add(controller);
+    if (delay > Duration.zero) {
+      _delayTimers[controller] = Timer(delay, () {
+        _delayTimers.remove(controller);
+        if (mounted && _controllers.contains(controller)) _showRequest(request);
+      });
+    } else {
+      _showRequest(request);
+    }
+    return controller;
+  }
+
+  void _showRequest(_MateoToastRequest request) {
     final overlay = _overlayKey?.currentState;
     if (overlay == null) {
       // Requests before the first frame can replace content that has not appeared.
-      setState(() => _install(builder));
+      setState(() => _install(request));
       return;
     }
-    _pendingToast = builder;
+    if (_pendingRequest case final pendingRequest?) _retire(pendingRequest.controller);
+    _pendingRequest = request;
     overlay.dismiss();
   }
 
   void dismiss() {
-    _pendingToast = null;
+    if (_pendingRequest case final pendingRequest?) _retire(pendingRequest.controller);
+    _pendingRequest = null;
     if (_toast == null) return;
     final overlay = _overlayKey?.currentState;
     if (overlay != null) {
@@ -113,26 +146,64 @@ class _MateoToastHostState extends State<MateoToastHost> {
       return;
     }
     setState(() {
+      if (_currentRequest case final currentRequest?) _retire(currentRequest.controller);
+      _currentRequest = null;
       _overlayKey = null;
       _toast = null;
     });
   }
 
-  void _install(_MateoToastBuilder builder) {
+  void _dismissRequest(MateoToastController controller) {
+    if (!_controllers.contains(controller)) return;
+    _retire(controller);
+    if (_pendingRequest?.controller == controller) {
+      _pendingRequest = null;
+      return;
+    }
+    if (_currentRequest?.controller != controller) return;
+    final overlay = _overlayKey?.currentState;
+    if (overlay != null) {
+      overlay.dismiss();
+      return;
+    }
+    setState(() {
+      _currentRequest = null;
+      _overlayKey = null;
+      _toast = null;
+    });
+  }
+
+  void _retire(MateoToastController controller) {
+    _controllers.remove(controller);
+    _delayTimers.remove(controller)?.cancel();
+    controller._finish();
+  }
+
+  void _install(_MateoToastRequest request) {
+    if (_currentRequest case final currentRequest?) _retire(currentRequest.controller);
     final overlayKey = GlobalKey<_MateoToastOverlayState>();
+    _currentRequest = request;
     _overlayKey = overlayKey;
-    _pendingToast = null;
-    _toast = builder(overlayKey, () {
+    _pendingRequest = null;
+    _toast = request.builder(overlayKey, () {
       if (!mounted || !identical(_overlayKey, overlayKey)) return;
       setState(() {
-        if (_pendingToast case final pendingToast?) {
-          _install(pendingToast);
+        if (_pendingRequest case final pendingRequest?) {
+          _install(pendingRequest);
           return;
         }
+        _retire(request.controller);
+        _currentRequest = null;
         _overlayKey = null;
         _toast = null;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _controllers.toList().forEach(_retire);
+    super.dispose();
   }
 
   @override

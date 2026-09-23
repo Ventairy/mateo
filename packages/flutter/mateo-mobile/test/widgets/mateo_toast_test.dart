@@ -45,10 +45,11 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  void show({
+  MateoToastController show({
     String message = 'Saved',
     MateoToastStatus status = .success,
     MateoToastDuration? duration,
+    Duration delay = Duration.zero,
     bool dismissible = true,
     Widget? icon,
     VoidCallback? onPressed,
@@ -56,6 +57,7 @@ void main() {
     context: context,
     toast: MateoToast(message: message, status: status, icon: icon, onPressed: onPressed),
     duration: duration ?? MateoToastDuration.custom(duration: const Duration(seconds: 10)),
+    delay: delay,
     dismissible: dismissible,
   );
 
@@ -110,6 +112,150 @@ void main() {
       expect(tester.takeException(), isNull);
     });
   }
+
+  testWidgets('when delay is negative, it should reject the toast request', (tester) async {
+    await mount(tester);
+    expect(() => show(delay: const Duration(milliseconds: -1)), throwsArgumentError);
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('when a delayed toast is cancelled, it should never appear', (tester) async {
+    await mount(tester);
+    final toast = show(message: 'Delayed', delay: const Duration(seconds: 1));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(getToast(), findsNothing);
+    toast
+      ..dismiss()
+      ..dismiss();
+    await tester.pump(const Duration(seconds: 2));
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('when a delay expires, it should show the toast at that boundary', (tester) async {
+    await mount(tester);
+    show(message: 'Delayed', delay: const Duration(seconds: 1));
+    await tester.pump(const Duration(milliseconds: 999));
+    expect(getToast(), findsNothing);
+    await tester.pump(const Duration(milliseconds: 1));
+    expect(find.text('Delayed'), findsOneWidget);
+  });
+
+  testWidgets('when a delayed toast replaces a newer toast, it should receive its full visible duration', (
+    tester,
+  ) async {
+    await mount(tester);
+    show(
+      message: 'Scheduled',
+      delay: const Duration(seconds: 1),
+      duration: .custom(duration: const Duration(seconds: 1)),
+    );
+    show(message: 'Current');
+    await settle(tester);
+    await tester.pump(const Duration(milliseconds: 700));
+    expect(find.text('Current'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump();
+    expect(find.text('Scheduled'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 999));
+    expect(find.text('Scheduled'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 1));
+    await settle(tester);
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('when multiple delayed toasts expire, they should join the handoff in expiry order', (tester) async {
+    await mount(tester);
+    show(message: 'Later', delay: const Duration(seconds: 2));
+    show(message: 'Sooner', delay: const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Sooner'), findsOneWidget);
+    await settle(tester);
+    await tester.pump(const Duration(milliseconds: 700));
+    expect(find.text('Sooner'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 300));
+    await settle(tester);
+    expect(find.text('Later'), findsOneWidget);
+    expect(getToast(), findsOneWidget);
+  });
+
+  testWidgets('when global dismissal runs, a scheduled toast should still appear later', (tester) async {
+    await mount(tester);
+    show(message: 'Current');
+    show(message: 'Scheduled', delay: const Duration(seconds: 1));
+    await settle(tester);
+    dismissMateoToast(context: context);
+    await settle(tester);
+    expect(getToast(), findsNothing);
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(getToast(), findsNothing);
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('Scheduled'), findsOneWidget);
+  });
+
+  testWidgets('when its controller dismisses an entering toast, it should animate that toast out', (tester) async {
+    await mount(tester);
+    final toast = show();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
+    toast.dismiss();
+    await settle(tester);
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('when its controller dismisses a visible toast, it should leave later requests intact', (tester) async {
+    await mount(tester);
+    final first = show(message: 'First');
+    await settle(tester);
+    show(message: 'Second');
+    first.dismiss();
+    await settle(tester);
+    expect(find.text('Second'), findsOneWidget);
+  });
+
+  testWidgets('when its controller cancels a waiting replacement, it should not dismiss another toast', (
+    tester,
+  ) async {
+    await mount(tester);
+    show(message: 'First');
+    await settle(tester);
+    final waiting = show(message: 'Waiting');
+    final dismissWaiting = waiting.dismiss;
+    dismissWaiting();
+    await settle(tester);
+    expect(getToast(), findsNothing);
+    show(message: 'Later');
+    await settle(tester);
+    dismissWaiting();
+    expect(find.text('Later'), findsOneWidget);
+  });
+
+  testWidgets('when a controller belongs to a replaced toast, it should not dismiss its replacement', (
+    tester,
+  ) async {
+    await mount(tester);
+    final first = show(message: 'First');
+    await settle(tester);
+    show(message: 'Second');
+    await settle(tester);
+    first.dismiss();
+    await tester.pump();
+    expect(find.text('Second'), findsOneWidget);
+  });
+
+  testWidgets('when the toast host is disposed, delayed and visible controllers should become inert', (
+    tester,
+  ) async {
+    await mount(tester);
+    final visible = show(message: 'Current');
+    final delayed = show(message: 'Scheduled', delay: const Duration(seconds: 1));
+    await settle(tester);
+    await tester.pumpWidget(const SizedBox());
+    visible.dismiss();
+    delayed.dismiss();
+    await tester.pump(const Duration(seconds: 2));
+    expect(getToast(), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('programmatic dismissal before the first frame should cancel the toast', (tester) async {
     await mount(tester);

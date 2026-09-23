@@ -49,7 +49,8 @@ export 'src/components/mateo_text_input/mateo_text_input_variant.dart'
     show MateoFilledTextInputVariant, MateoTextInputVariant;
 export 'src/components/mateo_toast/duration/mateo_toast_duration.dart'
     show MateoToastDuration, MateoToastDurationAuto, MateoToastDurationCustom, MateoToastDurationUntilDismissed;
-export 'src/components/mateo_toast/mateo_toast.dart' show MateoToast, dismissMateoToast, showMateoToast;
+export 'src/components/mateo_toast/mateo_toast.dart'
+    show MateoToast, MateoToastController, dismissMateoToast, showMateoToast;
 export 'src/components/mateo_toast/mateo_toast_status.dart' show MateoToastStatus;
 export 'src/components/mateo_toggle/mateo_toggle.dart' show MateoToggle, MateoToggleController;
 export 'src/components/mateo_view/components/mateo_view_footer/mateo_view_footer.dart' show MateoViewFooter;
