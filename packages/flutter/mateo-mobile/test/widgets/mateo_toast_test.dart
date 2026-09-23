@@ -238,6 +238,7 @@ void main() {
       show(status: status);
       await settle(tester);
       final expected = switch (status) {
+        MateoToastStatus.neutral => (theme.colorScheme.toast.neutral, MateoIconData.circle),
         MateoToastStatus.error => (theme.colorScheme.toast.error, MateoIconData.exclamationCircle),
         MateoToastStatus.warning => (theme.colorScheme.toast.warning, MateoIconData.exclamationTriangle),
         MateoToastStatus.info => (theme.colorScheme.toast.info, MateoIconData.circleInfo),

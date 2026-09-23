@@ -46,6 +46,14 @@ void main() {
     expect(toast.loading.icon, theme.palette.blue[9]);
   });
 
+  test('when resolving neutral toasts, surface, text, and icon should use black and white', () {
+    final neutral = theme.colorScheme.toast.neutral;
+    expect(neutral.background, theme.palette.black);
+    expect(neutral.foreground, theme.palette.white);
+    expect(neutral.icon, theme.palette.white);
+    expect(theme.copyWith().colorScheme.toast.neutral, neutral);
+  });
+
   test('when resolving options menus, it should expose their panel and content color roles', () {
     final menus = theme.colorScheme.menus;
     final options = menus.options;

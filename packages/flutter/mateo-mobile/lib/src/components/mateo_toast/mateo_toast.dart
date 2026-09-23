@@ -51,6 +51,7 @@ class MateoToast extends StatelessWidget {
   static const _maxLines = 2;
 
   Widget _defaultStatusVisual(Color iconColor) => switch (status) {
+    MateoToastStatus.neutral => const MateoIcon(.circle),
     MateoToastStatus.error => const MateoIcon(.exclamationCircle),
     MateoToastStatus.warning => const MateoIcon(.exclamationTriangle),
     MateoToastStatus.info => const MateoIcon(.circleInfo),

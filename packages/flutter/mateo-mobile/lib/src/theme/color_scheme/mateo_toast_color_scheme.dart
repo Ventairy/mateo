@@ -4,12 +4,16 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoToastColorScheme {
   const MateoToastColorScheme._({
+    required this.neutral,
     required this.error,
     required this.warning,
     required this.info,
     required this.loading,
     required this.success,
   });
+
+  /// The neutral toast treatment.
+  final MateoToastStatusColorScheme neutral;
 
   /// The error toast treatment.
   final MateoToastStatusColorScheme error;
@@ -30,6 +34,7 @@ final class MateoToastColorScheme {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MateoToastColorScheme &&
+          neutral == other.neutral &&
           error == other.error &&
           warning == other.warning &&
           info == other.info &&
@@ -37,5 +42,5 @@ final class MateoToastColorScheme {
           success == other.success;
 
   @override
-  int get hashCode => Object.hash(error, warning, info, loading, success);
+  int get hashCode => Object.hash(neutral, error, warning, info, loading, success);
 }

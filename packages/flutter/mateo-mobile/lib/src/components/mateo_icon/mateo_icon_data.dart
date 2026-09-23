@@ -60,6 +60,9 @@ enum MateoIconData {
   /// The chevron left icon.
   chevronLeft,
 
+  /// The filled circle icon.
+  circle,
+
   /// The circle block icon.
   circleBlock,
 
@@ -299,6 +302,7 @@ enum MateoIconData {
     checkmark => $Icons.checkmark(mateoOpticalSizeColor: color),
     chevronDown => $Icons.chevronDown(mateoOpticalSizeColor: color),
     chevronLeft => $Icons.chevronLeft(mateoOpticalSizeColor: color),
+    circle => $Icons.circle(mateoOpticalSizeColor: color),
     circleBlock => $Icons.circleBlock(mateoOpticalSizeColor: color),
     circleCheck => $Icons.circleCheck(mateoOpticalSizeColor: color),
     circleInfo => $Icons.circleInfo(mateoOpticalSizeColor: color),

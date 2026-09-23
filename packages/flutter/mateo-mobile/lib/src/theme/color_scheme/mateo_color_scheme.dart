@@ -128,6 +128,7 @@ final class MateoColorScheme {
       ),
     ),
     toast: ._(
+      neutral: .new(background: palette.black, foreground: palette.white, icon: palette.white),
       error: .new(background: palette.red[12], foreground: palette.white, icon: palette.red[9]),
       warning: .new(background: palette.amber[12], foreground: palette.white, icon: palette.amber[9]),
       info: .new(background: palette.cyan[12], foreground: palette.cyan[1], icon: palette.cyan[9]),
