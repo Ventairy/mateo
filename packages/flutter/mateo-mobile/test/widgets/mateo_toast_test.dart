@@ -212,7 +212,9 @@ void main() {
   });
 
   for (final status in MateoToastStatus.values) {
-    testWidgets('when status is ${status.name}, it should use its semantic colors and matching icon', (tester) async {
+    testWidgets('when status is ${status.name}, it should use its semantic colors and matching icon or indicator', (
+      tester,
+    ) async {
       await mount(tester);
       show(status: status);
       await settle(tester);
@@ -220,6 +222,7 @@ void main() {
         MateoToastStatus.error => (theme.colorScheme.toast.error, MateoIconData.exclamationCircle),
         MateoToastStatus.warning => (theme.colorScheme.toast.warning, MateoIconData.exclamationTriangle),
         MateoToastStatus.info => (theme.colorScheme.toast.info, MateoIconData.circleInfo),
+        MateoToastStatus.loading => (theme.colorScheme.toast.loading, null),
         MateoToastStatus.success => (theme.colorScheme.toast.success, MateoIconData.circleCheck),
       };
       final surface = tester.widget<MateoSurface>(
@@ -233,10 +236,21 @@ void main() {
       );
       expect((expected.$1.icon.computeLuminance() + 0.05) / (backgroundLuminance + 0.05), greaterThanOrEqualTo(3));
       expect(tester.widget<Text>(find.text('Saved')).style!.color, expected.$1.foreground);
-      expect(
-        tester.widget<MateoIcon>(find.descendant(of: getToast(), matching: find.byType(MateoIcon))).icon,
-        expected.$2,
-      );
+      if (expected.$2 case final expectedIcon?) {
+        expect(
+          tester.widget<MateoIcon>(find.descendant(of: getToast(), matching: find.byType(MateoIcon))).icon,
+          expectedIcon,
+        );
+        expect(find.descendant(of: getToast(), matching: find.byType(MateoLoadingIndicator)), findsNothing);
+      } else {
+        final indicator = find.descendant(of: getToast(), matching: find.byType(MateoLoadingIndicator));
+        expect(indicator, findsOneWidget);
+        expect(find.descendant(of: getToast(), matching: find.byType(MateoIcon)), findsNothing);
+        expect(
+          tester.getSize(find.descendant(of: indicator, matching: find.byType(SizedBox)).first),
+          const Size(22, 22),
+        );
+      }
       await tester.pumpWidget(const SizedBox());
     });
   }
@@ -248,13 +262,22 @@ void main() {
     show(
       icon: Builder(
         builder: (context) {
-          expect(MateoIconScope.of(context).size, 38);
+          expect(MateoIconScope.of(context).size, 28);
           expect(MateoIconScope.of(context).color, theme.colorScheme.toast.success.icon);
           return const MateoIcon(.cross);
         },
       ),
     );
     await settle(tester);
+    expect(tester.widget<MateoIcon>(find.byType(MateoIcon)).icon, MateoIconData.cross);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('when loading has a custom icon, it should replace the indicator', (tester) async {
+    await mount(tester);
+    show(status: .loading, icon: const MateoIcon(.cross));
+    await settle(tester);
+    expect(find.byType(MateoLoadingIndicator), findsNothing);
     expect(tester.widget<MateoIcon>(find.byType(MateoIcon)).icon, MateoIconData.cross);
     await tester.pumpWidget(const SizedBox());
   });
@@ -444,10 +467,10 @@ void main() {
     expect(getToast(), findsNothing);
   });
 
-  testWidgets('when announced, it should expose one full-message live region', (tester) async {
+  testWidgets('when loading is announced, it should expose one full-message live region', (tester) async {
     final semantics = tester.ensureSemantics();
     await mount(tester);
-    show(message: 'A complete announcement');
+    show(message: 'A complete announcement', status: .loading);
     await settle(tester);
     final nodes = find.byWidgetPredicate((widget) => widget is Semantics && widget.properties.liveRegion == true);
     expect(nodes, findsOneWidget);

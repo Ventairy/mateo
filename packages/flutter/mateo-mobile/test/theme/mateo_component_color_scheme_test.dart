@@ -37,6 +37,15 @@ void main() {
     expect(theme.copyWith().colorScheme.skeleton, skeleton);
   });
 
+  test('when resolving toasts, loading should have its own treatment with the current info colors', () {
+    final toast = theme.colorScheme.toast;
+    expect(toast.loading, toast.info);
+    expect(identical(toast.loading, toast.info), isFalse);
+    expect(toast.loading.background, theme.palette.blue[12]);
+    expect(toast.loading.foreground, theme.palette.white);
+    expect(toast.loading.icon, theme.palette.blue[9]);
+  });
+
   test('when resolving options menus, it should expose their panel and content color roles', () {
     final menus = theme.colorScheme.menus;
     final options = menus.options;

@@ -514,7 +514,7 @@ packages:
       path: "/Users/personal/Developer/ventairy/flutter/oh_my_flutter"
       relative: false
     source: path
-    version: "0.24.0"
+    version: "0.25.0"
   package_config:
     dependency: transitive
     description:

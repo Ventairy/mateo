@@ -1,12 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../foundation/mateo_elevation.dart';
-import '../../theme/mateo_theme.dart';
-import '../../theme/mateo_typography.dart';
-import '../mateo_icon/mateo_icon.dart';
-import '../mateo_icon/mateo_icon_scope.dart';
-import '../mateo_surface/mateo_surface.dart';
-import 'mateo_toast_status.dart';
+import 'package:mateo_mobile/mateo_mobile.dart';
 
 /// A compact status message for transient feedback.
 ///
@@ -21,20 +14,28 @@ class MateoToast extends StatelessWidget {
   /// The localized message, displayed on at most two lines.
   final String message;
 
-  /// The meaning that selects the surface colors and default icon.
+  /// The meaning that selects the surface colors and default icon or indicator.
   final MateoToastStatus status;
 
-  /// The optional replacement for the status icon.
+  /// The optional replacement for the status icon or indicator.
   ///
   /// Mateo icons inherit the toast's size and color through [MateoIconScope].
   /// Explicit icon properties take precedence over those defaults.
   final Widget? icon;
 
-  static const _iconSize = 38.0;
-  static const _iconTextGap = 8.0;
-  static const _contentPadding = 12.0;
-  static const _contentPaddingRight = 26.0;
+  static const _iconSize = 28.0;
+  static const _iconTextGap = 6.0;
   static const _maxLines = 2;
+
+  Widget _defaultStatusVisual(Color iconColor) => switch (status) {
+    MateoToastStatus.error => const MateoIcon(.exclamationCircle),
+    MateoToastStatus.warning => const MateoIcon(.exclamationTriangle),
+    MateoToastStatus.info => const MateoIcon(.circleInfo),
+    MateoToastStatus.loading => Center(
+      child: MateoLoadingIndicator(presentation: .circular(color: iconColor, size: 22)),
+    ),
+    MateoToastStatus.success => const MateoIcon(.circleCheck),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +58,7 @@ class MateoToast extends StatelessWidget {
         shape: const .capsule(),
         elevation: MateoElevation(level: 2),
         animation: const .none(),
-        padding: const .fromLTRB(
-          _contentPadding,
-          _contentPadding,
-          _contentPaddingRight,
-          _contentPadding,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12).copyWith(left: 12, right: 20),
         child: Row(
           mainAxisSize: .min,
           children: [
@@ -74,7 +70,7 @@ class MateoToast extends StatelessWidget {
                   size: _iconSize,
                   sizeWithBackground: _iconSize,
                   color: colors.icon,
-                  child: icon ?? MateoIcon(status.defaultIcon),
+                  child: icon ?? _defaultStatusVisual(colors.icon),
                 ),
               ),
             ),

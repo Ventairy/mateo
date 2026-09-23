@@ -7,6 +7,7 @@ final class MateoToastColorScheme {
     required this.error,
     required this.warning,
     required this.info,
+    required this.loading,
     required this.success,
   });
 
@@ -19,6 +20,9 @@ final class MateoToastColorScheme {
   /// The info toast treatment.
   final MateoToastStatusColorScheme info;
 
+  /// The loading toast treatment.
+  final MateoToastStatusColorScheme loading;
+
   /// The success toast treatment.
   final MateoToastStatusColorScheme success;
 
@@ -29,8 +33,9 @@ final class MateoToastColorScheme {
           error == other.error &&
           warning == other.warning &&
           info == other.info &&
+          loading == other.loading &&
           success == other.success;
 
   @override
-  int get hashCode => Object.hash(error, warning, info, success);
+  int get hashCode => Object.hash(error, warning, info, loading, success);
 }

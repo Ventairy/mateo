@@ -33,8 +33,11 @@ Future<void> main() async {
                   child: SizedBox(
                     width: 390,
                     height: 160,
-                    child: Center(
-                      child: MateoToast(message: 'Changes saved', status: status),
+                    child: MediaQuery(
+                      data: const MediaQueryData(disableAnimations: true),
+                      child: Center(
+                        child: MateoToast(message: 'Changes saved', status: status),
+                      ),
                     ),
                   ),
                 ),

@@ -130,8 +130,9 @@ final class MateoColorScheme {
     toast: ._(
       error: .new(background: palette.red[12], foreground: palette.white, icon: palette.red[9]),
       warning: .new(background: palette.amber[12], foreground: palette.white, icon: palette.amber[9]),
-      info: .new(background: palette.blue[12], foreground: palette.white, icon: palette.blue[9]),
-      success: .new(background: palette.green[12], foreground: palette.white, icon: palette.green[9]),
+      info: .new(background: palette.cyan[12], foreground: palette.cyan[1], icon: palette.cyan[9]),
+      loading: .new(background: palette.cyan[12], foreground: palette.cyan[1], icon: palette.cyan[8]),
+      success: .new(background: palette.green[12], foreground: palette.green[1], icon: palette.green[9]),
     ),
     toggle: .new(
       trackOn: palette.accent[9],
