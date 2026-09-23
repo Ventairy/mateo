@@ -11,7 +11,7 @@ class _MateoToastOverlay extends StatefulWidget {
   });
 
   final MateoToast toast;
-  final Duration? duration;
+  final MateoToastDuration duration;
   final bool dismissible;
   final EdgeInsetsGeometry padding;
   final VoidCallback onDismissed;
@@ -56,11 +56,16 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
   bool _reducedMotion = false;
   bool _started = false;
 
-  Duration get _readingDuration {
-    if (widget.duration case final duration?) return duration;
+  Duration get _automaticReadingDuration {
     final characters = widget.toast.message.trim().length;
     return Duration(milliseconds: (characters / 14 * 1000).round().clamp(2500, 8000));
   }
+
+  Duration? get _timeoutDuration => switch (widget.duration) {
+    MateoToastDurationAuto() => _automaticReadingDuration,
+    MateoToastDurationCustom(:final duration) => duration,
+    MateoToastDurationUntilDismissed() => null,
+  };
 
   @override
   void initState() {
@@ -80,7 +85,8 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
 
   void _startTimer() {
     _timer?.cancel();
-    _timer = Timer(_readingDuration, _dismiss);
+    _timer = null;
+    if (_timeoutDuration case final duration?) _timer = Timer(duration, _dismiss);
   }
 
   Future<void> _animateVisibility(double target) async {

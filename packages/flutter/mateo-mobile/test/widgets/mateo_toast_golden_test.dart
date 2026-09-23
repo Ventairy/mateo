@@ -126,7 +126,7 @@ Future<void> main() async {
                               showMateoToast(
                                 context: context,
                                 toast: const MateoToast(message: 'Changes saved', status: .success),
-                                duration: const Duration(seconds: 30),
+                                duration: .custom(duration: const Duration(seconds: 30)),
                               );
                             });
                           }

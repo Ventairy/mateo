@@ -4,10 +4,10 @@ part of 'mateo_toast.dart';
 ///
 /// Lets the current toast leave before bringing in the new toast. During a
 /// handoff, only the latest waiting toast is retained. Reduced motion switches
-/// immediately. [duration] overrides the estimated
-/// reading time. [dismissible] controls swipe and tap dismissal. A toast's
+/// immediately. [duration] selects estimated reading time, a custom timeout,
+/// or no timeout. [dismissible] controls swipe and tap dismissal. A toast's
 /// [MateoToast.onPressed] action still runs when [dismissible] is false.
-/// Automatic dismissal and [dismissMateoToast] remain enabled. [padding] is
+/// [dismissMateoToast] remains enabled for every duration. [padding] is
 /// applied inside the top and side safe areas.
 /// Throws [FlutterError] when [context] is not below a Mateo app's toast host.
 ///
@@ -20,7 +20,7 @@ part of 'mateo_toast.dart';
 void showMateoToast({
   required BuildContext context,
   required MateoToast toast,
-  Duration? duration,
+  MateoToastDuration duration = const .auto(),
   bool dismissible = true,
   EdgeInsetsGeometry padding = const .symmetric(horizontal: 20, vertical: 12),
 }) {

@@ -6,6 +6,20 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import '../fixtures/app_test_router_delegate.dart';
 
 void main() {
+  test('toast duration variants should preserve their distinct settings', () {
+    expect(const MateoToastDuration.auto(), const MateoToastDuration.auto());
+    expect(const MateoToastDuration.untilDismissed(), const MateoToastDuration.untilDismissed());
+    expect(const MateoToastDuration.auto(), isNot(const MateoToastDuration.untilDismissed()));
+    expect(
+      MateoToastDuration.custom(duration: const Duration(seconds: 2)),
+      MateoToastDuration.custom(duration: const Duration(seconds: 2)),
+    );
+    expect(
+      () => MateoToastDuration.custom(duration: const Duration(seconds: -1)),
+      throwsAssertionError,
+    );
+  });
+
   final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
   late BuildContext context;
   Future<void> mount(WidgetTester tester, {Widget? child, bool reducedMotion = false, bool router = false}) async {
@@ -34,14 +48,14 @@ void main() {
   void show({
     String message = 'Saved',
     MateoToastStatus status = .success,
-    Duration? duration = const Duration(seconds: 10),
+    MateoToastDuration? duration,
     bool dismissible = true,
     Widget? icon,
     VoidCallback? onPressed,
   }) => showMateoToast(
     context: context,
     toast: MateoToast(message: message, status: status, icon: icon, onPressed: onPressed),
-    duration: duration,
+    duration: duration ?? MateoToastDuration.custom(duration: const Duration(seconds: 10)),
     dismissible: dismissible,
   );
 
@@ -121,7 +135,10 @@ void main() {
   for (final dismissible in [false, true]) {
     testWidgets('programmatic dismissal should release an active touch with dismissible $dismissible', (tester) async {
       await mount(tester);
-      show(dismissible: dismissible, duration: const Duration(seconds: 1));
+      show(
+        dismissible: dismissible,
+        duration: .custom(duration: const Duration(seconds: 1)),
+      );
       await settle(tester);
       final gesture = await tester.startGesture(tester.getCenter(getToast()));
       await tester.pump(const Duration(seconds: 2));
@@ -388,7 +405,10 @@ void main() {
     await settle(tester);
     expect(presses, 0);
 
-    show(duration: const Duration(seconds: 1), onPressed: () => presses++);
+    show(
+      duration: .custom(duration: const Duration(seconds: 1)),
+      onPressed: () => presses++,
+    );
     await settle(tester);
     await tester.pump(const Duration(seconds: 1));
     await settle(tester);
@@ -411,7 +431,7 @@ void main() {
 
   testWidgets('when non-dismissible, it should resist touch dismissal but still time out', (tester) async {
     await mount(tester);
-    show(dismissible: false, duration: const Duration(seconds: 2));
+    show(dismissible: false, duration: .custom(duration: const Duration(seconds: 2)));
     await settle(tester);
     await tester.tap(getToast());
     await settle(tester);
@@ -425,7 +445,7 @@ void main() {
 
   testWidgets('when the timeout occurs during a hold, it should wait for release', (tester) async {
     await mount(tester);
-    show(duration: const Duration(seconds: 1));
+    show(duration: .custom(duration: const Duration(seconds: 1)));
     await settle(tester);
     final gesture = await tester.startGesture(tester.getCenter(getToast()));
     await tester.pump();
@@ -497,7 +517,7 @@ void main() {
         : 8000;
     testWidgets('when reading ${message.length} characters, it should use the bounded reading time', (tester) async {
       await mount(tester);
-      show(message: message, duration: null);
+      show(message: message, duration: const .auto());
       await tester.pump();
       await tester.pump(Duration(milliseconds: milliseconds - 1));
       expect(getToast(), findsOneWidget);
@@ -506,6 +526,44 @@ void main() {
       expect(getToast(), findsNothing);
     });
   }
+
+  testWidgets('until dismissed should not time out, including after app resume', (tester) async {
+    await mount(tester);
+    show(duration: const .untilDismissed(), dismissible: false);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 20));
+    expect(getToast(), findsOneWidget);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    await tester.pump(const Duration(seconds: 20));
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 20));
+    expect(getToast(), findsOneWidget);
+
+    dismissMateoToast(context: context);
+    await settle(tester);
+    expect(getToast(), findsNothing);
+  });
+
+  testWidgets('until dismissed should yield to a replacement', (tester) async {
+    await mount(tester);
+    show(message: 'Persistent', duration: const .untilDismissed(), dismissible: false);
+    await settle(tester);
+    show(message: 'Replacement');
+    await settle(tester);
+    expect(find.text('Persistent'), findsNothing);
+    expect(find.text('Replacement'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('zero custom duration should dismiss the toast', (tester) async {
+    await mount(tester);
+    show(duration: .custom(duration: Duration.zero));
+    await tester.pump();
+    await settle(tester);
+    expect(getToast(), findsNothing);
+  });
 
   for (final stage in ['entering', 'exiting', 'dragging']) {
     testWidgets('when replaced while $stage, it should dispose the old toast without affecting its replacement', (
@@ -535,7 +593,7 @@ void main() {
   for (final exiting in [false, true]) {
     testWidgets('when paused during ${exiting ? 'exit' : 'entry'}, it should resume the transition', (tester) async {
       await mount(tester);
-      show(duration: const Duration(seconds: 2));
+      show(duration: .custom(duration: const Duration(seconds: 2)));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 60));
       if (exiting) {
@@ -735,7 +793,7 @@ void main() {
 
   testWidgets('when a second pointer arrives, it should leave the first pointer in control', (tester) async {
     await mount(tester);
-    show(dismissible: false, duration: const Duration(seconds: 1));
+    show(dismissible: false, duration: .custom(duration: const Duration(seconds: 1)));
     await settle(tester);
     final first = await tester.startGesture(tester.getCenter(getToast()), pointer: 1);
     final second = await tester.startGesture(tester.getCenter(getToast()), pointer: 2);
@@ -761,7 +819,7 @@ void main() {
 
   testWidgets('when a held pointer is cancelled after timeout, it should dismiss once', (tester) async {
     await mount(tester);
-    show(duration: const Duration(seconds: 1));
+    show(duration: .custom(duration: const Duration(seconds: 1)));
     await settle(tester);
     final gesture = await tester.startGesture(tester.getCenter(getToast()));
     await tester.pump(const Duration(seconds: 2));
@@ -854,7 +912,10 @@ void main() {
     await mount(tester);
     show(message: 'Old');
     await settle(tester);
-    show(message: 'New', duration: const Duration(seconds: 1));
+    show(
+      message: 'New',
+      duration: .custom(duration: const Duration(seconds: 1)),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 281));
     await tester.pump();

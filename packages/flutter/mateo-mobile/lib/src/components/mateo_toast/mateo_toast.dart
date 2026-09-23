@@ -13,6 +13,7 @@ import '../mateo_icon/mateo_icon.dart';
 import '../mateo_icon/mateo_icon_scope.dart';
 import '../mateo_loading_indicator/mateo_loading_indicator.dart';
 import '../mateo_surface/mateo_surface.dart';
+import 'duration/mateo_toast_duration.dart';
 import 'mateo_toast_status.dart';
 
 part '_mateo_toast_curve.dart';
