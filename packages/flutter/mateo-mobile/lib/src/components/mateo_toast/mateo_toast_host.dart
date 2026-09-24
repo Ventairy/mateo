@@ -44,28 +44,28 @@ MateoToastController showMateoToast({
   final reducedMotion = MediaQuery.disableAnimationsOf(context);
   final locale = Localizations.maybeLocaleOf(context);
   return host.show(
-    (overlayKey, onDismissed) => MateoTheme(
-      data: theme,
-      child: Builder(
-        builder: (context) {
-          final overlay = Directionality(
-            textDirection: direction,
-            child: _MateoToastOverlay(
-              key: overlayKey,
-              toast: toast,
-              duration: duration,
-              dismissible: dismissible,
-              padding: padding,
-              onDismissed: onDismissed,
-            ),
-          );
-          return MediaQuery(
+    (overlayKey, onDismissed) {
+      final overlay = Directionality(
+        textDirection: direction,
+        child: _MateoToastOverlay(
+          key: overlayKey,
+          toast: toast,
+          duration: duration,
+          dismissible: dismissible,
+          padding: padding,
+          onDismissed: onDismissed,
+        ),
+      );
+      return MateoTheme(
+        data: theme,
+        child: Builder(
+          builder: (context) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaler: textScaler, disableAnimations: reducedMotion),
             child: locale == null ? overlay : Localizations.override(context: context, locale: locale, child: overlay),
-          );
-        },
-      ),
-    ),
+          ),
+        ),
+      );
+    },
     delay: delay,
   );
 }

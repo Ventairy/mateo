@@ -935,7 +935,11 @@ void main() {
     final text = tester.widget<Text>(find.text(message));
     expect(text.maxLines, 2);
     expect(text.overflow, TextOverflow.ellipsis);
-    expect(decoration.shadows, MateoElevation(level: 2).toShadowList(palette: theme.palette));
+    expect(decoration.shadows, isEmpty);
+    expect(
+      tester.widget<CustomPaint>(find.descendant(of: getToast(), matching: find.byType(CustomPaint)).first).painter,
+      isNotNull,
+    );
   });
 
   testWidgets('when a second pointer arrives, it should leave the first pointer in control', (tester) async {

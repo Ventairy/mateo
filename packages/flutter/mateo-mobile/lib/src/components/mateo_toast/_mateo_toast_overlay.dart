@@ -26,9 +26,6 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
   static const _pressDuration = Duration(milliseconds: 300);
   static const _dragDismissOffset = 10.0;
   static const _dragDampingDistance = 72.0;
-  static const _swipeDismissMinVelocity = 350.0;
-
-  static const _swipeReleaseTolerance = Duration(milliseconds: 150);
   static const _slideFraction = 0.22;
 
   late final _visibility = AnimationController(vsync: this, duration: _appearDuration);
@@ -43,9 +40,6 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
     end: 0.985,
   ).animate(CurveTween(curve: Curves.easeOutCubic).animate(_press));
   Timer? _timer;
-  VelocityTracker? _velocity;
-  Duration? _lastPointerTime;
-  Offset _lastMovementVelocity = .zero;
   int? _pointer;
   Offset? _pointerOrigin;
   double _dragOffsetY = 0;
@@ -154,25 +148,12 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
     _dragged = false;
     _dragOffsetY = -_dragDampingDistance * (1 / _visibility.value.clamp(1e-6, 1.0) - 1);
     _dragInput.value = Offset(0, _dragOffsetY);
-    _velocity = VelocityTracker.withKind(event.kind)..addPosition(event.timeStamp, event.position);
-    _lastPointerTime = event.timeStamp;
-    _lastMovementVelocity = .zero;
     _visibility.stop();
     _setPressed(true);
   }
 
   void _pointerMove(PointerMoveEvent event) {
     if (!mounted || event.pointer != _pointer || _dismissing) return;
-    _velocity?.addPosition(event.timeStamp, event.position);
-    final elapsed = event.timeStamp - _lastPointerTime!;
-    final estimatedVelocity = _velocity?.getVelocity().pixelsPerSecond ?? Offset.zero;
-    _lastMovementVelocity = estimatedVelocity != Offset.zero
-        ? estimatedVelocity
-        : elapsed.inMicroseconds > 0
-        ? event.delta * (Duration.microsecondsPerSecond / elapsed.inMicroseconds)
-        : Offset.zero;
-    if (event.delta.dy > 0) _lastMovementVelocity = .zero;
-    _lastPointerTime = event.timeStamp;
     _dragged = _dragged || (event.position - _pointerOrigin!).distance > kTouchSlop;
     _dragOffsetY += event.delta.dy;
     _dragInput.value = (_dragInput.value ?? Offset.zero) + event.delta;
@@ -185,26 +166,17 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
     _pointer = null;
     _dragInput.value = null;
     _pointerOrigin = null;
-    _velocity = null;
-    _lastPointerTime = null;
-    _lastMovementVelocity = .zero;
     _dragged = false;
     _setPressed(false);
   }
 
   void _pointerUp(PointerUpEvent event) {
     if (!mounted || event.pointer != _pointer) return;
-    // A stationary pointer-up must not erase the flick just before it.
-    final velocity = event.timeStamp - _lastPointerTime! <= _swipeReleaseTolerance
-        ? _lastMovementVelocity
-        : Offset.zero;
     final tapped = !_dragged;
     final upwardTravel = _pointerOrigin!.dy - event.position.dy;
-    final swipeUp =
-        upwardTravel >= kTouchSlop && velocity.dy <= -_swipeDismissMinVelocity && velocity.dy.abs() > velocity.dx.abs();
     final draggedToDismiss = upwardTravel >= _dragDismissOffset;
     _clearPointer();
-    if (_pendingTimeout || (widget.dismissible && !tapped && (swipeUp || draggedToDismiss))) {
+    if (_pendingTimeout || (widget.dismissible && !tapped && draggedToDismiss)) {
       _pendingTimeout = false;
       _dismiss();
       return;
@@ -271,12 +243,8 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
 
   @override
   Widget build(BuildContext context) => RepaintBoundary(
-    child: AnimatedBuilder(
-      animation: _visibility,
-      builder: (context, child) => FadeTransition(
-        opacity: AlwaysStoppedAnimation(_visibility.value.clamp(0.0, 1.0)),
-        child: child,
-      ),
+    child: FadeTransition(
+      opacity: _visibility,
       child: SlideTransition(
         position: _slide,
         child: SafeArea(

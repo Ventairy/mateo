@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../foundation/mateo_elevation.dart';
+import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 import '../../theme/mateo_theme.dart';
 import '../../theme/mateo_typography.dart';
 import '../mateo_drag_resistance/mateo_drag_resistance.dart';
@@ -18,6 +18,7 @@ import 'mateo_toast_status.dart';
 
 part '_mateo_toast_curve.dart';
 part '_mateo_toast_overlay.dart';
+part '_mateo_toast_shadow.dart';
 part '_mateo_toast_host_scope.dart';
 part 'mateo_toast_controller.dart';
 part 'mateo_toast_host.dart';
@@ -92,32 +93,37 @@ class MateoToast extends StatelessWidget {
         behavior: .opaque,
         excludeFromSemantics: true,
         onTap: activate,
-        child: MateoSurface(
-          color: colors.background,
-          shape: const .capsule(),
-          elevation: MateoElevation(level: 2),
-          animation: const .none(),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12).copyWith(left: 12, right: 20),
-          child: Row(
-            mainAxisSize: .min,
-            children: [
-              SizedBox.square(
-                dimension: _iconSize,
-                child: Align(
-                  alignment: .topLeft,
-                  child: MateoIconScope(
-                    size: _iconSize,
-                    sizeWithBackground: _iconSize,
-                    color: colors.icon,
-                    child: icon ?? _defaultStatusVisual(colors.icon),
+        child: CustomPaint(
+          painter: _MateoToastShadow(
+            color: theme.palette.neutral[12],
+            transparentOccluder: colors.background.a < 1,
+          ),
+          child: MateoSurface(
+            color: colors.background,
+            shape: const .capsule(),
+            animation: const .none(),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12).copyWith(left: 12, right: 20),
+            child: Row(
+              mainAxisSize: .min,
+              children: [
+                SizedBox.square(
+                  dimension: _iconSize,
+                  child: Align(
+                    alignment: .topLeft,
+                    child: MateoIconScope(
+                      size: _iconSize,
+                      sizeWithBackground: _iconSize,
+                      color: colors.icon,
+                      child: icon ?? _defaultStatusVisual(colors.icon),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: _iconTextGap),
-              Flexible(
-                child: Text(message, maxLines: _maxLines, overflow: .ellipsis, style: style),
-              ),
-            ],
+                const SizedBox(width: _iconTextGap),
+                Flexible(
+                  child: Text(message, maxLines: _maxLines, overflow: .ellipsis, style: style),
+                ),
+              ],
+            ),
           ),
         ),
       ),
