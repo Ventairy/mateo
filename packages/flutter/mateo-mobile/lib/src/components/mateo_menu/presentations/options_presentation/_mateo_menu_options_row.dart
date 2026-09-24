@@ -8,7 +8,7 @@ class _MateoMenuOptionsRow extends MultiChildRenderObjectWidget {
   });
 
   final bool hasSupporting;
-  final double singleLineHeight;
+  final double? singleLineHeight;
 
   @override
   _RenderMateoMenuOptionsRow createRenderObject(BuildContext context) => _RenderMateoMenuOptionsRow(

@@ -11,6 +11,7 @@ import '../mateo_press/mateo_press.dart';
 import '../mateo_surface/mateo_surface.dart';
 import 'mateo_menu_density.dart';
 import 'mateo_menu_width.dart';
+import 'overlay/mateo_menu_pop_overlay_scope.dart';
 import 'presentations/options_presentation/mateo_menu_options_presentation_item.dart';
 
 part '_mateo_menu_presentation_scope.dart';
@@ -19,6 +20,8 @@ part 'presentations/options_presentation/_mateo_menu_options_presentation_row.da
 part 'presentations/options_presentation/_mateo_menu_options_row.dart';
 part 'presentations/options_presentation/_render_mateo_menu_options_row.dart';
 part 'presentations/options_presentation/_mateo_menu_options_presentation.dart';
+part 'presentations/options_presentation/_mateo_menu_viewport_paint_cull.dart';
+part 'presentations/options_presentation/_render_mateo_menu_viewport_paint_cull.dart';
 
 /// A Mateo menu that displays the supplied presentation.
 ///

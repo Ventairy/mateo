@@ -6,6 +6,9 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
     required this.density,
     required this.topInset,
     required this.bottomInset,
+    required this.textStyles,
+    required this.leadingColor,
+    required this.singleLineHeight,
     required this.onPressed,
   });
 
@@ -13,6 +16,9 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
   final MateoMenuDensity density;
   final double topInset;
   final double bottomInset;
+  final ({TextStyle principal, TextStyle supporting}) textStyles;
+  final Color leadingColor;
+  final double? singleLineHeight;
   final FutureOr<void> Function()? onPressed;
 
   static const double _supportingGap = 2;
@@ -44,29 +50,8 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
     .standard => 48,
   };
 
-  double get _principalFontSize => switch (density) {
-    .compact => 15,
-    .standard => 16,
-  };
-
   @override
   Widget build(BuildContext context) {
-    final colors = MateoTheme.of(context).colorScheme.menus.options;
-    final principalStyle = TextStyle(
-      fontFamily: MateoTypography.fontFamily,
-      letterSpacing: MateoTypography.letterSpacing,
-      fontSize: _principalFontSize,
-      height: 1.4,
-      fontWeight: .w600,
-      color: colors.principal,
-    );
-    final singleLinePainter = TextPainter(
-      text: TextSpan(text: ' ', style: principalStyle),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
-    )..layout();
-
     return MateoPress(
       animation: .scaleFade,
       onPressed: onPressed == null ? null : (_) => onPressed!(),
@@ -83,13 +68,13 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
             opacity: onPressed == null ? 0.5 : 1,
             child: _MateoMenuOptionsRow(
               hasSupporting: item.supporting != null,
-              singleLineHeight: singleLinePainter.height,
+              singleLineHeight: singleLineHeight,
               children: [
                 if (item.leading != null)
                   MateoIconScope(
                     size: _iconSize,
                     sizeWithBackground: _iconSizeWithBackground,
-                    color: colors.leading,
+                    color: leadingColor,
                     child: item.leading!,
                   ),
                 if (item.leading != null && (item.principal != null || item.supporting != null))
@@ -102,21 +87,14 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
                       children: [
                         if (item.principal != null)
                           DefaultTextStyle(
-                            style: principalStyle,
+                            style: textStyles.principal,
                             textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
                             child: item.principal!,
                           ),
                         if (item.principal != null && item.supporting != null) const SizedBox(height: _supportingGap),
                         if (item.supporting != null)
                           DefaultTextStyle(
-                            style: TextStyle(
-                              fontFamily: MateoTypography.fontFamily,
-                              letterSpacing: MateoTypography.letterSpacing,
-                              fontSize: 14,
-                              height: 1.4,
-                              fontWeight: .w500,
-                              color: colors.supporting,
-                            ),
+                            style: textStyles.supporting,
                             textHeightBehavior: TextHeightBehavior(
                               applyHeightToFirstAscent: item.principal != null,
                             ),

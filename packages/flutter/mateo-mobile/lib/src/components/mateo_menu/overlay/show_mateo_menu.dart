@@ -13,6 +13,7 @@ import '../../../theme/mateo_theme.dart';
 import '../../../theme/mateo_theme_data.dart';
 import '../mateo_menu.dart';
 import '../presentations/options_presentation/mateo_menu_options_presentation_item.dart';
+import 'mateo_menu_pop_overlay_scope.dart';
 
 part '_mateo_menu_anchor.dart';
 part '_mateo_menu_layout.dart';

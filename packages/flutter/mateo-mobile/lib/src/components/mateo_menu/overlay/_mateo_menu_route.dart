@@ -82,6 +82,18 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
     return menu.onItemPressed!(item);
   }
 
+  Widget _buildMenu() {
+    final content = MateoSurfaceScope(
+      animation: surfaceAnimation,
+      child: MateoMenu(
+        key: menu.key,
+        presentation: menu.presentation,
+        onItemPressed: menu.onItemPressed == null ? null : _select,
+      ),
+    );
+    return surfaceAnimation is MateoSurfaceAnimationPop ? MateoMenuPopOverlayScope(child: content) : content;
+  }
+
   @override
   Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
       Directionality(
@@ -98,14 +110,7 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
                   route: this,
                   child: _buildExitTransition(
                     animation,
-                    MateoSurfaceScope(
-                      animation: surfaceAnimation,
-                      child: MateoMenu(
-                        key: menu.key,
-                        presentation: menu.presentation,
-                        onItemPressed: menu.onItemPressed == null ? null : _select,
-                      ),
-                    ),
+                    _buildMenu(),
                   ),
                 ),
               ),

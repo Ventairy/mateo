@@ -8,7 +8,7 @@ class _RenderMateoMenuOptionsRow extends RenderFlex {
   }) : super(direction: .horizontal, mainAxisSize: .min);
 
   bool _hasSupporting;
-  double _singleLineHeight;
+  double? _singleLineHeight;
 
   bool get hasSupporting => _hasSupporting;
 
@@ -18,9 +18,9 @@ class _RenderMateoMenuOptionsRow extends RenderFlex {
     markNeedsLayout();
   }
 
-  double get singleLineHeight => _singleLineHeight;
+  double? get singleLineHeight => _singleLineHeight;
 
-  set singleLineHeight(double value) {
+  set singleLineHeight(double? value) {
     if (_singleLineHeight == value) return;
     _singleLineHeight = value;
     markNeedsLayout();
@@ -54,7 +54,7 @@ class _RenderMateoMenuOptionsRow extends RenderFlex {
 
     content.visitChildren(findPrincipal);
     final paragraph = principal;
-    if (paragraph == null) return content.size.height > _singleLineHeight;
+    if (paragraph == null) return content.size.height > _singleLineHeight!;
     final textLength = paragraph.text.toPlainText().length;
     if (textLength == 0) return false;
     final boxes = paragraph.getBoxesForSelection(TextSelection(baseOffset: 0, extentOffset: textLength));
