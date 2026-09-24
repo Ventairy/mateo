@@ -240,6 +240,9 @@ enum MateoIconData {
   /// The smartphone icon.
   smartphone,
 
+  /// The social media post icon.
+  socialMediaPost,
+
   /// The stadium icon.
   stadium,
 
@@ -364,6 +367,7 @@ enum MateoIconData {
     shoppingCart => $Icons.shoppingCart(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
     sleepingFigure => $Icons.sleepingFigure(mateoOpticalSizeColor: color),
     smartphone => $Icons.smartphone(mateoOpticalSizeColor: color),
+    socialMediaPost => $Icons.socialMediaPost(mateoOpticalSizeColor: color),
     stadium => $Icons.stadium(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
     star => $Icons.star(mateoOpticalSizeColor: color),
     tire => $Icons.tire(mateoOpticalSizeColor: color),

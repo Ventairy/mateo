@@ -334,6 +334,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.smartphone(<params>);
 /// ```
 /// ```dart
+/// $Icons.socialMediaPost(<params>);
+/// ```
+/// ```dart
 /// $Icons.stadium(<params>);
 /// ```
 /// ```dart
@@ -1601,6 +1604,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `SocialMediaPost` widget from `socialMediaPost.svg`.
+  static Widget socialMediaPost({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _SocialMediaPost(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Stadium` widget from `stadium.svg`.
   static Widget stadium({
     Key? key,
@@ -1947,6 +1965,11 @@ abstract final class $Icons {
       height: height,
     ),
     'smartphone.svg' => smartphone(key: key, width: width, height: height),
+    'social-media-post.svg' => socialMediaPost(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'stadium.svg' => stadium(key: key, width: width, height: height),
     'star.svg' => star(key: key, width: width, height: height),
     'tire.svg' => tire(key: key, width: width, height: height),
@@ -16237,6 +16260,203 @@ class _SmartphonePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SmartphonePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/social-media-post.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _SocialMediaPost extends StatelessWidget with _DotdartSvgSizing {
+  const _SocialMediaPost({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _SocialMediaPost._svgWidth;
+
+  @override
+  double get svgNativeHeight => _SocialMediaPost._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _SocialMediaPost._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _SocialMediaPost._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _SocialMediaPostPainter(
+            mateoOpticalSizeColor:
+                mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _SocialMediaPostPainter extends CustomPainter {
+  _SocialMediaPostPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.677058669,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.677058669,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    3.229413314,
+    3.229413314,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(9.5068, 0)
+    ..cubicTo(5.9376, -0, 4.1528, 0.0004, 2.8252, 0.7715)
+    ..cubicTo(1.969, 1.2689, 1.2572, 1.9807, 0.7598, 2.8369)
+    ..cubicTo(-0.0113, 4.1645, -0.0117, 5.9493, -0.0117, 9.5185)
+    ..lineTo(-0.0117, 10.4814)
+    ..cubicTo(-0.0117, 14.0507, -0.0113, 15.8355, 0.7598, 17.1631)
+    ..cubicTo(1.2572, 18.0193, 1.969, 18.7311, 2.8252, 19.2285)
+    ..cubicTo(4.1528, 19.9996, 5.9376, 20, 9.5068, 20)
+    ..lineTo(10.4932, 20)
+    ..cubicTo(14.0624, 20, 15.8473, 19.9996, 17.1748, 19.2285)
+    ..cubicTo(18.031, 18.7311, 18.7428, 18.0193, 19.2402, 17.1631)
+    ..cubicTo(20.0113, 15.8355, 20.0117, 14.0507, 20.0117, 10.4814)
+    ..lineTo(20.0117, 9.5185)
+    ..cubicTo(20.0117, 5.9493, 20.0113, 4.1645, 19.2402, 2.8369)
+    ..cubicTo(18.7428, 1.9807, 18.031, 1.2689, 17.1748, 0.7715)
+    ..cubicTo(15.8473, 0.0004, 14.0624, 0, 10.4932, 0)
+    ..lineTo(9.5068, 0)
+    ..close()
+    ..moveTo(12.5762, 9.9385)
+    ..cubicTo(13.2589, 9.9385, 13.8125, 10.4921, 13.8125, 11.1748)
+    ..cubicTo(13.8124, 11.8574, 13.2588, 12.4111, 12.5762, 12.4111)
+    ..lineTo(5.4199, 12.4111)
+    ..cubicTo(4.7373, 12.4111, 4.1837, 11.8574, 4.1836, 11.1748)
+    ..cubicTo(4.1836, 10.4921, 4.7372, 9.9385, 5.4199, 9.9385)
+    ..lineTo(12.5762, 9.9385)
+    ..close()
+    ..moveTo(5.5518, 4.1484)
+    ..cubicTo(6.5265, 4.1486, 7.3164, 4.9393, 7.3164, 5.9141)
+    ..cubicTo(7.3162, 6.8886, 6.5263, 7.6785, 5.5518, 7.6787)
+    ..cubicTo(4.577, 7.6787, 3.7863, 6.8887, 3.7861, 5.9141)
+    ..cubicTo(3.7861, 4.9392, 4.5769, 4.1484, 5.5518, 4.1484)
+    ..close()
+    ..moveTo(14.9775, 4.6777)
+    ..cubicTo(15.6602, 4.6777, 16.2139, 5.2314, 16.2139, 5.9141)
+    ..cubicTo(16.2137, 6.5966, 15.6601, 7.1494, 14.9775, 7.1494)
+    ..lineTo(10.083, 7.1494)
+    ..cubicTo(9.4004, 7.1494, 8.8469, 6.5966, 8.8467, 5.9141)
+    ..cubicTo(8.8467, 5.2314, 9.4003, 4.6777, 10.083, 4.6777)
+    ..lineTo(14.9775, 4.6777)
+    ..close();
+
+  static final Path __clip0 = _buildClip0();
+
+  static Path _buildClip0() {
+    final path = Path();
+    final clipShape0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+    path.addPath(
+      clipShape0,
+      Offset.zero,
+      matrix4: Float64List.fromList([
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        20.0,
+        0.0,
+        0.0,
+        1.0,
+      ]),
+    );
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _SocialMediaPost._viewBoxWidth;
+    final scaleY = size.height / _SocialMediaPost._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_SocialMediaPost._viewBoxMinX,
+        -_SocialMediaPost._viewBoxMinY,
+      );
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _SocialMediaPostPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
