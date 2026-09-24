@@ -159,6 +159,9 @@ enum MateoIconData {
   /// The lightning bolt icon.
   lightningBolt,
 
+  /// The logout icon.
+  logout,
+
   /// The magnifier glass icon.
   magnifierGlass,
 
@@ -338,6 +341,7 @@ enum MateoIconData {
     info => $Icons.info(mateoOpticalSizeColor: color),
     letters => $Icons.letters(mateoOpticalSizeColor: color),
     lightningBolt => $Icons.lightningBolt(mateoOpticalSizeColor: color),
+    logout => $Icons.logout(mateoOpticalSizeColor: color),
     magnifierGlass => $Icons.magnifyingGlass(mateoOpticalSizeColor: color),
     magnifyingGlassSadFace => $Icons.magnifyingGlassSadFace(mateoOpticalSizeColor: color),
     mapPin => $Icons.locationPin(mateoOpticalSizeColor: color),

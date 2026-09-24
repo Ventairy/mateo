@@ -247,6 +247,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.locationPin(<params>);
 /// ```
 /// ```dart
+/// $Icons.logout(<params>);
+/// ```
+/// ```dart
 /// $Icons.magnifyingGlass(<params>);
 /// ```
 /// ```dart
@@ -1167,6 +1170,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `Logout` widget from `logout.svg`.
+  static Widget logout({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Logout(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `MagnifyingGlass` widget from `magnifyingGlass.svg`.
   static Widget magnifyingGlass({
     Key? key,
@@ -1896,6 +1914,7 @@ abstract final class $Icons {
       height: height,
     ),
     'location-pin.svg' => locationPin(key: key, width: width, height: height),
+    'logout.svg' => logout(key: key, width: width, height: height),
     'magnifying-glass.svg' => magnifyingGlass(
       key: key,
       width: width,
@@ -11447,6 +11466,154 @@ class _LocationPinPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LocationPinPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/logout.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Logout extends StatelessWidget with _DotdartSvgSizing {
+  const _Logout({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Logout._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Logout._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Logout._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Logout._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _LogoutPainter(
+            mateoOpticalSizeColor:
+                mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _LogoutPainter extends CustomPainter {
+  _LogoutPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.790480581,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.790480581,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.095194193,
+    2.095194193,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(9.5, 1.5)
+    ..lineTo(5, 1.5)
+    ..cubicTo(3.3432, 1.5, 2, 2.8432, 2, 4.5)
+    ..lineTo(2, 15.5)
+    ..cubicTo(2, 17.1569, 3.3432, 18.5, 5, 18.5)
+    ..lineTo(9.5, 18.5);
+
+  static final Path __path1 = Path()
+    ..moveTo(6.5, 10)
+    ..lineTo(18, 10)
+    ..moveTo(13.5, 5.5)
+    ..lineTo(18, 10)
+    ..lineTo(13.5, 14.5);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Logout._viewBoxWidth;
+    final scaleY = size.height / _Logout._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Logout._viewBoxMinX, -_Logout._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(
+      __path0,
+      _strokePaint
+        ..color = mateoOpticalSizeColor
+        ..strokeWidth = 2.4
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+    canvas.drawPath(
+      __path1,
+      _strokePaint
+        ..color = mateoOpticalSizeColor
+        ..strokeWidth = 2.4
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _LogoutPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
