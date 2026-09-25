@@ -51,6 +51,12 @@ final class MateoColorScheme {
           backgroundDisabled: palette.neutral[4],
           foregroundDisabled: palette.neutral[9],
         ),
+        warning: .new(
+          background: palette.amber[9],
+          foreground: palette.white,
+          backgroundDisabled: palette.neutral[4],
+          foregroundDisabled: palette.neutral[9],
+        ),
         neutral: .new(
           background: palette.neutral[12],
           foreground: palette.neutral[1],

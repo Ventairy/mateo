@@ -734,6 +734,7 @@ void main() {
   for (final variant in [
     MateoButtonVariant.primary,
     MateoButtonVariant.primary.success,
+    MateoButtonVariant.primary.warning,
     MateoButtonVariant.primary.neutral,
     MateoButtonVariant.primary.base,
     MateoButtonVariant.secondary,
@@ -767,6 +768,8 @@ void main() {
           : (background + 0.05) / (foreground + 0.05);
       if (variant == MateoButtonVariant.primary.success) {
         expect(ratio, closeTo(2.22, 0.01));
+      } else if (variant == MateoButtonVariant.primary.warning) {
+        expect(ratio, closeTo(1.91, 0.01));
       } else if (variant != MateoButtonVariant.secondary) {
         expect(ratio, greaterThanOrEqualTo(4.5));
       }

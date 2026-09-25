@@ -6,6 +6,7 @@ final class MateoPrimaryButtonColorScheme {
   const MateoPrimaryButtonColorScheme._({
     required this.accent,
     required this.success,
+    required this.warning,
     required this.neutral,
     required this.base,
   });
@@ -15,6 +16,9 @@ final class MateoPrimaryButtonColorScheme {
 
   /// The treatment for clearly positive actions.
   final MateoButtonColorScheme success;
+
+  /// The treatment for actions that need attention.
+  final MateoButtonColorScheme warning;
 
   /// The dark neutral treatment.
   final MateoButtonColorScheme neutral;
@@ -29,10 +33,11 @@ final class MateoPrimaryButtonColorScheme {
       other is MateoPrimaryButtonColorScheme &&
           accent == other.accent &&
           success == other.success &&
+          warning == other.warning &&
           neutral == other.neutral &&
           base == other.base;
 
   /// The hash of this scheme's color roles.
   @override
-  int get hashCode => Object.hash(accent, success, neutral, base);
+  int get hashCode => Object.hash(accent, success, warning, neutral, base);
 }
