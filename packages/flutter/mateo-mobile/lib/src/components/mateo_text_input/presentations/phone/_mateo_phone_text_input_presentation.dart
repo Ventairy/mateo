@@ -106,11 +106,13 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
     TextEditingValue newValue,
   ) {
     _hasUserInteracted = true;
+    final previousCountry = _phoneNumberFormatter.country;
     final result = _phoneNumberFormatter.formatEditUpdateWithResult(
       oldValue,
       newValue,
     );
     _applyFormattingResult(result);
+    if (_phoneNumberFormatter.country != previousCountry) setState(() {});
     return result.textEditingValue;
   }
 
@@ -123,7 +125,6 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   }
 
   void _handleChanged(_MateoTextInputPresentationScope scope) {
-    setState(() {});
     scope.onChanged?.call(_latestFormattingResult.internationalValue);
   }
 

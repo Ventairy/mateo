@@ -73,6 +73,9 @@ class Translations$textInput$phone$en {
   /// en: '$country, selected'
   String countrySelectedAccessibilityLabel({required Object country}) => '${country}, selected';
 
+  /// en: 'Loading countries'
+  String get loadingCountries => 'Loading countries';
+
   /// en: 'We couldn't find it'
   String get noCountriesFound => 'We couldn\'t find it';
 
@@ -93,6 +96,7 @@ extension on Translations {
       }) => 'Change country, currently ${country}',
       'textInput.phone.closeCountryPickerAccessibilityLabel' => 'Close country picker',
       'textInput.phone.countrySelectedAccessibilityLabel' => ({required Object country}) => '${country}, selected',
+      'textInput.phone.loadingCountries' => 'Loading countries',
       'textInput.phone.noCountriesFound' => 'We couldn\'t find it',
       'textInput.phone.searchCountries' => 'Search country',
       _ => null,

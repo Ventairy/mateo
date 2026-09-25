@@ -76,6 +76,8 @@ class Translations$textInput$phone$pt_BR extends Translations$textInput$phone$en
   @override
   String countrySelectedAccessibilityLabel({required Object country}) => '${country}, selecionado';
   @override
+  String get loadingCountries => 'Carregando países';
+  @override
   String get noCountriesFound => 'Não encontramos nada';
   @override
   String get searchCountries => 'Buscar país';
@@ -94,6 +96,7 @@ extension on TranslationsPtBr {
       }) => 'Alterar país, atualmente ${country}',
       'textInput.phone.closeCountryPickerAccessibilityLabel' => 'Fechar seletor de países',
       'textInput.phone.countrySelectedAccessibilityLabel' => ({required Object country}) => '${country}, selecionado',
+      'textInput.phone.loadingCountries' => 'Carregando países',
       'textInput.phone.noCountriesFound' => 'Não encontramos nada',
       'textInput.phone.searchCountries' => 'Buscar país',
       _ => null,

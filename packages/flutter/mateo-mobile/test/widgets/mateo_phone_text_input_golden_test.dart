@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,6 +9,17 @@ final _theme = MateoThemeData.light(
   accentColor: const Color(0xFFFF4A4B),
   onAccent: MateoPalette().white,
 );
+
+Completer<void>? _nextCountryPickerRoutePush;
+
+class _CountryPickerNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final completion = _nextCountryPickerRoutePush;
+    _nextCountryPickerRoutePush = null;
+    completion?.complete();
+  }
+}
 
 Future<void> main() async {
   await goldenTest(
@@ -96,7 +109,14 @@ Future<void> main() async {
     fileName: 'mateo_phone_country_picker',
     pumpBeforeTest: (tester) async {
       await tester.pumpAndSettle();
+      final routePushed = Completer<void>();
+      _nextCountryPickerRoutePush = routePushed;
       await tester.tap(find.byType(MateoCountryFlag));
+      for (var attempt = 0; attempt < 500 && !routePushed.isCompleted; attempt++) {
+        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+        await tester.pump();
+      }
+      expect(routePushed.isCompleted, isTrue);
       await tester.pumpAndSettle();
     },
     builder: () => GoldenTestGroup(
@@ -108,6 +128,7 @@ Future<void> main() async {
             height: 700,
             child: MateoApp(
               theme: _theme,
+              navigatorObservers: [_CountryPickerNavigatorObserver()],
               locale: const Locale('pt', 'BR'),
               supportedLocales: const [Locale('en', 'US'), Locale('pt', 'BR')],
               home: Center(

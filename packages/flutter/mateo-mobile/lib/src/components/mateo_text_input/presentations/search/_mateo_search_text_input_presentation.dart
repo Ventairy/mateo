@@ -24,7 +24,26 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
   final _scrollController = ScrollController();
   final _metricsChanged = ValueNotifier<ScrollMetrics?>(null);
   late final _fadeRepaint = Listenable.merge([_scrollController, _metricsChanged]);
+  TextEditingController? _textController;
+  bool _hasText = false;
   Drag? _scrollDrag;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final controller = _MateoTextInputPresentationScope.of(context).controller;
+    if (identical(controller, _textController)) return;
+    _textController?.removeListener(_handleTextChanged);
+    _textController = controller;
+    _hasText = controller.text.isNotEmpty;
+    controller.addListener(_handleTextChanged);
+  }
+
+  void _handleTextChanged() {
+    final hasText = _textController!.text.isNotEmpty;
+    if (hasText == _hasText) return;
+    setState(() => _hasText = hasText);
+  }
 
   void _startScrollDrag(DragStartDetails details) {
     _scrollDrag?.cancel();
@@ -38,6 +57,7 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
 
   @override
   void dispose() {
+    _textController?.removeListener(_handleTextChanged);
     _cancelScrollDrag();
     _scrollController.dispose();
     _metricsChanged.dispose();
@@ -70,10 +90,9 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
             color: scope.enabled ? colors.background : colors.backgroundDisabled,
             shape: const .capsule(),
             elevation: MateoElevation(level: widget.elevation),
-            child: ValueListenableBuilder<TextEditingValue>(
-              valueListenable: scope.controller,
-              builder: (context, value, child) {
-                final hasText = value.text.isNotEmpty;
+            child: Builder(
+              builder: (context) {
+                final hasText = _hasText;
                 final leadingWidth = widget.size.leadingPadding + widget.size.leadingIconSize;
                 final trailingWidth = hasText ? widget.size.trailingPadding + widget.size.trailingIconSize : 0.0;
                 final textInsets = EdgeInsetsDirectional.only(

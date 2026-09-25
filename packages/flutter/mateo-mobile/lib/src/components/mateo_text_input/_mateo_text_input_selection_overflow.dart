@@ -7,38 +7,66 @@ class _MateoTextInputSelectionOverflow extends SingleChildRenderObjectWidget {
   final Listenable repaint;
 
   @override
-  RenderObject createRenderObject(BuildContext context) => _RenderMateoTextInputSelectionOverflow(repaint);
+  RenderObject createRenderObject(BuildContext context) => _RenderMateoTextInputSelectionOverflow(
+    repaint,
+    _MateoTextInputPresentationScope.of(context).controller,
+  );
 
   @override
   void updateRenderObject(BuildContext context, _RenderMateoTextInputSelectionOverflow renderObject) {
-    renderObject.repaint = repaint;
+    renderObject
+      ..updateController(_MateoTextInputPresentationScope.of(context).controller)
+      ..repaint = repaint;
   }
 }
 
 class _RenderMateoTextInputSelectionOverflow extends RenderProxyBox {
-  _RenderMateoTextInputSelectionOverflow(this._repaint);
+  _RenderMateoTextInputSelectionOverflow(this._repaint, TextEditingController controller)
+    : _controller = controller,
+      _selectionCanPaint = _hasSelection(controller);
 
   Listenable _repaint;
+  TextEditingController _controller;
+  bool _selectionCanPaint;
+
+  static bool _hasSelection(TextEditingController controller) {
+    final selection = controller.selection;
+    return selection.isValid && !selection.isCollapsed;
+  }
+
+  void _handleRepaint() {
+    final selectionCanPaint = _hasSelection(_controller);
+    if (_selectionCanPaint || selectionCanPaint) markNeedsPaint();
+    _selectionCanPaint = selectionCanPaint;
+  }
+
+  void updateController(TextEditingController value) {
+    if (identical(value, _controller)) return;
+    final selectionCouldPaint = _selectionCanPaint;
+    _controller = value;
+    _selectionCanPaint = _hasSelection(value);
+    if (selectionCouldPaint || _selectionCanPaint) markNeedsPaint();
+  }
 
   Listenable get repaint => _repaint;
 
   set repaint(Listenable value) {
     if (identical(value, _repaint)) return;
-    if (attached) _repaint.removeListener(markNeedsPaint);
+    if (attached) _repaint.removeListener(_handleRepaint);
     _repaint = value;
-    if (attached) _repaint.addListener(markNeedsPaint);
-    markNeedsPaint();
+    if (attached) _repaint.addListener(_handleRepaint);
+    if (_selectionCanPaint) markNeedsPaint();
   }
 
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
-    _repaint.addListener(markNeedsPaint);
+    _repaint.addListener(_handleRepaint);
   }
 
   @override
   void detach() {
-    _repaint.removeListener(markNeedsPaint);
+    _repaint.removeListener(_handleRepaint);
     super.detach();
   }
 
@@ -51,6 +79,10 @@ class _RenderMateoTextInputSelectionOverflow extends RenderProxyBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    if (!_hasSelection(_controller)) {
+      super.paint(context, offset);
+      return;
+    }
     final editable = _findEditable(this);
     final selection = editable?.selection;
     final color = editable?.selectionColor;

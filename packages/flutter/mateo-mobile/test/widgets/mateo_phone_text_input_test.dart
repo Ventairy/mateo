@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/gen/flags.g.dart';
@@ -14,6 +15,44 @@ final _theme = MateoThemeData.light(
   onAccent: MateoPalette().white,
 );
 
+Completer<void>? _nextCountryPickerRoutePush;
+
+class _CountryPickerNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final completion = _nextCountryPickerRoutePush;
+    _nextCountryPickerRoutePush = null;
+    completion?.complete();
+  }
+}
+
+Future<void> _waitForCountryPicker(WidgetTester tester, Future<void> Function() activate) async {
+  final routePushed = Completer<void>();
+  _nextCountryPickerRoutePush = routePushed;
+  try {
+    await activate();
+    final namedCountryRow = find.byWidgetPredicate(
+      (widget) => widget is MateoPress && (widget.semanticLabel?.contains(', +') ?? false),
+    );
+    for (
+      var attempt = 0;
+      attempt < 500 && (!routePushed.isCompleted || namedCountryRow.evaluate().isEmpty);
+      attempt++
+    ) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    expect(routePushed.isCompleted, isTrue);
+    expect(namedCountryRow, findsWidgets);
+    await tester.pumpAndSettle();
+  } finally {
+    if (identical(_nextCountryPickerRoutePush, routePushed)) _nextCountryPickerRoutePush = null;
+  }
+}
+
+Future<void> _openCountryPicker(WidgetTester tester, Finder control) =>
+    _waitForCountryPicker(tester, () => tester.tap(control));
+
 Widget _host(
   Widget child, {
   Locale locale = const Locale('en', 'US'),
@@ -21,6 +60,7 @@ Widget _host(
   double textScale = 1,
 }) => MateoApp(
   theme: _theme,
+  navigatorObservers: [_CountryPickerNavigatorObserver()],
   locale: locale,
   supportedLocales: const [Locale('en', 'US'), Locale('pt', 'BR')],
   home: MediaQuery(
@@ -192,6 +232,49 @@ void main() {
     },
   );
 
+  testWidgets('when the country catalog is cold, it should start opening the sheet before rows are ready', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(MateoCountryFlag));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(MateoSheetView), findsOneWidget);
+    expect(find.byType(CupertinoActivityIndicator), findsNothing);
+    expect(find.byType(MateoCountryFlag), findsAtLeastNWidgets(2));
+    expect(find.bySemanticsLabel('Loading countries'), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is MateoPress && widget.animation == .scaleFade && widget.onPressed == null,
+      ),
+      findsWidgets,
+    );
+
+    final namedCountryRow = find.byWidgetPredicate(
+      (widget) => widget is MateoPress && (widget.semanticLabel?.contains(', +') ?? false),
+    );
+    for (var attempt = 0; attempt < 500 && namedCountryRow.evaluate().isEmpty; attempt++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    expect(namedCountryRow, findsWidgets);
+    Navigator.of(tester.element(find.byType(MateoSheetView))).pop();
+    await tester.pumpAndSettle();
+    semantics.dispose();
+  });
+
   testWidgets('language changes update an open picker without resetting input', (tester) async {
     final semantics = tester.ensureSemantics();
     final locale = ValueNotifier(const Locale('en', 'US'));
@@ -214,20 +297,19 @@ void main() {
     );
     controller.selection = const TextSelection.collapsed(offset: 5);
     final originalValue = controller.value;
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
     final search = find.byType(CupertinoTextField).last;
     await tester.enterText(search, 'zzzz');
-    await tester.pumpAndSettle();
+    await tester.pump();
     final searchController = tester.widget<CupertinoTextField>(search).controller!;
     final searchValue = searchController.value;
-    expect(find.text('No countries found'), findsOneWidget);
+    expect(find.text("We couldn't find it"), findsOneWidget);
 
     locale.value = const Locale('pt', 'BR');
-    await tester.pumpAndSettle();
-    expect(find.text('Buscar países'), findsOneWidget);
+    await tester.pump();
+    expect(find.text('Buscar país'), findsOneWidget);
     expect(find.bySemanticsLabel('Fechar seletor de países'), findsOneWidget);
-    expect(find.text('Nenhum país encontrado'), findsOneWidget);
+    expect(find.text('Não encontramos nada'), findsOneWidget);
     expect(searchController.value, searchValue);
     expect(controller.value, originalValue);
     expect(changes, isEmpty);
@@ -239,7 +321,7 @@ void main() {
 
     locale.value = const Locale('en', 'US');
     await tester.pumpAndSettle();
-    expect(find.text('Search countries'), findsOneWidget);
+    expect(find.text('Search country'), findsOneWidget);
     expect(find.bySemanticsLabel('Close country picker'), findsOneWidget);
     expect(find.text('Brazil'), findsOneWidget);
     expect(find.bySemanticsLabel('Brazil, selected'), findsOneWidget);
@@ -273,10 +355,206 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('+1'));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.text('+1'));
     expect(focusNode.hasFocus, isFalse);
     expect(find.byType(MateoSheetView), findsOneWidget);
+  });
+
+  testWidgets('when a country-selector press is canceled, it should keep the picker closed and allow a later tap', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    final control = find.byType(MateoCountryFlag);
+    final gesture = await tester.startGesture(tester.getCenter(control));
+    await tester.pump(const Duration(milliseconds: 100));
+    await gesture.cancel();
+    await tester.pump();
+
+    expect(find.byType(MateoSheetView), findsNothing);
+    await _openCountryPicker(tester, control);
+    expect(find.byType(MateoSheetView), findsOneWidget);
+  });
+
+  testWidgets('when accessibility activates the country selector, it should open the picker without a pointer press', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+
+    await _waitForCountryPicker(tester, () async {
+      final node = tester.getSemantics(find.bySemanticsLabel('Change country, currently Brazil'));
+      tester
+          .renderObject(find.byType(MateoTextInput))
+          .owner!
+          .semanticsOwner!
+          .performAction(
+            node.id,
+            SemanticsAction.tap,
+          );
+    });
+
+    expect(find.byType(MateoSheetView), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('when a country press is canceled, accessibility activation should still open the picker', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    final gesture = await tester.startGesture(tester.getCenter(find.byType(MateoCountryFlag)));
+    await tester.pump(const Duration(milliseconds: 100));
+    await gesture.cancel();
+    await tester.pump();
+
+    await _waitForCountryPicker(tester, () async {
+      final node = tester.getSemantics(find.bySemanticsLabel('Change country, currently Brazil'));
+      tester
+          .renderObject(find.byType(MateoTextInput))
+          .owner!
+          .semanticsOwner!
+          .performAction(node.id, SemanticsAction.tap);
+    });
+
+    expect(find.byType(MateoSheetView), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('when the picker reopens in the same locale, it should show the country list again', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
+    Navigator.of(tester.element(find.byType(MateoSheetView))).pop();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(MateoCountryFlag));
+    await tester.pumpAndSettle();
+    expect(find.byType(MateoSheetView), findsOneWidget);
+  });
+
+  testWidgets('when two phone inputs share a locale, it should open the second picker after the first', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MateoTextInput(
+              autofocus: false,
+              placeholder: 'First phone',
+              presentation: const .phone(initialCountry: .brazil),
+              onChanged: (_) {},
+            ),
+            MateoTextInput(
+              autofocus: false,
+              placeholder: 'Second phone',
+              presentation: const .phone(initialCountry: .brazil),
+              onChanged: (_) {},
+            ),
+          ],
+        ),
+      ),
+    );
+
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag).first);
+    Navigator.of(tester.element(find.byType(MateoSheetView))).pop();
+    await tester.pumpAndSettle();
+
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag).last);
+    final list = tester.widget<ListView>(find.byType(ListView));
+    expect(list.childrenDelegate.estimatedChildCount, 249);
+  });
+
+  testWidgets('when separate phone inputs switch sheet locales, it should show matching catalog names', (tester) async {
+    final matchedNames = <bool>[];
+    for (final (index, locale, name) in [
+      (0, const Locale('en', 'US'), 'Brazil'),
+      (1, const Locale('pt', 'BR'), 'Brasil'),
+      (2, const Locale('en', 'US'), 'Brazil'),
+    ]) {
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            key: ValueKey(index),
+            autofocus: false,
+            placeholder: 'Phone number',
+            presentation: const .phone(initialCountry: .brazil),
+            onChanged: (_) {},
+          ),
+          locale: locale,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openCountryPicker(tester, find.byType(MateoCountryFlag));
+      await tester.enterText(find.byType(CupertinoTextField).last, name);
+      await tester.pump();
+      matchedNames.add(
+        find.descendant(of: find.byType(ListView), matching: find.text(name)).evaluate().isNotEmpty,
+      );
+      Navigator.of(tester.element(find.byType(MateoSheetView))).pop();
+      await tester.pumpAndSettle();
+    }
+
+    expect(matchedNames, [true, true, true]);
+  });
+
+  testWidgets('when the input overrides locale, it should show country names from the sheet locale', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        Builder(
+          builder: (context) => Localizations.override(
+            context: context,
+            locale: const Locale('pt', 'BR'),
+            child: MateoTextInput(
+              autofocus: false,
+              placeholder: 'Phone number',
+              presentation: const .phone(initialCountry: .brazil),
+              onChanged: (_) {},
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
+    await tester.enterText(find.byType(CupertinoTextField).last, 'Brazil');
+    await tester.pump();
+    expect(find.descendant(of: find.byType(ListView), matching: find.text('Brazil')), findsOneWidget);
   });
 
   test('phone presentation resolves its fixed treatment and defaults', () {
@@ -342,6 +620,32 @@ void main() {
     expect(tester.widget<CupertinoTextField>(find.byType(CupertinoTextField)).controller!.text, '(202) 555-0123');
     expect(changes, ['+12025550123']);
     expect(submissions, ['+12025550123']);
+  });
+
+  testWidgets('when a calling code changes the country without visible digits, it should update the selector', (
+    tester,
+  ) async {
+    final changes = <String>[];
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: changes.add,
+        ),
+      ),
+    );
+
+    await tester.enterText(find.byType(CupertinoTextField), '+1');
+    await tester.pump();
+
+    expect(find.text('+1'), findsOneWidget);
+
+    await tester.enterText(find.byType(CupertinoTextField), '2025550123');
+    await tester.pump();
+
+    expect(changes, ['+12025550123']);
   });
 
   testWidgets('keeps formatting with the country detected from a paste', (
@@ -555,10 +859,9 @@ void main() {
 
     controller.selection = const TextSelection.collapsed(offset: 7);
 
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
     expect(find.byType(MateoSheetView), findsOneWidget);
-    expect(find.text('Buscar países'), findsOneWidget);
+    expect(find.text('Buscar país'), findsOneWidget);
 
     final searchField = find.byType(CupertinoTextField).last;
     await tester.enterText(searchField, 'estados unidos');
@@ -594,8 +897,7 @@ void main() {
     );
     controller.selection = const TextSelection.collapsed(offset: 5);
     final phoneValue = controller.value;
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
     final search = find.byType(CupertinoTextField).last;
     await tester.enterText(search, 'a');
     await tester.pumpAndSettle();
@@ -638,8 +940,7 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
 
     final sheet = find.byType(MateoSheetView);
     final originalSize = tester.getSize(sheet);
@@ -663,8 +964,8 @@ void main() {
     expect(find.text('Curaçao').hitTestable(), findsOneWidget);
     expect(tester.getSize(sheet), originalSize);
     await tester.enterText(search, 'zzzz');
-    await tester.pumpAndSettle();
-    expect(find.text('No countries found'), findsOneWidget);
+    await tester.pump();
+    expect(find.text("We couldn't find it"), findsOneWidget);
     expect(tester.getSize(sheet), originalSize);
     await tester.enterText(search, 'Zimbabwe');
     await tester.pumpAndSettle();
@@ -687,8 +988,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
     final searchField = find.byType(CupertinoTextField).last;
     await tester.enterText(searchField, 'curacao');
     await tester.pump();
@@ -696,7 +996,28 @@ void main() {
 
     await tester.enterText(searchField, 'zzzz');
     await tester.pump();
-    expect(find.text('No countries found'), findsOneWidget);
+    expect(find.text("We couldn't find it"), findsOneWidget);
+  });
+
+  testWidgets('when searching by country codes, it should find the matching country', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Phone number',
+          presentation: const .phone(initialCountry: .brazil),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
+    final searchField = find.byType(CupertinoTextField).last;
+
+    for (final query in ['br', 'BRA', '+55']) {
+      await tester.enterText(searchField, query);
+      await tester.pump();
+      expect(find.text('Brazil'), findsOneWidget);
+    }
   });
 
   testWidgets('country search preserves the not-found animation across empty queries', (tester) async {
@@ -711,8 +1032,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byType(MateoCountryFlag));
-    await tester.pumpAndSettle();
+    await _openCountryPicker(tester, find.byType(MateoCountryFlag));
     final searchField = find.byType(CupertinoTextField).last;
     await tester.enterText(searchField, 'zzzz');
     await tester.pump();

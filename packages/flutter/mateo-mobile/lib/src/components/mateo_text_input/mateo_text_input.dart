@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -96,6 +98,8 @@ class MateoTextInput extends StatefulWidget {
 class _MateoTextInputState extends State<MateoTextInput> {
   TextEditingController? _ownedController;
   FocusNode? _ownedFocusNode;
+  late final ValueChanged<String> _forwardChanged = _dispatchChanged;
+  late final ValueChanged<String> _forwardSubmitted = _dispatchSubmitted;
 
   TextEditingController get _controller => widget.controller ?? (_ownedController ??= TextEditingController());
   FocusNode get _focusNode => widget.focusNode ?? (_ownedFocusNode ??= FocusNode());
@@ -105,6 +109,10 @@ class _MateoTextInputState extends State<MateoTextInput> {
     _controller.clear();
     widget.onChanged!('');
   }
+
+  void _dispatchChanged(String value) => widget.onChanged?.call(value);
+
+  void _dispatchSubmitted(String value) => widget.onSubmitted?.call(value);
 
   @override
   void didUpdateWidget(MateoTextInput oldWidget) {
@@ -129,8 +137,8 @@ class _MateoTextInputState extends State<MateoTextInput> {
       focusNode: _focusNode,
       autofocus: widget.autofocus,
       placeholder: widget.placeholder,
-      onChanged: widget.onChanged,
-      onSubmitted: widget.onSubmitted,
+      onChanged: widget.onChanged == null ? null : _forwardChanged,
+      onSubmitted: widget.onSubmitted == null ? null : _forwardSubmitted,
       onClear: _clear,
       child: widget.presentation,
     ),

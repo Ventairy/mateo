@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
@@ -257,6 +258,159 @@ void main() {
       });
     }
   }
+
+  testWidgets('when a collapsed cursor moves, it should not invalidate the fade until selection needs painting', (
+    tester,
+  ) async {
+    final controller = TextEditingController.fromValue(
+      const TextEditingValue(text: 'Coffee', selection: TextSelection.collapsed(offset: 6)),
+    );
+    final focus = FocusNode();
+    addTearDown(controller.dispose);
+    addTearDown(focus.dispose);
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: false,
+          placeholder: 'Search',
+          controller: controller,
+          focusNode: focus,
+          presentation: const .search(variant: .filled),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    focus.requestFocus();
+    await tester.pumpAndSettle();
+
+    final fadePaint = tester.renderObject<RenderCustomPaint>(
+      find.descendant(
+        of: find.byType(BaseMateoEdgeFade),
+        matching: find.byWidgetPredicate(
+          (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+        ),
+      ),
+    );
+    final invalidated = <bool>[];
+    controller.selection = const TextSelection.collapsed(offset: 3);
+    invalidated.add(fadePaint.debugNeedsPaint);
+    await tester.pump();
+    controller.selection = const TextSelection(baseOffset: 0, extentOffset: 6);
+    invalidated.add(fadePaint.debugNeedsPaint);
+    await tester.pump();
+    focus.unfocus();
+    FocusManager.instance.applyFocusChangesIfNeeded();
+    invalidated.add(fadePaint.debugNeedsPaint);
+
+    expect(invalidated, [false, true, true]);
+  });
+
+  testWidgets('when the selection controller changes, it should repaint from only the current controller', (
+    tester,
+  ) async {
+    final first = TextEditingController.fromValue(
+      const TextEditingValue(text: 'First', selection: TextSelection.collapsed(offset: 5)),
+    );
+    final second = TextEditingController.fromValue(
+      const TextEditingValue(text: 'Second', selection: TextSelection.collapsed(offset: 6)),
+    );
+    addTearDown(first.dispose);
+    addTearDown(second.dispose);
+    Widget input(TextEditingController controller) => _host(
+      MateoTextInput(
+        autofocus: false,
+        placeholder: 'Search',
+        controller: controller,
+        presentation: const .search(variant: .filled),
+        onChanged: (_) {},
+      ),
+    );
+
+    await tester.pumpWidget(input(first));
+    await tester.pumpWidget(input(second));
+    final fadePaint = tester.renderObject<RenderCustomPaint>(
+      find.descendant(
+        of: find.byType(BaseMateoEdgeFade),
+        matching: find.byWidgetPredicate(
+          (widget) => widget is CustomPaint && widget.foregroundPainter is MateoEdgeFadePainter,
+        ),
+      ),
+    );
+
+    first.selection = const TextSelection(baseOffset: 0, extentOffset: 5);
+    final staleControllerInvalidated = fadePaint.debugNeedsPaint;
+    second.selection = const TextSelection(baseOffset: 0, extentOffset: 6);
+
+    expect((staleControllerInvalidated, fadePaint.debugNeedsPaint), (false, true));
+  });
+
+  testWidgets('when a selected controller is replaced by a collapsed controller, it should clear overflow highlight', (
+    tester,
+  ) async {
+    const text = 'Coffee shops and bakeries nearby with outdoor seating';
+    final selected = TextEditingController.fromValue(
+      const TextEditingValue(
+        text: text,
+        selection: TextSelection(baseOffset: 0, extentOffset: text.length),
+      ),
+    );
+    final collapsed = TextEditingController.fromValue(
+      const TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      ),
+    );
+    final focus = FocusNode();
+    addTearDown(selected.dispose);
+    addTearDown(collapsed.dispose);
+    addTearDown(focus.dispose);
+    Widget input(TextEditingController controller) => _host(
+      RepaintBoundary(
+        key: const ValueKey('controllerSwapCapture'),
+        child: MateoTextInput(
+          autofocus: false,
+          placeholder: 'Search',
+          controller: controller,
+          focusNode: focus,
+          presentation: const .search(variant: .filled),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+
+    await tester.pumpWidget(input(selected));
+    focus.requestFocus();
+    await tester.pumpAndSettle();
+    final scroll = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField)).scrollController!;
+    final middle = scroll.position.maxScrollExtent / 2;
+    scroll.jumpTo(middle);
+    await tester.pump();
+    final editable = tester.state<EditableTextState>(find.byType(EditableText)).renderEditable;
+    final viewport = tester.getRect(find.byType(EditableText));
+    final box = editable.getBoxesForSelection(selected.selection).first;
+    final point = Offset(viewport.left - 2, editable.localToGlobal(Offset(0, box.top + 1)).dy);
+    Future<List<int>> pixel() async {
+      final boundary = tester.renderObject<RenderRepaintBoundary>(
+        find.byKey(const ValueKey('controllerSwapCapture')),
+      );
+      final image = await boundary.toImage();
+      final bytes = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!.buffer.asUint8List();
+      final local = boundary.globalToLocal(point);
+      final index = (local.dy.floor() * image.width + local.dx.floor()) * 4;
+      final result = bytes.sublist(index, index + 4);
+      image.dispose();
+      return result;
+    }
+
+    final selectedPixel = (await tester.runAsync(pixel))!;
+    await tester.pumpWidget(input(collapsed));
+    await tester.pumpAndSettle();
+    scroll.jumpTo(middle);
+    await tester.pump();
+    final collapsedPixel = (await tester.runAsync(pixel))!;
+
+    expect(collapsedPixel, isNot(selectedPixel));
+  });
 
   testWidgets(
     'when text is long pressed, it should retain native word selection',
@@ -620,5 +774,35 @@ void main() {
     first.text = 'Still owned';
     second.text = 'Still owned';
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('when the search controller changes, it should follow only the new controller emptiness', (tester) async {
+    final first = TextEditingController(text: 'First');
+    final second = TextEditingController();
+    addTearDown(first.dispose);
+    addTearDown(second.dispose);
+    Widget input(TextEditingController controller) => _host(
+      MateoTextInput(
+        autofocus: false,
+        controller: controller,
+        placeholder: 'Search',
+        presentation: const .search(variant: .filled),
+        onChanged: (_) {},
+      ),
+    );
+
+    await tester.pumpWidget(input(first));
+    expect(find.byType(MateoPress), findsOneWidget);
+
+    await tester.pumpWidget(input(second));
+    expect(find.byType(MateoPress), findsNothing);
+
+    first.text = 'Detached';
+    await tester.pump();
+    expect(find.byType(MateoPress), findsNothing);
+
+    second.text = 'Second';
+    await tester.pump();
+    expect(find.byType(MateoPress), findsOneWidget);
   });
 }
