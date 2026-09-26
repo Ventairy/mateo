@@ -150,7 +150,7 @@ final class MateoColorScheme {
       thumbDisabled: palette.neutral[7],
     ),
     sheet: .new(scrim: palette.black.withValues(alpha: 0.2), handle: palette.neutral[6]),
-    skeleton: .new(bone: palette.neutral[3]),
+    skeleton: .new(bone: palette.neutral[2]),
     text: ._(
       primary: palette.neutral[12],
       secondary: palette.neutral[10],
