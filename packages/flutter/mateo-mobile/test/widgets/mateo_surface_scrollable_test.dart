@@ -35,7 +35,7 @@ void main() {
       expect(owned.offset, 100);
       if (shape == const MateoShape.none()) {
         expect(find.byType(ClipPath), findsNothing);
-        final clip = find.ancestor(of: find.byType(ColoredBox), matching: find.byType(ClipRect)).first;
+        final clip = find.ancestor(of: find.byType(CustomScrollView), matching: find.byType(ClipRect)).first;
         expect(tester.widget<ClipRect>(clip).clipBehavior, Clip.hardEdge);
         expect(tester.getSize(clip), Size(width, 200));
       } else {

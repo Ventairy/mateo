@@ -84,16 +84,13 @@ void main() {
   }
 
   ({double scale, double opacity}) entrance(WidgetTester tester, Finder surface) {
-    final finder = find.descendant(of: surface, matching: find.byType(Motion)).first;
-    final motion = tester.widget<Motion>(finder);
-    final content = tester.renderObject(find.byKey(motion.child.key!));
-    final renderObject = tester.renderObject(finder);
-    return (
-      scale: content.getTransformTo(renderObject).entry(0, 0),
-      opacity:
-          renderObject.toDiagnosticsNode().getProperties().firstWhere((property) => property.name == 'opacity').value!
-              as double,
+    final scale = tester.widget<ScaleTransition>(
+      find.descendant(of: surface, matching: find.byType(ScaleTransition)).first,
     );
+    final fade = tester.widget<FadeTransition>(
+      find.descendant(of: surface, matching: find.byType(FadeTransition)).first,
+    );
+    return (scale: scale.scale.value, opacity: fade.opacity.value);
   }
 
   Matcher matchesSize(Size expected) => isA<Size>()

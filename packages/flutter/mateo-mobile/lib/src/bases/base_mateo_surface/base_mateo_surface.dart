@@ -16,11 +16,19 @@ import 'mateo_surface_obstruction.dart';
 
 part '_base_mateo_surface_content_layer.dart';
 part '_base_mateo_surface_content_layout.dart';
+part '_base_mateo_surface_decoration.dart';
+part '_base_mateo_surface_decoration_painter.dart';
+part '_base_mateo_surface_pop.dart';
+part '_base_mateo_surface_pop_opacity.dart';
+part '_base_mateo_surface_pop_scale.dart';
+part '_base_mateo_surface_repaint_boundary.dart';
+part '_base_mateo_surface_repaint_scope.dart';
 part '_base_mateo_surface_scroll.dart';
 part '_base_mateo_surface_scroll_controller.dart';
 part '_base_mateo_surface_scroll_position.dart';
 part '_base_mateo_surface_size.dart';
 part '_render_base_mateo_surface_content_layout.dart';
+part '_render_base_mateo_surface_repaint_boundary.dart';
 part '_render_base_mateo_surface_size.dart';
 
 @internal
@@ -104,6 +112,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
 
   @override
   Widget build(BuildContext context) {
+    final ancestorScrollController = _BaseMateoSurfaceRepaintScope.of(context);
     if (widget._scrollable) _scrollController ??= _BaseMateoSurfaceScrollController();
     if (widget._scrollable && widget.height is MateoSurfaceHeightFit) {
       throw FlutterError('Scrollable Mateo surfaces do not support height: .fit(). Use .fill() or .custom(...).');
@@ -113,7 +122,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       obstruction: widget.obstruction,
       padding: widget.padding?.resolve(Directionality.maybeOf(context)) ?? EdgeInsets.zero,
       alignment: widget.alignment?.resolve(Directionality.maybeOf(context)),
-      child: widget.child,
+      child: widget._scrollable ? widget.child : _BaseMateoSurfaceRepaintScope(controller: null, child: widget.child),
     );
     final viewport = KeyedSubtree(
       key: _viewportKey,
@@ -135,25 +144,14 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
             child: clippedContent,
           )
         : clippedContent;
-    final presentation = widget.paintBackground
-        ? Stack(
-            fit: StackFit.passthrough,
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: _clipContent(ColoredBox(color: surfaceColor)),
-              ),
-              surfaceContent,
-            ],
-          )
-        : surfaceContent;
     final surface = _BaseMateoSurfaceSize(
       key: _surfaceKey,
       width: widget.width,
       height: widget.height,
       child: widget.paintBackground
           ? DecoratedBox(
-              decoration: ShapeDecoration(
+              decoration: _BaseMateoSurfaceDecoration(
+                color: surfaceColor,
                 shape: widget.shape,
                 shadows: widget.elevation == null || widget.elevation!.level == 0
                     ? const []
@@ -161,13 +159,15 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
                         palette: MateoTheme.of(context).palette,
                       ),
               ),
-              child: presentation,
+              child: surfaceContent,
             )
-          : presentation,
+          : surfaceContent,
     );
 
     return _buildAnimation(
-      surface: surface,
+      surface: ancestorScrollController == null
+          ? surface
+          : _BaseMateoSurfaceRepaintBoundary(controller: ancestorScrollController, child: surface),
       content: surfaceContent,
       color: surfaceColor,
     );
@@ -218,14 +218,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   }
 
   Widget _buildPopAnimation({required MateoSurfaceAnimationPop animation, required Widget child}) {
-    return Motion.list(
-      interactive: true,
-      effects: [
-        ScaleInMotionEffect(scale: animation.beginScale, duration: animation.duration, curve: animation.curve),
-        FadeInMotionEffect(duration: animation.duration, curve: animation.curve),
-      ],
-      child: child,
-    );
+    return _BaseMateoSurfacePop(animation: animation, child: child);
   }
 
   Widget _clipContent(Widget child) {

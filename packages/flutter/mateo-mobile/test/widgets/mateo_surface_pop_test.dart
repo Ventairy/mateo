@@ -1,8 +1,8 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_scope.dart';
-import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
@@ -45,21 +45,31 @@ Widget host({
   );
 }
 
-Finder get popTransform => find.byType(Motion);
-double scale(WidgetTester tester) {
-  final motion = tester.widget<Motion>(popTransform.first);
-  final surface = tester.renderObject(find.byKey(motion.child.key!));
-  return surface.getTransformTo(tester.renderObject(popTransform.first)).entry(0, 0);
-}
+Finder get popTransform => find.byType(ScaleTransition);
+double scale(WidgetTester tester) => tester.widget<ScaleTransition>(popTransform.first).scale.value;
 
-double opacity(WidgetTester tester) =>
-    tester
-            .renderObject(popTransform.first)
-            .toDiagnosticsNode()
-            .getProperties()
-            .firstWhere((property) => property.name == 'opacity')
-            .value!
-        as double;
+double opacity(WidgetTester tester) => tester.widget<FadeTransition>(find.byType(FadeTransition).first).opacity.value;
+
+Transform paintedTransform(WidgetTester tester) => tester.widget<Transform>(
+  find.descendant(of: popTransform.first, matching: find.byType(Transform)).first,
+);
+
+Future<Color> paintedCenter(WidgetTester tester, Finder capture) async => (await tester.runAsync(() async {
+  final boundary = tester.renderObject<RenderRepaintBoundary>(capture);
+  final image = await boundary.toImage();
+  try {
+    final pixels = (await image.toByteData(format: .rawRgba))!;
+    final position = (image.height ~/ 2 * image.width + image.width ~/ 2) * 4;
+    return Color.fromARGB(
+      pixels.getUint8(position + 3),
+      pixels.getUint8(position),
+      pixels.getUint8(position + 1),
+      pixels.getUint8(position + 2),
+    );
+  } finally {
+    image.dispose();
+  }
+}))!;
 
 void main() {
   test('pop has public configuration and value equality', () {
@@ -84,12 +94,12 @@ void main() {
       expect(scale(tester), .75);
       expect(opacity(tester), 0);
       await tester.pump(const Duration(milliseconds: 60));
-      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.1875), 0.000001));
+      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.1875).clamp(0, 1), 0.000001));
       await tester.pump(const Duration(milliseconds: 60));
-      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.375), 0.000001));
+      expect(opacity(tester), closeTo(Curves.easeOutBack.transform(.375).clamp(0, 1), 0.000001));
       await tester.pump(const Duration(milliseconds: 120));
       expect(scale(tester), greaterThan(1));
-      expect(opacity(tester), greaterThan(1));
+      expect(opacity(tester), 1);
       expect(tester.takeException(), isNull);
       expect(tester.getSize(popTransform.first), size);
       await tester.pump(const Duration(milliseconds: 160));
@@ -98,7 +108,7 @@ void main() {
       expect(tester.hasRunningAnimations, isFalse);
     });
   }
-  testWidgets('custom linear duration coordinates fade and scale', (tester) async {
+  testWidgets('custom linear duration coordinates fade and scale and ends filtering exactly on time', (tester) async {
     await tester.pumpWidget(
       host(
         animation: const .pop(duration: Duration(milliseconds: 200), curve: Curves.linear),
@@ -107,9 +117,13 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), closeTo(.5, .000001));
     expect(scale(tester), closeTo(.875, .000001));
+    expect(paintedTransform(tester).filterQuality, FilterQuality.low);
     await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), 1);
     expect(scale(tester), 1);
+    expect(paintedTransform(tester).filterQuality, isNull);
+    expect(tester.hasRunningAnimations, isFalse);
+    expect(tester.binding.hasScheduledFrame, isFalse);
   });
 
   testWidgets('scope updates propagate configuration without restarting pop', (tester) async {
@@ -119,15 +133,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), closeTo(.25, .000001));
     await tester.pumpWidget(scoped(const .pop(duration: Duration(milliseconds: 200), curve: Curves.easeOut)));
-    final effects = tester.widget<Motion>(popTransform.first).effects!;
-    for (final effect in effects) {
-      expect(effect.duration, const Duration(milliseconds: 200));
-      expect(effect.curve, Curves.easeOut);
-    }
     expect(opacity(tester), closeTo(Curves.easeOut.transform(.25), .000001));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(opacity(tester), closeTo(Curves.easeOut.transform(.625), .000001));
+    expect(scale(tester), closeTo(.75 + .25 * Curves.easeOut.transform(.625), .000001));
+    await tester.pump(const Duration(milliseconds: 100));
     expect(opacity(tester), 1);
     expect(scale(tester), 1);
+    expect(tester.hasRunningAnimations, isFalse);
   });
 
   testWidgets('rebuilds continue and remounts restart', (tester) async {
@@ -195,10 +208,13 @@ void main() {
   testWidgets('scroll and child state survive wrapper changes', (tester) async {
     const content = Column(children: [Text('Top'), SizedBox(height: 500), Text('Bottom')]);
     await tester.pumpWidget(host(scrollable: true, child: content));
-    await tester.pumpAndSettle();
     final element = tester.element(find.text('Top'));
     final scrollState = tester.state<ScrollableState>(find.byType(Scrollable).first);
     scrollState.position.jumpTo(80);
+    await tester.pumpAndSettle();
+    expect(tester.element(find.text('Top')), same(element));
+    expect(tester.state<ScrollableState>(find.byType(Scrollable).first), same(scrollState));
+    expect(scrollState.position.pixels, 80);
     for (final animation in [
       const MateoSurfaceAnimation.none(),
       MateoSurfaceAnimation.transform(
@@ -211,6 +227,50 @@ void main() {
       expect(tester.state<ScrollableState>(find.byType(Scrollable).first), same(scrollState));
       expect(scrollState.position.pixels, 80);
     }
+  });
+  testWidgets('live descendants repaint through the filtered entrance', (tester) async {
+    const captureKey = ValueKey('pop capture');
+    final color = ValueNotifier(const Color(0xFFFF0000));
+    addTearDown(color.dispose);
+    await tester.pumpWidget(
+      RepaintBoundary(
+        key: captureKey,
+        child: host(
+          animation: const .pop(duration: Duration(milliseconds: 400), curve: Curves.linear),
+          child: RepaintBoundary(
+            child: ValueListenableBuilder<Color>(
+              valueListenable: color,
+              builder: (_, value, _) => ColoredBox(color: value, child: const SizedBox.expand()),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 200));
+    final first = await paintedCenter(tester, find.byKey(captureKey));
+    expect(first.r, greaterThan(first.b));
+    color.value = const Color(0xFF0000FF);
+    await tester.pump();
+    final next = await paintedCenter(tester, find.byKey(captureKey));
+    expect(next.b, greaterThan(next.r));
+    expect(scale(tester), .875);
+    expect(paintedTransform(tester).filterQuality, FilterQuality.low);
+    await tester.pumpAndSettle();
+  });
+  testWidgets('reduced motion preserves child and scroll state when removing the temporary boundary', (tester) async {
+    const content = Column(children: [Text('Top'), SizedBox(height: 500), Text('Bottom')]);
+    await tester.pumpWidget(host(scrollable: true, child: content));
+    final element = tester.element(find.text('Top'));
+    final scrollState = tester.state<ScrollableState>(find.byType(Scrollable).first);
+    scrollState.position.jumpTo(80);
+    await tester.pump(const Duration(milliseconds: 60));
+    await tester.pumpWidget(host(scrollable: true, reduced: true, child: content));
+    expect(tester.element(find.text('Top')), same(element));
+    expect(tester.state<ScrollableState>(find.byType(Scrollable).first), same(scrollState));
+    expect(scrollState.position.pixels, 80);
+    expect(scale(tester), 1);
+    expect(paintedTransform(tester).filterQuality, isNull);
+    expect(tester.hasRunningAnimations, isFalse);
   });
   testWidgets('semantics remain present and hit testing follows scale', (tester) async {
     final semantics = tester.ensureSemantics();

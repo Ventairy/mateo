@@ -96,9 +96,12 @@ void main() {
         ),
       ),
     );
-    expect(tester.widget<ColoredBox>(find.byType(ColoredBox)).color, theme.colorScheme.background);
+    expect(
+      (tester.widget<DecoratedBox>(find.byType(DecoratedBox)).decoration as ShapeDecoration).color,
+      theme.colorScheme.background,
+    );
     await tester.pumpWidget(host(const MateoSurface(color: color, child: SizedBox(width: 20, height: 20))));
-    expect(tester.widget<ColoredBox>(find.byType(ColoredBox)).color, color);
+    expect((tester.widget<DecoratedBox>(find.byType(DecoratedBox)).decoration as ShapeDecoration).color, color);
     expect(tester.takeException(), isNull);
   });
 

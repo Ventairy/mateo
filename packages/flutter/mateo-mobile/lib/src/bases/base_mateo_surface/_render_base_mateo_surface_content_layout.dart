@@ -13,6 +13,7 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
   MateoSurfaceObstruction? _obstruction;
   MateoSurfaceObstruction? get obstruction => _obstruction;
   set obstruction(MateoSurfaceObstruction? value) {
+    if (value == null && _obstruction == null) return;
     // The owner can change slot measurements while retaining its identity.
     markNeedsLayout();
     if (identical(value, _obstruction)) return;
