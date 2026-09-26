@@ -127,11 +127,14 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
           widget._scrollable ? _scrollController!.leadingScrollDistance : null,
         ) ??
         child;
-    final capturedContent = MorphDescendant(
-      key: const ValueKey('Mateo surface transform content'),
-      flightBehavior: const .snapshot(),
-      child: _clipContent(withEdgeEffect(viewport)),
-    );
+    final clippedContent = _clipContent(withEdgeEffect(viewport));
+    final surfaceContent = widget.animation is MateoSurfaceAnimationTransform
+        ? MorphDescendant(
+            key: const ValueKey('Mateo surface transform content'),
+            flightBehavior: const .snapshot(),
+            child: clippedContent,
+          )
+        : clippedContent;
     final presentation = widget.paintBackground
         ? Stack(
             fit: StackFit.passthrough,
@@ -140,10 +143,10 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
               Positioned.fill(
                 child: _clipContent(ColoredBox(color: surfaceColor)),
               ),
-              capturedContent,
+              surfaceContent,
             ],
           )
-        : capturedContent;
+        : surfaceContent;
     final surface = _BaseMateoSurfaceSize(
       key: _surfaceKey,
       width: widget.width,
@@ -165,7 +168,7 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
 
     return _buildAnimation(
       surface: surface,
-      content: capturedContent,
+      content: surfaceContent,
       color: surfaceColor,
     );
   }
