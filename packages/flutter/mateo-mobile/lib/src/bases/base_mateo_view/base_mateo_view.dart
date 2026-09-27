@@ -9,6 +9,7 @@ import 'package:oh_my_flutter/oh_my_flutter.dart';
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_navigator_observer.dart';
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
+import '../../foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_morph_scope.dart';
 import '../../foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 import '../../foundation/mateo_view_animation/mateo_view_animation.dart';
 import '../../theme/mateo_theme.dart';
@@ -153,7 +154,9 @@ class _BaseMateoViewState extends State<BaseMateoView> {
   }) {
     final navigator = Navigator.maybeOf(context);
     final observer = navigator == null ? null : MorphNavigatorObserver.maybeOfNavigator(navigator);
-    final automaticTarget = observer is MateoNavigatorObserver ? observer.sheetToViewMorphTarget : null;
+    final automaticTarget = observer is MateoNavigatorObserver && MateoSheetToViewMorphScope.isPresent(context)
+        ? observer.sheetToViewMorphTarget
+        : null;
     // Automatic flights retain content pixels while the covered view is not
     // interactive. Keep geometry and keyboard-driven clearance live at handoff.
     final morphContent = MorphDescendant(
@@ -315,7 +318,7 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     required Widget child,
   }) {
     if (shape == const MateoRoundedShapeBorder(radius: 0)) {
-      return ClipRect(child: child);
+      return child;
     }
     return ClipPath(
       clipper: ShapeBorderClipper(

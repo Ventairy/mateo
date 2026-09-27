@@ -11,6 +11,25 @@ import '../fixtures/surface_transform_test_widgets.dart';
 
 const ValueKey<String> _frameKey = ValueKey('nested-morph-frame');
 
+final class _FlightGeometryDelegate extends MorphFlightDelegate<Rect> {
+  const _FlightGeometryDelegate(this.onFlight);
+
+  final void Function(MorphFlight<Rect>) onFlight;
+
+  @override
+  Rect properties(MorphEndpointContext endpoint) => endpoint.overlayBounds;
+
+  @override
+  Rect lerpProperties(Rect source, Rect destination, MorphFlightProgress progress) =>
+      Rect.lerp(source, destination, progress.curvedProgress)!;
+
+  @override
+  Widget buildFlight(BuildContext context, MorphFlight<Rect> flight) {
+    onFlight(flight);
+    return const SizedBox.expand();
+  }
+}
+
 Future<int> _visibleHeaderBands(WidgetTester tester) async => (await tester.runAsync(() async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(find.byKey(_frameKey));
   final image = await (boundary.debugLayer! as OffsetLayer).toImage(Offset.zero & boundary.size);
@@ -68,6 +87,136 @@ Future<List<int>> _nestedHeaderPixels(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets('consumer Morph uses route timing and follows changing header clearance', (tester) async {
+    tester.view
+      ..devicePixelRatio = 1
+      ..physicalSize = const Size(400, 800);
+    addTearDown(tester.view.reset);
+    final navigator = GlobalKey<NavigatorState>();
+    final headerHeight = ValueNotifier<double>(40);
+    addTearDown(headerHeight.dispose);
+    final target = MorphTarget(tag: 'changing-header');
+    MorphFlight<Rect>? flight;
+    Widget view(Key key, {bool changingHeader = false}) => MateoView(
+      header: MateoViewHeader(
+        principal: changingHeader
+            ? ValueListenableBuilder<double>(
+                valueListenable: headerHeight,
+                builder: (_, height, _) => SizedBox(height: height),
+              )
+            : const SizedBox(height: 40),
+      ),
+      surface: MateoViewSurface.scrollable(
+        padding: EdgeInsets.zero,
+        child: Column(
+          children: [
+            Morph(
+              targets: [target],
+              flightConfig: .custom(_FlightGeometryDelegate((value) => flight = value)),
+              child: SizedBox(
+                key: key,
+                width: 100,
+                height: 30,
+                child: const ColoredBox(color: Color(0xFF00FF00)),
+              ),
+            ),
+            const SizedBox(height: 900),
+          ],
+        ),
+      ),
+    );
+    const sourceKey = ValueKey('moving source morph');
+    const destinationKey = ValueKey('moving destination morph');
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: view(sourceKey, changingHeader: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final initialBounds = tester.getRect(find.byKey(sourceKey));
+    headerHeight.value = 100;
+    await tester.pumpAndSettle();
+    final sourceBounds = tester.getRect(find.byKey(sourceKey));
+    expect(sourceBounds.top, greaterThan(initialBounds.top));
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      view(destinationKey),
+      routeDuration: const Duration(milliseconds: 500),
+    );
+    await tester.pump(const Duration(milliseconds: 150));
+    expect(flight, isNotNull);
+    expect(flight!.source.bounds, rectMoreOrLessEquals(sourceBounds));
+    expect(flight!.destination.bounds, rectMoreOrLessEquals(tester.getRect(find.byKey(destinationKey))));
+    expect(flight!.uncurvedAnimation.value, inExclusiveRange(0, 1));
+    expect(flight!.curvedAnimation.value, closeTo(flight!.uncurvedAnimation.value, .000001));
+    await tester.pump(const Duration(milliseconds: 160));
+    expect(target.status.value, MorphTagStatus.flying);
+    await tester.pump(const Duration(milliseconds: 250));
+    expect(target.status.value, MorphTagStatus.completed);
+  });
+  testWidgets('consumer Morph inside a scrolling view travels between its visible endpoints', (tester) async {
+    tester.view
+      ..devicePixelRatio = 1
+      ..physicalSize = const Size(400, 800);
+    addTearDown(tester.view.reset);
+    final navigator = GlobalKey<NavigatorState>();
+    final surface = surfaceTransformTarget(
+      'consumer-flight',
+      duration: const Duration(seconds: 1),
+      curve: Curves.linear,
+    );
+    final header = MorphTarget(tag: 'consumer-header', duration: const Duration(seconds: 1), curve: Curves.linear);
+    MorphFlight<Rect>? flight;
+    Widget content(Key key) => Morph(
+      targets: [header],
+      flightConfig: .custom(_FlightGeometryDelegate((value) => flight = value)),
+      child: SizedBox(
+        key: key,
+        width: 100,
+        height: 30,
+        child: const ColoredBox(color: Color(0xFF00FF00)),
+      ),
+    );
+    const sourceKey = ValueKey('source consumer morph');
+    const destinationKey = ValueKey('destination consumer morph');
+    await tester.pumpWidget(
+      MateoApp(
+        theme: surfaceTransformTheme,
+        navigatorKey: navigator,
+        home: surfaceTransformEndpoint(
+          bounds: const Rect.fromLTWH(40, 350, 250, 160),
+          animation: .transform(target: surface),
+          child: content(sourceKey),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final sourceBounds = tester.getRect(find.byKey(sourceKey));
+    await startSurfaceTransformAnimationFlight(
+      tester,
+      navigator.currentState!,
+      surfaceTransformEndpoint(
+        bounds: const Rect.fromLTWH(12, 40, 376, 700),
+        animation: .transform(target: surface),
+        view: true,
+        scrollable: true,
+        child: content(destinationKey),
+      ),
+      routeDuration: const Duration(milliseconds: 320),
+    );
+    await tester.pump(const Duration(milliseconds: 150));
+    expect(flight, isNotNull);
+    final destinationBounds = tester.getRect(find.byKey(destinationKey));
+    expect(flight!.source.bounds, rectMoreOrLessEquals(sourceBounds));
+    expect(flight!.destination.bounds, rectMoreOrLessEquals(destinationBounds));
+    expect(
+      flight!.bounds,
+      rectMoreOrLessEquals(Rect.lerp(sourceBounds, destinationBounds, flight!.curvedAnimation.value)!),
+    );
+  });
   for (final scrollable in [false, true]) {
     testWidgets(
       'when a view with scrolling $scrollable pushes and pops, its surface snapshots should exclude the independently flying header',

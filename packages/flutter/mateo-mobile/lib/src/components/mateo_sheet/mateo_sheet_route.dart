@@ -176,7 +176,9 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
             style: textStyle,
             child: Semantics(
               onDismiss: () => unawaited(_requestDismiss(.accessibilityAction)),
-              child: _MateoSheetStackScope(stackEntry: _stackEntry, child: view),
+              child: MateoSheetToViewMorphScope(
+                child: _MateoSheetStackScope(stackEntry: _stackEntry, child: view),
+              ),
             ),
           ),
         ),

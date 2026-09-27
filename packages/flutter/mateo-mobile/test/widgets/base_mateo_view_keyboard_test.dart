@@ -63,7 +63,16 @@ class _KeyboardHost {
                       ),
                     );
                     if (!fitHeight) return view;
-                    return BaseMateoView(fitHeight: true, surface: view.surface, footer: view.footer);
+                    return BaseMateoView(
+                      fitHeight: true,
+                      surface: view.surface,
+                      footer: view.footer,
+                      surfacePresentation: (
+                        color: view.surface.color,
+                        elevation: null,
+                        shape: const MateoRoundedShapeBorder(radius: 0),
+                      ),
+                    );
                   },
                 ),
               ),

@@ -41,7 +41,16 @@ Widget _host({
       child: Offstage(
         offstage: offstage,
         child: base
-            ? BaseMateoView(fitHeight: false, surface: surface, footer: footerWidget)
+            ? BaseMateoView(
+                fitHeight: false,
+                surface: surface,
+                footer: footerWidget,
+                surfacePresentation: (
+                  color: surface.color,
+                  elevation: null,
+                  shape: const MateoRoundedShapeBorder(radius: 0),
+                ),
+              )
             : MateoView(
                 avoidBottomInset: avoid,
                 surface: surface,

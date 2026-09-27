@@ -262,7 +262,7 @@ void main() {
     );
     final navigator = await mount(tester, home: view(animation, child: const Text('Source')));
     final firstMorph = tester.widget<Morph>(find.byType(Morph));
-    final explicitTarget = firstMorph.targets[1];
+    final explicitTarget = firstMorph.targets.first;
     push(navigator, view(animation));
     await start(tester);
     await tester.pump(const Duration(milliseconds: 500));
@@ -274,7 +274,7 @@ void main() {
       (
         shape is MateoRoundedShapeBorder ? shape.resolveRadius(tester.getSize(surfaceFlight)) : null,
         flightLayers(tester).length,
-        identical(destinationMorph.targets[1], explicitTarget),
+        identical(destinationMorph.targets.first, explicitTarget),
         explicitTarget.duration,
         explicitTarget.curve,
         explicitTarget.status.value,

@@ -37,11 +37,9 @@ class _BaseMateoSurfaceScrollState extends State<_BaseMateoSurfaceScroll> {
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
-          child: RepaintBoundary(
-            child: _BaseMateoSurfaceRepaintScope(
-              controller: _retainSurfaceLayers ? widget.controller : null,
-              child: widget.child,
-            ),
+          child: _BaseMateoSurfaceRepaintScope(
+            controller: _retainSurfaceLayers ? widget.controller : null,
+            child: widget.child,
           ),
         ),
       ],

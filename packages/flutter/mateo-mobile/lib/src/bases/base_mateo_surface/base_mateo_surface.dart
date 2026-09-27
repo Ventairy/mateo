@@ -122,7 +122,10 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
       obstruction: widget.obstruction,
       padding: widget.padding?.resolve(Directionality.maybeOf(context)) ?? EdgeInsets.zero,
       alignment: widget.alignment?.resolve(Directionality.maybeOf(context)),
-      child: widget._scrollable ? widget.child : _BaseMateoSurfaceRepaintScope(controller: null, child: widget.child),
+      // Clearance can relayout the wrapper without changing the authored content.
+      child: widget._scrollable
+          ? RepaintBoundary(child: widget.child)
+          : _BaseMateoSurfaceRepaintScope(controller: null, child: widget.child),
     );
     final viewport = KeyedSubtree(
       key: _viewportKey,

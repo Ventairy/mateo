@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:oh_my_flutter/oh_my_flutter.dart' show Morph;
 
 void main() {
   const color = Color(0xFF123456);
@@ -19,10 +20,41 @@ void main() {
       expect(tester.getSize(find.byType(MateoViewSurface)), const Size(240, 320));
       expect(find.byType(ColoredBox), findsOneWidget);
       expect(tester.widget<ColoredBox>(find.byType(ColoredBox)).color, color);
-      final backgroundClip = find.ancestor(of: find.byType(ColoredBox), matching: find.byType(ClipRect));
-      expect(backgroundClip, findsOneWidget);
-      expect(tester.getSize(backgroundClip), const Size(240, 320));
+      expect(tester.getSize(find.byType(ColoredBox)), const Size(240, 320));
     }
+  });
+
+  testWidgets('a home view omits the automatic sheet-to-view Morph', (tester) async {
+    await tester.pumpWidget(
+      MateoApp(
+        theme: MateoThemeData.light(
+          accentColor: const Color(0xFF6955CD),
+          onAccent: const Color(0xFFFFFFFF),
+        ),
+        home: const MateoView(surface: MateoViewSurface(child: SizedBox())),
+      ),
+    );
+    expect(find.descendant(of: find.byType(MateoView), matching: find.byType(Morph)), findsNothing);
+  });
+
+  testWidgets('an ordinary page view omits the automatic sheet-to-view Morph', (tester) async {
+    await tester.pumpWidget(
+      MateoApp(
+        theme: MateoThemeData.light(
+          accentColor: const Color(0xFF6955CD),
+          onAccent: const Color(0xFFFFFFFF),
+        ),
+        home: const Text('Home'),
+      ),
+    );
+    final navigator = Navigator.of(tester.element(find.text('Home')));
+    navigator.push(
+      const MateoPage<void>(
+        child: MateoView(surface: MateoViewSurface(child: SizedBox())),
+      ).createRoute(navigator.context),
+    );
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: find.byType(MateoView), matching: find.byType(Morph)), findsNothing);
   });
 
   testWidgets('when the view rebuilds, it should preserve the surface scroll controller and offset', (tester) async {

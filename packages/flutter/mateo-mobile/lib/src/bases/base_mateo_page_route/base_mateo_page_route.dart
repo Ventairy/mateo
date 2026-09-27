@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../foundation/mateo_sheet_to_view_transition/mateo_sheet_to_view_morph_scope.dart';
 import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
 
 @internal
@@ -14,6 +15,8 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
     required Duration reverseDuration,
   }) {
     _surfaceTransitionSourceRoute = sourceRoute;
+    // Keep the endpoint stable if the sheet below is later removed.
+    _supportsSheetToViewMorph = true;
     disablePrimaryVisualMotion();
     setTransitionDurations(forward: forwardDuration, reverse: reverseDuration);
   }
@@ -31,6 +34,7 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   ({Duration forward, Duration reverse})? _transitionDurations;
   ({Duration forward, Duration reverse})? get transitionDurations => _transitionDurations;
   Route<dynamic>? _surfaceTransitionSourceRoute;
+  bool _supportsSheetToViewMorph = false;
 
   void setTransitionDurations({required Duration forward, required Duration reverse}) {
     assert(!forward.isNegative && !reverse.isNegative, 'Transition durations must be nonnegative.');
@@ -53,7 +57,8 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   bool _primaryVisualMotionWasRestored = false;
   bool _settlementScheduled = false;
   MateoPage<T> get page => settings as MateoPage<T>;
-  Widget buildContent(BuildContext context) => page.child;
+  Widget buildContent(BuildContext context) =>
+      _supportsSheetToViewMorph ? MateoSheetToViewMorphScope(child: page.child) : page.child;
   String? get title => page.title;
   @override
   bool get maintainState => page.maintainState;

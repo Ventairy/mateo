@@ -24,7 +24,7 @@ final class _MateoAndroidPageRoute<T> extends BaseMateoPageRoute<T> {
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
-      Semantics(scopesRoute: true, explicitChildNodes: true, child: page.child);
+      Semantics(scopesRoute: true, explicitChildNodes: true, child: buildContent(context));
 
   @override
   Widget buildTransitions(
