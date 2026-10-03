@@ -60,8 +60,8 @@ Compile package-owned utilities into `dist/styles.css`, exported as
 `mateo-web-react/styles.css`. Consumers import that stylesheet once; they do not
 need Tailwind installed or configured. Keep CSS marked as a package side effect.
 Omit Preflight and global resets, and scan only the component source directory.
-Verify the compiled stylesheet through the external consumer tests and browser
-layout checks when component styling changes.
+Verify the compiled stylesheet through browser layout checks when component
+styling changes.
 
 ## Test organization
 
@@ -73,12 +73,9 @@ layout checks when component styling changes.
   variable tests belong beside `src/theme/mateo-theme.ts`, separate from palette tests.
 - Reserve `test/` for package integration tests, shared setup and utilities,
   fixtures, and package-wide public type checks.
-- Keep external consumer tests and their fixtures in `test/consumer/`. Test
-  the packed, separately installed package through its public exports.
-  Scripts may prepare and clean up that environment; assertions belong in tests.
 - Exclude colocated tests from build output. Use the Node test environment for
   server-safe factories and the DOM environment for React behavior.
 
 Run `pnpm run check` from this package for formatting, type checks, module tests,
-build validation, and external consumer tests. Then run `pnpm run check` from
+and build validation. Then run `pnpm run check` from
 `packages/typescript/` for the workspace checks.

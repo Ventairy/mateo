@@ -1,5 +1,8 @@
 'use client';
 
+export type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';
+export { MateoIcon } from './components/mateo-icon/mateo-icon.js';
+export type { MateoIconName } from './components/mateo-icon/mateo-icon-artwork.js';
 export type { MateoPressProps } from './components/mateo-press/mateo-press.js';
 export { MateoPress } from './components/mateo-press/mateo-press.js';
 export type {

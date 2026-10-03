@@ -1,8 +1,10 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
+import { createMateoIconSvgPlugin } from './scripts/mateo-icon-svg-plugin.js';
 
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(), createMateoIconSvgPlugin()],
+  resolve: { dedupe: ['react', 'react-dom'] },
   build: {
     cssCodeSplit: true,
     lib: {
