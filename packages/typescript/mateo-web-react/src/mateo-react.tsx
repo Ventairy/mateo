@@ -1,5 +1,7 @@
 'use client';
 
+export type { MateoPressProps } from './components/mateo-press/mateo-press.js';
+export { MateoPress } from './components/mateo-press/mateo-press.js';
 export type {
   MateoSurfacePadding,
   MateoSurfaceProps,

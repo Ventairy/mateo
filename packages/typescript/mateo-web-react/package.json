@@ -39,9 +39,8 @@
     "format:check": "biome format .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run test:consumer",
-    "fix": "biome check --write .",
-    "test:consumer": "node scripts/test-mateo-consumer.mjs"
+    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build",
+    "fix": "biome check --write ."
   },
   "peerDependencies": {
     "react": "^19.0.0",

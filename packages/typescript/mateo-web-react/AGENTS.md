@@ -15,6 +15,18 @@ Use native React composition and web semantics. All components must support
 keyboard and pointer input, accessible names and focus, localization, and reduced
 motion.
 
+## Component props
+
+Keep each component's props focused on its purpose and concrete supported use
+cases. Every prop must have a clear reason to belong to that component; do not
+add props simply because HTML or React makes them available, or inherit broad
+DOM prop bags for convenience.
+
+Prefer a small, semantic API and native composition. Use inherited context for
+settings such as language and text direction when it serves the component's
+contract. Preserve the props needed for accessibility and supported interaction
+without adding unrelated customization options.
+
 ## Source organization
 
 - `src/components/` contains product-facing components and their colocated tests.

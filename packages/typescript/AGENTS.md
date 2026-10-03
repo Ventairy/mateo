@@ -42,6 +42,19 @@ object or namespace already provides that context.
   import paths stable when renaming source files.
 - Keep third-party API names unchanged; Mateo-owned aliases follow this rule.
 
+## Related values
+
+- Group values that configure the same behavior in one small, Mateo-named
+  readonly object. For example, keep press compression and release durations
+  together in `mateoPressDurations`.
+- Name members by their purpose and include units where needed, such as
+  `compressionMs` and `releaseMs`, so different phases cannot be confused.
+- Define each value once. Derive styling and runtime behavior from that same
+  definition; do not repeat a duration in both a CSS utility and a timer.
+- Keep the group beside the component or module that owns the behavior. Extract
+  a shared module only when independent owners need the same configuration;
+  do not combine unrelated settings into a global configuration object.
+
 ## Type safety
 
 Use deep type safety for every component and supporting API in every TypeScript
