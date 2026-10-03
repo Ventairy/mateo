@@ -3,9 +3,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: { index: 'src/index.ts', react: 'src/react.tsx' },
       formats: ['es'],
-      fileName: 'index',
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
     sourcemap: true,
     rolldownOptions: {

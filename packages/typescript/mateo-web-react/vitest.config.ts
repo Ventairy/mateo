@@ -1,12 +1,11 @@
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', 'test/**/*.test.{ts,tsx}'],
-    // The package intentionally contains no components or behavioral tests yet.
-    passWithNoTests: true,
+    exclude: [...configDefaults.exclude, 'test/consumer/**'],
     clearMocks: true,
     restoreMocks: true,
   },

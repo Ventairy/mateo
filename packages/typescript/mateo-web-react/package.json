@@ -23,10 +23,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
     }
   },
   "scripts": {
-    "build": "vite build && tsc -p tsconfig.build.json",
+    "build": "vite build && tsc -p tsconfig.build.json && node scripts/check-build.mjs",
     "prepare": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . --error-on-warnings",
@@ -34,8 +38,9 @@
     "format:check": "biome format .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build",
-    "fix": "biome check --write ."
+    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run test:consumer",
+    "fix": "biome check --write .",
+    "test:consumer": "node scripts/test-consumer.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -45,6 +50,7 @@
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
+    "@types/culori": "4.0.1",
     "@types/node": "24.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
@@ -54,5 +60,9 @@
     "typescript": "6.0.3",
     "vite": "8.3.2",
     "vitest": "5.0.3"
-  }
+  },
+  "dependencies": {
+    "culori": "4.0.2"
+  },
+  "sideEffects": false
 }
