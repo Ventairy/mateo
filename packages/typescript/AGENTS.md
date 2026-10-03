@@ -17,6 +17,31 @@ The authored design guidance remains in [`design-system/`](../../design-system/)
 This folder implements that guidance. The repository and parent
 [`packages/AGENTS.md`](../AGENTS.md) instructions also apply.
 
+## Mateo naming
+
+Keep Mateo context clear in package-owned names, including private
+implementation helpers and test fixtures. Avoid repeating it when an enclosing
+object or namespace already provides that context.
+
+- Use kebab-case filenames containing `mateo`, such as `mateo-palette.ts`,
+  `mateo-shape.ts`, and `use-mateo-surface-bounds.ts`. Colocated tests retain the
+  same base name, such as `mateo-shape.test.ts`.
+- Include `Mateo` in function, hook, class, interface, and type names, such as
+  `getMateoShapeRadius`, `useMateoSurfaceBounds`, and `MateoShape`. Use `mateo`
+  or `Mateo` in package-owned module constants and named helper callbacks too.
+- Members of a Mateo-named object, class, or module namespace do not repeat
+  `Mateo`: use `mateoPaletteValues.white`, not `mateoPaletteValues.mateoWhite`.
+  Grouped value modules may export contextual member names such as `white` and
+  `accent`; access them through a Mateo-named namespace. Standalone symbols
+  still retain Mateo context.
+- Apply the rule to source modules, scripts, integration tests, and fixtures.
+  Ordinary parameters, local data variables, component props, and semantic
+  object keys keep their descriptive names, such as `radius` and `accent`.
+- Preserve names required by tooling, including `package.json`, `tsconfig.json`,
+  `vite.config.ts`, `vitest.config.ts`, and `AGENTS.md`. Keep established package
+  import paths stable when renaming source files.
+- Keep third-party API names unchanged; Mateo-owned aliases follow this rule.
+
 ## Type safety
 
 Use deep type safety for every component and supporting API in every TypeScript

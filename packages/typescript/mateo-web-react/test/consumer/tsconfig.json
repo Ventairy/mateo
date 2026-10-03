@@ -10,5 +10,5 @@
     "noEmit": true,
     "skipLibCheck": false
   },
-  "include": ["fixture.tsx"]
+  "include": ["mateo-fixture.tsx"]
 }

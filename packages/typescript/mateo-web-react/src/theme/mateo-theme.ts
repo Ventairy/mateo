@@ -1,7 +1,10 @@
 import type { CSSProperties } from 'react';
-import { parseMateoColor } from './palette/color-utils.js';
-import { createMateoPalette, type MateoPalette } from './palette/palette.js';
-import { scaleNames } from './palette/values.js';
+import { parseMateoColor } from './mateo-palette/mateo-color-utils.js';
+import {
+  createMateoPalette,
+  type MateoPalette,
+} from './mateo-palette/mateo-palette.js';
+import * as mateoPaletteValues from './mateo-palette/mateo-palette-values.js';
 
 /** Shared color roles for the current Mateo appearance. */
 export interface MateoColorScheme {
@@ -50,7 +53,7 @@ export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
     '--mateo-palette-white': theme.palette.white,
     '--mateo-palette-black': theme.palette.black,
   };
-  for (const name of scaleNames) {
+  for (const name of mateoPaletteValues.scaleNames) {
     for (const [step, color] of Object.entries(theme.palette[name])) {
       style[`--mateo-palette-${name}-${step}`] = color;
     }

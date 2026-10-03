@@ -3,7 +3,7 @@ import { configDefaults, defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'jsdom',
-    setupFiles: ['test/setup.ts'],
+    setupFiles: ['test/mateo-setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', 'test/**/*.test.{ts,tsx}'],
     exclude: [...configDefaults.exclude, 'test/consumer/**'],
     clearMocks: true,

@@ -2,21 +2,21 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { parseAccent, shadeToHex } from './color-utils.js';
-import { createMateoPalette } from './palette.js';
-import { accentLightnessFloor, accentRules, scaleNames } from './values.js';
+import { getMateoShadeHex, parseMateoAccent } from './mateo-color-utils.js';
+import { createMateoPalette } from './mateo-palette.js';
+import * as mateoPaletteValues from './mateo-palette-values.js';
 
-const foundation = readFileSync(
+const mateoPaletteFoundation = readFileSync(
   new URL(
-    '../../../../../design-system/foundation/color-palette.md',
+    '../../../../../../design-system/foundation/color-palette.md',
     import.meta.url,
   ),
   'utf8',
 );
-const flutter = JSON.parse(
+const mateoFlutterPalette = JSON.parse(
   readFileSync(
     new URL(
-      '../../../../dart/mateo-mobile-flutter/test/theme/fixtures/palette.json',
+      '../../../../../dart/mateo-mobile-flutter/test/theme/fixtures/palette.json',
       import.meta.url,
     ),
     'utf8',
@@ -26,7 +26,7 @@ const flutter = JSON.parse(
 describe('palette', () => {
   it('keeps handwritten accent coefficients aligned with the foundation', () => {
     const rows = [
-      ...foundation.matchAll(
+      ...mateoPaletteFoundation.matchAll(
         /^\|\s*(\d+)\s*\|\s*`(L9[^`]*|0\.21[^`]*)`\s*\|\s*`(C9[^`]*)`/gm,
       ),
     ];
@@ -39,14 +39,14 @@ describe('palette', () => {
       chroma:
         Number(row[1]) === 9 ? 1 : Number(row[3]?.match(/× ([\d.]+)/)?.[1]),
     }));
-    expect(accentRules).toEqual(expected);
-    expect(accentLightnessFloor).toBe(Number(rows[11]?.[2]));
+    expect(mateoPaletteValues.accentRules).toEqual(expected);
+    expect(mateoPaletteValues.accentLightnessFloor).toBe(Number(rows[11]?.[2]));
   });
 
   it('matches every authored shade and the Flutter snapshot', () => {
     const palette = createMateoPalette();
-    const sections = foundation.split(/^## /m).slice(1);
-    for (const [index, name] of scaleNames.entries()) {
+    const sections = mateoPaletteFoundation.split(/^## /m).slice(1);
+    for (const [index, name] of mateoPaletteValues.scaleNames.entries()) {
       const section =
         sections.find((text) => text.startsWith(`${index + 1}. `)) ?? '';
       const colors = [
@@ -58,7 +58,7 @@ describe('palette', () => {
           Number.parseInt(`FF${color.slice(1)}`, 16),
         ),
         name,
-      ).toEqual(flutter[name]);
+      ).toEqual(mateoFlutterPalette[name]);
     }
     expect(palette.white).toBe('#FFFFFF');
     expect(palette.black).toBe('#000000');
@@ -83,27 +83,29 @@ describe('palette', () => {
     const original = createMateoPalette();
     expect(palette.accent[9]).toBe(accentColor);
     expect(Object.keys(palette.accent)).toHaveLength(12);
-    for (const name of scaleNames.filter((name) => name !== 'accent')) {
+    for (const name of mateoPaletteValues.scaleNames.filter(
+      (name) => name !== 'accent',
+    )) {
       expect(palette[name]).toBe(original[name]);
     }
     expect(palette.white).toBe(original.white);
     expect(palette.black).toBe(original.black);
     for (const color of Object.values(palette.accent))
-      expect(() => parseAccent(color)).not.toThrow();
+      expect(() => parseMateoAccent(color)).not.toThrow();
   });
 
   it('keeps vivid shades in light-to-dark order', () => {
     const shades = Object.values(
       createMateoPalette({ accentColor: '#00A86B' }).accent,
     );
-    const lightness = shades.map((shade) => parseAccent(shade).oklch.l);
+    const lightness = shades.map((shade) => parseMateoAccent(shade).oklch.l);
     for (let index = 1; index < lightness.length; index++) {
       expect(lightness[index]).toBeLessThan(lightness[index - 1] ?? 0);
     }
   });
 
   it('reduces chroma while keeping lightness and hue for an out-of-gamut shade', () => {
-    const mapped = parseAccent(shadeToHex(0.7, 0.4, 150)).oklch;
+    const mapped = parseMateoAccent(getMateoShadeHex(0.7, 0.4, 150)).oklch;
     expect(mapped.l).toBeCloseTo(0.7, 2);
     expect(mapped.h).toBeCloseTo(150, 0);
     expect(mapped.c).toBeLessThan(0.4);
@@ -136,7 +138,7 @@ describe('palette', () => {
   it('freezes scales and palette, and has no out-of-range entries', () => {
     const palette = createMateoPalette({ accentColor: '#00A86B' });
     expect(Object.isFrozen(palette)).toBe(true);
-    for (const name of scaleNames) {
+    for (const name of mateoPaletteValues.scaleNames) {
       expect(Object.isFrozen(palette[name])).toBe(true);
       expect(Reflect.set(palette[name], '1', '#000000')).toBe(false);
       expect(Reflect.get(palette[name], '0')).toBeUndefined();

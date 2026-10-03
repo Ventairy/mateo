@@ -1,9 +1,9 @@
 // @vitest-environment node
 
 import { describe, expect, it } from 'vitest';
-import type { MateoColorStep } from './palette/palette.js';
-import { scaleNames } from './palette/values.js';
-import { createMateoTheme, getMateoThemeStyle } from './theme.js';
+import type { MateoColorStep } from './mateo-palette/mateo-palette.js';
+import * as mateoPaletteValues from './mateo-palette/mateo-palette-values.js';
+import { createMateoTheme, getMateoThemeStyle } from './mateo-theme.js';
 
 describe('light theme', () => {
   it('derives exactly three roles and preserves transparent foregrounds', () => {
@@ -41,7 +41,7 @@ describe('light theme', () => {
     const style = getMateoThemeStyle(theme);
     expect(Object.keys(style)).toHaveLength(149);
     expect(Object.isFrozen(style)).toBe(true);
-    for (const name of scaleNames) {
+    for (const name of mateoPaletteValues.scaleNames) {
       for (let step = 1; step <= 12; step++) {
         expect(style[`--mateo-palette-${name}-${step}`]).toBe(
           theme.palette[name][step as MateoColorStep],

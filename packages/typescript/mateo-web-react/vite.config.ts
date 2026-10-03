@@ -7,9 +7,9 @@ export default defineConfig({
     cssCodeSplit: true,
     lib: {
       entry: {
-        index: 'src/index.ts',
-        react: 'src/react.tsx',
-        styles: 'src/styles.css',
+        index: 'src/mateo.ts',
+        react: 'src/mateo-react.tsx',
+        styles: 'src/mateo-styles.css',
       },
       formats: ['es'],
       cssFileName: 'styles',

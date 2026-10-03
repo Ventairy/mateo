@@ -1,5 +1,5 @@
-import { parseAccent, shadeToHex } from './color-utils.js';
-import * as values from './values.js';
+import { getMateoShadeHex, parseMateoAccent } from './mateo-color-utils.js';
+import * as mateoPaletteValues from './mateo-palette-values.js';
 
 /** A one-based step in a Mateo color scale. */
 export type MateoColorStep = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
@@ -27,21 +27,21 @@ export interface MateoPaletteOptions {
   readonly accentColor?: string;
 }
 
-const defaultPalette: MateoPalette = Object.freeze({
-  white: values.white,
-  black: values.black,
-  accent: values.accent,
-  neutral: values.neutral,
-  green: values.green,
-  amber: values.amber,
-  red: values.red,
-  blue: values.blue,
-  cyan: values.cyan,
-  violet: values.violet,
-  teal: values.teal,
-  orange: values.orange,
-  pink: values.pink,
-  yellow: values.yellow,
+const defaultMateoPalette: MateoPalette = Object.freeze({
+  white: mateoPaletteValues.white,
+  black: mateoPaletteValues.black,
+  accent: mateoPaletteValues.accent,
+  neutral: mateoPaletteValues.neutral,
+  green: mateoPaletteValues.green,
+  amber: mateoPaletteValues.amber,
+  red: mateoPaletteValues.red,
+  blue: mateoPaletteValues.blue,
+  cyan: mateoPaletteValues.cyan,
+  violet: mateoPaletteValues.violet,
+  teal: mateoPaletteValues.teal,
+  orange: mateoPaletteValues.orange,
+  pink: mateoPaletteValues.pink,
+  yellow: mateoPaletteValues.yellow,
 });
 
 /**
@@ -50,22 +50,23 @@ const defaultPalette: MateoPalette = Object.freeze({
  * pale, muted, and very dark seeds need visual review.
  */
 export function createMateoPalette({
-  accentColor = values.accent[9],
+  accentColor = mateoPaletteValues.accent[9],
 }: MateoPaletteOptions = {}): MateoPalette {
-  const { input, oklch } = parseAccent(accentColor);
-  if (input.toUpperCase() === values.accent[9]) return defaultPalette;
-  const shades = values.accentRules.map((rule, index) => {
+  const { input, oklch } = parseMateoAccent(accentColor);
+  if (input.toUpperCase() === mateoPaletteValues.accent[9])
+    return defaultMateoPalette;
+  const shades = mateoPaletteValues.accentRules.map((rule, index) => {
     if (index === 8) return input;
     const l =
       index < 8
         ? oklch.l + (1 - oklch.l) * rule.lightness
-        : values.accentLightnessFloor +
-          (oklch.l - values.accentLightnessFloor) * rule.lightness;
-    return shadeToHex(l, oklch.c * rule.chroma, oklch.h ?? 0);
+        : mateoPaletteValues.accentLightnessFloor +
+          (oklch.l - mateoPaletteValues.accentLightnessFloor) * rule.lightness;
+    return getMateoShadeHex(l, oklch.c * rule.chroma, oklch.h ?? 0);
   });
   // Every key is generated from the twelve validated foundation rules.
   const accent = Object.freeze(
     Object.fromEntries(shades.map((color, index) => [index + 1, color])),
   ) as MateoColorScale;
-  return Object.freeze({ ...defaultPalette, accent });
+  return Object.freeze({ ...defaultMateoPalette, accent });
 }

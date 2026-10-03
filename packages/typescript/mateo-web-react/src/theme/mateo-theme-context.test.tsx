@@ -3,35 +3,41 @@ import { useState } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { expect, it } from 'vitest';
-import { createMateoTheme, getMateoThemeStyle } from './theme.js';
-import { MateoTheme, useMateoTheme } from './theme-context.js';
+import { createMateoTheme, getMateoThemeStyle } from './mateo-theme.js';
+import { MateoTheme, useMateoTheme } from './mateo-theme-context.js';
 
-const outer = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFFFFF' });
-const inner = createMateoTheme({ accentColor: '#00A86B', onAccent: '#000000' });
+const outerMateoTheme = createMateoTheme({
+  accentColor: '#4A5CFF',
+  onAccent: '#FFFFFF',
+});
+const innerMateoTheme = createMateoTheme({
+  accentColor: '#00A86B',
+  onAccent: '#000000',
+});
 
-function ReadTheme({ label }: { label: string }) {
+function ReadMateoTheme({ label }: { label: string }) {
   const theme = useMateoTheme();
   return <span data-testid={label}>{theme.colorScheme.accent}</span>;
 }
 
-function NestedExample() {
+function MateoNestedThemeExample() {
   return (
-    <MateoTheme data={outer}>
-      <main style={getMateoThemeStyle(outer)}>
-        <ReadTheme label="outer" />
-        <MateoTheme data={inner}>
-          <section style={getMateoThemeStyle(inner)}>
-            <ReadTheme label="inner" />
+    <MateoTheme data={outerMateoTheme}>
+      <main style={getMateoThemeStyle(outerMateoTheme)}>
+        <ReadMateoTheme label="outer" />
+        <MateoTheme data={innerMateoTheme}>
+          <section style={getMateoThemeStyle(innerMateoTheme)}>
+            <ReadMateoTheme label="inner" />
           </section>
         </MateoTheme>
-        <ReadTheme label="sibling" />
+        <ReadMateoTheme label="sibling" />
       </main>
     </MateoTheme>
   );
 }
 
 it('uses the nearest theme without adding HTML or leaking to siblings', () => {
-  const { container } = render(<NestedExample />);
+  const { container } = render(<MateoNestedThemeExample />);
   expect(screen.getByTestId('outer')).toHaveTextContent('#4A5CFF');
   expect(screen.getByTestId('inner')).toHaveTextContent('#00A86B');
   expect(screen.getByTestId('sibling')).toHaveTextContent('#4A5CFF');
@@ -50,20 +56,20 @@ it('uses the nearest theme without adding HTML or leaking to siblings', () => {
 });
 
 it('updates context and CSS variables together', () => {
-  function Example() {
-    const [theme, setTheme] = useState(outer);
+  function MateoSurfaceExample() {
+    const [theme, setTheme] = useState(outerMateoTheme);
     return (
       <MateoTheme data={theme}>
         <main style={getMateoThemeStyle(theme)}>
-          <ReadTheme label="active" />
-          <button type="button" onClick={() => setTheme(inner)}>
+          <ReadMateoTheme label="active" />
+          <button type="button" onClick={() => setTheme(innerMateoTheme)}>
             Change theme
           </button>
         </main>
       </MateoTheme>
     );
   }
-  const { container } = render(<Example />);
+  const { container } = render(<MateoSurfaceExample />);
   fireEvent.click(screen.getByRole('button', { name: 'Change theme' }));
   expect(screen.getByTestId('active')).toHaveTextContent('#00A86B');
   expect(
@@ -74,21 +80,21 @@ it('updates context and CSS variables together', () => {
 });
 
 it('reports a missing provider', () => {
-  expect(() => render(<ReadTheme label="missing" />)).toThrow(
+  expect(() => render(<ReadMateoTheme label="missing" />)).toThrow(
     'useMateoTheme() requires a MateoTheme ancestor',
   );
 });
 
 it('server-renders and hydrates nested variable boundaries without mismatch', async () => {
   const container = document.createElement('div');
-  container.innerHTML = renderToString(<NestedExample />);
+  container.innerHTML = renderToString(<MateoNestedThemeExample />);
   document.body.append(container);
   const original = container.innerHTML;
   const errors: unknown[] = [];
   let root: ReturnType<typeof hydrateRoot> | undefined;
   try {
     await act(async () => {
-      root = hydrateRoot(container, <NestedExample />, {
+      root = hydrateRoot(container, <MateoNestedThemeExample />, {
         onRecoverableError: (error) => errors.push(error),
       });
     });

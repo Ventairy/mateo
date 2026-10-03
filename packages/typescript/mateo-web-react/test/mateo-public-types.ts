@@ -4,10 +4,10 @@ import {
   createMateoTheme,
   getMateoThemeStyle,
   type MateoColorStep,
-} from '../src';
+} from '../src/mateo.js';
 
 // This function is checked by tsc, never executed.
-export function checkPublicTypes(step: MateoColorStep) {
+export function checkMateoPublicTypes(step: MateoColorStep) {
   const palette = createMateoPalette();
   const color: string = palette.accent[step];
   // @ts-expect-error Scale indices are one-based.

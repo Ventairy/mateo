@@ -15,6 +15,16 @@ Use native React composition and web semantics. All components must support
 keyboard and pointer input, accessible names and focus, localization, and reduced
 motion.
 
+## Source organization
+
+- `src/components/` contains product-facing components and their colocated tests.
+- `src/foundation/` contains non-component foundations and supporting utilities,
+  including shape contracts, geometry, and bounds measurement.
+- `src/theme/` contains theme data, React theme integration, palettes, and their
+  supporting color utilities.
+- Keep tests beside the implementation they cover. Package entry modules and
+  the stylesheet remain at the source root.
+
 ## Styling
 
 Use Tailwind CSS through the package's Vite plugin for all component styling
@@ -45,10 +55,10 @@ layout checks when component styling changes.
 
 - Colocate module and component tests with their source, using
   `<module>.test.ts` or `<component>.test.tsx`. For example, keep
-  `src/palette/palette.test.ts` beside `src/palette/palette.ts` and
-  `src/react.test.tsx` beside `src/react.tsx`.
+  `src/theme/mateo-palette/mateo-palette.test.ts` beside `src/theme/mateo-palette/mateo-palette.ts` and
+  `src/mateo-react.test.tsx` beside `src/mateo-react.tsx`.
 - Keep each suite focused on the module it covers. Theme factory and CSS
-  variable tests belong beside `src/theme.ts`, separate from palette tests.
+  variable tests belong beside `src/theme/mateo-theme.ts`, separate from palette tests.
 - Reserve `test/` for package integration tests, shared setup and utilities,
   fixtures, and package-wide public type checks.
 - Keep external consumer tests and their fixtures in `test/consumer/`. Test

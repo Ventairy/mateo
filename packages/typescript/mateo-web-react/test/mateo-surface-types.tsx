@@ -1,7 +1,7 @@
 import { createRef } from 'react';
-import { MateoSurface, type MateoSurfaceSize } from '../src/react.js';
+import { MateoSurface, type MateoSurfaceSize } from '../src/mateo-react.js';
 
-export function checkSurfaceTypes() {
+export function checkMateoSurfaceTypes() {
   const ref = createRef<HTMLDivElement>();
   const surface = (
     <MateoSurface
@@ -77,4 +77,31 @@ export function checkSurfaceTypes() {
     sized,
     invalidRef,
   };
+}
+
+export function checkMateoShapeTypes() {
+  const rounded = (
+    <MateoSurface shape={{ type: 'rounded', radius: 24 }}>Content</MateoSurface>
+  );
+  const capsule = <MateoSurface shape="capsule">Content</MateoSurface>;
+  const none = <MateoSurface shape="none">Content</MateoSurface>;
+  const missing = (
+    // @ts-expect-error Rounded shapes require a radius.
+    <MateoSurface shape={{ type: 'rounded' }}>Content</MateoSurface>
+  );
+  const css = (
+    // @ts-expect-error Radius is a number of CSS pixels.
+    <MateoSurface shape={{ type: 'rounded', radius: '24px' }}>
+      Content
+    </MateoSurface>
+  );
+  // @ts-expect-error Shape treatments form a closed set.
+  const typo = <MateoSurface shape="capsul">Content</MateoSurface>;
+  const extra = (
+    // @ts-expect-error Unsupported configuration is rejected.
+    <MateoSurface shape={{ type: 'rounded', radius: 24, smoothing: 1 }}>
+      Content
+    </MateoSurface>
+  );
+  return { rounded, capsule, none, missing, css, typo, extra };
 }

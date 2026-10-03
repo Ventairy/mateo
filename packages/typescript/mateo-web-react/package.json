@@ -18,20 +18,20 @@
     "dist",
     "LICENSE"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./dist/mateo.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/mateo.d.ts",
       "import": "./dist/index.js"
     },
     "./react": {
-      "types": "./dist/react.d.ts",
+      "types": "./dist/mateo-react.d.ts",
       "import": "./dist/react.js"
     },
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "vite build && tsc -p tsconfig.build.json && node scripts/check-build.mjs",
+    "build": "vite build && tsc -p tsconfig.build.json && node scripts/check-mateo-build.mjs",
     "prepare": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . --error-on-warnings",
@@ -41,7 +41,7 @@
     "test:watch": "vitest",
     "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run test:consumer",
     "fix": "biome check --write .",
-    "test:consumer": "node scripts/test-consumer.mjs"
+    "test:consumer": "node scripts/test-mateo-consumer.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

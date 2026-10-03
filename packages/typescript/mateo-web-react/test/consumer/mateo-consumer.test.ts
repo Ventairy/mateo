@@ -8,7 +8,11 @@ import {
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
-import { ConsumerFixture, SurfaceFixture } from './fixture.js';
+import {
+  MateoConsumerFixture,
+  MateoShapeFixture,
+  MateoSurfaceFixture,
+} from './mateo-fixture.js';
 
 it('exposes working factories through installed public exports', () => {
   expect(createMateoPalette().accent[9]).toBe('#4A5CFF');
@@ -62,7 +66,7 @@ it('typechecks a strict NodeNext consumer through public declarations', () => {
 });
 
 it('server-renders nested themes and CSS variables without added wrappers', () => {
-  const html = renderToStaticMarkup(createElement(ConsumerFixture));
+  const html = renderToStaticMarkup(createElement(MateoConsumerFixture));
   expect(html).toMatch(/^<main style=/);
   expect(html.match(/<main/g)).toHaveLength(1);
   expect(html.match(/<section/g)).toHaveLength(1);
@@ -77,7 +81,7 @@ it('server-renders nested themes and CSS variables without added wrappers', () =
 });
 
 it('renders a surface from the installed React entry', () => {
-  const html = renderToStaticMarkup(createElement(SurfaceFixture));
+  const html = renderToStaticMarkup(createElement(MateoSurfaceFixture));
   expect(html).toMatch(/^<div/);
   expect(html.match(/<div/g)).toHaveLength(1);
   expect(html).toContain('id="consumer-surface"');
@@ -94,7 +98,7 @@ it('ships compiled, prefixed CSS without requiring Tailwind in the app', () => {
     new URL(import.meta.resolve('mateo-web-react/styles.css')),
     'utf8',
   );
-  const html = renderToStaticMarkup(createElement(SurfaceFixture));
+  const html = renderToStaticMarkup(createElement(MateoSurfaceFixture));
   const classes = html.match(/class="([^"]+)"/)?.[1]?.split(' ') ?? [];
   expect(classes.length).toBeGreaterThan(0);
   for (const className of classes) {
@@ -113,4 +117,17 @@ it('ships compiled, prefixed CSS without requiring Tailwind in the app', () => {
   );
   expect(manifest.sideEffects).toContain('**/*.css');
   expect(manifest.dependencies).not.toHaveProperty('tailwindcss');
+});
+
+it('should ship rounded surface utilities when shapes are used by an installed consumer', () => {
+  const css = readFileSync(
+    new URL(import.meta.resolve('mateo-web-react/styles.css')),
+    'utf8',
+  );
+  const html = renderToStaticMarkup(createElement(MateoShapeFixture));
+  expect(html).toContain('clipPathUnits="userSpaceOnUse"');
+  expect(html).toContain('aria-hidden="true"');
+  expect(css).toContain('clip-path:var(--mateo-clip)');
+  expect(css).toContain('position:absolute');
+  expect(css).toContain('pointer-events:none');
 });

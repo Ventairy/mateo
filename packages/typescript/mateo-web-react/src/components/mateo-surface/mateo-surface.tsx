@@ -7,9 +7,16 @@ import type {
   ReactNode,
   Ref,
 } from 'react';
-import { useMateoTheme } from '../../theme-context.js';
+import { useId } from 'react';
+import { getMateoRoundedPath } from '../../foundation/mateo-shape/mateo-rounded-path.js';
+import {
+  getMateoShapeRadius,
+  type MateoShape,
+} from '../../foundation/mateo-shape/mateo-shape.js';
+import { useMateoSurfaceBounds } from '../../foundation/use-mateo-surface-bounds.js';
+import { useMateoTheme } from '../../theme/mateo-theme-context.js';
 
-type CssSizeUnit =
+type MateoCssSizeUnit =
   | '%'
   | 'px'
   | 'cm'
@@ -29,7 +36,7 @@ export type MateoSurfaceSize =
   | 'fill'
   | number
   | '0'
-  | `${number}${CssSizeUnit}`
+  | `${number}${MateoCssSizeUnit}`
   | `var(--${string})`
   | `${'calc' | 'min' | 'max' | 'clamp' | 'env'}(${string})`;
 /** Padding in pixels or a CSS length/shorthand. */
@@ -40,6 +47,8 @@ export interface MateoSurfaceProps extends AriaAttributes {
   readonly children: ReactNode;
   readonly width?: MateoSurfaceSize;
   readonly height?: MateoSurfaceSize;
+  /** Outline shared by the background and content clip. Defaults to none. */
+  readonly shape?: MateoShape;
   readonly color?: CSSProperties['backgroundColor'];
   readonly padding?: MateoSurfacePadding;
   readonly paddingBlock?: MateoSurfacePadding;
@@ -53,17 +62,17 @@ export interface MateoSurfaceProps extends AriaAttributes {
   readonly [attribute: `data-${string}`]: string | number | boolean | undefined;
 }
 
-function validateNumber(value: string | number, name: string) {
+function validateMateoSurfaceNumber(value: string | number, name: string) {
   if (typeof value === 'number' && (!Number.isFinite(value) || value < 0)) {
     throw new TypeError(`${name} must be finite and nonnegative.`);
   }
   return value;
 }
 
-function dimension(value: MateoSurfaceSize, name: string) {
+function resolveMateoSurfaceDimension(value: MateoSurfaceSize, name: string) {
   if (value === 'fit') return 'fit-content';
   if (value === 'fill') return '100%';
-  return validateNumber(value, name);
+  return validateMateoSurfaceNumber(value, name);
 }
 
 /** A noninteractive surface using the nearest Mateo theme's background. */
@@ -72,6 +81,7 @@ export function MateoSurface({
   width = 'fit',
   height = 'fit',
   color,
+  shape = 'none',
   padding = 0,
   paddingBlock,
   paddingInline,
@@ -84,6 +94,10 @@ export function MateoSurface({
   ...attributes
 }: MateoSurfaceProps) {
   const theme = useMateoTheme();
+  const radius = getMateoShapeRadius(shape);
+  const shaped = shape !== 'none';
+  const bounds = useMateoSurfaceBounds(shaped, ref);
+  const clipId = `mateo-shape-${useId()}`;
   // Only accessibility and data attributes cross the closed surface boundary.
   const accessibleAttributes = Object.fromEntries(
     Object.entries(attributes).filter(
@@ -91,30 +105,63 @@ export function MateoSurface({
     ),
   );
   const style: CSSProperties = {
-    width: dimension(width, 'width'),
-    height: dimension(height, 'height'),
+    ...(shaped ? { '--mateo-clip': `url(#${clipId})` } : {}),
+    width: resolveMateoSurfaceDimension(width, 'width'),
+    height: resolveMateoSurfaceDimension(height, 'height'),
     backgroundColor: color ?? theme.colorScheme.background,
-    padding: validateNumber(padding, 'padding'),
+    padding: validateMateoSurfaceNumber(padding, 'padding'),
     ...(paddingBlock === undefined
       ? {}
-      : { paddingBlock: validateNumber(paddingBlock, 'paddingBlock') }),
+      : {
+          paddingBlock: validateMateoSurfaceNumber(
+            paddingBlock,
+            'paddingBlock',
+          ),
+        }),
     ...(paddingInline === undefined
       ? {}
-      : { paddingInline: validateNumber(paddingInline, 'paddingInline') }),
+      : {
+          paddingInline: validateMateoSurfaceNumber(
+            paddingInline,
+            'paddingInline',
+          ),
+        }),
   };
   return (
     <div
       {...accessibleAttributes}
-      ref={ref}
+      ref={bounds.ref}
       id={id}
       title={title}
       dir={dir}
       lang={lang}
       role={role}
-      className="mateo:box-border mateo:block mateo:max-w-full mateo:max-h-full mateo:overflow-visible"
+      className={[
+        'mateo:box-border mateo:block mateo:max-w-full mateo:max-h-full mateo:overflow-visible',
+        shaped ? 'mateo:[clip-path:var(--mateo-clip)]' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={style}
     >
       {children}
+      {shaped && (
+        <svg
+          width="0"
+          height="0"
+          aria-hidden="true"
+          focusable="false"
+          className="mateo:absolute mateo:pointer-events-none"
+        >
+          <defs>
+            <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+              <path
+                d={getMateoRoundedPath(bounds.width, bounds.height, radius)}
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      )}
     </div>
   );
 }
