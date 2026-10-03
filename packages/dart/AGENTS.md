@@ -527,11 +527,10 @@ where the concept is first introduced.
 
 ## Widget Testing
 
-- Add regression tests only in the scope that owns the fix. Do not add tests
-  to consuming components solely because they use the corrected behavior.
-  For example, a fix in `MateoPress` belongs in that widget's
-  tests, not in `MateoButton` tests. Add consumer regression coverage only when
-  the fix also covers a consumer requirement.
+Follow the shared [testing guidance](../AGENTS.md#development-and-validation)
+for test selection, regression ownership, behavior documentation, and theme
+expectations. The following rules are specific to Flutter.
+
 - Every new reusable widget must have corresponding golden coverage under
   `test/widgets/`.
 - Cover every visual state, including resting, active, error, loading, and
@@ -540,30 +539,9 @@ where the concept is first introduced.
 - Commit CI goldens under `test/widgets/goldens/ci/`. Gitignore platform goldens
   under `test/widgets/goldens/macos/`, `test/widgets/goldens/linux/`, and
   `test/widgets/goldens/windows/`.
-- Golden tests complement behavioral and unit tests; they do not replace them.
-- Derive expected colors from the exact theme applied by the test. Fixed colors
-  are allowed only when the exact value is the contract under test.
-
-## Tests As Behavior Documentation
-
-- Write tests as executable documentation. Someone reading the descriptions,
-  setup, actions, and assertions should understand the supported behavior
-  without first reading the implementation.
-- Choose meaningful scenarios that explain the contract: ordinary use,
-  relevant alternatives, and boundary or failure cases. Assert observable
-  outcomes rather than copying implementation calculations into expectations.
-- Make each description state the concrete condition and expected behavior.
-  Name parameterized cases by their meaning, not opaque numbers or labels such
-  as `placement 3`. The test report should explain which behavior failed.
-- Keep setup and assertions readable and focused. Use descriptive fixtures and
-  helpers that reduce repetition without hiding the behavior being tested.
-- Update descriptions and expectations together when behavior changes; do not
-  leave a passing test describing an outdated rule.
 
 ## Test Naming
 
-All tests must use the `when, should` pattern for descriptions.
-
-- **Format:** `when <condition/action>, it should <expected result>`
-- **Example:** `when MateoButton is tapped, it should invoke the onPressed callback`
-- Avoid vague descriptions like `renders correctly` or `test login`.
+All Dart tests must use `when <condition/action>, it should <expected result>`
+for descriptions. For example:
+`when MateoButton is tapped, it should invoke the onPressed callback`.

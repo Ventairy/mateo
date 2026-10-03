@@ -8,7 +8,7 @@ import {
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
-import { ConsumerFixture } from './fixture.js';
+import { ConsumerFixture, SurfaceFixture } from './fixture.js';
 
 it('exposes working factories through installed public exports', () => {
   expect(createMateoPalette().accent[9]).toBe('#4A5CFF');
@@ -74,4 +74,43 @@ it('server-renders nested themes and CSS variables without added wrappers', () =
   ]);
   expect(html).toContain('--mateo-color-accent:#4A5CFF');
   expect(html).toContain('--mateo-color-accent:#00A86B');
+});
+
+it('renders a surface from the installed React entry', () => {
+  const html = renderToStaticMarkup(createElement(SurfaceFixture));
+  expect(html).toMatch(/^<div/);
+  expect(html.match(/<div/g)).toHaveLength(1);
+  expect(html).toContain('id="consumer-surface"');
+  expect(html).toContain('width:100%');
+  expect(html).toContain('height:240px');
+  expect(html).toContain('padding-block:16px');
+  expect(html).toContain('padding-inline:1rem');
+  expect(html).toContain('background-color:#FFFFFF');
+  expect(html).toContain('Content</div>');
+});
+
+it('ships compiled, prefixed CSS without requiring Tailwind in the app', () => {
+  const css = readFileSync(
+    new URL(import.meta.resolve('mateo-web-react/styles.css')),
+    'utf8',
+  );
+  const html = renderToStaticMarkup(createElement(SurfaceFixture));
+  const classes = html.match(/class="([^"]+)"/)?.[1]?.split(' ') ?? [];
+  expect(classes.length).toBeGreaterThan(0);
+  for (const className of classes) {
+    expect(className).toMatch(/^mateo:/);
+    expect(css).toContain(`.${className.replaceAll(':', '\\:')}{`);
+  }
+  expect(css).toContain('box-sizing:border-box');
+  expect(css).toContain('max-width:100%');
+  expect(css).toContain('max-height:100%');
+  expect(css).toContain('overflow:visible');
+  expect(css).not.toMatch(/@(?:import|source|theme)\b/);
+  expect(css).not.toMatch(/(?:\*|html|body|:root)\s*[{,]/);
+  expect(css).not.toMatch(/--(?:color|spacing|font)-/);
+  const manifest = JSON.parse(
+    readFileSync('node_modules/mateo-web-react/package.json', 'utf8'),
+  );
+  expect(manifest.sideEffects).toContain('**/*.css');
+  expect(manifest.dependencies).not.toHaveProperty('tailwindcss');
 });

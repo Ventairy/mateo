@@ -85,13 +85,7 @@ Name each widget's golden test file
 onAccent: ...), child: ...)`; no Material theme is needed by Mateo.
 - Regenerate approved theme goldens from this package with
   `fvm flutter test --update-goldens test/widgets/mateo_theme_golden_test.dart`.
-- Resolve test colors from the same `MateoThemeData` applied by the test. Use
-  its color scheme when the target consumes semantic colors, and use its
-  palette only when the target consumes palette primitives. Fixed colors are
-  allowed only when the exact color value is the contract under test, such as
-  palette anchors, custom seeds, alpha validation, or color interpolation.
-- Use the shared test theme for default widget and golden scenarios. A test
-  with a custom theme must derive its expected colors from that exact theme.
+- Follow the shared [theme expectation rules](../../AGENTS.md#test-selection-and-depth).
   Golden changes remain the visual signal for intentional color-scheme edits.
 
 ## Releases

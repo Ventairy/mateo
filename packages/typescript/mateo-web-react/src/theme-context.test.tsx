@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { expect, it } from 'vitest';
-import { MateoTheme, useMateoTheme } from './react.js';
 import { createMateoTheme, getMateoThemeStyle } from './theme.js';
+import { MateoTheme, useMateoTheme } from './theme-context.js';
 
 const outer = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFFFFF' });
 const inner = createMateoTheme({ accentColor: '#00A86B', onAccent: '#000000' });

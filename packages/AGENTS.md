@@ -86,7 +86,24 @@ consumer branding also belong outside this directory.
 
 ## Package Documentation
 
-Every publishable package should explain:
+### Documentation before publication
+
+For every Mateo package that has not been published, do not add a README,
+changelog, or new Mateo design-system documentation for package changes unless
+explicitly requested. Defer these artifacts until preparation for real
+publication to npm, pub.dev, or another distribution channel. This temporary
+rule overrides repository and package documentation requirements, including
+requirements in nested instruction files.
+
+Continue reading and following existing Mateo foundations. Agree on component
+contracts before implementation, and keep public API behavior clear through
+types, focused code comments, and tests. Preserve existing documentation.
+Publication preparation must add the consumer documentation, changelog, and
+applicable Mateo design guidance. Published packages continue maintaining them.
+
+### Documentation for publication
+
+When preparing for publication, every package should explain:
 
 - what part of Mateo it implements;
 - supported platforms and toolchain versions;
@@ -107,15 +124,55 @@ instead of an unlinked or italicized repository path such as
 
 ## Development And Validation
 
+### Test Selection And Depth
+
+- Test deeply where failure would affect a person using Mateo. Prioritize
+  visible regressions in layout, colors, content, overflow, and motion, along
+  with interaction, accessibility, state transitions, and supported
+  customization. Nonvisual public contracts still deserve coverage when their
+  failure would break real consumer usage.
+- Evaluate each proposed test by the behavior it protects and the realistic
+  regression it would catch. Choose ordinary use, meaningful alternatives, and
+  relevant boundary or failure cases; do not add tests merely to increase
+  coverage or exercise every internal branch.
+- Assert observable outcomes through public APIs. Avoid private helper details,
+  internal call sequences, assertions that mirror implementation calculations,
+  and tooling behavior such as IDE autocomplete unless a specific regression
+  makes that coverage worthwhile.
+- Add regression tests in the scope that owns the fix. Do not repeat them in
+  every consuming component solely because it uses the corrected behavior.
+  Add consumer coverage when it protects a distinct consumer requirement.
+- Use visual or golden tests for meaningful appearance contracts and supported
+  visual states. They complement behavior and unit tests; they do not replace
+  interaction or accessibility assertions. Review baseline changes against the
+  authored design before accepting them.
+- Resolve expected colors from the exact theme applied by the test: semantic
+  roles for semantic consumers, palette values for primitive consumers. Use a
+  shared test theme for default scenarios. Fixed colors are appropriate only
+  when the exact value is the contract, such as palette anchors, custom seeds,
+  alpha validation, or color interpolation.
+
+### Tests As Behavior Documentation
+
+- Write tests as executable documentation. Someone reading the descriptions,
+  setup, actions, and assertions should understand how the component or code
+  behaves without first reading its implementation.
+- State the concrete condition and observable result; avoid vague
+  descriptions such as `renders correctly`. Name parameterized cases by their
+  meaning rather than opaque numbers. The failure report should explain which
+  behavior broke.
+- Keep setup and assertions readable and focused. Use descriptive fixtures and
+  helpers that reduce repetition without hiding the scenario or its outcome.
+- Update descriptions and expectations together when behavior changes. Do not
+  leave a passing test describing an outdated rule.
+
+### Validation Workflow
+
 - Follow the manifest, formatter, analyzer or linter, test runner, and build
   tools defined by the package being changed.
 - Do not invent repository-wide package commands before the corresponding
   ecosystem configuration exists. Record exact commands in the nearest
   `AGENTS.md` when tooling is introduced.
-- Test public API behavior, semantics, accessibility, state transitions,
-  customization, and failure cases.
-- Add visual or golden coverage where appearance is part of the contract, and
-  update expected output only after confirming it matches the authored design.
 - Validate examples as real external consumers so they do not depend on private
   repository imports or unpublished implementation details.
 - Run focused package checks first, then the broader ecosystem or workspace

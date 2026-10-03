@@ -1,0 +1,9 @@
+@import "tailwindcss/theme.css" layer(mateo-theme) prefix(mateo);
+@import "tailwindcss/utilities.css" layer(mateo) prefix(mateo) source(none);
+
+@theme {
+  --*: initial;
+}
+
+@source "./components";
+@source not "./components/**/*.test.tsx";

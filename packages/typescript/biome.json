@@ -74,6 +74,14 @@
           }
         }
       }
+    },
+    {
+      "includes": ["mateo-web-react/src/**/*.css"],
+      "css": {
+        "parser": {
+          "tailwindDirectives": true
+        }
+      }
     }
   ]
 }
