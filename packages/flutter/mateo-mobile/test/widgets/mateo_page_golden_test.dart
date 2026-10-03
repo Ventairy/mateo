@@ -5,30 +5,37 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 
 Future<void> main() async {
   for (final transition in _PageTransition.values) {
-    await goldenTest(
-      'when ${transition.description} in each direction, it should preserve the page relationship',
-      fileName: 'mateo_page_${transition.name}_directions',
-      whilePerforming: (tester) async {
-        for (final direction in MateoPageTransitionDirection.values) {
-          await tester.tap(find.byKey(ValueKey('open-${direction.name}')));
-        }
-        await tester.pump();
-        await tester.pump(transition.goldenDuration);
-        return null;
-      },
-      builder: () => GoldenTestGroup(
-        columns: 2,
-        children: [
-          for (final direction in MateoPageTransitionDirection.values)
-            GoldenTestScenario(
-              name: direction.name,
-              child: SizedBox(
-                width: 240,
-                height: 320,
-                child: _Scene(direction: direction, transition: transition),
+    // SnapshotWidget records through its own painting context. Use the actual
+    // font consistently on both captured and live pages in the push golden.
+    await AlchemistConfig.runWithConfig(
+      config: transition == .push
+          ? AlchemistConfig.current().copyWith(ciGoldensConfig: const CiGoldensConfig(obscureText: false))
+          : AlchemistConfig.current(),
+      run: () => goldenTest(
+        'when ${transition.description} in each direction, it should preserve the page relationship',
+        fileName: 'mateo_page_${transition.name}_directions',
+        whilePerforming: (tester) async {
+          for (final direction in MateoPageTransitionDirection.values) {
+            await tester.tap(find.byKey(ValueKey('open-${direction.name}')));
+          }
+          await tester.pump();
+          await tester.pump(transition.goldenDuration);
+          return null;
+        },
+        builder: () => GoldenTestGroup(
+          columns: 2,
+          children: [
+            for (final direction in MateoPageTransitionDirection.values)
+              GoldenTestScenario(
+                name: direction.name,
+                child: SizedBox(
+                  width: 240,
+                  height: 320,
+                  child: _Scene(direction: direction, transition: transition),
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -47,7 +54,11 @@ Future<void> main() async {
       children: [
         GoldenTestScenario(
           name: 'Return',
-          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .up, transition: .slide)),
+          child: const SizedBox(
+            width: 240,
+            height: 320,
+            child: _Scene(direction: .up, transition: .slide),
+          ),
         ),
       ],
     ),
@@ -67,7 +78,11 @@ Future<void> main() async {
       children: [
         GoldenTestScenario(
           name: 'Return',
-          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .up, transition: .wash)),
+          child: const SizedBox(
+            width: 240,
+            height: 320,
+            child: _Scene(direction: .up, transition: .wash),
+          ),
         ),
       ],
     ),
@@ -95,7 +110,11 @@ Future<void> main() async {
         ),
         GoldenTestScenario(
           name: 'Reduced motion',
-          child: const SizedBox(width: 240, height: 320, child: _Scene(direction: .down, transition: .wash, reduced: true)),
+          child: const SizedBox(
+            width: 240,
+            height: 320,
+            child: _Scene(direction: .down, transition: .wash, reduced: true),
+          ),
         ),
       ],
     ),

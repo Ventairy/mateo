@@ -4,10 +4,13 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:oh_my_flutter/oh_my_flutter.dart' show MaybeSafeAreaTransform;
 
 import 'mateo_page_transition_direction.dart';
 
 part '_mateo_page_transition_motion.dart';
+part 'transitions/push/_mateo_push_page_snapshot_painter.dart';
+part 'transitions/push/_mateo_push_page_transition_renderer.dart';
 part 'transitions/push/_mateo_push_page_transition_view.dart';
 part 'transitions/push/_render_mateo_push_page_transition.dart';
 part 'transitions/push/mateo_page_transition_push.dart';

@@ -309,17 +309,25 @@ void main() {
     );
 
     _testWidgets(
-      'when push blends pages, it should avoid full-viewport snapshots',
+      'when push disables snapshots, it should not enable destination page capture',
       (tester) async {
-        await _pumpPushTransitionApp(
+        await _pumpPushApp(
           tester,
-          direction: MateoPageTransitionDirection.left,
+          platform: .android,
+          settle: false,
+          page: const MateoPage<void>(
+            transition: .push(direction: .left),
+            allowSnapshotting: false,
+            child: ColoredBox(key: _destinationKey, color: Colors.blue),
+          ),
         );
-        await tester.tap(find.byKey(_openKey));
-        await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.byType(SnapshotWidget), findsNothing);
+        final snapshots = tester.widgetList<SnapshotWidget>(
+          find.ancestor(of: find.byKey(_destinationKey), matching: find.byType(SnapshotWidget)),
+        );
+        expect(snapshots, isNotEmpty);
+        expect(snapshots.every((snapshot) => !snapshot.controller.allowSnapshotting), isTrue);
       },
     );
 
@@ -1207,14 +1215,8 @@ void _expectEdgeBackedSourceFade(WidgetTester tester) {
     matching: find.byType(ColorFiltered),
   );
 
-  final destinationSnapshot = find.ancestor(
-    of: find.byKey(_destinationKey),
-    matching: find.byType(SnapshotWidget),
-  );
-
   expect(sourceFilter, findsNothing);
   expect(destinationFilter, findsNothing);
-  expect(destinationSnapshot, findsNothing);
 }
 
 void _expectWashOrigin(

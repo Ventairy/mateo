@@ -48,7 +48,9 @@ final class _MateoWashPageTransitionViewState extends State<_MateoWashPageTransi
       );
     }
 
-    if (oldWidget.child != widget.child || oldWidget.transition != widget.transition) {
+    // Flutter rebuilds its route gesture wrapper on every animation tick.
+    // Keep the captured page for the flight even when that wrapper changes.
+    if (oldWidget.transition != widget.transition) {
       _snapshotController.clear();
     }
     _updateSnapshotting();

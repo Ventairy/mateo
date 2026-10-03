@@ -49,7 +49,9 @@ class MateoPageTransitionsBuilder extends PageTransitionsBuilder {
     if (child == null) return null;
     return transition.buildOutgoing(
       animation: secondaryAnimation,
-      allowSnapshotting: allowSnapshotting,
+      // An underlying page can still be arriving during rapid navigation.
+      // Its primary transform must keep moving inside the outgoing treatment.
+      allowSnapshotting: allowSnapshotting && animation.isCompleted,
       child: child,
     );
   }

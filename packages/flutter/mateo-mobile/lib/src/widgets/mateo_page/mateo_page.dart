@@ -54,6 +54,10 @@ class MateoPage<T> extends Page<T> {
   final bool fullscreenDialog;
 
   /// Whether transitions may capture route content for rendering.
+  ///
+  /// Push and wash can hold a still image during motion, then show the latest
+  /// content when the transition ends. Set this to false when video, a camera,
+  /// or another animation must keep updating throughout the transition.
   final bool allowSnapshotting;
 
   @override

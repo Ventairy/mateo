@@ -1,19 +1,22 @@
 part of '../../mateo_page_transition.dart';
 
-final class _RenderMateoPushPageTransition extends RenderProxyBox {
+final class _RenderMateoPushPageTransition extends RenderProxyBox implements MaybeSafeAreaTransform {
   _RenderMateoPushPageTransition({
     required this._animation,
     required this._transition,
     required this._outgoing,
+    required this._allowPageSnapshot,
     required this._allowEdgeSnapshot,
     required this._useLinearProgress,
     required this._devicePixelRatio,
+    required this._snapshot,
   });
 
   static const _seamOverlap = 1.0;
 
   Paint? _destinationPaint;
   ui.Image? _edgeImage;
+  bool _edgeSnapshotUnavailable = false;
   Rect _edgeImageBounds = Rect.zero;
   double _progress = 0;
 
@@ -35,6 +38,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     _updateProgress();
     _disposeEdgeImage();
     markNeedsPaint();
+    markNeedsSemanticsUpdate();
   }
 
   MateoPageTransitionPush get transition => _transition;
@@ -65,6 +69,25 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     markNeedsPaint();
   }
 
+  bool _allowPageSnapshot;
+  bool get allowPageSnapshot => _allowPageSnapshot;
+  set allowPageSnapshot(bool value) {
+    if (value == _allowPageSnapshot) return;
+    _allowPageSnapshot = value;
+    markNeedsLayout();
+    markNeedsPaint();
+    markNeedsSemanticsUpdate();
+  }
+
+  @override
+  bool get usesRestingSafeAreaGeometry => _allowPageSnapshot;
+
+  @override
+  void applyRestingPaintTransform(RenderObject child, Matrix4 transform) {
+    // Push moves the complete page. Its safe-area geometry stays at rest;
+    // applyPaintTransform still supplies the moving position to interactions.
+  }
+
   bool get useLinearProgress => _useLinearProgress;
   bool _useLinearProgress;
   set useLinearProgress(bool value) {
@@ -82,6 +105,25 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     _devicePixelRatio = value;
     _disposeEdgeImage();
     if (_allowEdgeSnapshot) markNeedsPaint();
+  }
+
+  _MateoPushPageSnapshot? Function() get snapshot => _snapshot;
+  _MateoPushPageSnapshot? Function() _snapshot;
+  set snapshot(_MateoPushPageSnapshot? Function() value) {
+    if (value == _snapshot) return;
+    _snapshot = value;
+    if (_allowEdgeSnapshot) markNeedsPaint();
+  }
+
+  _MateoPushPageSnapshot? get _edgeSourceSnapshot {
+    if (!_allowEdgeSnapshot) return null;
+    final snapshot = _snapshot();
+    if (snapshot == null ||
+        snapshot.pixelRatio != _devicePixelRatio ||
+        snapshot.sourceSize != size * _devicePixelRatio) {
+      return null;
+    }
+    return snapshot;
   }
 
   @override
@@ -127,7 +169,8 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
 
     final progress = _progress;
     final childOffset = _translatedOffset(offset, progress);
-    final edgeImage = _edgeImage;
+    final edgeSnapshot = _edgeSourceSnapshot;
+    final edgeImage = edgeSnapshot?.image ?? _edgeImage;
     if (edgeImage != null) {
       _paintEdgeWash(
         context: context,
@@ -135,11 +178,16 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
         childOffset: childOffset,
         progress: progress,
         image: edgeImage,
+        sourceBounds: edgeSnapshot == null ? _edgeImageBounds : _edgeSnapshotBounds(edgeSnapshot),
       );
     }
 
     context.paintChild(child, childOffset);
-    if (_allowEdgeSnapshot && _animation.isAnimating && _edgeImage == null) {
+    if (_allowEdgeSnapshot &&
+        _animation.isAnimating &&
+        _edgeImage == null &&
+        !_edgeSnapshotUnavailable &&
+        _edgeSourceSnapshot == null) {
       _captureEdge(child);
     }
   }
@@ -154,6 +202,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
 
   Offset _translatedOffset(Offset offset, double progress) {
     final travelProgress = _outgoing ? progress : progress - 1;
+    if (travelProgress == 0) return offset;
     return switch (_transition.direction) {
       .up => Offset(
         offset.dx,
@@ -180,6 +229,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     required Offset childOffset,
     required double progress,
     required ui.Image image,
+    required Rect sourceBounds,
   }) {
     final alpha = (progress * 255).round();
     if (alpha == 0 || alpha == 255) return;
@@ -187,7 +237,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     final destinationPaint = (_destinationPaint ??= Paint())..color = Color.fromARGB(alpha, 255, 255, 255);
     context.canvas.drawImageRect(
       image,
-      _edgeImageBounds,
+      sourceBounds,
       _visibleSourceRect(
         viewportOffset: viewportOffset,
         childOffset: childOffset,
@@ -196,9 +246,20 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
     );
   }
 
+  Rect _edgeSnapshotBounds(_MateoPushPageSnapshot snapshot) => switch (_transition.direction) {
+    .up => .fromLTWH(0, 0, snapshot.sourceSize.width, 1),
+    .down => .fromLTWH(0, snapshot.sourceSize.height - 1, snapshot.sourceSize.width, 1),
+    .left => .fromLTWH(0, 0, 1, snapshot.sourceSize.height),
+    .right => .fromLTWH(snapshot.sourceSize.width - 1, 0, 1, snapshot.sourceSize.height),
+  };
+
   void _captureEdge(RenderBox child) {
     final layer = child.layer;
     if (layer is! OffsetLayer || size.isEmpty) return;
+    if (!layer.supportsRasterization()) {
+      _edgeSnapshotUnavailable = true;
+      return;
+    }
 
     final image = layer.toImageSync(
       _edgeBounds,
@@ -282,8 +343,11 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
   }
 
   void _handleAnimationTick() {
+    final previousProgress = _progress;
     _updateProgress();
+    if (_progress == previousProgress) return;
     markNeedsPaint();
+    markNeedsSemanticsUpdate();
   }
 
   void _handleAnimationStatus(AnimationStatus status) {
@@ -300,6 +364,7 @@ final class _RenderMateoPushPageTransition extends RenderProxyBox {
   }
 
   void _disposeEdgeImage() {
+    _edgeSnapshotUnavailable = false;
     final edgeImage = _edgeImage;
     if (edgeImage == null) return;
 

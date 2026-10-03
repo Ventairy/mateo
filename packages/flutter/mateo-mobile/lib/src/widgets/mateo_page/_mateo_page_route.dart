@@ -71,7 +71,13 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
             this,
             context,
             shouldAnimatePrimary ? animation : kAlwaysCompleteAnimation,
-            secondaryAnimation,
+            // Flutter creates a fresh dismissed proxy while another route
+            // delegates its outgoing motion. Keep that no-op input stable.
+            secondaryAnimation is ProxyAnimation &&
+                    secondaryAnimation.parent == null &&
+                    !identical(secondaryAnimation, this.secondaryAnimation)
+                ? kAlwaysDismissedAnimation
+                : secondaryAnimation,
             child,
           );
     if (defaultTargetPlatform != .android) return view;
