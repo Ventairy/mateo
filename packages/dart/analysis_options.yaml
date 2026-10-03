@@ -6,7 +6,6 @@ formatter:
 
 analyzer:
   exclude:
-    - mateo-mobile-flutter/**
     - '**/lib/src/gen/**'
     - '**/build/**'
     - '**/android/**'

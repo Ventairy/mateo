@@ -63,9 +63,12 @@ validated automatically, and maintainers can help correct one before merge.
 
 ## Flutter package
 
-Run Flutter commands through FVM from `packages/flutter/mateo-mobile/`.
-Use `fvm flutter analyze` and `fvm flutter test` to validate package changes.
-See the [package README](packages/flutter/mateo-mobile/README.md) for usage.
+Run workspace commands through FVM from `packages/dart/`.
+Use `fvm dart run melos run analyze --no-select` and
+`fvm dart run melos run test --no-select` to validate registered packages.
+Focused Flutter commands can run from `packages/dart/mateo-mobile-flutter/`
+using the inherited FVM pin.
+See the [package README](packages/dart/mateo-mobile-flutter/README.md) for usage.
 
 ## Release files
 

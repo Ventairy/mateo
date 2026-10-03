@@ -64,7 +64,7 @@ environment.
 
 Every releasable package must define:
 
-- a stable path under `packages/<ecosystem>/<package>/`;
+- a stable path under `packages/<language>/mateo-<platform>-<framework>/`;
 - an ecosystem manifest and package-local changelog;
 - package-local validation and publication instructions;
 - one commit scope and tag prefix;

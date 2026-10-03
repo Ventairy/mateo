@@ -1,7 +1,7 @@
 # Mateo Public Packages
 
 This directory contains the public library implementations of the Mateo Design
-System for flutter. Packages here turn Mateo's foundations and platform design guidance into
+System. Packages here turn Mateo's foundations and platform design guidance into
 reusable APIs that product teams can install and use in their applications.
 
 The repository-level `AGENTS.md` still applies. These instructions take
@@ -26,10 +26,12 @@ consumer branding also belong outside this directory.
 
 ## Directory Ownership
 
-- Group implementations by ecosystem or framework, such as `flutter/`.
+- Group implementations by language ecosystem, such as `dart/`.
+- Each ecosystem directory owns its workspace tooling and shared lockfile.
+- Name package directories `mateo-<platform>-<framework>`; each is a package root.
 - Give each publishable library its own package directory, manifest, tests,
   documentation, changelog, license metadata, and validation commands.
-- `flutter/mateo-mobile/` owns the current `mateo_mobile` implementation for flutter
+- `dart/mateo-mobile-flutter/` owns the current `mateo_mobile` implementation for Flutter.
 - Add a nested `AGENTS.md` when an ecosystem or package needs instructions that
   do not apply to every public Mateo library.
 

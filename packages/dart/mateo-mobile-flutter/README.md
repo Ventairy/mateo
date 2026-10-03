@@ -11,7 +11,7 @@ Use a local path dependency:
 ```yaml
 dependencies:
   mateo_mobile:
-    path: /path/to/mateo/packages/flutter/mateo-mobile
+    path: /path/to/mateo/packages/dart/mateo-mobile-flutter
 ```
 
 ```dart

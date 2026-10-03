@@ -37,7 +37,7 @@ accessible mobile behavior.
 | --------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | Foundations     | Color, typography, rounded geometry, motion, icons, etc.          | [Foundation documentation](./design-system/foundation/)             |
 | Mateo Mobile    | Semantic color, boundary rules, drag resistance, components, etc. | [Mobile documentation](./design-system/mobile/)                     |
-| Flutter package | The Android and iOS implementation of Mateo Mobile                | [`mateo_mobile`](./packages/flutter/mateo-mobile/README.md) |
+| Flutter package | The Android and iOS implementation of Mateo Mobile                | [`mateo_mobile`](./packages/dart/mateo-mobile-flutter/README.md) |
 
 The design documentation describes observable results precisely enough to
 implement Mateo consistently in another technology. The Flutter package is the
@@ -47,7 +47,7 @@ first real implementation of those contracts, not a separate design source.
 
 | I want to…                                       | Go to…                                                                                         |
 | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| Build an Android or iOS application with Flutter | [Installation and quick start](./packages/flutter/mateo-mobile/README.md#installation) |
+| Build an Android or iOS application with Flutter | [Installation and quick start](./packages/dart/mateo-mobile-flutter/README.md#installation) |
 | Understand Mateo's primitive colors              | [Color palette](./design-system/foundation/color-palette.md)                                   |
 | Use Mateo's typography foundation                | [Typography](./design-system/foundation/typography.md)                                         |
 | Choose rounding for a component                  | [Border radius](./design-system/foundation/border-radius.md)                                   |
@@ -67,7 +67,7 @@ design-system/foundation/    Shared visual foundations
             ↓
 design-system/mobile/        Android and iOS phone guidance
             ↓
-packages/flutter/            Public Flutter implementation
+packages/dart/               Public Dart implementations
 ```
 
 - **Foundations** own reusable primitives and visual rules.

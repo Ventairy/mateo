@@ -1,4 +1,4 @@
-name: mateo_flutter_workspace
+name: mateo_dart_workspace
 publish_to: none
 
 environment: &environment
@@ -6,7 +6,7 @@ environment: &environment
   flutter: ">=3.47.0"
 
 workspace:
-  - mateo-mobile
+  - mateo-mobile-flutter
 
 dev_dependencies:
   melos: ^8.6.0
@@ -23,7 +23,7 @@ melos:
       environment: *environment
   scripts:
     get:
-      description: Fetch dependencies for the Flutter workspace.
+      description: Fetch dependencies for the Dart workspace using the pinned Flutter SDK.
       run: flutter pub get
     analyze:
       description: Analyze registered packages with the shared lint rules.

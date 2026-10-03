@@ -22,7 +22,7 @@ jobs:
       PANA_MAX_DEFICIT: 0
     defaults:
       run:
-        working-directory: packages/flutter/mateo-mobile-flutter
+        working-directory: packages/dart/mateo-mobile-flutter
     steps:
       - name: Checkout tagged source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -42,7 +42,7 @@ jobs:
       - name: Read Flutter version
         id: fvmrc
         run: |
-          echo "flutter-version=$(ruby -rjson -e 'puts JSON.parse(File.read(".fvmrc")).fetch("flutter")')" >> "$GITHUB_OUTPUT"
+          echo "flutter-version=$(ruby -rjson -e 'puts JSON.parse(File.read("../.fvmrc")).fetch("flutter")')" >> "$GITHUB_OUTPUT"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
@@ -54,18 +54,18 @@ jobs:
         run: |
           dart pub global activate fvm
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+          cd ..
           fvm install
 
       - name: Resolve hosted dependencies
         run: |
-          fvm flutter pub get
-          cd example
+          cd ..
           fvm flutter pub get
 
       - name: Require hosted release dependencies
         run: |
+          test ! -f ../pubspec_overrides.yaml
           test ! -f pubspec_overrides.yaml
-          test ! -f example/pubspec_overrides.yaml
 
       - name: Generate source
         run: |
@@ -76,7 +76,7 @@ jobs:
         run: git diff --exit-code -- lib
 
       - name: Check formatting
-        run: fvm dart format --output none --set-exit-if-changed lib test example/lib/main.dart
+        run: fvm dart format --output none --set-exit-if-changed lib test
 
       - name: Analyze package
         run: fvm flutter analyze --fatal-infos
@@ -86,10 +86,6 @@ jobs:
 
       - name: Validate API documentation
         run: fvm dart doc --validate-links
-
-      - name: Analyze example
-        run: fvm flutter analyze --fatal-infos
-        working-directory: packages/flutter/mateo-mobile-flutter/example
 
       - name: Validate pub.dev archive
         run: fvm flutter pub publish --dry-run
@@ -106,5 +102,5 @@ jobs:
       id-token: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@65eb853c7ba17dde3be364c3d2858773e7144260 # v1
     with:
-      working-directory: packages/flutter/mateo-mobile-flutter
+      working-directory: packages/dart/mateo-mobile-flutter
       environment: pub.dev

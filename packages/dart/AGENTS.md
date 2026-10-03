@@ -1,20 +1,21 @@
-# Mateo Flutter Packages
+# Mateo Dart Packages
 
-This directory contains Mateo's public Flutter packages. These packages turn
-Mateo's foundations and platform design guidance into reusable Dart APIs,
-widgets, themes, and tokens for Flutter applications.
+This directory is Mateo's Dart Pub workspace and Melos root. Each package
+implements Mateo for its own platform and Dart framework. Currently the only
+member is `mateo-mobile-flutter`, the Flutter implementation of Mateo Mobile.
 
 Each package lives in its own subdirectory with its implementation,
 documentation, examples, and tests.
 
 The repository-level and parent `packages/AGENTS.md` instructions still apply.
-These rules apply to all Flutter packages in this directory; package-specific
+Rules referring to Flutter widgets, MediaQuery, or widget golden tests apply
+only to Flutter packages. Shared Dart conventions apply to all members; specific
 guidance belongs in each package's own `AGENTS.md`.
 
 ## Toolchain And Package Environment
 
-- This directory is the Flutter Pub workspace and Melos root. Register packages
-  explicitly in its `pubspec.yaml`; currently only `mateo-mobile` participates.
+- This directory is the Dart Pub workspace and Melos root. Register packages
+  explicitly in its `pubspec.yaml`; currently only `mateo-mobile-flutter` participates.
 - Use the Flutter version in this directory's `.fvmrc` exclusively through FVM.
   Do not add separate SDK pins to workspace members.
 - The root `analysis_options.yaml` owns lint rules, formatter settings, and

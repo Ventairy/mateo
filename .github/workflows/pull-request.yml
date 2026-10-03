@@ -46,7 +46,7 @@ jobs:
             esac
 
             case "$path" in
-              packages/flutter/mateo-mobile-flutter/*|.github/workflows/mateo-mobile-flutter.yml)
+              packages/dart/*|.github/workflows/mateo-mobile-flutter-check.yml|.github/workflows/pull-request.yml)
                 mateo_mobile_flutter=true
                 ;;
             esac
