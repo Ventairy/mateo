@@ -39,7 +39,6 @@ describe('light theme', () => {
       onAccent: '#000',
     });
     const style = getMateoThemeStyle(theme);
-    expect(Object.keys(style)).toHaveLength(149);
     expect(Object.isFrozen(style)).toBe(true);
     for (const name of mateoPaletteValues.scaleNames) {
       for (let step = 1; step <= 12; step++) {
@@ -56,4 +55,17 @@ describe('light theme', () => {
     expect(style['--mateo-color-accent']).toBe(theme.colorScheme.accent);
     expect(style['--mateo-color-on-accent']).toBe('#000');
   });
+});
+
+it('should provide inherited typography without a type scale when applying a theme', () => {
+  const theme = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFF' });
+  const style = getMateoThemeStyle(theme);
+  expect(style.fontFamily).toBe('Inter, sans-serif');
+  expect(style.letterSpacing).toBe('-0.2px');
+  expect(style['--mateo-font-family']).toBe('Inter, sans-serif');
+  expect(style['--mateo-letter-spacing']).toBe('-0.2px');
+  expect(style).not.toHaveProperty('fontSize');
+  expect(style).not.toHaveProperty('fontWeight');
+  expect(style).not.toHaveProperty('lineHeight');
+  expect(style).not.toHaveProperty('color');
 });

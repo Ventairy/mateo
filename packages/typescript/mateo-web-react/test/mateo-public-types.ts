@@ -4,6 +4,7 @@ import {
   createMateoTheme,
   getMateoThemeStyle,
   type MateoColorStep,
+  mateoTypography,
 } from '../src/mateo.js';
 
 // This function is checked by tsc, never executed.
@@ -27,5 +28,9 @@ export function checkMateoPublicTypes(step: MateoColorStep) {
   // @ts-expect-error Semantic roles are immutable.
   theme.colorScheme.background = color;
   const style: CSSProperties = getMateoThemeStyle(theme);
-  return { style, dark };
+  const fontFamily: 'Inter, sans-serif' = mateoTypography.fontFamily;
+  const letterSpacing: '-0.2px' = mateoTypography.letterSpacing;
+  // @ts-expect-error Shared typography is readonly.
+  mateoTypography.fontFamily = 'serif';
+  return { style, dark, fontFamily, letterSpacing };
 }

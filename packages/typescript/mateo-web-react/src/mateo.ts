@@ -1,4 +1,5 @@
 export type { MateoShape } from './foundation/mateo-shape/mateo-shape.js';
+export { mateoTypography } from './foundation/mateo-typography/mateo-typography.js';
 export type {
   MateoColorScale,
   MateoColorStep,

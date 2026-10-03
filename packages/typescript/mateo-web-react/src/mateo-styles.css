@@ -7,3 +7,29 @@
 
 @source "./components";
 @source not "./components/**/*.test.tsx";
+
+@font-face {
+  font-family: Inter;
+  src: url("./foundation/mateo-typography/assets/inter-variable.ttf?no-inline")
+    format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("./foundation/mateo-typography/assets/inter-italic.ttf?no-inline")
+    format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer mateo-theme {
+  /* Native controls have browser font defaults instead of inheriting text fonts. */
+  :where(button, input, select, textarea) {
+    font-family: var(--mateo-font-family, revert-layer);
+    letter-spacing: var(--mateo-letter-spacing, revert-layer);
+  }
+}

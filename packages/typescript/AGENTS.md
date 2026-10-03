@@ -19,12 +19,14 @@ This folder implements that guidance. The repository and parent
 
 ## Mateo naming
 
-Keep Mateo context clear in package-owned names, including private
-implementation helpers and test fixtures. Avoid repeating it when an enclosing
-object or namespace already provides that context.
+Use the `mateo` or `Mateo` prefix only for Mateo-owned artifacts, including
+private implementation helpers and test fixtures. Bundling a third-party asset
+does not make it Mateo-owned: preserve its own name, such as `inter-variable.ttf`
+for Inter fonts. Avoid repeating Mateo when an enclosing object or namespace
+already provides that context.
 
-- Use kebab-case filenames containing `mateo`, such as `mateo-palette.ts`,
-  `mateo-shape.ts`, and `use-mateo-surface-bounds.ts`. Colocated tests retain the
+- Use kebab-case filenames containing `mateo` for Mateo-owned files, such as
+  `mateo-palette.ts`, `mateo-shape.ts`, and `use-mateo-surface-bounds.ts`. Colocated tests retain the
   same base name, such as `mateo-shape.test.ts`.
 - Include `Mateo` in function, hook, class, interface, and type names, such as
   `getMateoShapeRadius`, `useMateoSurfaceBounds`, and `MateoShape`. Use `mateo`
@@ -40,7 +42,8 @@ object or namespace already provides that context.
 - Preserve names required by tooling, including `package.json`, `tsconfig.json`,
   `vite.config.ts`, `vitest.config.ts`, and `AGENTS.md`. Keep established package
   import paths stable when renaming source files.
-- Keep third-party API names unchanged; Mateo-owned aliases follow this rule.
+- Keep third-party API and asset names unchanged; Mateo-owned aliases follow
+  this rule.
 
 ## Related values
 

@@ -1,11 +1,32 @@
+import { readFileSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import { createMateoIconSvgPlugin } from './scripts/mateo-icon-svg-plugin.js';
 
 export default defineConfig({
-  plugins: [tailwindcss(), createMateoIconSvgPlugin()],
+  base: './',
+  plugins: [
+    tailwindcss(),
+    createMateoIconSvgPlugin(),
+    {
+      name: 'mateo-font-license',
+      generateBundle() {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'fonts/OFL.txt',
+          source: readFileSync(
+            new URL(
+              './src/foundation/mateo-typography/assets/OFL.txt',
+              import.meta.url,
+            ),
+          ),
+        });
+      },
+    },
+  ],
   resolve: { dedupe: ['react', 'react-dom'] },
   build: {
+    assetsDir: '',
     cssCodeSplit: true,
     lib: {
       entry: {

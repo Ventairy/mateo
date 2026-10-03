@@ -36,13 +36,20 @@ function MateoNestedThemeExample() {
   );
 }
 
-it('uses the nearest theme without adding HTML or leaking to siblings', () => {
+it('should apply text defaults and the nearest theme without extra HTML when nesting themes', () => {
   const { container } = render(<MateoNestedThemeExample />);
   expect(screen.getByTestId('outer')).toHaveTextContent('#4A5CFF');
   expect(screen.getByTestId('inner')).toHaveTextContent('#00A86B');
   expect(screen.getByTestId('sibling')).toHaveTextContent('#4A5CFF');
   expect(container.querySelectorAll('*')).toHaveLength(5);
   expect(container.firstElementChild?.tagName).toBe('MAIN');
+  const rootStyle = container.querySelector('main')?.style;
+  expect(rootStyle?.fontFamily).toBe('Inter, sans-serif');
+  expect(rootStyle?.letterSpacing).toBe('-0.2px');
+  expect(rootStyle?.getPropertyValue('--mateo-font-family')).toBe(
+    'Inter, sans-serif',
+  );
+  expect(rootStyle?.getPropertyValue('--mateo-letter-spacing')).toBe('-0.2px');
   expect(
     container
       .querySelector('main')

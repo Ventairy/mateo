@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { mateoTypography } from '../foundation/mateo-typography/mateo-typography.js';
 import { parseMateoColor } from './mateo-palette/mateo-color-utils.js';
 import {
   createMateoPalette,
@@ -42,12 +43,12 @@ export function createMateoTheme(options: MateoThemeOptions): MateoThemeData {
   });
 }
 
-/** CSS variables that can be applied to an app-owned theme boundary. */
+/** Inherited text defaults and CSS variables for an app-owned theme boundary. */
 export type MateoThemeStyle = CSSProperties & {
   readonly [name: `--mateo-${string}`]: string;
 };
 
-/** Apply this theme's palette and roles to your existing root or nested element. */
+/** Apply palette, roles, and inherited typography to your existing root or nested element. */
 export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
   const style: Record<`--mateo-${string}`, string> = {
     '--mateo-palette-white': theme.palette.white,
@@ -61,5 +62,11 @@ export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
   style['--mateo-color-background'] = theme.colorScheme.background;
   style['--mateo-color-accent'] = theme.colorScheme.accent;
   style['--mateo-color-on-accent'] = theme.colorScheme.onAccent;
-  return Object.freeze(style);
+  style['--mateo-font-family'] = mateoTypography.fontFamily;
+  style['--mateo-letter-spacing'] = mateoTypography.letterSpacing;
+  return Object.freeze({
+    ...style,
+    fontFamily: mateoTypography.fontFamily,
+    letterSpacing: mateoTypography.letterSpacing,
+  });
 }
