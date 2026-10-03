@@ -26,12 +26,13 @@ consumer branding also belong outside this directory.
 
 ## Directory Ownership
 
-- Group implementations by language ecosystem, such as `dart/`.
+- Group implementations by language ecosystem: `dart/` and `typescript/`.
 - Each ecosystem directory owns its workspace tooling and shared lockfile.
 - Name package directories `mateo-<platform>-<framework>`; each is a package root.
 - Give each publishable library its own package directory, manifest, tests,
   documentation, changelog, license metadata, and validation commands.
 - `dart/mateo-mobile-flutter/` owns the current `mateo_mobile` implementation for Flutter.
+- `typescript/mateo-web-react/` owns the `mateo-web-react` scaffold.
 - Add a nested `AGENTS.md` when an ecosystem or package needs instructions that
   do not apply to every public Mateo library.
 

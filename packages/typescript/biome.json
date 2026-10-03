@@ -1,0 +1,79 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "root": true,
+  "files": {
+    "includes": ["**", "!!**/node_modules", "!!**/dist", "!!**/coverage"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noFocusedTests": "error",
+        "noSkippedTests": "error"
+      },
+      "style": {
+        "noNonNullAssertion": "error",
+        "useImportType": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["mateo-web-react/**/*.{ts,tsx}"],
+      "linter": {
+        "domains": {
+          "react": "recommended"
+        },
+        "rules": {
+          "correctness": {
+            "useExhaustiveDependencies": "error",
+            "useHookAtTopLevel": "error",
+            "noUnusedImports": "error",
+            "noUnusedVariables": "error",
+            "noReactPropAssignments": "error",
+            "noNestedComponentDefinitions": "error"
+          },
+          "a11y": {
+            "preset": "recommended",
+            "useKeyWithClickEvents": "error",
+            "noStaticElementInteractions": "error",
+            "useSemanticElements": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["mateo-web-react/src/**/*.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "error"
+          }
+        }
+      }
+    }
+  ]
+}

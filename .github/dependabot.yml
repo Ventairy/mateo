@@ -25,3 +25,16 @@ updates:
       prefix: chore
       prefix-development: chore
       include: scope
+
+  - package-ecosystem: npm
+    directory: /packages/typescript
+    schedule:
+      interval: weekly
+      day: monday
+      time: "10:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope

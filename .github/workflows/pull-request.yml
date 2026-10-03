@@ -23,6 +23,7 @@ jobs:
     outputs:
       documentation: ${{ steps.paths.outputs.documentation }}
       mateo-mobile-flutter: ${{ steps.paths.outputs.mateo-mobile-flutter }}
+      mateo-web-react: ${{ steps.paths.outputs.mateo-web-react }}
       repository: ${{ steps.paths.outputs.repository }}
     steps:
       - name: Checkout
@@ -38,6 +39,7 @@ jobs:
         run: |
           documentation=false
           mateo_mobile_flutter=false
+          mateo_web_react=false
           repository=false
 
           while IFS= read -r path; do
@@ -52,6 +54,12 @@ jobs:
             esac
 
             case "$path" in
+              packages/typescript/*|.github/workflows/mateo-web-react-check.yml|.github/workflows/pull-request.yml)
+                mateo_web_react=true
+                ;;
+            esac
+
+            case "$path" in
               .github/*|.release-please-manifest.json|RELEASES.md|release-please-config.json)
                 repository=true
                 ;;
@@ -60,6 +68,7 @@ jobs:
 
           echo "documentation=$documentation" >> "$GITHUB_OUTPUT"
           echo "mateo-mobile-flutter=$mateo_mobile_flutter" >> "$GITHUB_OUTPUT"
+          echo "mateo-web-react=$mateo_web_react" >> "$GITHUB_OUTPUT"
           echo "repository=$repository" >> "$GITHUB_OUTPUT"
 
   title:
@@ -98,6 +107,12 @@ jobs:
     if: needs.changes.outputs.mateo-mobile-flutter == 'true'
     uses: ./.github/workflows/mateo-mobile-flutter-check.yml
 
+  mateo-web-react:
+    name: mateo-web-react
+    needs: changes
+    if: needs.changes.outputs.mateo-web-react == 'true'
+    uses: ./.github/workflows/mateo-web-react-check.yml
+
   repository:
     name: Repository configuration
     needs: changes
@@ -116,6 +131,7 @@ jobs:
       - title
       - documentation
       - mateo-mobile-flutter
+      - mateo-web-react
       - repository
       - dependency-review
     runs-on: ubuntu-latest
@@ -126,6 +142,7 @@ jobs:
           TITLE: ${{ needs.title.result }}
           DOCUMENTATION: ${{ needs.documentation.result }}
           MATEO_MOBILE_FLUTTER: ${{ needs.mateo-mobile-flutter.result }}
+          MATEO_WEB_REACT: ${{ needs.mateo-web-react.result }}
           REPOSITORY: ${{ needs.repository.result }}
           DEPENDENCY_REVIEW: ${{ needs.dependency-review.result }}
         run: |
@@ -134,6 +151,7 @@ jobs:
             "$TITLE" \
             "$DOCUMENTATION" \
             "$MATEO_MOBILE_FLUTTER" \
+            "$MATEO_WEB_REACT" \
             "$REPOSITORY" \
             "$DEPENDENCY_REVIEW"; do
             case "$result" in
