@@ -24,7 +24,39 @@ export function checkMateoPressTypes() {
   const styled = <MateoPress className="custom">Save</MateoPress>;
   // @ts-expect-error Sizing belongs to the wrapped content.
   const sized = <MateoPress width="fill">Save</MateoPress>;
+  const nativeAction = (
+    <MateoPress
+      as="button"
+      ref={createRef<HTMLButtonElement>()}
+      onPressed={(event) => {
+        const button: HTMLButtonElement = event.currentTarget;
+        button.focus();
+      }}
+    >
+      Save
+    </MateoPress>
+  );
+  const mismatchedRef = (
+    // @ts-expect-error Native button mode requires a button ref.
+    <MateoPress as="button" ref={createRef<HTMLDivElement>()}>
+      Save
+    </MateoPress>
+  );
+  const implicitButton = (
+    // @ts-expect-error Button refs require explicit native button mode.
+    <MateoPress ref={createRef<HTMLButtonElement>()}>Save</MateoPress>
+  );
+  const submission = (
+    // @ts-expect-error Submission is outside the action-only contract.
+    <MateoPress as="button" type="submit">
+      Save
+    </MateoPress>
+  );
   return {
+    nativeAction,
+    mismatchedRef,
+    implicitButton,
+    submission,
     action,
     asynchronous,
     disabled,

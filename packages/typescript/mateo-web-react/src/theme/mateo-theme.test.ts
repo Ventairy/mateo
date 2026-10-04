@@ -1,18 +1,16 @@
 // @vitest-environment node
 
 import { describe, expect, it } from 'vitest';
-import type { MateoColorStep } from './mateo-palette/mateo-palette.js';
-import * as mateoPaletteValues from './mateo-palette/mateo-palette-values.js';
 import { createMateoTheme, getMateoThemeStyle } from './mateo-theme.js';
 
 describe('light theme', () => {
-  it('derives exactly three roles and preserves transparent foregrounds', () => {
+  it('should derive light roles and preserve transparent foregrounds when creating a theme', () => {
     const theme = createMateoTheme({
       accentColor: '#00A86B',
       onAccent: 'rgba(255, 255, 255, 0.8)',
     });
     expect(theme.appearance).toBe('light');
-    expect(theme.colorScheme).toEqual({
+    expect(theme.colorScheme).toMatchObject({
       background: theme.palette.white,
       accent: theme.palette.accent[9],
       onAccent: 'rgba(255, 255, 255, 0.8)',
@@ -21,7 +19,7 @@ describe('light theme', () => {
     expect(Object.isFrozen(theme.colorScheme)).toBe(true);
   });
 
-  it('requires both concrete colors even from untyped callers', () => {
+  it('should require both concrete colors when called from JavaScript', () => {
     expect(() => Reflect.apply(createMateoTheme, null, [{}])).toThrow(
       TypeError,
     );
@@ -32,40 +30,16 @@ describe('light theme', () => {
       createMateoTheme({ accentColor: '#4A5CFF', onAccent: 'var(--text)' }),
     ).toThrow(TypeError);
   });
-
-  it('exposes all palette primitives and semantic roles as CSS variables', () => {
-    const theme = createMateoTheme({
-      accentColor: '#00A86B',
-      onAccent: '#000',
-    });
-    const style = getMateoThemeStyle(theme);
-    expect(Object.isFrozen(style)).toBe(true);
-    for (const name of mateoPaletteValues.scaleNames) {
-      for (let step = 1; step <= 12; step++) {
-        expect(style[`--mateo-palette-${name}-${step}`]).toBe(
-          theme.palette[name][step as MateoColorStep],
-        );
-      }
-    }
-    expect(style['--mateo-palette-white']).toBe('#FFFFFF');
-    expect(style['--mateo-palette-black']).toBe('#000000');
-    expect(style['--mateo-color-background']).toBe(
-      theme.colorScheme.background,
-    );
-    expect(style['--mateo-color-accent']).toBe(theme.colorScheme.accent);
-    expect(style['--mateo-color-on-accent']).toBe('#000');
-  });
 });
 
-it('should provide inherited typography without a type scale when applying a theme', () => {
+it('should provide only consumed typography properties when applying a theme', () => {
   const theme = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFF' });
   const style = getMateoThemeStyle(theme);
-  expect(style.fontFamily).toBe('Inter, sans-serif');
-  expect(style.letterSpacing).toBe('-0.2px');
-  expect(style['--mateo-font-family']).toBe('Inter, sans-serif');
-  expect(style['--mateo-letter-spacing']).toBe('-0.2px');
-  expect(style).not.toHaveProperty('fontSize');
-  expect(style).not.toHaveProperty('fontWeight');
-  expect(style).not.toHaveProperty('lineHeight');
-  expect(style).not.toHaveProperty('color');
+  expect(Object.isFrozen(style)).toBe(true);
+  expect(style).toEqual({
+    fontFamily: 'Inter, sans-serif',
+    letterSpacing: '-0.2px',
+    '--mateo-font-family': 'Inter, sans-serif',
+    '--mateo-letter-spacing': '-0.2px',
+  });
 });

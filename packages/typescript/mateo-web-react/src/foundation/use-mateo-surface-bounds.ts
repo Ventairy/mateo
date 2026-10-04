@@ -7,14 +7,13 @@ import {
 } from 'react';
 
 /** Measure layout dimensions, independent of CSS transforms on the surface. */
-export function useMateoSurfaceBounds(
-  active: boolean,
-  forwardedRef: Ref<HTMLDivElement> | undefined,
-) {
-  const element = useRef<HTMLDivElement | null>(null);
+export function useMateoSurfaceBounds<
+  MateoSurfaceElement extends HTMLElement = HTMLDivElement,
+>(active: boolean, forwardedRef: Ref<MateoSurfaceElement> | undefined) {
+  const element = useRef<MateoSurfaceElement | null>(null);
   const [bounds, setBounds] = useState({ width: 0, height: 0 });
   const mateoSurfaceRef = useCallback(
-    (node: HTMLDivElement | null) => {
+    (node: MateoSurfaceElement | null) => {
       element.current = node;
       if (!node) return;
       const cleanup =

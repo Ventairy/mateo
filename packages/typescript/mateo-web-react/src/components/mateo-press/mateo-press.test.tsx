@@ -316,3 +316,83 @@ describe('MateoPress feedback completion', () => {
     expect(onPressed).not.toHaveBeenCalled();
   });
 });
+
+describe('MateoPress native button composition', () => {
+  it('should render one native button and forward its ref when using button mode', () => {
+    const ref = createRef<HTMLButtonElement>();
+    const onPressed = vi.fn();
+    const theme = createMateoTheme({
+      accentColor: '#4A5CFF',
+      onAccent: '#FFF',
+    });
+    const { container } = render(
+      <MateoTheme data={theme}>
+        <MateoPress
+          as="button"
+          ref={ref}
+          id="save-action"
+          data-action="save"
+          onPressed={onPressed}
+        >
+          <MateoSurface as="span">Save</MateoSurface>
+        </MateoPress>
+      </MateoTheme>,
+    );
+    const button = screen.getByRole('button', { name: 'Save' });
+    expect(button.tagName).toBe('BUTTON');
+    expect(button).toHaveAttribute('type', 'button');
+    expect(button).toHaveAttribute('id', 'save-action');
+    expect(button).toHaveAttribute('data-action', 'save');
+    expect(ref.current).toBe(button);
+    expect(container.querySelectorAll('button, [role="button"]')).toHaveLength(
+      1,
+    );
+    expect(button.querySelector('div')).toBeNull();
+    fireEvent.click(button);
+    expect(onPressed).toHaveBeenCalledOnce();
+  });
+
+  it('should leave keyboard activation to the browser when using button mode', () => {
+    const onPressed = vi.fn();
+    render(
+      <MateoPress as="button" onPressed={onPressed}>
+        Save
+      </MateoPress>,
+    );
+    const button = screen.getByRole('button', { name: 'Save' });
+    for (const key of ['Enter', ' ']) {
+      expect(fireEvent.keyDown(button, { key })).toBe(true);
+      expect(button).toHaveAttribute('data-mateo-pressed');
+      expect(onPressed).not.toHaveBeenCalled();
+      expect(fireEvent.keyUp(button, { key })).toBe(true);
+      expect(button).not.toHaveAttribute('data-mateo-pressed');
+    }
+    fireEvent.click(button, { detail: 0 });
+    expect(onPressed).toHaveBeenCalledOnce();
+  });
+
+  it('should cancel contact and use native disablement when removing the action', () => {
+    const onPressed = vi.fn();
+    const view = render(
+      <MateoPress as="button" onPressed={onPressed}>
+        Save
+      </MateoPress>,
+    );
+    const button = screen.getByRole('button', { name: 'Save' });
+    fireMateoPointer(button, 'pointerdown');
+    expect(button).toHaveAttribute('data-mateo-pressed');
+    view.rerender(<MateoPress as="button">Save</MateoPress>);
+    expect(button).toBeDisabled();
+    expect(button).not.toHaveAttribute('data-mateo-pressed');
+    fireEvent.click(button);
+    expect(onPressed).not.toHaveBeenCalled();
+    view.rerender(
+      <MateoPress as="button" onPressed={onPressed}>
+        Save
+      </MateoPress>,
+    );
+    expect(button).toBeEnabled();
+    fireEvent.click(button, { detail: 0 });
+    expect(onPressed).toHaveBeenCalledOnce();
+  });
+});

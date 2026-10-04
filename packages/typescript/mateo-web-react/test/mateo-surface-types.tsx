@@ -15,6 +15,15 @@ export function checkMateoSurfaceTypes() {
       Content
     </MateoSurface>
   );
+  const span = (
+    <MateoSurface as="span" ref={createRef<HTMLSpanElement>()}>
+      Content
+    </MateoSurface>
+  );
+  const spanRefOnDiv = (
+    // @ts-expect-error The default div requires a div-compatible ref.
+    <MateoSurface ref={createRef<HTMLSpanElement>()}>Content</MateoSurface>
+  );
   // @ts-expect-error Content is required.
   const empty = <MateoSurface />;
   // @ts-expect-error The surface is a container, not a polymorphic control.
@@ -69,6 +78,8 @@ export function checkMateoSurfaceTypes() {
     unitTypo,
     unitless,
     surface,
+    span,
+    spanRefOnDiv,
     empty,
     button,
     styled,

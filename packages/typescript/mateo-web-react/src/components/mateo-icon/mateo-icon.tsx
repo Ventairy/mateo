@@ -5,6 +5,7 @@ import {
   type MateoIconName,
   renderMateoIconArtwork,
 } from './mateo-icon-artwork.js';
+import { useMateoIconContext } from './mateo-icon-provider.js';
 
 /** A catalog image. Its interactive parent owns action labels and states. */
 export interface MateoIconProps {
@@ -27,12 +28,15 @@ const mateoIconGeometry = {
 /** An optically sized Mateo SVG using its surrounding text color by default. */
 export function MateoIcon({
   icon,
-  size = mateoIconGeometry.frameSize,
-  color,
+  size: explicitSize,
+  color: explicitColor,
   backgroundColor,
   'aria-label': label,
   ref,
 }: MateoIconProps) {
+  const scope = useMateoIconContext();
+  const size = explicitSize ?? scope.size ?? mateoIconGeometry.frameSize;
+  const color = explicitColor ?? scope.color;
   const idPrefix = `mateo-icon-${useId()}`;
   if (typeof size !== 'number' || !Number.isFinite(size) || size < 0) {
     throw new TypeError('MateoIcon size must be finite and nonnegative.');

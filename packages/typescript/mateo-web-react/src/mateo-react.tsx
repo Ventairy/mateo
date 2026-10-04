@@ -1,8 +1,27 @@
 'use client';
 
+export type { MateoButtonProps } from './components/mateo-button/mateo-button.js';
+export { MateoButton } from './components/mateo-button/mateo-button.js';
+export type {
+  MateoButtonAlignment,
+  MateoButtonPresentation,
+  MateoButtonSize,
+  MateoButtonVariant,
+  MateoButtonWidth,
+  MateoIconButtonPresentation,
+  MateoLabelButtonPresentation,
+} from './components/mateo-button/mateo-button-presentation.js';
 export type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';
 export { MateoIcon } from './components/mateo-icon/mateo-icon.js';
 export type { MateoIconName } from './components/mateo-icon/mateo-icon-artwork.js';
+export type {
+  MateoIconContextData,
+  MateoIconProviderProps,
+} from './components/mateo-icon/mateo-icon-provider.js';
+export {
+  MateoIconProvider,
+  useMateoIconContext,
+} from './components/mateo-icon/mateo-icon-provider.js';
 export type { MateoPressProps } from './components/mateo-press/mateo-press.js';
 export { MateoPress } from './components/mateo-press/mateo-press.js';
 export type {

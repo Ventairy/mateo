@@ -7,7 +7,7 @@ import type {
   ReactNode,
   Ref,
 } from 'react';
-import { useId } from 'react';
+import { useCallback, useId } from 'react';
 import { getMateoRoundedPath } from '../../foundation/mateo-shape/mateo-rounded-path.js';
 import {
   getMateoShapeRadius,
@@ -43,7 +43,7 @@ export type MateoSurfaceSize =
 export type MateoSurfacePadding = NonNullable<CSSProperties['padding']>;
 
 /** A background with content, size, and logical padding. */
-export interface MateoSurfaceProps extends AriaAttributes {
+interface MateoSurfaceContentProps extends AriaAttributes {
   readonly children: ReactNode;
   readonly width?: MateoSurfaceSize;
   readonly height?: MateoSurfaceSize;
@@ -53,7 +53,6 @@ export interface MateoSurfaceProps extends AriaAttributes {
   readonly padding?: MateoSurfacePadding;
   readonly paddingBlock?: MateoSurfacePadding;
   readonly paddingInline?: MateoSurfacePadding;
-  readonly ref?: Ref<HTMLDivElement>;
   readonly id?: string;
   readonly title?: string;
   readonly dir?: 'ltr' | 'rtl' | 'auto';
@@ -61,6 +60,13 @@ export interface MateoSurfaceProps extends AriaAttributes {
   readonly role?: AriaRole;
   readonly [attribute: `data-${string}`]: string | number | boolean | undefined;
 }
+
+/** Div by default; span permits phrasing content inside native controls. */
+export type MateoSurfaceProps = MateoSurfaceContentProps &
+  (
+    | { readonly as?: 'div'; readonly ref?: Ref<HTMLDivElement> }
+    | { readonly as: 'span'; readonly ref?: Ref<HTMLSpanElement> }
+  );
 
 function validateMateoSurfaceNumber(value: string | number, name: string) {
   if (typeof value === 'number' && (!Number.isFinite(value) || value < 0)) {
@@ -76,27 +82,47 @@ function resolveMateoSurfaceDimension(value: MateoSurfaceSize, name: string) {
 }
 
 /** A noninteractive surface using the nearest Mateo theme's background. */
-export function MateoSurface({
-  children,
-  width = 'fit',
-  height = 'fit',
-  color,
-  shape = 'none',
-  padding = 0,
-  paddingBlock,
-  paddingInline,
-  ref,
-  id,
-  title,
-  dir,
-  lang,
-  role,
-  ...attributes
-}: MateoSurfaceProps) {
+export function MateoSurface(props: MateoSurfaceProps) {
+  const {
+    children,
+    width = 'fit',
+    height = 'fit',
+    color,
+    shape = 'none',
+    padding = 0,
+    paddingBlock,
+    paddingInline,
+    as: elementKind,
+    ref: _mateoSurfaceRef,
+    id,
+    title,
+    dir,
+    lang,
+    role,
+    ...attributes
+  } = props;
+  const Tag = elementKind === 'span' ? 'span' : 'div';
   const theme = useMateoTheme();
   const radius = getMateoShapeRadius(shape);
   const shaped = shape !== 'none';
-  const bounds = useMateoSurfaceBounds(shaped, ref);
+  const forwardMateoSurfaceRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (props.as === 'span') {
+        if (node !== null && !(node instanceof HTMLSpanElement)) return;
+        if (typeof props.ref === 'function') return props.ref(node);
+        if (props.ref) props.ref.current = node;
+      } else {
+        if (node !== null && !(node instanceof HTMLDivElement)) return;
+        if (typeof props.ref === 'function') return props.ref(node);
+        if (props.ref) props.ref.current = node;
+      }
+    },
+    [props.as, props.ref],
+  );
+  const bounds = useMateoSurfaceBounds<HTMLElement>(
+    shaped,
+    forwardMateoSurfaceRef,
+  );
   const clipId = `mateo-shape-${useId()}`;
   // Only accessibility and data attributes cross the closed surface boundary.
   const accessibleAttributes = Object.fromEntries(
@@ -128,7 +154,7 @@ export function MateoSurface({
         }),
   };
   return (
-    <div
+    <Tag
       {...accessibleAttributes}
       ref={bounds.ref}
       id={id}
@@ -162,6 +188,6 @@ export function MateoSurface({
           </defs>
         </svg>
       )}
-    </div>
+    </Tag>
   );
 }

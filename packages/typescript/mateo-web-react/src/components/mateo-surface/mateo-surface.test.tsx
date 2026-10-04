@@ -19,7 +19,9 @@ const otherMateoTheme: MateoThemeData = {
   colorScheme: { ...mateoTestTheme.colorScheme, background: '#F5F5F5' },
 };
 
-function MateoSurfaceExample(props: Omit<MateoSurfaceProps, 'children'>) {
+function MateoSurfaceExample(
+  props: Omit<Extract<MateoSurfaceProps, { readonly as?: 'div' }>, 'children'>,
+) {
   return (
     <MateoTheme data={mateoTestTheme}>
       <MateoSurface data-testid="surface" {...props}>
@@ -128,7 +130,7 @@ it('ignores unsupported styling and interaction even from untyped callers', () =
     tabIndex: 0,
     as: 'button',
   };
-  render(<MateoSurfaceExample {...unsupported} />);
+  render(Reflect.apply(MateoSurfaceExample, null, [unsupported]));
   const surface = screen.getByTestId('surface');
   expect(surface.tagName).toBe('DIV');
   expect(surface).not.toHaveClass('custom');
@@ -362,4 +364,22 @@ describe('surface shapes', () => {
       ).toThrow('finite, nonnegative radius');
     },
   );
+});
+
+it('should preserve span semantics and its ref when composing a native button surface', () => {
+  const ref = createRef<HTMLSpanElement>();
+  render(
+    <MateoTheme data={mateoTestTheme}>
+      <button type="button">
+        <MateoSurface as="span" ref={ref} color="#4A5CFF">
+          Save
+        </MateoSurface>
+      </button>
+    </MateoTheme>,
+  );
+  const button = screen.getByRole('button', { name: 'Save' });
+  expect(ref.current?.tagName).toBe('SPAN');
+  expect(ref.current).toBe(button.firstElementChild);
+  expect(button.querySelector('div')).toBeNull();
+  expect(ref.current).toHaveStyle({ backgroundColor: '#4A5CFF' });
 });
