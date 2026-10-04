@@ -30,12 +30,22 @@ without adding unrelated customization options.
 ## Source organization
 
 - `src/components/` contains product-facing components and their colocated tests.
+- `src/bases/` contains shared internal implementation components. Use the
+  `BaseMateo` prefix and a matching kebab-case folder and filename, such as
+  `src/bases/base-mateo-surface/base-mateo-surface.tsx`. Keep bases out of public
+  package exports.
 - `src/foundation/` contains non-component foundations and supporting utilities,
   including shape contracts, geometry, and bounds measurement.
 - `src/theme/` contains theme data, React theme integration, palettes, and their
   supporting color utilities.
 - Keep tests beside the implementation they cover. Package entry modules and
   the stylesheet remain at the source root.
+
+Keep rendering, layout, lifecycle, and private React context with the component
+or base that owns the behavior. Extract a base when multiple components need the
+same implementation; keep their public contracts and defaults with each
+component. Do not move component-specific code into foundation merely because
+it could be reused later.
 
 ## Styling
 
@@ -59,7 +69,8 @@ design tokens as Mateo foundation values.
 Compile package-owned utilities into `dist/styles.css`, exported as
 `mateo-web-react/styles.css`. Consumers import that stylesheet once; they do not
 need Tailwind installed or configured. Keep CSS marked as a package side effect.
-Omit Preflight and global resets, and scan only the component source directory.
+Omit Preflight and global resets, and scan only the component and base source
+directories.
 Verify the compiled stylesheet through browser layout checks when component
 styling changes.
 

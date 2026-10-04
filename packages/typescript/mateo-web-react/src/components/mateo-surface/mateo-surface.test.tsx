@@ -168,6 +168,23 @@ it('requires a theme even with an explicit background', () => {
   ).toThrow('useMateoTheme() requires a MateoTheme ancestor');
 });
 
+it('should ignore internal view layout options when supplied by an untyped caller', () => {
+  const unsupported = {
+    overlay: <button type="button">Unexpected overlay</button>,
+    scroll: {
+      clearanceBlockStart: 80,
+      padding: { blockStart: 20, blockEnd: 12, inlineStart: 20, inlineEnd: 20 },
+    },
+  };
+  render(Reflect.apply(MateoSurfaceExample, null, [unsupported]));
+  expect(
+    screen.queryByRole('button', { name: 'Unexpected overlay' }),
+  ).toBeNull();
+  expect(screen.getByText('Content').parentElement).toBe(
+    screen.getByTestId('surface'),
+  );
+});
+
 describe.each([
   'width',
   'height',
