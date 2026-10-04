@@ -11,14 +11,55 @@ import {
 
 /** Directional side controls surrounding the view's principal content. */
 export interface MateoViewHeaderProps {
+  /**
+   * Controls before the principal content in reading order. Direction is inherited.
+   */
   readonly leading?: ReactNode;
+  /**
+   * Primary heading or content. Supply your own semantic element, such as an h1.
+   * Centered within the header when both side slots are present.
+   */
   readonly principal?: ReactNode;
+  /**
+   * Controls after the principal content in reading order.
+   */
   readonly trailing?: ReactNode;
+  /**
+   * Local logical spacing; replaces inherited header spacing.
+   *
+   * @defaultValue View padding with the block-end inset removed.
+   */
   readonly padding?: MateoViewPadding;
-  /** Maximum total width in pixels, including padding. Centers the header. */
+  /**
+   * Maximum total width in pixels, including padding; finite and nonnegative.
+   * Centers the header within the view and shrinks to the view's available width.
+   *
+   * @defaultValue No local cap; the header fills the view width.
+   */
   readonly maxWidth?: number;
 }
 
+/**
+ * Renders directional controls around the principal content in a view header.
+ *
+ * @remarks
+ * Requires a MateoView ancestor. The view surface holds it at the top while
+ * content scrolls underneath. Side controls keep their natural widths; when both
+ * are present the principal slot balances against the wider side. Content owns
+ * heading semantics, accessible names, and its own interactions.
+ *
+ * @throws Error - If there is no MateoView ancestor.
+ * @throws TypeError - If maximum width or padding is not finite and nonnegative.
+ *
+ * @example
+ * ```tsx
+ * <MateoViewHeader
+ *   leading={<button type="button">Back</button>}
+ *   principal={<h1>Messages</h1>}
+ *   maxWidth={960}
+ * />
+ * ```
+ */
 export function MateoViewHeader({
   leading,
   principal,

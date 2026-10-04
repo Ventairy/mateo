@@ -1,8 +1,26 @@
-/** A Mateo outline treatment shared by components that support shapes. */
+/**
+ * Outline treatment shared by components that support Mateo shapes.
+ *
+ * @remarks
+ * `none` leaves the surface rectangular. `capsule` derives full rounding from
+ * the rendered bounds. `rounded` requests a radius in pixels; it must be finite
+ * and nonnegative and is limited by the available bounds. The same outline
+ * clips the background and content.
+ *
+ * @example
+ * ```tsx
+ * <MateoSurface shape={{ type: "rounded", radius: 24 }}>Content</MateoSurface>
+ * ```
+ */
 export type MateoShape =
   | 'none'
   | 'capsule'
-  | Readonly<{ type: 'rounded'; radius: number }>;
+  | Readonly<{
+      /** Selects Mateo's rounded outline. */
+      type: 'rounded';
+      /** Requested corner radius in pixels; finite and nonnegative. */
+      radius: number;
+    }>;
 
 /** Resolve the requested radius; null means full rounding from the bounds. */
 export function getMateoShapeRadius(shape: MateoShape): number | null {

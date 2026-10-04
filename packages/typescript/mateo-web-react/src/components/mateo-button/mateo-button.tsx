@@ -15,15 +15,41 @@ import {
   MateoLabelButtonContent,
 } from './presentations/mateo-label-button-presentation.js';
 
-/** One native action with separately reusable content and appearance. */
+/**
+ * Configuration for one native Mateo button action.
+ *
+ * @remarks
+ * Supports React ARIA attributes and `data-*` attributes on the button. Use
+ * `presentation` for supported appearance choices and `onPressed` to enable the
+ * action. An `aria-label` overrides the presentation label as the accessible name.
+ */
 export interface MateoButtonProps extends AriaAttributes {
+  /**
+   * Visible content, accessible label, size, and treatment for this action.
+   */
   readonly presentation: MateoButtonPresentation;
-  /** Omit to disable. Pending promises and errors remain caller-owned. */
+  /**
+   * Called when the enabled action is activated by pointer, keyboard, or assistive
+   * technology. Omit to disable the button.
+   *
+   * @remarks
+   * Promises do not automatically show pending state or disable repeated activation.
+   * Handle pending state and errors in the calling application.
+   */
   readonly onPressed?: (
     event: MouseEvent<HTMLButtonElement>,
   ) => void | Promise<void>;
+  /**
+   * Ref to the underlying native button, suitable for moving focus.
+   */
   readonly ref?: Ref<HTMLButtonElement>;
+  /**
+   * DOM identifier on the native button for relationships and lookup.
+   */
   readonly id?: string;
+  /**
+   * Consumer data attributes forwarded to the native button.
+   */
   readonly [attribute: `data-${string}`]: string | number | boolean | undefined;
 }
 
@@ -46,7 +72,27 @@ function getMateoButtonColors(
   return treatments[variant];
 }
 
-/** Composes press interaction with the surface rendered by its presentation. */
+/**
+ * Renders a native action with Mateo colors, shape, and press feedback.
+ *
+ * @remarks
+ * Requires a MateoTheme ancestor. Uses `type="button"`, so activation does not
+ * submit a form. Omit `onPressed` to disable. Keyboard and pointer feedback respect
+ * reduced-motion preferences. Label presentations truncate when space is limited;
+ * the full label remains the default accessible name.
+ *
+ * @throws TypeError - If the presentation, label, icon content, or supported
+ * appearance options are invalid.
+ * @throws Error - If there is no MateoTheme ancestor.
+ *
+ * @example
+ * ```tsx
+ * <MateoButton
+ *   presentation={{ kind: "label", label: "Save", variant: "primary" }}
+ *   onPressed={() => save()}
+ * />
+ * ```
+ */
 export function MateoButton({
   presentation,
   onPressed,

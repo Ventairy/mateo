@@ -7,16 +7,41 @@ const MateoThemeContext = createContext<MateoThemeData | null>(null);
 
 /** A theme boundary for React descendants; adds no HTML or layout. */
 export interface MateoThemeProps {
+  /**
+   * Theme to make available to descendants. The nearest boundary wins.
+   */
   readonly data: MateoThemeData;
+  /**
+   * Interface that consumes this theme.
+   */
   readonly children: ReactNode;
 }
 
-/** Provide one consistent theme. Apply its CSS variables to an app-owned element. */
+/**
+ * Provides a theme to React descendants without adding a DOM element.
+ *
+ * @remarks
+ * Use `getMateoThemeStyle` from `mateo-web-react` on your existing root to apply
+ * inherited typography. The provider supplies component colors, but does not
+ * apply DOM styles by itself. Nested providers replace the theme for their subtree.
+ *
+ * @example
+ * ```tsx
+ * <MateoTheme data={theme}>
+ *   <main style={getMateoThemeStyle(theme)}>{content}</main>
+ * </MateoTheme>
+ * ```
+ */
 export function MateoTheme({ data, children }: MateoThemeProps) {
   return <MateoThemeContext value={data}>{children}</MateoThemeContext>;
 }
 
-/** Read the nearest Mateo theme and subscribe to its updates. */
+/**
+ * Reads the nearest theme and subscribes to changes to that boundary.
+ *
+ * @returns The theme supplied by the closest {@link MateoTheme}.
+ * @throws Error - If called without a MateoTheme ancestor.
+ */
 export function useMateoTheme(): MateoThemeData {
   const theme = use(MateoThemeContext);
   if (!theme) {

@@ -10,31 +10,88 @@ import { useMateoPressInteraction } from './use-mateo-press-interaction.js';
 
 /** Content forming one action; descendants must be noninteractive. */
 interface MateoPressContentProps extends AriaAttributes {
+  /**
+   * Noninteractive content forming this one action. Do not nest buttons, links,
+   * inputs, or other independently interactive descendants.
+   */
   readonly children: ReactNode;
+  /**
+   * DOM identifier on the action element.
+   */
   readonly id?: string;
+  /**
+   * Consumer data attributes forwarded to the action element.
+   */
   readonly [attribute: `data-${string}`]: string | number | boolean | undefined;
 }
 
-/** Custom flow content uses a layout element; native actions use a button. */
+/**
+ * Content and activation options for a single Mateo press action.
+ *
+ * @remarks
+ * Use `as: "button"` for content allowed inside a native button, or the default
+ * `div` for flow content such as a composed surface. Omit `onPressed` to disable.
+ * ARIA and `data-*` attributes are forwarded to the action element.
+ */
 export type MateoPressProps = MateoPressContentProps &
   (
     | {
+        /**
+         * Uses a layout element with button semantics for flow content.
+         *
+         * @defaultValue `"div"`
+         */
         readonly as?: 'div';
+        /**
+         * Called on activation. Omit to disable; pending promises and errors remain
+         * caller-owned, with no automatic loading state.
+         */
         readonly onPressed?: (
           event: MouseEvent<HTMLDivElement>,
         ) => void | Promise<void>;
+        /**
+         * Ref to the layout action element, suitable for moving focus.
+         */
         readonly ref?: Ref<HTMLDivElement>;
       }
     | {
+        /**
+         * Uses a native button with `type="button"` and browser keyboard activation.
+         */
         readonly as: 'button';
+        /**
+         * Called on activation. Omit to disable; pending promises and errors remain
+         * caller-owned, with no automatic loading state.
+         */
         readonly onPressed?: (
           event: MouseEvent<HTMLButtonElement>,
         ) => void | Promise<void>;
+        /**
+         * Ref to the native action button, suitable for moving focus.
+         */
         readonly ref?: Ref<HTMLButtonElement>;
       }
   );
 
-/** Owns semantics, activation, and feedback for one Mateo action. */
+/**
+ * Adds accessible activation and tactile feedback to one composed action.
+ *
+ * @remarks
+ * Works with pointer, Enter, Space, and assistive-technology activation. The target
+ * stays stationary while its content compresses; reduced motion removes the
+ * animated transform. Give the action an accessible name through its content or
+ * ARIA attributes. Omit `onPressed` to disable and remove it from keyboard tab order.
+ * Does not supply a surface or require a theme.
+ *
+ * @throws TypeError - If `onPressed` is neither a function nor omitted.
+ *
+ * @example
+ * ```tsx
+ * <MateoPress onPressed={() => openDetails()}>
+ *   <MateoSurface padding={20}>Open details</MateoSurface>
+ * </MateoPress>
+ * ```
+ */
 export function MateoPress(props: MateoPressProps) {
   return props.as === 'button' ? (
     <MateoNativePress {...props} />

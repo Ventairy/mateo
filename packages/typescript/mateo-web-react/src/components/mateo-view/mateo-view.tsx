@@ -8,15 +8,59 @@ import {
   resolveMateoViewPadding,
 } from './mateo-view-padding.js';
 
-/** A parent-sized view with a stationary header and a scrolling content surface. */
+/**
+ * Composition and sizing for a bounded Mateo view.
+ *
+ * @remarks
+ * The parent supplies a resolved height. The view fills that height and available
+ * width unless `maxWidth` limits it. Compose a MateoViewSurface and optional
+ * MateoViewHeader through the named slots.
+ */
 export interface MateoViewProps {
+  /**
+   * Main surface slot. Use MateoViewSurface, directly or through your own component,
+   * to provide scrolling and header clearance.
+   */
   readonly surface: ReactNode;
+  /**
+   * Stationary top overlay slot. Use MateoViewHeader, directly or through a wrapper.
+   * Omit, or supply null or false, for a view without a header.
+   */
   readonly header?: ReactNode;
+  /**
+   * Inherited logical spacing for the header and surface. Local padding replaces it.
+   *
+   * @defaultValue `12` pixels on the block axis and `20` pixels on the inline axis.
+   */
   readonly padding?: MateoViewPadding;
-  /** Maximum total width in pixels. Centers the view and bounds its surface and header. */
+  /**
+   * Maximum total width in pixels; finite and nonnegative. Centers the complete
+   * view, including its surface and header, and shrinks to fit smaller parents.
+   *
+   * @defaultValue No cap; the view fills its parent's width.
+   */
   readonly maxWidth?: number;
 }
 
+/**
+ * Composes a bounded scrolling surface with an optional stationary header.
+ *
+ * @remarks
+ * Requires a parent with a resolved height. `maxWidth` centers and limits the
+ * whole view; a header can have a smaller cap but cannot exceed the view width.
+ * MateoViewSurface owns scrolling, fades, and clearance below the measured header.
+ *
+ * @throws TypeError - If maximum width or padding is not finite and nonnegative.
+ *
+ * @example
+ * ```tsx
+ * <MateoView
+ *   maxWidth={1200}
+ *   header={<MateoViewHeader maxWidth={960} principal={<h1>Messages</h1>} />}
+ *   surface={<MateoViewSurface>{messages}</MateoViewSurface>}
+ * />
+ * ```
+ */
 export function MateoView({
   surface,
   header,

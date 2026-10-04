@@ -204,6 +204,13 @@ const mateoIconArtwork = defineMateoIconArtwork({
   wrench: MateoWrenchArtwork,
 });
 
+/**
+ * Supported artwork names in the Mateo SVG icon catalog.
+ *
+ * @remarks
+ * Use these names with MateoIcon. Names choose artwork; accessible labels and
+ * action meanings belong to the consuming interface.
+ */
 export type MateoIconName = keyof typeof mateoIconArtwork;
 
 function isMateoIconName(name: string): name is MateoIconName {

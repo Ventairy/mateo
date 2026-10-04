@@ -8,12 +8,37 @@ import type {
   MateoButtonVariant,
 } from '../mateo-button-options.js';
 
-/** A circular action. Label names the action to assistive technology. */
+/**
+ * Circular icon-only button presentation with a required accessible label.
+ *
+ * @remarks
+ * Use a recognizable icon and a localized label describing the action. The icon
+ * is decorative to assistive technology; the button owns its accessible name.
+ */
 export interface MateoIconButtonPresentation {
+  /**
+   * Selects the circular icon-only presentation.
+   */
   readonly kind: 'icon';
+  /**
+   * Visible, noninteractive artwork. MateoIcon inherits presentation size and color.
+   */
   readonly icon: ReactNode;
+  /**
+   * Localized accessible action name; not drawn as visible text. Must be nonempty.
+   */
   readonly label: string;
+  /**
+   * Semantic color treatment.
+   *
+   * @defaultValue `"primary"`
+   */
   readonly variant?: MateoButtonVariant;
+  /**
+   * Square dimensions and icon proportions for this circular button.
+   *
+   * @defaultValue `"standard"`
+   */
   readonly size?: MateoButtonSize;
 }
 const mateoIconButtonDimensions = {

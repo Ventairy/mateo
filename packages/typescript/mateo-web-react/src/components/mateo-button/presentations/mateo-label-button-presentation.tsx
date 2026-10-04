@@ -11,16 +11,53 @@ import type {
   MateoButtonWidth,
 } from '../mateo-button-options.js';
 
-/** Content and appearance forwarded by any component that owns a button action. */
+/**
+ * Text-led button presentation with optional decorative icons.
+ *
+ * @remarks
+ * The visible label and default accessible name are the same. Limited width
+ * truncates the label visually. Icons are hidden from assistive technology and
+ * must not contain separate actions.
+ */
 export interface MateoLabelButtonPresentation {
+  /**
+   * Selects the text-led presentation.
+   */
   readonly kind: 'label';
+  /**
+   * Localized action text. Must contain non-whitespace content.
+   */
   readonly label: string;
+  /**
+   * Semantic color treatment.
+   *
+   * @defaultValue `"primary"`
+   */
   readonly variant?: MateoButtonVariant;
+  /**
+   * Size controlling label, icon, padding, and minimum height.
+   *
+   * @defaultValue `"standard"`
+   */
   readonly size?: MateoButtonSize;
+  /**
+   * Whether the button follows its content or fills its parent.
+   *
+   * @defaultValue `"fit"`
+   */
   readonly width?: MateoButtonWidth;
+  /**
+   * Alignment of the content group within the button.
+   *
+   * @defaultValue `"center"`
+   */
   readonly alignment?: MateoButtonAlignment;
   /** Decorative, noninteractive content. MateoIcon receives scoped defaults. */
   readonly leadingIcon?: ReactNode;
+  /**
+   * Decorative content after the label in reading order. MateoIcon inherits
+   * size and foreground from the presentation.
+   */
   readonly trailingIcon?: ReactNode;
 }
 
