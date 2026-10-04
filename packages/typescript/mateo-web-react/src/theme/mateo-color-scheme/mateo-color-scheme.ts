@@ -2,6 +2,7 @@ import { parseMateoColor } from '../mateo-palette/mateo-color-utils.js';
 import type { MateoPalette } from '../mateo-palette/mateo-palette.js';
 import type { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
 import { createMateoLightColorSchemeRoles } from './mateo-light-color-scheme.js';
+import type { MateoTextColorScheme } from './mateo-text-color-scheme.js';
 
 /** Immutable shared and component colors for a Mateo appearance. */
 export class MateoColorScheme {
@@ -21,12 +22,14 @@ export class MateoColorScheme {
    * Enabled and disabled colors grouped by button treatment.
    */
   readonly buttons: MateoButtonsColorScheme;
+  /** Shared text emphasis and money colors for this appearance. */
+  readonly text: MateoTextColorScheme;
 
   /**
    * Derives the immutable light color scheme from a primitive palette.
    *
    * @param options - Palette and concrete foreground to retain on the accent.
-   * @returns Semantic roles for light surfaces and button treatments.
+   * @returns Semantic roles for light surfaces, button treatments, and text.
    * @throws TypeError - If `onAccent` is not a resolvable concrete CSS color.
    *
    * @remarks
@@ -49,13 +52,14 @@ export class MateoColorScheme {
   private constructor(
     colors: Pick<
       MateoColorScheme,
-      'background' | 'accent' | 'onAccent' | 'buttons'
+      'background' | 'accent' | 'onAccent' | 'buttons' | 'text'
     >,
   ) {
     this.background = colors.background;
     this.accent = colors.accent;
     this.onAccent = colors.onAccent;
     this.buttons = colors.buttons;
+    this.text = colors.text;
     Object.freeze(this);
   }
 }

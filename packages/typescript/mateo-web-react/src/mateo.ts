@@ -5,6 +5,7 @@ export { MateoButtonsColorScheme } from './theme/mateo-color-scheme/mateo-button
 export { MateoColorScheme } from './theme/mateo-color-scheme/mateo-color-scheme.js';
 export { MateoPrimaryButtonColorScheme } from './theme/mateo-color-scheme/mateo-primary-button-color-scheme.js';
 export { MateoSecondaryButtonColorScheme } from './theme/mateo-color-scheme/mateo-secondary-button-color-scheme.js';
+export { MateoTextColorScheme } from './theme/mateo-color-scheme/mateo-text-color-scheme.js';
 export type {
   MateoColorScale,
   MateoColorStep,
