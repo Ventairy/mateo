@@ -12,6 +12,7 @@ export function checkMateoViewTypes() {
       padding={padding}
       header={
         <MateoViewHeader
+          maxWidth={960}
           leading={<button type="button">Back</button>}
           principal={<h1>Messages</h1>}
         />
@@ -46,6 +47,8 @@ export function checkMateoViewTypes() {
   const typo = <MateoViewHeader padding={{ inlineStrat: 12 }} />;
   // @ts-expect-error Arbitrary styles are not header customization points.
   const style = <MateoViewHeader style={{ position: 'fixed' }} />;
+  // @ts-expect-error Header maximum width is expressed in numeric pixels.
+  const cssMaxWidth = <MateoViewHeader maxWidth="960px" />;
   return {
     view,
     missingSurface,
@@ -56,5 +59,6 @@ export function checkMateoViewTypes() {
     cssPadding,
     typo,
     style,
+    cssMaxWidth,
   };
 }

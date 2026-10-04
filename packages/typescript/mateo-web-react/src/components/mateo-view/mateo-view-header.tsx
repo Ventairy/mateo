@@ -15,6 +15,8 @@ export interface MateoViewHeaderProps {
   readonly principal?: ReactNode;
   readonly trailing?: ReactNode;
   readonly padding?: MateoViewPadding;
+  /** Maximum total width in pixels, including padding. Centers the header. */
+  readonly maxWidth?: number;
 }
 
 export function MateoViewHeader({
@@ -22,8 +24,14 @@ export function MateoViewHeader({
   principal,
   trailing,
   padding,
+  maxWidth,
 }: MateoViewHeaderProps) {
   const view = useMateoViewContext();
+  if (maxWidth !== undefined && (!Number.isFinite(maxWidth) || maxWidth < 0)) {
+    throw new TypeError(
+      'MateoViewHeader maxWidth must be finite and nonnegative.',
+    );
+  }
   const resolvedPadding =
     padding === undefined
       ? { ...view.padding, blockEnd: 0 }
@@ -41,6 +49,8 @@ export function MateoViewHeader({
     paddingInlineStart: resolvedPadding.inlineStart,
     paddingInlineEnd: resolvedPadding.inlineEnd,
     ...{
+      '--mateo-header-max-width':
+        maxWidth === undefined ? 'none' : `${maxWidth}px`,
       '--mateo-header-gap': `${mateoViewSpacing.headerSlotGapPx}px`,
       '--mateo-principal-start': `${centered ? sideWidth - start.width : 0}px`,
       '--mateo-principal-end': `${centered ? sideWidth - end.width : 0}px`,
@@ -49,7 +59,7 @@ export function MateoViewHeader({
   return (
     <div
       style={style}
-      className="mateo:box-border mateo:flex mateo:w-full mateo:min-w-[0px] mateo:items-center mateo:justify-between mateo:gap-(--mateo-header-gap) mateo:pointer-events-none mateo:text-[16px] mateo:font-[600]"
+      className="mateo:box-border mateo:flex mateo:w-full mateo:max-w-(--mateo-header-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:items-center mateo:justify-between mateo:gap-(--mateo-header-gap) mateo:pointer-events-none mateo:text-[16px] mateo:font-[600]"
     >
       {hasLeading && (
         <div

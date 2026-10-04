@@ -59,11 +59,13 @@ function MateoViewExample({
   padding,
   surfacePadding,
   headerPadding,
+  headerMaxWidth,
 }: {
   readonly header?: boolean;
   readonly padding?: MateoViewPadding;
   readonly surfacePadding?: MateoViewPadding;
   readonly headerPadding?: MateoViewPadding;
+  readonly headerMaxWidth?: number;
 }) {
   return (
     <MateoTheme data={mateoViewTestTheme}>
@@ -72,6 +74,9 @@ function MateoViewExample({
         header={
           header ? (
             <MateoViewHeader
+              {...(headerMaxWidth === undefined
+                ? {}
+                : { maxWidth: headerMaxWidth })}
               {...(headerPadding === undefined
                 ? {}
                 : { padding: headerPadding })}
@@ -272,3 +277,12 @@ it('should require view ownership when rendering a view surface or header', () =
     'MateoView ancestor',
   );
 });
+
+it.each([-1, NaN, Infinity])(
+  'should reject maximum width %s when rendering a header',
+  (headerMaxWidth) => {
+    expect(() =>
+      render(<MateoViewExample headerMaxWidth={headerMaxWidth} />),
+    ).toThrow('maxWidth must be finite and nonnegative');
+  },
+);
