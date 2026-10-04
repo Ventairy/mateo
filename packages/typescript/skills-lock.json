@@ -7,6 +7,12 @@
       "skillPath": "skills/pnpm/SKILL.md",
       "computedHash": "d1bd6f4fd38ff1ba33b857223c58a832d1cd5b488163ba0d389db449be472603"
     },
+    "tsdoc": {
+      "source": "bm629/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tsdoc/SKILL.md",
+      "computedHash": "306a0bdeb3c56e88b4d397968641d15f2908be17375c5cd7291cf387d40c4375"
+    },
     "typescript-advanced-types": {
       "source": "wshobson/agents",
       "sourceType": "github",

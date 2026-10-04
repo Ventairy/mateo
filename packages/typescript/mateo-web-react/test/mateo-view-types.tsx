@@ -9,6 +9,7 @@ export function checkMateoViewTypes() {
   const padding: MateoViewPadding = { inlineStart: 24, blockEnd: 8 };
   const view = (
     <MateoView
+      maxWidth={1200}
       padding={padding}
       header={
         <MateoViewHeader
@@ -49,6 +50,8 @@ export function checkMateoViewTypes() {
   const style = <MateoViewHeader style={{ position: 'fixed' }} />;
   // @ts-expect-error Header maximum width is expressed in numeric pixels.
   const cssMaxWidth = <MateoViewHeader maxWidth="960px" />;
+  // @ts-expect-error View maximum width is expressed in numeric pixels.
+  const cssViewMaxWidth = <MateoView maxWidth="1200px" surface="Content" />;
   return {
     view,
     missingSurface,
@@ -60,5 +63,6 @@ export function checkMateoViewTypes() {
     typo,
     style,
     cssMaxWidth,
+    cssViewMaxWidth,
   };
 }

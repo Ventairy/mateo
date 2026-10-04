@@ -85,6 +85,20 @@ discover valid options through autocomplete.
   separately installed consumer. Preserve useful inference and autocomplete by
   design; do not add language-service autocomplete tests by default.
 
+## Public API TSDoc
+
+Add rich, consumer-facing TSDoc to everything consumers can access through the
+public package API, including components, hooks, functions, classes, types,
+constants, and their public members and props. Explain purpose, usage, defaults,
+units, supported behavior, constraints, and meaningful edge cases as applicable,
+so consumers understand the API from their editor. Use a brief summary and add
+`@remarks`, `@example`, `@defaultValue`, `@param`, `@returns`, `@throws`, and
+`{@link}` where they help; document intent and behavior rather than repeating
+TypeScript types. Use the `tsdoc` skill when writing or reviewing these comments.
+Private and internal implementation details do not require TSDoc. For generated
+public APIs, maintain documentation in the owning source or generator rather
+than hand-editing generated output.
+
 ## Test Naming
 
 Use `should <expected result> when <condition/action>` for TypeScript test

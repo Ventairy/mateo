@@ -279,6 +279,15 @@ it('should require view ownership when rendering a view surface or header', () =
 });
 
 it.each([-1, NaN, Infinity])(
+  'should reject maximum width %s when rendering a view',
+  (maxWidth) => {
+    expect(() =>
+      render(<MateoView maxWidth={maxWidth} surface="Content" />),
+    ).toThrow('MateoView maxWidth must be finite and nonnegative');
+  },
+);
+
+it.each([-1, NaN, Infinity])(
   'should reject maximum width %s when rendering a header',
   (headerMaxWidth) => {
     expect(() =>
