@@ -93,9 +93,9 @@ describe('Mateo icon button presentation', () => {
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
     expect(button.querySelector('svg[viewBox]')).toHaveAttribute('width', '12');
-    expect(button.querySelector('svg[viewBox]')).toHaveStyle({
-      '--mateo-icon-color': 'red',
-    });
+    expect(button.querySelector('svg[viewBox]')).toHaveStyle(
+      '--mateo-icon-color: red',
+    );
   });
   it('should reject an unnamed action when JavaScript supplies an empty label', () => {
     expect(() =>

@@ -1,0 +1,39 @@
+/* Test canvas only; package styles are consumed unchanged from dist. */
+body {
+  margin: 0;
+}
+.mateo-golden-grid {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 24px;
+  padding: 24px;
+}
+.mateo-golden-case {
+  margin: 0;
+}
+.mateo-golden-group {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: max-content;
+  background: white;
+}
+.mateo-golden-group img {
+  display: block;
+}
+.mateo-golden-case figcaption {
+  font-size: 12px;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+.mateo-golden-canvas {
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 8px;
+}
+.mateo-golden-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}

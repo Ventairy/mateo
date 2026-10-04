@@ -16,7 +16,7 @@ permissions:
 jobs:
   package:
     name: Package checks
-    runs-on: ubuntu-latest
+    runs-on: macos-26
     timeout-minutes: 15
     defaults:
       run:
@@ -36,8 +36,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install golden browser
+        run: pnpm --filter mateo-web-react exec playwright install chromium
+
       - name: Check workspace and package
         run: pnpm check
+
+      - name: Upload golden failure images
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mateo-web-react-golden-failures
+          path: packages/typescript/mateo-web-react/.vitest/
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Require clean tracked files
         run: git diff --exit-code

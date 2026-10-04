@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import type { CSSProperties, ReactNode } from "react";
-import { BaseMateoSurface } from "../../bases/base-mateo-surface/base-mateo-surface.js";
-import type { MateoShape } from "../../foundation/mateo-shape/mateo-shape.js";
-import { useMateoSurfaceBounds } from "../../foundation/use-mateo-surface-bounds.js";
-import { useMateoViewContext } from "./mateo-view-context.js";
+import type { CSSProperties, ReactNode } from 'react';
+import { BaseMateoSurface } from '../../bases/base-mateo-surface/base-mateo-surface.js';
+import type { MateoShape } from '../../foundation/mateo-shape/mateo-shape.js';
+import { useMateoSurfaceBounds } from '../../foundation/use-mateo-surface-bounds.js';
+import { useMateoViewContext } from './mateo-view-context.js';
 import {
   type MateoViewPadding,
   mateoViewSpacing,
   resolveMateoViewPadding,
-} from "./mateo-view-padding.js";
+} from './mateo-view-padding.js';
 
 /** A view-filling background with automatic scrolling and header clearance. */
 export interface MateoViewSurfaceProps {
@@ -28,7 +28,7 @@ export interface MateoViewSurfaceProps {
    *
    * @defaultValue The nearest theme's background color.
    */
-  readonly color?: CSSProperties["backgroundColor"];
+  readonly color?: CSSProperties['backgroundColor'];
   /**
    * Outline shared by the background and content boundary.
    *
@@ -61,7 +61,7 @@ export function MateoViewSurface({
   children,
   padding,
   color,
-  shape = "none",
+  shape = 'none',
 }: MateoViewSurfaceProps) {
   const view = useMateoViewContext();
   const hasHeader = view.header != null && view.header !== false;

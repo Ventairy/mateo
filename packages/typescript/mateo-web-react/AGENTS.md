@@ -90,3 +90,14 @@ styling changes.
 Run `pnpm run check` from this package for formatting, type checks, module tests,
 and build validation. Then run `pnpm run check` from
 `packages/typescript/` for the workspace checks.
+
+## Golden Tests
+
+- Colocate `mateo-*.golden.test.tsx` suites with their components. Use the shared
+  helpers in `test/golden/`, public package exports, and built package CSS. Keep
+  scenario names stable and group related cases into labeled reference images.
+  Capture settled interaction states before releasing input, then compare their
+  combined image. Test canvas styling must not override component CSS.
+- References live in colocated `__screenshots__/` directories and belong in Git.
+  Actual/diff/failure images live under ignored `.vitest/`; CI uploads them on
+  failure. Delete stale reference PNGs when removing or renaming a scenario.
