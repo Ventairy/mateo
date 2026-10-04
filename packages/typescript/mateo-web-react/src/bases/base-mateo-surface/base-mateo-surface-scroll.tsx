@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import {
   getMateoBoundaryDepth,
@@ -7,6 +7,7 @@ import {
 
 export interface BaseMateoSurfaceScrollOptions {
   readonly clearanceBlockStart: number;
+  readonly header?: Readonly<{ content: ReactNode; ref: Ref<HTMLDivElement> }>;
   readonly padding: Readonly<{
     blockStart: number;
     blockEnd: number;
@@ -25,7 +26,7 @@ export function BaseMateoSurfaceScroll({
 }) {
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
-  const { clearanceBlockStart, padding } = options;
+  const { clearanceBlockStart, header, padding } = options;
   useLayoutEffect(() => {
     const node = viewport.current;
     const body = content.current;
@@ -48,7 +49,10 @@ export function BaseMateoSurfaceScroll({
         '--mateo-boundary-mask',
         getMateoBoundaryMask(height, depths.top, depths.bottom),
       );
-      body.style.setProperty('--mateo-scroll-position', `${position}px`);
+      body.style.setProperty(
+        '--mateo-mask-offset',
+        `${position - clearanceBlockStart}px`,
+      );
       body.style.setProperty('--mateo-viewport-height', `${height}px`);
       node.style.scrollPaddingBlockStart = `${depths.clearTop}px`;
       node.style.scrollPaddingBlockEnd = `${depths.clearBottom}px`;
@@ -61,7 +65,10 @@ export function BaseMateoSurfaceScroll({
       passive: true,
     });
     const revealMateoFocusedContent = (event: FocusEvent) => {
-      if (!(event.target instanceof HTMLElement) || event.target === node)
+      if (
+        !(event.target instanceof HTMLElement) ||
+        !body.contains(event.target)
+      )
         return;
       const target = event.target.getBoundingClientRect();
       const bounds = node.getBoundingClientRect();
@@ -82,7 +89,7 @@ export function BaseMateoSurfaceScroll({
   }, [clearanceBlockStart, padding.blockStart]);
 
   const style: CSSProperties = {
-    paddingBlockStart: clearanceBlockStart + padding.blockStart,
+    paddingBlockStart: padding.blockStart,
     paddingBlockEnd: padding.blockEnd,
     paddingInlineStart: padding.inlineStart,
     paddingInlineEnd: padding.inlineEnd,
@@ -92,12 +99,20 @@ export function BaseMateoSurfaceScroll({
       ref={viewport}
       // biome-ignore lint/a11y/noNoninteractiveTabindex: A native scroll viewport must be reachable for keyboard scrolling.
       tabIndex={0}
-      className="mateo:box-border mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden"
+      className="mateo:box-border mateo:flex mateo:flex-col mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden"
     >
+      {header && (
+        <div
+          ref={header.ref}
+          className="mateo:sticky mateo:top-[0px] mateo:z-[1] mateo:shrink-0 mateo:pointer-events-none"
+        >
+          {header.content}
+        </div>
+      )}
       <div
         ref={content}
         style={style}
-        className="mateo:box-border mateo:flex mateo:flex-col mateo:min-h-full mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-scroll-position)] mateo:[mask-repeat:no-repeat]"
+        className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
       >
         {children}
       </div>

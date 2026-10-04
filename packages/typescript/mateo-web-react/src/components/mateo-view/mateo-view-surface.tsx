@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import type { CSSProperties, ReactNode } from 'react';
-import { BaseMateoSurface } from '../../bases/base-mateo-surface/base-mateo-surface.js';
-import type { MateoShape } from '../../foundation/mateo-shape/mateo-shape.js';
-import { useMateoSurfaceBounds } from '../../foundation/use-mateo-surface-bounds.js';
-import { useMateoViewContext } from './mateo-view-context.js';
+import type { CSSProperties, ReactNode } from "react";
+import { BaseMateoSurface } from "../../bases/base-mateo-surface/base-mateo-surface.js";
+import type { MateoShape } from "../../foundation/mateo-shape/mateo-shape.js";
+import { useMateoSurfaceBounds } from "../../foundation/use-mateo-surface-bounds.js";
+import { useMateoViewContext } from "./mateo-view-context.js";
 import {
   type MateoViewPadding,
   mateoViewSpacing,
   resolveMateoViewPadding,
-} from './mateo-view-padding.js';
+} from "./mateo-view-padding.js";
 
 /** A view-filling background with automatic scrolling and header clearance. */
 export interface MateoViewSurfaceProps {
   /**
-   * Scrollable content, initially placed below the measured header.
+   * Scrollable content, placed below the header.
    */
   readonly children: ReactNode;
   /**
@@ -28,7 +28,7 @@ export interface MateoViewSurfaceProps {
    *
    * @defaultValue The nearest theme's background color.
    */
-  readonly color?: CSSProperties['backgroundColor'];
+  readonly color?: CSSProperties["backgroundColor"];
   /**
    * Outline shared by the background and content boundary.
    *
@@ -41,8 +41,8 @@ export interface MateoViewSurfaceProps {
  * Fills its view with a background, scrolling content, and an unmasked header.
  *
  * @remarks
- * Requires MateoView and MateoTheme ancestors. Content starts below the measured
- * header and adjusts when that header wraps or changes height. Explicit padding
+ * Requires MateoView and MateoTheme ancestors. Content starts below the header
+ * and adjusts when that header wraps or changes height. Explicit padding
  * can remove the gap, but never the header clearance. Native vertical scrolling
  * and viewport fades keep the stationary header visible; focused content can
  * scroll into the clear region.
@@ -61,7 +61,7 @@ export function MateoViewSurface({
   children,
   padding,
   color,
-  shape = 'none',
+  shape = "none",
 }: MateoViewSurfaceProps) {
   const view = useMateoViewContext();
   const hasHeader = view.header != null && view.header !== false;
@@ -85,17 +85,11 @@ export function MateoViewSurface({
       scroll={{
         clearanceBlockStart: hasHeader ? header.height : 0,
         padding: resolvedPadding,
+        ...(hasHeader
+          ? { header: { content: view.header, ref: header.ref } }
+          : {}),
       }}
-      overlay={
-        hasHeader ? (
-          <div
-            ref={header.ref}
-            className="mateo:absolute mateo:inset-x-[0px] mateo:top-[0px] mateo:z-[1] mateo:pointer-events-none"
-          >
-            {view.header}
-          </div>
-        ) : null
-      }
+      overlay={null}
     >
       {children}
     </BaseMateoSurface>

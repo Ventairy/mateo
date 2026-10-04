@@ -106,10 +106,10 @@ function getMateoViewContent() {
   return content;
 }
 
-it('should keep content below the measured header when using inherited view spacing', () => {
+it('should keep content separate content spacing from header clearance when using inherited view spacing', () => {
   render(<MateoViewExample />);
   expect(getMateoViewContent()).toHaveStyle({
-    paddingBlockStart: '68px',
+    paddingBlockStart: '20px',
     paddingBlockEnd: '12px',
     paddingInlineStart: '20px',
     paddingInlineEnd: '20px',
@@ -147,7 +147,7 @@ it('should use the top view padding when no header is present', () => {
 it('should retain header clearance when explicit surface padding removes every gap', () => {
   const { rerender } = render(<MateoViewExample surfacePadding={0} />);
   expect(getMateoViewContent()).toHaveStyle({
-    paddingBlockStart: '48px',
+    paddingBlockStart: '0px',
     paddingBlockEnd: '0px',
     paddingInlineStart: '0px',
     paddingInlineEnd: '0px',
@@ -156,7 +156,7 @@ it('should retain header clearance when explicit surface padding removes every g
     <MateoViewExample surfacePadding={{ blockStart: 8, inlineEnd: 6 }} />,
   );
   expect(getMateoViewContent()).toHaveStyle({
-    paddingBlockStart: '56px',
+    paddingBlockStart: '8px',
     paddingBlockEnd: '0px',
     paddingInlineStart: '0px',
     paddingInlineEnd: '6px',
@@ -209,7 +209,12 @@ it('should update header clearance without resetting content state when its meas
   fireEvent.change(input, { target: { value: 'Keep this draft' } });
   mateoHeaderHeight = 92;
   resizeMateoView();
-  expect(input.parentElement).toHaveStyle({ paddingBlockStart: '112px' });
+  expect(input.parentElement).toHaveStyle({ paddingBlockStart: '20px' });
+  expect(
+    Number.parseFloat(
+      input.parentElement?.parentElement?.style.scrollPaddingBlockStart ?? '0',
+    ),
+  ).toBeGreaterThanOrEqual(112);
   expect(input).toHaveValue('Keep this draft');
   unmount();
   expect(mateoResizeCallbacks.size).toBe(0);
@@ -226,9 +231,7 @@ it('should anchor fades to the viewport and keep scrollbars outside the mask whe
   expect(restingMask).toContain('linear-gradient');
   viewport.scrollTop = 100;
   fireEvent.scroll(viewport);
-  expect(content.style.getPropertyValue('--mateo-scroll-position')).toBe(
-    '100px',
-  );
+  expect(content.style.getPropertyValue('--mateo-mask-offset')).toBe('52px');
   expect(content.style.getPropertyValue('--mateo-boundary-mask')).not.toBe(
     restingMask,
   );
@@ -295,3 +298,31 @@ it.each([-1, NaN, Infinity])(
     ).toThrow('maxWidth must be finite and nonnegative');
   },
 );
+
+it('should leave scrolling unchanged when focusing a header control', () => {
+  render(<MateoViewExample />);
+  const viewport = getMateoViewContent().parentElement;
+  if (!viewport) throw new Error('Missing scroll viewport.');
+  viewport.scrollTop = 100;
+  fireEvent.scroll(viewport);
+  fireEvent.focusIn(screen.getByRole('button', { name: 'Back' }));
+  expect(viewport.scrollTop).toBe(100);
+});
+
+it('should stop responding to scroll and focus events when a Strict Mode view unmounts', () => {
+  const { unmount } = render(
+    <StrictMode>
+      <MateoViewExample />
+    </StrictMode>,
+  );
+  const content = getMateoViewContent();
+  const viewport = content.parentElement;
+  if (!viewport) throw new Error('Missing scroll viewport.');
+  const setProperty = vi.spyOn(content.style, 'setProperty');
+  unmount();
+  viewport.scrollTop = 100;
+  fireEvent.scroll(viewport);
+  fireEvent.focusIn(content);
+  expect(setProperty).not.toHaveBeenCalled();
+  expect(mateoResizeCallbacks.size).toBe(0);
+});
