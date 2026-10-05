@@ -261,7 +261,7 @@ it('should preserve header clearance and bounded content when composing view lay
       const heading = header.getBoundingClientRect();
       const bounds = viewport.getBoundingClientRect();
       expect(heading.left + heading.width / 2).toBeCloseTo(
-        bounds.left + bounds.width / 2,
+        bounds.left + viewport.clientWidth / 2,
         0,
       );
     }
@@ -454,16 +454,17 @@ it('should preserve scrolling and draft state when changing or removing the cont
   ]);
   await settleMateoGolden();
   await page.getByRole('textbox', { name: 'Draft' }).fill('Preserved draft');
-  for (const width of [480, 360, 656]) {
+  for (const cap of [480, 360, undefined]) {
     const { content, viewport, headerBox } =
       getMateoGoldenViewGeometry('changing-cap');
+    const width = Math.min(cap ?? viewport.clientWidth, viewport.clientWidth);
     expect(content.getBoundingClientRect().width).toBe(width);
     expect(headerBox?.getBoundingClientRect().width).toBe(width);
     expect(viewport.getBoundingClientRect().width).toBe(656);
     viewport.scrollTop = 120;
     await settleMateoGolden();
     const headerTop = headerBox?.getBoundingClientRect().top;
-    if (width !== 656) {
+    if (cap !== undefined) {
       // Dispatch the cap change without the browser automation's scroll-into-view.
       const changeWidth = page
         .getByRole('button', { name: 'Change width' })

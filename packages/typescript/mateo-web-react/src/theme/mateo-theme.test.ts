@@ -32,7 +32,7 @@ describe('light theme', () => {
   });
 });
 
-it('should provide inherited typography and selection colors when applying a theme', () => {
+it('should provide inherited typography, selection, and scrollbar colors when applying a theme', () => {
   const theme = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFF' });
   const style = getMateoThemeStyle(theme);
   expect(Object.isFrozen(style)).toBe(true);
@@ -41,6 +41,10 @@ it('should provide inherited typography and selection colors when applying a the
     letterSpacing: '-0.2px',
     '--mateo-font-family': 'Inter, sans-serif',
     '--mateo-letter-spacing': '-0.2px',
+    '--mateo-scrollbar-size': '12px',
+    '--mateo-scrollbar-inset': '2px',
+    '--mateo-scrollbar-thumb': theme.colorScheme.scrollbar.thumb,
+    '--mateo-scrollbar-thumb-hover': theme.colorScheme.scrollbar.thumbHover,
     '--mateo-selection-background': theme.colorScheme.selection.background,
     '--mateo-selection-foreground': theme.colorScheme.selection.foreground,
   });

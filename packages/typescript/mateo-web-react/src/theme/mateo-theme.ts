@@ -1,12 +1,13 @@
-import type { CSSProperties } from 'react';
-import { mateoTypography } from '../foundation/mateo-typography/mateo-typography.js';
-import { MateoColorScheme } from './mateo-color-scheme/mateo-color-scheme.js';
+import type { CSSProperties } from "react";
+import { mateoTypography } from "../foundation/mateo-typography/mateo-typography.js";
+import { MateoColorScheme } from "./mateo-color-scheme/mateo-color-scheme.js";
 import {
   createMateoPalette,
   type MateoPalette,
-} from './mateo-palette/mateo-palette.js';
+} from "./mateo-palette/mateo-palette.js";
+import { mateoScrollbarDimensions } from "./mateo-scrollbar.js";
 
-export { MateoColorScheme } from './mateo-color-scheme/mateo-color-scheme.js';
+export { MateoColorScheme } from "./mateo-color-scheme/mateo-color-scheme.js";
 
 /**
  * A complete light theme shared by Mateo components.
@@ -19,7 +20,7 @@ export interface MateoThemeData {
   /**
    * Supported appearance. Mateo currently provides light appearance only.
    */
-  readonly appearance: 'light';
+  readonly appearance: "light";
   /**
    * Primitive scales for custom compositions. Prefer semantic roles for component colors.
    */
@@ -66,12 +67,12 @@ export interface MateoThemeOptions {
  * ```
  */
 export function createMateoTheme(options: MateoThemeOptions): MateoThemeData {
-  if (typeof options?.accentColor !== 'string') {
-    throw new TypeError('createMateoTheme requires accentColor and onAccent.');
+  if (typeof options?.accentColor !== "string") {
+    throw new TypeError("createMateoTheme requires accentColor and onAccent.");
   }
   const palette = createMateoPalette({ accentColor: options.accentColor });
   return Object.freeze({
-    appearance: 'light',
+    appearance: "light",
     palette,
     colorScheme: MateoColorScheme.light({
       palette,
@@ -81,40 +82,48 @@ export function createMateoTheme(options: MateoThemeOptions): MateoThemeData {
 }
 
 /**
- * Typography and selection CSS variables for an app-owned theme element.
+ * Typography, selection, and scrollbar CSS variables for an app-owned theme element.
  *
  * @remarks
  * Apply the complete object returned by {@link getMateoThemeStyle} to an element
  * that contains your interface. Font size and weight remain content-owned.
  */
 export type MateoThemeStyle = Readonly<
-  Pick<CSSProperties, 'fontFamily' | 'letterSpacing'> & {
+  Pick<CSSProperties, "fontFamily" | "letterSpacing"> & {
     /**
      * Font-family variable shared by Mateo typography.
      */
-    '--mateo-font-family': string;
+    "--mateo-font-family": string;
     /**
      * Letter-spacing variable shared by Mateo typography.
      */
-    '--mateo-letter-spacing': string;
+    "--mateo-letter-spacing": string;
+    /** Scrollbar thumb color inherited by scrollable elements. */
+    "--mateo-scrollbar-thumb": string;
+    /** Scrollbar size, including transparent thumb spacing, in CSS pixels. */
+    "--mateo-scrollbar-size": string;
+    /** Transparent spacing around a scrollbar thumb, in CSS pixels. */
+    "--mateo-scrollbar-inset": string;
+    /** Hovered scrollbar thumb color where the browser supports it. */
+    "--mateo-scrollbar-thumb-hover": string;
     /** Text-selection background inherited by all text within this element. */
-    '--mateo-selection-background': string;
+    "--mateo-selection-background": string;
     /** Dark accent foreground inherited by selected text within this element. */
-    '--mateo-selection-foreground': string;
+    "--mateo-selection-foreground": string;
   }
 >;
 
 /**
- * Returns typography and text-selection styles for an existing root or nested element.
+ * Returns typography, text-selection, and scrollbar styles for an existing root or nested element.
  *
  * @remarks
  * Import `mateo-web-react/styles.css` once to load package styles and bundled Inter
  * fonts. Selected text uses a dark accent foreground over a opaque pale accent highlight.
  * Nested styled roots use their own theme; apply this object to portal roots too.
- * Forced-colors mode retains native selection colors. Typography is inherited
+ * Forced-colors mode retains native colors. Typography is inherited
  * without choosing text sizes or adding a DOM wrapper.
  *
- * @param theme - Theme supplying selection colors; typography is shared by all themes.
+ * @param theme - Theme supplying selection and scrollbar colors; typography is shared by all themes.
  * @returns An immutable object suitable for a React element's `style` prop.
  *
  * @example
@@ -124,10 +133,14 @@ export type MateoThemeStyle = Readonly<
  */
 export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
   return Object.freeze({
-    '--mateo-selection-background': theme.colorScheme.selection.background,
-    '--mateo-selection-foreground': theme.colorScheme.selection.foreground,
-    '--mateo-font-family': mateoTypography.fontFamily,
-    '--mateo-letter-spacing': mateoTypography.letterSpacing,
+    "--mateo-scrollbar-size": `${mateoScrollbarDimensions.sizePx}px`,
+    "--mateo-scrollbar-inset": `${mateoScrollbarDimensions.insetPx}px`,
+    "--mateo-scrollbar-thumb": theme.colorScheme.scrollbar.thumb,
+    "--mateo-scrollbar-thumb-hover": theme.colorScheme.scrollbar.thumbHover,
+    "--mateo-selection-background": theme.colorScheme.selection.background,
+    "--mateo-selection-foreground": theme.colorScheme.selection.foreground,
+    "--mateo-font-family": mateoTypography.fontFamily,
+    "--mateo-letter-spacing": mateoTypography.letterSpacing,
     fontFamily: mateoTypography.fontFamily,
     letterSpacing: mateoTypography.letterSpacing,
   });

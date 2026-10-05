@@ -44,3 +44,65 @@
     }
   }
 }
+
+@layer mateo-theme {
+  @media (forced-colors: none) {
+    /* The theme style marks roots; descendants inherit their nearest root's colors. */
+    :where(
+        [style*="--mateo-scrollbar-thumb"],
+        [style*="--mateo-scrollbar-thumb"] *
+      ) {
+      scrollbar-color: var(--mateo-scrollbar-thumb) transparent;
+      scrollbar-width: thin;
+    }
+
+    @supports selector(::-webkit-scrollbar-thumb) {
+      /* Standard colors override thumb pseudo-elements, including their hover state. */
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        ) {
+        scrollbar-color: auto;
+        scrollbar-width: auto;
+      }
+
+      /* Keep a slim thumb inside a larger transparent draggable area. */
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        )::-webkit-scrollbar {
+        width: var(--mateo-scrollbar-size);
+        height: var(--mateo-scrollbar-size);
+        background-color: transparent;
+      }
+
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        )::-webkit-scrollbar-thumb {
+        border: var(--mateo-scrollbar-inset) solid transparent;
+        border-radius: calc(var(--mateo-scrollbar-size) / 2);
+        background-clip: padding-box;
+        background-color: var(--mateo-scrollbar-thumb);
+      }
+
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        )::-webkit-scrollbar-thumb:hover {
+        background-color: var(--mateo-scrollbar-thumb-hover);
+      }
+
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        )::-webkit-scrollbar-track,
+      :where(
+          [style*="--mateo-scrollbar-thumb"],
+          [style*="--mateo-scrollbar-thumb"] *
+        )::-webkit-scrollbar-corner {
+        background-color: transparent;
+      }
+    }
+  }
+}

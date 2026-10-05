@@ -24,6 +24,26 @@ export const mateoGoldenCommands = {
       return image.toString('base64');
     },
   ),
+  mateoScrollbarHover: defineBrowserCommand(
+    async (
+      { page, iframe },
+      testId: string,
+      axis: 'vertical' | 'horizontal',
+    ) => {
+      const bounds = await iframe.getByTestId(testId).boundingBox();
+      if (!bounds) throw new Error(`Missing scrollbar target: ${testId}`);
+      await page.mouse.move(
+        axis === 'vertical' ? bounds.x + bounds.width - 6 : bounds.x + 30,
+        axis === 'vertical' ? bounds.y + 30 : bounds.y + bounds.height - 6,
+      );
+    },
+  ),
+  mateoScrollKeyboard: defineBrowserCommand(
+    async ({ page, iframe }, testId: string) => {
+      await iframe.getByTestId(testId).focus();
+      await page.keyboard.press('ArrowDown');
+    },
+  ),
   mateoPointerDown: defineBrowserCommand(
     async ({ page, iframe }, testId: string) => {
       const bounds = await iframe.getByTestId(testId).boundingBox();
@@ -56,6 +76,11 @@ declare module 'vitest/browser' {
   interface BrowserCommands {
     mateoGroupViewport(width: number, height: number): Promise<void>;
     mateoCaptureScenario(testId: string): Promise<string>;
+    mateoScrollbarHover(
+      testId: string,
+      axis: 'vertical' | 'horizontal',
+    ): Promise<void>;
+    mateoScrollKeyboard(testId: string): Promise<void>;
     mateoPointerDown(testId: string): Promise<void>;
     mateoResetInput(): Promise<void>;
     mateoReducedMotion(): Promise<void>;

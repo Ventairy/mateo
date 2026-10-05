@@ -2,6 +2,7 @@ import { parseMateoColor } from '../mateo-palette/mateo-color-utils.js';
 import type { MateoPalette } from '../mateo-palette/mateo-palette.js';
 import type { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
 import { createMateoLightColorSchemeRoles } from './mateo-light-color-scheme.js';
+import type { MateoScrollbarColorScheme } from './mateo-scrollbar-color-scheme.js';
 import type { MateoSelectionColorScheme } from './mateo-selection-color-scheme.js';
 import type { MateoTextColorScheme } from './mateo-text-color-scheme.js';
 
@@ -19,6 +20,8 @@ export class MateoColorScheme {
    * Caller-selected foreground for content on the accent.
    */
   readonly onAccent: string;
+  /** Colors for native scrollbar thumbs. */
+  readonly scrollbar: MateoScrollbarColorScheme;
   /** Colors for selected text. */
   readonly selection: MateoSelectionColorScheme;
   /**
@@ -55,13 +58,20 @@ export class MateoColorScheme {
   private constructor(
     colors: Pick<
       MateoColorScheme,
-      'background' | 'accent' | 'onAccent' | 'selection' | 'buttons' | 'text'
+      | 'background'
+      | 'accent'
+      | 'onAccent'
+      | 'selection'
+      | 'scrollbar'
+      | 'buttons'
+      | 'text'
     >,
   ) {
     this.background = colors.background;
     this.accent = colors.accent;
     this.onAccent = colors.onAccent;
     this.selection = colors.selection;
+    this.scrollbar = colors.scrollbar;
     this.buttons = colors.buttons;
     this.text = colors.text;
     Object.freeze(this);

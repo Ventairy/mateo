@@ -49,6 +49,8 @@ export default defineConfig({
             enabled: true,
             headless: true,
             provider: playwright({
+              // Native scrollbars must remain visible in appearance references.
+              launchOptions: { ignoreDefaultArgs: ['--hide-scrollbars'] },
               contextOptions: {
                 deviceScaleFactor: 1,
                 locale: 'en-US',

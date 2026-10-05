@@ -2,6 +2,7 @@ import {
   createMateoPalette,
   type MateoButtonColorScheme,
   MateoColorScheme,
+  MateoScrollbarColorScheme,
   MateoSelectionColorScheme,
   MateoTextColorScheme,
 } from '../src/mateo.js';
@@ -54,3 +55,21 @@ mateoLightScheme.selection = mateoSelectionColors;
 new MateoSelectionColorScheme({ background: '#FFFFFF' });
 // @ts-expect-error Selection foregrounds belong to the selection group.
 mateoLightScheme.onSelection;
+
+const mateoScrollbarColors: MateoScrollbarColorScheme =
+  mateoLightScheme.scrollbar;
+const mateoScrollbarThumb: string = mateoScrollbarColors.thumb;
+const mateoScrollbarHover: string = mateoScrollbarColors.thumbHover;
+void mateoScrollbarThumb;
+void mateoScrollbarHover;
+new MateoScrollbarColorScheme(mateoScrollbarColors);
+// @ts-expect-error Scrollbar thumbs are immutable.
+mateoScrollbarColors.thumb = '#000';
+// @ts-expect-error Hovered scrollbar thumbs are immutable.
+mateoScrollbarColors.thumbHover = '#000';
+// @ts-expect-error The scrollbar group is immutable.
+mateoLightScheme.scrollbar = mateoScrollbarColors;
+// @ts-expect-error Both scrollbar colors are required.
+new MateoScrollbarColorScheme({ thumb: '#DDD' });
+// @ts-expect-error Tracks are transparent, without a configurable color role.
+mateoScrollbarColors.track;

@@ -4,6 +4,7 @@ export { MateoButtonColorScheme } from './theme/mateo-color-scheme/mateo-button-
 export { MateoButtonsColorScheme } from './theme/mateo-color-scheme/mateo-buttons-color-scheme.js';
 export { MateoColorScheme } from './theme/mateo-color-scheme/mateo-color-scheme.js';
 export { MateoPrimaryButtonColorScheme } from './theme/mateo-color-scheme/mateo-primary-button-color-scheme.js';
+export { MateoScrollbarColorScheme } from './theme/mateo-color-scheme/mateo-scrollbar-color-scheme.js';
 export { MateoSecondaryButtonColorScheme } from './theme/mateo-color-scheme/mateo-secondary-button-color-scheme.js';
 export { MateoSelectionColorScheme } from './theme/mateo-color-scheme/mateo-selection-color-scheme.js';
 export { MateoTextColorScheme } from './theme/mateo-color-scheme/mateo-text-color-scheme.js';
