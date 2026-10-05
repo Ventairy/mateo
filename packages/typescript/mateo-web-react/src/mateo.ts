@@ -1,3 +1,9 @@
+export type {
+  MateoRoundedShapeEndpoint,
+  MateoRoundedShapeFrame,
+  MateoRoundedShapeLerpOptions,
+} from './foundation/mateo-shape/mateo-rounded-shape-interpolation.js';
+export { lerpMateoRoundedShape } from './foundation/mateo-shape/mateo-rounded-shape-interpolation.js';
 export type { MateoShape } from './foundation/mateo-shape/mateo-shape.js';
 export { mateoTypography } from './foundation/mateo-typography/mateo-typography.js';
 export { MateoButtonColorScheme } from './theme/mateo-color-scheme/mateo-button-color-scheme.js';

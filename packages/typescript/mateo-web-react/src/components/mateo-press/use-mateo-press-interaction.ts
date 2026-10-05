@@ -109,6 +109,22 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
     event.currentTarget.focus({ preventScroll: true });
   }
 
+  function _preserveMateoNativePressFocus(
+    event: MouseEvent<MateoPressElement>,
+  ) {
+    // Pointer down already focused this action without scrolling. WebKit's
+    // native mousedown default can otherwise blur a button into its focusable
+    // ancestor, cancelling the press before its click arrives.
+    if (
+      native &&
+      enabled &&
+      event.button === 0 &&
+      event.currentTarget.ownerDocument.activeElement === event.currentTarget
+    ) {
+      event.preventDefault();
+    }
+  }
+
   function enterMateoPress(event: PointerEvent<MateoPressElement>) {
     if (!enabled) return;
     setHovered(event.pointerType === 'mouse');
@@ -205,6 +221,7 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
     handlers: {
       onClick: activateMateoPress,
       onPointerDown: startMateoPress,
+      onMouseDown: _preserveMateoNativePressFocus,
       onPointerEnter: enterMateoPress,
       onPointerLeave: leaveMateoPress,
       onPointerUp: releaseMateoPress,

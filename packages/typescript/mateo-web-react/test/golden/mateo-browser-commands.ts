@@ -55,6 +55,54 @@ export const mateoGoldenCommands = {
       await page.mouse.down();
     },
   ),
+  mateoFocusKey: defineBrowserCommand(
+    async ({ page }, key: 'Tab' | 'Shift+Tab') => {
+      await page.keyboard.press(key);
+    },
+  ),
+  mateoTouchTap: defineBrowserCommand(
+    async ({ page, iframe }, testId: string) => {
+      const bounds = await iframe.getByTestId(testId).boundingBox();
+      if (!bounds) throw new Error(`Missing touch target: ${testId}`);
+      await page.touchscreen.tap(
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+      );
+    },
+  ),
+  mateoPenClick: defineBrowserCommand(
+    async ({ page, iframe }, testId: string) => {
+      const bounds = await iframe.getByTestId(testId).boundingBox();
+      if (!bounds) throw new Error(`Missing pen target: ${testId}`);
+      const session = await page.context().newCDPSession(page);
+      const point = {
+        x: bounds.x + bounds.width / 2,
+        y: bounds.y + bounds.height / 2,
+        pointerType: 'pen' as const,
+      };
+      try {
+        await session.send('Input.dispatchMouseEvent', {
+          ...point,
+          type: 'mousePressed',
+          button: 'left',
+          buttons: 1,
+          clickCount: 1,
+        });
+        await session.send('Input.dispatchMouseEvent', {
+          ...point,
+          type: 'mouseReleased',
+          button: 'left',
+          buttons: 0,
+          clickCount: 1,
+        });
+      } finally {
+        await session.detach();
+      }
+    },
+  ),
+  mateoPointerUp: defineBrowserCommand(async ({ page }) => {
+    await page.mouse.up();
+  }),
   mateoResetInput: defineBrowserCommand(async ({ page }) => {
     await page.mouse.up();
     await page.keyboard.up('Space');
@@ -82,6 +130,10 @@ declare module 'vitest/browser' {
     ): Promise<void>;
     mateoScrollKeyboard(testId: string): Promise<void>;
     mateoPointerDown(testId: string): Promise<void>;
+    mateoFocusKey(key: 'Tab' | 'Shift+Tab'): Promise<void>;
+    mateoTouchTap(testId: string): Promise<void>;
+    mateoPenClick(testId: string): Promise<void>;
+    mateoPointerUp(): Promise<void>;
     mateoResetInput(): Promise<void>;
     mateoReducedMotion(): Promise<void>;
     mateoForcedColors(active: boolean): Promise<void>;

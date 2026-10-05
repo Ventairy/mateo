@@ -101,3 +101,13 @@ and build validation. Then run `pnpm run check` from
 - References live in colocated `__screenshots__/` directories and belong in Git.
   Actual/diff/failure images live under ignored `.vitest/`; CI uploads them on
   failure. Delete stale reference PNGs when removing or renaming a scenario.
+
+## Browser Behavior Tests
+
+Colocate `mateo-*.browser.test.tsx` tests for native event ordering and geometry
+that jsdom cannot reproduce. These reuse the browser helpers and built package
+CSS without adding appearance references. Run `pnpm run build` followed by
+`pnpm run test:browser:run`; package and workspace `check` include this suite.
+Use `MATEO_BEHAVIOR_BROWSER=firefox pnpm run test:browser:run` or
+`MATEO_BEHAVIOR_BROWSER=webkit pnpm run test:browser:run` for other installed
+Playwright engines. Chromium remains the default and the sole golden engine.

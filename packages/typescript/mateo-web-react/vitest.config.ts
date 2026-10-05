@@ -5,6 +5,10 @@ import { defineConfig } from 'vitest/config';
 import { createMateoIconSvgPlugin } from './scripts/mateo-icon-svg-plugin.js';
 import { mateoGoldenCommands } from './test/golden/mateo-browser-commands.js';
 
+const mateoBehaviorBrowser = process.env.MATEO_BEHAVIOR_BROWSER;
+
+const mateoBrowserPattern = 'src/**/*.browser.test.tsx';
+
 const mateoGoldenPattern = 'src/**/*.golden.test.tsx';
 
 export default defineConfig({
@@ -32,9 +36,34 @@ export default defineConfig({
           environment: 'jsdom',
           setupFiles: ['test/mateo-setup.ts'],
           include: ['src/**/*.test.{ts,tsx}', 'test/**/*.test.{ts,tsx}'],
-          exclude: [mateoGoldenPattern],
+          exclude: [mateoGoldenPattern, mateoBrowserPattern],
           clearMocks: true,
           restoreMocks: true,
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'browser',
+          include: [mateoBrowserPattern],
+          setupFiles: ['test/golden/mateo-golden-setup.ts'],
+          testTimeout: 30_000,
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({ contextOptions: { hasTouch: true } }),
+            instances: [
+              {
+                browser:
+                  mateoBehaviorBrowser === 'firefox' ||
+                  mateoBehaviorBrowser === 'webkit'
+                    ? mateoBehaviorBrowser
+                    : 'chromium',
+                viewport: { width: 1280, height: 900 },
+              },
+            ],
+            commands: mateoGoldenCommands,
+          },
         },
       },
       {
@@ -60,7 +89,10 @@ export default defineConfig({
               },
             }),
             instances: [
-              { browser: 'chromium', viewport: { width: 1280, height: 900 } },
+              {
+                browser: 'chromium',
+                viewport: { width: 1280, height: 900 },
+              },
             ],
             commands: mateoGoldenCommands,
             expect: {

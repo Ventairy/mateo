@@ -64,12 +64,58 @@ export function BaseMateoSurfaceScroll({
     node.addEventListener('scroll', updateMateoScrollBoundary, {
       passive: true,
     });
+    // Keep intent local to this viewport. The event path also covers presses on
+    // noninteractive children of a control, without treating sibling focus (for
+    // example a validation error) as pointer focus.
+    let mateoPointerPath: readonly EventTarget[] = [];
+    const _clearMateoPointerFocus = () => {
+      mateoPointerPath = [];
+    };
+    const _captureMateoPointerFocus = (event: MouseEvent) => {
+      mateoPointerPath =
+        event.button === 0 &&
+        !(event instanceof PointerEvent && !event.isPrimary) &&
+        event.target instanceof Node &&
+        body.contains(event.target)
+          ? event.composedPath()
+          : [];
+    };
+    const ownerDocument = node.ownerDocument;
+    const ownerWindow = ownerDocument.defaultView;
+    const pointerListeners = new AbortController();
+    const capture = { capture: true, signal: pointerListeners.signal };
+    ownerDocument.addEventListener(
+      'pointerdown',
+      _captureMateoPointerFocus,
+      capture,
+    );
+    // Touch can focus through compatibility mousedown after pointerup. Capture
+    // that new focus opportunity instead of retaining a completed touch contact.
+    ownerDocument.addEventListener(
+      'mousedown',
+      _captureMateoPointerFocus,
+      capture,
+    );
+    for (const type of [
+      'pointerup',
+      'pointercancel',
+      'mouseup',
+      'click',
+      'keydown',
+      'dragstart',
+    ]) {
+      ownerDocument.addEventListener(type, _clearMateoPointerFocus, capture);
+    }
+    ownerWindow?.addEventListener('blur', _clearMateoPointerFocus, capture);
     const revealMateoFocusedContent = (event: FocusEvent) => {
       if (
         !(event.target instanceof HTMLElement) ||
         !body.contains(event.target)
       )
         return;
+      const pointerFocused = mateoPointerPath.includes(event.target);
+      _clearMateoPointerFocus();
+      if (pointerFocused) return;
       const target = event.target.getBoundingClientRect();
       const bounds = node.getBoundingClientRect();
       const top =
@@ -82,6 +128,7 @@ export function BaseMateoSurfaceScroll({
     };
     node.addEventListener('focusin', revealMateoFocusedContent);
     return () => {
+      pointerListeners.abort();
       observer.disconnect();
       node.removeEventListener('scroll', updateMateoScrollBoundary);
       node.removeEventListener('focusin', revealMateoFocusedContent);

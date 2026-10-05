@@ -1,3 +1,7 @@
+import {
+  lerpMateoRoundedShape,
+  type MateoRoundedShapeEndpoint,
+} from 'mateo-web-react';
 import { type MateoShape, MateoSurface } from 'mateo-web-react/react';
 import { expect, it } from 'vitest';
 import {
@@ -165,4 +169,55 @@ it('should adapt its clipping outline when its parent changes dimensions', async
     createMateoResizeScenario(112, 176),
     'surface-resize',
   );
+});
+
+it('should preserve Mateo outlines and clipping when rendering interpolated rounded shape frames', async () => {
+  const movements = [
+    {
+      name: 'pill orientation',
+      begin: { width: 200, height: 56, shape: 'capsule' },
+      end: { width: 56, height: 200, shape: 'capsule' },
+      progress: [0, 0.5, 1],
+    },
+    {
+      name: 'rounding loss',
+      begin: { width: 96, height: 96, shape: { type: 'rounded', radius: 999 } },
+      end: { width: 96, height: 96, shape: 'none' },
+      progress: [0, 0.5, 1],
+    },
+    {
+      name: 'size overshoot',
+      begin: { width: 100, height: 100, shape: 'none' },
+      end: { width: 200, height: 200, shape: { type: 'rounded', radius: 20 } },
+      progress: [0, 1, 1.5],
+    },
+  ] as const satisfies readonly {
+    name: string;
+    begin: MateoRoundedShapeEndpoint;
+    end: MateoRoundedShapeEndpoint;
+    progress: readonly number[];
+  }[];
+  const scenarios = movements.flatMap(({ name, begin, end, progress }) =>
+    progress.map((value) => {
+      const frame = lerpMateoRoundedShape({ begin, end, progress: value });
+      return {
+        name: `${name} — ${value}`,
+        content: (
+          <MateoSurface {...frame} color={mateoGoldenTheme.colorScheme.accent}>
+            <div
+              style={{
+                width: frame.width + 40,
+                height: frame.height / 2,
+                background:
+                  mateoGoldenTheme.colorScheme.buttons.secondary.neutral
+                    .background,
+              }}
+            />
+          </MateoSurface>
+        ),
+      };
+    }),
+  );
+  await renderMateoGoldens(scenarios);
+  await captureMateoGoldens(scenarios, 'surface-rounded-interpolation');
 });

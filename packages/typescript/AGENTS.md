@@ -44,6 +44,11 @@ already provides that context.
   import paths stable when renaming source files.
 - Keep third-party API and asset names unchanged; Mateo-owned aliases follow
   this rule.
+- Always prefix private functions and methods with `_`, such as
+  `_getMateoShapeRadius` or `private _resolveBounds()`. This includes named
+  functions and function-valued variables intended for use only within their
+  file, even when they have no explicit `private` modifier. Keep the Mateo
+  naming rules above after the underscore.
 
 ## Related values
 

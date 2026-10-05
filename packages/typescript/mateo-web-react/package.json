@@ -39,11 +39,12 @@
     "format:check": "biome format .",
     "test": "vitest run --project unit",
     "test:watch": "vitest --project unit",
-    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run test:golden:run",
+    "check": "biome ci . --error-on-warnings && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run test:golden:run && pnpm run test:browser:run",
     "fix": "biome check --write .",
     "test:golden": "pnpm run build && pnpm run test:golden:run",
     "test:golden:run": "vitest run --project golden",
-    "test:golden:update": "pnpm run build && vitest run --project golden --update"
+    "test:golden:update": "pnpm run build && vitest run --project golden --update",
+    "test:browser:run": "vitest run --project browser"
   },
   "peerDependencies": {
     "react": "^19.0.0",
