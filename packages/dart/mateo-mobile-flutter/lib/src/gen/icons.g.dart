@@ -307,6 +307,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.questionmark(<params>);
 /// ```
 /// ```dart
+/// $Icons.raisedHand(<params>);
+/// ```
+/// ```dart
 /// $Icons.rectangleStack(<params>);
 /// ```
 /// ```dart
@@ -1470,6 +1473,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `RaisedHand` widget from `raisedHand.svg`.
+  static Widget raisedHand({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _RaisedHand(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `RectangleStack` widget from `rectangleStack.svg`.
   static Widget rectangleStack({
     Key? key,
@@ -1958,6 +1976,7 @@ abstract final class $Icons {
       height: height,
     ),
     'questionmark.svg' => questionmark(key: key, width: width, height: height),
+    'raised-hand.svg' => raisedHand(key: key, width: width, height: height),
     'rectangle-stack.svg' => rectangleStack(
       key: key,
       width: width,
@@ -5290,8 +5309,7 @@ class _Circle extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _CirclePainter(
-            mateoOpticalSizeColor:
-                mateoOpticalSizeColor ?? const Color(0xff000000),
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
           ),
           size: Size(width, height),
         ),
@@ -8486,8 +8504,7 @@ class _FigureCropCircle extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _FigureCropCirclePainter(
-            mateoOpticalSizeColor:
-                mateoOpticalSizeColor ?? const Color(0xff000000),
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
           ),
           size: Size(width, height),
         ),
@@ -11531,8 +11548,7 @@ class _Logout extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _LogoutPainter(
-            mateoOpticalSizeColor:
-                mateoOpticalSizeColor ?? const Color(0xff000000),
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
           ),
           size: Size(width, height),
         ),
@@ -14759,6 +14775,196 @@ class _QuestionmarkPainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/raised-hand.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _RaisedHand extends StatelessWidget with _DotdartSvgSizing {
+  const _RaisedHand({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _RaisedHand._svgWidth;
+
+  @override
+  double get svgNativeHeight => _RaisedHand._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _RaisedHand._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _RaisedHand._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _RaisedHandPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _RaisedHandPainter extends CustomPainter {
+  _RaisedHandPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.793124396,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.793124396,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.068756038,
+    2.068756038,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(10.0108, 0.009)
+    ..cubicTo(10.5938, -0.0635, 11.2421, 0.3116, 11.4824, 0.8458)
+    ..cubicTo(11.6542, 1.2275, 11.6202, 1.6491, 11.6205, 2.0581)
+    ..lineTo(11.6191, 3.4507)
+    ..lineTo(11.6198, 7.4237)
+    ..lineTo(11.6196, 8.6693)
+    ..cubicTo(11.6196, 8.87, 11.6173, 9.0768, 11.623, 9.2776)
+    ..cubicTo(11.6245, 9.3306, 11.6604, 9.3974, 11.6957, 9.4371)
+    ..cubicTo(11.7575, 9.5056, 11.8439, 9.5467, 11.936, 9.5515)
+    ..cubicTo(12.0251, 9.5556, 12.1118, 9.5221, 12.1751, 9.459)
+    ..cubicTo(12.3232, 9.309, 12.2735, 8.753, 12.2724, 8.5374)
+    ..lineTo(12.2715, 7.3266)
+    ..lineTo(12.2716, 3.1784)
+    ..cubicTo(12.273, 2.6897, 12.3344, 2.3226, 12.7036, 1.9603)
+    ..cubicTo(12.9666, 1.7012, 13.3226, 1.5582, 13.6918, 1.5634)
+    ..cubicTo(14.0932, 1.5709, 14.4392, 1.7335, 14.7166, 2.0206)
+    ..cubicTo(15.1293, 2.4479, 15.0872, 2.9461, 15.087, 3.4932)
+    ..lineTo(15.0867, 4.6247)
+    ..cubicTo(15.0818, 5.693, 15.0987, 6.7755, 15.0835, 7.8413)
+    ..cubicTo(14.8083, 8.0824, 14.5364, 8.3122, 14.2878, 8.5823)
+    ..cubicTo(13.7447, 9.1681, 13.3924, 9.9051, 13.2776, 10.6955)
+    ..cubicTo(13.2473, 10.9071, 13.2305, 11.1144, 13.2404, 11.3279)
+    ..cubicTo(13.2458, 11.445, 13.2378, 11.6389, 13.138, 11.7205)
+    ..cubicTo(12.9665, 11.8606, 12.7287, 11.9338, 12.5393, 12.0522)
+    ..cubicTo(11.4362, 12.6985, 10.4717, 13.7855, 10.3044, 15.091)
+    ..cubicTo(10.2847, 15.2453, 10.2776, 15.4116, 10.3837, 15.5406)
+    ..cubicTo(10.4472, 15.6176, 10.5402, 15.6643, 10.6398, 15.6697)
+    ..cubicTo(10.7794, 15.6763, 10.911, 15.6043, 10.9809, 15.4834)
+    ..cubicTo(11.0504, 15.361, 11.0619, 15.0447, 11.1009, 14.8913)
+    ..cubicTo(11.3632, 13.8489, 12.1933, 13.0104, 13.1317, 12.5338)
+    ..cubicTo(13.5888, 12.3017, 14.0161, 12.2043, 13.9865, 11.5843)
+    ..cubicTo(13.979, 11.4242, 13.9899, 11.1797, 14.0001, 11.0164)
+    ..cubicTo(14.0649, 10.0871, 14.4981, 9.2224, 15.2036, 8.6141)
+    ..cubicTo(15.6819, 8.1949, 16.385, 7.8286, 17.032, 7.8383)
+    ..cubicTo(17.3802, 7.853, 17.7452, 8.1087, 17.7714, 8.474)
+    ..cubicTo(17.7979, 8.8432, 17.7827, 9.2276, 17.7817, 9.5958)
+    ..lineTo(17.7712, 10.7806)
+    ..cubicTo(17.7682, 11.1937, 17.7737, 11.5661, 17.7316, 11.978)
+    ..cubicTo(17.4893, 14.3434, 16.6123, 16.6595, 14.733, 18.1995)
+    ..cubicTo(13.5506, 19.1856, 12.1015, 19.7971, 10.5702, 19.9564)
+    ..cubicTo(6.2444, 20.399, 2.6271, 17.4286, 2.2444, 13.0761)
+    ..cubicTo(2.1996, 12.5668, 2.2204, 12.0259, 2.2204, 11.512)
+    ..lineTo(2.2197, 8.8444)
+    ..lineTo(2.221, 6.6459)
+    ..cubicTo(2.221, 6.257, 2.1927, 5.8027, 2.2429, 5.4209)
+    ..cubicTo(2.44, 3.934, 4.4056, 3.7451, 4.7791, 5.2425)
+    ..cubicTo(4.8679, 5.5988, 4.829, 6.12, 4.8285, 6.4973)
+    ..lineTo(4.8284, 8.9164)
+    ..lineTo(4.8266, 9.6284)
+    ..cubicTo(4.8251, 9.8643, 4.7477, 10.3689, 5.1321, 10.3247)
+    ..cubicTo(5.3001, 10.3055, 5.3689, 10.1646, 5.3709, 10.0081)
+    ..cubicTo(5.3735, 9.8152, 5.3703, 9.6193, 5.3691, 9.4249)
+    ..lineTo(5.3681, 8.3821)
+    ..lineTo(5.3681, 4.6521)
+    ..lineTo(5.368, 3.5187)
+    ..cubicTo(5.3681, 3.2873, 5.3582, 2.969, 5.3928, 2.7486)
+    ..cubicTo(5.4291, 2.5114, 5.5276, 2.2881, 5.6783, 2.1014)
+    ..cubicTo(6.368, 1.2349, 7.7681, 1.5541, 8.0075, 2.6105)
+    ..cubicTo(8.0931, 2.9882, 8.053, 3.7626, 8.0531, 4.1758)
+    ..lineTo(8.0534, 7.523)
+    ..lineTo(8.0517, 8.6071)
+    ..cubicTo(8.0516, 8.7999, 8.0463, 9.0091, 8.0594, 9.2005)
+    ..cubicTo(8.0665, 9.303, 8.0816, 9.3803, 8.1655, 9.4443)
+    ..cubicTo(8.2348, 9.497, 8.3224, 9.5197, 8.4085, 9.5071)
+    ..cubicTo(8.6362, 9.4756, 8.6743, 9.3046, 8.6747, 9.1126)
+    ..cubicTo(8.676, 8.4861, 8.6751, 7.8588, 8.675, 7.2324)
+    ..lineTo(8.6748, 3.5285)
+    ..lineTo(8.6745, 2.1449)
+    ..cubicTo(8.6741, 1.9678, 8.6792, 1.7797, 8.6738, 1.6038)
+    ..cubicTo(8.6488, 0.7749, 9.1594, 0.1107, 10.0108, 0.009)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _RaisedHand._viewBoxWidth;
+    final scaleY = size.height / _RaisedHand._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_RaisedHand._viewBoxMinX, -_RaisedHand._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _RaisedHandPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/rectangle-stack.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -16492,8 +16698,7 @@ class _SocialMediaPost extends StatelessWidget with _DotdartSvgSizing {
       child: RepaintBoundary(
         child: CustomPaint(
           painter: _SocialMediaPostPainter(
-            mateoOpticalSizeColor:
-                mateoOpticalSizeColor ?? const Color(0xff000000),
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
           ),
           size: Size(width, height),
         ),

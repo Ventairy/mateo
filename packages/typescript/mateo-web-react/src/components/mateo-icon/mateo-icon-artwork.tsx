@@ -72,6 +72,7 @@ import MateoPoliceBadgeArtwork from '../../../../../../design-system/foundation/
 import MateoPopcornArtwork from '../../../../../../design-system/foundation/assets/icons/svg/popcorn.svg?react';
 import MateoPrayingFigureArtwork from '../../../../../../design-system/foundation/assets/icons/svg/praying-figure.svg?react';
 import MateoQuestionmarkArtwork from '../../../../../../design-system/foundation/assets/icons/svg/questionmark.svg?react';
+import MateoRaisedHandArtwork from '../../../../../../design-system/foundation/assets/icons/svg/raised-hand.svg?react';
 import MateoRectangleStackArtwork from '../../../../../../design-system/foundation/assets/icons/svg/rectangle-stack.svg?react';
 import MateoRoadArtwork from '../../../../../../design-system/foundation/assets/icons/svg/road.svg?react';
 import MateoRunningFigureArtwork from '../../../../../../design-system/foundation/assets/icons/svg/running-figure.svg?react';
@@ -180,6 +181,7 @@ const mateoIconArtwork = defineMateoIconArtwork({
   popcorn: MateoPopcornArtwork,
   prayingFigure: MateoPrayingFigureArtwork,
   questionmark: MateoQuestionmarkArtwork,
+  raisedHand: MateoRaisedHandArtwork,
   rectangleStack: MateoRectangleStackArtwork,
   road: MateoRoadArtwork,
   runningFigure: MateoRunningFigureArtwork,

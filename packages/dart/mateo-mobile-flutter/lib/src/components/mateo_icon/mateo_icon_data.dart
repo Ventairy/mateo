@@ -213,6 +213,9 @@ enum MateoIconData {
   /// The questionmark icon.
   questionmark,
 
+  /// The raised hand icon.
+  raisedHand,
+
   /// The rectangle stack icon.
   rectangleStack,
 
@@ -361,6 +364,7 @@ enum MateoIconData {
     popcorn => $Icons.popcorn(mateoOpticalSizeColor: color),
     prayingFigure => $Icons.prayingFigure(mateoOpticalSizeColor: color),
     questionmark => $Icons.questionmark(mateoOpticalSizeColor: color),
+    raisedHand => $Icons.raisedHand(mateoOpticalSizeColor: color),
     rectangleStack => $Icons.rectangleStack(mateoOpticalSizeColor: color),
     road => $Icons.road(mateoOpticalSizeColor: color),
     runningFigure => $Icons.runningFigure(mateoOpticalSizeColor: color),

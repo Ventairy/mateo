@@ -74,6 +74,7 @@ export const mateoGoldenIconCatalog = {
   popcorn: true,
   prayingFigure: true,
   questionmark: true,
+  raisedHand: true,
   rectangleStack: true,
   road: true,
   runningFigure: true,
