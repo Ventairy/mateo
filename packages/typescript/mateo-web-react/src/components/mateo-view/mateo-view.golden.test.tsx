@@ -1,12 +1,15 @@
 import {
   MateoButton,
   MateoIcon,
+  MateoTheme,
   MateoView,
   MateoViewHeader,
   type MateoViewPadding,
   MateoViewSurface,
 } from 'mateo-web-react/react';
-import { useState } from 'react';
+import { StrictMode, useState } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 import {
@@ -171,7 +174,25 @@ const mateoGoldenViewCases: readonly (MateoGoldenViewOptions & {
     width: 336,
     padding: { blockStart: 16, blockEnd: 24, inlineStart: 32, inlineEnd: 12 },
   },
-  { name: 'width-caps', width: 656, viewMaxWidth: 480, headerMaxWidth: 360 },
+  { name: 'width-caps', width: 672, viewMaxWidth: 480, headerMaxWidth: 360 },
+  { name: 'inherited-cap', width: 656, viewMaxWidth: 480 },
+  {
+    name: 'larger-header-cap',
+    width: 656,
+    viewMaxWidth: 480,
+    headerMaxWidth: 600,
+  },
+  { name: 'narrow-capped', width: 336, viewMaxWidth: 480 },
+  { name: 'capped-short', width: 656, viewMaxWidth: 480, short: true },
+  {
+    name: 'capped-rounded-rtl',
+    width: 656,
+    viewMaxWidth: 480,
+    rounded: true,
+    customBackground: true,
+    dir: 'rtl',
+    padding: { inlineStart: 32, inlineEnd: 12, blockStart: 16, blockEnd: 24 },
+  },
   { name: 'rtl', width: 336, dir: 'rtl' },
   {
     name: 'rounded-background',
@@ -209,6 +230,9 @@ it('should preserve header clearance and bounded content when composing view lay
     short,
     header: headerKind,
     padding,
+    width,
+    viewMaxWidth,
+    headerMaxWidth,
   } of mateoGoldenViewCases) {
     const { input, content, viewport, header, headerBox } =
       getMateoGoldenViewGeometry(name);
@@ -241,9 +265,44 @@ it('should preserve header clearance and bounded content when composing view lay
         0,
       );
     }
-    if (name === 'width-caps') {
-      expect(viewport.getBoundingClientRect().width).toBe(480);
-      expect(headerBox?.getBoundingClientRect().width).toBe(360);
+    const viewportBounds = viewport.getBoundingClientRect();
+    const surface = viewport.parentElement;
+    if (!surface) throw new Error('Missing view surface');
+    expect(viewportBounds.width).toBe(width - 16);
+    expect(surface.getBoundingClientRect().width).toBe(width - 16);
+    // The content cap does not move the native scrollbar's owning viewport.
+    expect(viewportBounds.right).toBe(surface.getBoundingClientRect().right);
+    const availableWidth = viewport.clientWidth;
+    const contentBounds = content.getBoundingClientRect();
+    expect(contentBounds.width).toBe(
+      Math.min(viewMaxWidth ?? availableWidth, availableWidth),
+    );
+    expect(contentBounds.left + contentBounds.width / 2).toBeCloseTo(
+      viewportBounds.left + viewport.clientLeft + availableWidth / 2,
+      0,
+    );
+    if (headerBox) {
+      const bounds = headerBox.getBoundingClientRect();
+      expect(bounds.width).toBe(
+        Math.min(
+          headerMaxWidth ?? availableWidth,
+          viewMaxWidth ?? availableWidth,
+          availableWidth,
+        ),
+      );
+      expect(bounds.left + bounds.width / 2).toBeCloseTo(
+        contentBounds.left + contentBounds.width / 2,
+        0,
+      );
+    }
+    if (name === 'capped-rounded-rtl') {
+      await expect.element(surface).toHaveStyle({
+        backgroundColor:
+          mateoGoldenTheme.colorScheme.buttons.secondary.neutral.background,
+      });
+      expect(getComputedStyle(surface).clipPath).not.toBe('none');
+      expect(getComputedStyle(content).paddingRight).toBe('32px');
+      expect(getComputedStyle(content).paddingLeft).toBe('12px');
     }
   }
   await captureMateoGoldens(scenarios, 'view-layouts', 2);
@@ -352,4 +411,134 @@ it('should adjust clearance without losing draft state when the header grows', a
     .toHaveValue('Preserved draft');
   await captureMateoGolden('resized-header');
   await compareMateoGoldenGroup('view-resized-header');
+});
+
+function MateoGoldenChangingWidthView() {
+  const [maxWidth, setMaxWidth] = useState<number | undefined>(480);
+  return (
+    <MateoView
+      {...(maxWidth === undefined ? {} : { maxWidth })}
+      header={
+        <MateoViewHeader
+          principal={
+            <h1 style={{ margin: 0 }}>
+              <button
+                type="button"
+                onClick={() => setMaxWidth(maxWidth === 480 ? 360 : undefined)}
+              >
+                Change width
+              </button>
+            </h1>
+          }
+        />
+      }
+      surface={
+        <MateoViewSurface>
+          <input aria-label="Draft" defaultValue="Keep this draft" />
+          <div style={{ height: 640, flexShrink: 0 }}>Messages</div>
+          <button type="button">Last action</button>
+        </MateoViewSurface>
+      }
+    />
+  );
+}
+
+it('should preserve scrolling and draft state when changing or removing the content cap', async () => {
+  await renderMateoGoldens([
+    {
+      name: 'changing-cap',
+      width: 672,
+      height: 416,
+      content: <MateoGoldenChangingWidthView />,
+    },
+  ]);
+  await settleMateoGolden();
+  await page.getByRole('textbox', { name: 'Draft' }).fill('Preserved draft');
+  for (const width of [480, 360, 656]) {
+    const { content, viewport, headerBox } =
+      getMateoGoldenViewGeometry('changing-cap');
+    expect(content.getBoundingClientRect().width).toBe(width);
+    expect(headerBox?.getBoundingClientRect().width).toBe(width);
+    expect(viewport.getBoundingClientRect().width).toBe(656);
+    viewport.scrollTop = 120;
+    await settleMateoGolden();
+    const headerTop = headerBox?.getBoundingClientRect().top;
+    if (width !== 656) {
+      // Dispatch the cap change without the browser automation's scroll-into-view.
+      const changeWidth = page
+        .getByRole('button', { name: 'Change width' })
+        .element();
+      if (!(changeWidth instanceof HTMLButtonElement))
+        throw new Error('Missing width control');
+      changeWidth.click();
+      await settleMateoGolden();
+      expect(viewport.scrollTop).toBe(120);
+      expect(headerBox?.getBoundingClientRect().top).toBe(headerTop);
+    }
+    await expect
+      .element(page.getByRole('textbox', { name: 'Draft' }))
+      .toHaveValue('Preserved draft');
+  }
+  const { viewport, headerBox } = getMateoGoldenViewGeometry('changing-cap');
+  page.getByRole('button', { name: 'Last action' }).element().focus();
+  await settleMateoGolden();
+  const last = page
+    .getByRole('button', { name: 'Last action' })
+    .element()
+    .getBoundingClientRect();
+  expect(last.top).toBeGreaterThanOrEqual(
+    headerBox?.getBoundingClientRect().bottom ?? 0,
+  );
+  expect(last.bottom).toBeLessThanOrEqual(
+    viewport.getBoundingClientRect().bottom,
+  );
+});
+
+it('should retain content bounds and header clearance when hydrating a capped view', async () => {
+  const view = (
+    <StrictMode>
+      <MateoTheme data={mateoGoldenTheme}>
+        <MateoGoldenView viewMaxWidth={480} header="wrapped" />
+      </MateoTheme>
+    </StrictMode>
+  );
+  await renderMateoGoldens([
+    {
+      name: 'hydrated-cap',
+      width: 672,
+      height: 416,
+      content: (
+        <div
+          data-testid="hydrate-root"
+          style={{ height: '100%' }}
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Hydration fixture uses only React-rendered local markup.
+          dangerouslySetInnerHTML={{ __html: renderToString(view) }}
+        />
+      ),
+    },
+  ]);
+  await settleMateoGolden();
+  const before = getMateoGoldenViewGeometry('hydrated-cap');
+  const contentBounds = before.content.getBoundingClientRect();
+  const inputTop = before.input.getBoundingClientRect().top;
+  const errors: unknown[] = [];
+  const root = hydrateRoot(page.getByTestId('hydrate-root').element(), view, {
+    onRecoverableError: (error) => errors.push(error),
+  });
+  try {
+    await settleMateoGolden();
+    const after = getMateoGoldenViewGeometry('hydrated-cap');
+    expect(errors).toEqual([]);
+    expect(after.viewport.getBoundingClientRect().width).toBe(656);
+    expect(after.content.getBoundingClientRect().width).toBe(
+      contentBounds.width,
+    );
+    expect(after.content.getBoundingClientRect().left).toBe(contentBounds.left);
+    expect(after.input.getBoundingClientRect().top).toBe(inputTop);
+    expect(
+      inputTop - (after.headerBox?.getBoundingClientRect().bottom ?? 0),
+    ).toBeCloseTo(20, 0);
+  } finally {
+    root.unmount();
+  }
 });

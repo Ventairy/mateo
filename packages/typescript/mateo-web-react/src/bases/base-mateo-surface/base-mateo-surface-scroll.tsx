@@ -7,6 +7,7 @@ import {
 
 export interface BaseMateoSurfaceScrollOptions {
   readonly clearanceBlockStart: number;
+  readonly contentMaxWidth?: number;
   readonly header?: Readonly<{ content: ReactNode; ref: Ref<HTMLDivElement> }>;
   readonly padding: Readonly<{
     blockStart: number;
@@ -88,7 +89,13 @@ export function BaseMateoSurfaceScroll({
     };
   }, [clearanceBlockStart, padding.blockStart]);
 
-  const style: CSSProperties = {
+  const style: CSSProperties & {
+    readonly '--mateo-scroll-content-max-width': string;
+  } = {
+    '--mateo-scroll-content-max-width':
+      options.contentMaxWidth === undefined
+        ? 'none'
+        : `${options.contentMaxWidth}px`,
     paddingBlockStart: padding.blockStart,
     paddingBlockEnd: padding.blockEnd,
     paddingInlineStart: padding.inlineStart,
@@ -112,7 +119,7 @@ export function BaseMateoSurfaceScroll({
       <div
         ref={content}
         style={style}
-        className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
+        className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:w-full mateo:max-w-(--mateo-scroll-content-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
       >
         {children}
       </div>

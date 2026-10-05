@@ -32,9 +32,10 @@ export interface MateoViewHeaderProps {
   readonly padding?: MateoViewPadding;
   /**
    * Maximum total width in pixels, including padding; finite and nonnegative.
-   * Centers the header within the view and shrinks to the view's available width.
+   * Centers the header within the view. Cannot exceed the view's content cap
+   * or available width.
    *
-   * @defaultValue No local cap; the header fills the view width.
+   * @defaultValue No local cap; follows the view’s maximum content width.
    */
   readonly maxWidth?: number;
 }
@@ -84,6 +85,10 @@ export function MateoViewHeader({
   const start = useMateoSurfaceBounds<HTMLDivElement>(centered, undefined);
   const end = useMateoSurfaceBounds<HTMLDivElement>(centered, undefined);
   const sideWidth = Math.max(start.width, end.width);
+  const resolvedMaxWidth =
+    maxWidth === undefined
+      ? view.maxWidth
+      : Math.min(maxWidth, view.maxWidth ?? Number.POSITIVE_INFINITY);
   const style: CSSProperties = {
     paddingBlockStart: resolvedPadding.blockStart,
     paddingBlockEnd: resolvedPadding.blockEnd,
@@ -91,7 +96,7 @@ export function MateoViewHeader({
     paddingInlineEnd: resolvedPadding.inlineEnd,
     ...{
       '--mateo-header-max-width':
-        maxWidth === undefined ? 'none' : `${maxWidth}px`,
+        resolvedMaxWidth === undefined ? 'none' : `${resolvedMaxWidth}px`,
       '--mateo-header-gap': `${mateoViewSpacing.headerSlotGapPx}px`,
       '--mateo-principal-start': `${centered ? sideWidth - start.width : 0}px`,
       '--mateo-principal-end': `${centered ? sideWidth - end.width : 0}px`,

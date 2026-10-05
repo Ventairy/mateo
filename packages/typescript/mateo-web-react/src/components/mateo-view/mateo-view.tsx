@@ -1,6 +1,6 @@
 'use client';
 
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { MateoViewContext } from './mateo-view-context.js';
 import {
   type MateoViewPadding,
@@ -13,8 +13,8 @@ import {
  *
  * @remarks
  * The parent supplies a resolved height. The view fills that height and available
- * width unless `maxWidth` limits it. Compose a MateoViewSurface and optional
- * MateoViewHeader through the named slots.
+ * width. `maxWidth` limits only the content and header. Compose a
+ * MateoViewSurface and optional MateoViewHeader through the named slots.
  */
 export interface MateoViewProps {
   /**
@@ -34,10 +34,11 @@ export interface MateoViewProps {
    */
   readonly padding?: MateoViewPadding;
   /**
-   * Maximum total width in pixels; finite and nonnegative. Centers the complete
-   * view, including its surface and header, and shrinks to fit smaller parents.
+   * Maximum content and header width in pixels, including padding; finite and
+   * nonnegative. Centers both within the full-width surface and shrinks to fit
+   * smaller parents. The background and scroll viewport remain full width.
    *
-   * @defaultValue No cap; the view fills its parent's width.
+   * @defaultValue No cap; content and header fill the available width.
    */
   readonly maxWidth?: number;
 }
@@ -47,7 +48,8 @@ export interface MateoViewProps {
  *
  * @remarks
  * Requires a parent with a resolved height. `maxWidth` centers and limits the
- * whole view; a header can have a smaller cap but cannot exceed the view width.
+ * content and header; a header can have a smaller cap. The surface background
+ * and native scroll viewport fill the view, with the scrollbar at its edge.
  * MateoViewSurface owns scrolling, fades, and clearance below the measured header.
  *
  * @throws TypeError - If maximum width or padding is not finite and nonnegative.
@@ -73,15 +75,9 @@ export function MateoView({
   const resolvedPadding = resolveMateoViewPadding(
     padding ?? mateoViewSpacing.padding,
   );
-  const style: CSSProperties & { readonly '--mateo-view-max-width': string } = {
-    '--mateo-view-max-width': maxWidth === undefined ? 'none' : `${maxWidth}px`,
-  };
   return (
-    <MateoViewContext value={{ header, padding: resolvedPadding }}>
-      <div
-        style={style}
-        className="mateo:box-border mateo:h-full mateo:w-full mateo:max-w-(--mateo-view-max-width) mateo:mx-auto mateo:min-h-[0px] mateo:min-w-[0px]"
-      >
+    <MateoViewContext value={{ header, padding: resolvedPadding, maxWidth }}>
+      <div className="mateo:box-border mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px]">
         {surface}
       </div>
     </MateoViewContext>

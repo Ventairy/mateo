@@ -14,7 +14,8 @@ import {
 /** A view-filling background with automatic scrolling and header clearance. */
 export interface MateoViewSurfaceProps {
   /**
-   * Scrollable content, placed below the header.
+   * Scrollable content, placed below the header and centered within the view’s
+   * maximum width, including its padding.
    */
   readonly children: ReactNode;
   /**
@@ -85,6 +86,9 @@ export function MateoViewSurface({
       scroll={{
         clearanceBlockStart: hasHeader ? header.height : 0,
         padding: resolvedPadding,
+        ...(view.maxWidth === undefined
+          ? {}
+          : { contentMaxWidth: view.maxWidth }),
         ...(hasHeader
           ? { header: { content: view.header, ref: header.ref } }
           : {}),
