@@ -2,6 +2,7 @@ import {
   createMateoPalette,
   type MateoButtonColorScheme,
   MateoColorScheme,
+  MateoSelectionColorScheme,
   MateoTextColorScheme,
 } from '../src/mateo.js';
 
@@ -35,3 +36,21 @@ mateoLightScheme.buttons.primary.accent.foreground = '#000000';
 new MateoColorScheme({});
 // @ts-expect-error Dark appearance is not supported.
 MateoColorScheme.dark({ palette: mateoSchemePalette, onAccent: '#FFFFFF' });
+
+const mateoSelectionColors: MateoSelectionColorScheme =
+  mateoLightScheme.selection;
+const mateoSelectionBackground: string = mateoSelectionColors.background;
+const mateoSelectionForeground: string = mateoSelectionColors.foreground;
+void mateoSelectionBackground;
+void mateoSelectionForeground;
+new MateoSelectionColorScheme(mateoSelectionColors);
+// @ts-expect-error Selection backgrounds are immutable.
+mateoSelectionColors.background = '#000000';
+// @ts-expect-error Selection foregrounds are immutable.
+mateoSelectionColors.foreground = '#000000';
+// @ts-expect-error The selection group is immutable.
+mateoLightScheme.selection = mateoSelectionColors;
+// @ts-expect-error Both selection colors are required.
+new MateoSelectionColorScheme({ background: '#FFFFFF' });
+// @ts-expect-error Selection foregrounds belong to the selection group.
+mateoLightScheme.onSelection;

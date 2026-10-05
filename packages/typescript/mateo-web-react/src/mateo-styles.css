@@ -35,3 +35,12 @@
     letter-spacing: var(--mateo-letter-spacing, revert-layer);
   }
 }
+
+@layer mateo-theme {
+  @media (forced-colors: none) {
+    ::selection {
+      background-color: var(--mateo-selection-background, revert-layer);
+      color: var(--mateo-selection-foreground, revert-layer);
+    }
+  }
+}

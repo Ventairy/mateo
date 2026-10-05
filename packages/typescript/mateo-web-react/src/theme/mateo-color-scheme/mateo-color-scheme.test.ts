@@ -65,3 +65,23 @@ describe('MateoColorScheme.light', () => {
     ).toThrow(TypeError);
   });
 });
+
+it.each([
+  ['default violet', '#4A5CFF'],
+  ['green hex', '#00A86B'],
+  ['RGB', 'rgb(0, 168, 107)'],
+  ['HSL', 'hsl(120, 100%, 50%)'],
+  ['OKLCH', 'oklch(50% 0 0)'],
+])(
+  'should provide a pale opaque highlight and dark accent text selection when using %s',
+  (_, accentColor) => {
+    const theme = createMateoTheme({ accentColor, onAccent: '#FFF' });
+    expect(theme.colorScheme.selection.background).toBe(
+      theme.palette.accent[3],
+    );
+    expect(theme.colorScheme.selection.foreground).toBe(
+      theme.palette.accent[10],
+    );
+    expect(Object.isFrozen(theme.colorScheme)).toBe(true);
+  },
+);

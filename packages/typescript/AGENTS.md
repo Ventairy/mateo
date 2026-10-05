@@ -87,7 +87,7 @@ discover valid options through autocomplete.
 
 ## Public API TSDoc
 
-Add rich, consumer-facing TSDoc to everything consumers can access through the
+Add clear, consumer-facing TSDoc to everything consumers can access through the
 public package API, including components, hooks, functions, classes, types,
 constants, and their public members and props. Explain purpose, usage, defaults,
 units, supported behavior, constraints, and meaningful edge cases as applicable,
@@ -98,6 +98,24 @@ TypeScript types. Use the `tsdoc` skill when writing or reviewing these comments
 Private and internal implementation details do not require TSDoc. For generated
 public APIs, maintain documentation in the owning source or generator rather
 than hand-editing generated output.
+
+Describe what an API means and what it is for, rather than tying its description
+to the current implementation. For semantic roles, explain the role itself;
+avoid baking in today's appearance, palette step, opacity, or rendering choice.
+Include such details only when they are part of the public contract and needed
+to use the API correctly. Keep simple meanings simple: a one-line summary is
+enough when there is nothing else a consumer needs to know. Do not add remarks
+or caveats merely to make a comment more detailed.
+
+For example, document a selection background as:
+
+```ts
+/** Background color for selected text. */
+readonly selection: string;
+```
+
+Avoid describing that role as an "opaque pale accent background in the light
+appearance"; those are current theme assignments, not the meaning of selection.
 
 ## Test Naming
 

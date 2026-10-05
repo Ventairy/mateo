@@ -39,7 +39,13 @@ export const mateoGoldenCommands = {
     await page.mouse.up();
     await page.keyboard.up('Space');
     await page.mouse.move(0, 0);
-    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.emulateMedia({
+      reducedMotion: 'no-preference',
+      forcedColors: 'none',
+    });
+  }),
+  mateoForcedColors: defineBrowserCommand(async ({ page }, active: boolean) => {
+    await page.emulateMedia({ forcedColors: active ? 'active' : 'none' });
   }),
   mateoReducedMotion: defineBrowserCommand(async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -53,5 +59,6 @@ declare module 'vitest/browser' {
     mateoPointerDown(testId: string): Promise<void>;
     mateoResetInput(): Promise<void>;
     mateoReducedMotion(): Promise<void>;
+    mateoForcedColors(active: boolean): Promise<void>;
   }
 }

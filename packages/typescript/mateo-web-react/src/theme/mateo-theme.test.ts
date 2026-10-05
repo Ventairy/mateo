@@ -32,7 +32,7 @@ describe('light theme', () => {
   });
 });
 
-it('should provide only consumed typography properties when applying a theme', () => {
+it('should provide inherited typography and selection colors when applying a theme', () => {
   const theme = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFF' });
   const style = getMateoThemeStyle(theme);
   expect(Object.isFrozen(style)).toBe(true);
@@ -41,5 +41,7 @@ it('should provide only consumed typography properties when applying a theme', (
     letterSpacing: '-0.2px',
     '--mateo-font-family': 'Inter, sans-serif',
     '--mateo-letter-spacing': '-0.2px',
+    '--mateo-selection-background': theme.colorScheme.selection.background,
+    '--mateo-selection-foreground': theme.colorScheme.selection.foreground,
   });
 });

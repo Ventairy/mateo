@@ -4,6 +4,7 @@ import { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
 import type { MateoColorScheme } from './mateo-color-scheme.js';
 import { MateoPrimaryButtonColorScheme } from './mateo-primary-button-color-scheme.js';
 import { MateoSecondaryButtonColorScheme } from './mateo-secondary-button-color-scheme.js';
+import { MateoSelectionColorScheme } from './mateo-selection-color-scheme.js';
 import { MateoTextColorScheme } from './mateo-text-color-scheme.js';
 
 /** The single source of semantic color assignments for the light appearance. */
@@ -12,12 +13,16 @@ export function createMateoLightColorSchemeRoles(
   onAccent: string,
 ): Pick<
   MateoColorScheme,
-  'background' | 'accent' | 'onAccent' | 'buttons' | 'text'
+  'background' | 'accent' | 'onAccent' | 'selection' | 'buttons' | 'text'
 > {
   return {
     background: palette.white,
     accent: palette.accent[9],
     onAccent,
+    selection: new MateoSelectionColorScheme({
+      background: palette.accent[3],
+      foreground: palette.accent[10],
+    }),
     text: new MateoTextColorScheme({
       primary: palette.neutral[12],
       secondary: palette.neutral[10],

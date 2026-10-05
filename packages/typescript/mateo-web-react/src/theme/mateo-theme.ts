@@ -25,7 +25,7 @@ export interface MateoThemeData {
    */
   readonly palette: MateoPalette;
   /**
-   * Semantic background, accent, and button roles derived from the palette.
+   * Semantic roles derived from the palette.
    */
   readonly colorScheme: MateoColorScheme;
 }
@@ -81,7 +81,7 @@ export function createMateoTheme(options: MateoThemeOptions): MateoThemeData {
 }
 
 /**
- * Typography declarations and CSS variables for an app-owned theme element.
+ * Typography and selection CSS variables for an app-owned theme element.
  *
  * @remarks
  * Apply the complete object returned by {@link getMateoThemeStyle} to an element
@@ -97,19 +97,24 @@ export type MateoThemeStyle = Readonly<
      * Letter-spacing variable shared by Mateo typography.
      */
     '--mateo-letter-spacing': string;
+    /** Text-selection background inherited by all text within this element. */
+    '--mateo-selection-background': string;
+    /** Dark accent foreground inherited by selected text within this element. */
+    '--mateo-selection-foreground': string;
   }
 >;
 
 /**
- * Returns typography styles to apply to an existing root or nested element.
+ * Returns typography and text-selection styles for an existing root or nested element.
  *
  * @remarks
  * Import `mateo-web-react/styles.css` once to load package styles and bundled Inter
- * fonts. {@link MateoThemeData} carries colors; this object applies shared
- * typography without choosing text sizes or adding a DOM wrapper.
+ * fonts. Selected text uses a dark accent foreground over a opaque pale accent highlight.
+ * Nested styled roots use their own theme; apply this object to portal roots too.
+ * Forced-colors mode retains native selection colors. Typography is inherited
+ * without choosing text sizes or adding a DOM wrapper.
  *
- * @param _theme - The theme used by the surrounding interface. Typography is
- * currently shared by all themes.
+ * @param theme - Theme supplying selection colors; typography is shared by all themes.
  * @returns An immutable object suitable for a React element's `style` prop.
  *
  * @example
@@ -117,8 +122,10 @@ export type MateoThemeStyle = Readonly<
  * <main style={getMateoThemeStyle(theme)}>{content}</main>
  * ```
  */
-export function getMateoThemeStyle(_theme: MateoThemeData): MateoThemeStyle {
+export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
   return Object.freeze({
+    '--mateo-selection-background': theme.colorScheme.selection.background,
+    '--mateo-selection-foreground': theme.colorScheme.selection.foreground,
     '--mateo-font-family': mateoTypography.fontFamily,
     '--mateo-letter-spacing': mateoTypography.letterSpacing,
     fontFamily: mateoTypography.fontFamily,

@@ -2,6 +2,7 @@ import { parseMateoColor } from '../mateo-palette/mateo-color-utils.js';
 import type { MateoPalette } from '../mateo-palette/mateo-palette.js';
 import type { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
 import { createMateoLightColorSchemeRoles } from './mateo-light-color-scheme.js';
+import type { MateoSelectionColorScheme } from './mateo-selection-color-scheme.js';
 import type { MateoTextColorScheme } from './mateo-text-color-scheme.js';
 
 /** Immutable shared and component colors for a Mateo appearance. */
@@ -18,6 +19,8 @@ export class MateoColorScheme {
    * Caller-selected foreground for content on the accent.
    */
   readonly onAccent: string;
+  /** Colors for selected text. */
+  readonly selection: MateoSelectionColorScheme;
   /**
    * Enabled and disabled colors grouped by button treatment.
    */
@@ -52,12 +55,13 @@ export class MateoColorScheme {
   private constructor(
     colors: Pick<
       MateoColorScheme,
-      'background' | 'accent' | 'onAccent' | 'buttons' | 'text'
+      'background' | 'accent' | 'onAccent' | 'selection' | 'buttons' | 'text'
     >,
   ) {
     this.background = colors.background;
     this.accent = colors.accent;
     this.onAccent = colors.onAccent;
+    this.selection = colors.selection;
     this.buttons = colors.buttons;
     this.text = colors.text;
     Object.freeze(this);
