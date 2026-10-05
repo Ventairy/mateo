@@ -154,6 +154,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.circleCheck(<params>);
 /// ```
 /// ```dart
+/// $Icons.circleDollar(<params>);
+/// ```
+/// ```dart
 /// $Icons.circleInfo(<params>);
 /// ```
 /// ```dart
@@ -701,6 +704,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _CircleCheck(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `CircleDollar` widget from `circleDollar.svg`.
+  static Widget circleDollar({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _CircleDollar(
     key: key,
     width: width,
     height: height,
@@ -1869,6 +1887,7 @@ abstract final class $Icons {
     'circle.svg' => circle(key: key, width: width, height: height),
     'circle-block.svg' => circleBlock(key: key, width: width, height: height),
     'circle-check.svg' => circleCheck(key: key, width: width, height: height),
+    'circle-dollar.svg' => circleDollar(key: key, width: width, height: height),
     'circle-info.svg' => circleInfo(key: key, width: width, height: height),
     'classic-building.svg' => classicBuilding(
       key: key,
@@ -5691,6 +5710,169 @@ class _CircleCheckPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CircleCheckPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/circle-dollar.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CircleDollar extends StatelessWidget with _DotdartSvgSizing {
+  const _CircleDollar({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CircleDollar._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CircleDollar._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CircleDollar._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CircleDollar._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CircleDollarPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CircleDollarPainter extends CustomPainter {
+  _CircleDollarPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.819140671,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.819140671,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.808593292,
+    1.808593292,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(0, 10)
+    ..cubicTo(0, 4.4771, 4.4771, 0, 10, 0)
+    ..cubicTo(15.5228, 0, 20, 4.4771, 20, 10)
+    ..cubicTo(20, 15.5228, 15.5228, 20, 10, 20)
+    ..cubicTo(4.4771, 20, 0, 15.5228, 0, 10)
+    ..close()
+    ..moveTo(10, 3.5)
+    ..cubicTo(10.5523, 3.5, 11, 3.9477, 11, 4.5)
+    ..lineTo(11, 5.1237)
+    ..cubicTo(11.804, 5.3271, 12.5135, 5.7746, 12.9759, 6.414)
+    ..cubicTo(13.2995, 6.8616, 13.199, 7.4867, 12.7515, 7.8103)
+    ..cubicTo(12.304, 8.134, 11.6788, 8.0335, 11.3552, 7.586)
+    ..cubicTo(11.1379, 7.2855, 10.6534, 7, 10, 7)
+    ..lineTo(9.7222, 7)
+    ..cubicTo(8.8274, 7, 8.5, 7.5449, 8.5, 7.7778)
+    ..lineTo(8.5, 7.8541)
+    ..cubicTo(8.5, 8.0514, 8.6491, 8.3826, 9.1525, 8.584)
+    ..lineTo(11.5902, 9.5591)
+    ..cubicTo(12.6572, 9.9858, 13.5, 10.9386, 13.5, 12.1459)
+    ..cubicTo(13.5, 13.6189, 12.323, 14.6144, 11, 14.9091)
+    ..lineTo(11, 15.5)
+    ..cubicTo(11, 16.0523, 10.5523, 16.5, 10, 16.5)
+    ..cubicTo(9.4477, 16.5, 9, 16.0523, 9, 15.5)
+    ..lineTo(9, 14.8763)
+    ..cubicTo(8.196, 14.6729, 7.4865, 14.2254, 7.0241, 13.586)
+    ..cubicTo(6.7005, 13.1384, 6.801, 12.5133, 7.2485, 12.1897)
+    ..cubicTo(7.696, 11.866, 8.3212, 11.9665, 8.6448, 12.414)
+    ..cubicTo(8.8621, 12.7145, 9.3466, 13, 10, 13)
+    ..lineTo(10.1824, 13)
+    ..cubicTo(11.1298, 13, 11.5, 12.4209, 11.5, 12.1459)
+    ..cubicTo(11.5, 11.9486, 11.3509, 11.6174, 10.8475, 11.416)
+    ..lineTo(8.4098, 10.4409)
+    ..cubicTo(7.3428, 10.0142, 6.5, 9.0614, 6.5, 7.8541)
+    ..lineTo(6.5, 7.7778)
+    ..cubicTo(6.5, 6.3138, 7.6894, 5.339, 9, 5.0733)
+    ..lineTo(9, 4.5)
+    ..cubicTo(9, 3.9477, 9.4477, 3.5, 10, 3.5)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CircleDollar._viewBoxWidth;
+    final scaleY = size.height / _CircleDollar._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CircleDollar._viewBoxMinX, -_CircleDollar._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CircleDollarPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

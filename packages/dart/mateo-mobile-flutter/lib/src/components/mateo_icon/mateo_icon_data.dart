@@ -69,6 +69,9 @@ enum MateoIconData {
   /// The circle check icon.
   circleCheck,
 
+  /// The dollar sign in a circle icon.
+  circleDollar,
+
   /// The circle info icon.
   circleInfo,
 
@@ -314,6 +317,7 @@ enum MateoIconData {
     circle => $Icons.circle(mateoOpticalSizeColor: color),
     circleBlock => $Icons.circleBlock(mateoOpticalSizeColor: color),
     circleCheck => $Icons.circleCheck(mateoOpticalSizeColor: color),
+    circleDollar => $Icons.circleDollar(mateoOpticalSizeColor: color),
     circleInfo => $Icons.circleInfo(mateoOpticalSizeColor: color),
     classicBuilding => $Icons.classicBuilding(mateoOpticalSizeColor: color),
     clock => $Icons.clock(mateoOpticalSizeColor: color),

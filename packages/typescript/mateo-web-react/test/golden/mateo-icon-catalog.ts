@@ -22,6 +22,7 @@ export const mateoGoldenIconCatalog = {
   chevronLeft: true,
   circleBlock: true,
   circleCheck: true,
+  circleDollar: true,
   circleInfo: true,
   circle: true,
   classicBuilding: true,

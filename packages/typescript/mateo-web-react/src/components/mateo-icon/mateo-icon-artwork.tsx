@@ -21,6 +21,7 @@ import MateoChevronLeftArtwork from '../../../../../../design-system/foundation/
 import MateoCircleArtwork from '../../../../../../design-system/foundation/assets/icons/svg/circle.svg?react';
 import MateoCircleBlockArtwork from '../../../../../../design-system/foundation/assets/icons/svg/circle-block.svg?react';
 import MateoCircleCheckArtwork from '../../../../../../design-system/foundation/assets/icons/svg/circle-check.svg?react';
+import MateoCircleDollarArtwork from '../../../../../../design-system/foundation/assets/icons/svg/circle-dollar.svg?react';
 import MateoCircleInfoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/circle-info.svg?react';
 import MateoClassicBuildingArtwork from '../../../../../../design-system/foundation/assets/icons/svg/classic-building.svg?react';
 import MateoClockArtwork from '../../../../../../design-system/foundation/assets/icons/svg/clock.svg?react';
@@ -129,6 +130,7 @@ const mateoIconArtwork = defineMateoIconArtwork({
   chevronLeft: MateoChevronLeftArtwork,
   circleBlock: MateoCircleBlockArtwork,
   circleCheck: MateoCircleCheckArtwork,
+  circleDollar: MateoCircleDollarArtwork,
   circleInfo: MateoCircleInfoArtwork,
   circle: MateoCircleArtwork,
   classicBuilding: MateoClassicBuildingArtwork,
