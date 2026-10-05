@@ -39,7 +39,6 @@ export function BaseMateoSurfaceScroll({
       const depths = getMateoBoundaryDepth(
         height,
         position,
-        maximum - position,
         clearanceBlockStart,
         padding.blockStart,
       );
@@ -48,7 +47,7 @@ export function BaseMateoSurfaceScroll({
       // and reveals the true background even when the surface is translucent.
       body.style.setProperty(
         '--mateo-boundary-mask',
-        getMateoBoundaryMask(height, depths.top, depths.bottom),
+        getMateoBoundaryMask(height, depths.top),
       );
       body.style.setProperty(
         '--mateo-mask-offset',
@@ -56,7 +55,7 @@ export function BaseMateoSurfaceScroll({
       );
       body.style.setProperty('--mateo-viewport-height', `${height}px`);
       node.style.scrollPaddingBlockStart = `${depths.clearTop}px`;
-      node.style.scrollPaddingBlockEnd = `${depths.clearBottom}px`;
+      node.style.scrollPaddingBlockEnd = '0px';
     };
     updateMateoScrollBoundary();
     const observer = new ResizeObserver(updateMateoScrollBoundary);

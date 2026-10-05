@@ -220,7 +220,7 @@ it('should update header clearance without resetting content state when its meas
   expect(mateoResizeCallbacks.size).toBe(0);
 });
 
-it('should anchor fades to the viewport and keep scrollbars outside the mask when content scrolls', () => {
+it('should anchor the top fade to the viewport and keep scrollbars outside the mask when content scrolls', () => {
   render(<MateoViewExample />);
   const content = getMateoViewContent();
   const viewport = content.parentElement;
@@ -229,6 +229,8 @@ it('should anchor fades to the viewport and keep scrollbars outside the mask whe
   expect(viewport.style.maskImage).toBe('');
   const restingMask = content.style.getPropertyValue('--mateo-boundary-mask');
   expect(restingMask).toContain('linear-gradient');
+  expect(restingMask).toContain('#000 400px');
+  expect(viewport.style.scrollPaddingBlockEnd).toBe('0px');
   viewport.scrollTop = 100;
   fireEvent.scroll(viewport);
   expect(content.style.getPropertyValue('--mateo-mask-offset')).toBe('52px');
@@ -246,13 +248,26 @@ it('should anchor fades to the viewport and keep scrollbars outside the mask whe
   );
 });
 
-it('should remove overflow fades when content becomes shorter than the viewport', () => {
+it('should leave overflowing content unmasked at the top when a headerless view rests at the start', () => {
   render(<MateoViewExample header={false} />);
-  mateoScrollHeight = 400;
-  resizeMateoView();
   expect(
     getMateoViewContent().style.getPropertyValue('--mateo-boundary-mask'),
   ).toBe('none');
+});
+
+it('should remove the top overflow fade when content becomes shorter than the viewport', () => {
+  render(<MateoViewExample header={false} />);
+  const content = getMateoViewContent();
+  const viewport = content.parentElement;
+  if (!viewport) throw new Error('Missing scroll viewport.');
+  viewport.scrollTop = 100;
+  fireEvent.scroll(viewport);
+  expect(content.style.getPropertyValue('--mateo-boundary-mask')).toContain(
+    'linear-gradient',
+  );
+  mateoScrollHeight = 400;
+  resizeMateoView();
+  expect(content.style.getPropertyValue('--mateo-boundary-mask')).toBe('none');
 });
 
 describe.each(['view', 'header', 'surface'] as const)('%s padding', (owner) => {

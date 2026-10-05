@@ -20,7 +20,6 @@ const mateoBoundaryGeometry = {
 export function getMateoBoundaryDepth(
   height: number,
   before: number,
-  after: number,
   header: number,
   gap: number,
 ) {
@@ -43,39 +42,20 @@ export function getMateoBoundaryDepth(
   const resolveMateoDepth = (distance: number) =>
     depth === 0 ? 0 : depth * (1 - (1 - Math.min(1, distance / depth)) ** 8);
   const top = header > 0 ? contextualTop : resolveMateoDepth(before);
-  const bottom = Math.min(
-    resolveMateoDepth(after),
-    Math.max(0, (height - top) / 2),
-  );
   return {
     top,
-    bottom,
     clearTop: header > 0 ? completeTop : depth,
-    clearBottom: depth,
   };
 }
 
-export function getMateoBoundaryMask(
-  height: number,
-  top: number,
-  bottom: number,
-) {
-  if (height <= 0 || (top === 0 && bottom === 0)) return 'none';
+export function getMateoBoundaryMask(height: number, top: number) {
+  if (height <= 0 || top === 0) return 'none';
   const stops = [
-    ...(top > 0
-      ? mateoBoundaryStops.map(
-          ({ progress, visibility }) =>
-            `rgba(0,0,0,${visibility}) ${progress * top}px`,
-        )
-      : ['#000 0px']),
-    ...(bottom > 0
-      ? [...mateoBoundaryStops]
-          .reverse()
-          .map(
-            ({ progress, visibility }) =>
-              `rgba(0,0,0,${visibility}) ${height - progress * bottom}px`,
-          )
-      : [`#000 ${height}px`]),
+    ...mateoBoundaryStops.map(
+      ({ progress, visibility }) =>
+        `rgba(0,0,0,${visibility}) ${progress * top}px`,
+    ),
+    `#000 ${height}px`,
   ];
   return `linear-gradient(to bottom, ${stops.join(', ')})`;
 }
