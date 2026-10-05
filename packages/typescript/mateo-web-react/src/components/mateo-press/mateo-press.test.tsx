@@ -396,3 +396,113 @@ describe('MateoPress native button composition', () => {
     expect(onPressed).toHaveBeenCalledOnce();
   });
 });
+
+describe.each(['div', 'button'] as const)(
+  'MateoPress %s without press animation',
+  (as) => {
+    it('should activate without compression when completing a pointer press', () => {
+      const onPressed = vi.fn();
+      render(
+        <MateoPress as={as} pressAnimation="none" onPressed={onPressed}>
+          Save
+        </MateoPress>,
+      );
+      const press = screen.getByRole('button');
+      fireMateoPointer(press, 'pointerdown');
+      expect(press).toHaveFocus();
+      expect(press).toHaveAttribute('data-mateo-hovered');
+      expect(press).not.toHaveAttribute('data-mateo-compressed');
+      expect(onPressed).not.toHaveBeenCalled();
+      fireMateoPointer(press, 'pointerup');
+      fireEvent.click(press, { detail: 1 });
+      expect(onPressed).toHaveBeenCalledOnce();
+      expect(press).not.toHaveAttribute('data-mateo-compressed');
+    });
+
+    it.each(['Enter', ' '])(
+      'should activate without compression when using the %s key',
+      (key) => {
+        const onPressed = vi.fn();
+        render(
+          <MateoPress as={as} pressAnimation="none" onPressed={onPressed}>
+            Save
+          </MateoPress>,
+        );
+        const press = screen.getByRole('button');
+        fireEvent.keyDown(press, { key });
+        expect(press).not.toHaveAttribute('data-mateo-compressed');
+        fireEvent.keyUp(press, { key });
+        // jsdom does not synthesize native button keyboard clicks.
+        if (as === 'button') fireEvent.click(press);
+        expect(onPressed).toHaveBeenCalledOnce();
+      },
+    );
+
+    it('should prevent activation when the pointer press is cancelled', () => {
+      const onPressed = vi.fn();
+      render(
+        <MateoPress as={as} pressAnimation="none" onPressed={onPressed}>
+          Save
+        </MateoPress>,
+      );
+      const press = screen.getByRole('button');
+      fireMateoPointer(press, 'pointerdown');
+      fireMateoPointer(press, 'pointercancel');
+      fireEvent.click(press, { detail: 1 });
+      expect(onPressed).not.toHaveBeenCalled();
+    });
+
+    it('should remain unavailable when no callback is supplied', () => {
+      render(
+        <MateoPress as={as} pressAnimation="none">
+          Save
+        </MateoPress>,
+      );
+      const press = screen.getByRole('button');
+      expect(press).toHaveAttribute('aria-disabled', 'true');
+      fireMateoPointer(press, 'pointerdown');
+      expect(press).not.toHaveAttribute('data-mateo-compressed');
+      expect(press).not.toHaveAttribute('data-mateo-hovered');
+      if (as === 'button') expect(press).toBeDisabled();
+      else expect(press.tabIndex).toBe(-1);
+    });
+
+    it('should clear active feedback without cancelling activation when the animation changes to none', () => {
+      const onPressed = vi.fn();
+      const view = render(
+        <MateoPress as={as} onPressed={onPressed}>
+          Save
+        </MateoPress>,
+      );
+      const press = screen.getByRole('button');
+      fireMateoPointer(press, 'pointerdown');
+      expect(press).toHaveAttribute('data-mateo-compressed');
+      view.rerender(
+        <MateoPress as={as} pressAnimation="none" onPressed={onPressed}>
+          Save
+        </MateoPress>,
+      );
+      expect(press).not.toHaveAttribute('data-mateo-compressed');
+      fireMateoPointer(press, 'pointerup');
+      fireEvent.click(press, { detail: 1 });
+      expect(onPressed).toHaveBeenCalledOnce();
+      view.rerender(
+        <MateoPress as={as} pressAnimation="scale" onPressed={onPressed}>
+          Save
+        </MateoPress>,
+      );
+      fireMateoPointer(press, 'pointerdown');
+      expect(press).toHaveAttribute('data-mateo-compressed');
+    });
+  },
+);
+
+it('should reject unsupported press feedback when supplied by a JavaScript consumer', () => {
+  expect(() =>
+    render(
+      <MateoPress {...JSON.parse('{"pressAnimation":"fade"}')}>
+        Save
+      </MateoPress>,
+    ),
+  ).toThrow(TypeError);
+});

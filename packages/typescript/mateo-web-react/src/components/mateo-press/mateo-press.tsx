@@ -4,9 +4,14 @@ import type { AriaAttributes, MouseEvent, ReactNode, Ref } from 'react';
 import {
   mateoPressDurationStyle,
   mateoPressFeedbackClassName,
+  mateoPressNoAnimationClassName,
+  mateoPressScaleClassName,
   mateoPressTargetClassNames,
 } from './mateo-press-appearance.js';
 import { useMateoPressInteraction } from './use-mateo-press-interaction.js';
+
+/** Press feedback applied to the content of a Mateo action. */
+export type MateoPressAnimation = 'scale' | 'none';
 
 /** Content forming one action; descendants must be noninteractive. */
 interface MateoPressContentProps extends AriaAttributes {
@@ -15,6 +20,13 @@ interface MateoPressContentProps extends AriaAttributes {
    * inputs, or other independently interactive descendants.
    */
   readonly children: ReactNode;
+  /**
+   * Feedback while pressing. `"scale"` compresses and dims the content; `"none"`
+   * removes press feedback while preserving hover dimming and keyboard focus.
+   *
+   * @defaultValue `"scale"`
+   */
+  readonly pressAnimation?: MateoPressAnimation;
   /**
    * DOM identifier on the action element.
    */
@@ -78,12 +90,13 @@ export type MateoPressProps = MateoPressContentProps &
  *
  * @remarks
  * Works with pointer, Enter, Space, and assistive-technology activation. The target
- * stays stationary while its content compresses; reduced motion removes the
- * animated transform. Give the action an accessible name through its content or
+ * stays stationary while its content compresses by default. Reduced motion removes
+ * the animated transform. Give the action an accessible name through its content or
  * ARIA attributes. Omit `onPressed` to disable and remove it from keyboard tab order.
  * Does not supply a surface or require a theme.
  *
- * @throws TypeError - If `onPressed` is neither a function nor omitted.
+ * @throws TypeError - If `onPressed` is neither a function nor omitted, or
+ * `pressAnimation` is unsupported.
  *
  * @example
  * ```tsx
@@ -93,6 +106,13 @@ export type MateoPressProps = MateoPressContentProps &
  * ```
  */
 export function MateoPress(props: MateoPressProps) {
+  if (
+    props.pressAnimation !== undefined &&
+    props.pressAnimation !== 'scale' &&
+    props.pressAnimation !== 'none'
+  ) {
+    throw new TypeError('MateoPress pressAnimation must be scale or none.');
+  }
   return props.as === 'button' ? (
     <MateoNativePress {...props} />
   ) : (
@@ -104,11 +124,16 @@ export function MateoPress(props: MateoPressProps) {
 function MateoCustomPress({
   children,
   onPressed,
+  pressAnimation = 'scale',
   ref,
   id,
   ...attributes
 }: Extract<MateoPressProps, { as?: 'div' }>) {
-  const press = useMateoPressInteraction<HTMLDivElement>(onPressed);
+  const press = useMateoPressInteraction<HTMLDivElement>(
+    onPressed,
+    'custom',
+    pressAnimation === 'scale',
+  );
   const accessibleAttributes = getMateoPressAccessibleAttributes(attributes);
   return (
     // biome-ignore lint/a11y/useSemanticElements: Native buttons cannot contain arbitrary flow content such as MateoSurface.
@@ -123,7 +148,9 @@ function MateoCustomPress({
       className={getMateoPressTargetClassName('div', press.enabled)}
       {...press.handlers}
     >
-      <MateoPressFeedback as="div">{children}</MateoPressFeedback>
+      <MateoPressFeedback as="div" pressAnimation={pressAnimation}>
+        {children}
+      </MateoPressFeedback>
     </div>
   );
 }
@@ -132,6 +159,7 @@ function MateoCustomPress({
 function MateoNativePress({
   children,
   onPressed,
+  pressAnimation = 'scale',
   ref,
   id,
   ...attributes
@@ -139,6 +167,7 @@ function MateoNativePress({
   const press = useMateoPressInteraction<HTMLButtonElement>(
     onPressed,
     'native',
+    pressAnimation === 'scale',
   );
   const accessibleAttributes = getMateoPressAccessibleAttributes(attributes);
   return (
@@ -153,7 +182,9 @@ function MateoNativePress({
       aria-disabled={!press.enabled}
       className={getMateoPressTargetClassName('button', press.enabled)}
     >
-      <MateoPressFeedback as="span">{children}</MateoPressFeedback>
+      <MateoPressFeedback as="span" pressAnimation={pressAnimation}>
+        {children}
+      </MateoPressFeedback>
     </button>
   );
 }
@@ -178,12 +209,14 @@ function getMateoPressTargetClassName(as: 'div' | 'button', enabled: boolean) {
     .join(' ');
 }
 
-/** Both element modes animate the content while keeping the target stationary. */
+/** Both element modes keep the target and content layout stationary. */
 function MateoPressFeedback({
   as: Tag,
   children,
+  pressAnimation,
 }: {
   readonly as: 'div' | 'span';
+  readonly pressAnimation: MateoPressAnimation;
   readonly children: ReactNode;
 }) {
   return (
@@ -191,6 +224,9 @@ function MateoPressFeedback({
       style={mateoPressDurationStyle}
       className={[
         mateoPressFeedbackClassName,
+        pressAnimation === 'scale'
+          ? mateoPressScaleClassName
+          : mateoPressNoAnimationClassName,
         Tag === 'span' ? 'mateo:block' : '',
       ]
         .filter(Boolean)

@@ -24,6 +24,7 @@ export function useMateoPressFeedback(
   }, [clearMateoPressTimeline]);
 
   const startMateoPressFeedback = useCallback(() => {
+    if (!enabled) return;
     clearMateoPressTimeline();
     setCompressed(true);
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
@@ -38,7 +39,7 @@ export function useMateoPressFeedback(
         }, compressionDurationMs);
       });
     });
-  }, [clearMateoPressTimeline, compressionDurationMs]);
+  }, [enabled, clearMateoPressTimeline, compressionDurationMs]);
 
   const releaseMateoPressFeedback = useCallback(() => {
     releaseRequested.current = true;
@@ -62,7 +63,7 @@ export function useMateoPressFeedback(
   }, [cancelMateoPressFeedback, clearMateoPressTimeline]);
 
   return {
-    compressed,
+    compressed: enabled && compressed,
     startMateoPressFeedback,
     releaseMateoPressFeedback,
     cancelMateoPressFeedback,

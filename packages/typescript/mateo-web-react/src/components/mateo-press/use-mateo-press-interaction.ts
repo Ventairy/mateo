@@ -15,6 +15,7 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
     | ((event: MouseEvent<MateoPressElement>) => void | Promise<void>)
     | undefined,
   activation: 'custom' | 'native' = 'custom',
+  animatePress = true,
 ) {
   if (onPressed !== undefined && typeof onPressed !== 'function') {
     throw new TypeError(
@@ -28,7 +29,10 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
     startMateoPressFeedback,
     releaseMateoPressFeedback,
     cancelMateoPressFeedback,
-  } = useMateoPressFeedback(enabled, mateoPressDurations.compressionMs);
+  } = useMateoPressFeedback(
+    enabled && animatePress,
+    mateoPressDurations.compressionMs,
+  );
   const [hovered, setHovered] = useState(false);
   const [pointerFocused, setPointerFocused] = useState(false);
   const [pressed, setPressed] = useState(false);

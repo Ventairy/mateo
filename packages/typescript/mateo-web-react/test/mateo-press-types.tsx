@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { MateoPress } from '../src/mateo-react.js';
+import { MateoPress, type MateoPressAnimation } from '../src/mateo-react.js';
 
 export function checkMateoPressTypes() {
   const action = (
@@ -13,12 +13,25 @@ export function checkMateoPressTypes() {
     </MateoPress>
   );
   const asynchronous = <MateoPress onPressed={async () => {}}>Save</MateoPress>;
+  const pressAnimation: MateoPressAnimation = 'none';
+  const staticAction = (
+    <MateoPress pressAnimation={pressAnimation}>Save</MateoPress>
+  );
+  const scalingAction = (
+    <MateoPress as="button" pressAnimation="scale">
+      Save
+    </MateoPress>
+  );
+  const unsupportedAnimation = (
+    // @ts-expect-error Only named press animations are supported.
+    <MateoPress pressAnimation="fade">Save</MateoPress>
+  );
   const disabled = <MateoPress>Save</MateoPress>;
   // @ts-expect-error The callback owns enablement.
   const separateDisabled = <MateoPress disabled>Save</MateoPress>;
   // @ts-expect-error Navigation is outside the action-only contract.
   const link = <MateoPress href="/profile">Profile</MateoPress>;
-  // @ts-expect-error Animation selection is not supported.
+  // @ts-expect-error The prop is named pressAnimation.
   const animation = <MateoPress animation="fade">Save</MateoPress>;
   // @ts-expect-error Styling is configured through semantic props.
   const styled = <MateoPress className="custom">Save</MateoPress>;
@@ -53,6 +66,9 @@ export function checkMateoPressTypes() {
     </MateoPress>
   );
   return {
+    staticAction,
+    scalingAction,
+    unsupportedAnimation,
     nativeAction,
     mismatchedRef,
     implicitButton,

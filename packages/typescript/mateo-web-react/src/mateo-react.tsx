@@ -22,7 +22,10 @@ export {
   MateoIconProvider,
   useMateoIconContext,
 } from './components/mateo-icon/mateo-icon-provider.js';
-export type { MateoPressProps } from './components/mateo-press/mateo-press.js';
+export type {
+  MateoPressAnimation,
+  MateoPressProps,
+} from './components/mateo-press/mateo-press.js';
 export { MateoPress } from './components/mateo-press/mateo-press.js';
 export type {
   MateoSurfacePadding,
