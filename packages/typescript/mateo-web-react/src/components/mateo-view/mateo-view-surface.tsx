@@ -26,6 +26,13 @@ export interface MateoViewSurfaceProps {
    */
   readonly extendBehindScrollbar?: boolean;
   /**
+   * Boundary scrolling behavior. `"clamp"` suppresses vertical bounce and scroll
+   * chaining while retaining native scrolling inside the viewport.
+   *
+   * @defaultValue `"native"`
+   */
+  readonly overscrollBehavior?: 'native' | 'clamp';
+  /**
    * Local content spacing; replaces inherited spacing but retains header clearance.
    *
    * @defaultValue View spacing, with a `20` pixel top gap below a present header.
@@ -56,7 +63,7 @@ export interface MateoViewSurfaceProps {
  * scroll into the clear region.
  *
  * @throws Error - If a required view or theme ancestor is absent.
- * @throws TypeError - If padding or the rounded shape radius is invalid.
+ * @throws TypeError - If padding, overscrollBehavior, or the rounded shape radius is invalid.
  *
  * @example
  * ```tsx
@@ -71,7 +78,13 @@ export function MateoViewSurface({
   color,
   shape = 'none',
   extendBehindScrollbar = false,
+  overscrollBehavior = 'native',
 }: MateoViewSurfaceProps) {
+  if (overscrollBehavior !== 'native' && overscrollBehavior !== 'clamp') {
+    throw new TypeError(
+      'MateoViewSurface overscrollBehavior must be "native" or "clamp".',
+    );
+  }
   const view = useMateoViewContext();
   const hasHeader = view.header != null && view.header !== false;
   const header = useMateoSurfaceBounds<HTMLDivElement>(hasHeader, undefined);
@@ -93,6 +106,7 @@ export function MateoViewSurface({
       shape={shape}
       scroll={{
         extendBehindScrollbar,
+        clampOverscroll: overscrollBehavior === 'clamp',
         clearanceBlockStart: hasHeader ? header.height : 0,
         padding: resolvedPadding,
         ...(view.maxWidth === undefined

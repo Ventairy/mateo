@@ -107,6 +107,18 @@ export const mateoGoldenCommands = {
       await page.keyboard.press('ArrowDown');
     },
   ),
+  mateoWheel: defineBrowserCommand(
+    async ({ page, iframe }, testId: string, deltaY: number) => {
+      const bounds = await iframe.getByTestId(testId).boundingBox();
+      if (!bounds) throw new Error(`Missing wheel target: ${testId}`);
+      await page.mouse.move(
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+      );
+      await page.mouse.wheel(0, deltaY);
+      await page.waitForTimeout(150);
+    },
+  ),
   mateoPointerDown: defineBrowserCommand(
     async ({ page, iframe }, testId: string) => {
       const bounds = await iframe.getByTestId(testId).boundingBox();
@@ -201,6 +213,7 @@ declare module 'vitest/browser' {
       axis: 'vertical' | 'horizontal',
     ): Promise<void>;
     mateoScrollKeyboard(testId: string): Promise<void>;
+    mateoWheel(testId: string, deltaY: number): Promise<void>;
     mateoPointerDown(testId: string): Promise<void>;
     mateoFocusKey(key: 'Tab' | 'Shift+Tab'): Promise<void>;
     mateoTouchTap(testId: string): Promise<void>;

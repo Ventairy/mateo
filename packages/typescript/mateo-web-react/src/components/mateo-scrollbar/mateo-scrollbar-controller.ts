@@ -121,6 +121,7 @@ export function attachMateoScrollbar(
       const travel = trackLength - length;
       next.set(axis, { maximum, extent, position, travel, rtl });
       const track = tracks[axis];
+      track.dir = rtl ? 'rtl' : 'ltr';
       track.style.setProperty('--mateo-scrollbar-track', `${trackLength}px`);
       track.style.setProperty('--mateo-scrollbar-length', `${length}px`);
       const fraction = maximum > 0 ? position / maximum : 0;
@@ -128,11 +129,14 @@ export function attachMateoScrollbar(
         '--mateo-scrollbar-position',
         `${travel * (axis === 'horizontal' && rtl ? 1 - fraction : fraction)}px`,
       );
+      const visible = !forced && maximum > 0 && trackLength > 0;
+      if (!visible && target.ownerDocument.activeElement === track)
+        target.focus({ preventScroll: true });
       track.style.setProperty(
         '--mateo-scrollbar-display',
-        !forced && maximum > 0 && trackLength > 0 ? 'block' : 'none',
+        visible ? 'block' : 'none',
       );
-      track.tabIndex = !forced && maximum > 0 && trackLength > 0 ? 0 : -1;
+      track.tabIndex = visible ? 0 : -1;
       track.setAttribute('aria-valuenow', `${Math.round(fraction * 100)}`);
       track.setAttribute('aria-controls', targetId);
       const inheritedLabel = label ?? target.getAttribute('aria-label');

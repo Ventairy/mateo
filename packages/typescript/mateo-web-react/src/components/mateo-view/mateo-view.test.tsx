@@ -341,3 +341,17 @@ it('should stop responding to scroll and focus events when a Strict Mode view un
   expect(setProperty).not.toHaveBeenCalled();
   expect(mateoResizeCallbacks.size).toBe(0);
 });
+
+it('should reject an unsupported overscroll mode when a JavaScript consumer renders a surface', () => {
+  const surface = (
+    // @ts-expect-error Exercise an invalid runtime value from a JavaScript consumer.
+    <MateoViewSurface overscrollBehavior="bounce">Content</MateoViewSurface>
+  );
+  expect(() =>
+    render(
+      <MateoTheme data={mateoViewTestTheme}>
+        <MateoView surface={surface} />
+      </MateoTheme>,
+    ),
+  ).toThrow('MateoViewSurface overscrollBehavior must be "native" or "clamp".');
+});

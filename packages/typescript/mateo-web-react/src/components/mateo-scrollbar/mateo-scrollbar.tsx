@@ -54,15 +54,37 @@ export function MateoScrollbar({
   const vertical = useRef<HTMLDivElement>(null);
   const horizontal = useRef<HTMLDivElement>(null);
   const id = useId();
-  // Deliberately rebind after commits: changing a ref's current value does not
-  // trigger React. No polling or interception of consumer refs is necessary.
+  const controller = useRef<{
+    readonly target: HTMLElement;
+    readonly label: string | undefined;
+    readonly labelledBy: string | undefined;
+    readonly release: () => void;
+  } | null>(null);
+  // Check refs after commits without restarting a stable viewport's gestures.
   useLayoutEffect(() => {
     const target = scrollRef.current;
+    const current = controller.current;
+    if (
+      current?.target === target &&
+      current?.label === label &&
+      current?.labelledBy === labelledBy
+    )
+      return;
+    current?.release();
+    controller.current = null;
     const y = vertical.current;
     const x = horizontal.current;
     if (!target || !y || !x) return;
-    return attachMateoScrollbar(target, y, x, id, label, labelledBy);
+    const release = attachMateoScrollbar(target, y, x, id, label, labelledBy);
+    if (release) controller.current = { target, label, labelledBy, release };
   });
+  useLayoutEffect(
+    () => () => {
+      controller.current?.release();
+      controller.current = null;
+    },
+    [],
+  );
   const style: CSSProperties &
     Record<
       | '--mateo-scrollbar-size'

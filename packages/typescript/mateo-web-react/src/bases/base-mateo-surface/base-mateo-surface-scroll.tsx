@@ -9,6 +9,7 @@ import {
 export interface BaseMateoSurfaceScrollOptions {
   readonly clearanceBlockStart: number;
   readonly extendBehindScrollbar?: boolean;
+  readonly clampOverscroll?: boolean;
   readonly contentMaxWidth?: number;
   readonly header?: Readonly<{ content: ReactNode; ref: Ref<HTMLDivElement> }>;
   readonly padding: Readonly<{
@@ -155,7 +156,12 @@ export function BaseMateoSurfaceScroll({
         ref={viewport}
         // biome-ignore lint/a11y/noNoninteractiveTabindex: A native scroll viewport must be reachable for keyboard scrolling.
         tabIndex={0}
-        className="mateo:box-border mateo:flex mateo:flex-col mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden"
+        className={[
+          'mateo:box-border mateo:flex mateo:flex-col mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden',
+          options.clampOverscroll ? 'mateo:overscroll-y-none' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
       >
         {header && (
           <div

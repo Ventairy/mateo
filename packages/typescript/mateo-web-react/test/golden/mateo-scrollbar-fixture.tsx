@@ -14,6 +14,7 @@ export function MateoScrollbarSample({
   const [enabled, setEnabled] = useState(true);
   const [large, setLarge] = useState(axis !== 'none');
   const [target, setTarget] = useState(0);
+  const [revision, setRevision] = useState(0);
   return (
     <>
       {controls && (
@@ -23,6 +24,9 @@ export function MateoScrollbarSample({
           </button>
           <button type="button" onClick={() => setLarge(!large)}>
             Resize
+          </button>
+          <button type="button" onClick={() => setRevision(revision + 1)}>
+            Refresh
           </button>
           <button type="button" onClick={() => setTarget(target + 1)}>
             Replace

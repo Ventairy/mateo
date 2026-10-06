@@ -6,6 +6,16 @@ import {
 } from '../src/mateo-react.js';
 
 export function checkMateoViewTypes() {
+  const clamped = (
+    <MateoViewSurface overscrollBehavior="clamp">Content</MateoViewSurface>
+  );
+  const native = (
+    <MateoViewSurface overscrollBehavior="native">Content</MateoViewSurface>
+  );
+  const invalidOverscroll = (
+    // @ts-expect-error Overscroll is a closed native-or-clamp contract.
+    <MateoViewSurface overscrollBehavior="bounce">Content</MateoViewSurface>
+  );
   const padding: MateoViewPadding = { inlineStart: 24, blockEnd: 8 };
   const view = (
     <MateoView
@@ -53,6 +63,9 @@ export function checkMateoViewTypes() {
   // @ts-expect-error View maximum width is expressed in numeric pixels.
   const cssViewMaxWidth = <MateoView maxWidth="1200px" surface="Content" />;
   return {
+    clamped,
+    native,
+    invalidOverscroll,
     view,
     missingSurface,
     missingContent,

@@ -5,7 +5,7 @@ import {
 } from 'mateo-web-react/react';
 import { StrictMode } from 'react';
 import { expect, it } from 'vitest';
-import { commands, page, userEvent } from 'vitest/browser';
+import { commands, page, server, userEvent } from 'vitest/browser';
 import {
   getMateoGoldenElement,
   renderMateoGoldens,
@@ -61,10 +61,18 @@ it('should scroll each native axis with accessible controls when using the keybo
     .click({ position: { x: 5, y: 6 } });
   await userEvent.keyboard('[ArrowRight]');
   expect(viewport.scrollLeft).toBe(40);
-  await page.getByTestId('viewport').click({ position: { x: 30, y: 30 } });
-  await userEvent.keyboard('[ArrowDown]');
-  await expect.poll(() => viewport.scrollTop).toBeGreaterThan(0);
 });
+
+// Touch-enabled WebKit does not arrow-scroll a plain focused div either.
+// Keep this platform behavior separate from the custom controls above.
+it.skipIf(server.browser === 'webkit')(
+  'should preserve native viewport keyboard scrolling when the overlay is attached',
+  async () => {
+    const viewport = await _renderMateoScrollbar();
+    await commands.mateoScrollKeyboard('viewport');
+    await expect.poll(() => viewport.scrollTop).toBeGreaterThan(0);
+  },
+);
 
 it('should update controls and restore native scrolling when content, target, and ownership change', async () => {
   const viewport = await _renderMateoScrollbar();
@@ -92,6 +100,9 @@ it('should update controls and restore native scrolling when content, target, an
 
 it('should use logical horizontal positions when scrolling a right-to-left viewport', async () => {
   const viewport = await _renderMateoScrollbar(true);
+  expect(_getMateoTrack('vertical').getBoundingClientRect().left).toBe(
+    viewport.getBoundingClientRect().left,
+  );
   await page
     .getByRole('scrollbar')
     .nth(1)
@@ -156,22 +167,72 @@ it('should keep header clearance and focus reveal when a surface extends behind 
   expect(viewport.clientWidth).toBe(viewport.offsetWidth);
 });
 
-it('should drag a thumb beyond its track and stop changing scroll position when released or cancelled', async () => {
+it.each(['vertical', 'horizontal'] as const)(
+  'should drag the %s thumb within its range and stop when released or cancelled',
+  async (axis) => {
+    const viewport = await _renderMateoScrollbar();
+    const _getMateoPosition = () =>
+      axis === 'vertical' ? viewport.scrollTop : viewport.scrollLeft;
+    await commands.mateoScrollbarDrag(axis, 300);
+    expect(_getMateoPosition()).toBe(axis === 'vertical' ? 480 : 240);
+    const track = _getMateoTrack(axis);
+    expect(track.hasAttribute('data-dragging')).toBe(true);
+    await commands.mateoPointerUp();
+    expect(track.hasAttribute('data-dragging')).toBe(false);
+    viewport.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    await settleMateoGolden();
+    let pointerId = 0;
+    track.addEventListener(
+      'pointerdown',
+      (event) => {
+        pointerId = event.pointerId;
+      },
+      { once: true },
+    );
+    await commands.mateoScrollbarDrag(axis, 20);
+    const dragged = _getMateoPosition();
+    track.dispatchEvent(new PointerEvent('pointercancel', { pointerId }));
+    expect(track.hasAttribute('data-dragging')).toBe(false);
+    await commands.mateoPointerUp();
+    expect(_getMateoPosition()).toBe(dragged);
+  },
+);
+
+it('should page toward a track press when pressing outside the thumb', async () => {
   const viewport = await _renderMateoScrollbar();
-  await commands.mateoScrollbarDrag('vertical', 300);
-  expect(viewport.scrollTop).toBe(480);
+  await page
+    .getByRole('scrollbar')
+    .nth(0)
+    .click({ position: { x: 6, y: 140 } });
+  expect(viewport.scrollTop).toBe(144);
+  await page
+    .getByRole('scrollbar')
+    .nth(1)
+    .click({ position: { x: 220, y: 6 } });
+  expect(viewport.scrollLeft).toBe(216);
+});
+
+it('should preserve an active drag when its list rerenders', async () => {
+  await _renderMateoScrollbar();
+  await commands.mateoScrollbarDrag('vertical', 20);
   const track = _getMateoTrack('vertical');
   expect(track.hasAttribute('data-dragging')).toBe(true);
-  await commands.mateoPointerUp();
-  expect(track.hasAttribute('data-dragging')).toBe(false);
-  viewport.scrollTop = 0;
+  page
+    .getByRole('button', { name: 'Refresh' })
+    .element()
+    .dispatchEvent(new MouseEvent('click', { bubbles: true }));
   await settleMateoGolden();
-  await commands.mateoScrollbarDrag('vertical', 20);
-  const position = viewport.scrollTop;
-  track.dispatchEvent(new PointerEvent('pointercancel', { pointerId: 1 }));
-  // Browsers assign different mouse IDs; lost capture is the shared cancellation path.
-  track.dispatchEvent(new PointerEvent('lostpointercapture', { pointerId: 0 }));
-  expect(track.hasAttribute('data-dragging')).toBe(false);
+  expect(track.hasAttribute('data-dragging')).toBe(true);
   await commands.mateoPointerUp();
-  expect(viewport.scrollTop).toBe(position);
+});
+
+it('should return focus to the viewport when its focused control loses overflow', async () => {
+  const viewport = await _renderMateoScrollbar();
+  _getMateoTrack('vertical').focus();
+  const content = viewport.firstElementChild;
+  if (!(content instanceof HTMLElement))
+    throw new Error('Missing scrolling content');
+  content.style.width = '100px';
+  content.style.height = '100px';
+  await expect.poll(() => document.activeElement).toBe(viewport);
 });
