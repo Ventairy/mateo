@@ -3,6 +3,9 @@ part of 'mateo_icon.dart';
 /// An icon from the Mateo catalog.
 @RecordUse()
 enum MateoIconData {
+  /// The Apple logo icon.
+  appleLogo,
+
   /// The arrow down icon.
   arrowDown,
 
@@ -295,6 +298,7 @@ enum MateoIconData {
   padlockOpen;
 
   Widget _buildSvg({Color? color}) => switch (this) {
+    appleLogo => $Icons.appleLogo(mateoOpticalSizeColor: color),
     arrowDown => $Icons.arrowDown(mateoOpticalSizeColor: color),
     arrowLeft => $Icons.arrowLeft(mateoOpticalSizeColor: color),
     arrowRight => $Icons.arrowRight(mateoOpticalSizeColor: color),

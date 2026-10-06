@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import MateoAppleLogoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/apple-logo.svg?react';
 import MateoArrowDownArtwork from '../../../../../../design-system/foundation/assets/icons/svg/arrow-down.svg?react';
 import MateoArrowLeftArtwork from '../../../../../../design-system/foundation/assets/icons/svg/arrow-left.svg?react';
 import MateoArrowRightArtwork from '../../../../../../design-system/foundation/assets/icons/svg/arrow-right.svg?react';
@@ -109,6 +110,7 @@ function defineMateoIconArtwork<TName extends string>(
 }
 
 const mateoIconArtwork = defineMateoIconArtwork({
+  appleLogo: MateoAppleLogoArtwork,
   arrowDown: MateoArrowDownArtwork,
   arrowLeft: MateoArrowLeftArtwork,
   arrowRight: MateoArrowRightArtwork,

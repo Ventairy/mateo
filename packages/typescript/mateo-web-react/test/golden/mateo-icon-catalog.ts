@@ -1,6 +1,7 @@
 import type { MateoIconName } from 'mateo-web-react/react';
 
 export const mateoGoldenIconCatalog = {
+  appleLogo: true,
   arrowDown: true,
   arrowLeft: true,
   arrowRight: true,

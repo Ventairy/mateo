@@ -88,6 +88,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// Call a method named after each asset to render it:
 ///
 /// ```dart
+/// $Icons.appleLogo(<params>);
+/// ```
+/// ```dart
 /// $Icons.arrowDown(<params>);
 /// ```
 /// ```dart
@@ -380,6 +383,21 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 abstract final class $Icons {
   $Icons._();
+
+  /// Builds the `AppleLogo` widget from `appleLogo.svg`.
+  static Widget appleLogo({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _AppleLogo(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
 
   /// Builds the `ArrowDown` widget from `arrowDown.svg`.
   static Widget arrowDown({
@@ -1853,6 +1871,7 @@ abstract final class $Icons {
     double? width,
     double? height,
   }) => switch (fileName) {
+    'apple-logo.svg' => appleLogo(key: key, width: width, height: height),
     'arrow-down.svg' => arrowDown(key: key, width: width, height: height),
     'arrow-left.svg' => arrowLeft(key: key, width: width, height: height),
     'arrow-right.svg' => arrowRight(key: key, width: width, height: height),
@@ -2044,6 +2063,148 @@ abstract final class $Icons {
     'wrench.svg' => wrench(key: key, width: width, height: height),
     _ => null,
   };
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/apple-logo.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _AppleLogo extends StatelessWidget with _DotdartSvgSizing {
+  const _AppleLogo({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _AppleLogo._svgWidth;
+
+  @override
+  double get svgNativeHeight => _AppleLogo._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _AppleLogo._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _AppleLogo._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _AppleLogoPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _AppleLogoPainter extends CustomPainter {
+  _AppleLogoPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.733305509,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.733305509,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.666944911,
+    2.666944911,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(12.9465, 3.1979)
+    ..cubicTo(12.276, 4.0103, 11.1412, 4.6164, 10.2385, 4.6164)
+    ..cubicTo(10.1354, 4.6164, 10.0323, 4.6035, 9.9678, 4.5906)
+    ..cubicTo(9.9548, 4.539, 9.929, 4.3843, 9.929, 4.2295)
+    ..cubicTo(9.929, 3.1979, 10.4578, 2.1663, 11.0251, 1.5216)
+    ..cubicTo(11.7472, 0.6705, 12.9594, 0.0387, 13.9651, 0)
+    ..cubicTo(13.9909, 0.1161, 14.0039, 0.2579, 14.0039, 0.3997)
+    ..cubicTo(14.0039, 1.4313, 13.5654, 2.45, 12.9465, 3.1979)
+    ..close()
+    ..moveTo(13.6557, 4.8356)
+    ..cubicTo(14.223, 4.8356, 16.2733, 4.8872, 17.6145, 6.8214)
+    ..cubicTo(17.4984, 6.9117, 15.4609, 8.0593, 15.4609, 10.6254)
+    ..cubicTo(15.4609, 13.5912, 18.0528, 14.6486, 18.1303, 14.6744)
+    ..cubicTo(18.1173, 14.7389, 17.7176, 16.1057, 16.7633, 17.5112)
+    ..cubicTo(15.9123, 18.7363, 15.0097, 19.9742, 13.6557, 19.9742)
+    ..cubicTo(12.2888, 19.9742, 11.9406, 19.1748, 10.3804, 19.1748)
+    ..cubicTo(8.8459, 19.1748, 8.3043, 20, 7.0664, 20)
+    ..cubicTo(5.8156, 20, 4.9516, 18.8524, 3.9587, 17.4597)
+    ..cubicTo(2.7982, 15.8091, 1.8697, 13.256, 1.8697, 10.8317)
+    ..cubicTo(1.8697, 6.9504, 4.3971, 4.8872, 6.8858, 4.8872)
+    ..cubicTo(8.2011, 4.8872, 9.2972, 5.7511, 10.1354, 5.7511)
+    ..cubicTo(10.922, 5.7511, 12.147, 4.8356, 13.6557, 4.8356)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _AppleLogo._viewBoxWidth;
+    final scaleY = size.height / _AppleLogo._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_AppleLogo._viewBoxMinX, -_AppleLogo._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _AppleLogoPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
 }
 
 /// A dotdart-generated SVG widget from `assets/icons/arrow-down.svg`.
