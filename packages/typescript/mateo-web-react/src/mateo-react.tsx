@@ -27,6 +27,10 @@ export type {
   MateoPressProps,
 } from './components/mateo-press/mateo-press.js';
 export { MateoPress } from './components/mateo-press/mateo-press.js';
+export {
+  MateoScrollbar,
+  type MateoScrollbarProps,
+} from './components/mateo-scrollbar/mateo-scrollbar.js';
 export type {
   MateoSurfacePadding,
   MateoSurfaceProps,

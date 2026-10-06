@@ -66,6 +66,27 @@ export const mateoGoldenCommands = {
       return image.toString('base64');
     },
   ),
+  mateoScrollbarDrag: defineBrowserCommand(
+    async (
+      { page, iframe },
+      axis: 'vertical' | 'horizontal',
+      delta: number,
+    ) => {
+      const track = iframe.locator(
+        `[role="scrollbar"][aria-orientation="${axis}"]`,
+      );
+      const bounds = await track.locator('div').boundingBox();
+      if (!bounds) throw new Error('Missing scrollbar thumb');
+      const x = bounds.x + bounds.width / 2;
+      const y = bounds.y + bounds.height / 2;
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.mouse.move(
+        x + (axis === 'horizontal' ? delta : 0),
+        y + (axis === 'vertical' ? delta : 0),
+      );
+    },
+  ),
   mateoScrollbarHover: defineBrowserCommand(
     async (
       { page, iframe },
@@ -171,6 +192,10 @@ declare module 'vitest/browser' {
     mateoFollowStaticLink(markup: string): Promise<string>;
     mateoGroupViewport(width: number, height: number): Promise<void>;
     mateoCaptureScenario(testId: string): Promise<string>;
+    mateoScrollbarDrag(
+      axis: 'vertical' | 'horizontal',
+      delta: number,
+    ): Promise<void>;
     mateoScrollbarHover(
       testId: string,
       axis: 'vertical' | 'horizontal',

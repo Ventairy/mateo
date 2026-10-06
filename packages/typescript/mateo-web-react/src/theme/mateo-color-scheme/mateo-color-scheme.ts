@@ -20,7 +20,7 @@ export class MateoColorScheme {
    * Caller-selected foreground for content on the accent.
    */
   readonly onAccent: string;
-  /** Colors for native scrollbar thumbs. */
+  /** Colors for scrollbar thumbs. */
   readonly scrollbar: MateoScrollbarColorScheme;
   /** Colors for selected text. */
   readonly selection: MateoSelectionColorScheme;

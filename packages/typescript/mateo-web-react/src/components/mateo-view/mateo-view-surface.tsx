@@ -19,6 +19,13 @@ export interface MateoViewSurfaceProps {
    */
   readonly children: ReactNode;
   /**
+   * Lets content fill the viewport beneath an internally managed overlay scrollbar.
+   * Native scrollbars remain available without JavaScript and in forced colors.
+   *
+   * @defaultValue `false`
+   */
+  readonly extendBehindScrollbar?: boolean;
+  /**
    * Local content spacing; replaces inherited spacing but retains header clearance.
    *
    * @defaultValue View spacing, with a `20` pixel top gap below a present header.
@@ -63,6 +70,7 @@ export function MateoViewSurface({
   padding,
   color,
   shape = 'none',
+  extendBehindScrollbar = false,
 }: MateoViewSurfaceProps) {
   const view = useMateoViewContext();
   const hasHeader = view.header != null && view.header !== false;
@@ -84,6 +92,7 @@ export function MateoViewSurface({
       {...(color === undefined ? {} : { color })}
       shape={shape}
       scroll={{
+        extendBehindScrollbar,
         clearanceBlockStart: hasHeader ? header.height : 0,
         padding: resolvedPadding,
         ...(view.maxWidth === undefined

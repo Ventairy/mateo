@@ -1,4 +1,4 @@
-/** Colors for native scrollbar thumbs. */
+/** Colors for scrollbar thumbs. */
 export class MateoScrollbarColorScheme {
   /** Color of the draggable scrollbar thumb at rest. */
   readonly thumb: string;

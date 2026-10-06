@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useLayoutEffect, useRef } from 'react';
+import { MateoScrollbar } from '../../components/mateo-scrollbar/mateo-scrollbar.js';
 import {
   getMateoBoundaryDepth,
   getMateoBoundaryMask,
@@ -7,6 +8,7 @@ import {
 
 export interface BaseMateoSurfaceScrollOptions {
   readonly clearanceBlockStart: number;
+  readonly extendBehindScrollbar?: boolean;
   readonly contentMaxWidth?: number;
   readonly header?: Readonly<{ content: ReactNode; ref: Ref<HTMLDivElement> }>;
   readonly padding: Readonly<{
@@ -148,27 +150,30 @@ export function BaseMateoSurfaceScroll({
     paddingInlineEnd: padding.inlineEnd,
   };
   return (
-    <div
-      ref={viewport}
-      // biome-ignore lint/a11y/noNoninteractiveTabindex: A native scroll viewport must be reachable for keyboard scrolling.
-      tabIndex={0}
-      className="mateo:box-border mateo:flex mateo:flex-col mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden"
-    >
-      {header && (
-        <div
-          ref={header.ref}
-          className="mateo:sticky mateo:top-[0px] mateo:z-[1] mateo:shrink-0 mateo:pointer-events-none"
-        >
-          {header.content}
-        </div>
-      )}
+    <>
       <div
-        ref={content}
-        style={style}
-        className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:w-full mateo:max-w-(--mateo-scroll-content-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
+        ref={viewport}
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: A native scroll viewport must be reachable for keyboard scrolling.
+        tabIndex={0}
+        className="mateo:box-border mateo:flex mateo:flex-col mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px] mateo:overflow-y-auto mateo:overflow-x-hidden"
       >
-        {children}
+        {header && (
+          <div
+            ref={header.ref}
+            className="mateo:sticky mateo:top-[0px] mateo:z-[1] mateo:shrink-0 mateo:pointer-events-none"
+          >
+            {header.content}
+          </div>
+        )}
+        <div
+          ref={content}
+          style={style}
+          className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:w-full mateo:max-w-(--mateo-scroll-content-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
+        >
+          {children}
+        </div>
       </div>
-    </div>
+      {options.extendBehindScrollbar && <MateoScrollbar scrollRef={viewport} />}
+    </>
   );
 }
