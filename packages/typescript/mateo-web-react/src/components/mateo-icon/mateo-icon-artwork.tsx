@@ -51,8 +51,10 @@ import MateoHelicopterFrontArtwork from '../../../../../../design-system/foundat
 import MateoHookahArtwork from '../../../../../../design-system/foundation/assets/icons/svg/hookah.svg?react';
 import MateoHotCoffeeCupArtwork from '../../../../../../design-system/foundation/assets/icons/svg/hot-coffee-cup.svg?react';
 import MateoInfoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/info.svg?react';
+import MateoInstagramLogoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/instagram-logo.svg?react';
 import MateoLettersArtwork from '../../../../../../design-system/foundation/assets/icons/svg/letters.svg?react';
 import MateoLightningBoltArtwork from '../../../../../../design-system/foundation/assets/icons/svg/lightning-bolt.svg?react';
+import MateoLinkedinLogoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/linkedin-logo.svg?react';
 import MateoMapPinArtwork from '../../../../../../design-system/foundation/assets/icons/svg/location-pin.svg?react';
 import MateoLogoutArtwork from '../../../../../../design-system/foundation/assets/icons/svg/logout.svg?react';
 import MateoMagnifierGlassArtwork from '../../../../../../design-system/foundation/assets/icons/svg/magnifying-glass.svg?react';
@@ -97,6 +99,7 @@ import MateoWifiArtwork from '../../../../../../design-system/foundation/assets/
 import MateoWifiExclamationArtwork from '../../../../../../design-system/foundation/assets/icons/svg/wifi-exclamation-mark.svg?react';
 import MateoWineGlassArtwork from '../../../../../../design-system/foundation/assets/icons/svg/wine-glass.svg?react';
 import MateoWrenchArtwork from '../../../../../../design-system/foundation/assets/icons/svg/wrench.svg?react';
+import MateoXLogoArtwork from '../../../../../../design-system/foundation/assets/icons/svg/x-logo.svg?react';
 
 interface MateoIconArtworkProps {
   readonly idPrefix: string;
@@ -162,8 +165,10 @@ const mateoIconArtwork = defineMateoIconArtwork({
   hookah: MateoHookahArtwork,
   hotCoffeeCup: MateoHotCoffeeCupArtwork,
   info: MateoInfoArtwork,
+  instagramLogo: MateoInstagramLogoArtwork,
   letters: MateoLettersArtwork,
   lightningBolt: MateoLightningBoltArtwork,
+  linkedinLogo: MateoLinkedinLogoArtwork,
   mapPin: MateoMapPinArtwork,
   logout: MateoLogoutArtwork,
   magnifyingGlassSadFace: MateoMagnifyingGlassSadFaceArtwork,
@@ -208,6 +213,7 @@ const mateoIconArtwork = defineMateoIconArtwork({
   wifi: MateoWifiArtwork,
   wineGlass: MateoWineGlassArtwork,
   wrench: MateoWrenchArtwork,
+  xLogo: MateoXLogoArtwork,
 });
 
 /**

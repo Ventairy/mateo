@@ -156,6 +156,9 @@ enum MateoIconData {
   /// The hot coffee cup icon.
   hotCoffeeCup,
 
+  /// The Instagram logo icon.
+  instagramLogo,
+
   /// The info icon.
   info,
 
@@ -164,6 +167,9 @@ enum MateoIconData {
 
   /// The lightning bolt icon.
   lightningBolt,
+
+  /// The LinkedIn logo icon.
+  linkedinLogo,
 
   /// The logout icon.
   logout,
@@ -288,6 +294,9 @@ enum MateoIconData {
   /// The wrench icon.
   wrench,
 
+  /// The X logo icon.
+  xLogo,
+
   /// The plus signal icon.
   plusSignal,
 
@@ -298,6 +307,9 @@ enum MateoIconData {
   padlockOpen;
 
   Widget _buildSvg({Color? color}) => switch (this) {
+    xLogo => $Icons.xLogo(mateoOpticalSizeColor: color),
+    linkedinLogo => $Icons.linkedinLogo(mateoOpticalSizeColor: color),
+    instagramLogo => $Icons.instagramLogo(mateoOpticalSizeColor: color),
     appleLogo => $Icons.appleLogo(mateoOpticalSizeColor: color),
     arrowDown => $Icons.arrowDown(mateoOpticalSizeColor: color),
     arrowLeft => $Icons.arrowLeft(mateoOpticalSizeColor: color),

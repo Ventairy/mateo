@@ -53,8 +53,10 @@ export const mateoGoldenIconCatalog = {
   hookah: true,
   hotCoffeeCup: true,
   info: true,
+  instagramLogo: true,
   letters: true,
   lightningBolt: true,
+  linkedinLogo: true,
   mapPin: true,
   logout: true,
   magnifyingGlassSadFace: true,
@@ -99,4 +101,5 @@ export const mateoGoldenIconCatalog = {
   wifi: true,
   wineGlass: true,
   wrench: true,
+  xLogo: true,
 } as const satisfies Record<MateoIconName, true>;
