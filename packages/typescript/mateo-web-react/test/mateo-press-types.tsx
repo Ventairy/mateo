@@ -29,7 +29,7 @@ export function checkMateoPressTypes() {
   const disabled = <MateoPress>Save</MateoPress>;
   // @ts-expect-error The callback owns enablement.
   const separateDisabled = <MateoPress disabled>Save</MateoPress>;
-  // @ts-expect-error Navigation is outside the action-only contract.
+  // @ts-expect-error Navigation requires explicit anchor mode.
   const link = <MateoPress href="/profile">Profile</MateoPress>;
   // @ts-expect-error The prop is named pressAnimation.
   const animation = <MateoPress animation="fade">Save</MateoPress>;
@@ -65,7 +65,47 @@ export function checkMateoPressTypes() {
       Save
     </MateoPress>
   );
+  const anchor = (
+    <MateoPress
+      as="a"
+      href="/profile"
+      target="_blank"
+      rel="noopener"
+      ref={createRef<HTMLAnchorElement>()}
+      onPressed={(event) => {
+        const link: HTMLAnchorElement = event.currentTarget;
+        link.focus();
+      }}
+    >
+      Profile
+    </MateoPress>
+  );
+  // @ts-expect-error Anchor mode requires a destination.
+  const missingDestination = <MateoPress as="a">Profile</MateoPress>;
+  const anchorButtonRef = (
+    // @ts-expect-error Anchor mode requires an anchor ref.
+    <MateoPress as="a" href="/profile" ref={createRef<HTMLButtonElement>()}>
+      Profile
+    </MateoPress>
+  );
+  const buttonDestination = (
+    // @ts-expect-error Buttons cannot receive navigation props.
+    <MateoPress as="button" href="/profile">
+      Profile
+    </MateoPress>
+  );
+  const disabledAnchor = (
+    // @ts-expect-error Anchor mode does not have a disabled action state.
+    <MateoPress as="a" href="/profile" disabled>
+      Profile
+    </MateoPress>
+  );
   return {
+    anchor,
+    missingDestination,
+    anchorButtonRef,
+    buttonDestination,
+    disabledAnchor,
     staticAction,
     scalingAction,
     unsupportedAnimation,

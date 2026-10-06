@@ -42,7 +42,8 @@ interface MateoPressContentProps extends AriaAttributes {
  *
  * @remarks
  * Use `as: "button"` for content allowed inside a native button, or the default
- * `div` for flow content such as a composed surface. Omit `onPressed` to disable.
+ * `div` for flow content such as a composed surface. Use `as: "a"` with `href`
+ * for navigation. Omit `onPressed` to disable button and container actions.
  * ARIA and `data-*` attributes are forwarded to the action element.
  */
 export type MateoPressProps = MateoPressContentProps &
@@ -54,6 +55,9 @@ export type MateoPressProps = MateoPressContentProps &
          * @defaultValue `"div"`
          */
         readonly as?: 'div';
+        readonly href?: never;
+        readonly target?: never;
+        readonly rel?: never;
         /**
          * Called on activation. Omit to disable; pending promises and errors remain
          * caller-owned, with no automatic loading state.
@@ -71,6 +75,9 @@ export type MateoPressProps = MateoPressContentProps &
          * Uses a native button with `type="button"` and browser keyboard activation.
          */
         readonly as: 'button';
+        readonly href?: never;
+        readonly target?: never;
+        readonly rel?: never;
         /**
          * Called on activation. Omit to disable; pending promises and errors remain
          * caller-owned, with no automatic loading state.
@@ -83,20 +90,41 @@ export type MateoPressProps = MateoPressContentProps &
          */
         readonly ref?: Ref<HTMLButtonElement>;
       }
+    | {
+        /** Uses a native link with browser-owned navigation. */
+        readonly as: 'a';
+        /** Destination URL, including relative paths and page fragments. Must be nonempty. */
+        readonly href: string;
+        /** Browsing context receiving the destination. Defaults to the current context. */
+        readonly target?: '_self' | '_blank' | '_parent' | '_top';
+        /** Space-separated relationships to the destination, such as `noopener`. */
+        readonly rel?: string;
+        /**
+         * Optional activation callback. Navigation remains native unless the callback
+         * calls `event.preventDefault()`. Promises are not awaited before navigation.
+         */
+        readonly onPressed?: (
+          event: MouseEvent<HTMLAnchorElement>,
+        ) => void | Promise<void>;
+        /** Ref to the native link, suitable for moving focus. */
+        readonly ref?: Ref<HTMLAnchorElement>;
+      }
   );
 
 /**
  * Adds accessible activation and tactile feedback to one composed action.
  *
  * @remarks
- * Works with pointer, Enter, Space, and assistive-technology activation. The target
+ * Works with pointer and assistive-technology activation. Buttons support Enter
+ * and Space; links retain native Enter activation and Space scrolling. The target
  * stays stationary while its content compresses by default. Reduced motion removes
  * the animated transform. Give the action an accessible name through its content or
- * ARIA attributes. Omit `onPressed` to disable and remove it from keyboard tab order.
+ * ARIA attributes. Omit `onPressed` to disable button and container actions. Links
+ * remain enabled through `href`, including without JavaScript.
  * Does not supply a surface or require a theme.
  *
  * @throws TypeError - If `onPressed` is neither a function nor omitted, or
- * `pressAnimation` is unsupported.
+ * `pressAnimation` is unsupported, or an anchor has an empty destination.
  *
  * @example
  * ```tsx
@@ -113,15 +141,21 @@ export function MateoPress(props: MateoPressProps) {
   ) {
     throw new TypeError('MateoPress pressAnimation must be scale or none.');
   }
+  if (props.as === 'a') {
+    if (typeof props.href !== 'string' || props.href.trim().length === 0) {
+      throw new TypeError('MateoPress anchor href must be a nonempty string.');
+    }
+    return <_MateoAnchorPress {...props} />;
+  }
   return props.as === 'button' ? (
-    <MateoNativePress {...props} />
+    <_MateoNativePress {...props} />
   ) : (
-    <MateoCustomPress {...props} />
+    <_MateoCustomPress {...props} />
   );
 }
 
 /** Adds hover, contact feedback, and button semantics to a custom action. */
-function MateoCustomPress({
+function _MateoCustomPress({
   children,
   onPressed,
   pressAnimation = 'scale',
@@ -129,12 +163,13 @@ function MateoCustomPress({
   id,
   ...attributes
 }: Extract<MateoPressProps, { as?: 'div' }>) {
+  // biome-ignore lint/correctness/useHookAtTopLevel: Internal React component uses the Mateo private naming prefix.
   const press = useMateoPressInteraction<HTMLDivElement>(
     onPressed,
     'custom',
     pressAnimation === 'scale',
   );
-  const accessibleAttributes = getMateoPressAccessibleAttributes(attributes);
+  const accessibleAttributes = _getMateoPressAccessibleAttributes(attributes);
   return (
     // biome-ignore lint/a11y/useSemanticElements: Native buttons cannot contain arbitrary flow content such as MateoSurface.
     <div
@@ -145,18 +180,18 @@ function MateoCustomPress({
       tabIndex={press.enabled ? 0 : -1}
       aria-disabled={!press.enabled}
       {...press.attributes}
-      className={getMateoPressTargetClassName('div', press.enabled)}
+      className={_getMateoPressTargetClassName('div', press.enabled)}
       {...press.handlers}
     >
-      <MateoPressFeedback as="div" pressAnimation={pressAnimation}>
+      <_MateoPressFeedback as="div" pressAnimation={pressAnimation}>
         {children}
-      </MateoPressFeedback>
+      </_MateoPressFeedback>
     </div>
   );
 }
 
 /** Native activation stays with the browser, including Enter and Space clicks. */
-function MateoNativePress({
+function _MateoNativePress({
   children,
   onPressed,
   pressAnimation = 'scale',
@@ -164,12 +199,13 @@ function MateoNativePress({
   id,
   ...attributes
 }: Extract<MateoPressProps, { as: 'button' }>) {
+  // biome-ignore lint/correctness/useHookAtTopLevel: Internal React component uses the Mateo private naming prefix.
   const press = useMateoPressInteraction<HTMLButtonElement>(
     onPressed,
     'native',
     pressAnimation === 'scale',
   );
-  const accessibleAttributes = getMateoPressAccessibleAttributes(attributes);
+  const accessibleAttributes = _getMateoPressAccessibleAttributes(attributes);
   return (
     <button
       {...accessibleAttributes}
@@ -180,16 +216,52 @@ function MateoNativePress({
       type="button"
       disabled={!press.enabled}
       aria-disabled={!press.enabled}
-      className={getMateoPressTargetClassName('button', press.enabled)}
+      className={_getMateoPressTargetClassName('button', press.enabled)}
     >
-      <MateoPressFeedback as="span" pressAnimation={pressAnimation}>
+      <_MateoPressFeedback as="span" pressAnimation={pressAnimation}>
         {children}
-      </MateoPressFeedback>
+      </_MateoPressFeedback>
     </button>
   );
 }
 
-function getMateoPressAccessibleAttributes(
+function _MateoAnchorPress({
+  children,
+  href,
+  target,
+  rel,
+  onPressed,
+  pressAnimation = 'scale',
+  ref,
+  id,
+  ...attributes
+}: Extract<MateoPressProps, { as: 'a' }>) {
+  // biome-ignore lint/correctness/useHookAtTopLevel: Internal React component uses the Mateo private naming prefix.
+  const press = useMateoPressInteraction<HTMLAnchorElement>(
+    onPressed,
+    'link',
+    pressAnimation === 'scale',
+  );
+  return (
+    <a
+      {..._getMateoPressAccessibleAttributes(attributes)}
+      {...press.attributes}
+      {...press.handlers}
+      href={href}
+      target={target}
+      rel={rel}
+      ref={ref}
+      id={id}
+      className={_getMateoPressTargetClassName('a', true)}
+    >
+      <_MateoPressFeedback as="span" pressAnimation={pressAnimation}>
+        {children}
+      </_MateoPressFeedback>
+    </a>
+  );
+}
+
+function _getMateoPressAccessibleAttributes(
   attributes: Omit<MateoPressContentProps, 'children' | 'id'>,
 ) {
   return Object.fromEntries(
@@ -199,10 +271,14 @@ function getMateoPressAccessibleAttributes(
   );
 }
 
-function getMateoPressTargetClassName(as: 'div' | 'button', enabled: boolean) {
+function _getMateoPressTargetClassName(
+  as: 'div' | 'button' | 'a',
+  enabled: boolean,
+) {
   return [
     mateoPressTargetClassNames.shared,
-    as === 'button' ? mateoPressTargetClassNames.native : '',
+    as === 'div' ? '' : mateoPressTargetClassNames.native,
+    as === 'a' ? mateoPressTargetClassNames.link : '',
     enabled ? 'mateo:cursor-pointer' : 'mateo:cursor-default',
   ]
     .filter(Boolean)
@@ -210,7 +286,7 @@ function getMateoPressTargetClassName(as: 'div' | 'button', enabled: boolean) {
 }
 
 /** Both element modes keep the target and content layout stationary. */
-function MateoPressFeedback({
+function _MateoPressFeedback({
   as: Tag,
   children,
   pressAnimation,

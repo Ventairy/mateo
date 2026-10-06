@@ -14,7 +14,7 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
   onPressed:
     | ((event: MouseEvent<MateoPressElement>) => void | Promise<void>)
     | undefined,
-  activation: 'custom' | 'native' = 'custom',
+  activation: 'custom' | 'native' | 'link' = 'custom',
   animatePress = true,
 ) {
   if (onPressed !== undefined && typeof onPressed !== 'function') {
@@ -22,8 +22,8 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
       'MateoPress onPressed must be a function or undefined.',
     );
   }
-  const enabled = onPressed !== undefined;
-  const native = activation === 'native';
+  const enabled = activation === 'link' || onPressed !== undefined;
+  const native = activation !== 'custom';
   const {
     compressed,
     startMateoPressFeedback,
@@ -116,7 +116,7 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
     // native mousedown default can otherwise blur a button into its focusable
     // ancestor, cancelling the press before its click arrives.
     if (
-      native &&
+      activation === 'native' &&
       enabled &&
       event.button === 0 &&
       event.currentTarget.ownerDocument.activeElement === event.currentTarget
@@ -172,6 +172,7 @@ export function useMateoPressInteraction<MateoPressElement extends HTMLElement>(
 
   function keyDownMateoPress(event: KeyboardEvent<MateoPressElement>) {
     setPointerFocused(false);
+    if (activation === 'link' && event.key !== 'Enter') return;
     if (!enabled || (event.key !== 'Enter' && event.key !== ' ')) return;
     if (!native || event.repeat) event.preventDefault();
     if (event.repeat || contact.current) return;

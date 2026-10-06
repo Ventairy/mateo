@@ -1,6 +1,48 @@
 import { defineBrowserCommand } from '@vitest/browser-playwright';
 
 export const mateoGoldenCommands = {
+  mateoFollowLink: defineBrowserCommand(
+    async (
+      { page, iframe },
+      testId: string,
+      input: 'pointer' | 'enter' | 'modified' | 'middle',
+    ) => {
+      const popup = page.context().waitForEvent('page');
+      const link = iframe.getByTestId(testId);
+      if (input === 'enter') {
+        await link.focus();
+        await page.keyboard.press('Enter');
+      } else {
+        await link.click(
+          input === 'middle'
+            ? { button: 'middle' }
+            : input === 'modified'
+              ? { modifiers: ['ControlOrMeta'] }
+              : {},
+        );
+      }
+      const destination = await popup;
+      try {
+        await destination.waitForURL('about:blank#mateo-destination');
+        return destination.url();
+      } finally {
+        await destination.close();
+      }
+    },
+  ),
+  mateoFollowStaticLink: defineBrowserCommand(
+    async ({ page }, markup: string) => {
+      const consumer = await page.context().newPage();
+      try {
+        await consumer.setContent(markup);
+        await consumer.getByRole('link', { name: 'Profile' }).click();
+        await consumer.waitForURL('about:blank#mateo-destination');
+        return consumer.url();
+      } finally {
+        await consumer.close();
+      }
+    },
+  ),
   mateoGroupViewport: defineBrowserCommand(
     async ({ page, iframe }, width: number, height: number) => {
       await page.setViewportSize({ width, height });
@@ -122,6 +164,11 @@ export const mateoGoldenCommands = {
 
 declare module 'vitest/browser' {
   interface BrowserCommands {
+    mateoFollowLink(
+      testId: string,
+      input: 'pointer' | 'enter' | 'modified' | 'middle',
+    ): Promise<string>;
+    mateoFollowStaticLink(markup: string): Promise<string>;
     mateoGroupViewport(width: number, height: number): Promise<void>;
     mateoCaptureScenario(testId: string): Promise<string>;
     mateoScrollbarHover(

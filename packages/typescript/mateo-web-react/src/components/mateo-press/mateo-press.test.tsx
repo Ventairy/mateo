@@ -5,7 +5,7 @@ import {
   render,
   screen,
 } from '@testing-library/react';
-import { createRef, useState } from 'react';
+import { createRef, type MouseEvent as ReactMouseEvent, useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createMateoTheme } from '../../theme/mateo-theme.js';
 import { MateoTheme } from '../../theme/mateo-theme-context.js';
@@ -34,6 +34,58 @@ function fireMateoPointer(
 }
 
 describe('MateoPress', () => {
+  it('should expose an enabled native link when a destination is provided without a callback', () => {
+    const ref = createRef<HTMLAnchorElement>();
+    render(
+      <MateoPress
+        as="a"
+        href="/profile"
+        target="_blank"
+        rel="noopener"
+        ref={ref}
+      >
+        Profile
+      </MateoPress>,
+    );
+    const link = screen.getByRole('link', { name: 'Profile' });
+    expect(ref.current).toBe(link);
+    expect(link).toHaveAttribute('href', '/profile');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener');
+    expect(link).not.toHaveAttribute('aria-disabled');
+    expect(link.tabIndex).toBe(0);
+    fireMateoPointer(link, 'pointerdown');
+    expect(link).toHaveAttribute('data-mateo-pressed');
+    fireMateoPointer(link, 'pointercancel');
+    expect(link).not.toHaveAttribute('data-mateo-pressed');
+  });
+
+  it('should let the caller prevent navigation when an anchor callback handles activation', () => {
+    const onPressed = vi.fn((event: ReactMouseEvent<HTMLAnchorElement>) =>
+      event.preventDefault(),
+    );
+    render(
+      <MateoPress as="a" href="/profile" onPressed={onPressed}>
+        Profile
+      </MateoPress>,
+    );
+    expect(fireEvent.click(screen.getByRole('link'))).toBe(false);
+    expect(onPressed).toHaveBeenCalledOnce();
+  });
+
+  it.each(['', '   '])(
+    'should reject an empty destination when anchor href is %j',
+    (href) => {
+      expect(() =>
+        render(
+          <MateoPress as="a" href={href}>
+            Profile
+          </MateoPress>,
+        ),
+      ).toThrow('MateoPress anchor href must be a nonempty string.');
+    },
+  );
+
   it('should restore keyboard focus indication when keyboard input follows pointer focus', () => {
     render(<MateoPress onPressed={() => {}}>Save</MateoPress>);
     const press = screen.getByRole('button');

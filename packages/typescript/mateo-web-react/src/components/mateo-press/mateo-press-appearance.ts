@@ -54,6 +54,7 @@ export const mateoPressTargetClassNames = {
     'mateo:[&:focus:not(:focus-visible)]:[outline:none]',
     'mateo:[&[data-mateo-pointer-focus]:focus]:[outline:none]',
   ].join(' '),
+  link: 'mateo:[color:inherit] mateo:no-underline',
   native: [
     'mateo:[grid-template-columns:minmax(0,1fr)] mateo:align-middle mateo:appearance-none mateo:[border:0] mateo:p-[0px] mateo:bg-transparent mateo:[font:inherit] mateo:[text-align:inherit]',
     'mateo:focus-visible:outline-[2px] mateo:focus-visible:outline-offset-[2px] mateo:focus-visible:outline-solid mateo:focus-visible:outline-(--mateo-press-focus,Highlight)',

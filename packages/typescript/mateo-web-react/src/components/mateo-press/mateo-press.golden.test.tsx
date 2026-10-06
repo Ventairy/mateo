@@ -1,4 +1,4 @@
-import { MateoPress, MateoSurface } from 'mateo-web-react/react';
+import { MateoIcon, MateoPress, MateoSurface } from 'mateo-web-react/react';
 import { expect, it } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
@@ -206,5 +206,66 @@ for (const as of ['button', 'div'] as const) {
     await commands.mateoResetInput();
     await expect.poll(() => activations).toBe(1);
     await result.unmount();
+  });
+}
+
+for (const pressAnimation of ['scale', 'none'] as const) {
+  it(`should preserve native link ${pressAnimation} feedback when exercising text and icon states`, async () => {
+    for (const content of ['text', 'icon'] as const) {
+      for (const state of [
+        'resting',
+        'hover',
+        'held-pointer',
+        'keyboard-focus',
+        'reduced-motion',
+        'forced-colors',
+      ] as const) {
+        if (state === 'reduced-motion') await commands.mateoReducedMotion();
+        if (state === 'forced-colors') await commands.mateoForcedColors(true);
+        const name = `link-${pressAnimation}-${content}-${state}`;
+        const result = await renderMateoGoldens([
+          {
+            name,
+            width: 240,
+            content: (
+              <span
+                style={{ color: mateoGoldenTheme.colorScheme.text.primary }}
+              >
+                <MateoPress
+                  as="a"
+                  href="#profile"
+                  pressAnimation={pressAnimation}
+                  data-testid="press-link"
+                  aria-label="Profile"
+                >
+                  <span style={{ display: 'block', padding: 12 }}>
+                    {content === 'text' ? (
+                      'View profile'
+                    ) : (
+                      <MateoIcon
+                        icon="instagramLogo"
+                        size={24}
+                        color={mateoGoldenTheme.colorScheme.text.primary}
+                      />
+                    )}
+                  </span>
+                </MateoPress>
+              </span>
+            ),
+          },
+        ]);
+        const link = page.getByTestId('press-link');
+        if (state === 'hover') await link.hover();
+        if (state === 'held-pointer' || state === 'reduced-motion')
+          await commands.mateoPointerDown('press-link');
+        if (state === 'keyboard-focus' || state === 'forced-colors')
+          await userEvent.tab();
+        await settleMateoGolden();
+        await captureMateoGolden(name);
+        await commands.mateoResetInput();
+        await result.unmount();
+      }
+    }
+    await compareMateoGoldenGroup(`link-${pressAnimation}-states`);
   });
 }
