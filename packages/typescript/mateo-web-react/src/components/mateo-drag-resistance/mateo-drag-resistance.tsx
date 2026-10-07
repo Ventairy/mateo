@@ -11,6 +11,7 @@ import {
   useState,
 } from 'react';
 import { createMateoDragResistance } from './mateo-drag-resistance-interaction.js';
+import { mateoDragResistanceMotion } from './mateo-drag-resistance-motion.js';
 
 interface MateoDragResistanceChildProps {
   readonly ref?: Ref<HTMLElement | SVGElement>;
@@ -28,6 +29,26 @@ export interface MateoDragResistanceSides {
   readonly bottom?: number;
   /** Maximum leftward movement in CSS pixels. Omitted or zero keeps this side fixed. */
   readonly left?: number;
+}
+
+/** Sets how anchored content settles after a pull is released. */
+export interface MateoDragResistanceReturnAnimation {
+  /**
+   * Time to reach rest, in milliseconds. Must be finite and nonnegative;
+   * zero returns immediately.
+   *
+   * @defaultValue `180`
+   */
+  readonly durationMs?: number;
+  /**
+   * Cubic Bézier control points in `[x1, y1, x2, y2]` order. Every coordinate
+   * must be finite and between zero and one, keeping the return within the
+   * allowed sides without overshoot. For a quick response with a soft landing,
+   * try `[0.22, 1, 0.36, 1]`.
+   *
+   * @defaultValue Mateo's softly settling return curve.
+   */
+  readonly curve?: readonly [number, number, number, number];
 }
 
 /** Controls how anchored content responds to a pull. */
@@ -48,6 +69,14 @@ export interface MateoDragResistanceProps {
    * @defaultValue `6`
    */
   readonly resistance?: number | MateoDragResistanceSides;
+  /**
+   * Timing and curve for returning to rest. Each omitted field keeps its
+   * default. Settings are captured on release; changes during a return apply
+   * to the next release. Reduced motion keeps content stationary.
+   *
+   * @defaultValue A 180 ms return using Mateo's softly settling curve.
+   */
+  readonly returnAnimation?: MateoDragResistanceReturnAnimation;
 }
 
 /**
@@ -56,9 +85,11 @@ export interface MateoDragResistanceProps {
  *
  * @remarks
  * Use for playful feedback when pulling should leave the content anchored.
- * Content yields less as the pull grows, then returns to rest in 180 ms without
- * overshoot when released. Grabbing it during the return continues from its
- * current position. Reduced motion keeps it stationary.
+ * Content yields less as the pull grows, then returns to rest without overshoot
+ * when released. By default, the return takes 180 ms; customize it with
+ * {@link MateoDragResistanceProps.returnAnimation | returnAnimation}. Grabbing
+ * it during the return continues from its current position. Reduced motion
+ * keeps it stationary.
  *
  * The child's layout, native scrolling, and interactive descendants are
  * preserved. For touch dragging on decorative artwork, opt out of scrolling
@@ -69,10 +100,14 @@ export interface MateoDragResistanceProps {
  * `translate` property while this component is mounted; use a nested element
  * for additional movement.
  *
- * @throws TypeError - If resistance is invalid or the child is not a native element.
+ * @throws TypeError - If resistance or return animation is invalid, or the
+ * child is not a native element.
  * @example
  * ```tsx
- * <MateoDragResistance resistance={{ right: 16 }}>
+ * <MateoDragResistance
+ *   resistance={{ right: 16 }}
+ *   returnAnimation={{ durationMs: 260, curve: [0.22, 1, 0.36, 1] }}
+ * >
  *   <g>{artwork}</g>
  * </MateoDragResistance>
  * ```
@@ -80,6 +115,7 @@ export interface MateoDragResistanceProps {
 export function MateoDragResistance({
   children,
   resistance = 6,
+  returnAnimation,
 }: MateoDragResistanceProps) {
   if (
     typeof resistance !== 'number' &&
@@ -111,20 +147,66 @@ export function MateoDragResistance({
       'MateoDragResistance limits must be finite and nonnegative.',
     );
   }
+  if (
+    returnAnimation !== undefined &&
+    (!returnAnimation ||
+      typeof returnAnimation !== 'object' ||
+      Array.isArray(returnAnimation))
+  ) {
+    throw new TypeError(
+      'MateoDragResistance returnAnimation needs timing and curve settings.',
+    );
+  }
+  const { durationMs = mateoDragResistanceMotion.returnMs, curve } =
+    returnAnimation ?? {};
+  if (!Number.isFinite(durationMs) || durationMs < 0) {
+    throw new TypeError(
+      'MateoDragResistance return duration must be finite and nonnegative.',
+    );
+  }
+  if (
+    curve !== undefined &&
+    (!Array.isArray(curve) ||
+      curve.length !== 4 ||
+      Array.from(curve).some(
+        (coordinate) =>
+          !Number.isFinite(coordinate) || coordinate < 0 || coordinate > 1,
+      ))
+  ) {
+    throw new TypeError(
+      'MateoDragResistance return curve needs four finite coordinates between zero and one.',
+    );
+  }
   if (!isValidElement(children) || typeof children.type !== 'string') {
     throw new TypeError(
       'MateoDragResistance needs one native HTML or SVG element.',
     );
   }
   const [element, setElement] = useState<HTMLElement | SVGElement | null>(null);
-  const options = useRef({ resistance: { top, right, bottom, left } });
+  const [x1, y1, x2, y2] = curve ?? [];
+  const options = useRef({
+    resistance: { top, right, bottom, left },
+    returnAnimation: { durationMs, curve },
+  });
   const controller = useRef<ReturnType<
     typeof createMateoDragResistance
   > | null>(null);
   useLayoutEffect(() => {
-    options.current = { resistance: { top, right, bottom, left } };
+    options.current = {
+      resistance: { top, right, bottom, left },
+      returnAnimation: {
+        durationMs,
+        curve:
+          x1 !== undefined &&
+          y1 !== undefined &&
+          x2 !== undefined &&
+          y2 !== undefined
+            ? [x1, y1, x2, y2]
+            : undefined,
+      },
+    };
     controller.current?.update();
-  }, [top, right, bottom, left]);
+  }, [top, right, bottom, left, durationMs, x1, y1, x2, y2]);
   const childRef = children.props.ref;
   const ref = useCallback(
     (node: HTMLElement | SVGElement | null) => {

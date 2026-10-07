@@ -14,6 +14,7 @@ export type {
 export {
   MateoDragResistance,
   type MateoDragResistanceProps,
+  type MateoDragResistanceReturnAnimation,
   type MateoDragResistanceSides,
 } from './components/mateo-drag-resistance/mateo-drag-resistance.js';
 export type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';

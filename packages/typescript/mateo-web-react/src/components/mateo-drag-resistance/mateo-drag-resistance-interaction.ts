@@ -1,4 +1,7 @@
-import type { MateoDragResistanceSides } from './mateo-drag-resistance.js';
+import type {
+  MateoDragResistanceReturnAnimation,
+  MateoDragResistanceSides,
+} from './mateo-drag-resistance.js';
 import {
   getMateoDragResistanceReturn,
   mateoDragResistanceMotion,
@@ -6,6 +9,10 @@ import {
 
 interface MateoDragResistanceOptions {
   readonly resistance: Required<MateoDragResistanceSides>;
+  readonly returnAnimation: {
+    readonly durationMs: number;
+    readonly curve: MateoDragResistanceReturnAnimation['curve'];
+  };
 }
 
 export function createMateoDragResistance(
@@ -107,14 +114,16 @@ export function createMateoDragResistance(
       _clearMateoOffset();
       return;
     }
+    const { durationMs, curve } = options().returnAnimation;
+    if (durationMs === 0) {
+      _clearMateoOffset();
+      return;
+    }
     const start = visible;
     const startedAt = view.performance.now();
     function _animateMateoReturn(now: number) {
-      const progress = Math.min(
-        1,
-        (now - startedAt) / mateoDragResistanceMotion.returnMs,
-      );
-      const remaining = 1 - getMateoDragResistanceReturn(progress);
+      const progress = Math.min(1, (now - startedAt) / durationMs);
+      const remaining = 1 - getMateoDragResistanceReturn(progress, curve);
       _renderMateoOffset(
         progress === 1 ? 0 : start.x * remaining,
         progress === 1 ? 0 : start.y * remaining,

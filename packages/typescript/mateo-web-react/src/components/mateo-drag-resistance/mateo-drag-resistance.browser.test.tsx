@@ -3,7 +3,7 @@ import {
   type MateoDragResistanceProps,
 } from 'mateo-web-react/react';
 import { StrictMode, useRef, useState } from 'react';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { commands, page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
 import {
@@ -23,9 +23,11 @@ function _getMateoTranslation() {
 function _MateoResistanceSample({
   svg = false,
   resistance = 16,
+  returnAnimation,
 }: {
   readonly svg?: boolean;
   readonly resistance?: MateoDragResistanceProps['resistance'];
+  readonly returnAnimation?: MateoDragResistanceProps['returnAnimation'];
 }) {
   // biome-ignore lint/correctness/useHookAtTopLevel: Private React fixture follows Mateo naming.
   const ref = useRef<HTMLDivElement>(null);
@@ -53,7 +55,10 @@ function _MateoResistanceSample({
             viewBox="0 0 400 360"
             aria-label="Artwork"
           >
-            <MateoDragResistance resistance={resistance}>
+            <MateoDragResistance
+              resistance={resistance}
+              {...(returnAnimation ? { returnAnimation } : {})}
+            >
               <g
                 ref={svgRef}
                 data-testid="drag"
@@ -69,7 +74,10 @@ function _MateoResistanceSample({
             </MateoDragResistance>
           </svg>
         ) : (
-          <MateoDragResistance resistance={resistance}>
+          <MateoDragResistance
+            resistance={resistance}
+            {...(returnAnimation ? { returnAnimation } : {})}
+          >
             <div
               ref={ref}
               data-testid="drag"
@@ -284,3 +292,197 @@ it('should settle when the window loses focus during a captured drag', async () 
   await expect.poll(() => _getMateoTranslation()[0]).toBe(0);
   await commands.mateoPointerUp();
 });
+
+// Advance the real controller's animation frames deterministically while using
+// native pointer events and observing the child's rendered translation.
+function _controlMateoReturnFrames() {
+  let nextFrame = 0;
+  const pending = new Map<number, FrameRequestCallback>();
+  let releasedAt = 0;
+  const target = page.getByTestId('drag').element();
+  function _recordMateoRelease() {
+    releasedAt = performance.now();
+  }
+  target.addEventListener('pointerup', _recordMateoRelease);
+  const request = vi
+    .spyOn(window, 'requestAnimationFrame')
+    .mockImplementation((callback) => {
+      const id = ++nextFrame;
+      pending.set(id, callback);
+      return id;
+    });
+  const cancel = vi
+    .spyOn(window, 'cancelAnimationFrame')
+    .mockImplementation((id) => {
+      pending.delete(id);
+    });
+  return {
+    advance(elapsedMs: number) {
+      const callbacks = [...pending.values()];
+      pending.clear();
+      for (const callback of callbacks) callback(releasedAt + elapsedMs);
+    },
+    restore() {
+      request.mockRestore();
+      cancel.mockRestore();
+      target.removeEventListener('pointerup', _recordMateoRelease);
+    },
+  };
+}
+
+it.each([
+  { name: 'linear curve', curve: [0, 0, 1, 1], halfway: 4 },
+  { name: 'soft landing curve', curve: [0, 1, 1, 1], halfway: 1 },
+  { name: 'flat time-axis endpoints', curve: [0, 0, 0, 1], halfway: 0.881 },
+] satisfies readonly {
+  name: string;
+  curve: readonly [number, number, number, number];
+  halfway: number;
+}[])(
+  'should honor timing and settle within the allowed side when using a $name',
+  async ({ curve, halfway }) => {
+    await render(
+      <_MateoResistanceSample
+        resistance={{ right: 16 }}
+        returnAnimation={{ durationMs: 800, curve }}
+      />,
+    );
+    await commands.mateoDragPointer('drag', 96, -96);
+    expect(_getMateoTranslation()).toEqual([8, 0]);
+    const frames = _controlMateoReturnFrames();
+    try {
+      await commands.mateoPointerUp();
+      frames.advance(400);
+      expect(_getMateoTranslation()[0]).toBeCloseTo(halfway, 2);
+      expect(_getMateoTranslation()[1]).toBe(0);
+      frames.advance(799);
+      expect(_getMateoTranslation()[0]).toBeGreaterThan(0);
+      frames.advance(800);
+      expect(_getMateoTranslation()).toEqual([0, 0]);
+    } finally {
+      frames.restore();
+    }
+  },
+);
+
+it('should return immediately when duration is zero', async () => {
+  await render(<_MateoResistanceSample returnAnimation={{ durationMs: 0 }} />);
+  await commands.mateoDragPointer('drag', 96, 0);
+  expect(_getMateoTranslation()[0]).toBe(8);
+  await commands.mateoPointerUp();
+  expect(_getMateoTranslation()).toEqual([0, 0]);
+  expect(getComputedStyle(page.getByTestId('drag').element()).willChange).toBe(
+    'auto',
+  );
+});
+
+it('should preserve dragging through equivalent settings and continue when regrabbing a custom return', async () => {
+  const sample = await render(
+    <_MateoResistanceSample
+      returnAnimation={{ durationMs: 800, curve: [0, 0, 1, 1] }}
+    />,
+  );
+  const start = await commands.mateoDragPointer('drag', 96, 0);
+  await sample.rerender(
+    <_MateoResistanceSample
+      returnAnimation={{ durationMs: 800, curve: [0, 0, 1, 1] }}
+    />,
+  );
+  expect(_getMateoTranslation()[0]).toBe(8);
+  await commands.mateoMovePointer(start.x + 192, start.y);
+  expect(_getMateoTranslation()[0]).toBeGreaterThan(8);
+  const frames = _controlMateoReturnFrames();
+  try {
+    await commands.mateoPointerUp();
+    frames.advance(400);
+    const held = _getMateoTranslation();
+    await commands.mateoPointerDown('drag');
+    expect(_getMateoTranslation()).toEqual(held);
+    frames.advance(800);
+    expect(_getMateoTranslation()).toEqual(held);
+    await commands.mateoPointerUp();
+    frames.advance(800);
+    expect(_getMateoTranslation()).toEqual([0, 0]);
+  } finally {
+    frames.restore();
+  }
+});
+
+it('should apply changed settings on the next release when rerendered during a return', async () => {
+  const sample = await render(
+    <_MateoResistanceSample
+      returnAnimation={{ durationMs: 800, curve: [0, 0, 1, 1] }}
+    />,
+  );
+  await commands.mateoDragPointer('drag', 96, 0);
+  const frames = _controlMateoReturnFrames();
+  try {
+    await commands.mateoPointerUp();
+    frames.advance(200);
+    const beforeUpdate = _getMateoTranslation();
+    await sample.rerender(
+      <_MateoResistanceSample
+        returnAnimation={{ durationMs: 1600, curve: [0, 1, 1, 1] }}
+      />,
+    );
+    expect(_getMateoTranslation()).toEqual(beforeUpdate);
+    frames.advance(400);
+    expect(_getMateoTranslation()[0]).toBeCloseTo(4, 2);
+    frames.advance(800);
+    expect(_getMateoTranslation()).toEqual([0, 0]);
+    await commands.mateoDragPointer('drag', 96, 0);
+    await commands.mateoPointerUp();
+    frames.advance(800);
+    expect(_getMateoTranslation()[0]).toBeCloseTo(1, 2);
+    frames.advance(1600);
+    expect(_getMateoTranslation()).toEqual([0, 0]);
+  } finally {
+    frames.restore();
+  }
+});
+
+it.each([
+  {
+    name: 'only duration is supplied',
+    animation: { durationMs: 800 },
+    durationMs: 800,
+    linear: false,
+  },
+  {
+    name: 'only curve is supplied',
+    animation: { curve: [0, 0, 1, 1] },
+    durationMs: 180,
+    linear: true,
+  },
+  {
+    name: 'the configuration is empty',
+    animation: {},
+    durationMs: 180,
+    linear: false,
+  },
+] satisfies readonly {
+  name: string;
+  animation: NonNullable<MateoDragResistanceProps['returnAnimation']>;
+  durationMs: number;
+  linear: boolean;
+}[])(
+  'should retain defaults for omitted return fields when $name',
+  async ({ animation, durationMs, linear }) => {
+    await render(<_MateoResistanceSample returnAnimation={animation} />);
+    await commands.mateoDragPointer('drag', 96, 0);
+    const frames = _controlMateoReturnFrames();
+    try {
+      await commands.mateoPointerUp();
+      frames.advance(durationMs / 2);
+      if (linear) expect(_getMateoTranslation()[0]).toBeCloseTo(4, 2);
+      else {
+        expect(_getMateoTranslation()[0]).toBeGreaterThan(0);
+        expect(_getMateoTranslation()[0]).toBeLessThan(4);
+      }
+      frames.advance(durationMs);
+      expect(_getMateoTranslation()).toEqual([0, 0]);
+    } finally {
+      frames.restore();
+    }
+  },
+);
