@@ -32,18 +32,39 @@ export function useMateoSurfaceBounds<
   useLayoutEffect(() => {
     const node = element.current;
     if (!active || !node) return;
-    const measureMateoSurfaceBounds = () => {
-      const style = getComputedStyle(node);
-      const width = Number.parseFloat(style.width) || node.offsetWidth;
-      const height = Number.parseFloat(style.height) || node.offsetHeight;
+    const style = getComputedStyle(node);
+    const _updateMateoSurfaceBounds = (width: number, height: number) => {
       setBounds((previous) =>
         previous.width === width && previous.height === height
           ? previous
           : { width, height },
       );
     };
-    measureMateoSurfaceBounds();
-    const observer = new ResizeObserver(measureMateoSurfaceBounds);
+    const _measureMateoSurfaceBounds = (style: CSSStyleDeclaration) => {
+      _updateMateoSurfaceBounds(
+        Number.parseFloat(style.width) || node.offsetWidth,
+        Number.parseFloat(style.height) || node.offsetHeight,
+      );
+    };
+    _measureMateoSurfaceBounds(style);
+    const observer = new ResizeObserver((entries) => {
+      const sizes = entries?.[0]?.borderBoxSize;
+      const size = sizes?.length === 1 ? sizes[0] : undefined;
+      if (!size) {
+        _measureMateoSurfaceBounds(getComputedStyle(node));
+        return;
+      }
+      // Computed style stays live, including inherited writing-mode changes.
+      // Native box sizes avoid synchronous layout reads during resize delivery.
+      const writingMode = style.writingMode;
+      const vertical =
+        writingMode.startsWith('vertical') ||
+        writingMode.startsWith('sideways');
+      _updateMateoSurfaceBounds(
+        vertical ? size.blockSize : size.inlineSize,
+        vertical ? size.inlineSize : size.blockSize,
+      );
+    });
     observer.observe(node, { box: 'border-box' });
     return () => observer.disconnect();
   }, [active]);

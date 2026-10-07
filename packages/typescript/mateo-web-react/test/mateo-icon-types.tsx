@@ -1,5 +1,9 @@
 import { createRef } from 'react';
 import {
+  MateoArrowDownIcon,
+  type MateoNamedIconProps,
+} from '../src/mateo-icons.js';
+import {
   MateoIcon,
   type MateoIconName,
   type MateoIconProps,
@@ -34,3 +38,21 @@ const mateoIconProps: MateoIconProps = {
 <MateoIcon icon="cross" style="threeD" />;
 // @ts-expect-error The ref targets the rendered SVG.
 <MateoIcon icon="cross" ref={createRef<HTMLDivElement>()} />;
+
+const mateoNamedIconProps: MateoNamedIconProps = {
+  size: 24,
+  color: 'var(--foreground)',
+  backgroundColor: 'rebeccapurple',
+  'aria-label': 'Down',
+  ref: createRef<SVGSVGElement>(),
+};
+<MateoArrowDownIcon {...mateoNamedIconProps} />;
+<MateoArrowDownIcon />;
+// @ts-expect-error The imported component already chooses its artwork.
+<MateoArrowDownIcon icon="arrowDown" />;
+// @ts-expect-error Named icons keep the closed appearance contract.
+<MateoArrowDownIcon className="custom" />;
+// @ts-expect-error Named icons keep numeric pixel sizing.
+<MateoArrowDownIcon size="2rem" />;
+// @ts-expect-error The interactive parent owns actions.
+<MateoArrowDownIcon onClick={() => {}} />;

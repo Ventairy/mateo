@@ -106,13 +106,13 @@ interface MateoIconArtworkProps {
 }
 
 // Preserve catalog names in emitted declarations without exposing SVG imports.
-function defineMateoIconArtwork<TName extends string>(
+function _defineMateoIconArtwork<TName extends string>(
   artwork: Readonly<Record<TName, ComponentType<MateoIconArtworkProps>>>,
 ): Readonly<Record<TName, ComponentType<MateoIconArtworkProps>>> {
   return artwork;
 }
 
-const mateoIconArtwork = defineMateoIconArtwork({
+const mateoIconArtwork = /* @__PURE__ */ _defineMateoIconArtwork({
   appleLogo: MateoAppleLogoArtwork,
   arrowDown: MateoArrowDownArtwork,
   arrowLeft: MateoArrowLeftArtwork,
@@ -225,17 +225,19 @@ const mateoIconArtwork = defineMateoIconArtwork({
  */
 export type MateoIconName = keyof typeof mateoIconArtwork;
 
-function isMateoIconName(name: string): name is MateoIconName {
+function _isMateoIconName(name: string): name is MateoIconName {
   return Object.hasOwn(mateoIconArtwork, name);
 }
 
-export const mateoIconNames =
-  Object.keys(mateoIconArtwork).filter(isMateoIconName);
+function _getMateoIconNames(): readonly MateoIconName[] {
+  return Object.keys(mateoIconArtwork).filter(_isMateoIconName);
+}
 
-export function renderMateoIconArtwork(icon: MateoIconName, idPrefix: string) {
-  if (!isMateoIconName(icon)) {
+export const mateoIconNames = /* @__PURE__ */ _getMateoIconNames();
+
+export function getMateoIconArtwork(icon: MateoIconName) {
+  if (!_isMateoIconName(icon)) {
     throw new TypeError(`Unknown Mateo icon: ${String(icon)}.`);
   }
-  const MateoArtwork = mateoIconArtwork[icon];
-  return <MateoArtwork idPrefix={idPrefix} />;
+  return mateoIconArtwork[icon];
 }

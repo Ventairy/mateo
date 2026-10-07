@@ -1,5 +1,6 @@
 @import "tailwindcss/theme.css" layer(mateo-theme) prefix(mateo);
 @import "tailwindcss/utilities.css" layer(mateo) prefix(mateo) source(none);
+@import "./foundation/mateo-typography/mateo-font-faces.css";
 
 @theme {
   --*: initial;
@@ -10,22 +11,23 @@
 @source "./bases";
 @source not "./bases/**/*.test.tsx";
 
-@font-face {
-  font-family: Inter;
-  src: url("./foundation/mateo-typography/assets/inter-variable.ttf?no-inline")
-    format("truetype");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
+/* Scroll masks belong to their content element, never its foreground subtree. */
+@property --mateo-boundary-mask {
+  syntax: "*";
+  inherits: false;
+  initial-value: none;
 }
 
-@font-face {
-  font-family: Inter;
-  src: url("./foundation/mateo-typography/assets/inter-italic.ttf?no-inline")
-    format("truetype");
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
+@property --mateo-mask-offset {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --mateo-viewport-height {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
 }
 
 @layer mateo-theme {

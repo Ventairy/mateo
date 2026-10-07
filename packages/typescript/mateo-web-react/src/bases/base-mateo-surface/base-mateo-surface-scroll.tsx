@@ -35,6 +35,30 @@ export function BaseMateoSurfaceScroll({
     const node = viewport.current;
     const body = content.current;
     if (!node || !body) return;
+    const ownerDocument = node.ownerDocument;
+    const ownerWindow = ownerDocument.defaultView;
+    let maskAnimation: Animation | undefined;
+    let maskEffect: KeyframeEffect | undefined;
+    let canUseMateoMaskEffect =
+      !!ownerWindow &&
+      typeof ownerWindow.Animation === 'function' &&
+      typeof ownerWindow.KeyframeEffect === 'function' &&
+      typeof ownerWindow.KeyframeEffect.prototype.setKeyframes === 'function' &&
+      ownerWindow.CSS.supports('mask-image', 'linear-gradient(#000, #000)');
+    let previousHeight: number | undefined;
+    let previousTop: number | undefined;
+    let previousOffset: number | undefined;
+    let mask = 'none';
+    const _setMateoStaticBoundary = (height: number, offset: number) => {
+      if (body.style.getPropertyValue('--mateo-boundary-mask') !== mask)
+        body.style.setProperty('--mateo-boundary-mask', mask);
+      if (body.style.getPropertyValue('--mateo-mask-offset') !== `${offset}px`)
+        body.style.setProperty('--mateo-mask-offset', `${offset}px`);
+      if (
+        body.style.getPropertyValue('--mateo-viewport-height') !== `${height}px`
+      )
+        body.style.setProperty('--mateo-viewport-height', `${height}px`);
+    };
     const updateMateoScrollBoundary = () => {
       const height = node.clientHeight;
       const maximum = Math.max(0, node.scrollHeight - height);
@@ -45,20 +69,61 @@ export function BaseMateoSurfaceScroll({
         clearanceBlockStart,
         padding.blockStart,
       );
-      // Anchor the mask to the viewport, not to the moving content. Masking
-      // content alone leaves native scrollbars and the fixed header untouched,
-      // and reveals the true background even when the surface is translucent.
-      body.style.setProperty(
-        '--mateo-boundary-mask',
-        getMateoBoundaryMask(height, depths.top),
-      );
-      body.style.setProperty(
-        '--mateo-mask-offset',
-        `${position - clearanceBlockStart}px`,
-      );
-      body.style.setProperty('--mateo-viewport-height', `${height}px`);
-      node.style.scrollPaddingBlockStart = `${depths.clearTop}px`;
-      node.style.scrollPaddingBlockEnd = '0px';
+      const offset = position - clearanceBlockStart;
+      const imageChanged =
+        previousHeight !== height || previousTop !== depths.top;
+      if (imageChanged || previousOffset !== offset) {
+        if (imageChanged) mask = getMateoBoundaryMask(height, depths.top);
+        if (!canUseMateoMaskEffect || mask === 'none') {
+          // An unmasked owner needs no persistent effect or implicit will-change.
+          maskAnimation?.cancel();
+          maskAnimation = undefined;
+          maskEffect = undefined;
+          _setMateoStaticBoundary(height, offset);
+        } else if (ownerWindow) {
+          // Preserve an exact static first pose and the original API fallback.
+          if (!maskEffect) _setMateoStaticBoundary(height, offset);
+          const frame = {
+            maskImage: mask,
+            maskSize: `100% ${height}px`,
+            maskPosition: `0px ${offset}px`,
+          };
+          const frames = [
+            { ...frame, offset: 0 },
+            { ...frame, offset: 1 },
+          ];
+          try {
+            if (maskEffect) {
+              maskEffect.setKeyframes(frames);
+            } else {
+              maskEffect = new ownerWindow.KeyframeEffect(body, frames, {
+                duration: 1,
+                fill: 'both',
+              });
+              // No play/pause task or advancing timeline: hold one exact pose.
+              maskAnimation = new ownerWindow.Animation(maskEffect, null);
+              maskAnimation.currentTime = 0;
+            }
+            // A null timeline has no scheduled sampling pass. Resolve the new
+            // model at its held time without reading DOM geometry or starting it.
+            maskEffect.getComputedTiming();
+          } catch {
+            maskAnimation?.cancel();
+            maskAnimation = undefined;
+            maskEffect = undefined;
+            canUseMateoMaskEffect = false;
+            _setMateoStaticBoundary(height, offset);
+          }
+        }
+        previousHeight = height;
+        previousTop = depths.top;
+        previousOffset = offset;
+      }
+      const clearance = `${depths.clearTop}px`;
+      if (node.style.scrollPaddingBlockStart !== clearance)
+        node.style.scrollPaddingBlockStart = clearance;
+      if (node.style.scrollPaddingBlockEnd !== '0px')
+        node.style.scrollPaddingBlockEnd = '0px';
     };
     updateMateoScrollBoundary();
     const observer = new ResizeObserver(updateMateoScrollBoundary);
@@ -83,8 +148,6 @@ export function BaseMateoSurfaceScroll({
           ? event.composedPath()
           : [];
     };
-    const ownerDocument = node.ownerDocument;
-    const ownerWindow = ownerDocument.defaultView;
     const pointerListeners = new AbortController();
     const capture = { capture: true, signal: pointerListeners.signal };
     ownerDocument.addEventListener(
@@ -131,6 +194,7 @@ export function BaseMateoSurfaceScroll({
     };
     node.addEventListener('focusin', revealMateoFocusedContent);
     return () => {
+      maskAnimation?.cancel();
       pointerListeners.abort();
       observer.disconnect();
       node.removeEventListener('scroll', updateMateoScrollBoundary);

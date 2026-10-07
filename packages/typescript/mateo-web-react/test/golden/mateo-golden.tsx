@@ -79,9 +79,12 @@ export async function renderMateoGoldens(
 
 export async function settleMateoGolden() {
   await document.fonts.ready;
-  expect(document.fonts.check('16px Inter')).toBe(true);
+  // Composite faces leave unneeded character resources unloaded after layout.
   const inter = Array.from(document.fonts).find(
-    (face) => face.family === 'Inter' && face.style === 'normal',
+    (face) =>
+      face.family === 'Inter' &&
+      face.style === 'normal' &&
+      face.status === 'loaded',
   );
   expect(inter?.status).toBe('loaded');
   for (const text of document.querySelectorAll(
@@ -95,9 +98,17 @@ export async function settleMateoGolden() {
     requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
   );
   // A state change can cancel one transition and start another in the same frame.
-  while (document.getAnimations().length > 0) {
+  for (;;) {
+    const progressing = document
+      .getAnimations()
+      .filter(
+        (animation) => animation.playState === 'running' || animation.pending,
+      );
+    if (progressing.length === 0) break;
     await Promise.allSettled(
-      document.getAnimations().map((animation) => animation.finished),
+      progressing.map((animation) =>
+        animation.pending ? animation.ready : animation.finished,
+      ),
     );
     await new Promise<void>((resolve) =>
       requestAnimationFrame(() => resolve()),

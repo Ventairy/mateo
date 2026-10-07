@@ -28,10 +28,18 @@
       "types": "./dist/mateo-react.d.ts",
       "import": "./dist/react.js"
     },
+    "./icons": {
+      "types": "./dist/mateo-icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./fonts/inter-latin.woff2": "./dist/inter-latin.woff2",
+    "./fonts/inter-variable.woff2": "./dist/inter-variable.woff2",
+    "./fonts/inter-italic-latin.woff2": "./dist/inter-italic-latin.woff2",
+    "./fonts/inter-italic.woff2": "./dist/inter-italic.woff2",
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "vite build && tsc -p tsconfig.build.json && node scripts/check-mateo-build.mjs",
+    "build": "node scripts/generate-mateo-icons.mjs && vite build && tsc -p tsconfig.build.json && node scripts/check-mateo-build.mjs && node scripts/check-mateo-icon-delivery.mjs",
     "prepare": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . --error-on-warnings",

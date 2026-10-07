@@ -7,6 +7,7 @@ import { expect, it } from 'vitest';
 import {
   captureMateoGolden,
   captureMateoGoldens,
+  compareMateoGoldenGroup,
   getMateoGoldenElement,
   mateoGoldenTheme,
   renderMateoGoldens,
@@ -165,10 +166,15 @@ it('should adapt its clipping outline when its parent changes dimensions', async
   expect(before?.width).toBe(240);
   expect(after?.width).toBe(96);
   expect(after?.height).toBe(160);
-  await captureMateoGoldens(
-    createMateoResizeScenario(112, 176),
-    'surface-resize',
-  );
+  await captureMateoGolden('resized-parent');
+  const parent = getMateoGoldenElement('resized-parent');
+  parent.style.width = '112.25px';
+  parent.style.height = '176.5px';
+  parent.style.writingMode = 'vertical-rl';
+  parent.style.transform = 'scale(0.8)';
+  parent.style.transformOrigin = 'top left';
+  await captureMateoGolden('vertical-fractional-scaled', 'resized-parent');
+  await compareMateoGoldenGroup('surface-resize');
 });
 
 it('should preserve Mateo outlines and clipping when rendering interpolated rounded shape frames', async () => {

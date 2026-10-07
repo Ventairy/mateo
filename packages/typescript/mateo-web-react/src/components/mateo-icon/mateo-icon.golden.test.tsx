@@ -1,4 +1,10 @@
 import {
+  MateoBeerMugIcon,
+  MateoBoxPencilIcon,
+  MateoCheckmarkIcon,
+  MateoCrossIcon,
+} from 'mateo-web-react/icons';
+import {
   MateoIcon,
   type MateoIconName,
   MateoIconProvider,
@@ -31,7 +37,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
   const scenarios = [
     ...[16, 20, 24, 48].map((size) => ({
       name: `size-${size}`,
-      content: <MateoIcon icon="checkmark" size={size} />,
+      content: <MateoCheckmarkIcon size={size} />,
     })),
     {
       name: 'inherited-text',
@@ -44,10 +50,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
     {
       name: 'explicit-foreground',
       content: (
-        <MateoIcon
-          icon="checkmark"
-          color={mateoGoldenTheme.colorScheme.accent}
-        />
+        <MateoCheckmarkIcon color={mateoGoldenTheme.colorScheme.accent} />
       ),
     },
     {
@@ -69,8 +72,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
           color={mateoGoldenTheme.colorScheme.accent}
         >
           <MateoIconProvider size={48}>
-            <MateoIcon
-              icon="checkmark"
+            <MateoCheckmarkIcon
               color={mateoGoldenTheme.colorScheme.text.secondary}
             />
           </MateoIconProvider>
@@ -80,8 +82,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
     {
       name: 'circular-background',
       content: (
-        <MateoIcon
-          icon="cross"
+        <MateoCrossIcon
           size={48}
           color={mateoGoldenTheme.colorScheme.onAccent}
           backgroundColor={mateoGoldenTheme.colorScheme.accent}
@@ -92,9 +93,9 @@ it('should inherit or override appearance when composing icon scopes and backgro
       name: 'repeated-definitions',
       content: (
         <div className="mateo-golden-row">
-          <MateoIcon icon="beerMug" size={32} />
-          <MateoIcon icon="beerMug" size={48} />
-          <MateoIcon icon="boxPencil" size={32} />
+          <MateoBeerMugIcon size={32} />
+          <MateoBeerMugIcon size={48} />
+          <MateoBoxPencilIcon size={32} />
         </div>
       ),
     },

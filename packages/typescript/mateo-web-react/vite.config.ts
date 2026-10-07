@@ -32,6 +32,7 @@ export default defineConfig({
       entry: {
         index: 'src/mateo.ts',
         react: 'src/mateo-react.tsx',
+        icons: 'src/mateo-icons.tsx',
         styles: 'src/mateo-styles.css',
       },
       formats: ['es'],

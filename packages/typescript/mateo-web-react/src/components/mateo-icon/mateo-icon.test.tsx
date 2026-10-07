@@ -5,6 +5,11 @@ import { createRef } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import {
+  MateoArrowDownIcon,
+  MateoCrossIcon,
+  MateoShoppingCartIcon,
+} from '../../mateo-icons.js';
 import { MateoIcon } from './mateo-icon.js';
 import { mateoIconNames } from './mateo-icon-artwork.js';
 
@@ -180,6 +185,7 @@ describe('MateoIcon', () => {
       <>
         <MateoIcon icon="cross" />
         <MateoIcon icon="cross" aria-label="  " />
+        <MateoArrowDownIcon aria-label="  " />
       </>,
     );
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
@@ -201,7 +207,7 @@ describe('MateoIcon', () => {
 
   it('should expose the native SVG when a ref is supplied', () => {
     const ref = createRef<SVGSVGElement>();
-    render(<MateoIcon icon="cross" aria-label="Close" ref={ref} />);
+    render(<MateoCrossIcon aria-label="Close" ref={ref} />);
     expect(ref.current).toBe(screen.getByRole('img', { name: 'Close' }));
   });
 
@@ -223,7 +229,7 @@ describe('MateoIcon', () => {
     const mateoImages = (
       <>
         <MateoIcon icon="shoppingCart" aria-label="First cart" />
-        <MateoIcon icon="shoppingCart" aria-label="Second cart" />
+        <MateoShoppingCartIcon aria-label="Second cart" />
         <MateoIcon icon="clock" aria-label="Clock" />
       </>
     );
