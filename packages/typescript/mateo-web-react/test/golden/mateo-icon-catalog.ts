@@ -57,6 +57,7 @@ export const mateoGoldenIconCatalog = {
   letters: true,
   lightningBolt: true,
   linkedinLogo: true,
+  linktreeLogo: true,
   mapPin: true,
   logout: true,
   magnifyingGlassSadFace: true,

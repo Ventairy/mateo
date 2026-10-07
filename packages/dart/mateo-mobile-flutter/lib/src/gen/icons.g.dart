@@ -256,6 +256,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.linkedinLogo(<params>);
 /// ```
 /// ```dart
+/// $Icons.linktreeLogo(<params>);
+/// ```
+/// ```dart
 /// $Icons.locationPin(<params>);
 /// ```
 /// ```dart
@@ -1233,6 +1236,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `LinktreeLogo` widget from `linktreeLogo.svg`.
+  static Widget linktreeLogo({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _LinktreeLogo(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `LocationPin` widget from `locationPin.svg`.
   static Widget locationPin({
     Key? key,
@@ -2029,6 +2047,7 @@ abstract final class $Icons {
       height: height,
     ),
     'linkedin-logo.svg' => linkedinLogo(key: key, width: width, height: height),
+    'linktree-logo.svg' => linktreeLogo(key: key, width: width, height: height),
     'location-pin.svg' => locationPin(key: key, width: width, height: height),
     'logout.svg' => logout(key: key, width: width, height: height),
     'magnifying-glass.svg' => magnifyingGlass(
@@ -12125,6 +12144,154 @@ class _LinkedinLogoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LinkedinLogoPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/linktree-logo.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _LinktreeLogo extends StatelessWidget with _DotdartSvgSizing {
+  const _LinktreeLogo({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _LinktreeLogo._svgWidth;
+
+  @override
+  double get svgNativeHeight => _LinktreeLogo._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _LinktreeLogo._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _LinktreeLogo._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _LinktreeLogoPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _LinktreeLogoPainter extends CustomPainter {
+  _LinktreeLogoPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.809292857,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.809292857,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.907071434,
+    1.907071434,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(11.4657, 4.8771)
+    ..lineTo(14.846, 1.4466)
+    ..lineTo(16.8084, 3.4306)
+    ..lineTo(13.2626, 6.7678)
+    ..lineTo(18.25, 6.7678)
+    ..lineTo(18.25, 9.5217)
+    ..lineTo(13.239, 9.5217)
+    ..lineTo(16.8084, 12.9448)
+    ..lineTo(14.846, 14.8896)
+    ..lineTo(10.0004, 10.0825)
+    ..lineTo(5.1548, 14.8896)
+    ..lineTo(3.1925, 12.9523)
+    ..lineTo(6.7619, 9.5292)
+    ..lineTo(1.75, 9.5292)
+    ..lineTo(1.75, 6.7678)
+    ..lineTo(6.7374, 6.7678)
+    ..lineTo(3.1916, 3.4306)
+    ..lineTo(5.154, 1.4466)
+    ..lineTo(8.5343, 4.8771)
+    ..lineTo(8.5343, 0)
+    ..lineTo(11.4657, 0)
+    ..lineTo(11.4657, 4.8771)
+    ..close()
+    ..moveTo(8.5343, 13.4655)
+    ..lineTo(11.4657, 13.4655)
+    ..lineTo(11.4657, 20)
+    ..lineTo(8.5343, 20)
+    ..lineTo(8.5343, 13.4655)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _LinktreeLogo._viewBoxWidth;
+    final scaleY = size.height / _LinktreeLogo._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_LinktreeLogo._viewBoxMinX, -_LinktreeLogo._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _LinktreeLogoPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

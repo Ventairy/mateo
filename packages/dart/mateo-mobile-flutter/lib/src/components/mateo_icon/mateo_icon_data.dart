@@ -171,6 +171,9 @@ enum MateoIconData {
   /// The LinkedIn logo icon.
   linkedinLogo,
 
+  /// The Linktree logo icon.
+  linktreeLogo,
+
   /// The logout icon.
   logout,
 
@@ -309,6 +312,7 @@ enum MateoIconData {
   Widget _buildSvg({Color? color}) => switch (this) {
     xLogo => $Icons.xLogo(mateoOpticalSizeColor: color),
     linkedinLogo => $Icons.linkedinLogo(mateoOpticalSizeColor: color),
+    linktreeLogo => $Icons.linktreeLogo(mateoOpticalSizeColor: color),
     instagramLogo => $Icons.instagramLogo(mateoOpticalSizeColor: color),
     appleLogo => $Icons.appleLogo(mateoOpticalSizeColor: color),
     arrowDown => $Icons.arrowDown(mateoOpticalSizeColor: color),

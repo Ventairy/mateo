@@ -59,6 +59,7 @@ import MateoInstagramLogoArtwork from '../../../../design-system/foundation/asse
 import MateoLettersArtwork from '../../../../design-system/foundation/assets/icons/svg/letters.svg?react';
 import MateoLightningBoltArtwork from '../../../../design-system/foundation/assets/icons/svg/lightning-bolt.svg?react';
 import MateoLinkedinLogoArtwork from '../../../../design-system/foundation/assets/icons/svg/linkedin-logo.svg?react';
+import MateoLinktreeLogoArtwork from '../../../../design-system/foundation/assets/icons/svg/linktree-logo.svg?react';
 import MateoMapPinArtwork from '../../../../design-system/foundation/assets/icons/svg/location-pin.svg?react';
 import MateoLogoutArtwork from '../../../../design-system/foundation/assets/icons/svg/logout.svg?react';
 import MateoMagnifierGlassArtwork from '../../../../design-system/foundation/assets/icons/svg/magnifying-glass.svg?react';
@@ -439,6 +440,13 @@ export function MateoLinkedinLogoIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLinkedinLogoArtwork} />;
+}
+
+/** Renders the linktreeLogo artwork with Mateo icon appearance and accessibility. */
+export function MateoLinktreeLogoIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoLinktreeLogoArtwork} />;
 }
 
 /** Renders the mapPin artwork with Mateo icon appearance and accessibility. */
