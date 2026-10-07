@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import {
   MateoButton,
   type MateoButtonPresentation,
@@ -69,7 +70,55 @@ export function checkMateoButtonTypes() {
       ref={{ current: document.createElement('div') }}
     />
   );
+  const anchor = (
+    <MateoButton
+      as="a"
+      href="/profile"
+      presentation={presentation}
+      target="_blank"
+      rel="noopener"
+      ref={createRef<HTMLAnchorElement>()}
+      onPressed={(event) => {
+        const link: HTMLAnchorElement = event.currentTarget;
+        link.focus();
+      }}
+    />
+  );
+  // @ts-expect-error Anchor mode requires a destination.
+  const missingDestination = <MateoButton as="a" presentation={presentation} />;
+  const implicitDestination = (
+    // @ts-expect-error Navigation props require explicit anchor mode.
+    <MateoButton href="/profile" presentation={presentation} />
+  );
+  const buttonDestination = (
+    // @ts-expect-error Native actions cannot receive navigation props.
+    <MateoButton as="button" href="/profile" presentation={presentation} />
+  );
+  const anchorButtonRef = (
+    // @ts-expect-error Link refs must refer to native anchors.
+    <MateoButton
+      as="a"
+      href="/profile"
+      presentation={presentation}
+      ref={createRef<HTMLButtonElement>()}
+    />
+  );
+  const buttonTarget = (
+    // @ts-expect-error Actions cannot receive browsing context props.
+    <MateoButton target="_blank" presentation={presentation} />
+  );
+  const disabledAnchor = (
+    // @ts-expect-error Links do not have a disabled state.
+    <MateoButton as="a" href="/profile" presentation={presentation} disabled />
+  );
   return {
+    anchor,
+    missingDestination,
+    implicitDestination,
+    buttonDestination,
+    anchorButtonRef,
+    buttonTarget,
+    disabledAnchor,
     presentation,
     iconPresentation,
     unnamedIcon,

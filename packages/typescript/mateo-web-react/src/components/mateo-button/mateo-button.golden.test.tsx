@@ -4,7 +4,9 @@ import {
   type MateoButtonVariant,
   MateoIcon,
   type MateoLabelButtonPresentation,
+  MateoTheme,
 } from 'mateo-web-react/react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 import {
@@ -226,4 +228,63 @@ it('should use the applied accent when consuming a custom theme', async () => {
   ];
   await renderMateoGoldens(scenarios, mateoGoldenCustomTheme);
   await captureMateoGoldens(scenarios, 'custom-accent');
+});
+
+it('should preserve native destination label and icon presentations', async () => {
+  const scenarios = mateoGoldenButtonSizes.map((size) => ({
+    name: `native-link-${size}`,
+    width: 360,
+    content: (
+      <div className="mateo-golden-row">
+        <MateoButton
+          as="a"
+          href="#profile"
+          presentation={{
+            kind: 'label',
+            label: 'Profile',
+            size,
+            leadingIcon: <MateoIcon icon="figureCropCircle" />,
+          }}
+        />
+        <MateoButton
+          as="a"
+          href="#profile"
+          presentation={{
+            kind: 'icon',
+            label: 'Profile',
+            size,
+            icon: <MateoIcon icon="figureCropCircle" />,
+          }}
+        />
+      </div>
+    ),
+  }));
+  const staticScenario = {
+    name: 'native-link-server-rendered',
+    width: 360,
+    content: (
+      <div
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Render fixed public Mateo components to verify their unhydrated appearance.
+        dangerouslySetInnerHTML={{
+          __html: renderToStaticMarkup(
+            <MateoTheme data={mateoGoldenCustomTheme}>
+              <MateoButton
+                as="a"
+                href="#profile"
+                presentation={{
+                  kind: 'label',
+                  label: 'Profile',
+                  leadingIcon: <MateoIcon icon="figureCropCircle" />,
+                }}
+              />
+            </MateoTheme>,
+          ),
+        }}
+      />
+    ),
+  };
+  const links = [...scenarios, staticScenario];
+  await renderMateoGoldens(links);
+  await settleMateoGolden();
+  await captureMateoGoldens(links, 'link-presentations');
 });

@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import type { AriaAttributes, CSSProperties, MouseEvent, Ref } from 'react';
-import type { MateoButtonsColorScheme } from '../../theme/mateo-color-scheme/mateo-buttons-color-scheme.js';
-import { useMateoTheme } from '../../theme/mateo-theme-context.js';
-import { MateoPress } from '../mateo-press/mateo-press.js';
-import { mateoButtonHeights } from './mateo-button-options.js';
+import type { AriaAttributes, CSSProperties, MouseEvent, Ref } from "react";
+import type { MateoButtonsColorScheme } from "../../theme/mateo-color-scheme/mateo-buttons-color-scheme.js";
+import { useMateoTheme } from "../../theme/mateo-theme-context.js";
+import { MateoPress } from "../mateo-press/mateo-press.js";
+import { mateoButtonHeights } from "./mateo-button-options.js";
 import type {
   MateoButtonPresentation,
   MateoButtonVariant,
-} from './mateo-button-presentation.js';
-import { MateoIconButtonContent } from './presentations/mateo-icon-button-presentation.js';
+} from "./mateo-button-presentation.js";
+import { MateoIconButtonContent } from "./presentations/mateo-icon-button-presentation.js";
 import {
   getMateoLabelButtonClassName,
   MateoLabelButtonContent,
-} from './presentations/mateo-label-button-presentation.js';
+} from "./presentations/mateo-label-button-presentation.js";
 
 /**
  * Configuration for one native Mateo button action.
@@ -23,26 +23,11 @@ import {
  * `presentation` for supported appearance choices and `onPressed` to enable the
  * action. An `aria-label` overrides the presentation label as the accessible name.
  */
-export interface MateoButtonProps extends AriaAttributes {
+interface MateoButtonContentProps extends AriaAttributes {
   /**
    * Visible content, accessible label, size, and treatment for this action.
    */
   readonly presentation: MateoButtonPresentation;
-  /**
-   * Called when the enabled action is activated by pointer, keyboard, or assistive
-   * technology. Omit to disable the button.
-   *
-   * @remarks
-   * Promises do not automatically show pending state or disable repeated activation.
-   * Handle pending state and errors in the calling application.
-   */
-  readonly onPressed?: (
-    event: MouseEvent<HTMLButtonElement>,
-  ) => void | Promise<void>;
-  /**
-   * Ref to the underlying native button, suitable for moving focus.
-   */
-  readonly ref?: Ref<HTMLButtonElement>;
   /**
    * DOM identifier on the native button for relationships and lookup.
    */
@@ -53,31 +38,73 @@ export interface MateoButtonProps extends AriaAttributes {
   readonly [attribute: `data-${string}`]: string | number | boolean | undefined;
 }
 
+/**
+ * A native button by default, or a native destination with `as="a"` and `href`.
+ * Links retain browser navigation and remain enabled without `onPressed`.
+ */
+export type MateoButtonProps = MateoButtonContentProps &
+  (
+    | {
+        /** Native action mode; this is the default. */
+        readonly as?: "button";
+        readonly href?: never;
+        readonly target?: never;
+        readonly rel?: never;
+        /** Action callback. Omit to disable; promises do not change pending state. */
+        readonly onPressed?: (
+          event: MouseEvent<HTMLButtonElement>,
+        ) => void | Promise<void>;
+        /** Ref to the native button. */
+        readonly ref?: Ref<HTMLButtonElement>;
+      }
+    | {
+        /** Native destination mode with the same button presentation. */
+        readonly as: "a";
+        /** Nonempty destination URL, including relative paths and fragments. */
+        readonly href: string;
+        /** Browsing context receiving navigation. Defaults to the current context. */
+        readonly target?: "_self" | "_blank" | "_parent" | "_top";
+        /** Space-separated destination relationships, such as `noopener`. */
+        readonly rel?: string;
+        /**
+         * Optional activation callback. Navigation remains native unless it calls
+         * `preventDefault()`. Promises are not awaited before navigation.
+         */
+        readonly onPressed?: (
+          event: MouseEvent<HTMLAnchorElement>,
+        ) => void | Promise<void>;
+        /** Ref to the native link. */
+        readonly ref?: Ref<HTMLAnchorElement>;
+      }
+  );
+
 function getMateoButtonColors(
   colors: MateoButtonsColorScheme,
   variant: MateoButtonVariant,
 ) {
   const treatments = {
     primary: colors.primary.accent,
-    'primary-success': colors.primary.success,
-    'primary-warning': colors.primary.warning,
-    'primary-neutral': colors.primary.neutral,
-    'primary-base': colors.primary.base,
+    "primary-success": colors.primary.success,
+    "primary-warning": colors.primary.warning,
+    "primary-neutral": colors.primary.neutral,
+    "primary-base": colors.primary.base,
     secondary: colors.secondary.accent,
-    'secondary-neutral': colors.secondary.neutral,
+    "secondary-neutral": colors.secondary.neutral,
     tertiary: colors.tertiary,
   } as const;
   if (!Object.hasOwn(treatments, variant))
-    throw new TypeError('Unsupported MateoButton variant.');
+    throw new TypeError("Unsupported MateoButton variant.");
   return treatments[variant];
 }
 
 /**
- * Renders a native action with Mateo colors, shape, and press feedback.
+ * Renders a native action or destination with Mateo colors, shape, and press feedback.
  *
  * @remarks
  * Requires a MateoTheme ancestor. Uses `type="button"`, so activation does not
- * submit a form. Omit `onPressed` to disable. Keyboard and pointer feedback respect
+ * submit a form. Omit `onPressed` to disable actions. Use `as="a"` and `href`
+ * for a destination, with optional `target`, `rel`, and `onPressed`. Enter follows
+ * the link and Space scrolls. Links work without hydration. Pointer feedback respects
  * reduced-motion preferences. Label presentations truncate when space is limited;
  * the full label remains the default accessible name.
  *
@@ -93,63 +120,73 @@ function getMateoButtonColors(
  * />
  * ```
  */
-export function MateoButton({
-  presentation,
-  onPressed,
-  ref,
-  id,
-  ...attributes
-}: MateoButtonProps) {
+export function MateoButton(props: MateoButtonProps) {
+  const { presentation, id, ...attributes } = props;
   const theme = useMateoTheme();
-  const enabled = onPressed !== undefined;
+  const enabled = props.as === "a" || props.onPressed !== undefined;
   if (
-    (presentation?.kind !== 'label' && presentation?.kind !== 'icon') ||
-    typeof presentation.label !== 'string' ||
+    (presentation?.kind !== "label" && presentation?.kind !== "icon") ||
+    typeof presentation.label !== "string" ||
     !presentation.label.trim()
   ) {
     throw new TypeError(
-      'MateoButton requires a supported presentation with a nonempty label.',
+      "MateoButton requires a supported presentation with a nonempty label.",
     );
   }
-  const { label, variant = 'primary', size = 'standard' } = presentation;
+  const { label, variant = "primary", size = "standard" } = presentation;
   if (!Object.hasOwn(mateoButtonHeights, size))
-    throw new TypeError('Unsupported MateoButton size.');
+    throw new TypeError("Unsupported MateoButton size.");
   const className =
-    presentation.kind === 'label'
+    presentation.kind === "label"
       ? getMateoLabelButtonClassName(presentation)
-      : 'mateo:w-fit';
+      : "mateo:w-fit";
   const colors = getMateoButtonColors(theme.colorScheme.buttons, variant);
   const foreground = enabled ? colors.foreground : colors.foregroundDisabled;
   const style: CSSProperties & Record<`--mateo-${string}`, string> = {
-    '--mateo-button-height': `${mateoButtonHeights[size]}px`,
-    '--mateo-button-background': enabled
+    "--mateo-button-height": `${mateoButtonHeights[size]}px`,
+    "--mateo-button-background": enabled
       ? colors.background
       : colors.backgroundDisabled,
-    '--mateo-button-foreground': foreground,
-    '--mateo-press-focus': theme.colorScheme.accent,
+    "--mateo-button-foreground": foreground,
+    "--mateo-press-focus": theme.colorScheme.accent,
   };
   const accessibleAttributes = Object.fromEntries(
     Object.entries(attributes).filter(
-      ([name]) => name.startsWith('aria-') || name.startsWith('data-'),
+      ([name]) => name.startsWith("aria-") || name.startsWith("data-"),
     ),
   );
   return (
     <span
       style={style}
       className={[
-        'mateo:inline-grid mateo:box-border mateo:max-w-full mateo:align-middle',
+        "mateo:inline-grid mateo:box-border mateo:max-w-full mateo:align-middle",
         className,
-      ].join(' ')}
+      ].join(" ")}
     >
       <MateoPress
         {...accessibleAttributes}
-        as="button"
-        {...(onPressed === undefined ? {} : { onPressed })}
-        {...(ref === undefined ? {} : { ref })}
+        {...(props.as === "a"
+          ? {
+              as: "a" as const,
+              href: props.href,
+              ...(props.target === undefined ? {} : { target: props.target }),
+              ...(props.rel === undefined ? {} : { rel: props.rel }),
+              ...(props.onPressed === undefined
+                ? {}
+                : { onPressed: props.onPressed }),
+              ...(props.ref === undefined ? {} : { ref: props.ref }),
+            }
+          : {
+              as: "button" as const,
+              ...(props.onPressed === undefined
+                ? {}
+                : { onPressed: props.onPressed }),
+              ...(props.ref === undefined ? {} : { ref: props.ref }),
+            })}
         {...(id === undefined ? {} : { id })}
-        aria-label={attributes['aria-label'] ?? label}
+        aria-label={attributes["aria-label"] ?? label}
       >
-        {presentation.kind === 'label' ? (
+        {presentation.kind === "label" ? (
           <MateoLabelButtonContent
             presentation={presentation}
             foreground={foreground}

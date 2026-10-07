@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineBrowserCommand } from '@vitest/browser-playwright';
 
 export const mateoGoldenCommands = {
@@ -35,6 +36,11 @@ export const mateoGoldenCommands = {
       const consumer = await page.context().newPage();
       try {
         await consumer.setContent(markup);
+        await consumer.addStyleTag({
+          path: fileURLToPath(
+            new URL('../../dist/styles.css', import.meta.url),
+          ),
+        });
         await consumer.getByRole('link', { name: 'Profile' }).click();
         await consumer.waitForURL('about:blank#mateo-destination');
         return consumer.url();
