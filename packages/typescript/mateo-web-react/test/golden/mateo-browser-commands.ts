@@ -181,6 +181,23 @@ export const mateoGoldenCommands = {
       }
     },
   ),
+  mateoDragPointer: defineBrowserCommand(
+    async ({ page, iframe }, testId: string, x: number, y: number) => {
+      const bounds = await iframe.getByTestId(testId).boundingBox();
+      if (!bounds) throw new Error(`Missing drag target: ${testId}`);
+      const startX = bounds.x + bounds.width / 2;
+      const startY = bounds.y + bounds.height / 2;
+      await page.mouse.move(startX, startY);
+      await page.mouse.down();
+      await page.mouse.move(startX + x, startY + y);
+      return { x: startX, y: startY };
+    },
+  ),
+  mateoMovePointer: defineBrowserCommand(
+    async ({ page }, x: number, y: number) => {
+      await page.mouse.move(x, y);
+    },
+  ),
   mateoPointerUp: defineBrowserCommand(async ({ page }) => {
     await page.mouse.up();
   }),
@@ -203,6 +220,13 @@ export const mateoGoldenCommands = {
 
 declare module 'vitest/browser' {
   interface BrowserCommands {
+    mateoDragPointer(
+      testId: string,
+      x: number,
+      y: number,
+    ): Promise<{ x: number; y: number }>;
+    mateoMovePointer(x: number, y: number): Promise<void>;
+
     mateoFollowLink(
       testId: string,
       input: 'pointer' | 'enter' | 'modified' | 'middle',

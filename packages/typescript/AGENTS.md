@@ -104,13 +104,35 @@ Private and internal implementation details do not require TSDoc. For generated
 public APIs, maintain documentation in the owning source or generator rather
 than hand-editing generated output.
 
-Describe what an API means and what it is for, rather than tying its description
-to the current implementation. For semantic roles, explain the role itself;
-avoid baking in today's appearance, palette step, opacity, or rendering choice.
-Include such details only when they are part of the public contract and needed
-to use the API correctly. Keep simple meanings simple: a one-line summary is
-enough when there is nothing else a consumer needs to know. Do not add remarks
-or caveats merely to make a comment more detailed.
+Follow these consumer-facing documentation rules:
+
+- Lead with the concrete outcome the API helps consumers achieve. Explain its
+  purpose through familiar use cases before behavior details, configuration,
+  or constraints; avoid abstract summaries when a direct description is clearer.
+- Describe extensible containers, such as modules, namespaces, classes, and
+  interfaces, by their stable domain or role. Do not define them by their first
+  feature or enumerate their current operations, even as examples. Put
+  feature-specific behavior on the member that provides it. Keep the summary
+  concrete: do not merely restate the name or stored value with phrases such as
+  "represents an X."
+- Explain how to use the API, what it visibly or observably does, and constraints
+  consumers must act on. Include technical details only when they change usage
+  or an observable result, and describe their consumer-facing consequence.
+  Keep internal coordination and optimization machinery out of public TSDoc,
+  including frame scheduling, transform accumulators, caches, and batching.
+- When an existing dedicated consumer guide provides useful detail, link to it
+  from the owning declaration using its canonical GitHub URL so the link works
+  in editors and generated API documentation. Keep detailed usage in that guide
+  rather than duplicating it in every declaration.
+- Describe an API's meaning rather than its current implementation. For semantic
+  roles, explain the role itself; avoid baking in today's appearance, palette
+  step, opacity, or rendering choice unless it is part of the public contract.
+  A one-line summary is enough for a simple meaning; do not add remarks or
+  caveats merely to make a comment longer.
+- Update TSDoc when consumers need to discover a capability, change their usage,
+  choose between meaningful options, or act on a non-obvious constraint. Do not
+  mechanically expand comments for internal changes or fixes that restore
+  behavior already implied by the public API.
 
 For example, document a selection background as:
 
