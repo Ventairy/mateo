@@ -2,6 +2,7 @@
 // Regenerate with node scripts/generate-mateo-icons.mjs.
 'use client';
 
+import type { ReactElement } from 'react';
 import MateoAppleLogoArtwork from '../../../../design-system/foundation/assets/icons/svg/apple-logo.svg?react';
 import MateoArrowDownArtwork from '../../../../design-system/foundation/assets/icons/svg/arrow-down.svg?react';
 import MateoArrowLeftArtwork from '../../../../design-system/foundation/assets/icons/svg/arrow-left.svg?react';
@@ -124,61 +125,65 @@ import type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';
 export type MateoNamedIconProps = Omit<MateoIconProps, 'icon'>;
 
 /** Renders the appleLogo artwork with Mateo icon appearance and accessibility. */
-export function MateoAppleLogoIcon(props: MateoNamedIconProps) {
+export function MateoAppleLogoIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoAppleLogoArtwork} />;
 }
 
 /** Renders the arrowDown artwork with Mateo icon appearance and accessibility. */
-export function MateoArrowDownIcon(props: MateoNamedIconProps) {
+export function MateoArrowDownIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoArrowDownArtwork} />;
 }
 
 /** Renders the arrowLeft artwork with Mateo icon appearance and accessibility. */
-export function MateoArrowLeftIcon(props: MateoNamedIconProps) {
+export function MateoArrowLeftIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoArrowLeftArtwork} />;
 }
 
 /** Renders the arrowRight artwork with Mateo icon appearance and accessibility. */
-export function MateoArrowRightIcon(props: MateoNamedIconProps) {
+export function MateoArrowRightIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoArrowRightArtwork} />;
 }
 
 /** Renders the arrowRotateClockwise artwork with Mateo icon appearance and accessibility. */
-export function MateoArrowRotateClockwiseIcon(props: MateoNamedIconProps) {
+export function MateoArrowRotateClockwiseIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return (
     <BaseMateoIcon {...props} artwork={MateoArrowRotateClockwiseArtwork} />
   );
 }
 
 /** Renders the arrowUp artwork with Mateo icon appearance and accessibility. */
-export function MateoArrowUpIcon(props: MateoNamedIconProps) {
+export function MateoArrowUpIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoArrowUpArtwork} />;
 }
 
 /** Renders the bankBuilding artwork with Mateo icon appearance and accessibility. */
-export function MateoBankBuildingIcon(props: MateoNamedIconProps) {
+export function MateoBankBuildingIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBankBuildingArtwork} />;
 }
 
 /** Renders the banknotePin artwork with Mateo icon appearance and accessibility. */
-export function MateoBanknotePinIcon(props: MateoNamedIconProps) {
+export function MateoBanknotePinIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBanknotePinArtwork} />;
 }
 
 /** Renders the beerMug artwork with Mateo icon appearance and accessibility. */
-export function MateoBeerMugIcon(props: MateoNamedIconProps) {
+export function MateoBeerMugIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBeerMugArtwork} />;
 }
 
 /** Renders the bicycle artwork with Mateo icon appearance and accessibility. */
-export function MateoBicycleIcon(props: MateoNamedIconProps) {
+export function MateoBicycleIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBicycleArtwork} />;
 }
 
 /** Renders the bidirecionalHorizontalArrow artwork with Mateo icon appearance and accessibility. */
 export function MateoBidirecionalHorizontalArrowIcon(
   props: MateoNamedIconProps,
-) {
+): ReactElement {
   return (
     <BaseMateoIcon
       {...props}
@@ -188,453 +193,507 @@ export function MateoBidirecionalHorizontalArrowIcon(
 }
 
 /** Renders the book artwork with Mateo icon appearance and accessibility. */
-export function MateoBookIcon(props: MateoNamedIconProps) {
+export function MateoBookIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBookArtwork} />;
 }
 
 /** Renders the boxPencil artwork with Mateo icon appearance and accessibility. */
-export function MateoBoxPencilIcon(props: MateoNamedIconProps) {
+export function MateoBoxPencilIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBoxPencilArtwork} />;
 }
 
 /** Renders the broom artwork with Mateo icon appearance and accessibility. */
-export function MateoBroomIcon(props: MateoNamedIconProps) {
+export function MateoBroomIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBroomArtwork} />;
 }
 
 /** Renders the buildings artwork with Mateo icon appearance and accessibility. */
-export function MateoBuildingsIcon(props: MateoNamedIconProps) {
+export function MateoBuildingsIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBuildingsArtwork} />;
 }
 
 /** Renders the busFront artwork with Mateo icon appearance and accessibility. */
-export function MateoBusFrontIcon(props: MateoNamedIconProps) {
+export function MateoBusFrontIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBusFrontArtwork} />;
 }
 
 /** Renders the checkeredFlag artwork with Mateo icon appearance and accessibility. */
-export function MateoCheckeredFlagIcon(props: MateoNamedIconProps) {
+export function MateoCheckeredFlagIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCheckeredFlagArtwork} />;
 }
 
 /** Renders the checkmark artwork with Mateo icon appearance and accessibility. */
-export function MateoCheckmarkIcon(props: MateoNamedIconProps) {
+export function MateoCheckmarkIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCheckmarkArtwork} />;
 }
 
 /** Renders the chevronDown artwork with Mateo icon appearance and accessibility. */
-export function MateoChevronDownIcon(props: MateoNamedIconProps) {
+export function MateoChevronDownIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoChevronDownArtwork} />;
 }
 
 /** Renders the chevronLeft artwork with Mateo icon appearance and accessibility. */
-export function MateoChevronLeftIcon(props: MateoNamedIconProps) {
+export function MateoChevronLeftIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoChevronLeftArtwork} />;
 }
 
 /** Renders the circleBlock artwork with Mateo icon appearance and accessibility. */
-export function MateoCircleBlockIcon(props: MateoNamedIconProps) {
+export function MateoCircleBlockIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCircleBlockArtwork} />;
 }
 
 /** Renders the circleCheck artwork with Mateo icon appearance and accessibility. */
-export function MateoCircleCheckIcon(props: MateoNamedIconProps) {
+export function MateoCircleCheckIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCircleCheckArtwork} />;
 }
 
 /** Renders the circleDollar artwork with Mateo icon appearance and accessibility. */
-export function MateoCircleDollarIcon(props: MateoNamedIconProps) {
+export function MateoCircleDollarIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCircleDollarArtwork} />;
 }
 
 /** Renders the circleInfo artwork with Mateo icon appearance and accessibility. */
-export function MateoCircleInfoIcon(props: MateoNamedIconProps) {
+export function MateoCircleInfoIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCircleInfoArtwork} />;
 }
 
 /** Renders the circle artwork with Mateo icon appearance and accessibility. */
-export function MateoCircleIcon(props: MateoNamedIconProps) {
+export function MateoCircleIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCircleArtwork} />;
 }
 
 /** Renders the classicBuilding artwork with Mateo icon appearance and accessibility. */
-export function MateoClassicBuildingIcon(props: MateoNamedIconProps) {
+export function MateoClassicBuildingIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoClassicBuildingArtwork} />;
 }
 
 /** Renders the clock artwork with Mateo icon appearance and accessibility. */
-export function MateoClockIcon(props: MateoNamedIconProps) {
+export function MateoClockIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoClockArtwork} />;
 }
 
 /** Renders the crossCircle artwork with Mateo icon appearance and accessibility. */
-export function MateoCrossCircleIcon(props: MateoNamedIconProps) {
+export function MateoCrossCircleIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCrossCircleArtwork} />;
 }
 
 /** Renders the cross artwork with Mateo icon appearance and accessibility. */
-export function MateoCrossIcon(props: MateoNamedIconProps) {
+export function MateoCrossIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCrossArtwork} />;
 }
 
 /** Renders the discoBall artwork with Mateo icon appearance and accessibility. */
-export function MateoDiscoBallIcon(props: MateoNamedIconProps) {
+export function MateoDiscoBallIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDiscoBallArtwork} />;
 }
 
 /** Renders the doubleCross artwork with Mateo icon appearance and accessibility. */
-export function MateoDoubleCrossIcon(props: MateoNamedIconProps) {
+export function MateoDoubleCrossIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDoubleCrossArtwork} />;
 }
 
 /** Renders the dropFoam artwork with Mateo icon appearance and accessibility. */
-export function MateoDropFoamIcon(props: MateoNamedIconProps) {
+export function MateoDropFoamIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDropFoamArtwork} />;
 }
 
 /** Renders the drop artwork with Mateo icon appearance and accessibility. */
-export function MateoDropIcon(props: MateoNamedIconProps) {
+export function MateoDropIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDropArtwork} />;
 }
 
 /** Renders the dumbbell artwork with Mateo icon appearance and accessibility. */
-export function MateoDumbbellIcon(props: MateoNamedIconProps) {
+export function MateoDumbbellIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDumbbellArtwork} />;
 }
 
 /** Renders the eraser artwork with Mateo icon appearance and accessibility. */
-export function MateoEraserIcon(props: MateoNamedIconProps) {
+export function MateoEraserIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoEraserArtwork} />;
 }
 
 /** Renders the evPlug artwork with Mateo icon appearance and accessibility. */
-export function MateoEvPlugIcon(props: MateoNamedIconProps) {
+export function MateoEvPlugIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoEvPlugArtwork} />;
 }
 
 /** Renders the exclamationCircle artwork with Mateo icon appearance and accessibility. */
-export function MateoExclamationCircleIcon(props: MateoNamedIconProps) {
+export function MateoExclamationCircleIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoExclamationCircleArtwork} />;
 }
 
 /** Renders the exclamationTriangle artwork with Mateo icon appearance and accessibility. */
-export function MateoExclamationTriangleIcon(props: MateoNamedIconProps) {
+export function MateoExclamationTriangleIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoExclamationTriangleArtwork} />;
 }
 
 /** Renders the ferrisWheel artwork with Mateo icon appearance and accessibility. */
-export function MateoFerrisWheelIcon(props: MateoNamedIconProps) {
+export function MateoFerrisWheelIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoFerrisWheelArtwork} />;
 }
 
 /** Renders the figureCropCircle artwork with Mateo icon appearance and accessibility. */
-export function MateoFigureCropCircleIcon(props: MateoNamedIconProps) {
+export function MateoFigureCropCircleIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoFigureCropCircleArtwork} />;
 }
 
 /** Renders the flame artwork with Mateo icon appearance and accessibility. */
-export function MateoFlameIcon(props: MateoNamedIconProps) {
+export function MateoFlameIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoFlameArtwork} />;
 }
 
 /** Renders the forkKnife artwork with Mateo icon appearance and accessibility. */
-export function MateoForkKnifeIcon(props: MateoNamedIconProps) {
+export function MateoForkKnifeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoForkKnifeArtwork} />;
 }
 
 /** Renders the gasStation artwork with Mateo icon appearance and accessibility. */
-export function MateoGasStationIcon(props: MateoNamedIconProps) {
+export function MateoGasStationIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoGasStationArtwork} />;
 }
 
 /** Renders the gear artwork with Mateo icon appearance and accessibility. */
-export function MateoGearIcon(props: MateoNamedIconProps) {
+export function MateoGearIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoGearArtwork} />;
 }
 
 /** Renders the gift artwork with Mateo icon appearance and accessibility. */
-export function MateoGiftIcon(props: MateoNamedIconProps) {
+export function MateoGiftIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoGiftArtwork} />;
 }
 
 /** Renders the governmentBuilding artwork with Mateo icon appearance and accessibility. */
-export function MateoGovernmentBuildingIcon(props: MateoNamedIconProps) {
+export function MateoGovernmentBuildingIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoGovernmentBuildingArtwork} />;
 }
 
 /** Renders the graduateCap artwork with Mateo icon appearance and accessibility. */
-export function MateoGraduateCapIcon(props: MateoNamedIconProps) {
+export function MateoGraduateCapIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoGraduateCapArtwork} />;
 }
 
 /** Renders the handshake artwork with Mateo icon appearance and accessibility. */
-export function MateoHandshakeIcon(props: MateoNamedIconProps) {
+export function MateoHandshakeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHandshakeArtwork} />;
 }
 
 /** Renders the helicopterFront artwork with Mateo icon appearance and accessibility. */
-export function MateoHelicopterFrontIcon(props: MateoNamedIconProps) {
+export function MateoHelicopterFrontIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHelicopterFrontArtwork} />;
 }
 
 /** Renders the hookah artwork with Mateo icon appearance and accessibility. */
-export function MateoHookahIcon(props: MateoNamedIconProps) {
+export function MateoHookahIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHookahArtwork} />;
 }
 
 /** Renders the hotCoffeeCup artwork with Mateo icon appearance and accessibility. */
-export function MateoHotCoffeeCupIcon(props: MateoNamedIconProps) {
+export function MateoHotCoffeeCupIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHotCoffeeCupArtwork} />;
 }
 
 /** Renders the info artwork with Mateo icon appearance and accessibility. */
-export function MateoInfoIcon(props: MateoNamedIconProps) {
+export function MateoInfoIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoInfoArtwork} />;
 }
 
 /** Renders the instagramLogo artwork with Mateo icon appearance and accessibility. */
-export function MateoInstagramLogoIcon(props: MateoNamedIconProps) {
+export function MateoInstagramLogoIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoInstagramLogoArtwork} />;
 }
 
 /** Renders the letters artwork with Mateo icon appearance and accessibility. */
-export function MateoLettersIcon(props: MateoNamedIconProps) {
+export function MateoLettersIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLettersArtwork} />;
 }
 
 /** Renders the lightningBolt artwork with Mateo icon appearance and accessibility. */
-export function MateoLightningBoltIcon(props: MateoNamedIconProps) {
+export function MateoLightningBoltIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLightningBoltArtwork} />;
 }
 
 /** Renders the linkedinLogo artwork with Mateo icon appearance and accessibility. */
-export function MateoLinkedinLogoIcon(props: MateoNamedIconProps) {
+export function MateoLinkedinLogoIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLinkedinLogoArtwork} />;
 }
 
 /** Renders the mapPin artwork with Mateo icon appearance and accessibility. */
-export function MateoMapPinIcon(props: MateoNamedIconProps) {
+export function MateoMapPinIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMapPinArtwork} />;
 }
 
 /** Renders the logout artwork with Mateo icon appearance and accessibility. */
-export function MateoLogoutIcon(props: MateoNamedIconProps) {
+export function MateoLogoutIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLogoutArtwork} />;
 }
 
 /** Renders the magnifyingGlassSadFace artwork with Mateo icon appearance and accessibility. */
-export function MateoMagnifyingGlassSadFaceIcon(props: MateoNamedIconProps) {
+export function MateoMagnifyingGlassSadFaceIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return (
     <BaseMateoIcon {...props} artwork={MateoMagnifyingGlassSadFaceArtwork} />
   );
 }
 
 /** Renders the magnifierGlass artwork with Mateo icon appearance and accessibility. */
-export function MateoMagnifierGlassIcon(props: MateoNamedIconProps) {
+export function MateoMagnifierGlassIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMagnifierGlassArtwork} />;
 }
 
 /** Renders the matiniGlass artwork with Mateo icon appearance and accessibility. */
-export function MateoMatiniGlassIcon(props: MateoNamedIconProps) {
+export function MateoMatiniGlassIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMatiniGlassArtwork} />;
 }
 
 /** Renders the medicalCross artwork with Mateo icon appearance and accessibility. */
-export function MateoMedicalCrossIcon(props: MateoNamedIconProps) {
+export function MateoMedicalCrossIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMedicalCrossArtwork} />;
 }
 
 /** Renders the numbers artwork with Mateo icon appearance and accessibility. */
-export function MateoNumbersIcon(props: MateoNamedIconProps) {
+export function MateoNumbersIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoNumbersArtwork} />;
 }
 
 /** Renders the padlockOpen artwork with Mateo icon appearance and accessibility. */
-export function MateoPadlockOpenIcon(props: MateoNamedIconProps) {
+export function MateoPadlockOpenIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPadlockOpenArtwork} />;
 }
 
 /** Renders the padlock artwork with Mateo icon appearance and accessibility. */
-export function MateoPadlockIcon(props: MateoNamedIconProps) {
+export function MateoPadlockIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPadlockArtwork} />;
 }
 
 /** Renders the paperPlaneUpRight artwork with Mateo icon appearance and accessibility. */
-export function MateoPaperPlaneUpRightIcon(props: MateoNamedIconProps) {
+export function MateoPaperPlaneUpRightIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPaperPlaneUpRightArtwork} />;
 }
 
 /** Renders the parkingSign artwork with Mateo icon appearance and accessibility. */
-export function MateoParkingSignIcon(props: MateoNamedIconProps) {
+export function MateoParkingSignIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoParkingSignArtwork} />;
 }
 
 /** Renders the pencil artwork with Mateo icon appearance and accessibility. */
-export function MateoPencilIcon(props: MateoNamedIconProps) {
+export function MateoPencilIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPencilArtwork} />;
 }
 
 /** Renders the phone artwork with Mateo icon appearance and accessibility. */
-export function MateoPhoneIcon(props: MateoNamedIconProps) {
+export function MateoPhoneIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPhoneArtwork} />;
 }
 
 /** Renders the pills artwork with Mateo icon appearance and accessibility. */
-export function MateoPillsIcon(props: MateoNamedIconProps) {
+export function MateoPillsIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPillsArtwork} />;
 }
 
 /** Renders the planeUpRight artwork with Mateo icon appearance and accessibility. */
-export function MateoPlaneUpRightIcon(props: MateoNamedIconProps) {
+export function MateoPlaneUpRightIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPlaneUpRightArtwork} />;
 }
 
 /** Renders the plusSignal artwork with Mateo icon appearance and accessibility. */
-export function MateoPlusSignalIcon(props: MateoNamedIconProps) {
+export function MateoPlusSignalIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPlusSignalArtwork} />;
 }
 
 /** Renders the pointerHandUp artwork with Mateo icon appearance and accessibility. */
-export function MateoPointerHandUpIcon(props: MateoNamedIconProps) {
+export function MateoPointerHandUpIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPointerHandUpArtwork} />;
 }
 
 /** Renders the policeBadge artwork with Mateo icon appearance and accessibility. */
-export function MateoPoliceBadgeIcon(props: MateoNamedIconProps) {
+export function MateoPoliceBadgeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPoliceBadgeArtwork} />;
 }
 
 /** Renders the popcorn artwork with Mateo icon appearance and accessibility. */
-export function MateoPopcornIcon(props: MateoNamedIconProps) {
+export function MateoPopcornIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPopcornArtwork} />;
 }
 
 /** Renders the prayingFigure artwork with Mateo icon appearance and accessibility. */
-export function MateoPrayingFigureIcon(props: MateoNamedIconProps) {
+export function MateoPrayingFigureIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoPrayingFigureArtwork} />;
 }
 
 /** Renders the questionmark artwork with Mateo icon appearance and accessibility. */
-export function MateoQuestionmarkIcon(props: MateoNamedIconProps) {
+export function MateoQuestionmarkIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoQuestionmarkArtwork} />;
 }
 
 /** Renders the raisedHand artwork with Mateo icon appearance and accessibility. */
-export function MateoRaisedHandIcon(props: MateoNamedIconProps) {
+export function MateoRaisedHandIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoRaisedHandArtwork} />;
 }
 
 /** Renders the rectangleStack artwork with Mateo icon appearance and accessibility. */
-export function MateoRectangleStackIcon(props: MateoNamedIconProps) {
+export function MateoRectangleStackIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoRectangleStackArtwork} />;
 }
 
 /** Renders the road artwork with Mateo icon appearance and accessibility. */
-export function MateoRoadIcon(props: MateoNamedIconProps) {
+export function MateoRoadIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoRoadArtwork} />;
 }
 
 /** Renders the runningFigure artwork with Mateo icon appearance and accessibility. */
-export function MateoRunningFigureIcon(props: MateoNamedIconProps) {
+export function MateoRunningFigureIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoRunningFigureArtwork} />;
 }
 
 /** Renders the sadEmoticon artwork with Mateo icon appearance and accessibility. */
-export function MateoSadEmoticonIcon(props: MateoNamedIconProps) {
+export function MateoSadEmoticonIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoSadEmoticonArtwork} />;
 }
 
 /** Renders the sadMaskHappyMask artwork with Mateo icon appearance and accessibility. */
-export function MateoSadMaskHappyMaskIcon(props: MateoNamedIconProps) {
+export function MateoSadMaskHappyMaskIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoSadMaskHappyMaskArtwork} />;
 }
 
 /** Renders the scissors artwork with Mateo icon appearance and accessibility. */
-export function MateoScissorsIcon(props: MateoNamedIconProps) {
+export function MateoScissorsIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoScissorsArtwork} />;
 }
 
 /** Renders the shoppingBag artwork with Mateo icon appearance and accessibility. */
-export function MateoShoppingBagIcon(props: MateoNamedIconProps) {
+export function MateoShoppingBagIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoShoppingBagArtwork} />;
 }
 
 /** Renders the shoppingCart artwork with Mateo icon appearance and accessibility. */
-export function MateoShoppingCartIcon(props: MateoNamedIconProps) {
+export function MateoShoppingCartIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoShoppingCartArtwork} />;
 }
 
 /** Renders the sleepingFigure artwork with Mateo icon appearance and accessibility. */
-export function MateoSleepingFigureIcon(props: MateoNamedIconProps) {
+export function MateoSleepingFigureIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoSleepingFigureArtwork} />;
 }
 
 /** Renders the smartphone artwork with Mateo icon appearance and accessibility. */
-export function MateoSmartphoneIcon(props: MateoNamedIconProps) {
+export function MateoSmartphoneIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoSmartphoneArtwork} />;
 }
 
 /** Renders the socialMediaPost artwork with Mateo icon appearance and accessibility. */
-export function MateoSocialMediaPostIcon(props: MateoNamedIconProps) {
+export function MateoSocialMediaPostIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoSocialMediaPostArtwork} />;
 }
 
 /** Renders the stadium artwork with Mateo icon appearance and accessibility. */
-export function MateoStadiumIcon(props: MateoNamedIconProps) {
+export function MateoStadiumIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoStadiumArtwork} />;
 }
 
 /** Renders the star artwork with Mateo icon appearance and accessibility. */
-export function MateoStarIcon(props: MateoNamedIconProps) {
+export function MateoStarIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoStarArtwork} />;
 }
 
 /** Renders the tire artwork with Mateo icon appearance and accessibility. */
-export function MateoTireIcon(props: MateoNamedIconProps) {
+export function MateoTireIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoTireArtwork} />;
 }
 
 /** Renders the trainFront artwork with Mateo icon appearance and accessibility. */
-export function MateoTrainFrontIcon(props: MateoNamedIconProps) {
+export function MateoTrainFrontIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoTrainFrontArtwork} />;
 }
 
 /** Renders the trash artwork with Mateo icon appearance and accessibility. */
-export function MateoTrashIcon(props: MateoNamedIconProps) {
+export function MateoTrashIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoTrashArtwork} />;
 }
 
 /** Renders the tree artwork with Mateo icon appearance and accessibility. */
-export function MateoTreeIcon(props: MateoNamedIconProps) {
+export function MateoTreeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoTreeArtwork} />;
 }
 
 /** Renders the whatsapp artwork with Mateo icon appearance and accessibility. */
-export function MateoWhatsappIcon(props: MateoNamedIconProps) {
+export function MateoWhatsappIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoWhatsappArtwork} />;
 }
 
 /** Renders the wifiExclamation artwork with Mateo icon appearance and accessibility. */
-export function MateoWifiExclamationIcon(props: MateoNamedIconProps) {
+export function MateoWifiExclamationIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoWifiExclamationArtwork} />;
 }
 
 /** Renders the wifi artwork with Mateo icon appearance and accessibility. */
-export function MateoWifiIcon(props: MateoNamedIconProps) {
+export function MateoWifiIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoWifiArtwork} />;
 }
 
 /** Renders the wineGlass artwork with Mateo icon appearance and accessibility. */
-export function MateoWineGlassIcon(props: MateoNamedIconProps) {
+export function MateoWineGlassIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoWineGlassArtwork} />;
 }
 
 /** Renders the wrench artwork with Mateo icon appearance and accessibility. */
-export function MateoWrenchIcon(props: MateoNamedIconProps) {
+export function MateoWrenchIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoWrenchArtwork} />;
 }
 
 /** Renders the xLogo artwork with Mateo icon appearance and accessibility. */
-export function MateoXLogoIcon(props: MateoNamedIconProps) {
+export function MateoXLogoIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoXLogoArtwork} />;
 }

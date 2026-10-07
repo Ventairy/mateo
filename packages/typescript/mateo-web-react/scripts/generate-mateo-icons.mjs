@@ -82,7 +82,7 @@ function _getMateoNamedIconImport(source) {
 }
 
 function _formatMateoNamedIcon({ name, component, artwork }) {
-  const signature = `export function ${component}(props: MateoNamedIconProps) {`;
+  const signature = `export function ${component}(props: MateoNamedIconProps): ReactElement {`;
   const element = `<BaseMateoIcon {...props} artwork={${artwork}} />`;
   const body = `  return ${element};`;
   return [
@@ -92,7 +92,7 @@ function _formatMateoNamedIcon({ name, component, artwork }) {
       : [
           `export function ${component}(`,
           '  props: MateoNamedIconProps,',
-          ') {',
+          '): ReactElement {',
         ]),
     ...(body.length <= 80
       ? [body]
@@ -118,6 +118,7 @@ const mateoIconEntry = [
   '// Regenerate with node scripts/generate-mateo-icons.mjs.',
   "'use client';",
   '',
+  "import type { ReactElement } from 'react';",
   ...Array.from(
     mateoIconImports,
     ([artwork, source]) =>
