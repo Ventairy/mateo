@@ -11,25 +11,6 @@
 @source "./bases";
 @source not "./bases/**/*.test.tsx";
 
-/* Scroll masks belong to their content element, never its foreground subtree. */
-@property --mateo-boundary-mask {
-  syntax: "*";
-  inherits: false;
-  initial-value: none;
-}
-
-@property --mateo-mask-offset {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --mateo-viewport-height {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
 @layer mateo-theme {
   /* Native controls have browser font defaults instead of inheriting text fonts. */
   :where(button, input, select, textarea) {

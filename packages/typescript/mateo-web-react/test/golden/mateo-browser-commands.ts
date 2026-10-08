@@ -2,6 +2,59 @@ import { fileURLToPath } from 'node:url';
 import { defineBrowserCommand } from '@vitest/browser-playwright';
 
 export const mateoGoldenCommands = {
+  mateoCapturePendingScroll: defineBrowserCommand(
+    async ({ page, iframe }, testId: string, deltaY: number) => {
+      const canvas = iframe.getByTestId(testId);
+      const viewport = canvas.locator('[tabindex="0"]').first();
+      const bounds = await viewport.boundingBox();
+      if (!bounds) throw new Error(`Missing scroll viewport: ${testId}`);
+      const before = await viewport.evaluate((node) => node.scrollTop);
+      const pending = await viewport.evaluateHandle((node) => {
+        const controller = new AbortController();
+        // Reproduce native scrolling getting ahead of main-thread boundary
+        // updates, without blocking the screenshot machinery itself.
+        node.addEventListener(
+          'scroll',
+          (event) => event.stopImmediatePropagation(),
+          {
+            capture: true,
+            signal: controller.signal,
+          },
+        );
+        return controller;
+      });
+      try {
+        await page.mouse.move(
+          bounds.x + bounds.width / 2,
+          bounds.y + bounds.height / 2,
+        );
+        await page.mouse.wheel(0, deltaY);
+        await viewport.evaluate(async () => {
+          await new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          );
+        });
+        const after = await viewport.evaluate((node) => node.scrollTop);
+        const image = await page.screenshot({
+          // The scrollbar has separate interaction coverage; capture content.
+          clip: {
+            x: bounds.x + 16,
+            y: bounds.y,
+            width: bounds.width - 32,
+            height: bounds.height,
+          },
+          animations: 'allow',
+        });
+        return { image: image.toString('base64'), before, after };
+      } finally {
+        await pending.evaluate((controller) => controller.abort());
+        await pending.dispose();
+        await viewport.evaluate((node) =>
+          node.dispatchEvent(new Event('scroll')),
+        );
+      }
+    },
+  ),
   mateoFollowLink: defineBrowserCommand(
     async (
       { page, iframe },
@@ -220,6 +273,10 @@ export const mateoGoldenCommands = {
 
 declare module 'vitest/browser' {
   interface BrowserCommands {
+    mateoCapturePendingScroll(
+      testId: string,
+      deltaY: number,
+    ): Promise<{ image: string; before: number; after: number }>;
     mateoDragPointer(
       testId: string,
       x: number,

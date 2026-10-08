@@ -138,7 +138,10 @@ export function BaseMateoSurface(props: BaseMateoSurfaceProps) {
     >
       {overlay}
       {scroll ? (
-        <BaseMateoSurfaceScroll options={scroll}>
+        <BaseMateoSurfaceScroll
+          options={scroll}
+          surfaceColor={color ?? theme.colorScheme.background}
+        >
           {children}
         </BaseMateoSurfaceScroll>
       ) : (

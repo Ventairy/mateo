@@ -60,12 +60,14 @@ function MateoViewExample({
   surfacePadding,
   headerPadding,
   headerMaxWidth,
+  surfaceColor,
 }: {
   readonly header?: boolean;
   readonly padding?: MateoViewPadding;
   readonly surfacePadding?: MateoViewPadding;
   readonly headerPadding?: MateoViewPadding;
   readonly headerMaxWidth?: number;
+  readonly surfaceColor?: string;
 }) {
   return (
     <MateoTheme data={mateoViewTestTheme}>
@@ -87,6 +89,7 @@ function MateoViewExample({
         }
         surface={
           <MateoViewSurface
+            {...(surfaceColor === undefined ? {} : { color: surfaceColor })}
             {...(surfacePadding === undefined
               ? {}
               : { padding: surfacePadding })}
@@ -220,54 +223,48 @@ it('should update header clearance without resetting content state when its meas
   expect(mateoResizeCallbacks.size).toBe(0);
 });
 
-it('should anchor the top fade to the viewport and keep scrollbars outside the mask when content scrolls', () => {
+function _getMateoViewFade(): HTMLElement {
+  const viewport = getMateoViewContent().parentElement;
+  const fade = viewport?.firstElementChild?.firstElementChild;
+  if (!(fade instanceof HTMLElement)) throw new Error('Missing boundary fade.');
+  return fade;
+}
+
+it('should keep the top fade separate from content and scrollbars when content scrolls', () => {
   render(<MateoViewExample />);
   const content = getMateoViewContent();
   const viewport = content.parentElement;
   if (!viewport) throw new Error('Missing scroll viewport.');
+  const fade = _getMateoViewFade();
+  const restingHeight = Number.parseFloat(fade.style.height);
   expect(viewport).toHaveAttribute('tabindex', '0');
   expect(viewport.style.maskImage).toBe('');
-  const restingMask = content.style.getPropertyValue('--mateo-boundary-mask');
-  expect(restingMask).toContain('linear-gradient');
-  expect(restingMask).toContain('#000 400px');
+  expect(content.style.maskImage).toBe('');
   expect(viewport.style.scrollPaddingBlockEnd).toBe('0px');
   viewport.scrollTop = 100;
   fireEvent.scroll(viewport);
-  expect(content.style.getPropertyValue('--mateo-mask-offset')).toBe('52px');
-  expect(content.style.getPropertyValue('--mateo-boundary-mask')).not.toBe(
-    restingMask,
-  );
-  expect(
-    screen.getByRole('button', { name: 'Back' }).closest<HTMLElement>('[style]')
-      ?.style.maskImage,
-  ).toBe('');
-  viewport.scrollTop = 600;
-  fireEvent.scroll(viewport);
-  expect(content.style.getPropertyValue('--mateo-boundary-mask')).toContain(
-    '#000 400px',
-  );
+  expect(Number.parseFloat(fade.style.height)).toBeGreaterThan(restingHeight);
+  expect(fade.parentElement).toHaveAttribute('aria-hidden', 'true');
+  expect(content).not.toContainElement(fade);
 });
 
-it('should leave overflowing content unmasked at the top when a headerless view rests at the start', () => {
+it('should leave overflowing content without a fade when a headerless view rests at the start', () => {
   render(<MateoViewExample header={false} />);
-  expect(
-    getMateoViewContent().style.getPropertyValue('--mateo-boundary-mask'),
-  ).toBe('none');
+  expect(_getMateoViewFade().style.height).toBe('0px');
 });
 
 it('should remove the top overflow fade when content becomes shorter than the viewport', () => {
   render(<MateoViewExample header={false} />);
-  const content = getMateoViewContent();
-  const viewport = content.parentElement;
+  const viewport = getMateoViewContent().parentElement;
   if (!viewport) throw new Error('Missing scroll viewport.');
   viewport.scrollTop = 100;
   fireEvent.scroll(viewport);
-  expect(content.style.getPropertyValue('--mateo-boundary-mask')).toContain(
-    'linear-gradient',
+  expect(Number.parseFloat(_getMateoViewFade().style.height)).toBeGreaterThan(
+    0,
   );
   mateoScrollHeight = 400;
   resizeMateoView();
-  expect(content.style.getPropertyValue('--mateo-boundary-mask')).toBe('none');
+  expect(_getMateoViewFade().style.height).toBe('0px');
 });
 
 describe.each(['view', 'header', 'surface'] as const)('%s padding', (owner) => {

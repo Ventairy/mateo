@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { MateoScrollbar } from '../../components/mateo-scrollbar/mateo-scrollbar.js';
 import {
   getMateoBoundaryDepth,
-  getMateoBoundaryMask,
+  getMateoBoundaryOverlay,
 } from './mateo-surface-boundary.js';
 
 export interface BaseMateoSurfaceScrollOptions {
@@ -24,41 +24,24 @@ export interface BaseMateoSurfaceScrollOptions {
 export function BaseMateoSurfaceScroll({
   children,
   options,
+  surfaceColor,
 }: {
   readonly children: ReactNode;
   readonly options: BaseMateoSurfaceScrollOptions;
+  readonly surfaceColor: string;
 }) {
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
+  const boundary = useRef<HTMLDivElement>(null);
   const { clearanceBlockStart, header, padding } = options;
   useLayoutEffect(() => {
     const node = viewport.current;
     const body = content.current;
-    if (!node || !body) return;
+    const fade = boundary.current;
+    if (!node || !body || !fade) return;
     const ownerDocument = node.ownerDocument;
     const ownerWindow = ownerDocument.defaultView;
-    let maskAnimation: Animation | undefined;
-    let maskEffect: KeyframeEffect | undefined;
-    let canUseMateoMaskEffect =
-      !!ownerWindow &&
-      typeof ownerWindow.Animation === 'function' &&
-      typeof ownerWindow.KeyframeEffect === 'function' &&
-      typeof ownerWindow.KeyframeEffect.prototype.setKeyframes === 'function' &&
-      ownerWindow.CSS.supports('mask-image', 'linear-gradient(#000, #000)');
-    let previousHeight: number | undefined;
     let previousTop: number | undefined;
-    let previousOffset: number | undefined;
-    let mask = 'none';
-    const _setMateoStaticBoundary = (height: number, offset: number) => {
-      if (body.style.getPropertyValue('--mateo-boundary-mask') !== mask)
-        body.style.setProperty('--mateo-boundary-mask', mask);
-      if (body.style.getPropertyValue('--mateo-mask-offset') !== `${offset}px`)
-        body.style.setProperty('--mateo-mask-offset', `${offset}px`);
-      if (
-        body.style.getPropertyValue('--mateo-viewport-height') !== `${height}px`
-      )
-        body.style.setProperty('--mateo-viewport-height', `${height}px`);
-    };
     const updateMateoScrollBoundary = () => {
       const height = node.clientHeight;
       const maximum = Math.max(0, node.scrollHeight - height);
@@ -69,55 +52,15 @@ export function BaseMateoSurfaceScroll({
         clearanceBlockStart,
         padding.blockStart,
       );
-      const offset = position - clearanceBlockStart;
-      const imageChanged =
-        previousHeight !== height || previousTop !== depths.top;
-      if (imageChanged || previousOffset !== offset) {
-        if (imageChanged) mask = getMateoBoundaryMask(height, depths.top);
-        if (!canUseMateoMaskEffect || mask === 'none') {
-          // An unmasked owner needs no persistent effect or implicit will-change.
-          maskAnimation?.cancel();
-          maskAnimation = undefined;
-          maskEffect = undefined;
-          _setMateoStaticBoundary(height, offset);
-        } else if (ownerWindow) {
-          // Preserve an exact static first pose and the original API fallback.
-          if (!maskEffect) _setMateoStaticBoundary(height, offset);
-          const frame = {
-            maskImage: mask,
-            maskSize: `100% ${height}px`,
-            maskPosition: `0px ${offset}px`,
-          };
-          const frames = [
-            { ...frame, offset: 0 },
-            { ...frame, offset: 1 },
-          ];
-          try {
-            if (maskEffect) {
-              maskEffect.setKeyframes(frames);
-            } else {
-              maskEffect = new ownerWindow.KeyframeEffect(body, frames, {
-                duration: 1,
-                fill: 'both',
-              });
-              // No play/pause task or advancing timeline: hold one exact pose.
-              maskAnimation = new ownerWindow.Animation(maskEffect, null);
-              maskAnimation.currentTime = 0;
-            }
-            // A null timeline has no scheduled sampling pass. Resolve the new
-            // model at its held time without reading DOM geometry or starting it.
-            maskEffect.getComputedTiming();
-          } catch {
-            maskAnimation?.cancel();
-            maskAnimation = undefined;
-            maskEffect = undefined;
-            canUseMateoMaskEffect = false;
-            _setMateoStaticBoundary(height, offset);
-          }
-        }
-        previousHeight = height;
+      if (previousTop !== depths.top) {
+        // Native sticky positioning owns the origin. A delayed scroll event
+        // can delay depth adjustment, but cannot displace or truncate content.
+        fade.style.backgroundImage = getMateoBoundaryOverlay(
+          depths.top,
+          surfaceColor,
+        );
+        fade.style.height = `${depths.top}px`;
         previousTop = depths.top;
-        previousOffset = offset;
       }
       const clearance = `${depths.clearTop}px`;
       if (node.style.scrollPaddingBlockStart !== clearance)
@@ -194,13 +137,12 @@ export function BaseMateoSurfaceScroll({
     };
     node.addEventListener('focusin', revealMateoFocusedContent);
     return () => {
-      maskAnimation?.cancel();
       pointerListeners.abort();
       observer.disconnect();
       node.removeEventListener('scroll', updateMateoScrollBoundary);
       node.removeEventListener('focusin', revealMateoFocusedContent);
     };
-  }, [clearanceBlockStart, padding.blockStart]);
+  }, [clearanceBlockStart, padding.blockStart, surfaceColor]);
 
   const style: CSSProperties & {
     readonly '--mateo-scroll-content-max-width': string;
@@ -230,10 +172,19 @@ export function BaseMateoSurfaceScroll({
           .filter(Boolean)
           .join(' ')}
       >
+        <div
+          aria-hidden="true"
+          className="mateo:sticky mateo:top-[0px] mateo:z-[1] mateo:h-[0px] mateo:shrink-0 mateo:pointer-events-none"
+        >
+          <div
+            ref={boundary}
+            className="mateo:absolute mateo:inset-x-[0px] mateo:top-[0px] mateo:pointer-events-none"
+          />
+        </div>
         {header && (
           <div
             ref={header.ref}
-            className="mateo:sticky mateo:top-[0px] mateo:z-[1] mateo:shrink-0 mateo:pointer-events-none"
+            className="mateo:sticky mateo:top-[0px] mateo:z-[2] mateo:shrink-0 mateo:pointer-events-none"
           >
             {header.content}
           </div>
@@ -241,7 +192,7 @@ export function BaseMateoSurfaceScroll({
         <div
           ref={content}
           style={style}
-          className="mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:w-full mateo:max-w-(--mateo-scroll-content-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:[overflow-wrap:anywhere] mateo:[mask-image:var(--mateo-boundary-mask)] mateo:[mask-size:100%_var(--mateo-viewport-height)] mateo:[mask-position:0_var(--mateo-mask-offset)] mateo:[mask-repeat:no-repeat]"
+          className="mateo:relative mateo:z-[0] mateo:isolate mateo:box-border mateo:flex mateo:flex-col mateo:flex-[1_0_auto] mateo:w-full mateo:max-w-(--mateo-scroll-content-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:[overflow-wrap:anywhere]"
         >
           {children}
         </div>

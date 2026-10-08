@@ -48,14 +48,13 @@ export function getMateoBoundaryDepth(
   };
 }
 
-export function getMateoBoundaryMask(height: number, top: number) {
-  if (height <= 0 || top === 0) return 'none';
-  const stops = [
-    ...mateoBoundaryStops.map(
+/** Surface-colored counterpart of the canonical passing-content mask. */
+export function getMateoBoundaryOverlay(top: number, color: string): string {
+  if (top <= 0) return 'none';
+  return `linear-gradient(to bottom, ${mateoBoundaryStops
+    .map(
       ({ progress, visibility }) =>
-        `rgba(0,0,0,${visibility}) ${progress * top}px`,
-    ),
-    `#000 ${height}px`,
-  ];
-  return `linear-gradient(to bottom, ${stops.join(', ')})`;
+        `color-mix(in srgb, ${color} ${(1 - visibility) * 100}%, transparent) ${progress * top}px`,
+    )
+    .join(', ')})`;
 }
