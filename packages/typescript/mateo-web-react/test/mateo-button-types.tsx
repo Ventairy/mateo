@@ -1,6 +1,8 @@
 import { createRef } from 'react';
+import { MateoButtonColorScheme } from '../src/mateo.js';
 import {
   MateoButton,
+  type MateoButtonColorSchemeOverride,
   type MateoButtonPresentation,
   MateoIcon,
   MateoIconProvider,
@@ -22,6 +24,45 @@ export function MateoButtonTypeTrigger({
   );
 }
 export function checkMateoButtonTypes() {
+  const partialColors = {
+    background: '#173B2C',
+  } satisfies MateoButtonColorSchemeOverride;
+  const completeColors = new MateoButtonColorScheme({
+    background: '#173B2C',
+    foreground: '#FFFFFF',
+    backgroundDisabled: '#E5EAFA',
+    foregroundDisabled: '#273392',
+  });
+  const customLabel: MateoButtonPresentation = {
+    kind: 'label',
+    label: 'Save',
+    colorScheme: partialColors,
+  };
+  const customIcon: MateoButtonPresentation = {
+    kind: 'icon',
+    label: 'Close',
+    icon: <MateoIcon icon="cross" />,
+    colorScheme: completeColors,
+  };
+  const emptyColors = {} satisfies MateoButtonColorSchemeOverride;
+  const invalidColors: MateoButtonColorSchemeOverride = {
+    // @ts-expect-error Color roles require strings.
+    foreground: 123,
+  };
+  const misspelledColors: MateoButtonColorSchemeOverride = {
+    // @ts-expect-error Only the four supported color roles are accepted.
+    backgound: '#173B2C',
+  };
+  const nullRole: MateoButtonColorSchemeOverride = {
+    // @ts-expect-error Omit a role to inherit; null is unsupported.
+    background: null,
+  };
+  const nullColors: MateoButtonPresentation = {
+    kind: 'label',
+    label: 'Save',
+    // @ts-expect-error Omit the scheme to inherit; null is unsupported.
+    colorScheme: null,
+  };
   const presentation = {
     kind: 'label',
     label: 'Save',
@@ -112,6 +153,13 @@ export function checkMateoButtonTypes() {
     <MateoButton as="a" href="/profile" presentation={presentation} disabled />
   );
   return {
+    customLabel,
+    customIcon,
+    emptyColors,
+    invalidColors,
+    misspelledColors,
+    nullRole,
+    nullColors,
     anchor,
     missingDestination,
     implicitDestination,

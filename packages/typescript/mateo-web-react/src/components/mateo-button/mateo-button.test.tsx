@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { MateoButtonColorScheme } from '../../theme/mateo-color-scheme/mateo-button-color-scheme.js';
 import { createMateoTheme } from '../../theme/mateo-theme.js';
 import { MateoTheme } from '../../theme/mateo-theme-context.js';
 import { MateoIcon } from '../mateo-icon/mateo-icon.js';
@@ -70,6 +71,226 @@ beforeEach(() =>
 
 describe('MateoButton', () => {
   const colors = mateoButtonTestTheme.colorScheme.buttons;
+  it('should inherit each remaining role from the current variant when overriding only the background', () => {
+    const colorScheme = { background: '#173B2C' };
+    const view = render(
+      <MateoButtonFixture
+        presentation={{ kind: 'label', label: 'Save', colorScheme }}
+        onPressed={() => {}}
+      />,
+    );
+    const button = screen.getByRole('button');
+    const style = button.parentElement?.style;
+    expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+      colorScheme.background,
+    );
+    expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+      colors.primary.accent.foreground,
+    );
+    view.rerender(
+      <MateoButtonFixture
+        presentation={{
+          kind: 'label',
+          label: 'Save',
+          variant: 'primary-base',
+          colorScheme,
+        }}
+        onPressed={() => {}}
+      />,
+    );
+    expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+      colorScheme.background,
+    );
+    expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+      colors.primary.base.foreground,
+    );
+    view.rerender(
+      <MateoButtonFixture
+        presentation={{
+          kind: 'label',
+          label: 'Save',
+          variant: 'primary-base',
+          colorScheme,
+        }}
+      />,
+    );
+    expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+      colors.primary.base.backgroundDisabled,
+    );
+    expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+      colors.primary.base.foregroundDisabled,
+    );
+  });
+
+  it('should preserve the disabled background when overriding only the disabled foreground', () => {
+    render(
+      <MateoButtonFixture
+        presentation={{
+          kind: 'label',
+          label: 'Save',
+          variant: 'secondary',
+          colorScheme: { foregroundDisabled: '#273392' },
+        }}
+      />,
+    );
+    const style = screen.getByRole('button').parentElement?.style;
+    expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+      colors.secondary.accent.backgroundDisabled,
+    );
+    expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+      '#273392',
+    );
+  });
+
+  it.each(['label', 'icon'] as const)(
+    'should update content and icon colors when changing the %s presentation scheme',
+    (kind) => {
+      const colorScheme = new MateoButtonColorScheme({
+        background: '#173B2C',
+        foreground: '#FFFFFF',
+        backgroundDisabled: '#E5EAFA',
+        foregroundDisabled: '#273392',
+      });
+      const presentation: MateoButtonPresentation =
+        kind === 'label'
+          ? {
+              kind,
+              label: 'Save',
+              leadingIcon: <MateoButtonCustomIcon />,
+              colorScheme,
+            }
+          : {
+              kind,
+              label: 'Save',
+              icon: <MateoButtonCustomIcon />,
+              colorScheme,
+            };
+      const view = render(
+        <MateoButtonFixture presentation={presentation} onPressed={() => {}} />,
+      );
+      const button = screen.getByRole('button');
+      const style = button.parentElement?.style;
+      expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+        colorScheme.background,
+      );
+      expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+        colorScheme.foreground,
+      );
+      expect(button.querySelector('svg')).toHaveAttribute(
+        'fill',
+        colorScheme.foreground,
+      );
+      view.rerender(<MateoButtonFixture presentation={presentation} />);
+      expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+        colorScheme.backgroundDisabled,
+      );
+      expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+        colorScheme.foregroundDisabled,
+      );
+      expect(button.querySelector('svg')).toHaveAttribute(
+        'fill',
+        colorScheme.foregroundDisabled,
+      );
+      const updated = { background: '#E5EAFA', foreground: '#0C123E' };
+      view.rerender(
+        <MateoButtonFixture
+          presentation={{ ...presentation, colorScheme: updated }}
+          onPressed={() => {}}
+        />,
+      );
+      expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+        updated.background,
+      );
+      expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+        updated.foreground,
+      );
+      expect(button.querySelector('svg')).toHaveAttribute(
+        'fill',
+        updated.foreground,
+      );
+    },
+  );
+
+  it('should use the current theme for inherited colors when changing themes with an override', () => {
+    const alternate = createMateoTheme({
+      accentColor: '#00A86B',
+      onAccent: '#000000',
+    });
+    const presentation = {
+      kind: 'label',
+      label: 'Save',
+      colorScheme: { background: '#E5EAFA' },
+    } satisfies MateoButtonPresentation;
+    const view = render(
+      <MateoButtonFixture presentation={presentation} onPressed={() => {}} />,
+    );
+    view.rerender(
+      <MateoTheme data={alternate}>
+        <MateoButton presentation={presentation} onPressed={() => {}} />
+      </MateoTheme>,
+    );
+    const style = screen.getByRole('button').parentElement?.style;
+    expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+      presentation.colorScheme.background,
+    );
+    expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+      alternate.colorScheme.buttons.primary.accent.foreground,
+    );
+  });
+
+  it.each([{}, { background: undefined, foreground: undefined }])(
+    'should inherit variant colors when the override contains no defined roles: %j',
+    (colorScheme) => {
+      const presentation = Object.assign(
+        JSON.parse(
+          '{"kind":"label","label":"Save","variant":"secondary-neutral"}',
+        ),
+        { colorScheme },
+      );
+      render(
+        <MateoButtonFixture presentation={presentation} onPressed={() => {}} />,
+      );
+      const style = screen.getByRole('button').parentElement?.style;
+      expect(style?.getPropertyValue('--mateo-button-background')).toBe(
+        colors.secondary.neutral.background,
+      );
+      expect(style?.getPropertyValue('--mateo-button-foreground')).toBe(
+        colors.secondary.neutral.foreground,
+      );
+    },
+  );
+
+  it.each([null, 'red', { background: null }, { foregroundDisabled: 123 }])(
+    'should reject invalid color overrides when called from JavaScript: %j',
+    (colorScheme) => {
+      expect(() =>
+        render(
+          <MateoButtonFixture
+            presentation={JSON.parse(
+              JSON.stringify({ kind: 'label', label: 'Save', colorScheme }),
+            )}
+          />,
+        ),
+      ).toThrow(TypeError);
+    },
+  );
+
+  it('should reject an unsupported variant when a complete override is supplied', () => {
+    expect(() =>
+      render(
+        <MateoButtonFixture
+          presentation={JSON.parse(
+            JSON.stringify({
+              kind: 'label',
+              label: 'Save',
+              variant: 'custom',
+              colorScheme: colors.primary.accent,
+            }),
+          )}
+        />,
+      ),
+    ).toThrow(TypeError);
+  });
   it.each([
     ['primary', colors.primary.accent],
     ['primary-success', colors.primary.success],

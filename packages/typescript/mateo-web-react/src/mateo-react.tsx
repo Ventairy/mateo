@@ -4,6 +4,7 @@ export type { MateoButtonProps } from './components/mateo-button/mateo-button.js
 export { MateoButton } from './components/mateo-button/mateo-button.js';
 export type {
   MateoButtonAlignment,
+  MateoButtonColorSchemeOverride,
   MateoButtonPresentation,
   MateoButtonSize,
   MateoButtonVariant,

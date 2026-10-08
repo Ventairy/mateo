@@ -1,5 +1,6 @@
 import {
   MateoButton,
+  type MateoButtonColorSchemeOverride,
   type MateoButtonSize,
   type MateoButtonVariant,
   MateoIcon,
@@ -16,6 +17,7 @@ import {
   getMateoGoldenElement,
   type MateoGoldenScenario,
   mateoGoldenCustomTheme,
+  mateoGoldenTheme,
   renderMateoGoldens,
   settleMateoGolden,
 } from '../../../test/golden/mateo-golden.js';
@@ -37,6 +39,93 @@ const mateoGoldenButtonSizes = [
 ] as const satisfies readonly MateoButtonSize[];
 const mateoGoldenButtonHeights = { mini: 32, small: 40, standard: 48 } as const;
 function onMateoGoldenPressed() {}
+
+it('should render inherited and overridden colors when custom presentations are enabled or disabled', async () => {
+  const customColors =
+    mateoGoldenCustomTheme.colorScheme.buttons.primary.accent;
+  const variantColors = mateoGoldenTheme.colorScheme.buttons.primary.accent;
+  const cases: readonly {
+    readonly name: string;
+    readonly colorScheme: MateoButtonColorSchemeOverride;
+  }[] = [
+    {
+      name: 'background-only',
+      colorScheme: { background: customColors.background },
+    },
+    {
+      name: 'disabled-foreground-only',
+      colorScheme: {
+        foregroundDisabled: mateoGoldenTheme.colorScheme.text.primary,
+      },
+    },
+    { name: 'complete-scheme', colorScheme: customColors },
+  ];
+  const scenarios = cases.flatMap(({ name, colorScheme }) =>
+    [true, false].map((enabled) => ({
+      name: `${name}-${enabled ? 'enabled' : 'disabled'}`,
+      width: 320,
+      colorScheme,
+      enabled,
+      content: (
+        <div className="mateo-golden-row">
+          <MateoButton
+            presentation={{
+              kind: 'label',
+              label: 'Continue',
+              trailingIcon: <MateoIcon icon="arrowRight" />,
+              colorScheme,
+            }}
+            {...(enabled ? { onPressed: onMateoGoldenPressed } : {})}
+          />
+          <MateoButton
+            presentation={{
+              kind: 'icon',
+              label: 'Continue',
+              icon: <MateoIcon icon="arrowRight" />,
+              colorScheme,
+            }}
+            {...(enabled ? { onPressed: onMateoGoldenPressed } : {})}
+          />
+        </div>
+      ),
+    })),
+  );
+  await renderMateoGoldens(scenarios);
+  await settleMateoGolden();
+  for (const { name, colorScheme, enabled } of scenarios) {
+    const background = enabled
+      ? (colorScheme.background ?? variantColors.background)
+      : (colorScheme.backgroundDisabled ?? variantColors.backgroundDisabled);
+    const foreground = enabled
+      ? (colorScheme.foreground ?? variantColors.foreground)
+      : (colorScheme.foregroundDisabled ?? variantColors.foregroundDisabled);
+    // Let the browser normalize the theme's color notation for computed styles.
+    const reference = document.createElement('span');
+    reference.style.color = foreground;
+    reference.style.backgroundColor = background;
+    document.body.append(reference);
+    const expected = getComputedStyle(reference);
+    for (const button of page
+      .getByTestId(name)
+      .getByRole('button')
+      .elements()) {
+      const surface = button.querySelector('span[style*="background-color"]');
+      expect(surface).not.toBeNull();
+      if (surface)
+        expect(getComputedStyle(surface).backgroundColor).toBe(
+          expected.backgroundColor,
+        );
+      const label = button.querySelector('span[class*="truncate"]');
+      if (label) expect(getComputedStyle(label).color).toBe(expected.color);
+      const icon = button.querySelector('svg');
+      expect(icon).not.toBeNull();
+      if (icon) expect(getComputedStyle(icon).color).toBe(expected.color);
+      expect(button.hasAttribute('disabled')).toBe(!enabled);
+    }
+    reference.remove();
+  }
+  await captureMateoGoldens(scenarios, 'custom-color-overrides');
+});
 
 for (const enabled of [true, false]) {
   it(`should preserve every treatment and size when ${enabled ? 'enabled' : 'disabled'}`, async () => {

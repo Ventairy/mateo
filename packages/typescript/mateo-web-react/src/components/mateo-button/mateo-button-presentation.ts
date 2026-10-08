@@ -3,6 +3,7 @@ import type { MateoLabelButtonPresentation } from './presentations/mateo-label-b
 
 export type {
   MateoButtonAlignment,
+  MateoButtonColorSchemeOverride,
   MateoButtonSize,
   MateoButtonVariant,
   MateoButtonWidth,

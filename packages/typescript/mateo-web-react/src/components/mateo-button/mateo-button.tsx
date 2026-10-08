@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-import type { AriaAttributes, CSSProperties, MouseEvent, Ref } from "react";
-import type { MateoButtonsColorScheme } from "../../theme/mateo-color-scheme/mateo-buttons-color-scheme.js";
-import { useMateoTheme } from "../../theme/mateo-theme-context.js";
-import { MateoPress } from "../mateo-press/mateo-press.js";
-import { mateoButtonHeights } from "./mateo-button-options.js";
+import type { AriaAttributes, CSSProperties, MouseEvent, Ref } from 'react';
+import type { MateoButtonsColorScheme } from '../../theme/mateo-color-scheme/mateo-buttons-color-scheme.js';
+import { useMateoTheme } from '../../theme/mateo-theme-context.js';
+import { MateoPress } from '../mateo-press/mateo-press.js';
+import { mateoButtonHeights } from './mateo-button-options.js';
 import type {
+  MateoButtonColorSchemeOverride,
   MateoButtonPresentation,
   MateoButtonVariant,
-} from "./mateo-button-presentation.js";
-import { MateoIconButtonContent } from "./presentations/mateo-icon-button-presentation.js";
+} from './mateo-button-presentation.js';
+import { MateoIconButtonContent } from './presentations/mateo-icon-button-presentation.js';
 import {
   getMateoLabelButtonClassName,
   MateoLabelButtonContent,
-} from "./presentations/mateo-label-button-presentation.js";
+} from './presentations/mateo-label-button-presentation.js';
 
 /**
  * Configuration for one native Mateo button action.
@@ -46,7 +47,7 @@ export type MateoButtonProps = MateoButtonContentProps &
   (
     | {
         /** Native action mode; this is the default. */
-        readonly as?: "button";
+        readonly as?: 'button';
         readonly href?: never;
         readonly target?: never;
         readonly rel?: never;
@@ -59,11 +60,11 @@ export type MateoButtonProps = MateoButtonContentProps &
       }
     | {
         /** Native destination mode with the same button presentation. */
-        readonly as: "a";
+        readonly as: 'a';
         /** Nonempty destination URL, including relative paths and fragments. */
         readonly href: string;
         /** Browsing context receiving navigation. Defaults to the current context. */
-        readonly target?: "_self" | "_blank" | "_parent" | "_top";
+        readonly target?: '_self' | '_blank' | '_parent' | '_top';
         /** Space-separated destination relationships, such as `noopener`. */
         readonly rel?: string;
         /**
@@ -78,23 +79,49 @@ export type MateoButtonProps = MateoButtonContentProps &
       }
   );
 
-function getMateoButtonColors(
+function _getMateoButtonColors(
   colors: MateoButtonsColorScheme,
   variant: MateoButtonVariant,
+  override: MateoButtonColorSchemeOverride | undefined,
 ) {
   const treatments = {
     primary: colors.primary.accent,
-    "primary-success": colors.primary.success,
-    "primary-warning": colors.primary.warning,
-    "primary-neutral": colors.primary.neutral,
-    "primary-base": colors.primary.base,
+    'primary-success': colors.primary.success,
+    'primary-warning': colors.primary.warning,
+    'primary-neutral': colors.primary.neutral,
+    'primary-base': colors.primary.base,
     secondary: colors.secondary.accent,
-    "secondary-neutral": colors.secondary.neutral,
+    'secondary-neutral': colors.secondary.neutral,
     tertiary: colors.tertiary,
   } as const;
   if (!Object.hasOwn(treatments, variant))
-    throw new TypeError("Unsupported MateoButton variant.");
-  return treatments[variant];
+    throw new TypeError('Unsupported MateoButton variant.');
+  const treatment = treatments[variant];
+  if (override === undefined) return treatment;
+  if (
+    override === null ||
+    typeof override !== 'object' ||
+    Array.isArray(override)
+  )
+    throw new TypeError('MateoButton colorScheme must be a color-role object.');
+  for (const role of [
+    'background',
+    'foreground',
+    'backgroundDisabled',
+    'foregroundDisabled',
+  ] as const) {
+    if (override[role] !== undefined && typeof override[role] !== 'string')
+      throw new TypeError(
+        `MateoButton colorScheme.${role} must be a color string.`,
+      );
+  }
+  const {
+    background = treatment.background,
+    foreground = treatment.foreground,
+    backgroundDisabled = treatment.backgroundDisabled,
+    foregroundDisabled = treatment.foregroundDisabled,
+  } = override;
+  return { background, foreground, backgroundDisabled, foregroundDisabled };
 }
 
 /**
@@ -123,51 +150,55 @@ function getMateoButtonColors(
 export function MateoButton(props: MateoButtonProps) {
   const { presentation, id, ...attributes } = props;
   const theme = useMateoTheme();
-  const enabled = props.as === "a" || props.onPressed !== undefined;
+  const enabled = props.as === 'a' || props.onPressed !== undefined;
   if (
-    (presentation?.kind !== "label" && presentation?.kind !== "icon") ||
-    typeof presentation.label !== "string" ||
+    (presentation?.kind !== 'label' && presentation?.kind !== 'icon') ||
+    typeof presentation.label !== 'string' ||
     !presentation.label.trim()
   ) {
     throw new TypeError(
-      "MateoButton requires a supported presentation with a nonempty label.",
+      'MateoButton requires a supported presentation with a nonempty label.',
     );
   }
-  const { label, variant = "primary", size = "standard" } = presentation;
+  const { label, variant = 'primary', size = 'standard' } = presentation;
   if (!Object.hasOwn(mateoButtonHeights, size))
-    throw new TypeError("Unsupported MateoButton size.");
+    throw new TypeError('Unsupported MateoButton size.');
   const className =
-    presentation.kind === "label"
+    presentation.kind === 'label'
       ? getMateoLabelButtonClassName(presentation)
-      : "mateo:w-fit";
-  const colors = getMateoButtonColors(theme.colorScheme.buttons, variant);
+      : 'mateo:w-fit';
+  const colors = _getMateoButtonColors(
+    theme.colorScheme.buttons,
+    variant,
+    presentation.colorScheme,
+  );
   const foreground = enabled ? colors.foreground : colors.foregroundDisabled;
   const style: CSSProperties & Record<`--mateo-${string}`, string> = {
-    "--mateo-button-height": `${mateoButtonHeights[size]}px`,
-    "--mateo-button-background": enabled
+    '--mateo-button-height': `${mateoButtonHeights[size]}px`,
+    '--mateo-button-background': enabled
       ? colors.background
       : colors.backgroundDisabled,
-    "--mateo-button-foreground": foreground,
-    "--mateo-press-focus": theme.colorScheme.accent,
+    '--mateo-button-foreground': foreground,
+    '--mateo-press-focus': theme.colorScheme.accent,
   };
   const accessibleAttributes = Object.fromEntries(
     Object.entries(attributes).filter(
-      ([name]) => name.startsWith("aria-") || name.startsWith("data-"),
+      ([name]) => name.startsWith('aria-') || name.startsWith('data-'),
     ),
   );
   return (
     <span
       style={style}
       className={[
-        "mateo:inline-grid mateo:box-border mateo:max-w-full mateo:align-middle",
+        'mateo:inline-grid mateo:box-border mateo:max-w-full mateo:align-middle',
         className,
-      ].join(" ")}
+      ].join(' ')}
     >
       <MateoPress
         {...accessibleAttributes}
-        {...(props.as === "a"
+        {...(props.as === 'a'
           ? {
-              as: "a" as const,
+              as: 'a' as const,
               href: props.href,
               ...(props.target === undefined ? {} : { target: props.target }),
               ...(props.rel === undefined ? {} : { rel: props.rel }),
@@ -177,16 +208,16 @@ export function MateoButton(props: MateoButtonProps) {
               ...(props.ref === undefined ? {} : { ref: props.ref }),
             }
           : {
-              as: "button" as const,
+              as: 'button' as const,
               ...(props.onPressed === undefined
                 ? {}
                 : { onPressed: props.onPressed }),
               ...(props.ref === undefined ? {} : { ref: props.ref }),
             })}
         {...(id === undefined ? {} : { id })}
-        aria-label={attributes["aria-label"] ?? label}
+        aria-label={attributes['aria-label'] ?? label}
       >
-        {presentation.kind === "label" ? (
+        {presentation.kind === 'label' ? (
           <MateoLabelButtonContent
             presentation={presentation}
             foreground={foreground}

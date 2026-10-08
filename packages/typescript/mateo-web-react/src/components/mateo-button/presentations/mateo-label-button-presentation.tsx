@@ -6,6 +6,7 @@ import { MateoIconProvider } from '../../mateo-icon/mateo-icon-provider.js';
 import { MateoSurface } from '../../mateo-surface/mateo-surface.js';
 import type {
   MateoButtonAlignment,
+  MateoButtonColorSchemeOverride,
   MateoButtonSize,
   MateoButtonVariant,
   MateoButtonWidth,
@@ -34,6 +35,17 @@ export interface MateoLabelButtonPresentation {
    * @defaultValue `"primary"`
    */
   readonly variant?: MateoButtonVariant;
+  /**
+   * Overrides the selected variant's colors one role at a time.
+   *
+   * @remarks
+   * Omitted or `undefined` roles retain the variant's colors. Changing an enabled
+   * color does not change its disabled counterpart. Choose foreground and
+   * background colors that remain readable together.
+   *
+   * @defaultValue The selected variant's theme colors.
+   */
+  readonly colorScheme?: MateoButtonColorSchemeOverride;
   /**
    * Size controlling label, icon, padding, and minimum height.
    *

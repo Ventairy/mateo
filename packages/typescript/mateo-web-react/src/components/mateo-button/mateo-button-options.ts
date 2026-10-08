@@ -1,3 +1,5 @@
+import type { MateoButtonColorScheme } from '../../theme/mateo-color-scheme/mateo-button-color-scheme.js';
+
 /**
  * Semantic color treatment for a Mateo button.
  *
@@ -43,3 +45,13 @@ export const mateoButtonHeights = {
   small: 40,
   standard: 48,
 } as const;
+
+/**
+ * Overrides individual button colors while inheriting the remaining variant colors.
+ *
+ * @remarks
+ * Omitted or `undefined` roles inherit from the selected variant. Colors are used
+ * as supplied; foreground contrast and disabled colors are not derived. A complete
+ * {@link MateoButtonColorScheme} can also be supplied.
+ */
+export type MateoButtonColorSchemeOverride = Partial<MateoButtonColorScheme>;

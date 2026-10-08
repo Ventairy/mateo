@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { MateoIconProvider } from '../../mateo-icon/mateo-icon-provider.js';
 import { MateoSurface } from '../../mateo-surface/mateo-surface.js';
 import type {
+  MateoButtonColorSchemeOverride,
   MateoButtonSize,
   MateoButtonVariant,
 } from '../mateo-button-options.js';
@@ -34,6 +35,17 @@ export interface MateoIconButtonPresentation {
    * @defaultValue `"primary"`
    */
   readonly variant?: MateoButtonVariant;
+  /**
+   * Overrides the selected variant's colors one role at a time.
+   *
+   * @remarks
+   * Omitted or `undefined` roles retain the variant's colors. Changing an enabled
+   * color does not change its disabled counterpart. Choose foreground and
+   * background colors that remain readable together.
+   *
+   * @defaultValue The selected variant's theme colors.
+   */
+  readonly colorScheme?: MateoButtonColorSchemeOverride;
   /**
    * Square dimensions and icon proportions for this circular button.
    *

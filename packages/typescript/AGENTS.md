@@ -65,10 +65,17 @@ already provides that context.
 
 ## Type safety
 
-Use deep type safety for every component and supporting API in every TypeScript
-package. Types must describe the supported contract precisely and help consumers
-discover valid options through autocomplete.
+Type safety is mandatory for all TypeScript code: public APIs, components,
+private helpers, scripts, tests, and fixtures. Every value and operation must be
+type safe, and every contract must be explicit. Types must describe supported
+behavior precisely and help consumers discover valid options through autocomplete.
 
+- Make inputs, outputs, supported values, nullability, and optionality explicit
+  in type contracts. Declare parameter and return types at API and module
+  boundaries; use inference only where it preserves an equally precise contract.
+- Treat untrusted or untyped data as `unknown` and narrow or validate it before
+  use. Do not allow implicit or explicit `any` to carry unchecked data through
+  implementation code, scripts, or test fixtures.
 - Preserve literal options and inference. Do not widen a closed set of values
   with `string`, `any`, or an unrestricted index signature that accepts typos or
   unsupported props.
