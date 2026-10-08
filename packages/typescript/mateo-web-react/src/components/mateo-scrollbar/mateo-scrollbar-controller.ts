@@ -1,4 +1,4 @@
-import { mateoScrollbarDimensions } from '../../theme/mateo-scrollbar.js';
+import { mateoScrollbarDimensions } from "../../theme/mateo-scrollbar.js";
 
 const mateoScrollbarOwners = new WeakSet<HTMLElement>();
 const mateoScrollbarInteraction = Object.freeze({
@@ -6,7 +6,7 @@ const mateoScrollbarInteraction = Object.freeze({
   arrowStepPx: 40,
   pageFraction: 0.9,
 });
-type MateoScrollbarAxis = 'vertical' | 'horizontal';
+type MateoScrollbarAxis = "vertical" | "horizontal";
 interface MateoScrollbarGeometry {
   readonly maximum: number;
   readonly extent: number;
@@ -30,16 +30,16 @@ export function attachMateoScrollbar(
   labelledBy?: string,
 ) {
   if (mateoScrollbarOwners.has(target))
-    throw new Error('Only one MateoScrollbar may control a viewport.');
+    throw new Error("Only one MateoScrollbar may control a viewport.");
   const ownerWindow = target.ownerDocument.defaultView;
   if (!ownerWindow) return;
   const win = ownerWindow;
   mateoScrollbarOwners.add(target);
-  const originalId = target.getAttribute('id');
-  const originalMarker = target.getAttribute('data-mateo-overlay-scrollbar');
+  const originalId = target.getAttribute("id");
+  const originalMarker = target.getAttribute("data-mateo-overlay-scrollbar");
   const targetId = originalId || id;
   if (!originalId) target.id = targetId;
-  const forcedColors = win.matchMedia('(forced-colors: active)');
+  const forcedColors = win.matchMedia("(forced-colors: active)");
   const listeners = new AbortController();
   const signal = listeners.signal;
   let frame = 0;
@@ -63,7 +63,7 @@ export function attachMateoScrollbar(
     const active = drag;
     drag = undefined;
     if (!active) return;
-    active.track.removeAttribute('data-dragging');
+    active.track.removeAttribute("data-dragging");
     if (active.track.hasPointerCapture(active.pointerId))
       active.track.releasePointerCapture(active.pointerId);
   }
@@ -72,9 +72,9 @@ export function attachMateoScrollbar(
     if (!current) return;
     const position = _clampMateoScroll(value, current.maximum);
     target.scrollTo(
-      axis === 'vertical'
-        ? { top: position, behavior: 'instant' }
-        : { left: current.rtl ? -position : position, behavior: 'instant' },
+      axis === "vertical"
+        ? { top: position, behavior: "instant" }
+        : { left: current.rtl ? -position : position, behavior: "instant" },
     );
     _updateMateoScrollbar();
   }
@@ -91,11 +91,11 @@ export function attachMateoScrollbar(
       )
         target.focus({ preventScroll: true });
       if (originalMarker === null)
-        target.removeAttribute('data-mateo-overlay-scrollbar');
-      else target.setAttribute('data-mateo-overlay-scrollbar', originalMarker);
+        target.removeAttribute("data-mateo-overlay-scrollbar");
+      else target.setAttribute("data-mateo-overlay-scrollbar", originalMarker);
     } else if (presentationChanged)
-      target.setAttribute('data-mateo-overlay-scrollbar', '');
-    const rtl = targetStyle.direction === 'rtl';
+      target.setAttribute("data-mateo-overlay-scrollbar", "");
+    const rtl = targetStyle.direction === "rtl";
     const width = target.clientWidth;
     const height = target.clientHeight;
     const scrollWidth = target.scrollWidth;
@@ -110,18 +110,18 @@ export function attachMateoScrollbar(
         ? Math.max(0, scrollWidth - width)
         : 0,
     };
-    const inheritedLabel = label ?? target.getAttribute('aria-label');
+    const inheritedLabel = label ?? target.getAttribute("aria-label");
     const inheritedLabelledBy =
       labelledBy ??
-      (label === undefined ? target.getAttribute('aria-labelledby') : null);
+      (label === undefined ? target.getAttribute("aria-labelledby") : null);
     const accessibilityChanged =
       appliedLabel !== inheritedLabel ||
       appliedLabelledBy !== inheritedLabelledBy;
     const next = new Map<MateoScrollbarAxis, MateoScrollbarGeometry>();
     // Read geometry first; apply all visual updates afterwards.
-    for (const axis of ['vertical', 'horizontal'] as const) {
-      const extent = axis === 'vertical' ? height : width;
-      const other = axis === 'vertical' ? 'horizontal' : 'vertical';
+    for (const axis of ["vertical", "horizontal"] as const) {
+      const extent = axis === "vertical" ? height : width;
+      const other = axis === "vertical" ? "horizontal" : "vertical";
       const trackLength = Math.max(
         0,
         extent - (maxima[other] > 0 ? mateoScrollbarDimensions.sizePx : 0),
@@ -135,7 +135,7 @@ export function attachMateoScrollbar(
         ),
       );
       const position = _clampMateoScroll(
-        axis === 'vertical' ? scrollTop : rtl ? -scrollLeft : scrollLeft,
+        axis === "vertical" ? scrollTop : rtl ? -scrollLeft : scrollLeft,
         maximum,
       );
       const travel = trackLength - length;
@@ -153,29 +153,29 @@ export function attachMateoScrollbar(
       )
         continue;
       const track = tracks[axis];
-      track.dir = rtl ? 'rtl' : 'ltr';
-      track.style.setProperty('--mateo-scrollbar-track', `${trackLength}px`);
-      track.style.setProperty('--mateo-scrollbar-length', `${length}px`);
+      track.dir = rtl ? "rtl" : "ltr";
+      track.style.setProperty("--mateo-scrollbar-track", `${trackLength}px`);
+      track.style.setProperty("--mateo-scrollbar-length", `${length}px`);
       const fraction = maximum > 0 ? position / maximum : 0;
       track.style.setProperty(
-        '--mateo-scrollbar-position',
-        `${travel * (axis === 'horizontal' && rtl ? 1 - fraction : fraction)}px`,
+        "--mateo-scrollbar-position",
+        `${travel * (axis === "horizontal" && rtl ? 1 - fraction : fraction)}px`,
       );
       const visible = !forced && maximum > 0 && trackLength > 0;
       if (!visible && target.ownerDocument.activeElement === track)
         target.focus({ preventScroll: true });
       track.style.setProperty(
-        '--mateo-scrollbar-display',
-        visible ? 'block' : 'none',
+        "--mateo-scrollbar-display",
+        visible ? "block" : "none",
       );
       track.tabIndex = visible ? 0 : -1;
-      track.setAttribute('aria-valuenow', `${Math.round(fraction * 100)}`);
-      track.setAttribute('aria-controls', targetId);
-      if (inheritedLabel) track.setAttribute('aria-label', inheritedLabel);
-      else track.removeAttribute('aria-label');
+      track.setAttribute("aria-valuenow", `${Math.round(fraction * 100)}`);
+      track.setAttribute("aria-controls", targetId);
+      if (inheritedLabel) track.setAttribute("aria-label", inheritedLabel);
+      else track.removeAttribute("aria-label");
       if (inheritedLabelledBy)
-        track.setAttribute('aria-labelledby', inheritedLabelledBy);
-      else track.removeAttribute('aria-labelledby');
+        track.setAttribute("aria-labelledby", inheritedLabelledBy);
+      else track.removeAttribute("aria-labelledby");
     }
     appliedForced = forced;
     appliedLabel = inheritedLabel;
@@ -196,25 +196,25 @@ export function attachMateoScrollbar(
   function _observeMateoSubtree(node: Node) {
     if (!(node instanceof win.Element) || !target.contains(node)) return;
     _observeMateoElement(node);
-    for (const child of node.querySelectorAll('*')) _observeMateoElement(child);
+    for (const child of node.querySelectorAll("*")) _observeMateoElement(child);
   }
   function _releaseMateoSubtree(node: Node) {
     if (!(node instanceof win.Element) || target.contains(node)) return;
-    for (const element of [node, ...node.querySelectorAll('*')]) {
+    for (const element of [node, ...node.querySelectorAll("*")]) {
       if (!observed.delete(element)) continue;
       resize.unobserve(element);
     }
   }
   // These properties change paint, never the native scrollable overflow.
-  const paintOnly = new Set(['opacity', 'color', 'background-color']);
-  const previousStyle = target.ownerDocument.createElement('div').style;
-  const currentStyle = target.ownerDocument.createElement('div').style;
+  const paintOnly = new Set(["opacity", "color", "background-color"]);
+  const previousStyle = target.ownerDocument.createElement("div").style;
+  const currentStyle = target.ownerDocument.createElement("div").style;
   function _changesMateoGeometryStyle(record: MutationRecord) {
     if (!(record.target instanceof win.Element)) return true;
-    const inlineStyle = record.target.getAttribute('style');
+    const inlineStyle = record.target.getAttribute("style");
     if (inlineStyle === record.oldValue) return false;
-    previousStyle.cssText = record.oldValue ?? '';
-    currentStyle.cssText = inlineStyle ?? '';
+    previousStyle.cssText = record.oldValue ?? "";
+    currentStyle.cssText = inlineStyle ?? "";
     for (const property of new Set([...previousStyle, ...currentStyle])) {
       if (
         !paintOnly.has(property) &&
@@ -230,14 +230,14 @@ export function attachMateoScrollbar(
   const mutation = new MutationObserver((records) => {
     let changed = frame !== 0;
     for (const record of records) {
-      if (record.type === 'childList') {
+      if (record.type === "childList") {
         for (const node of record.removedNodes) _releaseMateoSubtree(node);
         for (const node of record.addedNodes) _observeMateoSubtree(node);
       }
       if (
         !changed &&
-        (record.type !== 'attributes' ||
-          record.attributeName !== 'style' ||
+        (record.type !== "attributes" ||
+          record.attributeName !== "style" ||
           _changesMateoGeometryStyle(record))
       )
         changed = true;
@@ -252,25 +252,25 @@ export function attachMateoScrollbar(
     attributes: true,
     attributeOldValue: true,
     attributeFilter: [
-      'style',
-      'class',
-      'dir',
-      'hidden',
-      'aria-label',
-      'aria-labelledby',
+      "style",
+      "class",
+      "dir",
+      "hidden",
+      "aria-label",
+      "aria-labelledby",
     ],
   });
   _observeMateoSubtree(target);
-  target.addEventListener('scroll', _scheduleMateoScrollbar, {
+  target.addEventListener("scroll", _scheduleMateoScrollbar, {
     passive: true,
     signal,
   });
-  forcedColors.addEventListener('change', _updateMateoScrollbar, { signal });
-  win.addEventListener('blur', _endMateoDrag, { signal });
-  for (const axis of ['vertical', 'horizontal'] as const) {
+  forcedColors.addEventListener("change", _updateMateoScrollbar, { signal });
+  win.addEventListener("blur", _endMateoDrag, { signal });
+  for (const axis of ["vertical", "horizontal"] as const) {
     const track = tracks[axis];
     track.addEventListener(
-      'pointerdown',
+      "pointerdown",
       (event) => {
         if (
           event.button !== 0 ||
@@ -285,13 +285,13 @@ export function attachMateoScrollbar(
         track.focus({ preventScroll: true });
         const bounds = track.getBoundingClientRect();
         const coordinate =
-          axis === 'vertical'
+          axis === "vertical"
             ? event.clientY - bounds.top
             : event.clientX - bounds.left;
         const fraction = current.position / current.maximum;
         const start =
           current.travel *
-          (axis === 'horizontal' && current.rtl ? 1 - fraction : fraction);
+          (axis === "horizontal" && current.rtl ? 1 - fraction : fraction);
         if (event.target !== track) {
           drag = {
             axis,
@@ -300,11 +300,11 @@ export function attachMateoScrollbar(
             grab: coordinate - start,
           };
           track.setPointerCapture(event.pointerId);
-          track.setAttribute('data-dragging', '');
+          track.setAttribute("data-dragging", "");
         } else {
           const direction =
             (coordinate < start ? -1 : 1) *
-            (axis === 'horizontal' && current.rtl ? -1 : 1);
+            (axis === "horizontal" && current.rtl ? -1 : 1);
           _setMateoScroll(
             axis,
             current.position +
@@ -317,7 +317,7 @@ export function attachMateoScrollbar(
       { signal },
     );
     track.addEventListener(
-      'pointermove',
+      "pointermove",
       (event) => {
         if (!drag || drag.track !== track || drag.pointerId !== event.pointerId)
           return;
@@ -325,7 +325,7 @@ export function attachMateoScrollbar(
         if (!current?.travel) return;
         const bounds = track.getBoundingClientRect();
         const coordinate =
-          axis === 'vertical'
+          axis === "vertical"
             ? event.clientY - bounds.top
             : event.clientX - bounds.left;
         const fraction =
@@ -333,16 +333,16 @@ export function attachMateoScrollbar(
           current.travel;
         _setMateoScroll(
           axis,
-          (axis === 'horizontal' && current.rtl ? 1 - fraction : fraction) *
+          (axis === "horizontal" && current.rtl ? 1 - fraction : fraction) *
             current.maximum,
         );
       },
       { signal },
     );
     for (const event of [
-      'pointerup',
-      'pointercancel',
-      'lostpointercapture',
+      "pointerup",
+      "pointercancel",
+      "lostpointercapture",
     ] as const)
       track.addEventListener(
         event,
@@ -352,7 +352,7 @@ export function attachMateoScrollbar(
         { signal },
       );
     track.addEventListener(
-      'keydown',
+      "keydown",
       (event) => {
         const current = geometry.get(axis);
         if (!current?.maximum || forcedColors.matches) return;
@@ -360,32 +360,32 @@ export function attachMateoScrollbar(
         const step = mateoScrollbarInteraction.arrowStepPx;
         const page = current.extent * mateoScrollbarInteraction.pageFraction;
         switch (event.key) {
-          case 'Home':
+          case "Home":
             next = 0;
             break;
-          case 'End':
+          case "End":
             next = current.maximum;
             break;
-          case 'PageUp':
+          case "PageUp":
             next = current.position - page;
             break;
-          case 'PageDown':
+          case "PageDown":
             next = current.position + page;
             break;
-          case 'ArrowUp':
-            if (axis !== 'vertical') return;
+          case "ArrowUp":
+            if (axis !== "vertical") return;
             next = current.position - step;
             break;
-          case 'ArrowDown':
-            if (axis !== 'vertical') return;
+          case "ArrowDown":
+            if (axis !== "vertical") return;
             next = current.position + step;
             break;
-          case 'ArrowLeft':
-            if (axis !== 'horizontal') return;
+          case "ArrowLeft":
+            if (axis !== "horizontal") return;
             next = current.position + (current.rtl ? step : -step);
             break;
-          case 'ArrowRight':
-            if (axis !== 'horizontal') return;
+          case "ArrowRight":
+            if (axis !== "horizontal") return;
             next = current.position + (current.rtl ? -step : step);
             break;
           default:
@@ -407,10 +407,10 @@ export function attachMateoScrollbar(
     if (frame) win.cancelAnimationFrame(frame);
     mateoScrollbarOwners.delete(target);
     if (originalMarker === null)
-      target.removeAttribute('data-mateo-overlay-scrollbar');
-    else target.setAttribute('data-mateo-overlay-scrollbar', originalMarker);
+      target.removeAttribute("data-mateo-overlay-scrollbar");
+    else target.setAttribute("data-mateo-overlay-scrollbar", originalMarker);
     if (!originalId && target.id === targetId) {
-      if (originalId === null) target.removeAttribute('id');
+      if (originalId === null) target.removeAttribute("id");
       else target.id = originalId;
     }
   };
