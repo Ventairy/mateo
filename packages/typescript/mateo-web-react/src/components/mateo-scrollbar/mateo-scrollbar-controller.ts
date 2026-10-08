@@ -103,8 +103,12 @@ export function attachMateoScrollbar(
     const scrollLeft = target.scrollLeft;
     const scrollTop = target.scrollTop;
     const maxima = {
-      vertical: Math.max(0, scrollHeight - height),
-      horizontal: Math.max(0, scrollWidth - width),
+      vertical: /^(auto|scroll|overlay)$/.test(targetStyle.overflowY)
+        ? Math.max(0, scrollHeight - height)
+        : 0,
+      horizontal: /^(auto|scroll|overlay)$/.test(targetStyle.overflowX)
+        ? Math.max(0, scrollWidth - width)
+        : 0,
     };
     const inheritedLabel = label ?? target.getAttribute('aria-label');
     const inheritedLabelledBy =

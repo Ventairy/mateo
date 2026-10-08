@@ -127,6 +127,34 @@ it('should use logical horizontal positions when scrolling a right-to-left viewp
   expect(viewport.scrollLeft).toBe(240);
 });
 
+it.each([
+  { axis: 'horizontal', property: 'overflowX', enabled: 'vertical' },
+  { axis: 'vertical', property: 'overflowY', enabled: 'horizontal' },
+] as const)(
+  'should hide the $axis control when overflow is clipped and restore it when scrolling is enabled',
+  async ({ axis, property, enabled }) => {
+    const viewport = await _renderMateoScrollbar();
+    const track = _getMateoTrack(axis);
+    track.focus();
+    viewport.style[property] = 'hidden';
+    await expect.poll(() => getComputedStyle(track).display).toBe('none');
+    expect(track.tabIndex).toBe(-1);
+    expect(document.activeElement).toBe(viewport);
+    expect(getComputedStyle(_getMateoTrack(enabled)).display).not.toBe('none');
+    viewport.style[property] = 'auto';
+    await expect.poll(() => getComputedStyle(track).display).not.toBe('none');
+    track.focus();
+    await userEvent.keyboard('[End]');
+    expect(
+      axis === 'horizontal' ? viewport.scrollLeft : viewport.scrollTop,
+    ).toBe(
+      axis === 'horizontal'
+        ? viewport.scrollWidth - viewport.clientWidth
+        : viewport.scrollHeight - viewport.clientHeight,
+    );
+  },
+);
+
 it('should restore native controls when forced colors become active', async () => {
   const viewport = await _renderMateoScrollbar();
   await commands.mateoForcedColors(true);
