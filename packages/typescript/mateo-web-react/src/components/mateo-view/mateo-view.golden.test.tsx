@@ -1,4 +1,4 @@
-import { MateoArrowLeftIcon } from 'mateo-web-react/icons';
+import { MateoArrowDownIcon, MateoArrowLeftIcon } from 'mateo-web-react/icons';
 import {
   MateoButton,
   MateoTheme,
@@ -39,6 +39,76 @@ interface MateoGoldenViewOptions {
   readonly customBackground?: boolean;
 }
 function onMateoGoldenViewPressed() {}
+
+it('should show the full action label when a header has room without principal content', async () => {
+  const scenarios: readonly MateoGoldenScenario[] = [
+    ...(
+      [
+        { name: 'side-controls-ltr', dir: 'ltr', width: 390 },
+        { name: 'side-controls-rtl', dir: 'rtl', width: 390 },
+        { name: 'small-mobile-side-controls', dir: 'ltr', width: 320 },
+      ] as const
+    ).map(({ name, dir, width }) => ({
+      name,
+      dir,
+      width,
+      height: 100,
+      content: (
+        <MateoView
+          header={
+            <MateoViewHeader
+              padding={{
+                inlineStart: 40,
+                inlineEnd: 40,
+                blockStart: 24,
+                blockEnd: 0,
+              }}
+              leading={
+                <MateoButton
+                  presentation={{
+                    kind: 'icon',
+                    label: 'Back',
+                    icon: <MateoArrowLeftIcon />,
+                    size: 'mini',
+                  }}
+                  onPressed={onMateoGoldenViewPressed}
+                />
+              }
+              trailing={
+                <MateoButton
+                  presentation={{
+                    kind: 'label',
+                    label: 'Baixe o app',
+                    size: 'small',
+                    variant: 'primary-neutral',
+                    trailingIcon: <MateoArrowDownIcon />,
+                  }}
+                  onPressed={onMateoGoldenViewPressed}
+                />
+              }
+            />
+          }
+          surface={<MateoViewSurface>{null}</MateoViewSurface>}
+        />
+      ),
+    })),
+  ];
+  await renderMateoGoldens(scenarios);
+  await settleMateoGolden();
+  for (const { name } of scenarios) {
+    const action = page
+      .getByTestId(name)
+      .getByRole('button', { name: 'Baixe o app' })
+      .element();
+    const label = Array.from(action.querySelectorAll('span')).find(
+      (element) =>
+        element.textContent === 'Baixe o app' && element.children.length === 0,
+    );
+    if (!label) throw new Error('Missing action label');
+    expect(label.scrollWidth).toBeLessThanOrEqual(label.clientWidth);
+  }
+  await captureMateoGoldens(scenarios, 'header-side-controls', 2);
+});
 
 function MateoGoldenView({
   header = 'both',

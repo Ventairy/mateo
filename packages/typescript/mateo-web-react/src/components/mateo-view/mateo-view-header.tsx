@@ -81,7 +81,13 @@ export function MateoViewHeader({
   const hasLeading = leading != null && leading !== false;
   const hasTrailing = trailing != null && trailing !== false;
   const hasPrincipal = principal != null && principal !== false;
-  const centered = hasLeading && hasTrailing;
+  const centered = hasPrincipal && hasLeading && hasTrailing;
+  const sideClassName = [
+    'mateo:pointer-events-auto',
+    hasPrincipal
+      ? 'mateo:shrink-0 mateo:max-w-[calc(50%-var(--mateo-header-gap))]'
+      : 'mateo:min-w-[0px] mateo:max-w-full',
+  ].join(' ');
   const start = useMateoSurfaceBounds<HTMLDivElement>(centered, undefined);
   const end = useMateoSurfaceBounds<HTMLDivElement>(centered, undefined);
   const sideWidth = Math.max(start.width, end.width);
@@ -108,10 +114,7 @@ export function MateoViewHeader({
       className="mateo:box-border mateo:flex mateo:w-full mateo:max-w-(--mateo-header-max-width) mateo:mx-auto mateo:min-w-[0px] mateo:items-center mateo:justify-between mateo:gap-(--mateo-header-gap) mateo:pointer-events-none mateo:text-[16px] mateo:font-[600]"
     >
       {hasLeading && (
-        <div
-          ref={start.ref}
-          className="mateo:shrink-0 mateo:max-w-[calc(50%-var(--mateo-header-gap))] mateo:pointer-events-auto"
-        >
+        <div ref={start.ref} className={sideClassName}>
           {leading}
         </div>
       )}
@@ -128,10 +131,7 @@ export function MateoViewHeader({
         </div>
       )}
       {hasTrailing && (
-        <div
-          ref={end.ref}
-          className="mateo:shrink-0 mateo:max-w-[calc(50%-var(--mateo-header-gap))] mateo:pointer-events-auto"
-        >
+        <div ref={end.ref} className={sideClassName}>
           {trailing}
         </div>
       )}
