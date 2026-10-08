@@ -111,9 +111,11 @@
 
 @layer mateo-theme {
   @media (forced-colors: none) {
+    [data-mateo-scrollbar-presentation="overlay"],
     [data-mateo-overlay-scrollbar] {
       scrollbar-width: none;
     }
+    [data-mateo-scrollbar-presentation="overlay"]::-webkit-scrollbar,
     [data-mateo-overlay-scrollbar]::-webkit-scrollbar {
       display: none;
       width: 0;

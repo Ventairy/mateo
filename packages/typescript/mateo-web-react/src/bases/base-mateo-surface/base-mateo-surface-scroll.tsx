@@ -218,6 +218,9 @@ export function BaseMateoSurfaceScroll({
     <>
       <div
         ref={viewport}
+        data-mateo-scrollbar-presentation={
+          options.extendBehindScrollbar ? 'overlay' : undefined
+        }
         // biome-ignore lint/a11y/noNoninteractiveTabindex: A native scroll viewport must be reachable for keyboard scrolling.
         tabIndex={0}
         className={[

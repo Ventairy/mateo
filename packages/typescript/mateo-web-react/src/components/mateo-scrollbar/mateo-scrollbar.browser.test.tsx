@@ -1,13 +1,18 @@
+import { getMateoThemeStyle } from 'mateo-web-react';
 import {
+  MateoTheme,
   MateoView,
   MateoViewHeader,
   MateoViewSurface,
 } from 'mateo-web-react/react';
 import { StrictMode } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { expect, it, vi } from 'vitest';
 import { commands, page, server, userEvent } from 'vitest/browser';
 import {
   getMateoGoldenElement,
+  mateoGoldenTheme,
   renderMateoGoldens,
   settleMateoGolden,
 } from '../../../test/golden/mateo-golden.js';
@@ -171,6 +176,21 @@ it('should keep header clearance and focus reveal when a surface extends behind 
     viewport.getBoundingClientRect().bottom,
   );
   expect(viewport.clientWidth).toBe(viewport.offsetWidth);
+  await commands.mateoForcedColors(true);
+  await expect
+    .poll(() => viewport.hasAttribute('data-mateo-overlay-scrollbar'))
+    .toBe(false);
+  // Firefox emulates matchMedia here but does not apply forced-colors CSS rules.
+  if (server.browser !== 'firefox') {
+    await expect
+      .poll(() => getComputedStyle(viewport).scrollbarWidth)
+      .not.toBe('none');
+  }
+  expect(getComputedStyle(_getMateoTrack('vertical')).display).toBe('none');
+  await commands.mateoForcedColors(false);
+  await expect
+    .poll(() => getComputedStyle(viewport).scrollbarWidth)
+    .toBe('none');
 });
 
 it.each(['vertical', 'horizontal'] as const)(
@@ -392,3 +412,69 @@ it('should update the native range when absolute content moves, transforms, resi
   await expect.poll(() => document.activeElement).toBe(viewport);
   expect(_getMateoTrack('vertical').tabIndex).toBe(-1);
 });
+
+it.each([
+  { name: 'capped LTR view', direction: 'ltr', width: 500, maxWidth: 400 },
+  { name: 'capped RTL view', direction: 'rtl', width: 500, maxWidth: 400 },
+  {
+    name: 'full-width mobile view',
+    direction: 'ltr',
+    width: 320,
+    maxWidth: 320,
+  },
+  {
+    name: 'full-width RTL mobile view',
+    direction: 'rtl',
+    width: 320,
+    maxWidth: 320,
+  },
+] as const)(
+  'should keep the initial header and content layout when overlay controls attach to a $name',
+  async ({ direction, width, maxWidth }) => {
+    const host = document.createElement('div');
+    host.style.cssText = `width:${width}px;height:240px`;
+    host.dir = direction;
+    document.body.append(host);
+    const view = (
+      <MateoTheme data={mateoGoldenTheme}>
+        <div
+          style={{ ...getMateoThemeStyle(mateoGoldenTheme), height: '100%' }}
+        >
+          <MateoView
+            maxWidth={maxWidth}
+            header={<MateoViewHeader principal={<span>Stable header</span>} />}
+            surface={
+              <MateoViewSurface extendBehindScrollbar>
+                <p>Stable content</p>
+                <div style={{ height: 600 }} />
+              </MateoViewSurface>
+            }
+          />
+        </div>
+      </MateoTheme>
+    );
+    host.innerHTML = renderToString(view);
+    await document.fonts.load('16px Inter');
+    await document.fonts.ready;
+    const header = host.querySelector('span');
+    const content = host.querySelector('p');
+    if (!header || !content) throw new Error('Missing initial view content');
+    const initialHeader = header.getBoundingClientRect();
+    const initialContent = content.getBoundingClientRect();
+    const root = hydrateRoot(host, view);
+    try {
+      await expect
+        .poll(() => host.querySelector('[data-mateo-overlay-scrollbar]'))
+        .not.toBeNull();
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      expect(header.getBoundingClientRect().x).toBe(initialHeader.x);
+      expect(content.getBoundingClientRect().x).toBe(initialContent.x);
+      expect(content.getBoundingClientRect().width).toBe(initialContent.width);
+    } finally {
+      root.unmount();
+      host.remove();
+    }
+  },
+);

@@ -20,7 +20,8 @@ export interface MateoViewSurfaceProps {
   readonly children: ReactNode;
   /**
    * Lets content fill the viewport beneath an internally managed overlay scrollbar.
-   * Native scrollbars remain available without JavaScript and in forced colors.
+   * Native scrollbars are hidden from the initial layout; wheel, touch, and
+   * keyboard scrolling stay native. Forced colors use native scrollbar controls.
    *
    * @defaultValue `false`
    */
