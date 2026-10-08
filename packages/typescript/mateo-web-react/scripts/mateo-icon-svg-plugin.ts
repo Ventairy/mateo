@@ -15,7 +15,7 @@ export function createMateoIconSvgPlugin() {
         '#080706': 'currentColor',
       },
       template: ({ componentName, jsx }, { tpl }) => {
-        // MateoIcon owns the SVG frame. Keep authored children and geometry intact.
+        // BaseMateoIcon owns the SVG frame. Keep authored children and geometry intact.
         mateoBabel.traverseFast(jsx, (node) => {
           if (
             !mateoBabel.isJSXAttribute(node) ||

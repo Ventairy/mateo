@@ -18,9 +18,6 @@ export {
   type MateoDragResistanceReturnAnimation,
   type MateoDragResistanceSides,
 } from './components/mateo-drag-resistance/mateo-drag-resistance.js';
-export type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';
-export { MateoIcon } from './components/mateo-icon/mateo-icon.js';
-export type { MateoIconName } from './components/mateo-icon/mateo-icon-artwork.js';
 export type {
   MateoIconContextData,
   MateoIconProviderProps,

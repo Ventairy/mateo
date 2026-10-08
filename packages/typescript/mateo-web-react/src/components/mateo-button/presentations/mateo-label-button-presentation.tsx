@@ -64,10 +64,10 @@ export interface MateoLabelButtonPresentation {
    * @defaultValue `"center"`
    */
   readonly alignment?: MateoButtonAlignment;
-  /** Decorative, noninteractive content. MateoIcon receives scoped defaults. */
+  /** Decorative, noninteractive content. Mateo icons receive scoped defaults. */
   readonly leadingIcon?: ReactNode;
   /**
-   * Decorative content after the label in reading order. MateoIcon inherits
+   * Decorative content after the label in reading order. Mateo icons inherit
    * size and foreground from the presentation.
    */
   readonly trailingIcon?: ReactNode;

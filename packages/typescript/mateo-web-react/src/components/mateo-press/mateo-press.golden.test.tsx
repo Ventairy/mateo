@@ -1,4 +1,5 @@
-import { MateoIcon, MateoPress, MateoSurface } from 'mateo-web-react/react';
+import { MateoInstagramLogoIcon } from 'mateo-web-react/icons';
+import { MateoPress, MateoSurface } from 'mateo-web-react/react';
 import { expect, it } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
@@ -242,8 +243,7 @@ for (const pressAnimation of ['scale', 'none'] as const) {
                     {content === 'text' ? (
                       'View profile'
                     ) : (
-                      <MateoIcon
-                        icon="instagramLogo"
+                      <MateoInstagramLogoIcon
                         size={24}
                         color={mateoGoldenTheme.colorScheme.text.primary}
                       />

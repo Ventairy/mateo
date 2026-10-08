@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MateoIcon } from './mateo-icon.js';
+import { MateoCircleCheckIcon, MateoCrossIcon } from '../../mateo-icons.js';
 import {
   MateoIconProvider,
   useMateoIconContext,
@@ -24,7 +24,7 @@ describe('MateoIconProvider', () => {
     render(
       <MateoIconProvider size={24} color="red">
         <MateoIconProvider color="blue">
-          <MateoIcon icon="circleCheck" aria-label="Check" />
+          <MateoCircleCheckIcon aria-label="Check" />
           <MateoCustomIcon />
         </MateoIconProvider>
       </MateoIconProvider>,
@@ -50,12 +50,7 @@ describe('MateoIconProvider', () => {
   it('should retain explicit icon props when provided defaults are present', () => {
     render(
       <MateoIconProvider size={24} color="red">
-        <MateoIcon
-          icon="circleCheck"
-          size={16}
-          color="green"
-          aria-label="Check"
-        />
+        <MateoCircleCheckIcon size={16} color="green" aria-label="Check" />
       </MateoIconProvider>,
     );
     const icon = screen.getByRole('img');
@@ -66,7 +61,7 @@ describe('MateoIconProvider', () => {
     expect(() =>
       render(
         <MateoIconProvider size={-1}>
-          <MateoIcon icon="cross" />
+          <MateoCrossIcon />
         </MateoIconProvider>,
       ),
     ).toThrow(TypeError);

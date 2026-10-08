@@ -1,6 +1,6 @@
+import { MateoArrowLeftIcon } from 'mateo-web-react/icons';
 import {
   MateoButton,
-  MateoIcon,
   MateoTheme,
   MateoView,
   MateoViewHeader,
@@ -87,7 +87,7 @@ function MateoGoldenView({
                       presentation={{
                         kind: 'icon',
                         label: 'Back',
-                        icon: <MateoIcon icon="arrowLeft" />,
+                        icon: <MateoArrowLeftIcon />,
                         size: 'mini',
                         variant: 'tertiary',
                       }}

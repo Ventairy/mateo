@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { cp, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
@@ -15,10 +17,17 @@ const mateoConsumerRoot = await mkdtemp(join(tmpdir(), 'mateo-icon-delivery-'));
 
 try {
   await mkdir(join(mateoConsumerRoot, 'node_modules'));
-  await symlink(
-    mateoPackageRoot,
-    join(mateoConsumerRoot, 'node_modules/mateo-web-react'),
-    'dir',
+  const installedPackage = join(
+    mateoConsumerRoot,
+    'node_modules/mateo-web-react',
+  );
+  await mkdir(installedPackage);
+  await cp(join(mateoPackageRoot, 'dist'), join(installedPackage, 'dist'), {
+    recursive: true,
+  });
+  await cp(
+    join(mateoPackageRoot, 'package.json'),
+    join(installedPackage, 'package.json'),
   );
   for (const dependency of ['react', 'react-dom']) {
     await symlink(
@@ -27,6 +36,53 @@ try {
       'dir',
     );
   }
+  await mkdir(join(mateoConsumerRoot, 'node_modules/@types'));
+  for (const dependency of ['@types/react', '@types/react-dom']) {
+    await symlink(
+      dirname(mateoRequire.resolve(`${dependency}/package.json`)),
+      join(mateoConsumerRoot, 'node_modules', dependency),
+      'dir',
+    );
+  }
+  const typeEntry = join(mateoConsumerRoot, 'consumer.tsx');
+  await writeFile(
+    typeEntry,
+    `import { createRef } from 'react';
+import { MateoAppleLogoIcon, MateoArrowDownIcon, type MateoNamedIconProps } from 'mateo-web-react/icons';
+const props: MateoNamedIconProps = {
+  size: 24, color: 'currentColor', backgroundColor: 'white',
+  'aria-label': 'Artwork', ref: createRef<SVGSVGElement>(),
+};
+<MateoAppleLogoIcon {...props} />;
+<MateoArrowDownIcon {...props} />;
+// @ts-expect-error Artwork is chosen by the imported component.
+<MateoAppleLogoIcon icon="appleLogo" />;
+// @ts-expect-error Icon sizes use numeric pixels.
+<MateoArrowDownIcon size="24px" />;
+// @ts-expect-error The ref targets an SVG element.
+<MateoArrowDownIcon ref={createRef<HTMLDivElement>()} />;
+`,
+  );
+  execFileSync(
+    process.execPath,
+    [
+      mateoRequire.resolve('typescript/bin/tsc'),
+      '--noEmit',
+      '--strict',
+      '--exactOptionalPropertyTypes',
+      '--skipLibCheck',
+      '--target',
+      'ES2022',
+      '--module',
+      'ESNext',
+      '--moduleResolution',
+      'Bundler',
+      '--jsx',
+      'react-jsx',
+      typeEntry,
+    ],
+    { cwd: mateoConsumerRoot, stdio: 'pipe' },
+  );
   const entry = join(mateoConsumerRoot, 'consumer.mjs');
   await writeFile(
     entry,
@@ -69,6 +125,22 @@ export function MateoConsumerIcon() {
     const destination = join(mateoConsumerRoot, chunk.fileName);
     await mkdir(dirname(destination), { recursive: true });
     await writeFile(destination, chunk.code);
+  }
+  const code = chunks.map((chunk) => chunk.code).join('\n');
+  for (const filename of ['apple-logo.svg', 'shopping-cart.svg']) {
+    const source = readFileSync(
+      new URL(
+        `../../../../design-system/foundation/assets/icons/svg/${filename}`,
+        import.meta.url,
+      ),
+      'utf8',
+    );
+    const path = source.match(/<path[^>]*\sd="([^"]+)"/)?.[1];
+    assert.ok(path, `${filename} must contain reference artwork.`);
+    assert.ok(
+      !code.includes(path),
+      `The arrow-only consumer must omit ${filename} artwork.`,
+    );
   }
   const { MateoConsumerIcon } = await import(
     pathToFileURL(join(mateoConsumerRoot, consumer.fileName)).href

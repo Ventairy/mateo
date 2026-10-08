@@ -4,11 +4,7 @@ import {
   MateoCheckmarkIcon,
   MateoCrossIcon,
 } from 'mateo-web-react/icons';
-import {
-  MateoIcon,
-  type MateoIconName,
-  MateoIconProvider,
-} from 'mateo-web-react/react';
+import { MateoIconProvider } from 'mateo-web-react/react';
 import { expect, it } from 'vitest';
 import {
   captureMateoGoldens,
@@ -17,18 +13,13 @@ import {
 } from '../../../test/golden/mateo-golden.js';
 import { mateoGoldenIconCatalog } from '../../../test/golden/mateo-icon-catalog.js';
 
-function isMateoGoldenIconName(name: string): name is MateoIconName {
-  return Object.hasOwn(mateoGoldenIconCatalog, name);
-}
-
 it('should render the complete public artwork catalog when using the default size', async () => {
-  const names = Object.keys(mateoGoldenIconCatalog).filter(
-    isMateoGoldenIconName,
+  const scenarios = Object.entries(mateoGoldenIconCatalog).map(
+    ([icon, Icon]) => ({
+      name: `catalog-${icon}`,
+      content: <Icon aria-label={icon} />,
+    }),
   );
-  const scenarios = names.map((icon) => ({
-    name: `catalog-${icon}`,
-    content: <MateoIcon icon={icon} aria-label={icon} />,
-  }));
   await renderMateoGoldens(scenarios);
   await captureMateoGoldens(scenarios, 'icon-catalog', 5);
 });
@@ -43,7 +34,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
       name: 'inherited-text',
       content: (
         <span style={{ color: mateoGoldenTheme.colorScheme.accent }}>
-          <MateoIcon icon="checkmark" />
+          <MateoCheckmarkIcon />
         </span>
       ),
     },
@@ -60,7 +51,7 @@ it('should inherit or override appearance when composing icon scopes and backgro
           size={32}
           color={mateoGoldenTheme.colorScheme.accent}
         >
-          <MateoIcon icon="checkmark" />
+          <MateoCheckmarkIcon />
         </MateoIconProvider>
       ),
     },

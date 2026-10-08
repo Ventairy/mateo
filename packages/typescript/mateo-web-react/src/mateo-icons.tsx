@@ -1,4 +1,4 @@
-// Generated from the authored mateo-icon-artwork.tsx catalog.
+// Generated from scripts/mateo-icon-catalog.json.
 // Regenerate with node scripts/generate-mateo-icons.mjs.
 'use client';
 
@@ -106,24 +106,9 @@ import MateoWineGlassArtwork from '../../../../design-system/foundation/assets/i
 import MateoWrenchArtwork from '../../../../design-system/foundation/assets/icons/svg/wrench.svg?react';
 import MateoXLogoArtwork from '../../../../design-system/foundation/assets/icons/svg/x-logo.svg?react';
 import { BaseMateoIcon } from './bases/base-mateo-icon/base-mateo-icon.js';
-import type { MateoIconProps } from './components/mateo-icon/mateo-icon.js';
+import type { MateoNamedIconProps } from './components/mateo-icon/mateo-named-icon-props.js';
 
-/**
- * Appearance and accessible name for an individually imported Mateo icon.
- *
- * @remarks
- * Named icon components preserve MateoIcon size, color, provider, background,
- * ref, and accessible-name behavior. Import only the icons your interface uses
- * from `mateo-web-react/icons` so a production bundler can omit other artwork.
- * The existing MateoIcon string-name API remains available for dynamic catalogs.
- *
- * @example
- * ```tsx
- * import { MateoArrowDownIcon } from 'mateo-web-react/icons';
- * <MateoArrowDownIcon size={24} aria-label="Down" />
- * ```
- */
-export type MateoNamedIconProps = Omit<MateoIconProps, 'icon'>;
+export type { MateoNamedIconProps } from './components/mateo-icon/mateo-named-icon-props.js';
 
 /** Renders the appleLogo artwork with Mateo icon appearance and accessibility. */
 export function MateoAppleLogoIcon(props: MateoNamedIconProps): ReactElement {

@@ -1,9 +1,15 @@
 import {
+  MateoArrowRightIcon,
+  MateoCheckmarkIcon,
+  MateoCrossIcon,
+  MateoFigureCropCircleIcon,
+  MateoPaperPlaneUpRightIcon,
+} from 'mateo-web-react/icons';
+import {
   MateoButton,
   type MateoButtonColorSchemeOverride,
   type MateoButtonSize,
   type MateoButtonVariant,
-  MateoIcon,
   type MateoLabelButtonPresentation,
   MateoTheme,
 } from 'mateo-web-react/react';
@@ -72,7 +78,7 @@ it('should render inherited and overridden colors when custom presentations are 
             presentation={{
               kind: 'label',
               label: 'Continue',
-              trailingIcon: <MateoIcon icon="arrowRight" />,
+              trailingIcon: <MateoArrowRightIcon />,
               colorScheme,
             }}
             {...(enabled ? { onPressed: onMateoGoldenPressed } : {})}
@@ -81,7 +87,7 @@ it('should render inherited and overridden colors when custom presentations are 
             presentation={{
               kind: 'icon',
               label: 'Continue',
-              icon: <MateoIcon icon="arrowRight" />,
+              icon: <MateoArrowRightIcon />,
               colorScheme,
             }}
             {...(enabled ? { onPressed: onMateoGoldenPressed } : {})}
@@ -142,7 +148,7 @@ for (const enabled of [true, false]) {
                 label: 'Publish',
                 variant,
                 size,
-                trailingIcon: <MateoIcon icon="paperPlaneUpRight" />,
+                trailingIcon: <MateoPaperPlaneUpRightIcon />,
               }}
               {...(enabled ? { onPressed: onMateoGoldenPressed } : {})}
             />
@@ -150,7 +156,7 @@ for (const enabled of [true, false]) {
               presentation={{
                 kind: 'icon',
                 label: 'Close',
-                icon: <MateoIcon icon="cross" />,
+                icon: <MateoCrossIcon />,
                 variant,
                 size,
               }}
@@ -203,20 +209,20 @@ const mateoGoldenButtonContentCases: readonly (MateoLabelButtonPresentation & {
     name: 'leading-icon',
     kind: 'label',
     label: 'Save',
-    leadingIcon: <MateoIcon icon="checkmark" />,
+    leadingIcon: <MateoCheckmarkIcon />,
   },
   {
     name: 'trailing-icon',
     kind: 'label',
     label: 'Send',
-    trailingIcon: <MateoIcon icon="paperPlaneUpRight" />,
+    trailingIcon: <MateoPaperPlaneUpRightIcon />,
   },
   {
     name: 'both-icons',
     kind: 'label',
     label: 'Send',
-    leadingIcon: <MateoIcon icon="checkmark" />,
-    trailingIcon: <MateoIcon icon="paperPlaneUpRight" />,
+    leadingIcon: <MateoCheckmarkIcon />,
+    trailingIcon: <MateoPaperPlaneUpRightIcon />,
   },
   {
     name: 'rtl-start',
@@ -225,8 +231,8 @@ const mateoGoldenButtonContentCases: readonly (MateoLabelButtonPresentation & {
     label: 'Publicar',
     width: 'fill',
     alignment: 'start',
-    leadingIcon: <MateoIcon icon="checkmark" />,
-    trailingIcon: <MateoIcon icon="paperPlaneUpRight" />,
+    leadingIcon: <MateoCheckmarkIcon />,
+    trailingIcon: <MateoPaperPlaneUpRightIcon />,
   },
 ];
 
@@ -332,7 +338,7 @@ it('should preserve native destination label and icon presentations', async () =
             kind: 'label',
             label: 'Profile',
             size,
-            leadingIcon: <MateoIcon icon="figureCropCircle" />,
+            leadingIcon: <MateoFigureCropCircleIcon />,
           }}
         />
         <MateoButton
@@ -342,7 +348,7 @@ it('should preserve native destination label and icon presentations', async () =
             kind: 'icon',
             label: 'Profile',
             size,
-            icon: <MateoIcon icon="figureCropCircle" />,
+            icon: <MateoFigureCropCircleIcon />,
           }}
         />
       </div>
@@ -363,7 +369,7 @@ it('should preserve native destination label and icon presentations', async () =
                 presentation={{
                   kind: 'label',
                   label: 'Profile',
-                  leadingIcon: <MateoIcon icon="figureCropCircle" />,
+                  leadingIcon: <MateoFigureCropCircleIcon />,
                 }}
               />
             </MateoTheme>,

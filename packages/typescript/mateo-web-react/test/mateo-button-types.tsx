@@ -1,10 +1,10 @@
 import { createRef } from 'react';
 import { MateoButtonColorScheme } from '../src/mateo.js';
+import { MateoCircleCheckIcon, MateoCrossIcon } from '../src/mateo-icons.js';
 import {
   MateoButton,
   type MateoButtonColorSchemeOverride,
   type MateoButtonPresentation,
-  MateoIcon,
   MateoIconProvider,
   useMateoIconContext,
 } from '../src/mateo-react.js';
@@ -41,7 +41,7 @@ export function checkMateoButtonTypes() {
   const customIcon: MateoButtonPresentation = {
     kind: 'icon',
     label: 'Close',
-    icon: <MateoIcon icon="cross" />,
+    icon: <MateoCrossIcon />,
     colorScheme: completeColors,
   };
   const emptyColors = {} satisfies MateoButtonColorSchemeOverride;
@@ -67,22 +67,22 @@ export function checkMateoButtonTypes() {
     kind: 'label',
     label: 'Save',
     variant: 'primary-success',
-    leadingIcon: <MateoIcon icon="circleCheck" />,
+    leadingIcon: <MateoCircleCheckIcon />,
   } satisfies MateoButtonPresentation;
   const iconPresentation: MateoButtonPresentation = {
     kind: 'icon',
     label: 'Close',
-    icon: <MateoIcon icon="cross" />,
+    icon: <MateoCrossIcon />,
   };
   // @ts-expect-error Icon actions require an accessible label.
   const unnamedIcon: MateoButtonPresentation = {
     kind: 'icon',
-    icon: <MateoIcon icon="cross" />,
+    icon: <MateoCrossIcon />,
   };
   const stretchedIcon: MateoButtonPresentation = {
     kind: 'icon',
     label: 'Close',
-    icon: <MateoIcon icon="cross" />,
+    icon: <MateoCrossIcon />,
     // @ts-expect-error Icon presentations have circular geometry, not fill width.
     width: 'fill',
   };
@@ -182,7 +182,7 @@ export function MateoIconProviderTypeFixture() {
   const { size, color } = useMateoIconContext();
   return (
     <MateoIconProvider size={size} color={color}>
-      <MateoIcon icon="cross" />
+      <MateoCrossIcon />
     </MateoIconProvider>
   );
 }

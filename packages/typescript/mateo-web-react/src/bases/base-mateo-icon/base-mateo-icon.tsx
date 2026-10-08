@@ -1,10 +1,10 @@
 'use client';
 
 import { type ComponentType, type CSSProperties, useId } from 'react';
-import type { MateoIconProps } from '../../components/mateo-icon/mateo-icon.js';
 import { useMateoIconContext } from '../../components/mateo-icon/mateo-icon-provider.js';
+import type { MateoNamedIconProps } from '../../components/mateo-icon/mateo-named-icon-props.js';
 
-interface BaseMateoIconProps extends Omit<MateoIconProps, 'icon'> {
+interface BaseMateoNamedIconProps extends MateoNamedIconProps {
   readonly artwork: ComponentType<{ readonly idPrefix: string }>;
 }
 
@@ -20,13 +20,13 @@ export function BaseMateoIcon({
   backgroundColor,
   'aria-label': label,
   ref,
-}: BaseMateoIconProps) {
+}: BaseMateoNamedIconProps) {
   const scope = useMateoIconContext();
   const size = explicitSize ?? scope.size ?? mateoIconGeometry.frameSize;
   const color = explicitColor ?? scope.color;
   const idPrefix = `mateo-icon-${useId()}`;
   if (typeof size !== 'number' || !Number.isFinite(size) || size < 0) {
-    throw new TypeError('MateoIcon size must be finite and nonnegative.');
+    throw new TypeError('Mateo icon size must be finite and nonnegative.');
   }
   const named = Boolean(label?.trim());
   const background = backgroundColor !== undefined;

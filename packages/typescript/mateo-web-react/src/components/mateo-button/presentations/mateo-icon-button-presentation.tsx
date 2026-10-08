@@ -22,7 +22,7 @@ export interface MateoIconButtonPresentation {
    */
   readonly kind: 'icon';
   /**
-   * Visible, noninteractive artwork. MateoIcon inherits presentation size and color.
+   * Visible, noninteractive artwork. Mateo icons inherit presentation size and color.
    */
   readonly icon: ReactNode;
   /**

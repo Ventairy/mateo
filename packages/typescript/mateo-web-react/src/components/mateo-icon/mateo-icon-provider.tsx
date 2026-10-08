@@ -2,7 +2,7 @@
 
 import { type CSSProperties, createContext, type ReactNode, use } from 'react';
 
-/** Inherited defaults available to MateoIcon and custom icon content. */
+/** Inherited defaults available to Mateo icons and custom icon content. */
 export interface MateoIconContextData {
   /**
    * Inherited total square size in pixels. Must be finite and nonnegative; omission
@@ -31,7 +31,7 @@ const MateoIconContext = createContext(mateoIconContextDefaults);
  * Provides inherited icon size and color without adding a DOM element.
  *
  * @remarks
- * Nested providers override only the supplied defaults. Explicit MateoIcon props
+ * Nested providers override only the supplied defaults. Explicit icon props
  * take precedence. Custom artwork can read these values with
  * {@link useMateoIconContext}. No theme is required.
  *
@@ -40,7 +40,7 @@ const MateoIconContext = createContext(mateoIconContextDefaults);
  * @example
  * ```tsx
  * <MateoIconProvider size={24} color="currentColor">
- *   <MateoIcon icon="checkmark" />
+ *   <MateoCheckmarkIcon />
  * </MateoIconProvider>
  * ```
  */

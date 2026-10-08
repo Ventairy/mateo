@@ -1,10 +1,10 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { MateoCircleCheckIcon } from '../../mateo-icons.js';
 import { MateoButtonColorScheme } from '../../theme/mateo-color-scheme/mateo-button-color-scheme.js';
 import { createMateoTheme } from '../../theme/mateo-theme.js';
 import { MateoTheme } from '../../theme/mateo-theme-context.js';
-import { MateoIcon } from '../mateo-icon/mateo-icon.js';
 import { useMateoIconContext } from '../mateo-icon/mateo-icon-provider.js';
 import { MateoButton, type MateoButtonProps } from './mateo-button.js';
 import type { MateoButtonPresentation } from './mateo-button-presentation.js';
@@ -365,7 +365,7 @@ describe('MateoButton', () => {
           kind: 'label',
           label: 'Save all changes in this project',
           size: 'small',
-          leadingIcon: <MateoIcon icon="circleCheck" aria-label="Check" />,
+          leadingIcon: <MateoCircleCheckIcon aria-label="Check" />,
           trailingIcon: <MateoButtonCustomIcon />,
         }}
         onPressed={() => {}}

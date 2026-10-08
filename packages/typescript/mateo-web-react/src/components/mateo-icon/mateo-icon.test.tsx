@@ -5,13 +5,21 @@ import { createRef } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import * as MateoIcons from '../../mateo-icons.js';
 import {
   MateoArrowDownIcon,
+  MateoArrowLeftIcon,
+  MateoCircleCheckIcon,
+  MateoClockIcon,
   MateoCrossIcon,
   MateoShoppingCartIcon,
+  MateoWhatsappIcon,
 } from '../../mateo-icons.js';
-import { MateoIcon } from './mateo-icon.js';
-import { mateoIconNames } from './mateo-icon-artwork.js';
+
+const mateoIconCatalog = Object.entries(MateoIcons).map(([component, Icon]) => {
+  const name = component.slice(5, -4);
+  return { name: name.slice(0, 1).toLowerCase() + name.slice(1), Icon };
+});
 
 const mateoIconSources = resolve(
   '../../../design-system/foundation/assets/icons/svg',
@@ -23,18 +31,18 @@ const mateoIconSourceExceptions: Readonly<Record<string, string>> = {
   wifiExclamation: 'wifi-exclamation-mark',
 };
 
-function getMateoIconSourceName(name: string) {
+function _getMateoIconSourceName(name: string) {
   return (
     mateoIconSourceExceptions[name] ??
     name.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
   );
 }
 
-describe('MateoIcon', () => {
+describe('Mateo named icons', () => {
   it('should include every foundation SVG when exposing the catalog', () => {
     expect(
-      mateoIconNames
-        .map((name) => `${getMateoIconSourceName(name)}.svg`)
+      mateoIconCatalog
+        .map(({ name }) => `${_getMateoIconSourceName(name)}.svg`)
         .sort(),
     ).toEqual(
       readdirSync(mateoIconSources)
@@ -42,17 +50,17 @@ describe('MateoIcon', () => {
         .sort(),
     );
   });
-  it.each(mateoIconNames)(
-    'should render the catalog artwork when choosing %s',
-    (icon) => {
-      render(<MateoIcon icon={icon} aria-label={icon} />);
+  it.each(mateoIconCatalog)(
+    'should render the catalog artwork when using $name',
+    ({ name: icon, Icon }) => {
+      render(<Icon aria-label={icon} />);
       const image = screen.getByRole('img', { name: icon });
       expect(image).toHaveAttribute('viewBox', '0 0 20 20');
       expect(image.querySelector('path, rect, circle')).not.toBeNull();
       expect(image.querySelector('[transform]')).not.toBeNull();
       const source = new DOMParser().parseFromString(
         readFileSync(
-          join(mateoIconSources, `${getMateoIconSourceName(icon)}.svg`),
+          join(mateoIconSources, `${_getMateoIconSourceName(icon)}.svg`),
           'utf8',
         ),
         'image/svg+xml',
@@ -71,7 +79,7 @@ describe('MateoIcon', () => {
   );
 
   it('should render at 20 pixels without a theme when size is omitted', () => {
-    render(<MateoIcon icon="cross" aria-label="Close" />);
+    render(<MateoCrossIcon aria-label="Close" />);
     const image = screen.getByRole('img', { name: 'Close' });
     expect(image).toHaveAttribute('width', '20');
     expect(image).toHaveAttribute('height', '20');
@@ -80,7 +88,7 @@ describe('MateoIcon', () => {
   });
 
   it('should size the complete square when a custom size is supplied', () => {
-    render(<MateoIcon icon="circleCheck" size={32} aria-label="Completed" />);
+    render(<MateoCircleCheckIcon size={32} aria-label="Completed" />);
     const image = screen.getByRole('img', { name: 'Completed' });
     expect(image).toHaveAttribute('width', '32');
     expect(image).toHaveAttribute('height', '32');
@@ -89,12 +97,7 @@ describe('MateoIcon', () => {
 
   it('should render empty when size is zero even with a background', () => {
     render(
-      <MateoIcon
-        icon="cross"
-        size={0}
-        backgroundColor="black"
-        aria-label="Close"
-      />,
+      <MateoCrossIcon size={0} backgroundColor="black" aria-label="Close" />,
     );
     const image = screen.getByRole('img', { name: 'Close' });
     expect(image).toHaveAttribute('width', '0');
@@ -108,36 +111,24 @@ describe('MateoIcon', () => {
     { name: 'positive infinity', value: Number.POSITIVE_INFINITY },
     { name: 'negative infinity', value: Number.NEGATIVE_INFINITY },
   ])('should reject size when it is $name', ({ value }) => {
-    expect(() =>
-      renderToString(<MateoIcon icon="cross" size={value} />),
-    ).toThrow('MateoIcon size must be finite and nonnegative.');
+    expect(() => renderToString(<MateoCrossIcon size={value} />)).toThrow(
+      'Mateo icon size must be finite and nonnegative.',
+    );
   });
 
   it('should reject a nonnumeric size when a JavaScript consumer supplies it', () => {
     expect(() =>
       renderToString(
         // @ts-expect-error JavaScript consumers can bypass the numeric contract.
-        <MateoIcon icon="cross" size="24" />,
+        <MateoCrossIcon size="24" />,
       ),
-    ).toThrow('MateoIcon size must be finite and nonnegative.');
+    ).toThrow('Mateo icon size must be finite and nonnegative.');
   });
-
-  it.each(['unknown', 'toString', '__proto__'])(
-    'should reject the icon when a JavaScript consumer supplies %s',
-    (icon) => {
-      expect(() =>
-        renderToString(
-          // @ts-expect-error JavaScript consumers can bypass catalog names.
-          <MateoIcon icon={icon} />,
-        ),
-      ).toThrow(`Unknown Mateo icon: ${icon}.`);
-    },
-  );
 
   it('should inherit foreground without recoloring clipping geometry when color is omitted', () => {
     render(
       <span style={{ color: 'rebeccapurple' }}>
-        <MateoIcon icon="shoppingCart" aria-label="Cart" />
+        <MateoShoppingCartIcon aria-label="Cart" />
       </span>,
     );
     const image = screen.getByRole('img', { name: 'Cart' });
@@ -153,16 +144,14 @@ describe('MateoIcon', () => {
 
   it('should update explicit foreground independently when the background changes', () => {
     const { rerender } = render(
-      <MateoIcon
-        icon="cross"
+      <MateoCrossIcon
         color="white"
         backgroundColor="black"
         aria-label="Close"
       />,
     );
     rerender(
-      <MateoIcon
-        icon="cross"
+      <MateoCrossIcon
         color="white"
         backgroundColor="rebeccapurple"
         aria-label="Close"
@@ -183,8 +172,8 @@ describe('MateoIcon', () => {
   it('should remain decorative when no nonempty image label is supplied', () => {
     const { container } = render(
       <>
-        <MateoIcon icon="cross" />
-        <MateoIcon icon="cross" aria-label="  " />
+        <MateoCrossIcon />
+        <MateoCrossIcon aria-label="  " />
         <MateoArrowDownIcon aria-label="  " />
       </>,
     );
@@ -198,7 +187,7 @@ describe('MateoIcon', () => {
   it('should preserve the parent action name when used inside a button', () => {
     render(
       <button type="button" aria-label="Close dialog">
-        <MateoIcon icon="cross" />
+        <MateoCrossIcon />
       </button>,
     );
     expect(screen.getByRole('button')).toHaveAccessibleName('Close dialog');
@@ -214,8 +203,8 @@ describe('MateoIcon', () => {
   it('should preserve artwork direction when the surrounding content is RTL', () => {
     render(
       <div dir="rtl">
-        <MateoIcon icon="arrowLeft" aria-label="Left" />
-        <MateoIcon icon="whatsapp" aria-label="WhatsApp" />
+        <MateoArrowLeftIcon aria-label="Left" />
+        <MateoWhatsappIcon aria-label="WhatsApp" />
       </div>,
     );
     for (const image of screen.getAllByRole('img')) {
@@ -228,9 +217,9 @@ describe('MateoIcon', () => {
   it('should keep clipping references local when repeated icons hydrate', async () => {
     const mateoImages = (
       <>
-        <MateoIcon icon="shoppingCart" aria-label="First cart" />
+        <MateoShoppingCartIcon aria-label="First cart" />
         <MateoShoppingCartIcon aria-label="Second cart" />
-        <MateoIcon icon="clock" aria-label="Clock" />
+        <MateoClockIcon aria-label="Clock" />
       </>
     );
     const container = document.createElement('div');

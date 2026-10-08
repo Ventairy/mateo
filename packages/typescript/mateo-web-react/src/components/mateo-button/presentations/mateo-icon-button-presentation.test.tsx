@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { MateoCrossIcon } from '../../../mateo-icons.js';
 import { createMateoTheme } from '../../../theme/mateo-theme.js';
 import { MateoTheme } from '../../../theme/mateo-theme-context.js';
-import { MateoIcon } from '../../mateo-icon/mateo-icon.js';
 import { MateoButton } from '../mateo-button.js';
 import type { MateoIconButtonPresentation } from './mateo-icon-button-presentation.js';
 
@@ -43,7 +43,7 @@ describe('Mateo icon button presentation', () => {
         <MateoButton
           presentation={{
             kind: 'icon',
-            icon: <MateoIcon icon="cross" aria-label="Cross artwork" />,
+            icon: <MateoCrossIcon aria-label="Cross artwork" />,
             label: 'Close menu',
           }}
           onPressed={onPressed}
@@ -68,7 +68,7 @@ describe('Mateo icon button presentation', () => {
           presentation={{
             kind: 'icon',
             label: 'Close',
-            icon: <MateoIcon icon="cross" />,
+            icon: <MateoCrossIcon />,
             size,
           }}
         />,
@@ -84,7 +84,7 @@ describe('Mateo icon button presentation', () => {
     const presentation = {
       kind: 'icon',
       label: 'Close',
-      icon: <MateoIcon icon="cross" size={12} color="red" />,
+      icon: <MateoCrossIcon size={12} color="red" />,
     } satisfies MateoIconButtonPresentation;
     const view = render(<MateoIconButtonFixture presentation={presentation} />);
     view.rerender(
@@ -104,7 +104,7 @@ describe('Mateo icon button presentation', () => {
           presentation={{
             kind: 'icon',
             label: ' ',
-            icon: <MateoIcon icon="cross" />,
+            icon: <MateoCrossIcon />,
           }}
         />,
       ),
