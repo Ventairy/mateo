@@ -3,8 +3,8 @@ import {
   MateoBoxPencilIcon,
   MateoCheckmarkIcon,
   MateoCrossIcon,
-} from 'mateo-web-react/icons';
-import { MateoIconProvider } from 'mateo-web-react/react';
+} from '@mateo/web-react/icons';
+import { MateoIconProvider } from '@mateo/web-react/react';
 import { expect, it } from 'vitest';
 import {
   captureMateoGoldens,

@@ -1,7 +1,7 @@
 import {
   MateoDragResistance,
   type MateoDragResistanceProps,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { StrictMode, useRef, useState } from 'react';
 import { expect, it, vi } from 'vitest';
 import { commands, page } from 'vitest/browser';

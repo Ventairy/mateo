@@ -1,7 +1,7 @@
 import {
   MateoDragResistance,
   type MateoDragResistanceReturnAnimation,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 
 export function checkMateoDragResistanceReturnTypes() {
   const animation: MateoDragResistanceReturnAnimation = {

@@ -4,7 +4,7 @@ import {
   MateoCrossIcon,
   MateoFigureCropCircleIcon,
   MateoPaperPlaneUpRightIcon,
-} from 'mateo-web-react/icons';
+} from '@mateo/web-react/icons';
 import {
   MateoButton,
   type MateoButtonColorSchemeOverride,
@@ -12,7 +12,7 @@ import {
   type MateoButtonVariant,
   type MateoLabelButtonPresentation,
   MateoTheme,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';

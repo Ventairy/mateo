@@ -1,9 +1,9 @@
-import { getMateoThemeStyle } from 'mateo-web-react';
+import { getMateoThemeStyle } from '@mateo/web-react';
 import {
   MateoView,
   MateoViewHeader,
   MateoViewSurface,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import type { CSSProperties } from 'react';
 import { expect, it } from 'vitest';
 import { commands, page } from 'vitest/browser';

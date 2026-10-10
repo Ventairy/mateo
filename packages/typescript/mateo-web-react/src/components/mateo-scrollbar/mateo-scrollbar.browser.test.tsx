@@ -1,10 +1,10 @@
-import { getMateoThemeStyle } from 'mateo-web-react';
+import { getMateoThemeStyle } from '@mateo/web-react';
 import {
   MateoTheme,
   MateoView,
   MateoViewHeader,
   MateoViewSurface,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';

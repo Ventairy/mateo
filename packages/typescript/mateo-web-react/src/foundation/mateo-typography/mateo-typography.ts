@@ -3,7 +3,7 @@
  *
  * @remarks
  * Use `getMateoThemeStyle` on your app-owned root to inherit these defaults.
- * Import `mateo-web-react/styles.css` once to load bundled Inter fonts. Components
+ * Import `@mateo/web-react/styles.css` once to load bundled Inter fonts. Components
  * and content own their font sizes, weights, and line heights; there is no global
  * type scale.
  */

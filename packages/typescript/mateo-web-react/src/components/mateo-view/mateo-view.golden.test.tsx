@@ -1,4 +1,4 @@
-import { MateoArrowDownIcon, MateoArrowLeftIcon } from 'mateo-web-react/icons';
+import { MateoArrowDownIcon, MateoArrowLeftIcon } from '@mateo/web-react/icons';
 import {
   MateoButton,
   MateoTheme,
@@ -6,7 +6,7 @@ import {
   MateoViewHeader,
   type MateoViewPadding,
   MateoViewSurface,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { StrictMode, useState } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';

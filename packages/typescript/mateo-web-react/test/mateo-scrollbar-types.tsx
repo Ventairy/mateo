@@ -1,4 +1,4 @@
-import { MateoScrollbar, MateoViewSurface } from 'mateo-web-react/react';
+import { MateoScrollbar, MateoViewSurface } from '@mateo/web-react/react';
 import { createRef } from 'react';
 
 const mateoScrollRef = createRef<HTMLDivElement>();

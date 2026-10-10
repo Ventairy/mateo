@@ -19,9 +19,9 @@ try {
   await mkdir(join(mateoConsumerRoot, 'node_modules'));
   const installedPackage = join(
     mateoConsumerRoot,
-    'node_modules/mateo-web-react',
+    'node_modules/@mateo/web-react',
   );
-  await mkdir(installedPackage);
+  await mkdir(installedPackage, { recursive: true });
   await cp(join(mateoPackageRoot, 'dist'), join(installedPackage, 'dist'), {
     recursive: true,
   });
@@ -48,7 +48,7 @@ try {
   await writeFile(
     typeEntry,
     `import { createRef } from 'react';
-import { MateoAppleLogoIcon, MateoArrowDownIcon, type MateoNamedIconProps } from 'mateo-web-react/icons';
+import { MateoAppleLogoIcon, MateoArrowDownIcon, type MateoNamedIconProps } from '@mateo/web-react/icons';
 const props: MateoNamedIconProps = {
   size: 24, color: 'currentColor', backgroundColor: 'white',
   'aria-label': 'Artwork', ref: createRef<SVGSVGElement>(),
@@ -87,8 +87,8 @@ const props: MateoNamedIconProps = {
   await writeFile(
     entry,
     `import { createElement } from 'react';
-import { MateoArrowDownIcon } from 'mateo-web-react/icons';
-import { MateoIconProvider } from 'mateo-web-react/react';
+import { MateoArrowDownIcon } from '@mateo/web-react/icons';
+import { MateoIconProvider } from '@mateo/web-react/react';
 export function MateoConsumerIcon() {
   return createElement(MateoIconProvider, { size: 24 },
     createElement(MateoArrowDownIcon, { 'aria-label': 'Down' }));

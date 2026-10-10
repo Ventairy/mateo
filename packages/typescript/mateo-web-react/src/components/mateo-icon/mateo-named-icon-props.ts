@@ -4,7 +4,7 @@ import type { CSSProperties, Ref } from 'react';
  * Controls the appearance and accessible name of an individually imported icon.
  *
  * @remarks
- * Import icons from `mateo-web-react/icons` so bundlers can omit unused artwork.
+ * Import icons from `@mateo/web-react/icons` so bundlers can omit unused artwork.
  * Icons inherit size and color from MateoIconProvider unless explicitly overridden.
  * Without a nonempty `aria-label`, artwork is decorative and hidden from assistive
  * technology. The interactive parent owns its action name, focus, and state.

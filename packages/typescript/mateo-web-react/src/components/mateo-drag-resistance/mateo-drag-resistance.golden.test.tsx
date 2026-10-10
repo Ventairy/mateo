@@ -1,4 +1,4 @@
-import { MateoDragResistance } from 'mateo-web-react/react';
+import { MateoDragResistance } from '@mateo/web-react/react';
 import { it } from 'vitest';
 import { commands } from 'vitest/browser';
 import {

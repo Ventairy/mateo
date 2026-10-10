@@ -3,8 +3,8 @@ import {
   getMateoThemeStyle,
   type MateoThemeData,
   mateoTypography,
-} from 'mateo-web-react';
-import { MateoTheme } from 'mateo-web-react/react';
+} from '@mateo/web-react';
+import { MateoTheme } from '@mateo/web-react/react';
 import type { ReactNode } from 'react';
 import { expect } from 'vitest';
 import { commands, page } from 'vitest/browser';

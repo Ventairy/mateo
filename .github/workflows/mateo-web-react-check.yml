@@ -37,7 +37,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install golden browser
-        run: pnpm --filter mateo-web-react exec playwright install chromium
+        run: pnpm --filter @mateo/web-react exec playwright install chromium
 
       - name: Check workspace and package
         run: pnpm check

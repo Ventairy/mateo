@@ -1,5 +1,5 @@
-import { createMateoTheme } from 'mateo-web-react';
-import { MateoButton, MateoTheme } from 'mateo-web-react/react';
+import { createMateoTheme } from '@mateo/web-react';
+import { MateoButton, MateoTheme } from '@mateo/web-react/react';
 import type { MouseEvent } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it, vi } from 'vitest';

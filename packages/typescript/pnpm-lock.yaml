@@ -170,6 +170,18 @@ importers:
         specifier: 2.5.15
         version: 2.5.15
 
+  mateo-icons:
+    devDependencies:
+      '@types/node':
+        specifier: 24.19.1
+        version: 24.19.1
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
+      vite:
+        specifier: 8.3.2
+        version: 8.3.2(@types/node@24.19.1)(jiti@2.7.0)
+
   mateo-web-react:
     dependencies:
       culori:
@@ -179,6 +191,9 @@ importers:
       '@babel/types':
         specifier: 7.29.8
         version: 7.29.8
+      '@mateo/icons':
+        specifier: workspace:*
+        version: link:../mateo-icons
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(vite@8.3.2(@types/node@24.19.1)(jiti@2.7.0))

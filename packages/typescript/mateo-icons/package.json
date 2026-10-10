@@ -1,0 +1,47 @@
+{
+  "name": "@mateo/icons",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mateo static icon artwork for interfaces and SVG rendering.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ventairy/mateo.git",
+    "directory": "packages/typescript/mateo-icons"
+  },
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": "^24.15.0"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "mateo-icon-catalog.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./svg/*.svg": "./dist/svg/*.svg",
+    "./catalog.json": "./mateo-icon-catalog.json",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "node scripts/generate-mateo-icons.ts",
+    "prepare": "pnpm run build",
+    "typecheck": "pnpm run build && tsc --noEmit",
+    "test": "pnpm run build && node --test test/*.test.ts",
+    "check": "pnpm run typecheck && pnpm run test && node scripts/generate-mateo-icons.ts --check"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.2"
+  }
+}

@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import 'mateo-web-react/styles.css';
+import '@mateo/web-react/styles.css';
 import './mateo-golden.css';
 import { afterEach } from 'vitest';
 import { commands } from 'vitest/browser';

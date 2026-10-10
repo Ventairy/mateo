@@ -1,6 +1,6 @@
+import { createMateoTheme } from '@mateo/web-react';
+import { MateoScrollbar, MateoTheme } from '@mateo/web-react/react';
 import { render } from '@testing-library/react';
-import { createMateoTheme } from 'mateo-web-react';
-import { MateoScrollbar, MateoTheme } from 'mateo-web-react/react';
 import { createRef } from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it } from 'vitest';

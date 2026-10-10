@@ -117,7 +117,7 @@ export type MateoThemeStyle = Readonly<
  * Returns typography, text-selection, and scrollbar styles for an existing root or nested element.
  *
  * @remarks
- * Import `mateo-web-react/styles.css` once to load package styles and bundled Inter
+ * Import `@mateo/web-react/styles.css` once to load package styles and bundled Inter
  * fonts. Selected text uses a dark accent foreground over a opaque pale accent highlight.
  * Nested styled roots use their own theme; apply this object to portal roots too.
  * Forced-colors mode retains native colors. Typography is inherited

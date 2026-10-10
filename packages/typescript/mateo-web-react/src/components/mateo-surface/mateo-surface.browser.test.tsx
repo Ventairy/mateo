@@ -1,4 +1,4 @@
-import { MateoSurface } from 'mateo-web-react/react';
+import { MateoSurface } from '@mateo/web-react/react';
 import { createRef } from 'react';
 import { expect, it, vi } from 'vitest';
 import {

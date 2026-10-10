@@ -1,4 +1,4 @@
-import * as MateoIcons from 'mateo-web-react/icons';
+import * as MateoIcons from '@mateo/web-react/icons';
 
 export const mateoGoldenIconCatalog = {
   appleLogo: MateoIcons.MateoAppleLogoIcon,

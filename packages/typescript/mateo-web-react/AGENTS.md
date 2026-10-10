@@ -1,6 +1,6 @@
 # Mateo Web React Package
 
-This directory is the package root for `mateo-web-react`, the React implementation of
+This directory is the package root for `@mateo/web-react`, the React implementation of
 Mateo for websites and web apps, primarily for desktop with responsive mobile
 support.
 
@@ -67,7 +67,7 @@ props. Using Tailwind internally does not introduce consumer `className`,
 design tokens as Mateo foundation values.
 
 Compile package-owned utilities into `dist/styles.css`, exported as
-`mateo-web-react/styles.css`. Consumers import that stylesheet once; they do not
+`@mateo/web-react/styles.css`. Consumers import that stylesheet once; they do not
 need Tailwind installed or configured. Keep CSS marked as a package side effect.
 Omit Preflight and global resets, and scan only the component and base source
 directories.

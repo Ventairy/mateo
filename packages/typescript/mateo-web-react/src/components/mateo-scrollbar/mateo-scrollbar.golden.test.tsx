@@ -1,4 +1,4 @@
-import { MateoView, MateoViewSurface } from 'mateo-web-react/react';
+import { MateoView, MateoViewSurface } from '@mateo/web-react/react';
 import { it } from 'vitest';
 import { commands } from 'vitest/browser';
 import {

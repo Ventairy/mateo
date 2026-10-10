@@ -1,7 +1,7 @@
 import {
   MateoDragResistance,
   type MateoDragResistanceReturnAnimation,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { Fragment } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';

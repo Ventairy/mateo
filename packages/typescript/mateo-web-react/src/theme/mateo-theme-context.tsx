@@ -21,7 +21,7 @@ export interface MateoThemeProps {
  * Provides a theme to React descendants without adding a DOM element.
  *
  * @remarks
- * Use `getMateoThemeStyle` from `mateo-web-react` on your existing root to apply
+ * Use `getMateoThemeStyle` from `@mateo/web-react` on your existing root to apply
  * inherited typography. The provider supplies component colors, but does not
  * apply DOM styles by itself. Nested providers replace the theme for their subtree.
  *

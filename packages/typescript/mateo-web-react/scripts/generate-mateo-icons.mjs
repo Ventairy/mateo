@@ -1,10 +1,9 @@
+import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { dirname, relative, sep } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
-const mateoIconCatalogPath = new URL(
-  './mateo-icon-catalog.json',
-  import.meta.url,
+const mateoIconCatalogPath = createRequire(import.meta.url).resolve(
+  '@mateo/icons/catalog.json',
 );
 const mateoIconOutput = new URL('../src/mateo-icons.tsx', import.meta.url);
 /** @type {unknown} */
@@ -40,17 +39,7 @@ if (mateoIconEntries.length === 0) {
 }
 
 function _getMateoNamedIconImport(source) {
-  const sourceUrl = new URL(
-    `../../../../design-system/foundation/assets/icons/svg/${source}?react`,
-    import.meta.url,
-  );
-  const path = relative(
-    dirname(fileURLToPath(mateoIconOutput)),
-    fileURLToPath(sourceUrl),
-  )
-    .split(sep)
-    .join('/');
-  return `${path}${sourceUrl.search}`;
+  return `@mateo/icons/svg/${source}?react`;
 }
 
 function _formatMateoNamedIcon({ name, component, artwork }) {
@@ -85,8 +74,8 @@ function _formatMateoNamedIcon({ name, component, artwork }) {
   ];
 }
 
-const mateoIconEntry = [
-  '// Generated from scripts/mateo-icon-catalog.json.',
+const mateoIconSource = [
+  '// Generated from @mateo/icons/catalog.json.',
   '// Regenerate with node scripts/generate-mateo-icons.mjs.',
   "'use client';",
   '',
@@ -108,6 +97,17 @@ const mateoIconEntry = [
   '',
   ...mateoIconEntries.flatMap(_formatMateoNamedIcon),
 ].join('\n');
+
+const mateoIconEntry = execFileSync(
+  process.execPath,
+  [
+    createRequire(import.meta.url).resolve('@biomejs/biome/bin/biome'),
+    'check',
+    '--write',
+    '--stdin-file-path=src/mateo-icons.tsx',
+  ],
+  { input: mateoIconSource, encoding: 'utf8' },
+);
 
 if (process.argv.includes('--check')) {
   if (readFileSync(mateoIconOutput, 'utf8') !== mateoIconEntry) {

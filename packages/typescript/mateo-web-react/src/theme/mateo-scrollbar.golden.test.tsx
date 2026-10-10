@@ -1,4 +1,4 @@
-import { getMateoThemeStyle, type MateoThemeData } from 'mateo-web-react';
+import { getMateoThemeStyle, type MateoThemeData } from '@mateo/web-react';
 import { expect, it } from 'vitest';
 import { commands } from 'vitest/browser';
 import { render } from 'vitest-browser-react';

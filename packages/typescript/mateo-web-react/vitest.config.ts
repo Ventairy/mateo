@@ -18,12 +18,7 @@ export default defineConfig({
     fs: {
       allow: [
         fileURLToPath(new URL('.', import.meta.url)),
-        fileURLToPath(
-          new URL(
-            '../../../design-system/foundation/assets/icons/svg',
-            import.meta.url,
-          ),
-        ),
+        fileURLToPath(new URL('../mateo-icons', import.meta.url)),
       ],
     },
   },

@@ -1,4 +1,4 @@
-import { MateoPress } from 'mateo-web-react/react';
+import { MateoPress } from '@mateo/web-react/react';
 import { expect, it, vi } from 'vitest';
 import { commands } from 'vitest/browser';
 import {

@@ -1,4 +1,4 @@
-import { mateoTypography } from 'mateo-web-react';
+import { mateoTypography } from '@mateo/web-react';
 import { expect, it } from 'vitest';
 import { render } from 'vitest-browser-react';
 

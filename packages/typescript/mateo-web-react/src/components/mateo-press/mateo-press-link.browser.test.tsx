@@ -1,4 +1,4 @@
-import { MateoPress } from 'mateo-web-react/react';
+import { MateoPress } from '@mateo/web-react/react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it, vi } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';

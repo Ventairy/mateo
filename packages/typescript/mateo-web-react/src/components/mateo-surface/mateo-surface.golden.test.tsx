@@ -1,8 +1,8 @@
 import {
   lerpMateoRoundedShape,
   type MateoRoundedShapeEndpoint,
-} from 'mateo-web-react';
-import { type MateoShape, MateoSurface } from 'mateo-web-react/react';
+} from '@mateo/web-react';
+import { type MateoShape, MateoSurface } from '@mateo/web-react/react';
 import { expect, it } from 'vitest';
 import {
   captureMateoGolden,

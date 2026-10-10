@@ -3,7 +3,7 @@ import {
   MateoView,
   MateoViewHeader,
   MateoViewSurface,
-} from 'mateo-web-react/react';
+} from '@mateo/web-react/react';
 import { type ReactNode, StrictMode } from 'react';
 import { expect, it, vi } from 'vitest';
 import { commands, server } from 'vitest/browser';

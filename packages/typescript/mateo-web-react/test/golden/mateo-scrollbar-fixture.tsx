@@ -1,4 +1,4 @@
-import { MateoScrollbar } from 'mateo-web-react/react';
+import { MateoScrollbar } from '@mateo/web-react/react';
 import { useRef, useState } from 'react';
 
 export function MateoScrollbarSample({
