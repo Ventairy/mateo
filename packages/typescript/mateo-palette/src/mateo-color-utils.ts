@@ -29,8 +29,35 @@ function _getMateoColorConverters() {
   return mateoColorConverters;
 }
 
-/** @internal Parse concrete colors without consulting browser state. */
-export function parseMateoColor(value: string, name: string) {
+/**
+ * Resolves a concrete CSS color without consulting browser state.
+ *
+ * @param value - Hex, RGB, HSL, or OKLCH color; alpha is allowed.
+ * @param name - Field name used to identify invalid input in error messages.
+ * @returns The trimmed input and finite RGB channels. Channels may lie outside
+ * sRGB; palette accent creation applies its own opacity and gamut constraints.
+ * @throws TypeError - If the input is unresolved or contains nonfinite channels.
+ */
+export function parseMateoColor(
+  value: string,
+  name: string,
+): {
+  /** Concrete input with surrounding whitespace removed. */
+  readonly input: string;
+  /** RGB coordinates; alpha defaults to one when omitted. */
+  readonly rgb: {
+    /** Identifies RGB coordinates. */
+    readonly mode: 'rgb';
+    /** Red channel; zero to one is the sRGB range. */
+    readonly r: number;
+    /** Green channel; zero to one is the sRGB range. */
+    readonly g: number;
+    /** Blue channel; zero to one is the sRGB range. */
+    readonly b: number;
+    /** Opacity, when explicitly supplied. */
+    readonly alpha?: number;
+  };
+} {
   const _rejectMateoColor = () => {
     throw new TypeError(
       `${name} must be a finite hex, RGB, HSL, or OKLCH color.`,

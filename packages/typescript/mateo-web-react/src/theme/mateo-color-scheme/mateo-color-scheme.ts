@@ -1,4 +1,4 @@
-import { parseMateoColor } from '../mateo-palette/mateo-color-utils.js';
+import { parseMateoColor } from '@mateo/palette';
 import type { MateoPalette } from '../mateo-palette/mateo-palette.js';
 import type { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
 import { createMateoLightColorSchemeRoles } from './mateo-light-color-scheme.js';

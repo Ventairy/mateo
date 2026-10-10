@@ -41,7 +41,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rolldownOptions: {
-      external: (id) => /^(react|react-dom)(\/|$)/.test(id),
+      external: (id) => /^(react|react-dom|@mateo\/palette)(\/|$)/.test(id),
     },
   },
 });

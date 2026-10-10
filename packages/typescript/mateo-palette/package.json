@@ -1,0 +1,45 @@
+{
+  "name": "@mateo/palette",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mateo color palettes and product-accent customization.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ventairy/mateo.git",
+    "directory": "packages/typescript/mateo-palette"
+  },
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": "^24.15.0"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "types": "./dist/mateo-palette.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mateo-palette.d.ts",
+      "import": "./dist/mateo-palette.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "pnpm run build",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm run build && vitest run src && node --test test/*.test.ts",
+    "check": "pnpm run typecheck && pnpm run test"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "typescript": "6.0.3",
+    "@types/culori": "4.0.1",
+    "vitest": "5.0.3"
+  },
+  "dependencies": {
+    "culori": "4.0.2"
+  }
+}

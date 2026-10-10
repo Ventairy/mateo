@@ -2,3 +2,7 @@ packages:
   - mateo-*
 
 strictPeerDependencies: true
+
+# Develop React against the local palette; consumers use its Git dependency.
+overrides:
+  '@mateo/web-react>@mateo/palette': workspace:*

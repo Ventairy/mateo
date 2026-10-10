@@ -19,6 +19,7 @@ export default defineConfig({
       allow: [
         fileURLToPath(new URL('.', import.meta.url)),
         fileURLToPath(new URL('../mateo-icons', import.meta.url)),
+        fileURLToPath(new URL('../mateo-palette', import.meta.url)),
       ],
     },
   },
@@ -31,7 +32,11 @@ export default defineConfig({
           environment: 'jsdom',
           setupFiles: ['test/mateo-setup.ts'],
           include: ['src/**/*.test.{ts,tsx}', 'test/**/*.test.{ts,tsx}'],
-          exclude: [mateoGoldenPattern, mateoBrowserPattern],
+          exclude: [
+            mateoGoldenPattern,
+            mateoBrowserPattern,
+            'test/mateo-palette-delivery.test.ts',
+          ],
           clearMocks: true,
           restoreMocks: true,
         },
