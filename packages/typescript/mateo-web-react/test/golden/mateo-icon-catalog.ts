@@ -64,6 +64,7 @@ export const mateoGoldenIconCatalog = {
   magnifierGlass: MateoIcons.MateoMagnifierGlassIcon,
   matiniGlass: MateoIcons.MateoMatiniGlassIcon,
   medicalCross: MateoIcons.MateoMedicalCrossIcon,
+  monkeyHead: MateoIcons.MateoMonkeyHeadIcon,
   numbers: MateoIcons.MateoNumbersIcon,
   padlockOpen: MateoIcons.MateoPadlockOpenIcon,
   padlock: MateoIcons.MateoPadlockIcon,

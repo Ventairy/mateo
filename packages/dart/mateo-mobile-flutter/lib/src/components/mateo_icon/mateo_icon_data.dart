@@ -192,6 +192,9 @@ enum MateoIconData {
   /// The medical cross icon.
   medicalCross,
 
+  /// The monkey head icon.
+  monkeyHead,
+
   /// The numbers 1, 2, 3, and 4 icon.
   numbers,
 
@@ -374,6 +377,7 @@ enum MateoIconData {
     mapPin => $Icons.locationPin(mateoOpticalSizeColor: color),
     matiniGlass => $Icons.matiniGlass(mateoOpticalSizeColor: color),
     medicalCross => $Icons.medicalCross(mateoOpticalSizeColor: color),
+    monkeyHead => $Icons.monkeyHead(mateoOpticalSizeColor: color),
     numbers => $Icons.numbers(mateoOpticalSizeColor: color),
     padlock => $Icons.padlock(mateoOpticalSizeColor: color),
     padlockOpen => $Icons.padlockOpen(mateoOpticalSizeColor: color),

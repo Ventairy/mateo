@@ -66,6 +66,7 @@ import MateoMagnifierGlassArtwork from '../../../../design-system/foundation/ass
 import MateoMagnifyingGlassSadFaceArtwork from '../../../../design-system/foundation/assets/icons/svg/magnifying-glass-sad-face.svg?react';
 import MateoMatiniGlassArtwork from '../../../../design-system/foundation/assets/icons/svg/matini-glass.svg?react';
 import MateoMedicalCrossArtwork from '../../../../design-system/foundation/assets/icons/svg/medical-cross.svg?react';
+import MateoMonkeyHeadArtwork from '../../../../design-system/foundation/assets/icons/svg/monkey-head.svg?react';
 import MateoNumbersArtwork from '../../../../design-system/foundation/assets/icons/svg/numbers.svg?react';
 import MateoPadlockArtwork from '../../../../design-system/foundation/assets/icons/svg/padlock.svg?react';
 import MateoPadlockOpenArtwork from '../../../../design-system/foundation/assets/icons/svg/padlock-open.svg?react';
@@ -470,6 +471,11 @@ export function MateoMedicalCrossIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMedicalCrossArtwork} />;
+}
+
+/** Renders the monkeyHead artwork with Mateo icon appearance and accessibility. */
+export function MateoMonkeyHeadIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoMonkeyHeadArtwork} />;
 }
 
 /** Renders the numbers artwork with Mateo icon appearance and accessibility. */
