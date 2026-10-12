@@ -99,6 +99,9 @@ ImageFrameBuilder _dotdartImageFrameBuilder(
 /// ```dart
 /// $ThreeDIcons.pointerHandUp(<params>);
 /// ```
+/// ```dart
+/// $ThreeDIcons.redFlag(<params>);
+/// ```
 abstract final class $ThreeDIcons {
   $ThreeDIcons._();
 
@@ -234,6 +237,28 @@ abstract final class $ThreeDIcons {
     colorBlendMode: colorBlendMode,
   );
 
+  /// Builds the `RedFlag` widget from `redFlag.image`.
+  /// Pass [package] when this image belongs to a dependency package.
+  static Widget redFlag({
+    Key? key,
+    double? width,
+    double? height,
+    String? package,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Color? color,
+    BlendMode? colorBlendMode,
+  }) => _RedFlag(
+    key: key,
+    width: width,
+    height: height,
+    package: package,
+    fit: fit,
+    alignment: alignment,
+    color: color,
+    colorBlendMode: colorBlendMode,
+  );
+
   /// Builds the asset matching [fileName], or returns null if it is absent.
   ///
   /// Pass the original filename, including its extension and exact case.
@@ -285,6 +310,12 @@ abstract final class $ThreeDIcons {
       height: height,
       package: package,
     ),
+    'red-flag.webp' => redFlag(
+      key: key,
+      width: width,
+      height: height,
+      package: package,
+    ),
     _ => null,
   };
 }
@@ -302,6 +333,7 @@ abstract final class $ThreeDIconsCache {
   static const _padlockOpenAssetPath = 'assets/three_d_icons/padlock-open.webp';
   static const _pencilAssetPath = 'assets/three_d_icons/pencil.webp';
   static const _pointerHandUpAssetPath = 'assets/three_d_icons/pointer-hand-up.webp';
+  static const _redFlagAssetPath = 'assets/three_d_icons/red-flag.webp';
 
   /// Decodes `bidirecionalHorizontalArrow` before its first render.
   ///
@@ -583,6 +615,53 @@ abstract final class $ThreeDIconsCache {
     final provider = _provider(
       context,
       asset: AssetImage(_pointerHandUpAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+    );
+    final key = await provider.obtainKey(configuration);
+    return imageCache.evict(key, includeLive: false);
+  }
+
+  /// Decodes `redFlag` before its first render.
+  ///
+  /// [width] and [height] are logical pixels. Pass the same values to
+  /// `$ThreeDIcons.redFlag` so it reuses this cache entry.
+  /// Pass the same [package] as the image widget for package assets.
+  /// Omitting both values uses the widget's default display size.
+  static Future<void> precacheRedFlag(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+  }) => precacheImage(
+    _provider(
+      context,
+      asset: AssetImage(_redFlagAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+    ),
+    context,
+  );
+
+  /// Removes the decoded `redFlag` entry from Flutter's image cache.
+  ///
+  /// Returns whether the matching entry existed. [width] and [height]
+  /// must match the values used to precache or render the image.
+  /// [package] must match the image widget and precache call.
+  /// An image that is still displayed remains live until its last listener
+  /// is removed, preventing a duplicate decode during transitions.
+  static Future<bool> removeRedFlag(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+  }) async {
+    final configuration = createLocalImageConfiguration(context);
+    final provider = _provider(
+      context,
+      asset: AssetImage(_redFlagAssetPath, package: package),
       aspectRatio: 1,
       width: width,
       height: height,
@@ -1446,6 +1525,150 @@ class _PointerHandUp extends StatelessWidget {
     _dominantColor,
   );
   static const String _assetPath = 'assets/three_d_icons/pointer-hand-up.webp';
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    const aspect = _aspectRatio;
+    final w = width ?? (height != null ? height! * aspect : 280.0);
+    final h = height ?? w / aspect;
+
+    final image = Image.asset(
+      _assetPath,
+      package: package,
+      key: key,
+      width: w,
+      height: h,
+      fit: fit,
+      alignment: alignment,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.low,
+      cacheWidth: (w * dpr).ceil(),
+      cacheHeight: (h * dpr).ceil(),
+      frameBuilder: _frameBuilder,
+    );
+
+    return RepaintBoundary(child: image);
+  }
+}
+
+/// A dotdart-generated image widget from `assets/three_d_icons/red-flag.webp`.
+///
+/// Intrinsic 1254×1254 · WebP · aspect 1.0000.
+/// Decodes at display size × device pixel ratio for minimal memory.
+/// Renders a thumbhash placeholder in frame 1, then swaps to the image.
+class _RedFlag extends StatelessWidget {
+  const _RedFlag({
+    super.key,
+    this.width,
+    this.height,
+    this.package,
+    this.fit,
+    this.alignment = Alignment.center,
+    this.color,
+    this.colorBlendMode,
+  });
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// Package containing the image.
+  final String? package;
+
+  /// How to inscribe the image in its bounds.
+  final BoxFit? fit;
+
+  /// Alignment within the widget bounds.
+  final AlignmentGeometry alignment;
+
+  /// A color to blend with the image.
+  final Color? color;
+
+  /// The blend mode applied when color is set.
+  final BlendMode? colorBlendMode;
+
+  static const double _aspectRatio = 1;
+  static const Color _dominantColor = Color(0x8F873737);
+  static const int _thumbhashWidth = 8;
+  static const int _thumbhashHeight = 8;
+  static const List<Color> _thumbhashPixels = <Color>[
+    Color(0x62DAC3C0),
+    Color(0x92D9AAA8),
+    Color(0x50F9584D),
+    Color(0x67ED7E79),
+    Color(0x58E9736C),
+    Color(0x6CE37A74),
+    Color(0x4FE7847D),
+    Color(0x42C7877E),
+    Color(0x95DDA8A5),
+    Color(0xDDDC9290),
+    Color(0xAFF64C46),
+    Color(0xC4EE6763),
+    Color(0xC5F05955),
+    Color(0xBEF06763),
+    Color(0xC1F5615D),
+    Color(0x79EB726D),
+    Color(0x91E09E9B),
+    Color(0xDFDE8886),
+    Color(0xAEFE2A1C),
+    Color(0xC1F45551),
+    Color(0xBEF5453E),
+    Color(0xBFF6544F),
+    Color(0xA9F2524C),
+    Color(0x70E75C54),
+    Color(0x8ADAA7A4),
+    Color(0xDADA8E8C),
+    Color(0xADF63C34),
+    Color(0xC1EC5E5A),
+    Color(0xACEC544E),
+    Color(0xBBF15E59),
+    Color(0x7CF06B65),
+    Color(0x50E67B73),
+    Color(0x99DC9D9A),
+    Color(0xE8E18886),
+    Color(0xBDF93329),
+    Color(0xCCF55854),
+    Color(0xBFF64B45),
+    Color(0xD0F35651),
+    Color(0xBAF6544F),
+    Color(0x75E5625B),
+    Color(0x8FD89895),
+    Color(0xD3DB8684),
+    Color(0x9FED0000),
+    Color(0xB4E74D47),
+    Color(0xB4E8362D),
+    Color(0xB4E34A44),
+    Color(0xADED443C),
+    Color(0x78D9463C),
+    Color(0x75C9B1AE),
+    Color(0x9ECBA29F),
+    Color(0x4FEB4D3E),
+    Color(0x61E47C76),
+    Color(0x58E86C63),
+    Color(0x57E7807A),
+    Color(0x46EE847C),
+    Color(0x3CDA847B),
+    Color(0x63D3B4B1),
+    Color(0x88C8A5A2),
+    Color(0x45FC0000),
+    Color(0x5DE96B63),
+    Color(0x4EEC5649),
+    Color(0x51F66F66),
+    Color(0x49F8695F),
+    Color(0x31F46F61),
+  ];
+  static final ImageFrameBuilder _frameBuilder = _dotdartImageFrameBuilder(
+    _thumbhashWidth,
+    _thumbhashHeight,
+    _thumbhashPixels,
+    _dominantColor,
+  );
+  static const String _assetPath = 'assets/three_d_icons/red-flag.webp';
 
   @override
   Widget build(BuildContext context) {

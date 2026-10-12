@@ -88,10 +88,11 @@ void main() {
     expect(tester.getSize(find.byType(MateoIcon)), const Size.square(24));
   });
 
-  testWidgets('when coloring every catalog icon, it should recolor every paint through explicit and inherited colors', (
+  testWidgets('when coloring SVG catalog icons, it should recolor every paint through explicit and inherited colors', (
     tester,
   ) async {
     for (final icon in MateoIconData.values) {
+      if (icon == MateoIconData.redFlag) continue;
       for (final explicit in [true, false]) {
         await tester.pumpWidget(
           host(
@@ -273,6 +274,30 @@ void main() {
 
   testWidgets('when 3D artwork is unavailable, it should throw for that icon', (tester) async {
     await tester.pumpWidget(host(const MateoIcon(.cross, style: .threeD)));
+    expect(tester.takeException(), isA<UnsupportedError>());
+  });
+
+  testWidgets('when a red flag uses the 3D style, it should display the package artwork at the requested size', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      host(
+        const MediaQuery(
+          data: MediaQueryData(),
+          child: MateoIcon(.redFlag, style: .threeD, size: 48),
+        ),
+      ),
+    );
+    expect(tester.takeException(), isNull);
+    expect(tester.getSize(find.byType(MateoIcon)), const Size.square(48));
+    final provider = tester.widget<Image>(find.byType(Image)).image as ResizeImage;
+    final asset = provider.imageProvider as AssetImage;
+    expect(asset.assetName, 'assets/three_d_icons/red-flag.webp');
+    expect(asset.package, 'mateo_mobile');
+  });
+
+  testWidgets('when a red flag uses the SVG style, it should report unavailable artwork', (tester) async {
+    await tester.pumpWidget(host(const MateoIcon(.redFlag)));
     expect(tester.takeException(), isA<UnsupportedError>());
   });
 

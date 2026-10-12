@@ -240,6 +240,9 @@ enum MateoIconData {
   /// The rectangle stack icon.
   rectangleStack,
 
+  /// The red flag icon, available only with [MateoIconStyle.threeD].
+  redFlag,
+
   /// The road icon.
   road,
 
@@ -316,6 +319,7 @@ enum MateoIconData {
   padlockOpen;
 
   Widget _buildSvg({Color? color}) => switch (this) {
+    redFlag => throw UnsupportedError('Mateo icon $name has no SVG artwork.'),
     xLogo => $Icons.xLogo(mateoOpticalSizeColor: color),
     linkedinLogo => $Icons.linkedinLogo(mateoOpticalSizeColor: color),
     linktreeLogo => $Icons.linktreeLogo(mateoOpticalSizeColor: color),
@@ -429,6 +433,7 @@ enum MateoIconData {
     padlockOpen => $ThreeDIcons.padlockOpen(package: 'mateo_mobile'),
     pencil => $ThreeDIcons.pencil(package: 'mateo_mobile'),
     pointerHandUp => $ThreeDIcons.pointerHandUp(package: 'mateo_mobile'),
+    redFlag => $ThreeDIcons.redFlag(package: 'mateo_mobile'),
     _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
   };
 }
