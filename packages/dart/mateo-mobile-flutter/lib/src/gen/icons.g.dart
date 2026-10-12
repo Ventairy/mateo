@@ -208,6 +208,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.figureCropCircle(<params>);
 /// ```
 /// ```dart
+/// $Icons.flag(<params>);
+/// ```
+/// ```dart
 /// $Icons.flame(<params>);
 /// ```
 /// ```dart
@@ -992,6 +995,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _FigureCropCircle(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Flag` widget from `flag.svg`.
+  static Widget flag({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Flag(
     key: key,
     width: width,
     height: height,
@@ -2029,6 +2047,7 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'flag.svg' => flag(key: key, width: width, height: height),
     'flame.svg' => flame(key: key, width: width, height: height),
     'fork-knife.svg' => forkKnife(key: key, width: width, height: height),
     'gas-station.svg' => gasStation(key: key, width: width, height: height),
@@ -9055,6 +9074,164 @@ class _FigureCropCirclePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FigureCropCirclePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/flag.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Flag extends StatelessWidget with _DotdartSvgSizing {
+  const _Flag({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Flag._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Flag._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Flag._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Flag._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _FlagPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _FlagPainter extends CustomPainter {
+  _FlagPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.710253289,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.710253289,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.89746711,
+    2.89746711,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(2.9348, 0.0094)
+    ..cubicTo(2.9856, 0.005, 3.0378, 0.0007, 3.0887, 0.0002)
+    ..cubicTo(3.4853, -0.0057, 3.8672, 0.1503, 4.1461, 0.4323)
+    ..cubicTo(4.6519, 0.9376, 4.5741, 1.4991, 4.5739, 2.1552)
+    ..cubicTo(4.9208, 2.169, 5.2716, 2.1613, 5.619, 2.1616)
+    ..lineTo(7.559, 2.1613)
+    ..lineTo(13.7274, 2.1621)
+    ..lineTo(15.7838, 2.1617)
+    ..cubicTo(16.0817, 2.1611, 16.6863, 2.1436, 16.9576, 2.1853)
+    ..cubicTo(17.3026, 2.2357, 17.6237, 2.3914, 17.877, 2.6311)
+    ..cubicTo(18.0934, 2.8421, 18.2429, 3.1122, 18.307, 3.4076)
+    ..cubicTo(18.4039, 3.8598, 18.2957, 4.3316, 18.0117, 4.6965)
+    ..cubicTo(17.9252, 4.8096, 17.7387, 4.9996, 17.6356, 5.1095)
+    ..lineTo(17.0364, 5.7461)
+    ..lineTo(15.5987, 7.2816)
+    ..cubicTo(15.4576, 7.4312, 15.303, 7.582, 15.172, 7.7396)
+    ..cubicTo(14.6592, 8.3568, 15.2356, 8.7868, 15.6233, 9.2108)
+    ..lineTo(17.1012, 10.7985)
+    ..cubicTo(17.2259, 10.9312, 17.3521, 11.0691, 17.4768, 11.2009)
+    ..cubicTo(17.8964, 11.6443, 18.2428, 11.9497, 18.2516, 12.6078)
+    ..cubicTo(18.261, 13.0143, 18.1043, 13.407, 17.8176, 13.6955)
+    ..cubicTo(17.2166, 14.3043, 16.4258, 14.1765, 15.6379, 14.1695)
+    ..lineTo(14.4349, 14.1697)
+    ..lineTo(7.5143, 14.1691)
+    ..cubicTo(6.5865, 14.171, 5.4916, 14.1414, 4.575, 14.1824)
+    ..cubicTo(4.5652, 14.5491, 4.5725, 14.9388, 4.5724, 15.307)
+    ..lineTo(4.5724, 17.3529)
+    ..cubicTo(4.5731, 17.7974, 4.5921, 18.2871, 4.5567, 18.7256)
+    ..cubicTo(4.5099, 19.3045, 4.0059, 19.8336, 3.4427, 19.9623)
+    ..cubicTo(3.062, 20.0512, 2.6616, 19.9813, 2.3334, 19.769)
+    ..cubicTo(2.1093, 19.6239, 1.9566, 19.4461, 1.8321, 19.2106)
+    ..cubicTo(1.623, 18.8152, 1.6623, 18.3698, 1.662, 17.9345)
+    ..lineTo(1.6613, 16.6481)
+    ..lineTo(1.664, 12.5333)
+    ..lineTo(1.6632, 5.0949)
+    ..lineTo(1.6621, 2.6362)
+    ..cubicTo(1.6623, 2.2227, 1.6502, 1.792, 1.6682, 1.3807)
+    ..cubicTo(1.6996, 0.6684, 2.2304, 0.1099, 2.9348, 0.0094)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Flag._viewBoxWidth;
+    final scaleY = size.height / _Flag._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Flag._viewBoxMinX, -_Flag._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _FlagPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

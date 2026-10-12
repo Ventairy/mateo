@@ -41,6 +41,7 @@ export const mateoGoldenIconCatalog = {
   exclamationTriangle: MateoIcons.MateoExclamationTriangleIcon,
   ferrisWheel: MateoIcons.MateoFerrisWheelIcon,
   figureCropCircle: MateoIcons.MateoFigureCropCircleIcon,
+  flag: MateoIcons.MateoFlagIcon,
   flame: MateoIcons.MateoFlameIcon,
   forkKnife: MateoIcons.MateoForkKnifeIcon,
   gasStation: MateoIcons.MateoGasStationIcon,

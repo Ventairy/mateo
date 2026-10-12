@@ -42,6 +42,7 @@ import MateoExclamationCircleArtwork from '@mateo/icons/svg/exclamation-circle.s
 import MateoExclamationTriangleArtwork from '@mateo/icons/svg/exclamation-triangle.svg?react';
 import MateoFerrisWheelArtwork from '@mateo/icons/svg/ferris-wheel.svg?react';
 import MateoFigureCropCircleArtwork from '@mateo/icons/svg/figure-crop-circle.svg?react';
+import MateoFlagArtwork from '@mateo/icons/svg/flag.svg?react';
 import MateoFlameArtwork from '@mateo/icons/svg/flame.svg?react';
 import MateoForkKnifeArtwork from '@mateo/icons/svg/fork-knife.svg?react';
 import MateoGasStationArtwork from '@mateo/icons/svg/gas-station.svg?react';
@@ -334,6 +335,11 @@ export function MateoFigureCropCircleIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoFigureCropCircleArtwork} />;
+}
+
+/** Renders the flag artwork with Mateo icon appearance and accessibility. */
+export function MateoFlagIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoFlagArtwork} />;
 }
 
 /** Renders the flame artwork with Mateo icon appearance and accessibility. */

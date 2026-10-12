@@ -123,6 +123,9 @@ enum MateoIconData {
   /// The figure crop circle icon.
   figureCropCircle,
 
+  /// The flag icon.
+  flag,
+
   /// The flame icon.
   flame,
 
@@ -357,6 +360,7 @@ enum MateoIconData {
     exclamationTriangle => $Icons.exclamationTriangle(mateoOpticalSizeColor: color),
     ferrisWheel => $Icons.ferrisWheel(mateoOpticalSizeColor: color),
     figureCropCircle => $Icons.figureCropCircle(mateoOpticalSizeColor: color),
+    flag => $Icons.flag(mateoOpticalSizeColor: color),
     flame => $Icons.flame(mateoOpticalSizeColor: color),
     forkKnife => $Icons.forkKnife(mateoOpticalSizeColor: color),
     gasStation => $Icons.gasStation(mateoOpticalSizeColor: color),
