@@ -84,6 +84,9 @@ enum MateoIconData {
   /// The clock icon.
   clock,
 
+  /// The copyright icon.
+  copyright,
+
   /// The cross icon.
   cross,
 
@@ -161,6 +164,9 @@ enum MateoIconData {
 
   /// The Instagram logo icon.
   instagramLogo,
+
+  /// The intellectual property icon.
+  intellectualProperty,
 
   /// The info icon.
   info,
@@ -351,6 +357,7 @@ enum MateoIconData {
     circleInfo => $Icons.circleInfo(mateoOpticalSizeColor: color),
     classicBuilding => $Icons.classicBuilding(mateoOpticalSizeColor: color),
     clock => $Icons.clock(mateoOpticalSizeColor: color),
+    copyright => $Icons.copyright(mateoOpticalSizeColor: color),
     cross => $Icons.cross(mateoOpticalSizeColor: color),
     crossCircle => $Icons.crossCircle(mateoOpticalSizeColor: color),
     discoBall => $Icons.discoBall(mateoOpticalSizeColor: color),
@@ -376,6 +383,7 @@ enum MateoIconData {
     helicopterFront => $Icons.helicopterFront(mateoOpticalSizeColor: color),
     hookah => $Icons.hookah(mateoOpticalSizeColor: color),
     hotCoffeeCup => $Icons.hotCoffeeCup(mateoOpticalSizeColor: color),
+    intellectualProperty => $Icons.intellectualProperty(mateoOpticalSizeColor: color),
     info => $Icons.info(mateoOpticalSizeColor: color),
     letters => $Icons.letters(mateoOpticalSizeColor: color),
     lightningBolt => $Icons.lightningBolt(mateoOpticalSizeColor: color),

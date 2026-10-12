@@ -29,6 +29,7 @@ import MateoCircleDollarArtwork from '@mateo/icons/svg/circle-dollar.svg?react';
 import MateoCircleInfoArtwork from '@mateo/icons/svg/circle-info.svg?react';
 import MateoClassicBuildingArtwork from '@mateo/icons/svg/classic-building.svg?react';
 import MateoClockArtwork from '@mateo/icons/svg/clock.svg?react';
+import MateoCopyrightArtwork from '@mateo/icons/svg/copyright.svg?react';
 import MateoCrossArtwork from '@mateo/icons/svg/cross.svg?react';
 import MateoCrossCircleArtwork from '@mateo/icons/svg/cross-circle.svg?react';
 import MateoDiscoBallArtwork from '@mateo/icons/svg/disco-ball.svg?react';
@@ -56,6 +57,7 @@ import MateoHookahArtwork from '@mateo/icons/svg/hookah.svg?react';
 import MateoHotCoffeeCupArtwork from '@mateo/icons/svg/hot-coffee-cup.svg?react';
 import MateoInfoArtwork from '@mateo/icons/svg/info.svg?react';
 import MateoInstagramLogoArtwork from '@mateo/icons/svg/instagram-logo.svg?react';
+import MateoIntellectualPropertyArtwork from '@mateo/icons/svg/intellectual-property.svg?react';
 import MateoLettersArtwork from '@mateo/icons/svg/letters.svg?react';
 import MateoLightningBoltArtwork from '@mateo/icons/svg/lightning-bolt.svg?react';
 import MateoLinkedinLogoArtwork from '@mateo/icons/svg/linkedin-logo.svg?react';
@@ -266,6 +268,11 @@ export function MateoClockIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoClockArtwork} />;
 }
 
+/** Renders the copyright artwork with Mateo icon appearance and accessibility. */
+export function MateoCopyrightIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoCopyrightArtwork} />;
+}
+
 /** Renders the crossCircle artwork with Mateo icon appearance and accessibility. */
 export function MateoCrossCircleIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCrossCircleArtwork} />;
@@ -413,6 +420,15 @@ export function MateoInstagramLogoIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoInstagramLogoArtwork} />;
+}
+
+/** Renders the intellectualProperty artwork with Mateo icon appearance and accessibility. */
+export function MateoIntellectualPropertyIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return (
+    <BaseMateoIcon {...props} artwork={MateoIntellectualPropertyArtwork} />
+  );
 }
 
 /** Renders the letters artwork with Mateo icon appearance and accessibility. */
