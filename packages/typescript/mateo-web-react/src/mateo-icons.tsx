@@ -39,6 +39,7 @@ import MateoDropFoamArtwork from '@mateo/icons/svg/drop-foam.svg?react';
 import MateoDumbbellArtwork from '@mateo/icons/svg/dumbbell.svg?react';
 import MateoEraserArtwork from '@mateo/icons/svg/eraser.svg?react';
 import MateoEvPlugArtwork from '@mateo/icons/svg/ev-plug.svg?react';
+import MateoExclamationChatBubbleArtwork from '@mateo/icons/svg/exclamation-chat-bubble.svg?react';
 import MateoExclamationCircleArtwork from '@mateo/icons/svg/exclamation-circle.svg?react';
 import MateoExclamationTriangleArtwork from '@mateo/icons/svg/exclamation-triangle.svg?react';
 import MateoFerrisWheelArtwork from '@mateo/icons/svg/ferris-wheel.svg?react';
@@ -316,6 +317,15 @@ export function MateoEraserIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the evPlug artwork with Mateo icon appearance and accessibility. */
 export function MateoEvPlugIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoEvPlugArtwork} />;
+}
+
+/** Renders the exclamationChatBubble artwork with Mateo icon appearance and accessibility. */
+export function MateoExclamationChatBubbleIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return (
+    <BaseMateoIcon {...props} artwork={MateoExclamationChatBubbleArtwork} />
+  );
 }
 
 /** Renders the exclamationCircle artwork with Mateo icon appearance and accessibility. */

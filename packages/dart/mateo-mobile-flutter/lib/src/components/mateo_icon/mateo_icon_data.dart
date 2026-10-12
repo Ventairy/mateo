@@ -114,6 +114,9 @@ enum MateoIconData {
   /// The ev plug icon.
   evPlug,
 
+  /// The exclamation chat bubble icon.
+  exclamationChatBubble,
+
   /// The exclamation circle icon.
   exclamationCircle,
 
@@ -367,6 +370,7 @@ enum MateoIconData {
     dumbbell => $Icons.dumbbell(mateoOpticalSizeColor: color),
     eraser => $Icons.eraser(mateoOpticalSizeColor: color),
     evPlug => $Icons.evPlug(mateoOpticalSizeColor: color),
+    exclamationChatBubble => $Icons.exclamationChatBubble(mateoOpticalSizeColor: color),
     exclamationCircle => $Icons.exclamationCircle(mateoOpticalSizeColor: color),
     exclamationTriangle => $Icons.exclamationTriangle(mateoOpticalSizeColor: color),
     ferrisWheel => $Icons.ferrisWheel(mateoOpticalSizeColor: color),

@@ -38,6 +38,7 @@ export const mateoGoldenIconCatalog = {
   dumbbell: MateoIcons.MateoDumbbellIcon,
   eraser: MateoIcons.MateoEraserIcon,
   evPlug: MateoIcons.MateoEvPlugIcon,
+  exclamationChatBubble: MateoIcons.MateoExclamationChatBubbleIcon,
   exclamationCircle: MateoIcons.MateoExclamationCircleIcon,
   exclamationTriangle: MateoIcons.MateoExclamationTriangleIcon,
   ferrisWheel: MateoIcons.MateoFerrisWheelIcon,
