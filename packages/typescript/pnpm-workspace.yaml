@@ -3,6 +3,10 @@ packages:
 
 strictPeerDependencies: true
 
+# npm prepares Git subdirectory packages with their own dependencies installed.
+# Running their build must not install and prepare unrelated sibling packages.
+verifyDepsBeforeRun: false
+
 # Develop React against the local palette; consumers use its Git dependency.
 overrides:
   '@mateo/web-react>@mateo/palette': workspace:*
