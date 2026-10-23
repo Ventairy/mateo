@@ -29,7 +29,7 @@ export function checkMateoPublicTypes(step: MateoColorStep) {
   theme.colorScheme.background = color;
   const style: CSSProperties = getMateoThemeStyle(theme);
   const fontFamily: 'Inter, sans-serif' = mateoTypography.fontFamily;
-  const letterSpacing: '-0.2px' = mateoTypography.letterSpacing;
+  const letterSpacing: '-0.02em' = mateoTypography.letterSpacing;
   // @ts-expect-error Shared typography is readonly.
   mateoTypography.fontFamily = 'serif';
   return { style, dark, fontFamily, letterSpacing };

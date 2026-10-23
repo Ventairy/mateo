@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 import '../fixtures/app_test_counter.dart';
 import '../fixtures/app_test_navigator_observer.dart';
@@ -19,9 +20,7 @@ void main() {
         home: Builder(
           builder: (context) {
             expect(MateoTheme.of(context), theme);
-            expect(DefaultTextStyle.of(context).style.fontFamily, MateoTypography.fontFamily);
-            expect(DefaultTextStyle.of(context).style.letterSpacing, MateoTypography.letterSpacing);
-            expect(DefaultTextStyle.of(context).style.color, theme.colorScheme.text.primary);
+            expect(MateoTextScope.of(context).color, theme.colorScheme.text.primary);
             expect(Localizations.localeOf(context), const Locale('en', 'US'));
             expect(Directionality.of(context), TextDirection.ltr);
             expect(ModalRoute.of(context)?.settings.name, '/');
@@ -69,7 +68,7 @@ void main() {
         overlayBuilt = true;
         expect(MateoTheme.of(context), theme);
         expect(Localizations.localeOf(context), const Locale('pt', 'BR'));
-        expect(DefaultTextStyle.of(context).style.fontFamily, MateoTypography.fontFamily);
+        expect(MateoTextScope.of(context).color, theme.colorScheme.text.primary);
         return const Positioned(left: 0, top: 0, child: Text('Overlay'));
       },
     );
@@ -126,7 +125,7 @@ void main() {
       home: Builder(
         builder: (context) {
           expect(MateoTheme.maybeOf(context), isNotNull);
-          expect(DefaultTextStyle.of(context).style.fontFamily, MateoTypography.fontFamily);
+          expect(MateoTextScope.of(context).color, theme.colorScheme.text.primary);
           expect(Directionality.of(context), TextDirection.ltr);
           return const AppTestCounter();
         },

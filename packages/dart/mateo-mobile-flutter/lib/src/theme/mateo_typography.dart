@@ -1,11 +1,13 @@
-/// The shared typeface and letter spacing for Mateo text.
+/// The bundled font families for Mateo typography.
 ///
-/// Components own their sizes, weights, and line heights. These primitives
-/// follow the [typography foundation](https://github.com/Ventairy/mateo/blob/main/design-system/foundation/typography.md).
+/// Use MateoText for display text; its presentation owns typeface and tracking.
 abstract final class MateoTypography {
-  /// The bundled Inter family, qualified for use by consuming packages.
-  static const String fontFamily = 'packages/mateo_mobile/Inter';
+  /// The package-qualified Inter family for interface text.
+  static const String interfaceFontFamily = 'packages/mateo_mobile/Inter';
 
-  /// The shared letter spacing in logical pixels.
-  static const double letterSpacing = -0.2;
+  /// The package-qualified Fredoka family for rounded decorative text.
+  static const String decorativeRoundedFontFamily = 'packages/mateo_mobile/Fredoka';
+
+  /// The package-qualified Momo Signature family for cursive decorative text.
+  static const String decorativeCursiveFontFamily = 'packages/mateo_mobile/MomoSignature';
 }

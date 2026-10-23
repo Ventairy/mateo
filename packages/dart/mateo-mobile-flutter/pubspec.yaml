@@ -55,3 +55,10 @@ flutter:
         - asset: assets/fonts/inter_variable.ttf
         - asset: assets/fonts/inter_italic.ttf
           style: italic
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/fredoka/fredoka-variable.ttf
+          weight: 600
+    - family: MomoSignature
+      fonts:
+        - asset: assets/fonts/momo-signature/momo-signature.ttf

@@ -26,7 +26,7 @@ import '../../theme/mateo_theme_data.dart';
 ///     accentColor: const Color(0xFF4A5CFF),
 ///     onAccent: const Color(0xFFFFFFFF),
 ///   ),
-///   home: const Center(child: Text('Hello, Mateo')),
+///   home: const Center(child: MateoText('Hello, Mateo', presentation: .interface())),
 /// )
 /// ```
 ///

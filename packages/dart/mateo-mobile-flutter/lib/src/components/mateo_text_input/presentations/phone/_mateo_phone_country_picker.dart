@@ -152,16 +152,14 @@ class _MateoPhoneCountryPickerState extends State<_MateoPhoneCountryPicker> {
                     child: SizedBox(
                       height: 60,
                       child: Center(
-                        child: Text(
+                        child: MateoText(
                           translations.noCountriesFound,
-                          textAlign: .center,
-                          style: TextStyle(
-                            fontFamily: MateoTypography.fontFamily,
-                            letterSpacing: MateoTypography.letterSpacing,
+                          presentation: .interface(
                             fontSize: 15,
                             height: 1.4,
                             fontWeight: .w500,
                             color: MateoTheme.of(context).colorScheme.text.tertiary,
+                            textAlign: .center,
                           ),
                         ),
                       ),

@@ -55,7 +55,7 @@ Future<MateoMenuOptionsPresentationItem?> showMateoMenu({
     exitTransition: exitTransition,
     reducedMotion: MediaQuery.disableAnimationsOf(anchorContext),
     theme: MateoTheme.of(anchorContext),
-    textStyle: DefaultTextStyle.of(anchorContext).style,
+    capturedThemes: InheritedTheme.capture(from: anchorContext, to: navigator.context),
     direction: Directionality.of(anchorContext),
     anchorBounds: anchorBounds,
   );

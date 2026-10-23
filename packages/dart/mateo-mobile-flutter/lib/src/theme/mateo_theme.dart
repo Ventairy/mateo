@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../components/mateo_text/mateo_text.dart';
 import 'mateo_theme_data.dart';
-import 'mateo_typography.dart';
 
 part '_mateo_theme_scope.dart';
 
@@ -10,9 +10,9 @@ part '_mateo_theme_scope.dart';
 ///
 /// Nested themes replace the nearest appearance. Changes apply immediately,
 /// without animation. This scope does not require Material or paint a surface.
-/// It preserves inherited text sizes and layout settings, while applying
-/// Inter, Mateo letter spacing, and the primary text color. Descendants can
-/// override those text defaults normally.
+/// It preserves Mateo text sizes and alignment while supplying the primary text
+/// color. Text presentations own their typefaces and tracking. Native Flutter
+/// Text widgets do not consume these defaults.
 ///
 /// ```dart
 /// MateoTheme(
@@ -61,12 +61,8 @@ class MateoTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _MateoThemeScope(
     data: data,
-    child: DefaultTextStyle.merge(
-      style: TextStyle(
-        fontFamily: MateoTypography.fontFamily,
-        letterSpacing: MateoTypography.letterSpacing,
-        color: data.colorScheme.text.primary,
-      ),
+    child: MateoTextScope(
+      color: data.colorScheme.text.primary,
       child: child,
     ),
   );

@@ -19,10 +19,34 @@ Future<void> main() async {
           context: cappedLauncher,
           maxExtent: 280,
           view: const MateoSheetView(
-            header: MateoSheetViewHeader(presentation: .custom(principal: Text('Details'))),
-            footer: MateoSheetViewFooter(principal: Text('Continue')),
+            header: MateoSheetViewHeader(
+              presentation: .custom(
+                principal: MateoText(
+                  'Details',
+                  presentation: .interface(),
+                ),
+              ),
+            ),
+            footer: MateoSheetViewFooter(
+              principal: MateoText(
+                'Continue',
+                presentation: .interface(),
+              ),
+            ),
             surface: MateoSheetViewSurface.scrollable(
-              child: Column(children: [Text('Sheet content'), SizedBox(height: 600), Text('Last item')]),
+              child: Column(
+                children: [
+                  MateoText(
+                    'Sheet content',
+                    presentation: .interface(),
+                  ),
+                  SizedBox(height: 600),
+                  MateoText(
+                    'Last item',
+                    presentation: .interface(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -66,12 +90,34 @@ Future<void> main() async {
               context: launcher.context,
               view: MateoSheetView(
                 header: launcher.slots
-                    ? const MateoSheetViewHeader(presentation: .custom(principal: Text('Details')))
+                    ? const MateoSheetViewHeader(
+                        presentation: .custom(
+                          principal: MateoText(
+                            'Details',
+                            presentation: .interface(),
+                          ),
+                        ),
+                      )
                     : null,
-                footer: launcher.slots ? const MateoSheetViewFooter(principal: Text('Footer')) : null,
+                footer: launcher.slots
+                    ? const MateoSheetViewFooter(
+                        principal: MateoText(
+                          'Footer',
+                          presentation: .interface(),
+                        ),
+                      )
+                    : null,
                 surface: MateoSheetViewSurface(
                   color: surfaceTransformTheme.colorScheme.background,
-                  child: const SizedBox(height: 100, child: Center(child: Text('Sheet content'))),
+                  child: const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: MateoText(
+                        'Sheet content',
+                        presentation: .interface(),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

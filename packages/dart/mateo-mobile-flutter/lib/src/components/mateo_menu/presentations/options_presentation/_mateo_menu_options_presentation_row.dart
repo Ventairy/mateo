@@ -6,7 +6,7 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
     required this.density,
     required this.topInset,
     required this.bottomInset,
-    required this.textStyles,
+    required this.textScopes,
     required this.leadingColor,
     required this.singleLineHeight,
     required this.onPressed,
@@ -16,7 +16,7 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
   final MateoMenuDensity density;
   final double topInset;
   final double bottomInset;
-  final ({TextStyle principal, TextStyle supporting}) textStyles;
+  final ({MateoTextScope? principal, MateoTextScope? supporting}) textScopes;
   final Color leadingColor;
   final double? singleLineHeight;
   final FutureOr<void> Function()? onPressed;
@@ -85,21 +85,10 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
                       mainAxisSize: .min,
                       crossAxisAlignment: .start,
                       children: [
-                        if (item.principal != null)
-                          DefaultTextStyle(
-                            style: textStyles.principal,
-                            textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
-                            child: item.principal!,
-                          ),
-                        if (item.principal != null && item.supporting != null) const SizedBox(height: _supportingGap),
-                        if (item.supporting != null)
-                          DefaultTextStyle(
-                            style: textStyles.supporting,
-                            textHeightBehavior: TextHeightBehavior(
-                              applyHeightToFirstAscent: item.principal != null,
-                            ),
-                            child: item.supporting!,
-                          ),
+                        if (textScopes.principal != null) textScopes.principal!,
+                        if (textScopes.principal != null && textScopes.supporting != null)
+                          const SizedBox(height: _supportingGap),
+                        if (textScopes.supporting != null) textScopes.supporting!,
                       ],
                     ),
                   ),

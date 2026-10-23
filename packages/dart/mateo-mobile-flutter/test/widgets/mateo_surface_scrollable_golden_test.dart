@@ -40,7 +40,10 @@ Future<void> main() async {
                         child: Column(
                           crossAxisAlignment: .stretch,
                           children: [
-                            const Text('Your content'),
+                            const MateoText(
+                              'Your content',
+                              presentation: .interface(),
+                            ),
                             if (!long) const Spacer(),
                             for (var i = 0; i < (long ? 6 : 1); i++)
                               Padding(
@@ -50,7 +53,12 @@ Future<void> main() async {
                                   child: ColoredBox(
                                     color: theme.colorScheme.accent,
                                     child: Center(
-                                      child: Text('Item ${i + 1}', style: TextStyle(color: theme.colorScheme.onAccent)),
+                                      child: MateoText(
+                                        'Item ${i + 1}',
+                                        presentation: MateoTextPresentation.interface(
+                                          color: theme.colorScheme.onAccent,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

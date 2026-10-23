@@ -27,7 +27,12 @@ Future<void> main() async {
                 width: 360,
                 height: 400,
                 child: MateoView(
-                  header: const MateoViewHeader(principal: Text('Messages')),
+                  header: const MateoViewHeader(
+                    principal: MateoText(
+                      'Messages',
+                      presentation: .interface(),
+                    ),
+                  ),
                   surface: MateoViewSurface.scrollable(
                     child: Column(
                       crossAxisAlignment: .stretch,
@@ -40,7 +45,10 @@ Future<void> main() async {
                               child: ColoredBox(
                                 color: theme.colorScheme.accent,
                                 child: Center(
-                                  child: Text('Item ${i + 1}', style: TextStyle(color: theme.colorScheme.onAccent)),
+                                  child: MateoText(
+                                    'Item ${i + 1}',
+                                    presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                                  ),
                                 ),
                               ),
                             ),

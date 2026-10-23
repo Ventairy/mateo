@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mateo_mobile/mateo_mobile.dart';
 
 /// A restorable counter for verifying app state preservation.
 class AppTestCounter extends StatefulWidget {
@@ -31,7 +32,10 @@ class _AppTestCounterState extends State<AppTestCounter> with RestorationMixin {
   Widget build(BuildContext context) => Center(
     child: GestureDetector(
       onTap: () => setState(() => _count.value++),
-      child: Text('Count: ${_count.value}'),
+      child: MateoText(
+        'Count: ${_count.value}',
+        presentation: const .interface(),
+      ),
     ),
   );
 }

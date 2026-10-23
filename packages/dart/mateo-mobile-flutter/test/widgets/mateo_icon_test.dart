@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 part '_icon_recording_canvas.dart';
 
@@ -211,8 +212,8 @@ void main() {
         Widget child = MateoIcon(.cross, color: explicit, backgroundColor: background);
         if (scoped != null) child = MateoIconScope(color: scoped, child: child);
         if (textColor != null) {
-          child = DefaultTextStyle(
-            style: TextStyle(color: textColor),
+          child = MateoTextScope(
+            color: textColor,
             child: child,
           );
         }
@@ -228,8 +229,8 @@ void main() {
     for (final color in [red, blue]) {
       await tester.pumpWidget(
         host(
-          DefaultTextStyle(
-            style: TextStyle(color: color),
+          MateoTextScope(
+            color: color,
             child: const MateoIcon(.cross),
           ),
         ),

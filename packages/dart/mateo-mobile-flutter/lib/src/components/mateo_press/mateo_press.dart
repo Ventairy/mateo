@@ -26,7 +26,7 @@ part '_render_mateo_press_scale.dart';
 ///   },
 ///   child: const Padding(
 ///     padding: EdgeInsets.all(16),
-///     child: Text('Open'),
+///     child: MateoText('Open', presentation: .interface()),
 ///   ),
 /// )
 /// ```

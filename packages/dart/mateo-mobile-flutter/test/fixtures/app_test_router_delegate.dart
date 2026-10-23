@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mateo_mobile/mateo_mobile.dart';
 
 part '_app_test_page.dart';
 
@@ -42,7 +43,12 @@ class AppTestRouterDelegate extends RouterDelegate<Object>
       if (_showDetails)
         const _AppTestPage(
           key: ValueKey('details'),
-          child: Center(child: Text('Router details')),
+          child: Center(
+            child: MateoText(
+              'Router details',
+              presentation: .interface(),
+            ),
+          ),
         ),
     ],
     onDidRemovePage: (page) {

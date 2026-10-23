@@ -7,19 +7,19 @@ import 'package:flutter/widgets.dart';
 
 import '../../foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 import '../../theme/mateo_theme.dart';
-import '../../theme/mateo_typography.dart';
 import '../mateo_drag_resistance/mateo_drag_resistance.dart';
 import '../mateo_icon/mateo_icon.dart';
 import '../mateo_icon/mateo_icon_scope.dart';
 import '../mateo_loading_indicator/mateo_loading_indicator.dart';
 import '../mateo_surface/mateo_surface.dart';
+import '../mateo_text/mateo_text.dart';
 import 'duration/mateo_toast_duration.dart';
 import 'mateo_toast_status.dart';
 
 part '_mateo_toast_curve.dart';
+part '_mateo_toast_host_scope.dart';
 part '_mateo_toast_overlay.dart';
 part '_mateo_toast_shadow.dart';
-part '_mateo_toast_host_scope.dart';
 part 'mateo_toast_controller.dart';
 part 'mateo_toast_host.dart';
 
@@ -75,14 +75,7 @@ class MateoToast extends StatelessWidget {
     final dismissOnPress = _MateoToastHostScope.maybeOf(context);
     final canPress = onPressed != null || dismissOnPress;
     final activate = canPress ? () => _activate(context, dismissOnPress: dismissOnPress) : null;
-    final style = TextStyle(
-      color: colors.foreground,
-      decoration: TextDecoration.none,
-      fontFamily: MateoTypography.fontFamily,
-      fontWeight: .w600,
-      letterSpacing: MateoTypography.letterSpacing,
-      fontSize: 14,
-    );
+
     return Semantics(
       liveRegion: true,
       button: canPress,
@@ -120,7 +113,16 @@ class MateoToast extends StatelessWidget {
                 ),
                 const SizedBox(width: _iconTextGap),
                 Flexible(
-                  child: Text(message, maxLines: _maxLines, overflow: .ellipsis, style: style),
+                  child: MateoText(
+                    message,
+                    presentation: .interface(
+                      color: colors.foreground,
+                      fontWeight: .w600,
+                      fontSize: 14,
+                      maxLines: _maxLines,
+                      overflow: .ellipsis,
+                    ),
+                  ),
                 ),
               ],
             ),

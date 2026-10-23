@@ -26,6 +26,7 @@ import '../mateo_icon/mateo_icon.dart';
 import '../mateo_press/mateo_press.dart';
 import '../mateo_sheet/show_mateo_sheet.dart';
 import '../mateo_surface/mateo_surface.dart';
+import '../mateo_text/mateo_text.dart';
 import 'mateo_text_input_size.dart';
 import 'mateo_text_input_variant.dart';
 

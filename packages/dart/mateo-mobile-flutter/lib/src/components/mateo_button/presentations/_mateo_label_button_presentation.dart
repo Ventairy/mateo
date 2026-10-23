@@ -186,23 +186,23 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
                     child: FittedBox(
                       fit: .scaleDown,
                       alignment: contentAlignment,
-                      child: Text(
-                        widget.label,
-                        maxLines: 1,
-                        softWrap: false,
-                        textAlign: switch (widget.alignment) {
-                          .left => .left,
-                          .center => .center,
-                          .right => .right,
-                        },
-                        style: TextStyle(
-                          inherit: false,
-                          fontFamily: MateoTypography.fontFamily,
-                          fontSize: dimensions.fontSize,
-                          height: dimensions.lineHeight / dimensions.fontSize,
-                          fontWeight: .w600,
-                          letterSpacing: MateoTypography.letterSpacing,
-                          color: foreground,
+                      child: MateoTextScope(
+                        inherit: false,
+                        child: MateoText(
+                          widget.label,
+                          presentation: .interface(
+                            fontSize: dimensions.fontSize,
+                            height: dimensions.lineHeight / dimensions.fontSize,
+                            fontWeight: .w600,
+                            color: foreground,
+                            maxLines: 1,
+                            softWrap: false,
+                            textAlign: switch (widget.alignment) {
+                              .left => .left,
+                              .center => .center,
+                              .right => .right,
+                            },
+                          ),
                         ),
                       ),
                     ),

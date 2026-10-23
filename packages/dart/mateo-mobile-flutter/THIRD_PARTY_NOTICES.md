@@ -14,6 +14,26 @@ The fonts remain under OFL-1.1 and are not relicensed under `mateo_mobile`'s MIT
 license.
 No Reserved Font Name is declared in the upstream license notice.
 
+## Fredoka
+
+`mateo_mobile` redistributes the unchanged Fredoka variable font from Mateo's
+shared foundation assets in `assets/fonts/fredoka/`.
+
+- Copyright 2016 The Fredoka Project Authors (https://github.com/hafontia/Fredoka-One)
+- License: SIL Open Font License, Version 1.1
+- License text: [assets/fonts/fredoka/OFL.txt](assets/fonts/fredoka/OFL.txt)
+
+## Momo Signature
+
+`mateo_mobile` redistributes the unchanged Momo Signature font from Mateo's
+shared foundation assets in `assets/fonts/momo-signature/`.
+
+- Copyright 2024 The MoMo Signature Project Authors (https://github.com/typeassociates/MomoSignature)
+- License: SIL Open Font License, Version 1.1
+- License text: [assets/fonts/momo-signature/OFL.txt](assets/fonts/momo-signature/OFL.txt)
+
+These fonts remain under OFL-1.1 and are not relicensed under Mateo's MIT license.
+
 ## Circle Flags
 
 `mateo_mobile` includes Mateo-maintained country flag artwork in

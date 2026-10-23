@@ -15,7 +15,7 @@ import '../../mateo_view.dart';
 ///
 /// ```dart
 /// const MateoView(
-///   surface: MateoViewSurface(child: Text('A place for your content')),
+///   surface: MateoViewSurface(child: MateoText('A place for your content', presentation: .interface())),
 /// )
 /// ```
 class MateoViewSurface extends StatelessWidget {
@@ -50,7 +50,7 @@ class MateoViewSurface extends StatelessWidget {
   /// const MateoView(
   ///   surface: MateoViewSurface.scrollable(
   ///     child: Column(
-  ///       children: [Text('Welcome'), Spacer(), Text('Ready when you are')],
+  ///       children: [MateoText('Welcome', presentation: .interface()), Spacer(), MateoText('Ready when you are', presentation: .interface())],
   ///     ),
   ///   ),
   /// )
@@ -102,7 +102,7 @@ class MateoViewSurface extends StatelessWidget {
   /// ```dart
   /// MateoViewSurface(
   ///   padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-  ///   child: Text('Content with 12 pixels below the header'),
+  ///   child: MateoText('Content with 12 pixels below the header', presentation: .interface()),
   /// )
   /// ```
   final EdgeInsetsGeometry? padding;

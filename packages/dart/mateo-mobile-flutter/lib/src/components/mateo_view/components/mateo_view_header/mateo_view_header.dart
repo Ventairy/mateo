@@ -9,8 +9,8 @@ import '../../mateo_view.dart';
 ///
 /// ```dart
 /// const MateoView(
-///   header: MateoViewHeader(principal: Text('Messages')),
-///   surface: MateoViewSurface(child: Text('Content')),
+///   header: MateoViewHeader(principal: MateoText('Messages', presentation: .interface())),
+///   surface: MateoViewSurface(child: MateoText('Content', presentation: .interface())),
 /// )
 /// ```
 class MateoViewHeader extends StatelessWidget {

@@ -37,10 +37,13 @@ Future<void> main() async {
                           child: MateoView(
                             padding: const .symmetric(horizontal: 12, vertical: 16),
                             header: MateoViewHeader(
-                              principal: Text(
+                              principal: MateoText(
                                 'Your collection\nSaved for later',
-                                textAlign: .center,
-                                style: TextStyle(color: theme.colorScheme.text.primary, fontSize: 20),
+                                presentation: MateoTextPresentation.interface(
+                                  color: theme.colorScheme.text.primary,
+                                  fontSize: 20,
+                                  textAlign: .center,
+                                ),
                               ),
                             ),
                             surface: MateoViewSurface.scrollable(
@@ -65,9 +68,12 @@ Future<void> main() async {
                                                   ? theme.colorScheme.accent
                                                   : theme.colorScheme.inverse.background),
                                         child: pattern == 'Text'
-                                            ? Text(
+                                            ? MateoText(
                                                 'Messages, ideas and places $i',
-                                                style: TextStyle(color: theme.colorScheme.text.primary, fontSize: 18),
+                                                presentation: MateoTextPresentation.interface(
+                                                  color: theme.colorScheme.text.primary,
+                                                  fontSize: 18,
+                                                ),
                                               )
                                             : Row(
                                                 children: [
@@ -137,7 +143,10 @@ Future<void> main() async {
                             principal: SizedBox(
                               height: 80,
                               child: Center(
-                                child: Text('Your collection', style: TextStyle(color: theme.colorScheme.text.primary)),
+                                child: MateoText(
+                                  'Your collection',
+                                  presentation: MateoTextPresentation.interface(color: theme.colorScheme.text.primary),
+                                ),
                               ),
                             ),
                           ),

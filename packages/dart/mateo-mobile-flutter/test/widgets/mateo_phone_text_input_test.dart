@@ -736,8 +736,9 @@ void main() {
       final field = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField));
       expect(field.style!.fontSize, expectedFontSize);
       expect(field.placeholderStyle!.fontSize, expectedFontSize);
-      expect(tester.widget<Text>(code).style!.fontSize, expectedFontSize);
-      expect(tester.widget<Text>(code).style!.fontWeight, FontWeight.w600);
+      final codeStyle = tester.widget<RichText>(find.descendant(of: code, matching: find.byType(RichText))).text.style!;
+      expect(codeStyle.fontSize, expectedFontSize);
+      expect(codeStyle.fontWeight, FontWeight.w600);
       expect(tester.widget<CupertinoTextField>(find.byType(CupertinoTextField)).style!.fontWeight, FontWeight.w500);
     });
   }
@@ -758,7 +759,11 @@ void main() {
     expect(tester.widget<Opacity>(flagOpacity).opacity, 0.65);
     expect(field.enabled, isFalse);
     expect(field.style!.color, _theme.colorScheme.textInputs.plain.textDisabled);
-    expect(tester.widget<Text>(find.text('+55')).style!.color, field.style!.color);
+    final codeStyle = tester
+        .widget<RichText>(find.descendant(of: find.text('+55'), matching: find.byType(RichText)))
+        .text
+        .style!;
+    expect(codeStyle.color, field.style!.color);
 
     await tester.tap(find.byType(MateoCountryFlag));
     await tester.tap(find.text('+55'));

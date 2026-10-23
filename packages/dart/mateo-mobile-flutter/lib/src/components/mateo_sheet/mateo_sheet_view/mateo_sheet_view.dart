@@ -8,8 +8,8 @@ part of '../show_mateo_sheet.dart';
 /// showMateoSheet<void>(
 ///   context: context,
 ///   view: const MateoSheetView(
-///     header: MateoSheetViewHeader(presentation: .custom(principal: Text('Details'))),
-///     surface: MateoSheetViewSurface(child: Text('A place to unwind.')),
+///     header: MateoSheetViewHeader(presentation: .custom(principal: MateoText('Details', presentation: .interface()))),
+///     surface: MateoSheetViewSurface(child: MateoText('A place to unwind.', presentation: .interface())),
 ///   ),
 /// );
 /// ```

@@ -13,7 +13,7 @@ import 'components/mateo_view_surface/mateo_view_surface.dart';
 /// ```dart
 /// const MateoView(
 ///   surface: MateoViewSurface.scrollable(
-///     child: Text('Welcome'),
+///     child: MateoText('Welcome', presentation: .interface()),
 ///   ),
 /// )
 /// ```

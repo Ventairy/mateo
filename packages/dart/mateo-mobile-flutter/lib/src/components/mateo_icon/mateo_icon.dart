@@ -4,6 +4,7 @@ import 'package:meta/meta.dart' show RecordUse;
 import '../../gen/icons.g.dart';
 import '../../gen/three_d_icons.g.dart';
 import '../../theme/mateo_theme.dart';
+import '../mateo_text/mateo_text.dart';
 import 'mateo_icon_scope.dart';
 import 'mateo_icon_style.dart';
 
@@ -76,7 +77,7 @@ final class MateoIcon extends StatelessWidget {
     final resolvedColor =
         color ??
         defaults.color ??
-        context.dependOnInheritedWidgetOfExactType<DefaultTextStyle>()?.style.color ??
+        MateoTextScope.of(context).color ??
         MateoTheme.maybeOf(context)?.colorScheme.text.primary;
 
     var artwork = switch (style) {

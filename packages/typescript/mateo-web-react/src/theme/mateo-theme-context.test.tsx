@@ -45,11 +45,11 @@ it('should apply text defaults and the nearest theme without extra HTML when nes
   expect(container.firstElementChild?.tagName).toBe('MAIN');
   const rootStyle = container.querySelector('main')?.style;
   expect(rootStyle?.fontFamily).toBe('Inter, sans-serif');
-  expect(rootStyle?.letterSpacing).toBe('-0.2px');
+  expect(rootStyle?.letterSpacing).toBe('-0.02em');
   expect(rootStyle?.getPropertyValue('--mateo-font-family')).toBe(
     'Inter, sans-serif',
   );
-  expect(rootStyle?.getPropertyValue('--mateo-letter-spacing')).toBe('-0.2px');
+  expect(rootStyle?.getPropertyValue('--mateo-letter-spacing')).toBe('-0.02em');
 });
 
 it('should update the nearest theme colors when changing the theme', () => {

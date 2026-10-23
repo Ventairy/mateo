@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 void main() {
   testWidgets('when principal is omitted, it should lay out side slots and an empty slot', (tester) async {
@@ -184,9 +185,16 @@ void main() {
         host(
           MediaQuery(
             data: MediaQueryData(size: const Size(800, 600), textScaler: TextScaler.linear(scale)),
-            child: DefaultTextStyle(
-              style: const TextStyle(fontSize: 20),
-              child: _inView(const MateoViewFooter(principal: Text('A longer footer that wraps'))),
+            child: MateoTextScope(
+              fontSize: 20,
+              child: _inView(
+                const MateoViewFooter(
+                  principal: MateoText(
+                    'A longer footer that wraps',
+                    presentation: .interface(),
+                  ),
+                ),
+              ),
             ),
           ),
           width: 160,

@@ -171,14 +171,23 @@ class _Scene extends StatelessWidget {
                       child: GestureDetector(
                         key: const ValueKey('close'),
                         onTap: () => Navigator.of(context).pop(),
-                        child: Text('Details', style: TextStyle(color: _theme.colorScheme.onAccent, fontSize: 26)),
+                        child: MateoText(
+                          'Details',
+                          presentation: MateoTextPresentation.interface(
+                            color: _theme.colorScheme.onAccent,
+                            fontSize: 26,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ).createRoute(context),
             ),
-            child: Text('Discover', style: TextStyle(color: _theme.colorScheme.text.primary, fontSize: 26)),
+            child: MateoText(
+              'Discover',
+              presentation: MateoTextPresentation.interface(color: _theme.colorScheme.text.primary, fontSize: 26),
+            ),
           ),
         ),
       ),

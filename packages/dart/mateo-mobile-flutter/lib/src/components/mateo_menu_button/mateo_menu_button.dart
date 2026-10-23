@@ -21,7 +21,7 @@ import 'animation/mateo_menu_button_animation.dart';
 /// MateoMenuButton(
 ///   buttonPresentation: const .label(label: 'Options', variant: .secondary),
 ///   animation: const .transform(),
-///   menuPresentation: .options(items: const [MateoMenuOptionsPresentationItem(principal: Text('Details'))]),
+///   menuPresentation: .options(items: const [MateoMenuOptionsPresentationItem(principal: MateoText('Details', presentation: .interface()))]),
 ///   onItemPressed: (item) {}
 /// )
 /// ```

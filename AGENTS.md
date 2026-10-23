@@ -127,6 +127,11 @@ they are added.
 
 ## Implementation Style
 
+- Bound implementations to capabilities used by current production consumers.
+  Do not add parameters, variants, helpers, abstractions, fallback behavior, or
+  compatibility paths for hypothetical future use. Remove unused capabilities
+  instead of keeping them for flexibility. Tests written only to exercise an
+  otherwise unused capability do not establish a consumer.
 - Follow the conventions already present in the package or folder being edited.
 - Avoid adding dependencies until the repository has a clear package structure
   and the user has agreed with the direction.

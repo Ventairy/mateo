@@ -77,9 +77,11 @@ Future<void> main() async {
                                               ),
                                               const SizedBox(width: 8),
                                               Expanded(
-                                                child: Text(
+                                                child: MateoText(
                                                   'Content $index',
-                                                  style: TextStyle(color: theme.colorScheme.text.primary),
+                                                  presentation: MateoTextPresentation.interface(
+                                                    color: theme.colorScheme.text.primary,
+                                                  ),
                                                 ),
                                               ),
                                             ],

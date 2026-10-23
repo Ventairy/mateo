@@ -45,7 +45,12 @@ Future<void> main() async {
                       width: .custom(140),
                       height: .custom(100),
                       shape: .none(),
-                      child: Center(child: Text('Mateo')),
+                      child: Center(
+                        child: MateoText(
+                          'Mateo',
+                          presentation: .interface(),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -96,7 +101,12 @@ Future<void> main() async {
                       height: const .custom(100),
                       elevation: MateoElevation(level: elevation),
                       shape: const .none(),
-                      child: const Center(child: Text('Mateo')),
+                      child: const Center(
+                        child: MateoText(
+                          'Mateo',
+                          presentation: .interface(),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -133,10 +143,19 @@ Future<void> main() async {
               children: [
                 if (scenario == 'scrolled')
                   for (var index = 1; index <= 7; index++)
-                    Text('Item $index', style: TextStyle(color: theme.colorScheme.onAccent))
+                    MateoText(
+                      'Item $index',
+                      presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                    )
                 else ...[
-                  Text('Content start', style: TextStyle(color: theme.colorScheme.onAccent)),
-                  Text('Content end', style: TextStyle(color: theme.colorScheme.onAccent)),
+                  MateoText(
+                    'Content start',
+                    presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                  ),
+                  MateoText(
+                    'Content end',
+                    presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                  ),
                 ],
               ],
             ),
@@ -156,7 +175,12 @@ Future<void> main() async {
                       width: 300,
                       height: 300,
                       child: MateoView(
-                        header: const MateoViewHeader(principal: Text('Header')),
+                        header: const MateoViewHeader(
+                          principal: MateoText(
+                            'Header',
+                            presentation: .interface(),
+                          ),
+                        ),
                         surface: scenario == 'scrolled'
                             ? MateoViewSurface.scrollable(alignment: .center, padding: const .all(10), child: content)
                             : MateoViewSurface(alignment: .center, padding: const .all(10), child: content),

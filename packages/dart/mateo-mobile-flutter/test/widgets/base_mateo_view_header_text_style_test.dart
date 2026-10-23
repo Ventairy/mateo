@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
@@ -26,18 +27,15 @@ Widget _header({
 
 Widget _host(Widget child) => MateoApp(
   theme: _theme,
-  home: DefaultTextStyle.merge(
-    style: const TextStyle(fontSize: 31, fontWeight: FontWeight.w300, height: 1.5),
+  home: MateoTextScope(
+    fontSize: 31,
+    fontWeight: .w300,
+    height: 1.5,
     child: SizedBox(width: 360, height: 400, child: child),
   ),
 );
 
-Widget _probe(String slot, Map<String, TextStyle> styles) => Builder(
-  builder: (context) {
-    styles[slot] = DefaultTextStyle.of(context).style;
-    return Text(slot);
-  },
-);
+Widget _probe(String slot) => MateoText(slot, key: ValueKey(slot), presentation: const .interface());
 
 void main() {
   for (final sheet in [false, true]) {
@@ -52,9 +50,14 @@ void main() {
                 textDirection: direction,
                 child: _header(
                   sheet: sheet,
-                  leading: const Text('Back'),
-                  principal: Text('Title', textAlign: alignment),
-                  trailing: const Text('Longer action'),
+                  leading: const MateoText('Back', presentation: .interface()),
+                  principal: MateoText(
+                    'Title',
+                    presentation: .interface(
+                      textAlign: alignment,
+                    ),
+                  ),
+                  trailing: const MateoText('Longer action', presentation: .interface()),
                 ),
               ),
             ),
@@ -80,24 +83,26 @@ void main() {
     testWidgets('when a ${sheet ? 'sheet' : 'view'} header contains text, every slot should inherit the title style', (
       tester,
     ) async {
-      final styles = <String, TextStyle>{};
       await tester.pumpWidget(
         _host(
           _header(
             sheet: sheet,
-            leading: _probe('leading', styles),
-            principal: _probe('principal', styles),
-            trailing: _probe('trailing', styles),
+            leading: _probe('leading'),
+            principal: _probe('principal'),
+            trailing: _probe('trailing'),
           ),
         ),
       );
 
-      expect(styles.keys, containsAll(['leading', 'principal', 'trailing']));
-      for (final style in styles.values) {
+      for (final slot in ['leading', 'principal', 'trailing']) {
+        final style = tester
+            .widget<RichText>(find.descendant(of: find.byKey(ValueKey(slot)), matching: find.byType(RichText)))
+            .text
+            .style!;
         expect(style.fontSize, 16);
         expect(style.fontWeight, FontWeight.w600);
-        expect(style.fontFamily, MateoTypography.fontFamily);
-        expect(style.letterSpacing, MateoTypography.letterSpacing);
+        expect(style.fontFamily, MateoTypography.interfaceFontFamily);
+        expect(style.letterSpacing, -0.32);
         expect(style.color, _theme.colorScheme.text.primary);
         expect(style.height, 1.5);
       }
@@ -106,13 +111,16 @@ void main() {
     testWidgets('when ${sheet ? 'sheet' : 'view'} header text supplies a style, it should override the defaults', (
       tester,
     ) async {
-      const explicitStyle = TextStyle(fontSize: 23, fontWeight: FontWeight.w400, color: Color(0xFF123456));
       await tester.pumpWidget(
         _host(
           _header(
             sheet: sheet,
             leading: const SizedBox.shrink(),
-            principal: const Text('principal', key: ValueKey('explicit-text'), style: explicitStyle),
+            principal: const MateoText(
+              'principal',
+              key: ValueKey('explicit-text'),
+              presentation: .interface(fontSize: 23, fontWeight: .w400, color: Color(0xFF123456), height: 1.5),
+            ),
             trailing: const SizedBox.shrink(),
           ),
         ),
@@ -124,8 +132,8 @@ void main() {
       expect(text.text.style?.fontSize, 23);
       expect(text.text.style?.fontWeight, FontWeight.w400);
       expect(text.text.style?.color, const Color(0xFF123456));
-      expect(text.text.style?.fontFamily, MateoTypography.fontFamily);
-      expect(text.text.style?.letterSpacing, MateoTypography.letterSpacing);
+      expect(text.text.style?.fontFamily, MateoTypography.interfaceFontFamily);
+      expect(text.text.style?.letterSpacing, -0.46);
       expect(text.text.style?.height, 1.5);
     });
   }

@@ -12,8 +12,8 @@ import '../../mateo_view.dart';
 ///
 /// ```dart
 /// const MateoView(
-///   footer: MateoViewFooter(principal: Text('Ready when you are')),
-///   surface: MateoViewSurface(child: Text('Content')),
+///   footer: MateoViewFooter(principal: MateoText('Ready when you are', presentation: .interface())),
+///   surface: MateoViewSurface(child: MateoText('Content', presentation: .interface())),
 /// )
 /// ```
 class MateoViewFooter extends StatelessWidget {

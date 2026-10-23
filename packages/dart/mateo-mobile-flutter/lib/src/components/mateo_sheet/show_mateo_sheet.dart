@@ -69,7 +69,7 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 ///   context: context,
 ///   shouldDismiss: (source) => source != .tapOutside,
 ///   view: const MateoSheetView(
-///     surface: MateoSheetViewSurface(child: Text('Details')),
+///     surface: MateoSheetViewSurface(child: MateoText('Details', presentation: .interface())),
 ///   ),
 /// );
 /// ```
@@ -91,7 +91,7 @@ Future<T?> showMateoSheet<T>({
       shouldDismiss: shouldDismiss,
       from: .bottom,
       theme: MateoTheme.of(context),
-      textStyle: DefaultTextStyle.of(context).style,
+      capturedThemes: InheritedTheme.capture(from: context, to: navigator.context),
       direction: Directionality.of(context),
       reducedMotion: MediaQuery.maybeDisableAnimationsOf(context) ?? false,
     ),

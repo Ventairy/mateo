@@ -4,6 +4,7 @@ import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 import '../fixtures/surface_transform_test_widgets.dart';
 
@@ -15,31 +16,49 @@ Future<void> main() async {
     constraints: const BoxConstraints.tightFor(width: 390, height: 844),
     pumpBeforeTest: (tester) async {
       await tester.pumpAndSettle();
-      final slotStyle = TextStyle(color: surfaceTransformTheme.colorScheme.onAccent);
+      final slotStyle = MateoTextPresentation.interface(color: surfaceTransformTheme.colorScheme.onAccent);
       unawaited(
         showMateoSheet<void>(
           context: launcher,
           view: MateoSheetView(
             header: MateoSheetViewHeader(
               presentation: .custom(
-                leading: Text('Back', style: slotStyle),
-                principal: Text('Choose a stay', style: slotStyle),
-                trailing: Text('Help', style: slotStyle),
+                leading: MateoText(
+                  'Back',
+                  presentation: slotStyle,
+                ),
+                principal: MateoText(
+                  'Choose a stay',
+                  presentation: slotStyle,
+                ),
+                trailing: MateoText(
+                  'Help',
+                  presentation: slotStyle,
+                ),
               ),
             ),
-            footer: MateoSheetViewFooter(principal: Text('Two nights · Two guests', style: slotStyle)),
+            footer: MateoSheetViewFooter(
+              principal: MateoText(
+                'Two nights · Two guests',
+                presentation: slotStyle,
+              ),
+            ),
             surface: MateoSheetViewSurface.scrollable(
               color: surfaceTransformTheme.colorScheme.accent,
               alignment: .topCenter,
               edgeEffect: .fade(at: const [.top, .bottom]),
-              child: DefaultTextStyle.merge(
-                style: TextStyle(color: surfaceTransformTheme.colorScheme.onAccent, fontSize: 20),
+              child: MateoTextScope(
+                color: surfaceTransformTheme.colorScheme.onAccent,
+                fontSize: 20,
                 child: Column(
                   children: [
                     for (var i = 0; i < 16; i++)
                       Padding(
                         padding: const .symmetric(vertical: 24),
-                        child: Text('Garden room ${i + 1}'),
+                        child: MateoText(
+                          'Garden room ${i + 1}',
+                          presentation: const .interface(),
+                        ),
                       ),
                   ],
                 ),
@@ -78,12 +97,18 @@ Future<void> main() async {
             reserveHeaderSpace: false,
             header: MateoSheetViewHeader(
               presentation: .custom(
-                leading: Text('Back', style: TextStyle(color: foreground)),
-                principal: Text(
-                  'Garden room',
-                  style: TextStyle(color: foreground, fontWeight: FontWeight.w700),
+                leading: MateoText(
+                  'Back',
+                  presentation: MateoTextPresentation.interface(color: foreground),
                 ),
-                trailing: Text('Close', style: TextStyle(color: foreground)),
+                principal: MateoText(
+                  'Garden room',
+                  presentation: MateoTextPresentation.interface(color: foreground, fontWeight: FontWeight.w700),
+                ),
+                trailing: MateoText(
+                  'Close',
+                  presentation: MateoTextPresentation.interface(color: foreground),
+                ),
               ),
             ),
             surface: MateoSheetViewSurface(
@@ -97,9 +122,9 @@ Future<void> main() async {
                     alignment: .bottomCenter,
                     child: Padding(
                       padding: const .only(bottom: 28),
-                      child: Text(
+                      child: MateoText(
                         'A quiet place to arrive',
-                        style: TextStyle(
+                        presentation: MateoTextPresentation.interface(
                           color: surfaceTransformTheme.colorScheme.text.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

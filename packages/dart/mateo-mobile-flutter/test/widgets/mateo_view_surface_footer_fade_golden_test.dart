@@ -43,10 +43,13 @@ Future<void> main() async {
                                   color: theme.colorScheme.background,
                                   borderRadius: .circular(20),
                                 ),
-                                child: Text(
+                                child: MateoText(
                                   pattern == 'Search' ? 'Search your collection' : 'Continue',
-                                  textAlign: .center,
-                                  style: TextStyle(color: theme.colorScheme.text.primary, fontSize: 20),
+                                  presentation: MateoTextPresentation.interface(
+                                    color: theme.colorScheme.text.primary,
+                                    fontSize: 20,
+                                    textAlign: .center,
+                                  ),
                                 ),
                               ),
                             ),
@@ -72,9 +75,12 @@ Future<void> main() async {
                                                   ? theme.colorScheme.accent
                                                   : theme.colorScheme.inverse.background),
                                         child: pattern == 'Text'
-                                            ? Text(
+                                            ? MateoText(
                                                 'Messages, ideas and places $i',
-                                                style: TextStyle(color: theme.colorScheme.text.primary, fontSize: 18),
+                                                presentation: MateoTextPresentation.interface(
+                                                  color: theme.colorScheme.text.primary,
+                                                  fontSize: 18,
+                                                ),
                                               )
                                             : Row(
                                                 children: [

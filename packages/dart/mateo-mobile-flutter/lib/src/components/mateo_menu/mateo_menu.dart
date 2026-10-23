@@ -9,6 +9,7 @@ import '../../theme/mateo_typography.dart';
 import '../mateo_icon/mateo_icon_scope.dart';
 import '../mateo_press/mateo_press.dart';
 import '../mateo_surface/mateo_surface.dart';
+import '../mateo_text/mateo_text.dart';
 import 'mateo_menu_density.dart';
 import 'mateo_menu_width.dart';
 import 'overlay/mateo_menu_pop_overlay_scope.dart';
@@ -28,7 +29,7 @@ part 'presentations/options_presentation/_render_mateo_menu_viewport_paint_cull.
 /// ```dart
 /// MateoMenu(
 ///   presentation: .options(
-///     items: const [MateoMenuOptionsPresentationItem(principal: Text('View details'))],
+///     items: const [MateoMenuOptionsPresentationItem(principal: MateoText('View details', presentation: .interface()))],
 ///   ),
 ///   onItemPressed: (item) {},
 /// )

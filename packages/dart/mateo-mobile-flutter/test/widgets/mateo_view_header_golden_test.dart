@@ -23,10 +23,21 @@ Future<void> main() async {
                   child: Padding(
                     padding: EdgeInsets.only(top: inset ? 60 : 0),
                     child: MateoView(
-                      header: const MateoViewHeader(principal: Text('Messages'), leading: MateoIcon(.arrowLeft)),
+                      header: const MateoViewHeader(
+                        principal: MateoText(
+                          'Messages',
+                          presentation: .interface(),
+                        ),
+                        leading: MateoIcon(.arrowLeft),
+                      ),
                       surface: MateoViewSurface(
                         color: theme.colorScheme.accent.withValues(alpha: 0.1),
-                        child: const Center(child: Text('Surface content')),
+                        child: const Center(
+                          child: MateoText(
+                            'Surface content',
+                            presentation: .interface(),
+                          ),
+                        ),
                       ),
                     ),
                   ),

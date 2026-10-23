@@ -67,9 +67,9 @@ Future<void> main() async {
                                                   Expanded(
                                                     child: Align(
                                                       alignment: .centerLeft,
-                                                      child: Text(
+                                                      child: MateoText(
                                                         'Content $index',
-                                                        style: TextStyle(
+                                                        presentation: MateoTextPresentation.interface(
                                                           color: theme.colorScheme.text.primary,
                                                           fontSize: 12,
                                                         ),

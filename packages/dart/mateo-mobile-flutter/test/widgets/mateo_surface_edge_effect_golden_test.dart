@@ -73,7 +73,10 @@ Widget _content(MateoThemeData theme, int count) => Column(
         child: ColoredBox(
           color: index.isEven ? theme.colorScheme.inverse.background : theme.colorScheme.accent,
           child: Center(
-            child: Text('Item ${index + 1}', style: TextStyle(color: theme.colorScheme.onAccent)),
+            child: MateoText(
+              'Item ${index + 1}',
+              presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+            ),
           ),
         ),
       ),

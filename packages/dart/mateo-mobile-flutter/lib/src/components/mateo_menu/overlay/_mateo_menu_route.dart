@@ -7,7 +7,7 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
     required this.placement,
     required this.reducedMotion,
     required this.theme,
-    required this.textStyle,
+    required this.capturedThemes,
     required this.direction,
     required this.anchorBounds,
     this.exitTransition,
@@ -19,7 +19,7 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
   final MateoMenuExitTransition? exitTransition;
   final bool reducedMotion;
   final MateoThemeData theme;
-  final TextStyle textStyle;
+  final CapturedThemes capturedThemes;
   final TextDirection direction;
   final Rect anchorBounds;
   bool _selected = false;
@@ -100,9 +100,8 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
         textDirection: direction,
         child: MateoTheme(
           data: theme,
-          child: DefaultTextStyle(
-            style: textStyle,
-            child: CallbackShortcuts(
+          child: capturedThemes.wrap(
+            CallbackShortcuts(
               bindings: {const SingleActivator(LogicalKeyboardKey.escape): () => navigator?.maybePop()},
               child: Focus(
                 autofocus: true,

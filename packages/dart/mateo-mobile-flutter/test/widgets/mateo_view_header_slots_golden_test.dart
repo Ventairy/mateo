@@ -41,7 +41,12 @@ Future<void> main() async {
                           data: MediaQueryData(textScaler: TextScaler.linear(scale)),
                           child: _inView(
                             MateoViewHeader(
-                              principal: Text(title, textAlign: name == 'Default text alignment' ? null : .center),
+                              principal: MateoText(
+                                title,
+                                presentation: .interface(
+                                  textAlign: name == 'Default text alignment' ? null : .center,
+                                ),
+                              ),
                               leading: name == 'Principal only' || name.startsWith('Trailing only')
                                   ? null
                                   : const SizedBox(
@@ -55,7 +60,16 @@ Future<void> main() async {
                                     )
                                   : name == 'Principal only' || name.startsWith('Leading only')
                                   ? null
-                                  : const SizedBox(width: 64, height: 40, child: Center(child: Text('Edit'))),
+                                  : const SizedBox(
+                                      width: 64,
+                                      height: 40,
+                                      child: Center(
+                                        child: MateoText(
+                                          'Edit',
+                                          presentation: .interface(),
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ),
                         ),

@@ -14,7 +14,7 @@ Future<void> main() async {
         backgroundColor: theme.colorScheme.background,
         borderColor: theme.palette.neutral[3],
         nameTextStyle: TextStyle(
-          fontFamily: MateoTypography.fontFamily,
+          fontFamily: MateoTypography.interfaceFontFamily,
           fontSize: 12,
           color: theme.colorScheme.text.primary,
         ),

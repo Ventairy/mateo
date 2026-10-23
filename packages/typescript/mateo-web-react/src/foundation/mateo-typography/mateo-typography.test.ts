@@ -6,7 +6,7 @@ import { mateoTypography } from './mateo-typography.js';
 it('should expose immutable shared text defaults when using Mateo typography', () => {
   expect(mateoTypography).toEqual({
     fontFamily: 'Inter, sans-serif',
-    letterSpacing: '-0.2px',
+    letterSpacing: '-0.02em',
   });
   expect(Object.isFrozen(mateoTypography)).toBe(true);
 });

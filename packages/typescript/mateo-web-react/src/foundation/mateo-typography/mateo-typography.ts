@@ -13,7 +13,7 @@ export const mateoTypography = Object.freeze({
    */
   fontFamily: 'Inter, sans-serif',
   /**
-   * Fixed web letter spacing applied to inherited text.
+   * Letter spacing equal to minus two percent of the current font size.
    */
-  letterSpacing: '-0.2px',
+  letterSpacing: '-0.02em',
 });

@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 void main() {
   test('when using bundled typography, it should resolve the current package font', () {
-    expect(MateoTypography.fontFamily, 'packages/mateo_mobile/Inter');
+    expect(MateoTypography.interfaceFontFamily, 'packages/mateo_mobile/Inter');
   });
 
   final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
@@ -81,39 +82,27 @@ void main() {
     expect(observed, newAccent);
   });
 
-  testWidgets('when inheriting typography, it should apply Mateo primitives and preserve layout settings', (
-    tester,
-  ) async {
+  testWidgets('theme supplies Mateo text color while preserving contextual typography', (tester) async {
     await tester.pumpWidget(
       Directionality(
         textDirection: .ltr,
-        child: DefaultTextStyle(
-          style: const TextStyle(
-            fontFamily: 'Other',
-            fontSize: 23,
-            height: 1.4,
-            fontWeight: .w600,
-            letterSpacing: 2,
-            color: Color(0xFFFF0000),
-          ),
+        child: MateoTextScope(
+          fontSize: 23,
+          fontWeight: .w600,
+          height: 1.4,
           textAlign: .right,
-          maxLines: 2,
-          overflow: .ellipsis,
+          color: const Color(0xFFFF0000),
           child: MateoTheme(
             data: theme,
             child: Builder(
               builder: (context) {
-                final inherited = DefaultTextStyle.of(context);
-                expect(inherited.style.fontFamily, MateoTypography.fontFamily);
-                expect(inherited.style.letterSpacing, -0.2);
-                expect(inherited.style.color, theme.colorScheme.text.primary);
-                expect(inherited.style.fontSize, 23);
-                expect(inherited.style.height, 1.4);
-                expect(inherited.style.fontWeight, FontWeight.w600);
+                final inherited = MateoTextScope.of(context);
+                expect(inherited.color, theme.colorScheme.text.primary);
+                expect(inherited.fontSize, 23);
+                expect(inherited.fontWeight, FontWeight.w600);
+                expect(inherited.height, 1.4);
                 expect(inherited.textAlign, TextAlign.right);
-                expect(inherited.maxLines, 2);
-                expect(inherited.overflow, TextOverflow.ellipsis);
-                return const Text('Mateo');
+                return const MateoText('Mateo', presentation: .interface());
               },
             ),
           ),
@@ -123,21 +112,18 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('when descendants override typography, it should honor their explicit styles', (tester) async {
+  testWidgets('descendants override contextual Mateo typography explicitly', (tester) async {
     await tester.pumpWidget(
       Directionality(
         textDirection: .ltr,
         child: MateoTheme(
           data: theme,
-          child: DefaultTextStyle.merge(
-            style: const TextStyle(fontFamily: 'Custom', letterSpacing: 1, color: Color(0xFF123456)),
+          child: MateoTextScope(
+            color: const Color(0xFF123456),
             child: Builder(
               builder: (context) {
-                final style = DefaultTextStyle.of(context).style;
-                expect(style.fontFamily, 'Custom');
-                expect(style.letterSpacing, 1);
-                expect(style.color, const Color(0xFF123456));
-                return const Text('Custom');
+                expect(MateoTextScope.of(context).color, const Color(0xFF123456));
+                return const MateoText('Custom', presentation: .interface());
               },
             ),
           ),

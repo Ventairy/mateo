@@ -1,4 +1,8 @@
-import { mateoTypography } from '@mateo/web-react';
+import {
+  createMateoTheme,
+  getMateoThemeStyle,
+  mateoTypography,
+} from '@mateo/web-react';
 import { expect, it } from 'vitest';
 import { render } from 'vitest-browser-react';
 
@@ -47,3 +51,26 @@ for (const style of ['normal', 'italic'] as const) {
     expect(full?.status).toBe('loaded');
   });
 }
+
+it('should resolve minus two percent at each font size when descendants resize text', async () => {
+  const theme = createMateoTheme({
+    accentColor: '#4A5CFF',
+    onAccent: '#FFFFFF',
+  });
+  const view = await render(
+    <div style={{ ...getMateoThemeStyle(theme), fontSize: 16 }}>
+      <span data-testid="small" style={{ fontSize: 20 }}>
+        Small
+      </span>
+      <span data-testid="large" style={{ fontSize: 40 }}>
+        Large
+      </span>
+    </div>,
+  );
+  expect(
+    getComputedStyle(view.getByTestId('small').element()).letterSpacing,
+  ).toBe('-0.4px');
+  expect(
+    getComputedStyle(view.getByTestId('large').element()).letterSpacing,
+  ).toBe('-0.8px');
+});

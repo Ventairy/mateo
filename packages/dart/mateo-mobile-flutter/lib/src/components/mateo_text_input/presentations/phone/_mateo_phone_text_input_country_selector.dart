@@ -231,7 +231,16 @@ class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInpu
               const SizedBox(width: _flagCallingCodeGap),
               Padding(
                 padding: const EdgeInsets.only(right: _callingCodeTrailingPadding),
-                child: Text('+${widget.country.callingCode}', style: widget.textStyle),
+                child: MateoText(
+                  '+${widget.country.callingCode}',
+                  presentation: .interface(
+                    fontSize: widget.textStyle.fontSize,
+                    fontWeight: widget.textStyle.fontWeight,
+                    color: widget.textStyle.color,
+                    height: widget.textStyle.height,
+                    leadingDistribution: widget.textStyle.leadingDistribution,
+                  ),
+                ),
               ),
             ],
           ),

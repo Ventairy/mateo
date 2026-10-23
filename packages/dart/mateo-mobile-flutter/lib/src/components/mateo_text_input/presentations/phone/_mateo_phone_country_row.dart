@@ -57,24 +57,20 @@ class _MateoPhoneCountryRow extends StatelessWidget {
                       ),
                     )
                   else
-                    Text(
+                    MateoText(
                       name,
-                      maxLines: 2,
-                      overflow: .ellipsis,
-                      style: TextStyle(
-                        fontFamily: MateoTypography.fontFamily,
-                        letterSpacing: MateoTypography.letterSpacing,
+                      presentation: .interface(
                         fontSize: 16.5,
                         height: 1.25,
                         fontWeight: .w600,
                         color: theme.colorScheme.text.primary,
+                        maxLines: 2,
+                        overflow: .ellipsis,
                       ),
                     ),
-                  Text(
+                  MateoText(
                     '+${country.callingCode}',
-                    style: TextStyle(
-                      fontFamily: MateoTypography.fontFamily,
-                      letterSpacing: MateoTypography.letterSpacing,
+                    presentation: .interface(
                       fontSize: 15,
                       height: 1.25,
                       fontWeight: .w500,

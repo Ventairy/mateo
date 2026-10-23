@@ -1,6 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 Future<void> main() async {
   await goldenTest(
@@ -15,8 +16,9 @@ Future<void> main() async {
         ])
           GoldenTestScenario(
             name: label,
-            child: DefaultTextStyle(
-              style: const TextStyle(fontSize: 18, height: 1.4),
+            child: MateoTextScope(
+              fontSize: 18,
+              height: 1.4,
               child: MateoTheme(
                 data: MateoThemeData.light(accentColor: accent, onAccent: foreground),
                 child: Builder(
@@ -32,14 +34,23 @@ Future<void> main() async {
                             mainAxisSize: .min,
                             crossAxisAlignment: .stretch,
                             children: [
-                              const Text('Simple, warm, human.'),
-                              Text('Supporting text', style: TextStyle(color: colors.text.secondary)),
+                              const MateoText(
+                                'Simple, warm, human.',
+                                presentation: .interface(),
+                              ),
+                              MateoText(
+                                'Supporting text',
+                                presentation: MateoTextPresentation.interface(color: colors.text.secondary),
+                              ),
                               const SizedBox(height: 16),
                               ColoredBox(
                                 color: colors.accent,
                                 child: Padding(
                                   padding: const .all(12),
-                                  child: Text('Accent surface', style: TextStyle(color: colors.onAccent)),
+                                  child: MateoText(
+                                    'Accent surface',
+                                    presentation: MateoTextPresentation.interface(color: colors.onAccent),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -51,8 +62,16 @@ Future<void> main() async {
                                     crossAxisAlignment: .start,
                                     mainAxisSize: .min,
                                     children: [
-                                      Text('Inverse surface', style: TextStyle(color: colors.inverse.onBackground)),
-                                      Text('Inverse accent', style: TextStyle(color: colors.inverse.accent)),
+                                      MateoText(
+                                        'Inverse surface',
+                                        presentation: MateoTextPresentation.interface(
+                                          color: colors.inverse.onBackground,
+                                        ),
+                                      ),
+                                      MateoText(
+                                        'Inverse accent',
+                                        presentation: MateoTextPresentation.interface(color: colors.inverse.accent),
+                                      ),
                                     ],
                                   ),
                                 ),

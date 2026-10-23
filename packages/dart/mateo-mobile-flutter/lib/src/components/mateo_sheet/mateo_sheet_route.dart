@@ -7,7 +7,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     required this.avoidBottomInset,
     required this.from,
     required this.theme,
-    required this.textStyle,
+    required this.capturedThemes,
     required this.direction,
     required this.reducedMotion,
     this.shouldDismiss,
@@ -22,7 +22,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   bool _checkingDismissal = false;
   final MateoSheetSource from;
   final MateoThemeData theme;
-  final TextStyle textStyle;
+  final CapturedThemes capturedThemes;
   final TextDirection direction;
   final bool reducedMotion;
   late final CurvedAnimation _movement;
@@ -172,9 +172,8 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
         textDirection: direction,
         child: MateoTheme(
           data: theme,
-          child: DefaultTextStyle(
-            style: textStyle,
-            child: Semantics(
+          child: capturedThemes.wrap(
+            Semantics(
               onDismiss: () => unawaited(_requestDismiss(.accessibilityAction)),
               child: MateoSheetToViewMorphScope(
                 child: _MateoSheetStackScope(stackEntry: _stackEntry, child: view),

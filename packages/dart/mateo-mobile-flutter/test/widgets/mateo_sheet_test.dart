@@ -4,6 +4,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../fixtures/surface_transform_test_widgets.dart';
@@ -925,7 +926,7 @@ void main() {
       accentColor: surfaceTransformTheme.palette.violet[9],
       onAccent: surfaceTransformTheme.palette.white,
     );
-    final localStyle = TextStyle(fontSize: 31, color: localTheme.colorScheme.text.primary);
+
     await host(
       tester,
       child: Navigator(
@@ -935,8 +936,9 @@ void main() {
             data: localTheme,
             child: Directionality(
               textDirection: .rtl,
-              child: DefaultTextStyle(
-                style: localStyle,
+              child: MateoTextScope(
+                fontSize: 31,
+                color: localTheme.colorScheme.text.primary,
                 child: Builder(
                   builder: (context) {
                     launcher = context;
@@ -957,9 +959,10 @@ void main() {
             child: Builder(
               builder: (context) {
                 expect(MateoTheme.of(context), same(localTheme));
-                expect(DefaultTextStyle.of(context).style, localStyle);
+                expect(MateoTextScope.of(context).fontSize, 31);
+                expect(MateoTextScope.of(context).color, localTheme.colorScheme.text.primary);
                 expect(Directionality.of(context), TextDirection.rtl);
-                return const Text('Nested sheet');
+                return const MateoText('Nested sheet', presentation: .interface());
               },
             ),
           ),

@@ -26,7 +26,7 @@ sealed class MateoSurfaceAnimation {
   /// ```dart
   /// const MateoSurface(
   ///   animation: .pop(duration: Duration(milliseconds: 250), curve: Curves.easeOut),
-  ///   child: Text('Welcome'),
+  ///   child: MateoText('Welcome', presentation: .interface()),
   /// )
   /// ```
   const factory MateoSurfaceAnimation.pop({Duration duration, Curve curve}) = MateoSurfaceAnimationPop;

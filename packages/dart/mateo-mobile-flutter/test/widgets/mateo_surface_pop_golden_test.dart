@@ -41,9 +41,11 @@ Future<void> main() async {
                             elevation: MateoElevation(level: 1),
                             color: surfaceTransformTheme.colorScheme.accent,
                             child: Center(
-                              child: Text(
+                              child: MateoText(
                                 'Welcome',
-                                style: TextStyle(color: surfaceTransformTheme.colorScheme.onAccent),
+                                presentation: MateoTextPresentation.interface(
+                                  color: surfaceTransformTheme.colorScheme.onAccent,
+                                ),
                               ),
                             ),
                           ),

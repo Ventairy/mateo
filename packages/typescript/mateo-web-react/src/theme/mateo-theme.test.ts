@@ -38,9 +38,9 @@ it('should provide inherited typography, selection, and scrollbar colors when ap
   expect(Object.isFrozen(style)).toBe(true);
   expect(style).toEqual({
     fontFamily: 'Inter, sans-serif',
-    letterSpacing: '-0.2px',
+    letterSpacing: '-0.02em',
     '--mateo-font-family': 'Inter, sans-serif',
-    '--mateo-letter-spacing': '-0.2px',
+    '--mateo-letter-spacing': '-0.02em',
     '--mateo-scrollbar-size': '12px',
     '--mateo-scrollbar-inset': '2px',
     '--mateo-scrollbar-thumb': theme.colorScheme.scrollbar.thumb,

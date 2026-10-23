@@ -12,7 +12,7 @@ Future<void> main() async {
       goldenTestTheme: GoldenTestTheme(
         backgroundColor: GoldenTestTheme.standard().backgroundColor,
         borderColor: GoldenTestTheme.standard().borderColor,
-        nameTextStyle: const TextStyle(fontFamily: MateoTypography.fontFamily, fontSize: 18),
+        nameTextStyle: const TextStyle(fontFamily: MateoTypography.interfaceFontFamily, fontSize: 18),
       ),
     ),
     run: () async {
@@ -47,9 +47,9 @@ Future<void> main() async {
                   color: theme.colorScheme.accent,
                   child: Padding(
                     padding: const .symmetric(horizontal: 24, vertical: 16),
-                    child: Text(
+                    child: MateoText(
                       'Open messages',
-                      style: TextStyle(fontFamily: MateoTypography.fontFamily, color: theme.colorScheme.onAccent),
+                      presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
                     ),
                   ),
                 ),

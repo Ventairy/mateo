@@ -65,12 +65,21 @@ Future<void> main() async {
                               menuPresentation: .options(
                                 items: const [
                                   MateoMenuOptionsPresentationItem(
-                                    principal: Text('View details'),
-                                    supporting: Text('More about this item'),
+                                    principal: MateoText(
+                                      'View details',
+                                      presentation: .interface(),
+                                    ),
+                                    supporting: MateoText(
+                                      'More about this item',
+                                      presentation: .interface(),
+                                    ),
                                   ),
                                   MateoMenuOptionsPresentationItem(
                                     leading: MateoIcon(.paperPlaneUpRight),
-                                    principal: Text('Share'),
+                                    principal: MateoText(
+                                      'Share',
+                                      presentation: .interface(),
+                                    ),
                                   ),
                                 ],
                               ),

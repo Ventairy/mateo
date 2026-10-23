@@ -1,6 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 Future<void> main() async {
   await goldenTest(
@@ -30,15 +31,18 @@ Future<void> main() async {
                       textDirection: direction,
                       child: MediaQuery(
                         data: MediaQueryData(textScaler: TextScaler.linear(scale)),
-                        child: DefaultTextStyle.merge(
-                          style: TextStyle(fontSize: 20, color: theme.colorScheme.text.primary),
+                        child: MateoTextScope(
+                          fontSize: 20,
+                          color: theme.colorScheme.text.primary,
                           child: Align(
                             alignment: .bottomCenter,
                             child: _inView(
                               MateoViewFooter(
-                                principal: Text(
+                                principal: MateoText(
                                   name == 'Large text' ? 'Your selection' : '3 selected',
-                                  textAlign: .center,
+                                  presentation: const .interface(
+                                    textAlign: .center,
+                                  ),
                                 ),
                                 leading: name == 'Principal only'
                                     ? null
@@ -49,7 +53,16 @@ Future<void> main() async {
                                       ),
                                 trailing: name == 'Principal only'
                                     ? null
-                                    : const SizedBox(width: 64, height: 40, child: Center(child: Text('Done'))),
+                                    : const SizedBox(
+                                        width: 64,
+                                        height: 40,
+                                        child: Center(
+                                          child: MateoText(
+                                            'Done',
+                                            presentation: .interface(),
+                                          ),
+                                        ),
+                                      ),
                               ),
                             ),
                           ),

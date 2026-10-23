@@ -12,7 +12,20 @@ Future<void> main() async {
     (name: 'close_button', presentation: const .closeButton()),
     (
       name: 'custom',
-      presentation: const .custom(leading: Text('Back'), principal: Text('Details'), trailing: Text('Help')),
+      presentation: const .custom(
+        leading: MateoText(
+          'Back',
+          presentation: .interface(),
+        ),
+        principal: MateoText(
+          'Details',
+          presentation: .interface(),
+        ),
+        trailing: MateoText(
+          'Help',
+          presentation: .interface(),
+        ),
+      ),
     ),
   ]) {
     late BuildContext launcher;
@@ -28,7 +41,15 @@ Future<void> main() async {
             view: MateoSheetView(
               header: MateoSheetViewHeader(presentation: scenario.presentation),
               surface: const MateoSheetViewSurface(
-                child: SizedBox(height: 180, child: Center(child: Text('Sheet content'))),
+                child: SizedBox(
+                  height: 180,
+                  child: Center(
+                    child: MateoText(
+                      'Sheet content',
+                      presentation: .interface(),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

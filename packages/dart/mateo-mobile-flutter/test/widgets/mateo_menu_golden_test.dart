@@ -23,10 +23,22 @@ Future<void> main() async {
                     presentation: .options(
                       density: density,
                       items: [
-                        const MateoMenuOptionsPresentationItem(leading: MateoIcon(.cross), principal: Text('Close')),
                         const MateoMenuOptionsPresentationItem(
-                          principal: Text('View details'),
-                          supporting: Text('More about this item'),
+                          leading: MateoIcon(.cross),
+                          principal: MateoText(
+                            'Close',
+                            presentation: .interface(),
+                          ),
+                        ),
+                        const MateoMenuOptionsPresentationItem(
+                          principal: MateoText(
+                            'View details',
+                            presentation: .interface(),
+                          ),
+                          supporting: MateoText(
+                            'More about this item',
+                            presentation: .interface(),
+                          ),
                         ),
                         MateoMenuOptionsPresentationItem(
                           leading: MateoIcon(
@@ -34,7 +46,10 @@ Future<void> main() async {
                             backgroundColor: surfaceTransformTheme.colorScheme.background,
                             color: surfaceTransformTheme.colorScheme.menus.options.background,
                           ),
-                          principal: const Text('Share with someone'),
+                          principal: const MateoText(
+                            'Share with someone',
+                            presentation: .interface(),
+                          ),
                         ),
                       ],
                     ),

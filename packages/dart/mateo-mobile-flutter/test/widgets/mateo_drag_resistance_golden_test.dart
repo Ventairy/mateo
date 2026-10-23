@@ -24,7 +24,10 @@ Future<void> main() async {
                       color: theme.colorScheme.accent,
                       child: Padding(
                         padding: const .all(20),
-                        child: Text('Boundary', style: TextStyle(color: theme.colorScheme.onAccent)),
+                        child: MateoText(
+                          'Boundary',
+                          presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                        ),
                       ),
                     ),
                   ),

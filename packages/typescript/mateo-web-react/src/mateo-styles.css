@@ -12,6 +12,16 @@
 @source not "./bases/**/*.test.tsx";
 
 @layer mateo-theme {
+  /* Resolve relative tracking at each descendant's own font size. */
+  :where(
+    [style*="--mateo-letter-spacing"],
+    [style*="--mateo-letter-spacing"] *
+  ) {
+    letter-spacing: var(--mateo-letter-spacing, revert-layer);
+  }
+}
+
+@layer mateo-theme {
   /* Native controls have browser font defaults instead of inheriting text fonts. */
   :where(button, input, select, textarea) {
     font-family: var(--mateo-font-family, revert-layer);

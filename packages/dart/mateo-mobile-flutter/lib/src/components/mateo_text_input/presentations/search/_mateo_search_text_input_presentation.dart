@@ -71,8 +71,8 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
     final colors = widget.variant.resolveColorScheme(theme.colorScheme.textInputs);
     final typography = widget.variant.resolveTypography(widget.size);
     final style = TextStyle(
-      fontFamily: MateoTypography.fontFamily,
-      letterSpacing: MateoTypography.letterSpacing,
+      fontFamily: MateoTypography.interfaceFontFamily,
+      letterSpacing: (MediaQuery.maybeTextScalerOf(context) ?? TextScaler.noScaling).scale(typography.fontSize) * -0.02,
       fontSize: typography.fontSize,
       height: typography.lineHeight / typography.fontSize,
       fontWeight: .w500,

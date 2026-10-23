@@ -2,6 +2,7 @@ import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 import '../fixtures/surface_transform_test_widgets.dart';
 
@@ -71,7 +72,7 @@ Future<void> main() async {
                                                   width: 4,
                                                   height: 4,
                                                   decoration: BoxDecoration(
-                                                    color: DefaultTextStyle.of(context).style.color,
+                                                    color: MateoTextScope.of(context).color,
                                                     shape: .circle,
                                                   ),
                                                 ),
@@ -84,12 +85,21 @@ Future<void> main() async {
                                 menuPresentation: .options(
                                   items: const [
                                     MateoMenuOptionsPresentationItem(
-                                      principal: Text('View details'),
-                                      supporting: Text('More about this item'),
+                                      principal: MateoText(
+                                        'View details',
+                                        presentation: .interface(),
+                                      ),
+                                      supporting: MateoText(
+                                        'More about this item',
+                                        presentation: .interface(),
+                                      ),
                                     ),
                                     MateoMenuOptionsPresentationItem(
                                       leading: MateoIcon(.paperPlaneUpRight),
-                                      principal: Text('Share'),
+                                      principal: MateoText(
+                                        'Share',
+                                        presentation: .interface(),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -97,7 +107,13 @@ Future<void> main() async {
                               );
                               return MateoView(
                                 header: icon
-                                    ? MateoViewHeader(principal: const Text('Details'), trailing: button)
+                                    ? MateoViewHeader(
+                                        principal: const MateoText(
+                                          'Details',
+                                          presentation: .interface(),
+                                        ),
+                                        trailing: button,
+                                      )
                                     : null,
                                 surface: MateoViewSurface(
                                   child: icon
@@ -106,7 +122,12 @@ Future<void> main() async {
                                           padding: const EdgeInsets.all(24),
                                           child: Row(
                                             children: [
-                                              const Expanded(child: Text('Saved item')),
+                                              const Expanded(
+                                                child: MateoText(
+                                                  'Saved item',
+                                                  presentation: .interface(),
+                                                ),
+                                              ),
                                               button,
                                             ],
                                           ),

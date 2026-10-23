@@ -24,7 +24,12 @@ Future<void> main() async {
                   color: surfaceTransformTheme.colorScheme.background,
                   child: SizedBox(
                     height: phase == 'taller_entering' && index == 3 ? 340 : 240 - index * 30,
-                    child: Center(child: Text('Sheet ${index + 1}')),
+                    child: Center(
+                      child: MateoText(
+                        'Sheet ${index + 1}',
+                        presentation: const .interface(),
+                      ),
+                    ),
                   ),
                 ),
               ),

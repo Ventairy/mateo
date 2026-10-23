@@ -40,13 +40,21 @@ Future<void> main() async {
                   children: [
                     Positioned.fill(
                       child: MateoView(
-                        header: const MateoViewHeader(principal: Text('Your selection')),
+                        header: const MateoViewHeader(
+                          principal: MateoText(
+                            'Your selection',
+                            presentation: .interface(),
+                          ),
+                        ),
                         footer: MateoViewFooter(
                           principal: ColoredBox(
                             color: theme.colorScheme.accent,
                             child: Padding(
                               padding: const .all(12),
-                              child: Text('Continue', style: TextStyle(color: theme.colorScheme.onAccent)),
+                              child: MateoText(
+                                'Continue',
+                                presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                              ),
                             ),
                           ),
                         ),
@@ -56,14 +64,34 @@ Future<void> main() async {
                                   crossAxisAlignment: .stretch,
                                   children: [
                                     for (var i = 0; i < 8; i++)
-                                      SizedBox(height: 70, child: Center(child: Text('Item ${i + 1}'))),
+                                      SizedBox(
+                                        height: 70,
+                                        child: Center(
+                                          child: MateoText(
+                                            'Item ${i + 1}',
+                                            presentation: const .interface(),
+                                          ),
+                                        ),
+                                      ),
                                   ],
                                 ),
                               )
                             : MateoViewSurface(
                                 child: ColoredBox(
                                   color: theme.palette.neutral[3],
-                                  child: const Column(children: [Text('Content start'), Spacer(), Text('Content end')]),
+                                  child: const Column(
+                                    children: [
+                                      MateoText(
+                                        'Content start',
+                                        presentation: .interface(),
+                                      ),
+                                      Spacer(),
+                                      MateoText(
+                                        'Content end',
+                                        presentation: .interface(),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                       ),
@@ -76,7 +104,12 @@ Future<void> main() async {
                         height: 140,
                         child: ColoredBox(
                           color: theme.palette.neutral[5],
-                          child: const Center(child: Text('Keyboard')),
+                          child: const Center(
+                            child: MateoText(
+                              'Keyboard',
+                              presentation: .interface(),
+                            ),
+                          ),
                         ),
                       ),
                   ],

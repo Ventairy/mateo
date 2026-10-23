@@ -21,13 +21,33 @@ Future<void> main() async {
                   width: 240,
                   height: 320,
                   child: MateoView(
-                    header: const MateoViewHeader(principal: Text('Header')),
-                    footer: const MateoViewFooter(principal: Text('Footer')),
-                    surface: const MateoViewSurface(child: Center(child: Text('Surface'))),
+                    header: const MateoViewHeader(
+                      principal: MateoText(
+                        'Header',
+                        presentation: .interface(),
+                      ),
+                    ),
+                    footer: const MateoViewFooter(
+                      principal: MateoText(
+                        'Footer',
+                        presentation: .interface(),
+                      ),
+                    ),
+                    surface: const MateoViewSurface(
+                      child: Center(
+                        child: MateoText(
+                          'Surface',
+                          presentation: .interface(),
+                        ),
+                      ),
+                    ),
                     overlay: ColoredBox(
                       color: theme.colorScheme.accent.withValues(alpha: 0.5),
                       child: Center(
-                        child: Text('Overlay', style: TextStyle(color: theme.colorScheme.onAccent)),
+                        child: MateoText(
+                          'Overlay',
+                          presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                        ),
                       ),
                     ),
                   ),
@@ -43,7 +63,10 @@ Future<void> main() async {
                       color: theme.colorScheme.accent,
                       padding: const .all(24),
                       child: Center(
-                        child: Text('Welcome', style: TextStyle(color: theme.colorScheme.onAccent)),
+                        child: MateoText(
+                          'Welcome',
+                          presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                        ),
                       ),
                     ),
                   ),
@@ -68,7 +91,10 @@ Future<void> main() async {
                                 child: ColoredBox(
                                   color: theme.colorScheme.accent,
                                   child: Center(
-                                    child: Text('Item ${i + 1}', style: TextStyle(color: theme.colorScheme.onAccent)),
+                                    child: MateoText(
+                                      'Item ${i + 1}',
+                                      presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                                    ),
                                   ),
                                 ),
                               ),

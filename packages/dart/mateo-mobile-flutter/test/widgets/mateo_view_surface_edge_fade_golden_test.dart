@@ -38,8 +38,18 @@ Future<void> main() async {
                             width: 240,
                             height: 320,
                             child: MateoView(
-                              header: const MateoViewHeader(principal: Text('Header')),
-                              footer: const MateoViewFooter(principal: Text('Footer')),
+                              header: const MateoViewHeader(
+                                principal: MateoText(
+                                  'Header',
+                                  presentation: .interface(),
+                                ),
+                              ),
+                              footer: const MateoViewFooter(
+                                principal: MateoText(
+                                  'Footer',
+                                  presentation: .interface(),
+                                ),
+                              ),
                               surface: scrollable
                                   ? MateoViewSurface.scrollable(
                                       edgeEffect: .fade(),
@@ -82,6 +92,9 @@ Widget _content(MateoThemeData theme, int count) => Column(
 Widget _item(MateoThemeData theme, int index) => ColoredBox(
   color: index.isEven ? theme.colorScheme.inverse.background : theme.colorScheme.accent,
   child: Center(
-    child: Text('Item ${index + 1}', style: TextStyle(color: theme.colorScheme.onAccent)),
+    child: MateoText(
+      'Item ${index + 1}',
+      presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+    ),
   ),
 );

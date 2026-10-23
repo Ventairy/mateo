@@ -1,6 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/components/mateo_text/mateo_text.dart' show MateoTextScope;
 
 import '../fixtures/surface_transform_targets.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
@@ -72,22 +73,40 @@ Future<void> main() async {
                                     top: 20,
                                     width: 260,
                                     height: 300,
-                                    child: DefaultTextStyle(
-                                      style: TextStyle(color: theme.colorScheme.inverse.onBackground),
+                                    child: MateoTextScope(
+                                      color: theme.colorScheme.inverse.onBackground,
                                       child: MateoView(
                                         animation: MateoViewAnimation.transform(
                                           target: surfaceTransformTarget('details'),
                                         ),
-                                        header: const MateoViewHeader(principal: Text('Header')),
-                                        footer: const MateoViewFooter(principal: Text('Footer')),
+                                        header: const MateoViewHeader(
+                                          principal: MateoText(
+                                            'Header',
+                                            presentation: .interface(),
+                                          ),
+                                        ),
+                                        footer: const MateoViewFooter(
+                                          principal: MateoText(
+                                            'Footer',
+                                            presentation: .interface(),
+                                          ),
+                                        ),
                                         overlay: const Align(
                                           alignment: Alignment.centerRight,
-                                          child: Text('Overlay'),
+                                          child: MateoText(
+                                            'Overlay',
+                                            presentation: .interface(),
+                                          ),
                                         ),
                                         surface: MateoViewSurface(
                                           shape: viewShape,
                                           color: theme.colorScheme.inverse.background,
-                                          child: const Center(child: Text('Body')),
+                                          child: const Center(
+                                            child: MateoText(
+                                              'Body',
+                                              presentation: .interface(),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -101,9 +120,11 @@ Future<void> main() async {
                                 view: view,
                                 color: theme.colorScheme.inverse.background,
                                 child: Center(
-                                  child: Text(
+                                  child: MateoText(
                                     'Details',
-                                    style: TextStyle(color: theme.colorScheme.inverse.onBackground),
+                                    presentation: MateoTextPresentation.interface(
+                                      color: theme.colorScheme.inverse.onBackground,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -118,7 +139,10 @@ Future<void> main() async {
                             color: theme.colorScheme.accent,
                             elevation: MateoElevation(level: 1),
                             child: Center(
-                              child: Text('Open', style: TextStyle(color: theme.colorScheme.onAccent)),
+                              child: MateoText(
+                                'Open',
+                                presentation: MateoTextPresentation.interface(color: theme.colorScheme.onAccent),
+                              ),
                             ),
                           ),
                         ),

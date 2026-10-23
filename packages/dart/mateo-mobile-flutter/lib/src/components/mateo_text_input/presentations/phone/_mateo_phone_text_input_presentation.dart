@@ -152,13 +152,13 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
     final plainColors = theme.colorScheme.textInputs.plain;
     final typography = widget.variant.resolveTypography(widget.size);
     final style = TextStyle(
-      fontFamily: MateoTypography.fontFamily,
-      letterSpacing: MateoTypography.letterSpacing,
+      fontFamily: MateoTypography.interfaceFontFamily,
+      letterSpacing: (MediaQuery.maybeTextScalerOf(context) ?? TextScaler.noScaling).scale(typography.fontSize) * -0.02,
       fontSize: typography.fontSize,
       height: typography.lineHeight / typography.fontSize,
-      leadingDistribution: .even,
       fontWeight: .w500,
       color: scope.enabled ? plainColors.text : plainColors.textDisabled,
+      leadingDistribution: .even,
     );
     return Localizations.override(
       context: context,

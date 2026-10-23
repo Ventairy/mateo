@@ -26,7 +26,7 @@ import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 /// MateoSurface(
 ///   shape: .capsule(),
 ///   padding: const EdgeInsets.all(20),
-///   child: const Text('A place for your content'),
+///   child: const MateoText('A place for your content', presentation: .interface()),
 /// )
 /// ```
 class MateoSurface extends StatelessWidget {
@@ -68,7 +68,7 @@ class MateoSurface extends StatelessWidget {
   ///   height: .custom(320),
   ///   padding: EdgeInsets.all(20),
   ///   child: Column(
-  ///     children: [Text('Welcome'), Spacer(), Text('Ready when you are')],
+  ///     children: [MateoText('Welcome', presentation: .interface()), Spacer(), MateoText('Ready when you are', presentation: .interface())],
   ///   ),
   /// )
   /// ```

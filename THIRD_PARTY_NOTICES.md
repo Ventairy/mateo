@@ -1,8 +1,8 @@
 # Third-party notices
 
 Mateo packages keep notices beside the artifact that redistributes third-party
-material. The current Flutter package bundles Inter font files; its attribution
-and OFL-1.1 license reference are documented in
+material. The Flutter package bundles Inter, Fredoka, and Momo Signature font files;
+their attributions and OFL-1.1 license references are documented in
 [`packages/dart/mateo-mobile-flutter/THIRD_PARTY_NOTICES.md`](packages/dart/mateo-mobile-flutter/THIRD_PARTY_NOTICES.md).
 
 Third-party dependencies resolved by a package manager retain their own
