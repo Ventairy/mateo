@@ -5,6 +5,16 @@ part of '../mateo_text_input.dart';
 sealed class MateoTextInputPresentation extends StatefulWidget {
   const MateoTextInputPresentation._();
 
+  /// Creates a general-purpose, single-line text input presentation.
+  ///
+  /// The [purpose] selects typing assistance and defaults to
+  /// [MateoTextInputPurpose.text].
+  const factory MateoTextInputPresentation.general({
+    required MateoTextInputVariant variant,
+    MateoTextInputSize size,
+    MateoTextInputPurpose purpose,
+  }) = _MateoGeneralTextInputPresentation;
+
   /// Creates a search text input presentation.
   ///
   /// ```dart
