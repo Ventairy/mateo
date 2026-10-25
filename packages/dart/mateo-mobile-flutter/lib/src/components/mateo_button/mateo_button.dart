@@ -65,7 +65,31 @@ class MateoButton extends StatefulWidget {
   State<MateoButton> createState() => _MateoButtonState();
 }
 
-class _MateoButtonState extends State<MateoButton> {
+class _MateoButtonState extends State<MateoButton> with SingleTickerProviderStateMixin {
+  static const _availabilityTransitionDuration = Duration(milliseconds: 180);
+
+  late final AnimationController _availabilityTransition = AnimationController(
+    vsync: this,
+    value: widget.onPressed != null ? 1 : 0,
+  );
+  bool _immediate = false;
+
+  void _synchronizeAvailability() {
+    final target = widget.onPressed != null ? 1.0 : 0.0;
+    if (_immediate) {
+      _availabilityTransition.value = target;
+      return;
+    }
+    _availabilityTransition.animateTo(target, duration: _availabilityTransitionDuration, curve: Curves.easeOutCubic);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _immediate = (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || !TickerMode.valuesOf(context).enabled;
+    if (_immediate) _synchronizeAvailability();
+  }
+
   Timer? _loadingDelay;
   bool _pending = false;
   bool _showAsyncLoading = false;
@@ -75,6 +99,7 @@ class _MateoButtonState extends State<MateoButton> {
   @override
   void didUpdateWidget(MateoButton oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if ((oldWidget.onPressed != null) != (widget.onPressed != null)) _synchronizeAvailability();
     // Once activity is visible, overlapping manual work must not hide a
     // pending action just because its initial delay has not elapsed yet.
     if (widget.isLoading && _pending) _showAsyncLoading = true;
@@ -111,15 +136,20 @@ class _MateoButtonState extends State<MateoButton> {
   @override
   void dispose() {
     _loadingDelay?.cancel();
+    _availabilityTransition.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => _MateoButtonPresentationScope(
-    enabled: widget.onPressed != null,
-    interactive: _interactive,
-    loading: widget.isLoading || _showAsyncLoading,
-    onPressed: _activate,
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: _availabilityTransition,
     child: widget.presentation,
+    builder: (context, child) => _MateoButtonPresentationScope(
+      enabledProgress: _availabilityTransition.value,
+      interactive: _interactive,
+      loading: widget.isLoading || _showAsyncLoading,
+      onPressed: _activate,
+      child: child!,
+    ),
   );
 }

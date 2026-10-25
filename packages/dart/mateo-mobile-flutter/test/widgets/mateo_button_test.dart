@@ -48,6 +48,131 @@ Future<void> _activate(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets('when motion is reduced during an availability fade, it should settle immediately', (tester) async {
+    Future<void> show({required bool enabled, bool reducedMotion = false}) => tester.pumpWidget(
+      _host(
+        MateoButton(
+          presentation: const .label(label: 'Save'),
+          onPressed: enabled ? () {} : null,
+        ),
+        reducedMotion: reducedMotion,
+      ),
+    );
+    await show(enabled: false);
+    await show(enabled: true);
+    await tester.pump(const Duration(milliseconds: 60));
+    expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, isNot(_theme.colorScheme.accent));
+    await show(enabled: true, reducedMotion: true);
+    expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, _theme.colorScheme.accent);
+    expect(tester.binding.hasScheduledFrame, isFalse);
+  });
+
+  for (final iconOnly in [false, true]) {
+    for (final (treatment, variant) in <(String, MateoButtonVariant)>[
+      ('primary', MateoButtonVariant.primary),
+      ('secondary', MateoButtonVariant.secondary),
+      ('tertiary', MateoButtonVariant.tertiary),
+    ]) {
+      testWidgets(
+        'when a ${iconOnly ? 'icon' : 'label'} $treatment button changes availability, it should fade colors without delaying input',
+        (tester) async {
+          var activations = 0;
+          final colors = variant.resolveColorScheme(_theme.colorScheme.buttons);
+          final presentation = iconOnly
+              ? MateoButtonPresentation.icon(icon: const MateoIcon(.cross), variant: variant)
+              : MateoButtonPresentation.label(
+                  label: 'Save',
+                  leadingIcon: const MateoIcon(.cross),
+                  variant: variant,
+                );
+          Future<void> show({required bool enabled}) => tester.pumpWidget(
+            _host(
+              MateoButton(
+                presentation: presentation,
+                onPressed: enabled
+                    ? () {
+                        activations++;
+                      }
+                    : null,
+              ),
+            ),
+          );
+          Color background() => tester.widget<MateoSurface>(find.byType(MateoSurface)).color!;
+          Color foreground() => MateoIconScope.of(tester.element(find.byType(MateoIcon))).color!;
+
+          await show(enabled: false);
+          final restingSize = tester.getSize(_surface());
+          expect(background(), colors.backgroundDisabled);
+          expect(foreground(), colors.foregroundDisabled);
+          await show(enabled: true);
+          expect(background(), colors.backgroundDisabled);
+          expect(tester.widget<MateoPress>(find.byType(MateoPress)).onPressed, isNotNull);
+          await tester.pump(const Duration(milliseconds: 60));
+          if (colors.background != colors.backgroundDisabled) {
+            expect(background(), isNot(anyOf(colors.background, colors.backgroundDisabled)));
+          }
+          expect(foreground(), isNot(anyOf(colors.foreground, colors.foregroundDisabled)));
+          if (!iconOnly) expect(tester.widget<Text>(find.text('Save')).style!.color, foreground());
+          expect(tester.getSize(_surface()), restingSize);
+          await _activate(tester);
+          expect(activations, 1);
+          await tester.pumpAndSettle();
+          expect(background(), colors.background);
+          expect(foreground(), colors.foreground);
+
+          await show(enabled: false);
+          expect(tester.widget<MateoPress>(find.byType(MateoPress)).onPressed, isNull);
+          await tester.pump(const Duration(milliseconds: 60));
+          final returningBackground = background();
+          final returningForeground = foreground();
+          await show(enabled: true);
+          expect(background(), returningBackground);
+          expect(foreground(), returningForeground);
+          await tester.pumpAndSettle();
+          expect(background(), colors.background);
+          expect(foreground(), colors.foreground);
+        },
+      );
+    }
+
+    for (final reducedMotion in [false, true]) {
+      testWidgets(
+        'when ${iconOnly ? 'icon' : 'label'} availability changes with ${reducedMotion ? 'reduced motion' : 'muted tickers'}, it should apply custom colors immediately',
+        (tester) async {
+          final colors = MateoButtonColorScheme(
+            background: _theme.palette.green[9],
+            foreground: _theme.palette.neutral[1],
+            backgroundDisabled: _theme.palette.green[3],
+            foregroundDisabled: _theme.palette.neutral[9],
+          );
+          for (final enabled in [false, true, false]) {
+            await tester.pumpWidget(
+              _host(
+                MateoButton(
+                  presentation: iconOnly
+                      ? .icon(icon: const MateoIcon(.cross), colorScheme: colors)
+                      : .label(label: 'Save', leadingIcon: const MateoIcon(.cross), colorScheme: colors),
+                  onPressed: enabled ? () {} : null,
+                ),
+                reducedMotion: reducedMotion,
+                tickerEnabled: reducedMotion,
+              ),
+            );
+            expect(
+              tester.widget<MateoSurface>(find.byType(MateoSurface)).color,
+              enabled ? colors.background : colors.backgroundDisabled,
+            );
+            expect(
+              MateoIconScope.of(tester.element(find.byType(MateoIcon))).color,
+              enabled ? colors.foreground : colors.foregroundDisabled,
+            );
+            expect(tester.binding.hasScheduledFrame, isFalse);
+          }
+        },
+      );
+    }
+  }
+
   for (final (size, height, iconSize, iconButtonIconSize, fontSize) in [
     (MateoButtonSize.mini, 40.0, 16.0, 22.0, 14.0),
     (MateoButtonSize.small, 48.0, 20.0, 26.0, 15.0),
@@ -679,6 +804,7 @@ void main() {
             ),
           ),
         );
+        await tester.pumpAndSettle();
         expect(
           tester.widget<MateoSurface>(find.byType(MateoSurface)).color,
           _theme.colorScheme.accent,
@@ -706,6 +832,7 @@ void main() {
           theme: theme,
         ),
       );
+      await tester.pumpAndSettle();
       final scope = MateoIconScope.of(tester.element(find.byType(MateoIcon)));
       expect(scope.color, enabled ? theme.colorScheme.onAccent : theme.palette.neutral[9]);
       expect(tester.widget<Text>(find.text('Save')).style!.color, scope.color);

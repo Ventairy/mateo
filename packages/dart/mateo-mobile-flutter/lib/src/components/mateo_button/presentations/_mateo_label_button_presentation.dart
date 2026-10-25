@@ -154,7 +154,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
     final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
-    final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
+    final foreground = Color.lerp(colors.foregroundDisabled, colors.foreground, scope.enabledProgress)!;
     final contentAlignment = switch (widget.alignment) {
       .left => Alignment.centerLeft,
       .center => Alignment.center,
@@ -245,7 +245,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: math.max(0, (48 - size.height) / 2)),
         child: MateoSurface(
-          color: scope.enabled ? colors.background : colors.backgroundDisabled,
+          color: Color.lerp(colors.backgroundDisabled, colors.background, scope.enabledProgress),
           shape: const .capsule(),
           elevation: MateoElevation(level: elevation),
           child: SizedBox(

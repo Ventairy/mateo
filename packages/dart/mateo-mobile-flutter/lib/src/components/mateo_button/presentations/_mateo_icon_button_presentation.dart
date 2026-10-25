@@ -86,7 +86,7 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
     final scope = _MateoButtonPresentationScope.of(context);
     final theme = MateoTheme.of(context);
     final colors = widget.colorScheme ?? variant.resolveColorScheme(theme.colorScheme.buttons);
-    final foreground = scope.enabled ? colors.foreground : colors.foregroundDisabled;
+    final foreground = Color.lerp(colors.foregroundDisabled, colors.foreground, scope.enabledProgress)!;
 
     return MateoPress(
       semanticLabel: widget.semanticLabel,
@@ -96,7 +96,7 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
         dimension: math.max(48, size.height),
         child: Center(
           child: MateoSurface(
-            color: scope.enabled ? colors.background : colors.backgroundDisabled,
+            color: Color.lerp(colors.backgroundDisabled, colors.background, scope.enabledProgress),
             shape: const .capsule(),
             elevation: MateoElevation(level: elevation),
             child: SizedBox.square(
