@@ -52,7 +52,7 @@ void main() {
           );
           await show();
           final expected = density == MateoMenuDensity.standard
-              ? (withBackground ? 44.0 : 38.0)
+              ? (withBackground ? 48.0 : 38.0)
               : (withBackground ? 34.0 : 30.0);
           expect(tester.getSize(find.byType(MateoIcon)), Size.square(expected));
           await show(explicitSize: 22);
@@ -229,7 +229,7 @@ void main() {
       final lastContent = tester.getRect(find.byKey(lastKey));
       expect(firstContent.top - panel.top, density.verticalPadding);
       expect(panel.bottom - lastContent.bottom, density.verticalPadding);
-      expect(lastContent.top - firstContent.bottom, density == MateoMenuDensity.compact ? 8 : 16);
+      expect(lastContent.top - firstContent.bottom, density == MateoMenuDensity.compact ? 8 : 18);
       await tester.tapAt(Offset(panel.center.dx, firstContent.bottom + 3));
       await tester.pumpAndSettle();
       await tester.tapAt(Offset(panel.center.dx, lastContent.top - 3));
@@ -240,7 +240,7 @@ void main() {
     });
     for (final supporting in [0, 1, 2]) {
       testWidgets(
-        'when $density has supporting content in position $supporting, it should use the larger gap for its density',
+        'when $density has supporting content in position $supporting, it should use its density spacing',
         (
           tester,
         ) async {
@@ -263,7 +263,7 @@ void main() {
           final contentHeight = supporting == 2 ? 144 : 132;
           expect(
             tester.getSize(find.byType(MateoSurface)).height,
-            contentHeight + density.verticalPadding * 2 + (density == MateoMenuDensity.compact ? 12 : 24),
+            contentHeight + density.verticalPadding * 2 + (density == MateoMenuDensity.compact ? 12 : 18),
           );
         },
       );
@@ -288,7 +288,7 @@ void main() {
         panel.height,
         (density == MateoMenuDensity.compact ? 48 : 56) * 2 +
             density.verticalPadding * 2 +
-            (density == MateoMenuDensity.compact ? 8 : 16),
+            (density == MateoMenuDensity.compact ? 8 : 18),
       );
       expect(top.bottom, bottom.top);
       for (final point in [

@@ -5,23 +5,26 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 void main() {
   final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
-  test('when plain is resolved, it should expose transparent backgrounds and filled-base content colors', () {
-    final colors = theme.colorScheme.textInputs.plain;
-    final expected = MateoTextInputColorScheme(
-      background: const Color(0x00000000),
-      text: theme.palette.black,
-      placeholder: theme.palette.neutral[7],
-      icon: theme.palette.neutral[9],
-      backgroundDisabled: const Color(0x00000000),
-      textDisabled: theme.palette.neutral[9],
-      placeholderDisabled: theme.palette.neutral[9],
-      iconDisabled: theme.palette.neutral[9],
-    );
-    expect(MateoTextInputVariant.plain.resolveColorScheme(theme.colorScheme.textInputs), same(colors));
-    expect(colors, expected);
-    expect(colors.hashCode, expected.hashCode);
-    expect(colors, isNot(theme.colorScheme.textInputs.filled.base));
-  });
+  test(
+    'when plain is resolved, it should expose transparent backgrounds and its enabled and disabled content colors',
+    () {
+      final colors = theme.colorScheme.textInputs.plain;
+      final expected = MateoTextInputColorScheme(
+        background: const Color(0x00000000),
+        text: theme.palette.black,
+        placeholder: theme.palette.neutral[7],
+        icon: theme.palette.neutral[9],
+        backgroundDisabled: const Color(0x00000000),
+        textDisabled: theme.palette.neutral[8],
+        placeholderDisabled: theme.palette.neutral[8],
+        iconDisabled: theme.palette.neutral[8],
+      );
+      expect(MateoTextInputVariant.plain.resolveColorScheme(theme.colorScheme.textInputs), same(colors));
+      expect(colors, expected);
+      expect(colors.hashCode, expected.hashCode);
+      expect(colors, isNot(theme.colorScheme.textInputs.filled.base));
+    },
+  );
 
   test('when search uses plain, it should reject the unsupported variant', () {
     expect(
@@ -38,7 +41,7 @@ void main() {
     final expectedBase = MateoTextInputColorScheme(
       background: theme.palette.white,
       text: filled.neutral.text,
-      placeholder: filled.neutral.placeholder,
+      placeholder: theme.palette.neutral[7],
       icon: theme.palette.neutral[9],
       backgroundDisabled: filled.neutral.backgroundDisabled,
       textDisabled: theme.palette.neutral[9],
@@ -62,7 +65,7 @@ void main() {
     final colors = theme.colorScheme.textInputs.filled.neutral;
     expect(colors.background, theme.palette.neutral[2]);
     expect(colors.text, theme.palette.black);
-    expect(colors.placeholder, theme.palette.neutral[7]);
+    expect(colors.placeholder, theme.palette.neutral[8]);
     expect(colors.icon, theme.palette.neutral[10]);
     expect(colors.backgroundDisabled, theme.palette.neutral[4]);
     expect(colors.textDisabled, theme.palette.neutral[10]);

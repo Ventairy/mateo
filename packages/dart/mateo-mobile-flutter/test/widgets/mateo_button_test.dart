@@ -64,7 +64,7 @@ void main() {
     expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, isNot(_theme.colorScheme.accent));
     await show(enabled: true, reducedMotion: true);
     expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, _theme.colorScheme.accent);
-    expect(tester.binding.hasScheduledFrame, isFalse);
+    expect(tester.hasRunningAnimations, isFalse);
   });
 
   for (final iconOnly in [false, true]) {

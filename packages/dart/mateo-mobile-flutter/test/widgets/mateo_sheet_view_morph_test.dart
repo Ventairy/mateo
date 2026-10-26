@@ -603,7 +603,13 @@ Future<NavigatorState> _sheet(
         key: const ValueKey('capture'),
         child: MediaQuery(
           data: MediaQuery.of(context).copyWith(disableAnimations: reducedMotion),
-          child: child!,
+          child: DefaultTextStyle.merge(
+            style: TextStyle(
+              fontFamily: MateoTypography.interfaceFontFamily,
+              color: surfaceTransformTheme.colorScheme.text.primary,
+            ),
+            child: child!,
+          ),
         ),
       ),
       home: home,

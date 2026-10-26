@@ -29,7 +29,7 @@ void main() {
 
   test('when resolving skeletons, it should expose the neutral bone color', () {
     final skeleton = theme.colorScheme.skeleton;
-    expect(skeleton.bone, theme.palette.neutral[3]);
+    expect(skeleton.bone, theme.palette.neutral[2]);
     final equivalent = MateoSkeletonColorScheme(bone: skeleton.bone);
     expect(equivalent, skeleton);
     expect(equivalent.hashCode, skeleton.hashCode);
@@ -37,13 +37,13 @@ void main() {
     expect(theme.copyWith().colorScheme.skeleton, skeleton);
   });
 
-  test('when resolving toasts, loading should have its own treatment with the current info colors', () {
+  test('when resolving loading toasts, it should use the cyan surface with a softer icon', () {
     final toast = theme.colorScheme.toast;
-    expect(toast.loading, toast.info);
+    expect(toast.loading, isNot(toast.info));
     expect(identical(toast.loading, toast.info), isFalse);
-    expect(toast.loading.background, theme.palette.blue[12]);
-    expect(toast.loading.foreground, theme.palette.white);
-    expect(toast.loading.icon, theme.palette.blue[9]);
+    expect(toast.loading.background, theme.palette.cyan[12]);
+    expect(toast.loading.foreground, theme.palette.cyan[1]);
+    expect(toast.loading.icon, theme.palette.cyan[8]);
   });
 
   test('when resolving neutral toasts, surface, text, and icon should use black and white', () {

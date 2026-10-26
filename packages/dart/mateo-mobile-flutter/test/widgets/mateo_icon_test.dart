@@ -168,7 +168,7 @@ void main() {
       expect(boundsInIcon(tester, find.byType(DecoratedBox)), Rect.fromLTWH(0, 0, size, size));
       expect(
         boundsInIcon(tester, find.byType(CustomPaint)),
-        rectMoreOrLessEquals(Rect.fromLTWH(size * 0.2, size * 0.2, size * 0.6, size * 0.6)),
+        rectMoreOrLessEquals(Rect.fromLTWH(size * 0.175, size * 0.175, size * 0.65, size * 0.65)),
       );
       final decoration = tester.widget<DecoratedBox>(find.byType(DecoratedBox)).decoration as BoxDecoration;
       expect(decoration.shape, BoxShape.circle);
@@ -180,7 +180,7 @@ void main() {
     expect(boundsInIcon(tester, find.byType(DecoratedBox)), const Rect.fromLTWH(8, 0, 24, 24));
     expect(
       boundsInIcon(tester, find.byType(CustomPaint)),
-      rectMoreOrLessEquals(const Rect.fromLTWH(12.8, 4.8, 14.4, 14.4)),
+      rectMoreOrLessEquals(const Rect.fromLTWH(12.2, 4.2, 15.6, 15.6)),
     );
     await tester.pumpWidget(host(const MateoIconScope(size: 24, child: MateoIcon(.arrowUp, backgroundColor: blue))));
     expect(tester.getSize(find.byType(MateoIcon)), const Size.square(24));

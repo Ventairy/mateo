@@ -4,14 +4,14 @@ import 'package:mateo_mobile/src/i18n/mateo_translations.dart';
 
 void main() {
   final cases = <Locale, String>{
-    const Locale('en'): 'Search countries',
-    const Locale('en', 'US'): 'Search countries',
-    const Locale('pt', 'BR'): 'Buscar países',
-    const Locale('pt'): 'Buscar países',
-    const Locale('pt', 'PT'): 'Buscar países',
-    const Locale.fromSubtags(languageCode: 'pt', scriptCode: 'Latn', countryCode: 'BR'): 'Buscar países',
-    const Locale('fr'): 'Search countries',
-    const Locale('fr', 'BR'): 'Search countries',
+    const Locale('en'): 'Search country',
+    const Locale('en', 'US'): 'Search country',
+    const Locale('pt', 'BR'): 'Buscar país',
+    const Locale('pt'): 'Buscar país',
+    const Locale('pt', 'PT'): 'Buscar país',
+    const Locale.fromSubtags(languageCode: 'pt', scriptCode: 'Latn', countryCode: 'BR'): 'Buscar país',
+    const Locale('fr'): 'Search country',
+    const Locale('fr', 'BR'): 'Search country',
   };
   for (final entry in cases.entries) {
     testWidgets('when the locale is ${entry.key}, it should resolve the supported translation', (tester) async {
@@ -46,12 +46,12 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Search countries'), findsOneWidget);
+    expect(find.text('Search country'), findsOneWidget);
     locale.value = const Locale('pt', 'BR');
     await tester.pumpAndSettle();
-    expect(find.text('Buscar países'), findsOneWidget);
+    expect(find.text('Buscar país'), findsOneWidget);
     locale.value = const Locale('en');
     await tester.pumpAndSettle();
-    expect(find.text('Search countries'), findsOneWidget);
+    expect(find.text('Search country'), findsOneWidget);
   });
 }
