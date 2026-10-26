@@ -64,6 +64,7 @@ void main() {
       expect(child.getTransformTo(target).storage[0], lessThan(1));
       await gesture.up();
       await tester.pump();
+      await tester.pump();
       await tester.pump(const Duration(milliseconds: 80));
       expect(surfaceFlight, findsOneWidget);
       expect(find.byType(MateoLoadingIndicator), findsNothing);
@@ -82,6 +83,7 @@ void main() {
         const Interval(0, 0.3, curve: Curves.easeOut),
       );
       navigator.currentState!.pop();
+      await tester.pump();
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 80));
       expect(surfaceFlight, findsOneWidget);

@@ -301,6 +301,7 @@ void main() {
                 menuPresentation: .options(items: [item]),
                 onItemPressed: (selected) {
                   expect(selected, same(item));
+                  expect(find.byType(MateoMenu), findsNothing, reason: 'Actions run after the menu finishes closing.');
                   calls++;
                   if (navigate) {
                     navigator.currentState!.push(

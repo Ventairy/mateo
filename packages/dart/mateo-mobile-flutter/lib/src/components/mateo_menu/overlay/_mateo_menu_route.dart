@@ -75,11 +75,14 @@ class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
   @override
   String? get barrierLabel => null;
 
-  FutureOr<void> _select(MateoMenuOptionsPresentationItem item) {
-    if (_selected || !isCurrent) return Future<void>.value();
+  Future<void> _select(MateoMenuOptionsPresentationItem item) async {
+    if (_selected || !isCurrent) return;
     _selected = true;
     navigator!.pop(item);
-    return menu.onItemPressed!(item);
+    // Navigation from the action must not interrupt the closing morph capture.
+    // Pop menus and reduced motion can deliver the action immediately.
+    if (!reducedMotion && surfaceAnimation is MateoSurfaceAnimationTransform) await completed;
+    await menu.onItemPressed!(item);
   }
 
   Widget _buildMenu() {
