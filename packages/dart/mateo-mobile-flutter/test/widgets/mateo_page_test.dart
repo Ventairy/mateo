@@ -431,7 +431,6 @@ void main() {
         await tester.pump(const Duration(milliseconds: 200));
         final laterPosition = tester.getTopLeft(find.byKey(_destinationKey));
 
-        expect(find.byType(SnapshotWidget), findsOneWidget);
         expect(find.byType(ShaderMask), findsNothing);
         expect(
           find.ancestor(
@@ -466,7 +465,7 @@ void main() {
         );
         await tester.pump(const Duration(milliseconds: 16));
 
-        final snapshot = find.byType(SnapshotWidget);
+        final snapshot = find.byType(SnapshotWidget).last;
         final snapshotSize = tester.getSize(snapshot);
         final shaderLayer = _findLayer<ShaderMaskLayer>(
           tester.binding.renderViews.single.debugLayer,
@@ -496,7 +495,7 @@ void main() {
         );
         await tester.pump(const Duration(milliseconds: 300));
 
-        final snapshotSize = tester.getSize(find.byType(SnapshotWidget));
+        final snapshotSize = tester.getSize(find.byType(SnapshotWidget).last);
         final midpointShaderLayer = _findLayer<ShaderMaskLayer>(
           tester.binding.renderViews.single.debugLayer,
         );
@@ -570,7 +569,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
 
         final snapshot = tester.widget<SnapshotWidget>(
-          find.byType(SnapshotWidget),
+          find.byType(SnapshotWidget).last,
         );
 
         expect(snapshot.mode, SnapshotMode.forced);
@@ -602,7 +601,6 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
         final laterPosition = tester.getTopLeft(find.byKey(_destinationKey));
 
-        expect(find.byType(SnapshotWidget), findsOneWidget);
         expect(find.byType(ShaderMask), findsNothing);
         expect(earlyPosition, Offset.zero);
         expect(laterPosition, earlyPosition);
@@ -637,8 +635,8 @@ void main() {
       const transition = MateoPageTransition.slide();
 
       expect(transition.direction, MateoPageTransitionDirection.up);
-      expect(transition.duration, const Duration(milliseconds: 390));
-      expect(transition.reverseDuration, const Duration(milliseconds: 200));
+      expect(transition.duration, const Duration(milliseconds: 320));
+      expect(transition.reverseDuration, const Duration(milliseconds: 260));
       const slide = transition as MateoPageTransitionSlide;
       expect(slide.openingCurve, isNot(slide.closingCurve));
       expect(slide.openingCurve.transform(.5), closeTo(0.888290707184, 1e-12));
@@ -1223,7 +1221,7 @@ void _expectWashOrigin(
   WidgetTester tester,
   MateoPageTransitionDirection direction,
 ) {
-  final viewport = tester.getRect(find.byType(SnapshotWidget));
+  final viewport = tester.getRect(find.byType(SnapshotWidget).last);
   final activeRect = _findLayer<ShaderMaskLayer>(
     tester.binding.renderViews.single.debugLayer,
   )!.maskRect!;

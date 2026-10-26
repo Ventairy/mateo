@@ -28,8 +28,9 @@ final class MateoPageTransitionSlide extends MateoPageTransition {
     required bool allowSnapshotting,
     required Widget child,
   }) => _MateoPageTransitionMotion(
+    animation: animation,
     child: child,
-    builder: (child, {required useLinearProgress}) => _MateoSlidePageTransitionView(
+    builder: (child, animation, {required useLinearProgress}) => _MateoSlidePageTransitionView(
       animation: animation,
       transition: this,
       useLinearProgress: useLinearProgress,

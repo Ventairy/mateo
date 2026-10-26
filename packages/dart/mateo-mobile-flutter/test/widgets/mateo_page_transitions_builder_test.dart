@@ -25,7 +25,7 @@ void main() {
       await tester.pumpWidget(_app(pages));
       pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 195));
+      await tester.pump(builder.transitionDuration ~/ 2);
 
       final transition = builder.transition as MateoPageTransitionSlide;
       final source = tester.getRect(find.byKey(const ValueKey('source')));
@@ -43,7 +43,7 @@ void main() {
       await tester.pumpAndSettle();
       Navigator.of(tester.element(find.byKey(const ValueKey('destination')))).pop();
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(builder.reverseTransitionDuration ~/ 2);
 
       expect(tester.getRect(find.byKey(const ValueKey('source'))).topLeft, Offset.zero);
       expect(

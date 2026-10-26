@@ -32,8 +32,9 @@ final class MateoPageTransitionWash extends MateoPageTransition {
     required bool allowSnapshotting,
     required Widget child,
   }) => _MateoPageTransitionMotion(
+    animation: animation,
     child: child,
-    builder: (child, {required useLinearProgress}) => _MateoWashPageTransitionView(
+    builder: (child, animation, {required useLinearProgress}) => _MateoWashPageTransitionView(
       animation: animation,
       transition: this,
       allowSnapshotting: allowSnapshotting,

@@ -10,12 +10,34 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
   }
 
   MateoPageTransitionsBuilder _builder;
+  MateoPageTransitionPush? _outgoingPush;
 
   void _updateBuilder() {
     if (page.transition == _builder.transition) return;
     _builder = MateoPageTransitionsBuilder(transition: page.transition!);
     // Validate even when reduced motion removes the route timing.
     _builder.transitionDuration;
+  }
+
+  @override
+  void didChangeNext(Route<dynamic>? nextRoute) {
+    // A departing route still drives secondaryAnimation during its reverse.
+    // Keep its configuration until another route actually covers this one.
+    if (nextRoute != null) _updateOutgoingPush(nextRoute);
+    super.didChangeNext(nextRoute);
+  }
+
+  @override
+  void didPopNext(Route<dynamic> nextRoute) {
+    _updateOutgoingPush(nextRoute);
+    super.didPopNext(nextRoute);
+  }
+
+  void _updateOutgoingPush(Route<dynamic> nextRoute) {
+    _outgoingPush = switch (nextRoute) {
+      _MateoPageRoute(_builder: MateoPageTransitionsBuilder(:final MateoPageTransitionPush transition)) => transition,
+      _ => null,
+    };
   }
 
   @override
@@ -49,7 +71,9 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
     bool allowSnapshotting,
     Widget? child,
   ) {
-    if (!shouldAnimateSecondary) return child;
+    // Custom Mateo sources already own a persistent outgoing host. Returning
+    // their composed content avoids Flutter inserting/removing another host.
+    if (ModalRoute.of(context) is _MateoPageRoute || !shouldAnimateSecondary) return child;
     return _builder.delegatedTransition(context, animation, secondaryAnimation, allowSnapshotting, child) ?? child;
   }
 
@@ -65,21 +89,18 @@ final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
     Widget child,
   ) {
     updateMotion(context);
-    final view = !shouldAnimateSecondary
-        ? child
-        : _builder.buildTransitions(
-            this,
-            context,
-            shouldAnimatePrimary ? animation : kAlwaysCompleteAnimation,
-            // Flutter creates a fresh dismissed proxy while another route
-            // delegates its outgoing motion. Keep that no-op input stable.
-            secondaryAnimation is ProxyAnimation &&
-                    secondaryAnimation.parent == null &&
-                    !identical(secondaryAnimation, this.secondaryAnimation)
-                ? kAlwaysDismissedAnimation
-                : secondaryAnimation,
-            child,
-          );
+    final incoming = _builder.transition.buildIncoming(
+      animation: shouldAnimatePrimary ? animation : kAlwaysCompleteAnimation,
+      allowSnapshotting: allowSnapshotting,
+      child: child,
+    );
+    // Only push moves the departing page. Keep its host mounted even when
+    // inactive so changing the covering transition never reparents content.
+    final view = (_outgoingPush ?? const MateoPageTransitionPush()).buildOutgoing(
+      animation: shouldAnimateSecondary && _outgoingPush != null ? this.secondaryAnimation! : kAlwaysDismissedAnimation,
+      allowSnapshotting: shouldAnimateSecondary && _outgoingPush != null && allowSnapshotting && animation.isCompleted,
+      child: incoming,
+    );
     if (defaultTargetPlatform != .android) return view;
     return _MateoPredictiveBackGestureDetector(route: this, child: view);
   }

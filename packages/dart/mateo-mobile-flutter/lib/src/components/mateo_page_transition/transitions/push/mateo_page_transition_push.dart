@@ -24,8 +24,9 @@ final class MateoPageTransitionPush extends MateoPageTransition {
     required bool allowSnapshotting,
     required Widget child,
   }) => _MateoPageTransitionMotion(
+    animation: animation,
     child: child,
-    builder: (child, {required useLinearProgress}) => _MateoPushPageTransitionView(
+    builder: (child, animation, {required useLinearProgress}) => _MateoPushPageTransitionView(
       animation: animation,
       transition: this,
       outgoing: false,
@@ -41,8 +42,10 @@ final class MateoPageTransitionPush extends MateoPageTransition {
     required bool allowSnapshotting,
     required Widget child,
   }) => _MateoPageTransitionMotion(
+    animation: animation,
+    outgoing: true,
     child: child,
-    builder: (child, {required useLinearProgress}) => _MateoPushPageTransitionView(
+    builder: (child, animation, {required useLinearProgress}) => _MateoPushPageTransitionView(
       animation: animation,
       transition: this,
       outgoing: true,
