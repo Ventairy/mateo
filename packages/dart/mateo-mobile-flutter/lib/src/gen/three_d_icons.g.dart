@@ -88,6 +88,9 @@ ImageFrameBuilder _dotdartImageFrameBuilder(
 /// $ThreeDIcons.handshake(<params>);
 /// ```
 /// ```dart
+/// $ThreeDIcons.magnifyingGlass(<params>);
+/// ```
+/// ```dart
 /// $ThreeDIcons.padlock(<params>);
 /// ```
 /// ```dart
@@ -139,6 +142,28 @@ abstract final class $ThreeDIcons {
     Color? color,
     BlendMode? colorBlendMode,
   }) => _Handshake(
+    key: key,
+    width: width,
+    height: height,
+    package: package,
+    fit: fit,
+    alignment: alignment,
+    color: color,
+    colorBlendMode: colorBlendMode,
+  );
+
+  /// Builds the `MagnifyingGlass` widget from `magnifyingGlass.image`.
+  /// Pass [package] when this image belongs to a dependency package.
+  static Widget magnifyingGlass({
+    Key? key,
+    double? width,
+    double? height,
+    String? package,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Color? color,
+    BlendMode? colorBlendMode,
+  }) => _MagnifyingGlass(
     key: key,
     width: width,
     height: height,
@@ -286,6 +311,12 @@ abstract final class $ThreeDIcons {
       height: height,
       package: package,
     ),
+    'magnifying-glass.webp' => magnifyingGlass(
+      key: key,
+      width: width,
+      height: height,
+      package: package,
+    ),
     'padlock.webp' => padlock(
       key: key,
       width: width,
@@ -329,6 +360,7 @@ abstract final class $ThreeDIconsCache {
 
   static const _bidirecionalHorizontalArrowAssetPath = 'assets/three_d_icons/bidirecional-horizontal-arrow.webp';
   static const _handshakeAssetPath = 'assets/three_d_icons/handshake.webp';
+  static const _magnifyingGlassAssetPath = 'assets/three_d_icons/magnifying-glass.webp';
   static const _padlockAssetPath = 'assets/three_d_icons/padlock.webp';
   static const _padlockOpenAssetPath = 'assets/three_d_icons/padlock-open.webp';
   static const _pencilAssetPath = 'assets/three_d_icons/pencil.webp';
@@ -427,6 +459,53 @@ abstract final class $ThreeDIconsCache {
     final provider = _provider(
       context,
       asset: AssetImage(_handshakeAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+    );
+    final key = await provider.obtainKey(configuration);
+    return imageCache.evict(key, includeLive: false);
+  }
+
+  /// Decodes `magnifyingGlass` before its first render.
+  ///
+  /// [width] and [height] are logical pixels. Pass the same values to
+  /// `$ThreeDIcons.magnifyingGlass` so it reuses this cache entry.
+  /// Pass the same [package] as the image widget for package assets.
+  /// Omitting both values uses the widget's default display size.
+  static Future<void> precacheMagnifyingGlass(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+  }) => precacheImage(
+    _provider(
+      context,
+      asset: AssetImage(_magnifyingGlassAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+    ),
+    context,
+  );
+
+  /// Removes the decoded `magnifyingGlass` entry from Flutter's image cache.
+  ///
+  /// Returns whether the matching entry existed. [width] and [height]
+  /// must match the values used to precache or render the image.
+  /// [package] must match the image widget and precache call.
+  /// An image that is still displayed remains live until its last listener
+  /// is removed, preventing a duplicate decode during transitions.
+  static Future<bool> removeMagnifyingGlass(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+  }) async {
+    final configuration = createLocalImageConfiguration(context);
+    final provider = _provider(
+      context,
+      asset: AssetImage(_magnifyingGlassAssetPath, package: package),
       aspectRatio: 1,
       width: width,
       height: height,
@@ -949,6 +1028,150 @@ class _Handshake extends StatelessWidget {
     _dominantColor,
   );
   static const String _assetPath = 'assets/three_d_icons/handshake.webp';
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    const aspect = _aspectRatio;
+    final w = width ?? (height != null ? height! * aspect : 280.0);
+    final h = height ?? w / aspect;
+
+    final image = Image.asset(
+      _assetPath,
+      package: package,
+      key: key,
+      width: w,
+      height: h,
+      fit: fit,
+      alignment: alignment,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.low,
+      cacheWidth: (w * dpr).ceil(),
+      cacheHeight: (h * dpr).ceil(),
+      frameBuilder: _frameBuilder,
+    );
+
+    return RepaintBoundary(child: image);
+  }
+}
+
+/// A dotdart-generated image widget from `assets/three_d_icons/magnifying-glass.webp`.
+///
+/// Intrinsic 1254×1254 · WebP · aspect 1.0000.
+/// Decodes at display size × device pixel ratio for minimal memory.
+/// Renders a thumbhash placeholder in frame 1, then swaps to the image.
+class _MagnifyingGlass extends StatelessWidget {
+  const _MagnifyingGlass({
+    super.key,
+    this.width,
+    this.height,
+    this.package,
+    this.fit,
+    this.alignment = Alignment.center,
+    this.color,
+    this.colorBlendMode,
+  });
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// Package containing the image.
+  final String? package;
+
+  /// How to inscribe the image in its bounds.
+  final BoxFit? fit;
+
+  /// Alignment within the widget bounds.
+  final AlignmentGeometry alignment;
+
+  /// A color to blend with the image.
+  final Color? color;
+
+  /// The blend mode applied when color is set.
+  final BlendMode? colorBlendMode;
+
+  static const double _aspectRatio = 1;
+  static const Color _dominantColor = Color(0x523E3E3D);
+  static const int _thumbhashWidth = 8;
+  static const int _thumbhashHeight = 8;
+  static const List<Color> _thumbhashPixels = <Color>[
+    Color(0x36EAEAEA),
+    Color(0x5BC4C4C4),
+    Color(0x6BC2C2C2),
+    Color(0x78BABABA),
+    Color(0x5ECCCCCC),
+    Color(0x55BABABA),
+    Color(0x4FA5A5A5),
+    Color(0x36B3B3B3),
+    Color(0x52C7C7C7),
+    Color(0x81C3C3C3),
+    Color(0x4CC6C6C6),
+    Color(0x4BA9A9A9),
+    Color(0x52CDCDCD),
+    Color(0x8ABFBFBF),
+    Color(0x5DAFAFAF),
+    Color(0x32B5B5B5),
+    Color(0x5ECDCDCD),
+    Color(0x51C7C7C7),
+    Color(0x17F1F1F1),
+    Color(0x49989898),
+    Color(0x1AB6B6B6),
+    Color(0x65CACACA),
+    Color(0x71B2B2B2),
+    Color(0x26B4B4B4),
+    Color(0x77C5C5C5),
+    Color(0x4AC4C4C4),
+    Color(0x41B7B7B7),
+    Color(0x44AFAFAF),
+    Color(0x31CBCBCB),
+    Color(0x53CFCFCF),
+    Color(0x7DAEAEAE),
+    Color(0x28BCBCBC),
+    Color(0x5FD7D7D7),
+    Color(0x5BD5D5D5),
+    Color(0x11FFFFFF),
+    Color(0x38BFBFBF),
+    Color(0x1F707070),
+    Color(0x5FD5D5D5),
+    Color(0x6CA9A9A9),
+    Color(0x27B5B5B5),
+    Color(0x50BFBFBF),
+    Color(0x98BABABA),
+    Color(0x6BC4C4C4),
+    Color(0x63B1B1B1),
+    Color(0x71BABABA),
+    Color(0xA0ACACAC),
+    Color(0x71979797),
+    Color(0x3E999999),
+    Color(0x4B9F9F9F),
+    Color(0x57B4B4B4),
+    Color(0x75AAAAAA),
+    Color(0x7D9C9C9C),
+    Color(0x619A9A9A),
+    Color(0x6C949494),
+    Color(0x92737373),
+    Color(0x4B747474),
+    Color(0x2DC1C1C1),
+    Color(0x38B7B7B7),
+    Color(0x27B3B3B3),
+    Color(0x24A0A0A0),
+    Color(0x22999999),
+    Color(0x38A1A1A1),
+    Color(0x4D808080),
+    Color(0x4D707070),
+  ];
+  static final ImageFrameBuilder _frameBuilder = _dotdartImageFrameBuilder(
+    _thumbhashWidth,
+    _thumbhashHeight,
+    _thumbhashPixels,
+    _dominantColor,
+  );
+  static const String _assetPath = 'assets/three_d_icons/magnifying-glass.webp';
 
   @override
   Widget build(BuildContext context) {

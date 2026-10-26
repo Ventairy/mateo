@@ -176,7 +176,7 @@ class _MateoSearchTextInputPresentationState extends State<_MateoSearchTextInput
                             child: ExcludeSemantics(
                               child: Center(
                                 child: MateoIcon(
-                                  .magnifierGlass,
+                                  .magnifyingGlass,
                                   size: widget.size.leadingIconSize,
                                   color: scope.enabled ? colors.icon : colors.iconDisabled,
                                 ),

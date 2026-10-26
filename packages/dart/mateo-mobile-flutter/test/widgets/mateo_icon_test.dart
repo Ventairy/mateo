@@ -278,24 +278,29 @@ void main() {
     expect(tester.takeException(), isA<UnsupportedError>());
   });
 
-  testWidgets('when a red flag uses the 3D style, it should display the package artwork at the requested size', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      host(
-        const MediaQuery(
-          data: MediaQueryData(),
-          child: MateoIcon(.redFlag, style: .threeD, size: 48),
+  for (final (icon, fileName) in [
+    (MateoIconData.redFlag, 'red-flag.webp'),
+    (MateoIconData.magnifyingGlass, 'magnifying-glass.webp'),
+  ]) {
+    testWidgets('when ${icon.name} uses the 3D style, it should display the package artwork at the requested size', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        host(
+          MediaQuery(
+            data: const MediaQueryData(),
+            child: MateoIcon(icon, style: .threeD, size: 48),
+          ),
         ),
-      ),
-    );
-    expect(tester.takeException(), isNull);
-    expect(tester.getSize(find.byType(MateoIcon)), const Size.square(48));
-    final provider = tester.widget<Image>(find.byType(Image)).image as ResizeImage;
-    final asset = provider.imageProvider as AssetImage;
-    expect(asset.assetName, 'assets/three_d_icons/red-flag.webp');
-    expect(asset.package, 'mateo_mobile');
-  });
+      );
+      expect(tester.takeException(), isNull);
+      expect(tester.getSize(find.byType(MateoIcon)), const Size.square(48));
+      final provider = tester.widget<Image>(find.byType(Image)).image as ResizeImage;
+      final asset = provider.imageProvider as AssetImage;
+      expect(asset.assetName, 'assets/three_d_icons/$fileName');
+      expect(asset.package, 'mateo_mobile');
+    });
+  }
 
   testWidgets('when a red flag uses the SVG style, it should report unavailable artwork', (tester) async {
     await tester.pumpWidget(host(const MateoIcon(.redFlag)));

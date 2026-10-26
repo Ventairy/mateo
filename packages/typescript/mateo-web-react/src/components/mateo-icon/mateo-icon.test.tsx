@@ -27,7 +27,6 @@ const mateoIconSources = resolve(
 const mateoIconSourceExceptions: Readonly<Record<string, string>> = {
   arrowRotateClockwise: 'arrow-rotate-clockise',
   mapPin: 'location-pin',
-  magnifierGlass: 'magnifying-glass',
   wifiExclamation: 'wifi-exclamation-mark',
 };
 

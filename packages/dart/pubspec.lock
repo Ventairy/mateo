@@ -301,6 +301,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_gpu:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -522,7 +527,7 @@ packages:
       path: "/Users/personal/Developer/ventairy/flutter/oh_my_flutter"
       relative: false
     source: path
-    version: "0.28.0"
+    version: "0.29.0-beta.1"
   package_config:
     dependency: transitive
     description:

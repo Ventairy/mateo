@@ -189,8 +189,8 @@ enum MateoIconData {
   /// The logout icon.
   logout,
 
-  /// The magnifier glass icon.
-  magnifierGlass,
+  /// The magnifying glass icon.
+  magnifyingGlass,
 
   /// The magnifying glass sad face icon.
   magnifyingGlassSadFace,
@@ -392,7 +392,7 @@ enum MateoIconData {
     letters => $Icons.letters(mateoOpticalSizeColor: color),
     lightningBolt => $Icons.lightningBolt(mateoOpticalSizeColor: color),
     logout => $Icons.logout(mateoOpticalSizeColor: color),
-    magnifierGlass => $Icons.magnifyingGlass(mateoOpticalSizeColor: color),
+    magnifyingGlass => $Icons.magnifyingGlass(mateoOpticalSizeColor: color),
     magnifyingGlassSadFace => $Icons.magnifyingGlassSadFace(mateoOpticalSizeColor: color),
     mapPin => $Icons.locationPin(mateoOpticalSizeColor: color),
     matiniGlass => $Icons.matiniGlass(mateoOpticalSizeColor: color),
@@ -441,6 +441,7 @@ enum MateoIconData {
   Widget _buildThreeD() => switch (this) {
     bidirecionalHorizontalArrow => $ThreeDIcons.bidirecionalHorizontalArrow(package: 'mateo_mobile'),
     handshake => $ThreeDIcons.handshake(package: 'mateo_mobile'),
+    magnifyingGlass => $ThreeDIcons.magnifyingGlass(package: 'mateo_mobile'),
     padlock => $ThreeDIcons.padlock(package: 'mateo_mobile'),
     padlockOpen => $ThreeDIcons.padlockOpen(package: 'mateo_mobile'),
     pencil => $ThreeDIcons.pencil(package: 'mateo_mobile'),

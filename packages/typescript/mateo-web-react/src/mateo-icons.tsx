@@ -65,7 +65,7 @@ import MateoLinkedinLogoArtwork from '@mateo/icons/svg/linkedin-logo.svg?react';
 import MateoLinktreeLogoArtwork from '@mateo/icons/svg/linktree-logo.svg?react';
 import MateoMapPinArtwork from '@mateo/icons/svg/location-pin.svg?react';
 import MateoLogoutArtwork from '@mateo/icons/svg/logout.svg?react';
-import MateoMagnifierGlassArtwork from '@mateo/icons/svg/magnifying-glass.svg?react';
+import MateoMagnifyingGlassArtwork from '@mateo/icons/svg/magnifying-glass.svg?react';
 import MateoMagnifyingGlassSadFaceArtwork from '@mateo/icons/svg/magnifying-glass-sad-face.svg?react';
 import MateoMatiniGlassArtwork from '@mateo/icons/svg/matini-glass.svg?react';
 import MateoMedicalCrossArtwork from '@mateo/icons/svg/medical-cross.svg?react';
@@ -486,11 +486,11 @@ export function MateoMagnifyingGlassSadFaceIcon(
   );
 }
 
-/** Renders the magnifierGlass artwork with Mateo icon appearance and accessibility. */
-export function MateoMagnifierGlassIcon(
+/** Renders the magnifyingGlass artwork with Mateo icon appearance and accessibility. */
+export function MateoMagnifyingGlassIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
-  return <BaseMateoIcon {...props} artwork={MateoMagnifierGlassArtwork} />;
+  return <BaseMateoIcon {...props} artwork={MateoMagnifyingGlassArtwork} />;
 }
 
 /** Renders the matiniGlass artwork with Mateo icon appearance and accessibility. */
