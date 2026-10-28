@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'mateo_button_size.dart';
 import 'variants/mateo_button_variant.dart';
 
+part '_resolved_mateo_button_appearance_scope.dart';
+
 /// Inherited appearance defaults for Mateo buttons.
 ///
 /// Nested scopes inherit omitted properties independently. Explicit values on
@@ -49,21 +51,4 @@ class MateoButtonAppearanceScope extends StatelessWidget {
       child: child,
     );
   }
-}
-
-class _ResolvedMateoButtonAppearanceScope extends InheritedWidget {
-  const _ResolvedMateoButtonAppearanceScope({
-    required this.variant,
-    required this.elevation,
-    required this.size,
-    required super.child,
-  });
-
-  final MateoButtonVariant? variant;
-  final double? elevation;
-  final MateoButtonSize? size;
-
-  @override
-  bool updateShouldNotify(_ResolvedMateoButtonAppearanceScope oldWidget) =>
-      variant != oldWidget.variant || elevation != oldWidget.elevation || size != oldWidget.size;
 }

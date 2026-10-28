@@ -6,7 +6,7 @@ final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
     this.variant,
     this.colorScheme,
     this.size,
-    this.width = .fill,
+    this.width = const .fill(),
     this.alignment = .center,
     this.elevation,
     this.leadingIcon,
@@ -74,7 +74,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
 
   void _synchronizeWidth() {
     final target = _loading ? 1.0 : 0.0;
-    if (!_initialized || _immediate || widget.width == .fill) {
+    if (!_initialized || _immediate || widget.width is MateoButtonWidthFill) {
       _widthTransition.value = target;
     } else {
       _widthTransition.animateWith(
@@ -248,30 +248,31 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
           color: Color.lerp(colors.backgroundDisabled, colors.background, scope.enabledProgress),
           shape: const .capsule(),
           elevation: MateoElevation(level: elevation),
-          child: SizedBox(
-            width: widget.width == .fill ? double.infinity : null,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: 48, minHeight: size.height),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: dimensions.horizontalPadding,
-                  vertical: dimensions.verticalPadding,
-                ),
-                child: widget.width == .fit
-                    ? _MateoFittedLabelButtonContent(
-                        progress: _widthTransition,
-                        alignment: contentAlignment,
-                        content: content,
-                        loadingIndicator: TickerMode(enabled: showLoadingIndicator, child: loadingIndicator),
-                      )
-                    : Stack(
-                        alignment: contentAlignment,
-                        children: [
-                          content,
-                          if (showLoadingIndicator) Positioned.fill(child: loadingIndicator),
-                        ],
-                      ),
+          width: switch (widget.width) {
+            MateoButtonWidthFill(:final maxWidth) => .fill(maxWidth: maxWidth),
+            MateoButtonWidthFit() => const .fit(),
+          },
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 48, minHeight: size.height),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: dimensions.horizontalPadding,
+                vertical: dimensions.verticalPadding,
               ),
+              child: widget.width is MateoButtonWidthFit
+                  ? _MateoFittedLabelButtonContent(
+                      progress: _widthTransition,
+                      alignment: contentAlignment,
+                      content: content,
+                      loadingIndicator: TickerMode(enabled: showLoadingIndicator, child: loadingIndicator),
+                    )
+                  : Stack(
+                      alignment: contentAlignment,
+                      children: [
+                        content,
+                        if (showLoadingIndicator) Positioned.fill(child: loadingIndicator),
+                      ],
+                    ),
             ),
           ),
         ),

@@ -36,7 +36,6 @@ List<({Rect bounds, Color color})> drawing(WidgetTester tester) {
 }
 
 // Matches the toggle callback.
-// ignore: avoid_positional_boolean_parameters
 void ignore(bool value) {}
 
 void main() {

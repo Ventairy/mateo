@@ -14,8 +14,11 @@ sealed class MateoSurfaceWidth {
   /// Content that requests expansion may still fill the available space.
   const factory MateoSurfaceWidth.fit() = MateoSurfaceWidthFit;
 
-  /// Creates width that fills the parent's finite available extent.
-  const factory MateoSurfaceWidth.fill() = MateoSurfaceWidthFill;
+  /// Creates width that fills the available extent, optionally capped by [maxWidth].
+  ///
+  /// The cap includes padding and must be finite and nonnegative. Parent
+  /// constraints take precedence. An unbounded parent requires [maxWidth].
+  const factory MateoSurfaceWidth.fill({double? maxWidth}) = MateoSurfaceWidthFill;
 
   /// Creates a requested width in logical pixels, subject to parent constraints.
   ///

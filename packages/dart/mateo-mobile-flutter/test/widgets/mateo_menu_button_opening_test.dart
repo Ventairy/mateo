@@ -32,7 +32,7 @@ void main() {
                     alignment: .centerLeft,
                     child: MateoMenuButton(
                       animation: const .transform(),
-                      buttonPresentation: const .label(label: 'Mateo Surface', variant: .secondary, width: .fit),
+                      buttonPresentation: const .label(label: 'Mateo Surface', variant: .secondary, width: .fit()),
                       menuPresentation: .options(
                         items: const [MateoMenuOptionsPresentationItem(principal: SizedBox(width: 240, height: 130))],
                       ),
@@ -181,7 +181,7 @@ void main() {
             buttonPresentation: const .label(
               label: 'A generously sized trigger',
               variant: .secondary,
-              width: .fit,
+              width: .fit(),
               leadingIcon: SizedBox(width: 100, height: 140),
             ),
             menuPresentation: .options(items: const [MateoMenuOptionsPresentationItem()]),
@@ -208,7 +208,7 @@ void main() {
           home: Center(
             child: MateoMenuButton(
               animation: const .transform(),
-              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
               menuPresentation: .options(
                 width: .fill,
                 items: const [MateoMenuOptionsPresentationItem(principal: Text('Choice'))],
@@ -244,7 +244,7 @@ void main() {
           home: Center(
             child: MateoMenuButton(
               animation: const .transform(),
-              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
               menuPresentation: .options(
                 items: const [MateoMenuOptionsPresentationItem(principal: Text('Choice'))],
               ),
@@ -297,7 +297,7 @@ void main() {
             home: Center(
               child: MateoMenuButton(
                 animation: const .transform(),
-                buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                 menuPresentation: .options(items: [item]),
                 onItemPressed: (selected) {
                   expect(selected, same(item));
@@ -354,7 +354,7 @@ void main() {
                     top: top,
                     child: MateoMenuButton(
                       animation: const .transform(),
-                      buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                      buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                       menuPresentation: .options(
                         items: const [MateoMenuOptionsPresentationItem(principal: Text('Choice'))],
                       ),
@@ -403,7 +403,7 @@ void main() {
                   scale: ancestorScale,
                   child: MateoMenuButton(
                     animation: const .transform(),
-                    buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                    buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                     menuPresentation: .options(
                       items: const [MateoMenuOptionsPresentationItem(principal: Text('Choice'))],
                     ),
@@ -462,7 +462,7 @@ void main() {
                   child: present
                       ? MateoMenuButton(
                           animation: const .transform(),
-                          buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                          buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                           menuPresentation: .options(
                             items: const [MateoMenuOptionsPresentationItem(principal: Text('Choice'))],
                           ),

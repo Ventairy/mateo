@@ -1,10 +1,27 @@
 import 'dart:io';
 
+import 'package:code_assets/code_assets.dart';
 import 'package:data_assets/data_assets.dart';
 import 'package:hooks/hooks.dart';
+import 'package:native_toolchain_c/native_toolchain_c.dart';
+
+import 'three_d_icon_metadata_library.dart';
 
 void main(List<String> arguments) async {
   await build(arguments, (input, output) async {
+    if (input.config.buildCodeAssets) {
+      final source = await ThreeDIconMetadataLibrary.write(directory: input.outputDirectory, usages: const []);
+      await CBuilder.library(
+        name: ThreeDIconMetadataLibrary.name,
+        assetName: ThreeDIconMetadataLibrary.assetName,
+        sources: [source.toFilePath()],
+        linkModePreference: .dynamic,
+      ).run(
+        input: input,
+        output: output,
+        routing: [if (input.config.linkingEnabled) ToLinkHook(input.packageName) else const ToAppBundle()],
+      );
+    }
     if (!input.config.buildDataAssets) return;
 
     const imageAssetDirectory = 'assets/three_d_icons/';

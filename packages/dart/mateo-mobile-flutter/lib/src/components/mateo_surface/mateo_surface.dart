@@ -17,8 +17,8 @@ import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 /// The surface fits its padded [child] by default. Use [width] and [height]
 /// to fill available space or request a custom size. Parent constraints still
 /// apply. [alignment] positions content without changing the sizing policy.
-/// The same [shape] shapes the background and clips content and hit
-/// testing. Directional padding follows the surrounding direction.
+/// The [shape] defines the background outline, and [clipBehavior] controls
+/// content clipping. Directional padding follows the surrounding direction.
 ///
 /// Omitted [color] uses the current Mateo background.
 ///
@@ -32,14 +32,16 @@ import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 class MateoSurface extends StatelessWidget {
   /// Creates a surface containing [child].
   ///
-  /// [color] defaults to the theme background. [shape] shapes and clips
-  /// the surface. [padding] must be nonnegative.
+  /// [color] defaults to the theme background. [shape] defines its outline;
+  /// [clipBehavior] controls clipping of its content. [padding] must be
+  /// nonnegative.
   const MateoSurface({
     required this.child,
     super.key,
     this.color,
     this.elevation,
     this.shape,
+    this.clipBehavior,
     this.width = const .fit(),
     this.height = const .fit(),
     this.padding,
@@ -57,7 +59,8 @@ class MateoSurface extends StatelessWidget {
   /// content scrolls.
   ///
   /// [padding] travels with the content. Background, [shape], and
-  /// [elevation] stay fixed. [color] and [width] follow the ordinary surface.
+  /// [elevation] stay fixed. [color], [width], and [clipBehavior] follow the
+  /// ordinary surface.
   ///
   /// The child must support intrinsic sizing. Use ordinary box content rather
   /// than another scrolling viewport or a LayoutBuilder. This surface owns its
@@ -78,6 +81,7 @@ class MateoSurface extends StatelessWidget {
     this.color,
     this.elevation,
     this.shape,
+    this.clipBehavior,
     this.width = const .fit(),
     this.height = const .fill(),
     this.padding,
@@ -109,6 +113,16 @@ class MateoSurface extends StatelessWidget {
 
   /// The shape treatment used for the background and content clipping.
   final MateoShape? shape;
+
+  /// How content is clipped to [shape].
+  ///
+  /// When omitted, rectangular surfaces use [Clip.hardEdge] and shaped
+  /// surfaces use [Clip.antiAlias]. Use [Clip.none] when content such as an
+  /// entrance animation should paint beyond the surface's bounds.
+  ///
+  /// Background shape and shadows are unchanged. Painting beyond the surface
+  /// does not expand the hit-test bounds imposed by its parents.
+  final Clip? clipBehavior;
 
   /// The requested total width, including padding, subject to parent constraints.
   final MateoSurfaceWidth width;
@@ -151,6 +165,7 @@ class MateoSurface extends StatelessWidget {
         color: color,
         elevation: elevation,
         shape: resolvedShape,
+        clipBehavior: clipBehavior,
         width: width,
         height: height,
         padding: padding,
@@ -164,6 +179,7 @@ class MateoSurface extends StatelessWidget {
       color: color,
       elevation: elevation,
       shape: resolvedShape,
+      clipBehavior: clipBehavior,
       width: width,
       height: height,
       padding: padding,

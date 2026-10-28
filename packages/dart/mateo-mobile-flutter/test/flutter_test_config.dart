@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +20,9 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
     await (FontLoader(family)..addFont(rootBundle.load('assets/fonts/$asset'))).load();
   }
   await AlchemistConfig.runWithConfig(
-    config: const AlchemistConfig(),
+    config: AlchemistConfig(
+      platformGoldensConfig: PlatformGoldensConfig(enabled: Platform.environment['CI'] != 'true'),
+    ),
     run: testMain,
   );
 }

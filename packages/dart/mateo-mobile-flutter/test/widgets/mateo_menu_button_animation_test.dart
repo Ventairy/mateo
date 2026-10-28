@@ -40,7 +40,7 @@ void main() {
           home: Center(
             child: MateoMenuButton(
               animation: animation,
-              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+              buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
               menuPresentation: .options(items: const [MateoMenuOptionsPresentationItem(principal: Text('Details'))]),
             ),
           ),

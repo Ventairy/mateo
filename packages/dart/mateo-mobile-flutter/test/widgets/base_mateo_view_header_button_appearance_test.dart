@@ -49,7 +49,7 @@ void main() {
         (tester) async {
           final presentation = iconOnly
               ? const MateoButtonPresentation.icon(icon: MateoIcon(.cross), semanticLabel: 'Close')
-              : const MateoButtonPresentation.label(label: 'Close', width: .fit);
+              : const MateoButtonPresentation.label(label: 'Close', width: .fit());
           await tester.pumpWidget(
             _host(
               MateoButtonAppearanceScope(
@@ -80,7 +80,7 @@ void main() {
       variant: .tertiary,
       elevation: 2,
       size: .mini,
-      width: .fit,
+      width: .fit(),
     );
     await tester.pumpWidget(_host(_content(sheet: false, presentation: presentation)));
     await tester.pumpAndSettle();

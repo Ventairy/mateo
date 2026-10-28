@@ -70,6 +70,74 @@ void main() {
   });
 
   for (final iconOnly in [false, true]) {
+    for (final explicit in [false, true]) {
+      testWidgets(
+        'when captured ${iconOnly ? 'icon' : 'label'} appearance travels into a conflicting scope with explicit=$explicit, it should preserve the resolved endpoint appearance',
+        (tester) async {
+          late CapturedThemes captured;
+          await tester.pumpWidget(
+            _host(
+              MateoButtonAppearanceScope(
+                variant: .secondary,
+                size: .mini,
+                child: MateoButtonAppearanceScope(
+                  elevation: 1,
+                  child: Builder(
+                    builder: (context) {
+                      captured = InheritedTheme.capture(from: context, to: null);
+                      return const SizedBox();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          );
+          final presentation = iconOnly
+              ? MateoButtonPresentation.icon(
+                  icon: const MateoIcon(.cross),
+                  variant: explicit ? .tertiary : null,
+                  size: explicit ? .small : null,
+                  elevation: explicit ? 2 : null,
+                )
+              : MateoButtonPresentation.label(
+                  label: 'Save',
+                  variant: explicit ? .tertiary : null,
+                  size: explicit ? .small : null,
+                  elevation: explicit ? 2 : null,
+                );
+          await tester.pumpWidget(
+            _host(
+              MateoButtonAppearanceScope(
+                variant: .primary,
+                size: .standard,
+                elevation: 0,
+                child: captured.wrap(MateoButton(presentation: presentation, onPressed: () {})),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          final expectedColors = explicit
+              ? MateoButtonVariant.tertiary.resolveColorScheme(_theme.colorScheme.buttons)
+              : MateoButtonVariant.secondary.resolveColorScheme(_theme.colorScheme.buttons);
+          final decoration = tester.widget<DecoratedBox>(_surface()).decoration as ShapeDecoration;
+          expect(
+            {
+              'height': tester.getSize(_surface()).height,
+              'color': tester.widget<MateoSurface>(find.byType(MateoSurface)).color,
+              'shadows': decoration.shadows,
+            },
+            {
+              'height': (explicit ? MateoButtonSize.small : MateoButtonSize.mini).height,
+              'color': expectedColors.background,
+              'shadows': MateoElevation(level: explicit ? 2 : 1).toShadowList(palette: _theme.palette),
+            },
+          );
+        },
+      );
+    }
+  }
+
+  for (final iconOnly in [false, true]) {
     testWidgets('when ${iconOnly ? 'icon' : 'label'} appearance is omitted, it should resolve from the scope', (
       tester,
     ) async {
