@@ -21,19 +21,14 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   ]) {
     await (FontLoader(family)..addFont(rootBundle.load('assets/fonts/$asset'))).load();
   }
-  final originalComparator = goldenFileComparator;
   if (Platform.environment['CI'] == 'true') {
     final comparator = goldenFileComparator as LocalFileComparator;
     goldenFileComparator = MateoGoldenFileComparator(comparator.basedir.resolve('_goldens.dart'));
   }
-  try {
-    await AlchemistConfig.runWithConfig(
-      config: AlchemistConfig(
-        platformGoldensConfig: PlatformGoldensConfig(enabled: Platform.environment['CI'] != 'true'),
-      ),
-      run: testMain,
-    );
-  } finally {
-    goldenFileComparator = originalComparator;
-  }
+  await AlchemistConfig.runWithConfig(
+    config: AlchemistConfig(
+      platformGoldensConfig: PlatformGoldensConfig(enabled: Platform.environment['CI'] != 'true'),
+    ),
+    run: testMain,
+  );
 }

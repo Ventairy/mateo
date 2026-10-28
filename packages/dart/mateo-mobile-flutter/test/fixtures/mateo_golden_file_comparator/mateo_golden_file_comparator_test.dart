@@ -7,6 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'mateo_golden_file_comparator.dart';
 
 void main() {
+  if (Platform.environment['CI'] == 'true') {
+    test('when a CI test executes, it should retain the shared rounding comparator', () {
+      expect(goldenFileComparator, isA<MateoGoldenFileComparator>());
+    });
+  }
+
   late Directory directory;
   late MateoGoldenFileComparator comparator;
 
