@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
+import 'fixtures/mateo_golden_file_comparator/mateo_golden_file_comparator.dart';
+
 /// Loads the package fonts and configures focused theme goldens.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -19,10 +21,19 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   ]) {
     await (FontLoader(family)..addFont(rootBundle.load('assets/fonts/$asset'))).load();
   }
-  await AlchemistConfig.runWithConfig(
-    config: AlchemistConfig(
-      platformGoldensConfig: PlatformGoldensConfig(enabled: Platform.environment['CI'] != 'true'),
-    ),
-    run: testMain,
-  );
+  final originalComparator = goldenFileComparator;
+  if (Platform.environment['CI'] == 'true') {
+    final comparator = goldenFileComparator as LocalFileComparator;
+    goldenFileComparator = MateoGoldenFileComparator(comparator.basedir.resolve('_goldens.dart'));
+  }
+  try {
+    await AlchemistConfig.runWithConfig(
+      config: AlchemistConfig(
+        platformGoldensConfig: PlatformGoldensConfig(enabled: Platform.environment['CI'] != 'true'),
+      ),
+      run: testMain,
+    );
+  } finally {
+    goldenFileComparator = originalComparator;
+  }
 }
