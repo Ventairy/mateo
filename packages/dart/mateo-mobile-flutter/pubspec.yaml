@@ -29,7 +29,7 @@ dependencies:
   slang: ^4.19.2
 
 dev_dependencies:
-  alchemist: ^0.14.0
+  alchemist: ^0.14.1
   build_runner: ^2.15.0
   dotdart: ^0.11.4
   flutter_test:
