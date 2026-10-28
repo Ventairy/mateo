@@ -8,6 +8,7 @@ import MateoArrowLeftArtwork from '@mateo/icons/svg/arrow-left.svg?react';
 import MateoArrowRightArtwork from '@mateo/icons/svg/arrow-right.svg?react';
 import MateoArrowRotateClockwiseArtwork from '@mateo/icons/svg/arrow-rotate-clockise.svg?react';
 import MateoArrowUpArtwork from '@mateo/icons/svg/arrow-up.svg?react';
+import MateoAsteriskArtwork from '@mateo/icons/svg/asterisk.svg?react';
 import MateoBankBuildingArtwork from '@mateo/icons/svg/bank-building.svg?react';
 import MateoBanknotePinArtwork from '@mateo/icons/svg/banknote-pin.svg?react';
 import MateoBeerMugArtwork from '@mateo/icons/svg/beer-mug.svg?react';
@@ -147,6 +148,11 @@ export function MateoArrowRotateClockwiseIcon(
 /** Renders the arrowUp artwork with Mateo icon appearance and accessibility. */
 export function MateoArrowUpIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoArrowUpArtwork} />;
+}
+
+/** Renders the asterisk artwork with Mateo icon appearance and accessibility. */
+export function MateoAsteriskIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoAsteriskArtwork} />;
 }
 
 /** Renders the bankBuilding artwork with Mateo icon appearance and accessibility. */

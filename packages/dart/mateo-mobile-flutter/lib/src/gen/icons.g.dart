@@ -106,6 +106,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.arrowUp(<params>);
 /// ```
 /// ```dart
+/// $Icons.asterisk(<params>);
+/// ```
+/// ```dart
 /// $Icons.bankBuilding(<params>);
 /// ```
 /// ```dart
@@ -494,6 +497,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _ArrowUp(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Asterisk` widget from `asterisk.svg`.
+  static Widget asterisk({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Asterisk(
     key: key,
     width: width,
     height: height,
@@ -2043,6 +2061,7 @@ abstract final class $Icons {
       height: height,
     ),
     'arrow-up.svg' => arrowUp(key: key, width: width, height: height),
+    'asterisk.svg' => asterisk(key: key, width: width, height: height),
     'bank-building.svg' => bankBuilding(key: key, width: width, height: height),
     'banknote-pin.svg' => banknotePin(key: key, width: width, height: height),
     'beer-mug.svg' => beerMug(key: key, width: width, height: height),
@@ -3087,6 +3106,187 @@ class _ArrowUpPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArrowUpPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/asterisk.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Asterisk extends StatelessWidget with _DotdartSvgSizing {
+  const _Asterisk({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Asterisk._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Asterisk._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Asterisk._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Asterisk._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _AsteriskPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _AsteriskPainter extends CustomPainter {
+  _AsteriskPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.794704594,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.794704594,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.052954055,
+    2.052954055,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(9.9289, 0.0021)
+    ..cubicTo(10.3795, -0.022, 10.8568, 0.1674, 11.1787, 0.4804)
+    ..cubicTo(11.4135, 0.7113, 11.5729, 1.0078, 11.6359, 1.3309)
+    ..cubicTo(11.6756, 1.5375, 11.6677, 1.8273, 11.6678, 2.0409)
+    ..lineTo(11.6695, 2.9153)
+    ..cubicTo(11.6803, 4.3754, 11.6482, 5.8667, 11.6692, 7.3203)
+    ..lineTo(15.4528, 5.1611)
+    ..lineTo(16.4986, 4.5675)
+    ..cubicTo(17.0686, 4.2439, 17.4533, 4, 18.145, 4.1723)
+    ..cubicTo(19.0378, 4.3946, 19.5717, 5.2833, 19.3261, 6.1759)
+    ..cubicTo(19.2405, 6.4861, 19.0622, 6.7627, 18.8151, 6.9689)
+    ..cubicTo(18.6239, 7.1307, 18.323, 7.2894, 18.1007, 7.4167)
+    ..lineTo(17.0383, 8.0216)
+    ..lineTo(13.3315, 10.1266)
+    ..cubicTo(14.5477, 10.8391, 15.8073, 11.5493, 17.0343, 12.2443)
+    ..cubicTo(17.3962, 12.4495, 17.7571, 12.6569, 18.1166, 12.8661)
+    ..cubicTo(18.3281, 12.9874, 18.6191, 13.1359, 18.8044, 13.2853)
+    ..cubicTo(19.3984, 13.7641, 19.5573, 14.6351, 19.1887, 15.2967)
+    ..cubicTo(18.9748, 15.678, 18.617, 15.9578, 18.1952, 16.0732)
+    ..cubicTo(17.5032, 16.266, 17.0958, 15.9973, 16.5274, 15.6687)
+    ..lineTo(15.5377, 15.0968)
+    ..lineTo(11.6782, 12.8683)
+    ..cubicTo(11.658, 13.0146, 11.6659, 13.2821, 11.668, 13.4333)
+    ..cubicTo(11.6716, 13.6666, 11.6723, 13.9, 11.6702, 14.1333)
+    ..lineTo(11.6678, 17.3201)
+    ..cubicTo(11.6683, 17.7187, 11.6943, 18.2276, 11.6421, 18.6185)
+    ..cubicTo(11.5461, 19.3366, 10.9347, 19.8831, 10.2249, 19.987)
+    ..cubicTo(10.1685, 19.9923, 10.1093, 19.998, 10.0527, 19.9993)
+    ..cubicTo(9.5995, 20.0124, 9.1603, 19.8415, 8.835, 19.5256)
+    ..cubicTo(8.3116, 19.0154, 8.3357, 18.4962, 8.3362, 17.8193)
+    ..lineTo(8.3369, 16.851)
+    ..cubicTo(8.3365, 15.5312, 8.3502, 14.1864, 8.3349, 12.8691)
+    ..cubicTo(8.1195, 12.977, 7.8235, 13.158, 7.6123, 13.2809)
+    ..lineTo(6.6141, 13.8535)
+    ..lineTo(3.0308, 15.9197)
+    ..cubicTo(2.6559, 16.1364, 2.2086, 16.1905, 1.7928, 16.0694)
+    ..cubicTo(1.377, 15.9538, 1.0246, 15.6767, 0.8141, 15.2998)
+    ..cubicTo(0.6081, 14.9257, 0.5589, 14.4851, 0.6772, 14.0748)
+    ..cubicTo(0.7664, 13.7713, 0.9431, 13.5006, 1.1853, 13.297)
+    ..cubicTo(1.3508, 13.1592, 1.6937, 12.9749, 1.8874, 12.8651)
+    ..lineTo(2.9559, 12.2605)
+    ..lineTo(6.6758, 10.1602)
+    ..cubicTo(6.177, 9.8607, 5.579, 9.539, 5.067, 9.25)
+    ..cubicTo(4.2703, 8.8006, 3.4767, 8.3458, 2.6863, 7.8855)
+    ..lineTo(1.7906, 7.3705)
+    ..cubicTo(1.5923, 7.2557, 1.3831, 7.146, 1.2066, 7.0008)
+    ..cubicTo(0.9852, 6.8208, 0.8168, 6.584, 0.7196, 6.3157)
+    ..cubicTo(0.5679, 5.9112, 0.5841, 5.4627, 0.7646, 5.0702)
+    ..cubicTo(0.9478, 4.6745, 1.2835, 4.3698, 1.6951, 4.2259)
+    ..cubicTo(2.6231, 3.8912, 3.2849, 4.4626, 4.0504, 4.8931)
+    ..lineTo(6.9716, 6.5606)
+    ..cubicTo(7.3621, 6.7825, 7.9488, 7.1429, 8.3346, 7.3245)
+    ..cubicTo(8.3537, 5.9948, 8.3383, 4.6133, 8.3369, 3.2792)
+    ..lineTo(8.3366, 2.2252)
+    ..cubicTo(8.3369, 1.9232, 8.3227, 1.6187, 8.3782, 1.3215)
+    ..cubicTo(8.5244, 0.5399, 9.1666, 0.064, 9.9289, 0.0021)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Asterisk._viewBoxWidth;
+    final scaleY = size.height / _Asterisk._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Asterisk._viewBoxMinX, -_Asterisk._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _AsteriskPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

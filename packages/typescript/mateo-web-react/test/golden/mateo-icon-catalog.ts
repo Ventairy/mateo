@@ -7,6 +7,7 @@ export const mateoGoldenIconCatalog = {
   arrowRight: MateoIcons.MateoArrowRightIcon,
   arrowRotateClockwise: MateoIcons.MateoArrowRotateClockwiseIcon,
   arrowUp: MateoIcons.MateoArrowUpIcon,
+  asterisk: MateoIcons.MateoAsteriskIcon,
   bankBuilding: MateoIcons.MateoBankBuildingIcon,
   banknotePin: MateoIcons.MateoBanknotePinIcon,
   beerMug: MateoIcons.MateoBeerMugIcon,

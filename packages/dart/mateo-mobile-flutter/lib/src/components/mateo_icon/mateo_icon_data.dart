@@ -21,6 +21,9 @@ enum MateoIconData {
   /// The arrow up icon.
   arrowUp,
 
+  /// The asterisk icon.
+  asterisk,
+
   /// The bank building icon.
   bankBuilding,
 
@@ -339,6 +342,7 @@ enum MateoIconData {
     arrowRight => $Icons.arrowRight(mateoOpticalSizeColor: color),
     arrowRotateClockwise => $Icons.arrowRotateClockise(mateoOpticalSizeColor: color),
     arrowUp => $Icons.arrowUp(mateoOpticalSizeColor: color),
+    asterisk => $Icons.asterisk(mateoOpticalSizeColor: color),
     bankBuilding => $Icons.bankBuilding(mateoOpticalSizeColor: color),
     banknotePin => $Icons.banknotePin(mateoOpticalSizeColor: color),
     beerMug => $Icons.beerMug(mateoOpticalSizeColor: color),
