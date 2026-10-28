@@ -54,6 +54,7 @@ import MateoGiftArtwork from '@mateo/icons/svg/gift.svg?react';
 import MateoGovernmentBuildingArtwork from '@mateo/icons/svg/government-building.svg?react';
 import MateoGraduateCapArtwork from '@mateo/icons/svg/graduate-cap.svg?react';
 import MateoHandshakeArtwork from '@mateo/icons/svg/handshake.svg?react';
+import MateoHeartArtwork from '@mateo/icons/svg/heart.svg?react';
 import MateoHelicopterFrontArtwork from '@mateo/icons/svg/helicopter-front.svg?react';
 import MateoHookahArtwork from '@mateo/icons/svg/hookah.svg?react';
 import MateoHotCoffeeCupArtwork from '@mateo/icons/svg/hot-coffee-cup.svg?react';
@@ -405,6 +406,11 @@ export function MateoGraduateCapIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the handshake artwork with Mateo icon appearance and accessibility. */
 export function MateoHandshakeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHandshakeArtwork} />;
+}
+
+/** Renders the heart artwork with Mateo icon appearance and accessibility. */
+export function MateoHeartIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoHeartArtwork} />;
 }
 
 /** Renders the helicopterFront artwork with Mateo icon appearance and accessibility. */

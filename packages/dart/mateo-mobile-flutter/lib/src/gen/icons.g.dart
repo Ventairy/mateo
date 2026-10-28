@@ -244,6 +244,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.handshake(<params>);
 /// ```
 /// ```dart
+/// $Icons.heart(<params>);
+/// ```
+/// ```dart
 /// $Icons.helicopterFront(<params>);
 /// ```
 /// ```dart
@@ -1187,6 +1190,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Handshake(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Heart` widget from `heart.svg`.
+  static Widget heart({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Heart(
     key: key,
     width: width,
     height: height,
@@ -2139,6 +2157,7 @@ abstract final class $Icons {
     ),
     'graduate-cap.svg' => graduateCap(key: key, width: width, height: height),
     'handshake.svg' => handshake(key: key, width: width, height: height),
+    'heart.svg' => heart(key: key, width: width, height: height),
     'helicopter-front.svg' => helicopterFront(
       key: key,
       width: width,
@@ -11288,6 +11307,139 @@ class _HandshakePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HandshakePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/heart.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Heart extends StatelessWidget with _DotdartSvgSizing {
+  const _Heart({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Heart._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Heart._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Heart._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Heart._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _HeartPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _HeartPainter extends CustomPainter {
+  _HeartPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.777995444,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.777995444,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.220045556,
+    2.220045556,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(10.4886, 19.1158)
+    ..cubicTo(19.0104, 14.3394, 21.1069, 8.6537, 19.5039, 4.6567)
+    ..cubicTo(18.7257, 2.716, 17.0921, 1.3253, 15.1654, 0.8957)
+    ..cubicTo(13.4692, 0.5175, 11.6154, 0.8987, 10, 2.1811)
+    ..cubicTo(8.3846, 0.8987, 6.5309, 0.5175, 4.8346, 0.8958)
+    ..cubicTo(2.9079, 1.3253, 1.2744, 2.7161, 0.4961, 4.6567)
+    ..cubicTo(-1.1069, 8.6538, 0.9897, 14.3394, 9.5114, 19.1158)
+    ..cubicTo(9.815, 19.286, 10.1852, 19.286, 10.4886, 19.1158)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Heart._viewBoxWidth;
+    final scaleY = size.height / _Heart._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Heart._viewBoxMinX, -_Heart._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _HeartPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

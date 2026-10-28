@@ -159,6 +159,9 @@ enum MateoIconData {
   /// The handshake icon.
   handshake,
 
+  /// The heart icon.
+  heart,
+
   /// The helicopter front icon.
   helicopterFront,
 
@@ -388,6 +391,7 @@ enum MateoIconData {
     governmentBuilding => $Icons.governmentBuilding(mateoOpticalSizeColor: color),
     graduateCap => $Icons.graduateCap(mateoOpticalSizeColor: color),
     handshake => $Icons.handshake(mateoOpticalSizeColor: color),
+    heart => $Icons.heart(mateoOpticalSizeColor: color),
     helicopterFront => $Icons.helicopterFront(mateoOpticalSizeColor: color),
     hookah => $Icons.hookah(mateoOpticalSizeColor: color),
     hotCoffeeCup => $Icons.hotCoffeeCup(mateoOpticalSizeColor: color),

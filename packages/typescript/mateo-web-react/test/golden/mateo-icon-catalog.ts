@@ -53,6 +53,7 @@ export const mateoGoldenIconCatalog = {
   governmentBuilding: MateoIcons.MateoGovernmentBuildingIcon,
   graduateCap: MateoIcons.MateoGraduateCapIcon,
   handshake: MateoIcons.MateoHandshakeIcon,
+  heart: MateoIcons.MateoHeartIcon,
   helicopterFront: MateoIcons.MateoHelicopterFrontIcon,
   hookah: MateoIcons.MateoHookahIcon,
   hotCoffeeCup: MateoIcons.MateoHotCoffeeCupIcon,
