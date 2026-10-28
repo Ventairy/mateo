@@ -9,10 +9,11 @@ platforms:
   ios:
 
 environment:
-  sdk: ">=3.13.0 <4.0.0"
-  flutter: ">=3.47.0"
+  sdk: ">=3.14.0-95.2.beta <4.0.0"
+  flutter: ">=3.48.0-0.5.pre"
 
 dependencies:
+  code_assets: ^2.0.0
   data_assets: ^0.20.0
   diacritic: ^0.1.6
   flutter:
@@ -22,14 +23,15 @@ dependencies:
   hooks: ^2.2.0
   intl: ^0.20.3
   meta: ^1.17.0
-  oh_my_flutter: ^0.28.0
+  native_toolchain_c: ^0.19.4
+  oh_my_flutter: ^0.29.0-beta.2
   record_use: ^1.1.1
   slang: ^4.19.2
 
 dev_dependencies:
   alchemist: ^0.14.0
   build_runner: ^2.15.0
-  dotdart: ^0.11.3
+  dotdart: ^0.11.4
   flutter_test:
     sdk: flutter
   slang_build_runner: ^4.19.0
@@ -49,6 +51,7 @@ flutter:
     - assets/flags/
     - assets/icons/
     - assets/animated_icons/
+    - assets/three_d_icons/
   fonts:
     - family: Inter
       fonts:

@@ -34,7 +34,6 @@ class MateoToggle extends StatefulWidget {
   /// Null disables user interaction. Programmatic changes do not call this.
   /// Returning a future does not lock interaction or introduce loading.
   // Matches Flutter's positional value-change callbacks.
-  // ignore: avoid_positional_boolean_parameters
   final FutureOr<void> Function(bool value)? onChanged;
 
   /// The accessible name describing the setting this control changes.

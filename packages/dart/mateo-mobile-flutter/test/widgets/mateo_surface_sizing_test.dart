@@ -38,6 +38,110 @@ void main() {
     expect(scrollable.height, const MateoSurfaceHeight.fill());
   });
 
+  test('when fill has a width cap, it should validate the cap and compare by value', () {
+    expect(const MateoSurfaceWidthFill().maxWidth, isNull);
+    expect(const MateoSurfaceWidthFill(maxWidth: 120).maxWidth, 120);
+    expect(const MateoSurfaceWidth.fill(), const MateoSurfaceWidth.fill(maxWidth: null));
+    expect(const MateoSurfaceWidth.fill(maxWidth: 120), const MateoSurfaceWidthFill(maxWidth: 120));
+    expect(const MateoSurfaceWidth.fill(maxWidth: 120), isNot(const MateoSurfaceWidth.fill(maxWidth: 121)));
+    expect(const MateoSurfaceWidth.fill(maxWidth: 120), isNot(const MateoSurfaceWidth.fill()));
+    expect(
+      const MateoSurfaceWidth.fill(maxWidth: 120).hashCode,
+      const MateoSurfaceWidthFill(maxWidth: 120).hashCode,
+    );
+    for (final value in [-1.0, double.infinity, double.negativeInfinity, double.nan]) {
+      expect(() => MateoSurfaceWidth.fill(maxWidth: value), throwsAssertionError);
+      expect(() => MateoSurfaceWidthFill(maxWidth: value), throwsAssertionError);
+    }
+  });
+
+  testWidgets('when fill has a width cap, it should cap total width within parent constraints', (tester) async {
+    for (final entry in <(double, double)>[(120, 120), (300, 300), (600, 300), (0, 0)]) {
+      await tester.pumpWidget(
+        host(
+          MateoSurface(
+            width: .fill(maxWidth: entry.$1),
+            padding: const .all(10),
+            child: const SizedBox(width: 50, height: 30),
+          ),
+        ),
+      );
+      expect(tester.getSize(find.byType(MateoSurface)), Size(entry.$2, 50));
+    }
+
+    for (final constraints in [
+      const BoxConstraints(minWidth: 150, maxWidth: 300),
+      const BoxConstraints.tightFor(width: 150),
+    ]) {
+      await tester.pumpWidget(
+        host(
+          const MateoSurface(width: .fill(maxWidth: 100), child: SizedBox(width: 50, height: 30)),
+          constraints: constraints,
+        ),
+      );
+      expect(tester.getSize(find.byType(MateoSurface)), const Size(150, 30));
+    }
+  });
+
+  testWidgets('when parent width is unbounded, it should fill to the supplied cap', (tester) async {
+    await tester.pumpWidget(
+      host(
+        const UnconstrainedBox(
+          constrainedAxis: Axis.vertical,
+          child: MateoSurface(
+            width: .fill(maxWidth: 200),
+            padding: .all(10),
+            child: SizedBox(width: 50, height: 30),
+          ),
+        ),
+      ),
+    );
+    expect(tester.takeException(), isNull);
+    expect(tester.getSize(find.byType(MateoSurface)), const Size(200, 50));
+    expect(
+      tester.renderObject<RenderBox>(find.byType(MateoSurface)).getDryLayout(const BoxConstraints(maxHeight: 400)),
+      const Size(200, 50),
+    );
+  });
+
+  testWidgets('when a width cap changes or is removed, it should relayout and retain content state', (tester) async {
+    final contentHeight = ValueNotifier<double>(30);
+    addTearDown(contentHeight.dispose);
+    Widget surface(double? maxWidth) => host(
+      MateoSurface(
+        width: .fill(maxWidth: maxWidth),
+        child: ValueListenableBuilder<double>(
+          valueListenable: contentHeight,
+          builder: (context, value, child) => SizedBox(width: 50, height: value),
+        ),
+      ),
+    );
+    await tester.pumpWidget(surface(120));
+    final state = tester.state(find.byType(ValueListenableBuilder<double>));
+    expect(tester.getSize(find.byType(MateoSurface)), const Size(120, 30));
+    for (final entry in <(double?, double)>[(200, 200), (null, 300), (100, 100)]) {
+      await tester.pumpWidget(surface(entry.$1));
+      expect(tester.getSize(find.byType(MateoSurface)), Size(entry.$2, 30));
+      expect(tester.state(find.byType(ValueListenableBuilder<double>)), same(state));
+    }
+  });
+
+  testWidgets('when a scrollable surface has a width cap, it should cap its viewport width', (tester) async {
+    for (final unbounded in [false, true]) {
+      const surface = MateoSurface.scrollable(
+        width: .fill(maxWidth: 200),
+        padding: .all(10),
+        child: SizedBox(width: 50, height: 1000),
+      );
+      await tester.pumpWidget(
+        host(unbounded ? const UnconstrainedBox(constrainedAxis: Axis.vertical, child: surface) : surface),
+      );
+      expect(tester.takeException(), isNull);
+      expect(tester.getSize(find.byType(MateoSurface)), const Size(200, 400));
+      expect(tester.getSize(find.byType(CustomScrollView)).width, 200);
+    }
+  });
+
   testWidgets('changing dimensions and content size retains content state', (tester) async {
     final contentHeight = ValueNotifier<double>(30);
     addTearDown(contentHeight.dispose);
@@ -62,6 +166,31 @@ void main() {
     }
     expect(tester.getSize(find.byType(MateoSurface)), const Size(50, 70));
   });
+
+  for (final scenario in [
+    (width: const MateoSurfaceWidth.fill(maxWidth: 120), description: 'a 120px cap'),
+    (width: const MateoSurfaceWidth.fill(maxWidth: 200), description: 'a 200px cap'),
+    (width: const MateoSurfaceWidth.custom(150), description: 'a 150px fixed width'),
+    (width: const MateoSurfaceWidth.custom(900), description: 'a fixed width exceeding the parent'),
+  ]) {
+    testWidgets(
+      'when ${scenario.description} wraps fitted text, its intrinsic heights should match the rendered height',
+      (tester) async {
+        await tester.pumpWidget(
+          host(
+            MateoSurface(
+              width: scenario.width,
+              child: MateoText('word ' * 20, presentation: const .interface(fontSize: 14)),
+            ),
+            constraints: const BoxConstraints(maxWidth: 600, maxHeight: 400),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final box = tester.renderObject<RenderBox>(find.byType(MateoSurface));
+        expect((box.getMinIntrinsicHeight(600), box.getMaxIntrinsicHeight(600)), (box.size.height, box.size.height));
+      },
+    );
+  }
 
   testWidgets('fit includes padding and alignment does not expand either axis', (tester) async {
     await tester.pumpWidget(

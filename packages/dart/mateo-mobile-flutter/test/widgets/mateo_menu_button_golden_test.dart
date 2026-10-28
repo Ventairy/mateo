@@ -61,7 +61,7 @@ Future<void> main() async {
                               animation: const .transform(),
                               buttonPresentation: icon
                                   ? const .icon(icon: MateoIcon(.cross), variant: .secondary)
-                                  : const .label(label: 'Options', variant: .secondary, width: .fit),
+                                  : const .label(label: 'Options', variant: .secondary, width: .fit()),
                               menuPresentation: .options(
                                 items: const [
                                   MateoMenuOptionsPresentationItem(

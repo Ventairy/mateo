@@ -7,6 +7,8 @@
 // Generated canvas and paint sequences intentionally use repeated receiver calls.
 // ignore_for_file: cascade_invocations, unused_element, unused_element_parameter
 
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 /// Paints a thumbhash placeholder on a [CustomPainter] canvas.
@@ -77,6 +79,86 @@ ImageFrameBuilder _dotdartImageFrameBuilder(
   };
 }
 
+class _DotdartCachedImage extends ResizeImage {
+  const _DotdartCachedImage(
+    super.image, {
+    required int width,
+    required int height,
+    required this.cache,
+  }) : super(width: width, height: height);
+
+  final ImageCache cache;
+
+  @override
+  void resolveStreamForKey(
+    ImageConfiguration configuration,
+    ImageStream stream,
+    ResizeImageKey key,
+    ImageErrorListener handleError,
+  ) {
+    final completer = cache.putIfAbsent(key, () {
+      if (stream.completer != null) return stream.completer!;
+      final completer = loadImage(
+        key,
+        PaintingBinding.instance.instantiateImageCodecWithSize,
+      );
+      // AssetImage evicts Flutter's global cache on failure. This provider
+      // must also release a failed request from the caller-owned pool.
+      late ImageStreamListener listener;
+      listener = ImageStreamListener(
+        (image, _) {
+          image.dispose();
+          completer.removeListener(listener);
+        },
+        onError: (_, _) {
+          scheduleMicrotask(() => cache.evict(key));
+          completer.removeListener(listener);
+        },
+      );
+      completer.addListener(listener);
+      return completer;
+    }, onError: handleError);
+    if (completer != null && stream.completer == null) {
+      stream.setCompleter(completer);
+    }
+  }
+
+  @override
+  Future<ImageCacheStatus?> obtainCacheStatus({
+    required ImageConfiguration configuration,
+    ImageErrorListener? handleError,
+  }) async {
+    try {
+      return cache.statusForKey(await obtainKey(configuration));
+    } on Object catch (error, stack) {
+      if (handleError != null) {
+        handleError(error, stack);
+      } else {
+        FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: error,
+            stack: stack,
+            library: 'dotdart',
+          ),
+        );
+      }
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> evict({
+    ImageCache? cache,
+    ImageConfiguration configuration = ImageConfiguration.empty,
+  }) async => (cache ?? this.cache).evict(await obtainKey(configuration));
+
+  @override
+  bool operator ==(Object other) => other is _DotdartCachedImage && identical(cache, other.cache) && super == other;
+
+  @override
+  int get hashCode => Object.hash(super.hashCode, identityHashCode(cache));
+}
+
 /// Namespace for dotdart-generated widgets from `three_d_icons/`.
 ///
 /// Call a method named after each asset to render it:
@@ -115,6 +197,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -124,6 +207,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -137,6 +221,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -146,6 +231,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -159,6 +245,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -168,6 +255,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -181,6 +269,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -190,6 +279,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -203,6 +293,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -212,6 +303,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -225,6 +317,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -234,6 +327,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -247,6 +341,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -256,6 +351,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -269,6 +365,7 @@ abstract final class $ThreeDIcons {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     Color? color,
@@ -278,6 +375,7 @@ abstract final class $ThreeDIcons {
     width: width,
     height: height,
     package: package,
+    imageCache: imageCache,
     fit: fit,
     alignment: alignment,
     color: color,
@@ -292,60 +390,70 @@ abstract final class $ThreeDIcons {
   /// logical pixels and use the same sizing rules as the named accessor.
   /// All asset-specific options keep their defaults.
   /// [package] identifies the package containing an image or GIF.
+  /// [imageCache] selects the same optional cache used by the named accessor.
   static Widget? findByName(
     String fileName, {
     Key? key,
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) => switch (fileName) {
     'bidirecional-horizontal-arrow.webp' => bidirecionalHorizontalArrow(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'handshake.webp' => handshake(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'magnifying-glass.webp' => magnifyingGlass(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'padlock.webp' => padlock(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'padlock-open.webp' => padlockOpen(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'pencil.webp' => pencil(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'pointer-hand-up.webp' => pointerHandUp(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     'red-flag.webp' => redFlag(
       key: key,
       width: width,
       height: height,
       package: package,
+      imageCache: imageCache,
     ),
     _ => null,
   };
@@ -372,12 +480,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.bidirecionalHorizontalArrow` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precacheBidirecionalHorizontalArrow(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -388,15 +500,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `bidirecionalHorizontalArrow` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removeBidirecionalHorizontalArrow(
@@ -404,6 +518,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -415,9 +530,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `handshake` before its first render.
@@ -425,12 +544,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.handshake` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precacheHandshake(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -438,15 +561,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `handshake` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removeHandshake(
@@ -454,6 +579,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -462,9 +588,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `magnifyingGlass` before its first render.
@@ -472,12 +602,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.magnifyingGlass` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precacheMagnifyingGlass(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -485,15 +619,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `magnifyingGlass` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removeMagnifyingGlass(
@@ -501,6 +637,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -509,9 +646,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `padlock` before its first render.
@@ -519,12 +660,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.padlock` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precachePadlock(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -532,15 +677,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `padlock` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removePadlock(
@@ -548,6 +695,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -556,9 +704,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `padlockOpen` before its first render.
@@ -566,12 +718,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.padlockOpen` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precachePadlockOpen(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -579,15 +735,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `padlockOpen` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removePadlockOpen(
@@ -595,6 +753,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -603,9 +762,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `pencil` before its first render.
@@ -613,12 +776,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.pencil` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precachePencil(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -626,15 +793,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `pencil` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removePencil(
@@ -642,6 +811,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -650,9 +820,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `pointerHandUp` before its first render.
@@ -660,12 +834,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.pointerHandUp` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precachePointerHandUp(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -673,15 +851,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `pointerHandUp` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removePointerHandUp(
@@ -689,6 +869,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -697,9 +878,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   /// Decodes `redFlag` before its first render.
@@ -707,12 +892,16 @@ abstract final class $ThreeDIconsCache {
   /// [width] and [height] are logical pixels. Pass the same values to
   /// `$ThreeDIcons.redFlag` so it reuses this cache entry.
   /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
   /// Omitting both values uses the widget's default display size.
   static Future<void> precacheRedFlag(
     BuildContext context, {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
   }) => precacheImage(
     _provider(
       context,
@@ -720,15 +909,17 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     ),
     context,
+    onError: onError,
   );
 
   /// Removes the decoded `redFlag` entry from Flutter's image cache.
   ///
   /// Returns whether the matching entry existed. [width] and [height]
   /// must match the values used to precache or render the image.
-  /// [package] must match the image widget and precache call.
+  /// [package] and [imageCache] must match the image widget and precache call.
   /// An image that is still displayed remains live until its last listener
   /// is removed, preventing a duplicate decode during transitions.
   static Future<bool> removeRedFlag(
@@ -736,6 +927,7 @@ abstract final class $ThreeDIconsCache {
     double? width,
     double? height,
     String? package,
+    ImageCache? imageCache,
   }) async {
     final configuration = createLocalImageConfiguration(context);
     final provider = _provider(
@@ -744,9 +936,13 @@ abstract final class $ThreeDIconsCache {
       aspectRatio: 1,
       width: width,
       height: height,
+      cache: imageCache,
     );
     final key = await provider.obtainKey(configuration);
-    return imageCache.evict(key, includeLive: false);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
   }
 
   static ImageProvider<Object> _provider(
@@ -755,12 +951,21 @@ abstract final class $ThreeDIconsCache {
     required double aspectRatio,
     double? width,
     double? height,
+    ImageCache? cache,
   }) {
     assert(width == null || width > 0, 'width must be greater than zero.');
     assert(height == null || height > 0, 'height must be greater than zero.');
     final resolvedWidth = width ?? (height != null ? height * aspectRatio : 280);
     final resolvedHeight = height ?? resolvedWidth / aspectRatio;
     final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
+    if (cache != null) {
+      return _DotdartCachedImage(
+        asset,
+        width: (resolvedWidth * devicePixelRatio).ceil(),
+        height: (resolvedHeight * devicePixelRatio).ceil(),
+        cache: cache,
+      );
+    }
     return ResizeImage.resizeIfNeeded(
       (resolvedWidth * devicePixelRatio).ceil(),
       (resolvedHeight * devicePixelRatio).ceil(),
@@ -780,6 +985,7 @@ class _BidirecionalHorizontalArrow extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -794,6 +1000,9 @@ class _BidirecionalHorizontalArrow extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -892,9 +1101,19 @@ class _BidirecionalHorizontalArrow extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -904,8 +1123,6 @@ class _BidirecionalHorizontalArrow extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -924,6 +1141,7 @@ class _Handshake extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -938,6 +1156,9 @@ class _Handshake extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1036,9 +1257,19 @@ class _Handshake extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1048,8 +1279,6 @@ class _Handshake extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1068,6 +1297,7 @@ class _MagnifyingGlass extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1082,6 +1312,9 @@ class _MagnifyingGlass extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1180,9 +1413,19 @@ class _MagnifyingGlass extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1192,8 +1435,6 @@ class _MagnifyingGlass extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1212,6 +1453,7 @@ class _Padlock extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1226,6 +1468,9 @@ class _Padlock extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1324,9 +1569,19 @@ class _Padlock extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1336,8 +1591,6 @@ class _Padlock extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1356,6 +1609,7 @@ class _PadlockOpen extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1370,6 +1624,9 @@ class _PadlockOpen extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1468,9 +1725,19 @@ class _PadlockOpen extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1480,8 +1747,6 @@ class _PadlockOpen extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1500,6 +1765,7 @@ class _Pencil extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1514,6 +1780,9 @@ class _Pencil extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1612,9 +1881,19 @@ class _Pencil extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1624,8 +1903,6 @@ class _Pencil extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1644,6 +1921,7 @@ class _PointerHandUp extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1658,6 +1936,9 @@ class _PointerHandUp extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1756,9 +2037,19 @@ class _PointerHandUp extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1768,8 +2059,6 @@ class _PointerHandUp extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 
@@ -1788,6 +2077,7 @@ class _RedFlag extends StatelessWidget {
     this.width,
     this.height,
     this.package,
+    this.imageCache,
     this.fit,
     this.alignment = Alignment.center,
     this.color,
@@ -1802,6 +2092,9 @@ class _RedFlag extends StatelessWidget {
 
   /// Package containing the image.
   final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
 
   /// How to inscribe the image in its bounds.
   final BoxFit? fit;
@@ -1900,9 +2193,19 @@ class _RedFlag extends StatelessWidget {
     final w = width ?? (height != null ? height! * aspect : 280.0);
     final h = height ?? w / aspect;
 
-    final image = Image.asset(
-      _assetPath,
-      package: package,
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
       key: key,
       width: w,
       height: h,
@@ -1912,8 +2215,6 @@ class _RedFlag extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       gaplessPlayback: true,
       filterQuality: FilterQuality.low,
-      cacheWidth: (w * dpr).ceil(),
-      cacheHeight: (h * dpr).ceil(),
       frameBuilder: _frameBuilder,
     );
 

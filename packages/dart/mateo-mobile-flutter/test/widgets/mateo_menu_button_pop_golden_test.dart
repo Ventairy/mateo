@@ -81,7 +81,7 @@ Future<void> main() async {
                                         ),
                                         variant: .secondary,
                                       )
-                                    : const .label(label: 'Options', variant: .secondary, width: .fit),
+                                    : const .label(label: 'Options', variant: .secondary, width: .fit()),
                                 menuPresentation: .options(
                                   items: const [
                                     MateoMenuOptionsPresentationItem(

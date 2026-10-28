@@ -438,15 +438,57 @@ enum MateoIconData {
     plusSignal => $Icons.plusSignal(mateoOpticalSizeColor: color),
   };
 
-  Widget _buildThreeD() => switch (this) {
-    bidirecionalHorizontalArrow => $ThreeDIcons.bidirecionalHorizontalArrow(package: 'mateo_mobile'),
-    handshake => $ThreeDIcons.handshake(package: 'mateo_mobile'),
-    magnifyingGlass => $ThreeDIcons.magnifyingGlass(package: 'mateo_mobile'),
-    padlock => $ThreeDIcons.padlock(package: 'mateo_mobile'),
-    padlockOpen => $ThreeDIcons.padlockOpen(package: 'mateo_mobile'),
-    pencil => $ThreeDIcons.pencil(package: 'mateo_mobile'),
-    pointerHandUp => $ThreeDIcons.pointerHandUp(package: 'mateo_mobile'),
-    redFlag => $ThreeDIcons.redFlag(package: 'mateo_mobile'),
+  Widget _buildThreeD({required double size, ImageCache? imageCache}) => switch (this) {
+    bidirecionalHorizontalArrow => $ThreeDIcons.bidirecionalHorizontalArrow(
+      width: size,
+      height: size,
+      package: 'mateo_mobile',
+      imageCache: imageCache,
+    ),
+    handshake => $ThreeDIcons.handshake(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    magnifyingGlass => $ThreeDIcons.magnifyingGlass(
+      width: size,
+      height: size,
+      package: 'mateo_mobile',
+      imageCache: imageCache,
+    ),
+    padlock => $ThreeDIcons.padlock(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    padlockOpen => $ThreeDIcons.padlockOpen(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    pencil => $ThreeDIcons.pencil(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    pointerHandUp => $ThreeDIcons.pointerHandUp(
+      width: size,
+      height: size,
+      package: 'mateo_mobile',
+      imageCache: imageCache,
+    ),
+    redFlag => $ThreeDIcons.redFlag(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
   };
+
+  Future<void> _precacheThreeD(
+    BuildContext context, {
+    required double size,
+    required ImageCache imageCache,
+    ImageErrorListener? onError,
+  }) {
+    final precache = switch (this) {
+      bidirecionalHorizontalArrow => $ThreeDIconsCache.precacheBidirecionalHorizontalArrow,
+      handshake => $ThreeDIconsCache.precacheHandshake,
+      magnifyingGlass => $ThreeDIconsCache.precacheMagnifyingGlass,
+      padlock => $ThreeDIconsCache.precachePadlock,
+      padlockOpen => $ThreeDIconsCache.precachePadlockOpen,
+      pencil => $ThreeDIconsCache.precachePencil,
+      pointerHandUp => $ThreeDIconsCache.precachePointerHandUp,
+      redFlag => $ThreeDIconsCache.precacheRedFlag,
+      _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
+    };
+    return precache(
+      context,
+      width: size,
+      height: size,
+      package: 'mateo_mobile',
+      imageCache: imageCache,
+      onError: onError,
+    );
+  }
 }

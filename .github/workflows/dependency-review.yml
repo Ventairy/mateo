@@ -15,6 +15,14 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5
         with:
           fail-on-severity: moderate
+          # Pub.dev reports lowercase SPDX IDs (actions/dependency-review-action#1168).
+          # Reviewed: code_assets 2.0.0 and native_toolchain_c 0.19.4 are BSD-3-Clause;
+          # dotdart 0.11.4 and oh_my_flutter 0.29.0-beta.2 are MIT.
+          allow-dependencies-licenses: >-
+            pkg:pub/code_assets,
+            pkg:pub/native_toolchain_c,
+            pkg:pub/dotdart,
+            pkg:pub/oh_my_flutter
           deny-licenses: >-
             AGPL-1.0-only,
             AGPL-1.0-or-later,

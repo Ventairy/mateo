@@ -84,7 +84,7 @@ class _MenuOverlayGoldenSceneState extends State<MenuOverlayGoldenScene> {
                             });
                           }
                           return MateoButton(
-                            presentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                            presentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                             onPressed: () {},
                           );
                         },

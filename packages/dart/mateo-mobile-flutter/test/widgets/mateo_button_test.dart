@@ -48,6 +48,120 @@ Future<void> _activate(WidgetTester tester) async {
 }
 
 void main() {
+  test('when button widths are configured, it should validate caps and compare by value', () {
+    expect(const MateoButtonWidth.fill(), const MateoButtonWidthFill());
+    expect(const MateoButtonWidth.fit(), const MateoButtonWidthFit());
+    expect(const MateoButtonWidth.fill(maxWidth: 200), const MateoButtonWidthFill(maxWidth: 200));
+    expect(const MateoButtonWidth.fill(maxWidth: 200).hashCode, const MateoButtonWidthFill(maxWidth: 200).hashCode);
+    expect(const MateoButtonWidth.fill(maxWidth: 200), isNot(const MateoButtonWidth.fill()));
+    expect(const MateoButtonWidth.fill(maxWidth: 200), isNot(const MateoButtonWidth.fill(maxWidth: 201)));
+    expect(const MateoButtonWidth.fill(), isNot(const MateoButtonWidth.fit()));
+    for (final value in [-1.0, double.infinity, double.negativeInfinity, double.nan]) {
+      expect(() => MateoButtonWidth.fill(maxWidth: value), throwsAssertionError);
+    }
+  });
+
+  testWidgets('when fill is capped, it should size the surface and press area within parent bounds', (tester) async {
+    for (final entry in <(double, double)>[(200, 200), (320, 320), (400, 320), (0, 0)]) {
+      await tester.pumpWidget(
+        _host(
+          MateoButton(
+            presentation: .label(
+              label: 'Save',
+              width: .fill(maxWidth: entry.$1),
+            ),
+            onPressed: () {},
+          ),
+        ),
+      );
+      expect(tester.getSize(_surface()).width, entry.$2);
+      expect(tester.getSize(find.byType(MateoPress)).width, entry.$2);
+      expect(tester.takeException(), isNull);
+    }
+    for (final constraints in [
+      const BoxConstraints(minWidth: 250, maxWidth: 300),
+      const BoxConstraints.tightFor(width: 250),
+    ]) {
+      await tester.pumpWidget(
+        _host(
+          ConstrainedBox(
+            constraints: constraints,
+            child: const MateoButton(
+              presentation: .label(label: 'Save', width: .fill(maxWidth: 200)),
+            ),
+          ),
+        ),
+      );
+      expect(tester.getSize(_surface()).width, 250);
+    }
+  });
+
+  testWidgets('when a capped fill button is in a Row, it should fill to its finite cap', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        const Row(
+          children: [
+            MateoButton(
+              presentation: .label(label: 'Save', width: .fill(maxWidth: 200)),
+            ),
+          ],
+        ),
+      ),
+    );
+    expect(tester.getSize(_surface()).width, 200);
+    expect(tester.takeException(), isNull);
+  });
+
+  for (final reducedMotion in [false, true]) {
+    testWidgets('when capped width and loading change with reduced motion $reducedMotion, it should retain state', (
+      tester,
+    ) async {
+      final content = ValueNotifier<int>(0);
+      addTearDown(content.dispose);
+      Widget button(MateoButtonWidth width, bool loading) => _host(
+        MateoButton(
+          presentation: .label(
+            label: 'Save',
+            width: width,
+            leadingIcon: ValueListenableBuilder<int>(
+              valueListenable: content,
+              builder: (context, value, child) => const MateoIcon(.checkmark),
+            ),
+          ),
+          isLoading: loading,
+          onPressed: () {},
+        ),
+        reducedMotion: reducedMotion,
+      );
+      await tester.pumpWidget(button(const .fill(maxWidth: 200), false));
+      final presentation = find.byWidgetPredicate((widget) => widget is MateoButtonPresentation);
+      final presentationState = tester.state(presentation);
+      State? contentState = tester.state(find.byType(ValueListenableBuilder<int>));
+      for (final width in <MateoButtonWidth>[
+        const .fill(maxWidth: 250),
+        const .fill(),
+        const .fit(),
+        const .fill(maxWidth: 200),
+      ]) {
+        for (final loading in [true, false]) {
+          await tester.pumpWidget(button(width, loading));
+          await tester.pump(const Duration(milliseconds: 500));
+          await tester.pump(const Duration(milliseconds: 500));
+          expect(tester.state(presentation), same(presentationState));
+          if (width is MateoButtonWidthFill && contentState != null) {
+            expect(tester.state(find.byType(ValueListenableBuilder<int>)), same(contentState));
+          } else {
+            contentState = null;
+          }
+          if (width case MateoButtonWidthFill(:final maxWidth)) {
+            expect(tester.getSize(_surface()).width, maxWidth ?? 320);
+          }
+          expect(tester.takeException(), isNull);
+        }
+      }
+    });
+  }
+
   testWidgets('when motion is reduced during an availability fade, it should settle immediately', (tester) async {
     Future<void> show({required bool enabled, bool reducedMotion = false}) => tester.pumpWidget(
       _host(
@@ -284,7 +398,7 @@ void main() {
     await tester.pumpWidget(
       _host(
         const MateoButton(
-          presentation: .label(label: 'Save', variant: .primary, width: .fill),
+          presentation: .label(label: 'Save', variant: .primary, width: .fill()),
         ),
       ),
     );
@@ -300,7 +414,7 @@ void main() {
             label: 'Save changes',
             variant: .primary,
             size: size,
-            width: .fit,
+            width: const .fit(),
             leadingIcon: iconCount > 0 ? const MateoIcon(.cross) : null,
             trailingIcon: iconCount > 1 ? const MateoIcon(.cross) : null,
           ),
@@ -325,7 +439,7 @@ void main() {
       presentation: .label(
         label: 'Publicar oportunidade para minha comunidade',
         variant: .primary,
-        width: .fit,
+        width: .fit(),
         leadingIcon: MateoIcon(.cross),
         trailingIcon: MateoIcon(.cross),
       ),
@@ -342,7 +456,7 @@ void main() {
         const SizedBox(
           width: 300,
           child: MateoButton(
-            presentation: .label(label: 'Save', variant: .primary, width: .fit),
+            presentation: .label(label: 'Save', variant: .primary, width: .fit()),
           ),
         ),
       ),
@@ -350,7 +464,7 @@ void main() {
     expect(tester.getSize(_surface()).width, 300);
   });
 
-  for (final width in [MateoButtonWidth.fill]) {
+  for (final width in [const MateoButtonWidth.fill()]) {
     for (final reducedMotion in [false, true]) {
       testWidgets('when $width loading changes with reduced motion $reducedMotion, bounds should stay stable', (
         tester,
@@ -395,7 +509,7 @@ void main() {
               label: label,
               variant: .primary,
               size: size,
-              width: .fit,
+              width: const .fit(),
               leadingIcon: label == 'I' ? null : const MateoIcon(.checkmark),
               trailingIcon: label == 'I' ? null : const MateoIcon(.cross),
             ),
@@ -447,7 +561,7 @@ void main() {
   ) async {
     Widget button({required bool loading}) => _host(
       MateoButton(
-        presentation: const .label(label: 'Save changes', variant: .primary, width: .fit),
+        presentation: const .label(label: 'Save changes', variant: .primary, width: .fit()),
         onPressed: () {},
         isLoading: loading,
       ),
@@ -485,7 +599,7 @@ void main() {
   ) async {
     Widget button({required bool loading, bool reduced = false, bool ticking = true}) => _host(
       MateoButton(
-        presentation: const .label(label: 'Save changes', variant: .primary, width: .fit),
+        presentation: const .label(label: 'Save changes', variant: .primary, width: .fit()),
         onPressed: () {},
         isLoading: loading,
       ),
@@ -530,7 +644,7 @@ void main() {
                     presentation: .label(
                       label: tight ? 'Publicar oportunidade para minha comunidade' : 'Save',
                       variant: .primary,
-                      width: .fit,
+                      width: const .fit(),
                       alignment: alignment,
                       leadingIcon: const MateoIcon(.checkmark),
                     ),
@@ -568,7 +682,7 @@ void main() {
     await tester.pumpWidget(
       _host(
         MateoButton(
-          presentation: const .label(label: 'Save changes', variant: .primary, width: .fit),
+          presentation: const .label(label: 'Save changes', variant: .primary, width: .fit()),
           onPressed: () => pending.future,
         ),
       ),

@@ -39,6 +39,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.color,
     this.elevation,
     this.shape = const MateoRoundedShapeBorder(radius: 0),
+    this.clipBehavior,
     this.width = const .fit(),
     this.height = const .fit(),
     this.padding,
@@ -55,6 +56,7 @@ class BaseMateoSurface extends StatefulWidget {
     this.color,
     this.elevation,
     this.shape = const MateoRoundedShapeBorder(radius: 0),
+    this.clipBehavior,
     this.width = const .fit(),
     this.height = const .fill(),
     this.padding,
@@ -83,6 +85,8 @@ class BaseMateoSurface extends StatefulWidget {
   final MateoElevation? elevation;
 
   final MateoRoundedShapeBorder shape;
+
+  final Clip? clipBehavior;
 
   final MateoSurfaceWidth width;
 
@@ -226,10 +230,11 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
 
   Widget _clipContent(Widget child) {
     if (widget.shape == const MateoRoundedShapeBorder(radius: 0)) {
-      return ClipRect(child: child);
+      return ClipRect(clipBehavior: widget.clipBehavior ?? .hardEdge, child: child);
     }
 
     return ClipPath(
+      clipBehavior: widget.clipBehavior ?? .antiAlias,
       clipper: ShapeBorderClipper(shape: widget.shape, textDirection: Directionality.maybeOf(context)),
       child: child,
     );

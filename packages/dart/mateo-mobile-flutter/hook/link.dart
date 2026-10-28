@@ -1,10 +1,27 @@
+import 'package:code_assets/code_assets.dart';
 import 'package:data_assets/data_assets.dart';
 import 'package:hooks/hooks.dart';
+import 'package:native_toolchain_c/native_toolchain_c.dart';
 import 'package:record_use/record_use.dart';
+
+import 'three_d_icon_metadata_library.dart';
+import 'three_d_icon_usage_recordings.dart';
 
 void main(List<String> arguments) async {
   await link(arguments, (input, output) async {
     final recordedUses = input.recordedUses;
+    if (input.config.buildCodeAssets) {
+      final source = await ThreeDIconMetadataLibrary.write(
+        directory: input.outputDirectory,
+        usages: ThreeDIconUsageRecordings.extract(recordedUses),
+      );
+      await CLinker.library(
+        name: ThreeDIconMetadataLibrary.name,
+        assetName: ThreeDIconMetadataLibrary.assetName,
+        sources: [source.toFilePath()],
+        linkModePreference: .dynamic,
+      ).run(input: input, output: output);
+    }
     if (recordedUses == null) {
       output.assets.data.addAll(input.assets.data);
       return;

@@ -67,6 +67,37 @@ Widget _matrix({bool disabled = false, bool loading = false}) => _appearance(
 );
 
 Future<void> main() async {
+  await goldenTest(
+    'when fill width is capped, it should center the button within narrow and wide parents',
+    fileName: 'mateo_button_capped_fill',
+    pumpBeforeTest: (tester) async {
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+    },
+    builder: () => _appearance(
+      GoldenTestGroup(
+        columns: 1,
+        children: [
+          for (final width in [240.0, 600.0])
+            for (final loading in [false, true])
+              GoldenTestScenario(
+                name: 'Parent $width · loading $loading',
+                child: SizedBox(
+                  width: width,
+                  height: 80,
+                  child: Center(
+                    child: MateoButton(
+                      presentation: const .label(label: 'Continue', width: .fill(maxWidth: 400)),
+                      isLoading: loading,
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ),
+        ],
+      ),
+    ),
+  );
   for (final (phase, initialLoading, targetLoading, milliseconds) in [
     ('resting', false, false, 0),
     ('enter_60', false, true, 60),
@@ -104,7 +135,7 @@ Future<void> main() async {
                             presentation: .label(
                               label: label,
                               variant: .primary,
-                              width: .fit,
+                              width: const .fit(),
                               size: size,
                               alignment: alignment,
                               leadingIcon: label == 'I' ? null : const MateoIcon(.checkmark),

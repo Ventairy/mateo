@@ -16,7 +16,7 @@ import '../mateo_text/mateo_text.dart';
 import 'mateo_button_alignment.dart';
 import 'mateo_button_appearance_scope.dart';
 import 'mateo_button_size.dart';
-import 'mateo_button_width.dart';
+import 'mateo_button_width/mateo_button_width.dart';
 import 'variants/mateo_button_variant.dart';
 
 part '_mateo_button_presentation_scope.dart';

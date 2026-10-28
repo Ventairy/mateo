@@ -21,9 +21,9 @@ class _RenderBaseMateoSurfaceSize extends RenderProxyBox {
   }
 
   BoxConstraints _childConstraints(BoxConstraints constraints) {
-    if (_width is MateoSurfaceWidthFill && !constraints.hasBoundedWidth) {
+    if (_width case MateoSurfaceWidthFill(maxWidth: null) when !constraints.hasBoundedWidth) {
       throw FlutterError(
-        'MateoSurfaceWidth.fill() requires a finite parent width. Constrain the width or use .fit() or .custom(...).',
+        'MateoSurfaceWidth.fill() requires a finite parent width or maxWidth. Constrain the width, supply maxWidth, or use .fit() or .custom(...).',
       );
     }
     if (_height is MateoSurfaceHeightFill && !constraints.hasBoundedHeight) {
@@ -34,7 +34,8 @@ class _RenderBaseMateoSurfaceSize extends RenderProxyBox {
     return constraints.tighten(
       width: switch (_width) {
         MateoSurfaceWidthFit() => null,
-        MateoSurfaceWidthFill() => constraints.maxWidth,
+        MateoSurfaceWidthFill(:final maxWidth) =>
+          maxWidth == null ? constraints.maxWidth : constraints.constrainWidth(maxWidth),
         MateoSurfaceWidthCustom(:final value) => value,
       },
 
@@ -45,6 +46,13 @@ class _RenderBaseMateoSurfaceSize extends RenderProxyBox {
       },
     );
   }
+
+  double _intrinsicChildWidth(double availableWidth) => switch (_width) {
+    MateoSurfaceWidthFit() => availableWidth,
+    MateoSurfaceWidthFill(:final maxWidth) =>
+      maxWidth == null ? availableWidth : availableWidth.clamp(0, maxWidth).toDouble(),
+    MateoSurfaceWidthCustom(:final value) => value.clamp(0, availableWidth).toDouble(),
+  };
 
   @override
   Size computeDryLayout(BoxConstraints constraints) => child!.getDryLayout(_childConstraints(constraints));
@@ -74,12 +82,12 @@ class _RenderBaseMateoSurfaceSize extends RenderProxyBox {
   @override
   double computeMinIntrinsicHeight(double width) => switch (_height) {
     MateoSurfaceHeightCustom(:final value) => value,
-    _ => super.computeMinIntrinsicHeight(width),
+    MateoSurfaceHeightFit() || MateoSurfaceHeightFill() => super.computeMinIntrinsicHeight(_intrinsicChildWidth(width)),
   };
 
   @override
   double computeMaxIntrinsicHeight(double width) => switch (_height) {
     MateoSurfaceHeightCustom(:final value) => value,
-    _ => super.computeMaxIntrinsicHeight(width),
+    MateoSurfaceHeightFit() || MateoSurfaceHeightFill() => super.computeMaxIntrinsicHeight(_intrinsicChildWidth(width)),
   };
 }

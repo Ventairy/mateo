@@ -37,7 +37,6 @@ class MateoToggleController extends ChangeNotifier implements ValueListenable<bo
   /// the active transition future, or an already-completed future at rest.
   Future<void> setValue(
     // Matches Flutter's positional boolean control APIs.
-    // ignore: avoid_positional_boolean_parameters
     bool value,
   ) => _setValue(value);
 
@@ -84,7 +83,6 @@ class MateoToggleController extends ChangeNotifier implements ValueListenable<bo
 abstract interface class _MateoToggleControllerClient {
   Future<void> setToggleValue(
     // Mirrors the controller's positional boolean API internally.
-    // ignore: avoid_positional_boolean_parameters
     bool value, {
     double? velocity,
   });

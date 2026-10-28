@@ -63,7 +63,7 @@ void main() {
         home: Center(
           child: MateoMenuButton(
             animation: const .transform(),
-            buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+            buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
             menuPresentation: .options(
               items: List.generate(
                 20,
@@ -112,7 +112,7 @@ void main() {
         home: Center(
           child: MateoMenuButton(
             animation: const .pop(),
-            buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+            buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
             menuPresentation: .options(items: items),
             onItemPressed: (item) => selected = item,
           ),

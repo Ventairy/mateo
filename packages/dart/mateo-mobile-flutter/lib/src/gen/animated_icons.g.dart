@@ -418,9 +418,6 @@ class _EarthRotatingPainter extends CustomPainter {
 
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
   final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
-  final Paint _eraseFillPaint = Paint()
-    ..style = PaintingStyle.fill
-    ..blendMode = BlendMode.dstOut;
   final Paint _matteContentPaint = Paint();
   final Paint _invertedAlphaPaint = Paint()..blendMode = BlendMode.dstOut;
 
@@ -435,7 +432,18 @@ class _EarthRotatingPainter extends CustomPainter {
     return -19.0328;
   }
 
-  static final Path __treePath0_0_0 = Path()
+  static final Rect _ellipseRect1_0_0 = Rect.fromCenter(
+    center: const Offset(10.0086, 9.9886),
+    width: 14.0849,
+    height: 14.0849,
+  );
+  static final Rect _ellipseRect2_0_0 = Rect.fromCenter(
+    center: const Offset(10.0086, 9.9886),
+    width: 14.0849,
+    height: 14.0849,
+  );
+
+  static final Path __path0_0_0 = Path()
     ..moveTo(-55, 107)
     ..cubicTo(-38.1, 107.6, -25.5, 122, -9, 122)
     ..cubicTo(8, 122, 38.2, 89.3, 51.1, 119.7)
@@ -449,13 +457,13 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(-156.3, 163.5, -98.2, 108.6, -55, 107)
     ..close();
 
-  static final Path __treePath0_0_1 = Path()
+  static final Path __path0_0_1 = Path()
     ..moveTo(271, 125)
     ..cubicTo(286.7, 125, 259.4, 150.5, 252, 151)
     ..cubicTo(236.7, 152.1, 264.3, 126, 271, 125)
     ..close();
 
-  static final Path __treePath0_0_2 = Path()
+  static final Path __path0_0_2 = Path()
     ..moveTo(459, 323)
     ..cubicTo(531.5, 324.8, 498.9, 409.4, 473, 409)
     ..cubicTo(460.9, 408.8, 464.2, 392.5, 455.5, 390.4)
@@ -463,13 +471,13 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(399.1, 362, 443, 323.6, 459, 323)
     ..close();
 
-  static final Path __treePath0_0_3 = Path()
+  static final Path __path0_0_3 = Path()
     ..moveTo(509, 299)
     ..cubicTo(521.6, 302.6, 529.1, 332.6, 517.3, 329.9)
     ..cubicTo(505, 327, 491.7, 295.8, 509, 299)
     ..close();
 
-  static final Path __treePath0_0_4 = Path()
+  static final Path __path0_0_4 = Path()
     ..moveTo(19, 258.7)
     ..cubicTo(36, 259.8, 51.6, 272.5, 66.2, 280.1)
     ..cubicTo(76.1, 285.2, 88.9, 286, 97.7, 292.8)
@@ -480,7 +488,7 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(-28, 295.9, -10.7, 260.4, 19, 258.7)
     ..close();
 
-  static final Path __treePath0_0_5 = Path()
+  static final Path __path0_0_5 = Path()
     ..moveTo(396, 104)
     ..cubicTo(419, 104.4, 500.3, 113.9, 505.9, 143.5)
     ..cubicTo(509.1, 160.6, 490.8, 158.7, 485.6, 169.4)
@@ -510,7 +518,7 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(359.9, 118, 373.4, 104.4, 396, 104)
     ..close();
 
-  static final Path __treePath0_0_6 = Path()
+  static final Path __path0_0_6 = Path()
     ..moveTo(785, 107)
     ..cubicTo(801.9, 107.6, 814.5, 122, 831, 122)
     ..cubicTo(848, 122, 878.2, 89.3, 891.1, 119.7)
@@ -524,7 +532,7 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(683.7, 163.5, 741.8, 108.6, 785, 107)
     ..close();
 
-  static final Path __treePath0_0_7 = Path()
+  static final Path __path0_0_7 = Path()
     ..moveTo(859, 258.7)
     ..cubicTo(876, 259.8, 891.6, 272.5, 906.2, 280.1)
     ..cubicTo(916.1, 285.2, 928.9, 286, 937.7, 292.8)
@@ -535,33 +543,15 @@ class _EarthRotatingPainter extends CustomPainter {
     ..cubicTo(812, 295.9, 829.3, 260.4, 859, 258.7)
     ..close();
 
-  static final Path _treePaintPath0_0_8 = Path()
-    ..addPath(__treePath0_0_0, Offset.zero)
-    ..addPath(__treePath0_0_1, Offset.zero)
-    ..addPath(__treePath0_0_2, Offset.zero)
-    ..addPath(__treePath0_0_3, Offset.zero)
-    ..addPath(__treePath0_0_4, Offset.zero)
-    ..addPath(__treePath0_0_5, Offset.zero)
-    ..addPath(__treePath0_0_6, Offset.zero)
-    ..addPath(__treePath0_0_7, Offset.zero);
-
-  static final Path _treePaintPath1_0_1 = Path()
-    ..addOval(
-      Rect.fromCenter(
-        center: const Offset(10.0086, 9.9886),
-        width: 14.0849,
-        height: 14.0849,
-      ),
-    );
-
-  static final Path _treePaintPath2_0_1 = Path()
-    ..addOval(
-      Rect.fromCenter(
-        center: const Offset(10.0086, 9.9886),
-        width: 14.0849,
-        height: 14.0849,
-      ),
-    );
+  static final Path _compoundFillPath0_0 = Path()
+    ..addPath(__path0_0_0, Offset.zero)
+    ..addPath(__path0_0_1, Offset.zero)
+    ..addPath(__path0_0_2, Offset.zero)
+    ..addPath(__path0_0_3, Offset.zero)
+    ..addPath(__path0_0_4, Offset.zero)
+    ..addPath(__path0_0_5, Offset.zero)
+    ..addPath(__path0_0_6, Offset.zero)
+    ..addPath(__path0_0_7, Offset.zero);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -576,7 +566,9 @@ class _EarthRotatingPainter extends CustomPainter {
     final matteBounds1 = canvas.getLocalClipBounds();
     canvas.saveLayer(matteBounds1, _matteContentPaint);
     _draw1(canvas, frame, 1);
-    _erase0(canvas, frame, 1);
+    canvas.saveLayer(matteBounds1, _invertedAlphaPaint);
+    _draw0(canvas, frame, 1);
+    canvas.restore();
     canvas.restore();
 
     canvas.restore();
@@ -590,12 +582,12 @@ class _EarthRotatingPainter extends CustomPainter {
     canvas.translate(posX, 0.7861);
     canvas.scale(0.0359, 0.0359);
     // Group:
-    final treeFillPaint0_8 = _fillPaint
+    final compoundFillPaint0 = _fillPaint
       ..color = _dotdartApplyOpacity(
         overrides.color1 ?? const Color(0xffffffff),
         layerOpacity * 1,
       );
-    canvas.drawPath(_treePaintPath0_0_8, treeFillPaint0_8);
+    canvas.drawPath(_compoundFillPath0_0, compoundFillPaint0);
     canvas.restore();
   }
 
@@ -603,19 +595,19 @@ class _EarthRotatingPainter extends CustomPainter {
     final layerOpacity = inheritedOpacity * 1;
     if (layerOpacity <= 0) return;
     // Group:
-    final treeFillPaint0_1 = _fillPaint
+    final fillPaint0_0 = _fillPaint
       ..color = _dotdartApplyOpacity(
         overrides.color2 ?? const Color(0xff000000),
         layerOpacity * 1,
       );
-    canvas.drawPath(_treePaintPath1_0_1, treeFillPaint0_1);
+    canvas.drawOval(_ellipseRect1_0_0, fillPaint0_0);
   }
 
   void _draw2(Canvas canvas, double frame, double inheritedOpacity) {
     final layerOpacity = inheritedOpacity * 1;
     if (layerOpacity <= 0) return;
     // Group:
-    final treeStrokePaint0_1 = _strokePaint
+    final strokePaint0_0 = _strokePaint
       ..color = _dotdartApplyOpacity(
         overrides.color3 ?? const Color(0xff000000),
         layerOpacity * 1,
@@ -623,24 +615,7 @@ class _EarthRotatingPainter extends CustomPainter {
       ..strokeWidth = 1.4319
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
-    canvas.drawPath(_treePaintPath2_0_1, treeStrokePaint0_1);
-  }
-
-  void _erase0(Canvas canvas, double frame, double inheritedOpacity) {
-    final layerOpacity = inheritedOpacity * 1;
-    if (layerOpacity <= 0) return;
-    final posX = _keyframes0PositionX(frame);
-    canvas.save();
-    canvas.translate(posX, 0.7861);
-    canvas.scale(0.0359, 0.0359);
-    // Group:
-    final treeFillPaint0_8 = _eraseFillPaint
-      ..color = _dotdartApplyOpacity(
-        overrides.color1 ?? const Color(0xffffffff),
-        layerOpacity * 1,
-      );
-    canvas.drawPath(_treePaintPath0_0_8, treeFillPaint0_8);
-    canvas.restore();
+    canvas.drawOval(_ellipseRect2_0_0, strokePaint0_0);
   }
 
   @override

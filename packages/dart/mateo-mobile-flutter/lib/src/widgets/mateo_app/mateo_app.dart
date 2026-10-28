@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart' show MorphNavigatorObserver;
 
+import '../../components/mateo_icon/mateo_icon.dart' show MateoThreeDIconCacheHost;
 import '../../components/mateo_toast/mateo_toast.dart' show MateoToastHost;
 import '../../foundation/mateo_environment/mateo_environment.dart';
 import '../../foundation/mateo_navigator_observer.dart';
@@ -167,8 +168,10 @@ class _MateoAppState extends State<MateoApp> {
       ),
       child: ColoredBox(
         color: widget.theme.colorScheme.background,
-        child: MateoToastHost(
-          child: Builder(builder: (context) => widget.builder?.call(context, child) ?? child!),
+        child: MateoThreeDIconCacheHost(
+          child: MateoToastHost(
+            child: Builder(builder: (context) => widget.builder?.call(context, child) ?? child!),
+          ),
         ),
       ),
     );

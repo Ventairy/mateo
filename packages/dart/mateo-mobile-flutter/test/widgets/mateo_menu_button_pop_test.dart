@@ -123,7 +123,7 @@ void main() {
             Center(
               child: MateoMenuButton(
                 animation: const .pop(),
-                buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit),
+                buttonPresentation: const .label(label: 'Options', variant: .secondary, width: .fit()),
                 menuPresentation: .options(items: const [item]),
                 onItemPressed: (selected) {
                   expect(identical(selected, item), isTrue);

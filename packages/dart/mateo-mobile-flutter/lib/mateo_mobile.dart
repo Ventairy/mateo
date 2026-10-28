@@ -6,7 +6,8 @@ export 'package:oh_my_flutter/oh_my_flutter.dart' show Country;
 export 'src/components/mateo_button/mateo_button.dart' show MateoButton, MateoButtonPresentation;
 export 'src/components/mateo_button/mateo_button_alignment.dart' show MateoButtonAlignment;
 export 'src/components/mateo_button/mateo_button_size.dart' show MateoButtonSize;
-export 'src/components/mateo_button/mateo_button_width.dart' show MateoButtonWidth;
+export 'src/components/mateo_button/mateo_button_width/mateo_button_width.dart'
+    show MateoButtonWidth, MateoButtonWidthFill, MateoButtonWidthFit;
 export 'src/components/mateo_button/variants/mateo_button_variant.dart'
     show MateoButtonVariant, MateoPrimaryButtonVariant, MateoSecondaryButtonVariant, MateoTertiaryButtonVariant;
 export 'src/components/mateo_country_flag/mateo_country_flag.dart' show MateoCountryFlag;
