@@ -15,7 +15,8 @@ permissions:
 jobs:
   package:
     name: Package checks
-    runs-on: ubuntu-22.04
+    # Readable-font goldens are authored on macOS 26 with Flutter's x64 engine.
+    runs-on: macos-26-intel
     timeout-minutes: 30
     defaults:
       run:
@@ -66,6 +67,14 @@ jobs:
 
       - name: Run tests
         run: fvm dart run melos run test --no-select
+
+      - name: Upload golden failure images
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mateo-mobile-flutter-golden-failures
+          path: packages/dart/mateo-mobile-flutter/test/**/failures/*.png
+          if-no-files-found: ignore
 
       - name: Validate API documentation
         run: fvm dart doc --validate-links
