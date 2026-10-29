@@ -1,6 +1,7 @@
 import 'dart:ui' show SemanticsAction, Tristate;
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
@@ -88,6 +89,14 @@ void main() {
           autofillHints: [AutofillHints.email],
           enteredText: 'Joao.Example+Tag@Example.COM',
         ),
+        .code: (
+          keyboardType: .text,
+          capitalization: .characters,
+          autocorrect: false,
+          suggestions: false,
+          autofillHints: [],
+          enteredText: 'ABC123',
+        ),
         .phone: (
           keyboardType: .phone,
           capitalization: .none,
@@ -138,6 +147,96 @@ void main() {
     );
   }
 
+  testWidgets('when code receives user edits, it should uppercase them while preserving app-supplied values', (
+    tester,
+  ) async {
+    final controller = TextEditingController(text: 'initialCode');
+    addTearDown(controller.dispose);
+    final changes = <String>[];
+    final submissions = <String>[];
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          placeholder: 'Code',
+          presentation: const .general(variant: .plain, purpose: .code),
+          controller: controller,
+          onChanged: changes.add,
+          onSubmitted: submissions.add,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(controller.text, 'initialCode');
+    controller.text = 'appCode';
+    await tester.pump();
+    expect(controller.text, 'appCode');
+    expect(changes, isEmpty);
+    await tester.enterText(find.byType(CupertinoTextField), 'ab12');
+    expect(controller.text, 'AB12');
+    controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      if (call.method == 'Clipboard.getData') return {'text': '  cd-34!? 🌻  '};
+      return null;
+    });
+    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null));
+    final paste = tester.state<EditableTextState>(find.byType(EditableText)).pasteText(.toolbar);
+    await tester.pumpAndSettle();
+    await paste;
+    expect(controller.text, '  CD-34!? 🌻  ');
+    expect(changes, ['AB12', '  CD-34!? 🌻  ']);
+    await tester.testTextInput.receiveAction(.done);
+    expect(submissions, ['  CD-34!? 🌻  ']);
+  });
+
+  testWidgets(
+    'when code edits include Unicode letters or compose text, it should preserve editing positions and wait for commitment',
+    (tester) async {
+      final controller = TextEditingController();
+      addTearDown(controller.dispose);
+      final changes = <String>[];
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            placeholder: 'Code',
+            presentation: const .general(variant: .plain, purpose: .code),
+            controller: controller,
+            onChanged: changes.add,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      tester.testTextInput.updateEditingValue(
+        const TextEditingValue(text: 'aé12', selection: TextSelection.collapsed(offset: 2)),
+      );
+      expect(controller.text, 'AÉ12');
+      expect(controller.selection, const TextSelection.collapsed(offset: 2));
+      tester.testTextInput.updateEditingValue(
+        const TextEditingValue(
+          text: 'aé12b',
+          selection: TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
+        ),
+      );
+      expect(controller.text, 'AÉ12B');
+      expect(
+        controller.selection,
+        const TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
+      );
+      const composingValue = TextEditingValue(
+        text: 'ab12',
+        selection: TextSelection.collapsed(offset: 2),
+        composing: TextRange(start: 0, end: 2),
+      );
+      changes.clear();
+      tester.testTextInput.updateEditingValue(composingValue);
+      expect(controller.value, composingValue);
+      tester.testTextInput.updateEditingValue(composingValue.copyWith(composing: TextRange.empty));
+      expect(controller.text, 'AB12');
+      expect(controller.selection, composingValue.selection);
+      expect(controller.value.composing, TextRange.empty);
+      expect(changes, ['ab12', 'AB12']);
+    },
+  );
+
   for (final externalFocus in [false, true]) {
     testWidgets(
       'when purpose changes with ${externalFocus ? 'external manual' : 'owned automatic'} focus, it should preserve editing state and update the keyboard',
@@ -172,6 +271,7 @@ void main() {
           MateoTextInputPurpose.givenName,
           MateoTextInputPurpose.email,
           MateoTextInputPurpose.phone,
+          MateoTextInputPurpose.code,
           MateoTextInputPurpose.text,
         ]) {
           await tester.pumpWidget(input(purpose));

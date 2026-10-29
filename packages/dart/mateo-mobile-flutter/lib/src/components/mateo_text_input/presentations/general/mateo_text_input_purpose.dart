@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 
+part 'input_formatters/_code_text_input_purpose_formatter.dart';
+
 /// The typing assistance for a general text input's intended content.
-///
-/// Purposes configure the keyboard and autofill without changing entered text.
 enum MateoTextInputPurpose {
   /// Ordinary text with sentence capitalization, correction, and suggestions.
   text(
@@ -46,6 +46,18 @@ enum MateoTextInputPurpose {
     smartDashesType: .disabled,
     smartQuotesType: .disabled,
     autofillHints: [AutofillHints.telephoneNumber],
+  ),
+
+  /// A code for something, for example a referral code
+  code(
+    keyboardType: .text,
+    textCapitalization: .characters,
+    inputFormatters: [_CodeTextInputFormatter()],
+    autocorrect: false,
+    enableSuggestions: false,
+    smartDashesType: .disabled,
+    smartQuotesType: .disabled,
+    autofillHints: [],
   );
 
   const MateoTextInputPurpose({
@@ -54,9 +66,15 @@ enum MateoTextInputPurpose {
     required this.autocorrect,
     required this.enableSuggestions,
     required this.autofillHints,
+    this.inputFormatters = const [],
     this.smartDashesType,
     this.smartQuotesType,
   });
+
+  /// The formatters applied to user edits for this purpose.
+  ///
+  /// App-supplied controller values are not formatted.
+  final List<TextInputFormatter> inputFormatters;
 
   /// The keyboard requested for this content.
   final TextInputType keyboardType;

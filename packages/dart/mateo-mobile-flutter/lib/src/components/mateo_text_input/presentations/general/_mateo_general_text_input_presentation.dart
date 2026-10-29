@@ -81,6 +81,7 @@ class _MateoGeneralTextInputPresentationState extends State<_MateoGeneralTextInp
                 smartDashesType: widget.purpose.smartDashesType,
                 smartQuotesType: widget.purpose.smartQuotesType,
                 autofillHints: widget.purpose.autofillHints,
+                inputFormatters: widget.purpose.inputFormatters,
                 textInputAction: .done,
                 onChanged: scope.onChanged,
                 onSubmitted: scope.onSubmitted,
