@@ -6,19 +6,20 @@ final class _CodeTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (!newValue.composing.isCollapsed) return newValue;
-    final uppercaseText = newValue.text.toUpperCase();
-    if (uppercaseText == newValue.text) return newValue;
+    final normalizedText = newValue.text.replaceAll(' ', '').toUpperCase();
+    if (normalizedText == newValue.text) return newValue;
 
-    int uppercaseOffset(int offset) => offset < 0 ? offset : newValue.text.substring(0, offset).toUpperCase().length;
+    int normalizedOffset(int offset) =>
+        offset < 0 ? offset : newValue.text.substring(0, offset).replaceAll(' ', '').toUpperCase().length;
 
     return newValue.copyWith(
-      text: uppercaseText,
+      text: normalizedText,
       selection: newValue.selection.copyWith(
-        baseOffset: uppercaseOffset(newValue.selection.baseOffset),
-        extentOffset: uppercaseOffset(newValue.selection.extentOffset),
+        baseOffset: normalizedOffset(newValue.selection.baseOffset),
+        extentOffset: normalizedOffset(newValue.selection.extentOffset),
       ),
       composing: newValue.composing.isValid
-          ? TextRange.collapsed(uppercaseOffset(newValue.composing.start))
+          ? TextRange.collapsed(normalizedOffset(newValue.composing.start))
           : newValue.composing,
     );
   }

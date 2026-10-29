@@ -34,6 +34,7 @@ import 'presentations/general/mateo_text_input_purpose.dart';
 part '_mateo_text_input_editing_controls.dart';
 part '_mateo_text_input_presentation_scope.dart';
 part '_mateo_text_input_selection_overflow.dart';
+part 'presentations/general/_mateo_general_text_input_fade_profile.dart';
 part 'presentations/general/_mateo_general_text_input_presentation.dart';
 part 'presentations/mateo_text_input_presentation.dart';
 part 'presentations/phone/_mateo_phone_country_picker.dart';

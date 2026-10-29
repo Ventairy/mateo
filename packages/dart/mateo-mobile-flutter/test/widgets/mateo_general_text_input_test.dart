@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:mateo_mobile/src/bases/base_mateo_edge_fade/mateo_edge_fade_painter.dart';
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
 
@@ -107,135 +108,157 @@ void main() {
         ),
       };
 
-  for (final MapEntry(key: purpose, value: scenario) in purposeScenarios.entries) {
+  for (final variant in [MateoTextInputVariant.plain, MateoTextInputVariant.filled]) {
+    for (final MapEntry(key: purpose, value: scenario) in purposeScenarios.entries) {
+      testWidgets(
+        'when general $variant is for ${purpose.name}, it should configure typing assistance and preserve entered content',
+        (tester) async {
+          final changes = <String>[];
+          final submissions = <String>[];
+          await tester.pumpWidget(
+            _host(
+              MateoTextInput(
+                placeholder: 'Text',
+                presentation: .general(variant: variant, purpose: purpose),
+                onChanged: changes.add,
+                onSubmitted: submissions.add,
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          final configuration = tester.testTextInput.setClientArgs!;
+          expect(configuration['inputType'], scenario.keyboardType.toJson());
+          expect(configuration['textCapitalization'], scenario.capitalization.toString());
+          expect(configuration['autocorrect'], scenario.autocorrect);
+          expect(configuration['enableSuggestions'], scenario.suggestions);
+          expect(configuration['inputAction'], 'TextInputAction.done');
+          final field = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField));
+          expect(field.smartDashesType, purpose == .text ? SmartDashesType.enabled : SmartDashesType.disabled);
+          expect(field.smartQuotesType, purpose == .text ? SmartQuotesType.enabled : SmartQuotesType.disabled);
+          expect(field.autofillHints, scenario.autofillHints);
+          await tester.enterText(find.byType(CupertinoTextField), scenario.enteredText);
+          await tester.testTextInput.receiveAction(.done);
+          await tester.pump();
+          final editor = tester.widget<EditableText>(find.byType(EditableText));
+          expect(editor.controller.text, scenario.enteredText);
+          expect(changes, [scenario.enteredText]);
+          expect(submissions, [scenario.enteredText]);
+          expect(find.byType(MateoIcon), findsNothing);
+        },
+        variant: const TargetPlatformVariant({TargetPlatform.iOS, TargetPlatform.android}),
+      );
+    }
+  }
+
+  for (final variant in [MateoTextInputVariant.plain, MateoTextInputVariant.filled]) {
     testWidgets(
-      'when general is for ${purpose.name}, it should configure typing assistance and preserve entered content',
-      (tester) async {
+      'when code $variant receives typing or paste, it should uppercase letters and remove spaces while preserving app-supplied values',
+      (
+        tester,
+      ) async {
+        final controller = TextEditingController(text: 'initialCode');
+        addTearDown(controller.dispose);
         final changes = <String>[];
         final submissions = <String>[];
         await tester.pumpWidget(
           _host(
             MateoTextInput(
-              placeholder: 'Text',
-              presentation: .general(variant: .plain, purpose: purpose),
+              placeholder: 'Code',
+              presentation: .general(variant: variant, purpose: .code),
+              controller: controller,
               onChanged: changes.add,
               onSubmitted: submissions.add,
             ),
           ),
         );
         await tester.pumpAndSettle();
-        final configuration = tester.testTextInput.setClientArgs!;
-        expect(configuration['inputType'], scenario.keyboardType.toJson());
-        expect(configuration['textCapitalization'], scenario.capitalization.toString());
-        expect(configuration['autocorrect'], scenario.autocorrect);
-        expect(configuration['enableSuggestions'], scenario.suggestions);
-        expect(configuration['inputAction'], 'TextInputAction.done');
-        final field = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField));
-        expect(field.smartDashesType, purpose == .text ? SmartDashesType.enabled : SmartDashesType.disabled);
-        expect(field.smartQuotesType, purpose == .text ? SmartQuotesType.enabled : SmartQuotesType.disabled);
-        expect(field.autofillHints, scenario.autofillHints);
-        await tester.enterText(find.byType(CupertinoTextField), scenario.enteredText);
-        await tester.testTextInput.receiveAction(.done);
+        expect(controller.text, 'initialCode');
+        controller.text = 'appCode';
         await tester.pump();
-        final editor = tester.widget<EditableText>(find.byType(EditableText));
-        expect(editor.controller.text, scenario.enteredText);
-        expect(changes, [scenario.enteredText]);
-        expect(submissions, [scenario.enteredText]);
-        expect(find.byType(MateoIcon), findsNothing);
+        expect(controller.text, 'appCode');
+        expect(changes, isEmpty);
+        await tester.enterText(find.byType(CupertinoTextField), '  ab  12 ');
+        expect(controller.text, 'AB12');
+        controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+          if (call.method == 'Clipboard.getData') return {'text': '  cd  34!? 🌻  '};
+          return null;
+        });
+        addTearDown(
+          () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null),
+        );
+        final paste = tester.state<EditableTextState>(find.byType(EditableText)).pasteText(.toolbar);
+        await tester.pumpAndSettle();
+        await paste;
+        expect(controller.text, 'CD34!?🌻');
+        expect(changes, ['AB12', 'CD34!?🌻']);
+        await tester.testTextInput.receiveAction(.done);
+        expect(submissions, ['CD34!?🌻']);
       },
-      variant: const TargetPlatformVariant({TargetPlatform.iOS, TargetPlatform.android}),
     );
   }
 
-  testWidgets('when code receives user edits, it should uppercase them while preserving app-supplied values', (
-    tester,
-  ) async {
-    final controller = TextEditingController(text: 'initialCode');
-    addTearDown(controller.dispose);
-    final changes = <String>[];
-    final submissions = <String>[];
-    await tester.pumpWidget(
-      _host(
-        MateoTextInput(
-          placeholder: 'Code',
-          presentation: const .general(variant: .plain, purpose: .code),
-          controller: controller,
-          onChanged: changes.add,
-          onSubmitted: submissions.add,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(controller.text, 'initialCode');
-    controller.text = 'appCode';
-    await tester.pump();
-    expect(controller.text, 'appCode');
-    expect(changes, isEmpty);
-    await tester.enterText(find.byType(CupertinoTextField), 'ab12');
-    expect(controller.text, 'AB12');
-    controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
-    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
-      if (call.method == 'Clipboard.getData') return {'text': '  cd-34!? 🌻  '};
-      return null;
-    });
-    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null));
-    final paste = tester.state<EditableTextState>(find.byType(EditableText)).pasteText(.toolbar);
-    await tester.pumpAndSettle();
-    await paste;
-    expect(controller.text, '  CD-34!? 🌻  ');
-    expect(changes, ['AB12', '  CD-34!? 🌻  ']);
-    await tester.testTextInput.receiveAction(.done);
-    expect(submissions, ['  CD-34!? 🌻  ']);
-  });
-
-  testWidgets(
-    'when code edits include Unicode letters or compose text, it should preserve editing positions and wait for commitment',
-    (tester) async {
-      final controller = TextEditingController();
-      addTearDown(controller.dispose);
-      final changes = <String>[];
-      await tester.pumpWidget(
-        _host(
-          MateoTextInput(
-            placeholder: 'Code',
-            presentation: const .general(variant: .plain, purpose: .code),
-            controller: controller,
-            onChanged: changes.add,
+  for (final variant in [MateoTextInputVariant.plain, MateoTextInputVariant.filled]) {
+    testWidgets(
+      'when code $variant edits include Unicode letters or compose text, it should preserve editing positions and wait for commitment',
+      (tester) async {
+        final controller = TextEditingController();
+        addTearDown(controller.dispose);
+        final changes = <String>[];
+        await tester.pumpWidget(
+          _host(
+            MateoTextInput(
+              placeholder: 'Code',
+              presentation: .general(variant: variant, purpose: .code),
+              controller: controller,
+              onChanged: changes.add,
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      tester.testTextInput.updateEditingValue(
-        const TextEditingValue(text: 'aé12', selection: TextSelection.collapsed(offset: 2)),
-      );
-      expect(controller.text, 'AÉ12');
-      expect(controller.selection, const TextSelection.collapsed(offset: 2));
-      tester.testTextInput.updateEditingValue(
-        const TextEditingValue(
-          text: 'aé12b',
-          selection: TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
-        ),
-      );
-      expect(controller.text, 'AÉ12B');
-      expect(
-        controller.selection,
-        const TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
-      );
-      const composingValue = TextEditingValue(
-        text: 'ab12',
-        selection: TextSelection.collapsed(offset: 2),
-        composing: TextRange(start: 0, end: 2),
-      );
-      changes.clear();
-      tester.testTextInput.updateEditingValue(composingValue);
-      expect(controller.value, composingValue);
-      tester.testTextInput.updateEditingValue(composingValue.copyWith(composing: TextRange.empty));
-      expect(controller.text, 'AB12');
-      expect(controller.selection, composingValue.selection);
-      expect(controller.value.composing, TextRange.empty);
-      expect(changes, ['ab12', 'AB12']);
-    },
-  );
+        );
+        await tester.pumpAndSettle();
+        tester.testTextInput.updateEditingValue(
+          const TextEditingValue(text: 'aé12', selection: TextSelection.collapsed(offset: 2)),
+        );
+        expect(controller.text, 'AÉ12');
+        expect(controller.selection, const TextSelection.collapsed(offset: 2));
+        tester.testTextInput.updateEditingValue(
+          const TextEditingValue(
+            text: 'aé12b',
+            selection: TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
+          ),
+        );
+        expect(controller.text, 'AÉ12B');
+        expect(
+          controller.selection,
+          const TextSelection(baseOffset: 5, extentOffset: 2, affinity: .upstream, isDirectional: true),
+        );
+        tester.testTextInput.updateEditingValue(
+          const TextEditingValue(
+            text: ' a é12 b ',
+            selection: TextSelection(baseOffset: 8, extentOffset: 3, affinity: .upstream, isDirectional: true),
+          ),
+        );
+        expect(controller.text, 'AÉ12B');
+        expect(
+          controller.selection,
+          const TextSelection(baseOffset: 5, extentOffset: 1, affinity: .upstream, isDirectional: true),
+        );
+        const composingValue = TextEditingValue(
+          text: 'ab 12',
+          selection: TextSelection.collapsed(offset: 3),
+          composing: TextRange(start: 0, end: 3),
+        );
+        changes.clear();
+        tester.testTextInput.updateEditingValue(composingValue);
+        expect(controller.value, composingValue);
+        tester.testTextInput.updateEditingValue(composingValue.copyWith(composing: TextRange.empty));
+        expect(controller.text, 'AB12');
+        expect(controller.selection, const TextSelection.collapsed(offset: 2));
+        expect(controller.value.composing, TextRange.empty);
+        expect(changes, ['ab 12', 'AB12']);
+      },
+    );
+  }
 
   for (final externalFocus in [false, true]) {
     testWidgets(
@@ -456,14 +479,255 @@ void main() {
     expect(presentation.elevation, 0);
   });
 
-  for (final variant in [MateoTextInputVariant.filled.neutral, MateoTextInputVariant.filled.base]) {
+  for (final variant in [MateoTextInputVariant.filled.base]) {
     test('when general receives $variant, it should reject the unsupported treatment', () {
       expect(
         () => MateoTextInputPresentation.general(variant: variant),
         throwsA(
-          isA<AssertionError>().having((error) => error.message, 'message', 'Only plain is supported by general'),
+          isA<AssertionError>().having((error) => error.message, 'message', 'Base is not supported by general'),
         ),
       );
+    });
+  }
+  for (final size in [MateoTextInputSize.small, MateoTextInputSize.standard]) {
+    for (final enabled in [true, false]) {
+      testWidgets(
+        'when filled general is $size and enabled=$enabled, it should use its capsule colors and accessible sizing',
+        (tester) async {
+          Widget input() => MateoTextInput(
+            autofocus: false,
+            placeholder: 'Your name',
+            presentation: .general(variant: .filled, size: size),
+            onChanged: enabled ? (_) {} : null,
+          );
+          await tester.pumpWidget(_host(input()));
+          final surface = tester.widget<MateoSurface>(find.byType(MateoSurface));
+          final colors = _theme.colorScheme.textInputs.filled.neutral;
+          expect(surface.color, enabled ? colors.background : colors.backgroundDisabled);
+          expect(surface.elevation, isNull);
+          final field = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField));
+          expect(field.style!.color, enabled ? colors.text : colors.textDisabled);
+          expect(field.placeholderStyle!.color, enabled ? colors.placeholder : colors.placeholderDisabled);
+          expect(field.style!.fontSize, MateoTextInputVariant.filled.resolveTypography(size).fontSize);
+          expect(
+            field.padding,
+            EdgeInsetsDirectional.symmetric(
+              horizontal: size.leadingPadding,
+              vertical: (size.height - MateoTextInputVariant.filled.resolveTypography(size).lineHeight) / 2,
+            ),
+          );
+          expect(tester.getSize(find.byType(MateoTextInput)).height, size.height);
+          expect(find.byType(MateoIcon), findsNothing);
+          await tester.pumpWidget(_host(input(), textScale: 3));
+          expect(tester.getSize(find.byType(MateoTextInput)).height, greaterThan(size.height));
+          expect(tester.takeException(), isNull);
+        },
+      );
+    }
+  }
+
+  testWidgets('when general switches between plain and filled, it should preserve editing state and focus', (
+    tester,
+  ) async {
+    Widget input(MateoTextInputVariant variant) => _host(
+      MateoTextInput(
+        placeholder: 'Code',
+        presentation: .general(variant: variant, purpose: .code),
+        onChanged: (_) {},
+      ),
+    );
+    await tester.pumpWidget(input(.plain));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(CupertinoTextField), 'abc123');
+    final original = tester.widget<EditableText>(find.byType(EditableText));
+    original.controller.selection = const TextSelection(baseOffset: 1, extentOffset: 4);
+    final value = original.controller.value;
+    for (final variant in [MateoTextInputVariant.filled, MateoTextInputVariant.plain]) {
+      await tester.pumpWidget(input(variant));
+      await tester.pumpAndSettle();
+      final editor = tester.widget<EditableText>(find.byType(EditableText));
+      expect(editor.controller, same(original.controller));
+      expect(editor.controller.value, value);
+      expect(editor.focusNode, same(original.focusNode));
+      expect(editor.focusNode.hasFocus, isTrue);
+    }
+  });
+
+  testWidgets('when filled general is large, it should reject the unsupported size', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          placeholder: 'Text',
+          presentation: const .general(variant: .filled, size: .large),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    expect(tester.takeException(), isAssertionError);
+  });
+  for (final direction in TextDirection.values) {
+    testWidgets(
+      'when long filled general text scrolls in $direction, it should adapt its fades and preserve selection',
+      (tester) async {
+        final controller = TextEditingController(text: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ' * 4);
+        addTearDown(controller.dispose);
+        await tester.pumpWidget(
+          _host(
+            MateoTextInput(
+              autofocus: false,
+              placeholder: 'Code',
+              controller: controller,
+              presentation: const .general(variant: .filled),
+              onChanged: (_) {},
+            ),
+            direction: direction,
+          ),
+        );
+        await tester.pumpAndSettle();
+        final editable = tester.state<EditableTextState>(find.byType(EditableText));
+        final position = editable.renderEditable.offset as ScrollPosition;
+        final painter = tester
+            .widgetList<CustomPaint>(find.byType(CustomPaint))
+            .map((paint) => paint.foregroundPainter)
+            .whereType<MateoEdgeFadePainter>()
+            .single;
+        final bounds = tester.getSize(find.byType(MateoTextInput));
+        position.jumpTo(0);
+        await tester.pumpAndSettle();
+        final start = painter.resolveBands(bounds);
+        position.jumpTo(position.maxScrollExtent / 2);
+        await tester.pumpAndSettle();
+        final middle = painter.resolveBands(bounds);
+        expect(middle.every((band) => band.extent > MateoTextInputSize.standard.leadingPadding), isTrue);
+        position.jumpTo(position.maxScrollExtent);
+        await tester.pumpAndSettle();
+        final end = painter.resolveBands(bounds);
+        // The two ends exchange their resting and overflow depths.
+        expect(start.first.extent, closeTo(end.last.extent, 0.001));
+        expect(start.last.extent, closeTo(end.first.extent, 0.001));
+        expect(start.map((band) => band.extent), contains(MateoTextInputSize.standard.leadingPadding));
+        final value = controller.text;
+        controller.selection = TextSelection(baseOffset: 0, extentOffset: value.length);
+        await tester.pumpAndSettle();
+        expect(controller.text, value);
+        expect(controller.selection.extentOffset, value.length);
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
+  for (final direction in TextDirection.values) {
+    testWidgets('when filled general edits long text in $direction, it should keep the caret inside the resting fade', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            placeholder: 'Code',
+            presentation: const .general(variant: .filled),
+            onChanged: (_) {},
+          ),
+          direction: direction,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(CupertinoTextField), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ' * 4);
+      await tester.pumpAndSettle();
+      final editor = tester.state<EditableTextState>(find.byType(EditableText));
+      final caret = editor.renderEditable.getLocalRectForCaret(editor.textEditingValue.selection.extent);
+      final renderBox = tester.renderObject<RenderBox>(find.byType(MateoTextInput));
+      final caretPosition = renderBox.globalToLocal(editor.renderEditable.localToGlobal(caret.center));
+      expect(caretPosition.dx, greaterThanOrEqualTo(MateoTextInputSize.standard.leadingPadding));
+      expect(caretPosition.dx, lessThanOrEqualTo(renderBox.size.width - MateoTextInputSize.standard.trailingPadding));
+      expect(tester.takeException(), isNull);
+    });
+  }
+  for (final variant in [MateoTextInputVariant.plain, MateoTextInputVariant.filled]) {
+    for (final direction in TextDirection.values) {
+      testWidgets(
+        'when general $variant text is dragged in $direction, it should scroll without moving the caret or editing',
+        (tester) async {
+          final controller = TextEditingController.fromValue(
+            const TextEditingValue(
+              text: 'Coffee shops and bakeries nearby with outdoor seating and warm drinks',
+              selection: TextSelection.collapsed(offset: 0),
+            ),
+          );
+          addTearDown(controller.dispose);
+          final changes = <String>[];
+          await tester.pumpWidget(
+            _host(
+              MateoTextInput(
+                autofocus: false,
+                placeholder: 'Text',
+                controller: controller,
+                presentation: .general(variant: variant),
+                onChanged: changes.add,
+              ),
+              direction: direction,
+            ),
+          );
+          await tester.pumpAndSettle();
+          final editor = tester.widget<EditableText>(find.byType(EditableText));
+          final scroll = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField)).scrollController!;
+          for (final focused in [false, true]) {
+            if (focused) {
+              await tester.tap(find.byType(EditableText));
+              await tester.pumpAndSettle();
+            }
+            expect(editor.focusNode.hasFocus, focused);
+            final editingValue = controller.value;
+            scroll.jumpTo(scroll.position.maxScrollExtent / 2);
+            await tester.pumpAndSettle();
+            final initialOffset = scroll.offset;
+            final gesture = await tester.startGesture(tester.getCenter(find.byType(EditableText)));
+            await gesture.moveBy(const Offset(-50, 0));
+            await tester.pump(const Duration(milliseconds: 100));
+            await gesture.moveBy(const Offset(-30, 0));
+            await tester.pump(const Duration(milliseconds: 100));
+            expect((scroll.offset - initialOffset).abs(), greaterThan(10));
+            await gesture.up();
+            await tester.pumpAndSettle();
+            expect(controller.value, editingValue);
+            expect(editor.focusNode.hasFocus, focused);
+            expect(changes, isEmpty);
+          }
+          await tester.longPress(find.byType(EditableText));
+          await tester.pumpAndSettle();
+          expect(controller.selection.isValid, isTrue);
+          expect(editor.focusNode.hasFocus, isTrue);
+          await tester.tap(find.byType(EditableText));
+          await tester.pump(const Duration(milliseconds: 50));
+          await tester.tap(find.byType(EditableText));
+          await tester.pumpAndSettle();
+          expect(controller.selection.isCollapsed, isFalse);
+          expect(changes, isEmpty);
+          expect(tester.takeException(), isNull);
+        },
+        variant: const TargetPlatformVariant({TargetPlatform.iOS, TargetPlatform.android}),
+      );
+    }
+
+    testWidgets('when disabled general $variant text is dragged, it should stay still and unfocused', (tester) async {
+      final controller = TextEditingController(text: 'Coffee shops and bakeries nearby with outdoor seating');
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            controller: controller,
+            placeholder: 'Text',
+            presentation: .general(variant: variant),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final scroll = tester.widget<CupertinoTextField>(find.byType(CupertinoTextField)).scrollController!;
+      final initialOffset = scroll.offset;
+      final value = controller.value;
+      await tester.drag(find.byType(EditableText), const Offset(-80, 0), warnIfMissed: false);
+      await tester.pumpAndSettle();
+      expect(scroll.offset, initialOffset);
+      expect(controller.value, value);
+      expect(tester.widget<EditableText>(find.byType(EditableText)).focusNode.hasFocus, isFalse);
     });
   }
 }
