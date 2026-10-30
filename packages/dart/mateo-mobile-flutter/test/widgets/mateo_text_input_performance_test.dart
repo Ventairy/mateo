@@ -1,16 +1,63 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
-Widget _host(Widget input) => MateoApp(
-  theme: MateoThemeData.light(
-    accentColor: const Color(0xFF4A5CFF),
-    onAccent: MateoPalette().white,
-  ),
+Widget _host(Widget input, {MateoThemeData? theme}) => MateoApp(
+  theme:
+      theme ??
+      MateoThemeData.light(
+        accentColor: const Color(0xFF4A5CFF),
+        onAccent: MateoPalette().white,
+      ),
   home: Center(child: SizedBox(width: 320, child: input)),
 );
 
 void main() {
+  testWidgets('when Android editing controls read their theme repeatedly, they reuse the resolved Material theme', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _host(
+        MateoTextInput(
+          autofocus: true,
+          placeholder: 'Code',
+          presentation: .general(variant: .filled.neutral, purpose: .code),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+    await tester.enterText(find.byType(EditableText), 'INVITE');
+    await tester.pump();
+    final editingContext = tester.element(find.byType(EditableText));
+    final editingTheme = material.Theme.of(editingContext);
+    expect(material.Theme.of(editingContext), same(editingTheme));
+    await tester.enterText(find.byType(EditableText), 'INVITE2');
+    await tester.pump();
+    expect(material.Theme.of(editingContext), same(editingTheme));
+  }, variant: TargetPlatformVariant.only(.android));
+
+  testWidgets('when the Mateo accent changes, the native editing theme follows it', (tester) async {
+    for (final accent in [MateoPalette().blue[9], MateoPalette().green[9]]) {
+      final theme = MateoThemeData.light(accentColor: accent, onAccent: MateoPalette().white);
+      await tester.pumpWidget(
+        _host(
+          MateoTextInput(
+            autofocus: true,
+            placeholder: 'Code',
+            presentation: .general(variant: .filled.neutral, purpose: .code),
+            onChanged: (_) {},
+          ),
+          theme: theme,
+        ),
+      );
+      await tester.pump();
+      final editingContext = tester.element(find.byType(EditableText));
+      expect(material.Theme.of(editingContext).colorScheme.primary, theme.colorScheme.accent);
+      expect(material.TextSelectionTheme.of(editingContext).selectionHandleColor, theme.colorScheme.accent);
+    }
+  }, variant: TargetPlatformVariant.only(.android));
+
   for (final phone in [false, true]) {
     testWidgets(
       'when a ${phone ? 'phone' : 'search'} consumer rebuilds after an edit, it should keep the field widget stable',

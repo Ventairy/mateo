@@ -100,6 +100,7 @@ class MateoTextInput extends StatefulWidget {
 }
 
 class _MateoTextInputState extends State<MateoTextInput> {
+  material.ThemeData? _editingThemeData;
   TextEditingController? _ownedController;
   FocusNode? _ownedFocusNode;
   late final ValueChanged<String> _forwardChanged = _dispatchChanged;
@@ -119,6 +120,20 @@ class _MateoTextInputState extends State<MateoTextInput> {
   void _dispatchSubmitted(String value) => widget.onSubmitted?.call(value);
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (defaultTargetPlatform != .android && defaultTargetPlatform != .fuchsia) {
+      _editingThemeData = null;
+      return;
+    }
+    // Material handles otherwise generate a seeded theme from CupertinoTheme
+    // on every selection overlay rebuild.
+    _editingThemeData = material.CupertinoBasedMaterialThemeData(
+      themeData: CupertinoThemeData(brightness: .light, primaryColor: MateoTheme.of(context).colorScheme.accent),
+    ).materialTheme;
+  }
+
+  @override
   void didUpdateWidget(MateoTextInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != null && widget.controller == null) {
@@ -134,17 +149,20 @@ class _MateoTextInputState extends State<MateoTextInput> {
   }
 
   @override
-  Widget build(BuildContext context) => material.TextSelectionTheme(
-    data: material.TextSelectionThemeData(selectionHandleColor: MateoTheme.of(context).colorScheme.accent),
-    child: _MateoTextInputPresentationScope(
-      controller: _controller,
-      focusNode: _focusNode,
-      autofocus: widget.autofocus,
-      placeholder: widget.placeholder,
-      onChanged: widget.onChanged == null ? null : _forwardChanged,
-      onSubmitted: widget.onSubmitted == null ? null : _forwardSubmitted,
-      onClear: _clear,
-      child: widget.presentation,
-    ),
-  );
+  Widget build(BuildContext context) {
+    final input = material.TextSelectionTheme(
+      data: material.TextSelectionThemeData(selectionHandleColor: MateoTheme.of(context).colorScheme.accent),
+      child: _MateoTextInputPresentationScope(
+        controller: _controller,
+        focusNode: _focusNode,
+        autofocus: widget.autofocus,
+        placeholder: widget.placeholder,
+        onChanged: widget.onChanged == null ? null : _forwardChanged,
+        onSubmitted: widget.onSubmitted == null ? null : _forwardSubmitted,
+        onClear: _clear,
+        child: widget.presentation,
+      ),
+    );
+    return _editingThemeData == null ? input : material.Theme(data: _editingThemeData!, child: input);
+  }
 }
