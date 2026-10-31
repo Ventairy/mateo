@@ -9,11 +9,13 @@ void main() {
   for (final platform in [TargetPlatform.android, TargetPlatform.iOS]) {
     for (final snapshots in [true, false]) {
       for (final source in [
+        const MateoPageTransition.fade(),
         const MateoPageTransition.push(direction: .left),
         const MateoPageTransition.slide(direction: .down),
         const MateoPageTransition.wash(direction: .right),
       ]) {
         for (final destination in [
+          const MateoPageTransition.fade(),
           const MateoPageTransition.push(
             direction: .up,
             duration: Duration(milliseconds: 480),

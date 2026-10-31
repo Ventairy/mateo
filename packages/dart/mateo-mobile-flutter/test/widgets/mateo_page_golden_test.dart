@@ -31,7 +31,7 @@ Future<void> main() async {
                 child: SizedBox(
                   width: 240,
                   height: 320,
-                  child: _Scene(direction: direction, transition: transition),
+                  child: _Scene(direction: direction, transition: transition.transition(direction)),
                 ),
               ),
           ],
@@ -57,7 +57,7 @@ Future<void> main() async {
           child: const SizedBox(
             width: 240,
             height: 320,
-            child: _Scene(direction: .up, transition: .slide),
+            child: _Scene(direction: .up, transition: .slide()),
           ),
         ),
       ],
@@ -81,7 +81,7 @@ Future<void> main() async {
           child: const SizedBox(
             width: 240,
             height: 320,
-            child: _Scene(direction: .up, transition: .wash),
+            child: _Scene(direction: .up, transition: .wash()),
           ),
         ),
       ],
@@ -105,7 +105,7 @@ Future<void> main() async {
           child: const SizedBox(
             width: 240,
             height: 320,
-            child: _Scene(direction: .up, transition: .wash, snapshotting: false),
+            child: _Scene(direction: .up, transition: .wash(), snapshotting: false),
           ),
         ),
         GoldenTestScenario(
@@ -113,12 +113,49 @@ Future<void> main() async {
           child: const SizedBox(
             width: 240,
             height: 320,
-            child: _Scene(direction: .down, transition: .wash, reduced: true),
+            child: _Scene(direction: .down, transition: .wash(), reduced: true),
           ),
         ),
       ],
     ),
   );
+  for (final closing in [false, true]) {
+    // Use real font rendering so the capture preserves composited opacity.
+    await AlchemistConfig.runWithConfig(
+      config: AlchemistConfig.current().copyWith(ciGoldensConfig: const CiGoldensConfig(obscureText: false)),
+      run: () => goldenTest(
+        'when fade ${closing ? 'closes' : 'opens'}, it should blend the complete page without movement',
+        fileName: 'mateo_page_fade_${closing ? 'closing' : 'opening'}',
+        whilePerforming: (tester) async {
+          await tester.tap(find.byKey(const ValueKey('open-up')));
+          await tester.pump();
+          if (closing) {
+            await tester.pumpAndSettle();
+            await tester.tap(find.byKey(const ValueKey('close')));
+            await tester.pump();
+          }
+          await tester.pump(Duration(milliseconds: closing ? 150 : 300));
+          final fade = tester.widget<FadeTransition>(
+            find.ancestor(of: find.byKey(const ValueKey('close')), matching: find.byType(FadeTransition)).first,
+          );
+          expect(fade.opacity.value, closing ? inInclusiveRange(.3, .35) : inInclusiveRange(.75, .8));
+          return null;
+        },
+        builder: () => GoldenTestGroup(
+          children: [
+            GoldenTestScenario(
+              name: closing ? 'Closing at 150 ms' : 'Opening at 300 ms',
+              child: const SizedBox(
+                width: 240,
+                height: 320,
+                child: _Scene(direction: .up, transition: .fade()),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF7551FF), onAccent: const Color(0xFFFFFFFF));
@@ -143,7 +180,7 @@ enum _PageTransition {
 class _Scene extends StatelessWidget {
   const _Scene({required this.direction, required this.transition, this.snapshotting = true, this.reduced = false});
   final MateoPageTransitionDirection direction;
-  final _PageTransition transition;
+  final MateoPageTransition transition;
   final bool snapshotting;
   final bool reduced;
 
@@ -162,7 +199,7 @@ class _Scene extends StatelessWidget {
             key: ValueKey('open-${direction.name}'),
             onTap: () => Navigator.of(context).push(
               MateoPage<void>(
-                transition: transition.transition(direction),
+                transition: transition,
                 allowSnapshotting: snapshotting,
                 child: Builder(
                   builder: (context) => ColoredBox(

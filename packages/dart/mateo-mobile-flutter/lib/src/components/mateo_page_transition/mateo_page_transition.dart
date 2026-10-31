@@ -9,6 +9,10 @@ import 'package:oh_my_flutter/oh_my_flutter.dart' show MaybeSafeAreaTransform;
 import 'mateo_page_transition_direction.dart';
 
 part '_mateo_page_transition_motion.dart';
+part 'transitions/fade/_mateo_fade_closing_curve.dart';
+part 'transitions/fade/_mateo_fade_opening_curve.dart';
+part 'transitions/fade/_mateo_fade_page_transition_view.dart';
+part 'transitions/fade/mateo_page_transition_fade.dart';
 part 'transitions/push/_mateo_push_page_snapshot_painter.dart';
 part 'transitions/push/_mateo_push_page_transition_renderer.dart';
 part 'transitions/push/_mateo_push_page_transition_view.dart';
@@ -27,7 +31,13 @@ part 'transitions/wash/mateo_page_transition_wash.dart';
 /// Use with MateoPage or MateoPageTransitionsBuilder.
 @immutable
 sealed class MateoPageTransition {
-  const MateoPageTransition._({required this.direction, required this.duration, required this.reverseDuration});
+  const MateoPageTransition._({required this.duration, required this.reverseDuration});
+
+  /// Creates a full-page fade over a stationary previous page.
+  const factory MateoPageTransition.fade({
+    Duration duration,
+    Duration reverseDuration,
+  }) = MateoPageTransitionFade;
 
   /// Creates a feathered reveal of the destination from a screen edge.
   const factory MateoPageTransition.wash({
@@ -49,9 +59,6 @@ sealed class MateoPageTransition {
     Duration duration,
     Duration reverseDuration,
   }) = MateoPageTransitionSlide;
-
-  /// The physical direction of forward travel.
-  final MateoPageTransitionDirection direction;
 
   /// The time used to open the destination.
   final Duration duration;
@@ -77,12 +84,15 @@ sealed class MateoPageTransition {
 
   @override
   bool operator ==(Object other) =>
-      other.runtimeType == runtimeType &&
-      other is MateoPageTransition &&
-      other.direction == direction &&
-      other.duration == duration &&
-      other.reverseDuration == reverseDuration;
+      other.runtimeType == runtimeType && other is MateoPageTransition && other._configuration == _configuration;
+
+  Object get _configuration => switch (this) {
+    MateoPageTransitionFade() => (duration, reverseDuration),
+    MateoPageTransitionPush(:final direction) ||
+    MateoPageTransitionSlide(:final direction) ||
+    MateoPageTransitionWash(:final direction) => (direction, duration, reverseDuration),
+  };
 
   @override
-  int get hashCode => Object.hash(runtimeType, direction, duration, reverseDuration);
+  int get hashCode => Object.hash(runtimeType, _configuration);
 }

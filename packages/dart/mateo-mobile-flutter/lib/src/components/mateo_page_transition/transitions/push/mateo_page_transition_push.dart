@@ -9,11 +9,14 @@ final class MateoPageTransitionPush extends MateoPageTransition {
   ///
   /// Durations must be nonnegative. An omitted [reverseDuration] uses [duration].
   const MateoPageTransitionPush({
-    super.direction = .up,
+    this.direction = .up,
     super.duration = const .new(milliseconds: 600),
     Duration? reverseDuration,
   }) : curve = Curves.easeInOutCubic,
        super._(reverseDuration: reverseDuration ?? duration);
+
+  /// The physical direction of forward travel.
+  final MateoPageTransitionDirection direction;
 
   /// The easing of attached page movement.
   final Curve curve;

@@ -68,6 +68,7 @@ void main() {
       'when an explicit Mateo transition is used on iOS, it should not start an edge-swipe pop',
       (tester) async {
         for (final transition in [
+          const MateoPageTransition.fade(),
           const MateoPageTransition.wash(),
           const MateoPageTransition.push(),
           const MateoPageTransition.slide(),
@@ -634,10 +635,10 @@ void main() {
     test('when slide settings are omitted, they should use the default direction and timing', () {
       const transition = MateoPageTransition.slide();
 
-      expect(transition.direction, MateoPageTransitionDirection.up);
+      const slide = transition as MateoPageTransitionSlide;
+      expect(slide.direction, MateoPageTransitionDirection.up);
       expect(transition.duration, const Duration(milliseconds: 320));
       expect(transition.reverseDuration, const Duration(milliseconds: 260));
-      const slide = transition as MateoPageTransitionSlide;
       expect(slide.openingCurve, isNot(slide.closingCurve));
       expect(slide.openingCurve.transform(.5), closeTo(0.888290707184, 1e-12));
       expect(slide.closingCurve.transform(.5), closeTo(0.62890625, 1e-12));
@@ -917,6 +918,98 @@ void main() {
       expect(capturedRoute!.reverseTransitionDuration, Duration.zero);
       expect(tester.getTopLeft(find.byKey(_destinationKey)), Offset.zero);
     });
+
+    _testWidgets('when MateoPage fades, it should use its custom opacity curves in both directions', (tester) async {
+      PageRoute<void>? route;
+      await _pumpPushApp(
+        tester,
+        platform: .android,
+        settle: false,
+        onRouteCreated: (value) => route = value,
+        page: const MateoPage<void>(
+          transition: .fade(),
+          child: ColoredBox(key: _destinationKey, color: Colors.blue),
+        ),
+      );
+      expect(route!.transitionDuration, const Duration(milliseconds: 600));
+      expect(route!.reverseTransitionDuration, const Duration(milliseconds: 300));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(_destinationFadeOpacity(tester), inInclusiveRange(.75, .8));
+      expect(tester.getTopLeft(find.byKey(_destinationKey)), Offset.zero);
+      await tester.pumpAndSettle();
+      route!.navigator!.pop();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(_destinationFadeOpacity(tester), inInclusiveRange(.3, .35));
+      await tester.pumpAndSettle();
+      expect(find.byKey(_destinationKey), findsNothing);
+    });
+
+    _testWidgets('when reduced motion is enabled for fade, it should use zero timing and full opacity', (tester) async {
+      PageRoute<void>? route;
+      await tester.pumpWidget(
+        _PushApp(
+          platform: .android,
+          disableAnimations: true,
+          page: const MateoPage<void>(
+            transition: .fade(),
+            child: ColoredBox(key: _destinationKey, color: Colors.blue),
+          ),
+          onRouteCreated: (value) => route = value,
+        ),
+      );
+      await tester.tap(find.byKey(_openKey));
+      await tester.pump();
+      expect(route!.transitionDuration, Duration.zero);
+      expect(route!.reverseTransitionDuration, Duration.zero);
+      expect(_destinationFadeOpacity(tester), 1);
+    });
+
+    for (final commit in [false, true]) {
+      _testWidgets(
+        'when predictive back ${commit ? 'commits' : 'cancels'} fade, it should settle without an opacity jump',
+        (
+          tester,
+        ) async {
+          await _pumpPushApp(
+            tester,
+            platform: .android,
+            page: const MateoPage<void>(
+              transition: .fade(),
+              child: ColoredBox(key: _destinationKey, color: Colors.blue),
+            ),
+          );
+          final navigator = Navigator.of(tester.element(find.byKey(_destinationKey)));
+          await _sendBackGesture(
+            tester,
+            const MethodCall('startBackGesture', <String, Object>{
+              'touchOffset': <double>[5, 300],
+              'progress': 0.0,
+              'swipeEdge': 0,
+            }),
+          );
+          await _sendBackGesture(
+            tester,
+            const MethodCall('updateBackGestureProgress', <String, Object>{
+              'touchOffset': <double>[300, 300],
+              'progress': 0.4,
+              'swipeEdge': 0,
+            }),
+          );
+          await tester.pump();
+          final before = _destinationFadeOpacity(tester);
+          expect(before, closeTo(.6, .001));
+          await _sendBackGesture(tester, MethodCall(commit ? 'commitBackGesture' : 'cancelBackGesture'));
+          await tester.pump();
+          expect(_destinationFadeOpacity(tester), before);
+          await tester.pump(const Duration(milliseconds: 30));
+          expect(_destinationFadeOpacity(tester), commit ? lessThan(before) : greaterThan(before));
+          await tester.pumpAndSettle();
+          expect(find.byKey(_destinationKey), commit ? findsNothing : findsOneWidget);
+          expect(navigator.userGestureInProgress, isFalse);
+        },
+      );
+    }
 
     _testWidgets(
       'when a page with the same key updates, it should display the latest child',
@@ -1617,3 +1710,10 @@ void _testWidgets(String description, WidgetTesterCallback callback) {
     }
   });
 }
+
+double _destinationFadeOpacity(WidgetTester tester) => tester
+    .widget<FadeTransition>(
+      find.ancestor(of: find.byKey(_destinationKey), matching: find.byType(FadeTransition)).first,
+    )
+    .opacity
+    .value;

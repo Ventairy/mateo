@@ -15,6 +15,121 @@ void main() {
     );
   });
 
+  test('when fade uses default timing, it should open gently and return sooner', () {
+    const fade = MateoPageTransitionFade();
+    expect(const MateoPageTransition.fade(), fade);
+    expect(fade.duration, const Duration(milliseconds: 600));
+    expect(fade.reverseDuration, const Duration(milliseconds: 300));
+    expect(fade, isNot(const MateoPageTransition.fade(duration: Duration(milliseconds: 400))));
+    expect(fade, isNot(const MateoPageTransition.fade(reverseDuration: Duration(milliseconds: 200))));
+    expect(fade.hashCode, const MateoPageTransition.fade().hashCode);
+    expect(fade, isNot(const MateoPageTransition.slide()));
+    expect(const MateoPageTransition.slide(direction: .left), isNot(const MateoPageTransition.slide()));
+    expect(const MateoPageTransition.push(direction: .left), isNot(const MateoPageTransition.push()));
+    expect(const MateoPageTransition.wash(direction: .left), isNot(const MateoPageTransition.wash()));
+
+    for (final curve in [fade.openingCurve, fade.closingCurve]) {
+      var previous = curve.transform(0);
+      expect(previous, 0);
+      for (var sample = 1; sample <= 1000; sample++) {
+        final opacity = curve.transform(sample / 1000);
+        expect(opacity, inInclusiveRange(previous, 1));
+        previous = opacity;
+      }
+      expect(previous, 1);
+      // Soft onset and landing: halving either endpoint window should reduce
+      // the opacity change much more than halving a linear fade would.
+      expect(curve.transform(.005) / curve.transform(.01), lessThan(.15));
+      expect((1 - curve.transform(.995)) / (1 - curve.transform(.99)), lessThan(.08));
+    }
+    expect(fade.openingCurve.transform(.1), greaterThan(.02));
+    expect(fade.openingCurve.transform(.5), inInclusiveRange(.75, .8));
+    expect(fade.openingCurve.transform(.6), greaterThan(.9));
+    expect(fade.closingCurve.transform(.5), inInclusiveRange(.65, .7));
+  });
+
+  test('when fade timing is customized, it should validate and forward both durations', () {
+    const builder = MateoPageTransitionsBuilder(
+      transition: .fade(duration: Duration(milliseconds: 450), reverseDuration: Duration(milliseconds: 240)),
+    );
+    expect(builder.transitionDuration, const Duration(milliseconds: 450));
+    expect(builder.reverseTransitionDuration, const Duration(milliseconds: 240));
+    expect(
+      const MateoPageTransition.fade(duration: Duration(milliseconds: 450)).reverseDuration,
+      const Duration(milliseconds: 300),
+    );
+    for (final transition in [
+      const MateoPageTransition.fade(duration: Duration(milliseconds: -1)),
+      const MateoPageTransition.fade(reverseDuration: Duration(milliseconds: -1)),
+    ]) {
+      expect(() => MateoPageTransitionsBuilder(transition: transition).transitionDuration, throwsArgumentError);
+    }
+  });
+
+  testWidgets('when routes share a fade builder, it should fade the whole destination over a stationary source', (
+    tester,
+  ) async {
+    const builder = MateoPageTransitionsBuilder(transition: .fade());
+    final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+    addTearDown(pages.dispose);
+    await tester.pumpWidget(_app(pages));
+    pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+    await tester.pump();
+    expect(_fadeOpacity(tester, 'destination'), 0);
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(_fadeOpacity(tester, 'destination'), inInclusiveRange(.75, .8));
+    expect(_fadeOpacity(tester, 'source'), 1);
+    expect(tester.getTopLeft(find.byKey(const ValueKey('source'))), Offset.zero);
+    expect(tester.getTopLeft(find.byKey(const ValueKey('destination'))), Offset.zero);
+    await tester.pumpAndSettle();
+    expect(_fadeOpacity(tester, 'destination'), 1);
+    Navigator.of(tester.element(find.byKey(const ValueKey('destination')))).pop();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 150));
+    expect(_fadeOpacity(tester, 'destination'), inInclusiveRange(.3, .35));
+    expect(_fadeOpacity(tester, 'source'), 1);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('destination')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('when a fade is reversed during entry, it should continue from the visible opacity', (tester) async {
+    const builder = MateoPageTransitionsBuilder(transition: .fade());
+    final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+    addTearDown(pages.dispose);
+    await tester.pumpWidget(_app(pages));
+    pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    final before = _fadeOpacity(tester, 'destination');
+    Navigator.of(tester.element(find.byKey(const ValueKey('destination')))).pop();
+    await tester.pump();
+    expect(_fadeOpacity(tester, 'destination'), before);
+    await tester.pump(const Duration(milliseconds: 30));
+    expect(_fadeOpacity(tester, 'destination'), lessThan(before));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('when reduced motion changes during a fade, it should reveal the complete destination immediately', (
+    tester,
+  ) async {
+    const builder = MateoPageTransitionsBuilder(transition: .fade());
+    final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+    final reduced = ValueNotifier(false);
+    addTearDown(pages.dispose);
+    addTearDown(reduced.dispose);
+    await tester.pumpWidget(_app(pages, reduced: reduced));
+    pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(_fadeOpacity(tester, 'destination'), lessThan(.2));
+    reduced.value = true;
+    await tester.pump();
+    expect(_fadeOpacity(tester, 'destination'), 1);
+    await tester.pumpAndSettle();
+  });
+
   for (final direction in MateoPageTransitionDirection.values) {
     testWidgets('when application routes share a $direction slide builder, it should move only the destination', (
       tester,
@@ -132,6 +247,7 @@ void main() {
   });
 
   for (final transition in [
+    const MateoPageTransition.fade(),
     const MateoPageTransition.push(),
     const MateoPageTransition.slide(),
     const MateoPageTransition.wash(),
@@ -159,14 +275,10 @@ void main() {
           ..handleStartBackGesture(progress: 1)
           ..handleUpdateBackGestureProgress(progress: 0.63);
         await tester.pump();
-        final before = transition is MateoPageTransitionWash
-            ? _mask(tester)
-            : tester.getRect(find.byKey(const ValueKey('destination')));
+        final before = _transitionAppearance(tester, transition);
         route.handleCancelBackGesture();
         await tester.pump();
-        final after = transition is MateoPageTransitionWash
-            ? _mask(tester)
-            : tester.getRect(find.byKey(const ValueKey('destination')));
+        final after = _transitionAppearance(tester, transition);
         expect(after, before);
         await tester.pumpAndSettle();
         expect(route.isCurrent, isTrue);
@@ -305,3 +417,16 @@ ShaderMaskLayer? _findMask(Layer? layer) {
   }
   return null;
 }
+
+Object _transitionAppearance(WidgetTester tester, MateoPageTransition transition) => switch (transition) {
+  MateoPageTransitionFade() => _fadeOpacity(tester, 'destination'),
+  MateoPageTransitionWash() => _mask(tester),
+  MateoPageTransitionPush() || MateoPageTransitionSlide() => tester.getRect(find.byKey(const ValueKey('destination'))),
+};
+
+double _fadeOpacity(WidgetTester tester, String id) => tester
+    .widget<FadeTransition>(
+      find.ancestor(of: find.byKey(ValueKey(id)), matching: find.byType(FadeTransition)).first,
+    )
+    .opacity
+    .value;

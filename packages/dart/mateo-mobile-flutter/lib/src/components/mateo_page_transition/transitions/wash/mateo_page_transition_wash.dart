@@ -9,13 +9,16 @@ final class MateoPageTransitionWash extends MateoPageTransition {
   ///
   /// Durations must be nonnegative. An omitted [reverseDuration] uses [duration].
   const MateoPageTransitionWash({
-    super.direction = .up,
+    this.direction = .up,
     super.duration = const .new(milliseconds: 600),
     Duration? reverseDuration,
   }) : openingCurve = Curves.easeInOutSine,
        closingCurve = Curves.easeOutQuad,
        opacityCurve = Curves.easeInOutCubic,
        super._(reverseDuration: reverseDuration ?? duration);
+
+  /// The physical direction of forward travel.
+  final MateoPageTransitionDirection direction;
 
   /// The easing of the expanding reveal.
   final Curve openingCurve;

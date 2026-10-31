@@ -9,12 +9,15 @@ final class MateoPageTransitionSlide extends MateoPageTransition {
   ///
   /// Durations must be nonnegative.
   const MateoPageTransitionSlide({
-    super.direction = .up,
+    this.direction = .up,
     super.duration = const .new(milliseconds: 320),
     super.reverseDuration = const .new(milliseconds: 260),
   }) : openingCurve = const _MateoSlideOpeningCurve(),
        closingCurve = const _MateoSlideClosingCurve(),
        super._();
+
+  /// The physical direction of forward travel.
+  final MateoPageTransitionDirection direction;
 
   /// The easing used when the destination opens.
   final Curve openingCurve;

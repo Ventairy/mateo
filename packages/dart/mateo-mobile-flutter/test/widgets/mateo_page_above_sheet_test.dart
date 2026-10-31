@@ -13,7 +13,13 @@ const ValueKey<String> _declarativePageKey = .new('declarative-page');
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
-    for (final transition in <MateoPageTransition?>[null, const .wash(), const .push(), const .slide()]) {
+    for (final transition in <MateoPageTransition?>[
+      null,
+      const .fade(),
+      const .wash(),
+      const .push(),
+      const .slide(),
+    ]) {
       _testWidgets('$platform $transition suppresses push and pop above a sheet', (tester) async {
         debugDefaultTargetPlatformOverride = platform;
         final navigator = await _openSheet(tester);
