@@ -394,6 +394,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.star(<params>);
 /// ```
 /// ```dart
+/// $Icons.threeHorizontalLines(<params>);
+/// ```
+/// ```dart
 /// $Icons.tire(<params>);
 /// ```
 /// ```dart
@@ -1960,6 +1963,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `ThreeHorizontalLines` widget from `threeHorizontalLines.svg`.
+  static Widget threeHorizontalLines({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _ThreeHorizontalLines(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Tire` widget from `tire.svg`.
   static Widget tire({
     Key? key,
@@ -2325,6 +2343,11 @@ abstract final class $Icons {
     ),
     'stadium.svg' => stadium(key: key, width: width, height: height),
     'star.svg' => star(key: key, width: width, height: height),
+    'three-horizontal-lines.svg' => threeHorizontalLines(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'tire.svg' => tire(key: key, width: width, height: height),
     'train-front.svg' => trainFront(key: key, width: width, height: height),
     'trash.svg' => trash(key: key, width: width, height: height),
@@ -20122,6 +20145,141 @@ class _StarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _StarPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/three-horizontal-lines.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ThreeHorizontalLines extends StatelessWidget with _DotdartSvgSizing {
+  const _ThreeHorizontalLines({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ThreeHorizontalLines._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ThreeHorizontalLines._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ThreeHorizontalLines._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ThreeHorizontalLines._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ThreeHorizontalLinesPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ThreeHorizontalLinesPainter extends CustomPainter {
+  _ThreeHorizontalLinesPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.824729981,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.824729981,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.752700189,
+    1.752700189,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(1.5, 3)
+    ..lineTo(18.5, 3)
+    ..moveTo(1.5, 10)
+    ..lineTo(18.5, 10)
+    ..moveTo(1.5, 17)
+    ..lineTo(18.5, 17);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ThreeHorizontalLines._viewBoxWidth;
+    final scaleY = size.height / _ThreeHorizontalLines._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_ThreeHorizontalLines._viewBoxMinX,
+        -_ThreeHorizontalLines._viewBoxMinY,
+      );
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(
+      __path0,
+      _strokePaint
+        ..color = mateoOpticalSizeColor
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.miter,
+    );
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ThreeHorizontalLinesPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
