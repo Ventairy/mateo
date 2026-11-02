@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from contextlib import redirect_stderr
+from dataclasses import replace
 from functools import lru_cache
 from pathlib import Path
 from unittest.mock import patch
@@ -195,6 +196,46 @@ class ContrastAndSolverTests(unittest.TestCase):
                     geometry, scale
                 )
                 self.assertAlmostEqual(actual, factor, places=12)
+
+    def test_learned_enlargement_does_not_expand_sparse_peripheral_strokes(self):
+        for drawing in (
+            '<path d="M17 3H3V17H17" fill="none" stroke="black" stroke-width="2"/>',
+            '<path d="M3 3V17M17 3V17" fill="none" stroke="black" stroke-width="2"/>',
+        ):
+            with self.subTest(drawing=drawing):
+                source = svg(drawing)
+                geometry = sizing_tool._measure_geometry(source)
+                base_extent = sizing_tool.sizing(geometry, target())["extent"]
+                with patch.object(sizing_tool.learned_presence, "readout", return_value=-0.1):
+                    _, adjusted = sizing_tool.adjust_icon_size(source, target())
+                self.assertAlmostEqual(adjusted["extent"], base_extent, places=7)
+
+    def test_spread_limit_preserves_compact_enlargement_and_size_reduction(self):
+        compact_cross = svg(
+            '<path d="M10 3V17M3 10H17" stroke="black" stroke-width="2"/>'
+        )
+        for source, correction in ((compact_cross, -0.1), (RECT, -0.1), (compact_cross, 0.1)):
+            with self.subTest(source=source, correction=correction):
+                with patch.object(
+                    sizing_tool.learned_presence, "readout", return_value=correction
+                ):
+                    adjusted = sizing_tool.measure(source)
+                self.assertEqual(adjusted.features["learned_log_correction"], correction)
+
+    def test_sparse_spread_transition_has_no_jump_at_either_ink_boundary(self):
+        geometry = sizing_tool._measure_geometry(svg(
+            '<path d="M17 3H3V17H17" fill="none" stroke="black" stroke-width="2"/>'
+        ))
+        for boundary in sizing_tool.MODEL_DATA["sparse_spread_guard"].values():
+            corrections = []
+            for fraction in (boundary - 1e-6, boundary, boundary + 1e-6):
+                features = dict(
+                    geometry.features,
+                    ink_area=fraction * geometry.features["axis_extent"] ** 2,
+                )
+                icon = replace(geometry, features=features)
+                corrections.append(sizing_tool._limit_sparse_enlargement(icon, -0.1))
+            self.assertLess(max(corrections) - min(corrections), 1e-9)
 
     def test_score_is_strictly_increasing_over_several_orders_of_magnitude(self):
         for source in (

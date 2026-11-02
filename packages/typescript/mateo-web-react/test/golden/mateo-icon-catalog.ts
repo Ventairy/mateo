@@ -103,6 +103,7 @@ export const mateoGoldenIconCatalog = {
   socialMediaPost: MateoIcons.MateoSocialMediaPostIcon,
   stadium: MateoIcons.MateoStadiumIcon,
   star: MateoIcons.MateoStarIcon,
+  threeHorizontalLines: MateoIcons.MateoThreeHorizontalLinesIcon,
   tire: MateoIcons.MateoTireIcon,
   trainFront: MateoIcons.MateoTrainFrontIcon,
   trash: MateoIcons.MateoTrashIcon,

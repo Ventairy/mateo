@@ -6,6 +6,65 @@ import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
   await goldenTest(
+    'when sparse icons have broad contours, it should balance their size beside filled icons',
+    fileName: 'mateo_icon_optical_balance',
+    builder: () => MateoTheme(
+      data: surfaceTransformTheme,
+      child: GoldenTestGroup(
+        columns: 2,
+        children: [
+          for (final (group, icons) in [
+            (
+              'Settings',
+              [
+                MateoIconData.lifebuoy,
+                MateoIconData.shieldLock,
+                MateoIconData.scroll,
+                MateoIconData.logout,
+                MateoIconData.trash,
+              ],
+            ),
+            (
+              'Spread contours',
+              [
+                MateoIconData.arrowRotateClockwise,
+                MateoIconData.bankBuilding,
+                MateoIconData.intellectualProperty,
+                MateoIconData.road,
+                MateoIconData.sadMaskHappyMask,
+                MateoIconData.stadium,
+                MateoIconData.threeHorizontalLines,
+              ],
+            ),
+          ])
+            for (final size in [20.0, 40.0])
+              GoldenTestScenario(
+                name: '$group / ${size == 40 ? '40px badges' : '20px glyphs'}',
+                child: Padding(
+                  padding: const .all(16),
+                  child: Row(
+                    mainAxisSize: .min,
+                    spacing: 12,
+                    children: [
+                      for (final icon in icons)
+                        MateoIcon(
+                          icon,
+                          size: size,
+                          color: size == 40
+                              ? surfaceTransformTheme.colorScheme.onAccent
+                              : surfaceTransformTheme.colorScheme.text.primary,
+                          backgroundColor: size == 40 ? surfaceTransformTheme.colorScheme.accent : null,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+        ],
+      ),
+    ),
+  );
+
+  await goldenTest(
     'when icons have circular backgrounds, it should preserve spacing and supplied foreground colors at each size',
     fileName: 'mateo_icon_background',
     builder: () => MateoTheme(

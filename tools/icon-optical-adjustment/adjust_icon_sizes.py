@@ -17,6 +17,7 @@ import os
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, replace
+from functools import lru_cache
 from pathlib import Path
 
 import learned_presence
@@ -153,6 +154,7 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
         closure=closure["closure"],
         closure_filled_areas=closure["filled_areas"],
         orientation=orientation,
+        radial_spread=math.sqrt(vx + vy) / pixels_per_unit,
         orientation_log_bias=ORIENTATION_COEFFICIENT * orientation,
         diagonal_factor=diagonal_factor,
         geometry_presence=geometry_presence,
@@ -165,6 +167,39 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     return Measurement(raw.bounds, canonical_scale, features, frequencies, energy)
 
 
+@lru_cache(maxsize=1)
+def _reference_geometry():
+    return _measure_geometry(learned_presence.REFERENCE_SOURCE)
+
+
+def _limit_sparse_enlargement(icon, correction):
+    """Keep learned enlargement from exaggerating already spread-out strokes.
+
+    The disk's RMS distance from its ink centroid supplies a second, independent
+    span cue. It can limit learned enlargement, never reduce the geometric size
+    or change a learned size reduction. Compact symbols remain free to enlarge.
+    """
+    if correction >= 0:
+        return correction
+    features = icon.features
+    ink_fraction = features["ink_area"] / features["axis_extent"] ** 2
+    guard = MODEL_DATA["sparse_spread_guard"]
+    full = guard["full_strength_ink_fraction"]
+    zero = guard["zero_strength_ink_fraction"]
+    if ink_fraction >= zero:
+        return correction
+    reference = _reference_geometry().features
+    spread_presence = (
+        reference["geometry_presence"] * features["radial_spread"] / reference["radial_spread"]
+    )
+    correction_floor = min(0.0, math.log(spread_presence / features["geometry_presence"]))
+    if correction >= correction_floor:
+        return correction
+    progress = min(1.0, (zero - ink_fraction) / (zero - full))
+    strength = progress * progress * (3 - 2 * progress)
+    return correction + strength * (correction_floor - correction)
+
+
 def measure(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     """Apply one fixed visual correction to the authored geometry measurement."""
     if pixels_per_unit != PIXELS_PER_UNIT:
@@ -173,10 +208,12 @@ def measure(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     measured = _measure_geometry(original, pixels_per_unit=pixels_per_unit)
     model = learned_presence.get_model()
     raw = model.raw_features(original, measured, pixels_per_unit=pixels_per_unit)
-    correction = learned_presence.readout(raw, model.data)
+    learned_correction = learned_presence.readout(raw, model.data)
+    correction = _limit_sparse_enlargement(measured, learned_correction)
     features = dict(measured.features)
     features.update(
         learned_raw_cues=raw.tolist(),
+        learned_log_correction_before_spread_limit=learned_correction,
         learned_log_correction=correction,
         learned_gate=math.exp(-max(float(raw[2]), 0)),
         base_geometry_presence=features["geometry_presence"],
@@ -217,7 +254,7 @@ def reference_target(*, pixels_per_unit=PIXELS_PER_UNIT):
     """A synthetic disk fixes overall size without depending on a catalog member."""
     if pixels_per_unit != PIXELS_PER_UNIT:
         raise ValueError("The fixed icon model requires 32 geometry samples per unit")
-    disk = _measure_geometry(learned_presence.REFERENCE_SOURCE, pixels_per_unit=pixels_per_unit)
+    disk = _reference_geometry()
     learned_presence.get_model().verify_reference_geometry(disk)
     return presence(disk, REFERENCE_DIAMETER / FRAME)
 
@@ -418,7 +455,7 @@ def main(argv=None):
                 learned_model=dict(
                     parameters=MODEL_DATA,
                     parameters_sha256=learned_presence.digest_file(learned_presence.MODEL_PATH),
-                    formula="P(s) = P_base(s) * exp(bound * gate * tanh(standardized_polynomial_cues dot coefficients))",
+                    formula="P(s) = P_base(s) * exp(C); C is the bounded learned correction after the dense-ink and sparse-spread enlargement limits.",
                     inference="Verified local weights; no downloads or fitting during optical size adjustment.",
                 ),
                 input_directory=str(source_dir),

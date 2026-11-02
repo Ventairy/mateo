@@ -184,6 +184,19 @@ class LearnedPresenceTests(unittest.TestCase):
         self.assertEqual(len(presence.FEATURE_NAMES), 164)
         np.testing.assert_array_equal(presence.expand(reference, reference, units), np.zeros(164))
 
+    def test_model_rejects_invalid_sparse_spread_transition(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "model.json"
+            for full, zero in ((-0.1, 0.5), (0.5, 0.5), (0.5, 0.4), (0.4, 0.7), (True, 0.5), (0.4, math.nan)):
+                with self.subTest(full=full, zero=zero):
+                    data = presence.read_model()
+                    data["sparse_spread_guard"].update(
+                        full_strength_ink_fraction=full, zero_strength_ink_fraction=zero
+                    )
+                    path.write_text(json.dumps(data))
+                    with self.assertRaisesRegex(ValueError, "Sparse spread transition"):
+                        presence.read_model(path)
+
     def test_model_rejects_obsolete_mappings_and_gates(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "model.json"

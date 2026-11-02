@@ -1,6 +1,6 @@
 # Adjust icon sizes optically
 
-The `mateo-optical-4.2` model gives every icon a uniform scale and a
+The `mateo-optical-4.3` model gives every icon a uniform scale and a
 translation inside its existing SVG frame. It balances a shared size
 score against a reference disk and limits painted span. The
 [icon foundation](../../design-system/foundation/icons.md) owns how exported assets are used.
@@ -143,6 +143,17 @@ square to the reference disk's coverage, about 78.6%. The transition uses
 Below it, the correction stays unchanged; above it, learned enlargement is
 removed. Positive corrections, which reduce size, stay unchanged. Coverage uses
 actual ink, so empty space inside an outlined shape does not make it dense.
+
+Sparse drawings also limit learned enlargement when their ink is already
+spread broadly across the frame. Measure the RMS distance of ink from its
+centroid and compare it with the same measure for the reference disk. Multiply
+that ratio by the disk's geometric presence to obtain a spread-based score.
+The score floor is the smaller of that score and the icon's geometric score;
+it can remove learned enlargement but never shrink below the geometric result.
+Compact symbols whose learned score stays above this floor keep their sizing.
+Apply the limit fully below 40% ink coverage of the canonical square, fading
+it out with the same smooth transition by 50% coverage. Learned reductions and
+drawings at or above 50% coverage stay unchanged.
 
 The final score is **P(s) = P₀(s) × exp(C)**, using the adjusted C.
 

@@ -1,12 +1,16 @@
 {
   "schema": "mateo.icon-presence-model.v1",
-  "model": "mateo-optical-4.2",
+  "model": "mateo-optical-4.3",
   "reference_diameter": 15.5,
   "max_extent": 18.0,
   "pixels_per_unit": 32,
   "bound": 0.1823215567939546,
   "correction_gate": "ink-over-enclosure-and-dense-ink",
   "dense_ink_start": 0.6,
+  "sparse_spread_guard": {
+    "full_strength_ink_fraction": 0.4,
+    "zero_strength_ink_fraction": 0.5
+  },
   "feature_mapping": "complete-cubic",
   "input_feature_names": [
     "unoccupied_fraction",
@@ -848,8 +852,8 @@
     }
   },
   "provenance": {
-    "source_model_sha256": "ad338c68264dee55e4d1786ff6c8fae3cf56ba931f53da6e9ffab2a35fc23d59",
-    "calibration": "Fixed 4.1 coefficients and rendering context; 4.2 limits learned enlargement of dense silhouettes without refitting the coefficients."
+    "source_model_sha256": "cc870af887057e267b54e054f08e925b8b232aeb82d77a2df12de4de664a42b1",
+    "calibration": "Fixed 4.2 coefficients and rendering context; 4.3 limits learned enlargement of sparse, widely spread ink against the reference disk without refitting the coefficients."
   },
   "polynomial_degree": 3
 }

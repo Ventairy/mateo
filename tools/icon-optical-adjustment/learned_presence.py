@@ -138,6 +138,19 @@ def _validate_model(data):
         or not 0 <= dense_start < reference_ink <= 1
     ):
         raise ValueError("Dense ink transition must start below the reference disk ink fraction")
+    guard = data["sparse_spread_guard"]
+    full = guard["full_strength_ink_fraction"]
+    zero = guard["zero_strength_ink_fraction"]
+    if (
+        any(
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value)
+            for value in (full, zero)
+        )
+        or not 0 <= full < zero <= dense_start
+    ):
+        raise ValueError("Sparse spread transition must finish before the dense ink transition")
     if data["reference_authored_sha256"] != hashlib.sha256(REFERENCE_SOURCE.encode()).hexdigest():
         raise ValueError("The model must use the fixed 20-unit solid disk reference")
     context = data["canonical_context"]

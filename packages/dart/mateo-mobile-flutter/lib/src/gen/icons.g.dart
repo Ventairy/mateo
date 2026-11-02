@@ -2997,20 +2997,20 @@ class _ArrowRotateClockisePainter extends CustomPainter {
   final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.715858073,
+    0.674672971,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.715858073,
+    0.674672971,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.483490235,
-    2.841419271,
+    2.915933804,
+    3.253270289,
     0.0,
     1.0,
   ]);
@@ -3468,20 +3468,20 @@ class _BankBuildingPainter extends CustomPainter {
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.827133887,
+    0.820582532,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.827133887,
+    0.820582532,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.883748736,
-    1.741585099,
+    1.948033901,
+    1.806996278,
     0.0,
     1.0,
   ]);
@@ -12604,20 +12604,20 @@ class _IntellectualPropertyPainter extends CustomPainter {
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.845859909,
+    0.836722886,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.845859909,
+    0.836722886,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.541400911,
-    1.541400911,
+    1.632771138,
+    1.632771138,
     0.0,
     1.0,
   ]);
@@ -13943,20 +13943,20 @@ class _LogoutPainter extends CustomPainter {
   final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.790480581,
+    0.737135067,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.790480581,
+    0.737135067,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.095194193,
-    2.095194193,
+    2.628649329,
+    2.628649329,
     0.0,
     1.0,
   ]);
@@ -17770,20 +17770,20 @@ class _RoadPainter extends CustomPainter {
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.809329733,
+    0.678144384,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.809329733,
+    0.678144384,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.906702669,
-    1.906702669,
+    3.218556162,
+    3.218556162,
     0.0,
     1.0,
   ]);
@@ -18240,20 +18240,20 @@ class _SadMaskHappyMaskPainter extends CustomPainter {
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.820724592,
+    0.807654234,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.820724592,
+    0.807654234,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.805577902,
-    1.57474911,
+    1.936077261,
+    1.708924508,
     0.0,
     1.0,
   ]);
@@ -19830,20 +19830,20 @@ class _StadiumPainter extends CustomPainter {
   final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.818833214,
+    0.807941606,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.818833214,
+    0.807941606,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.811667859,
-    2.29785008,
+    1.92058394,
+    2.400299268,
     0.0,
     1.0,
   ]);
@@ -20227,20 +20227,20 @@ class _ThreeHorizontalLinesPainter extends CustomPainter {
   final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.824729981,
+    0.727436236,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.824729981,
+    0.727436236,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    1.752700189,
-    1.752700189,
+    2.725637637,
+    2.725637637,
     0.0,
     1.0,
   ]);
