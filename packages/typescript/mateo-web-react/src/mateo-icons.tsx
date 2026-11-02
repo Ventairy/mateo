@@ -16,6 +16,7 @@ import MateoBicycleArtwork from '@mateo/icons/svg/bicycle.svg?react';
 import MateoBidirecionalHorizontalArrowArtwork from '@mateo/icons/svg/bidirecional-horizontal-arrow.svg?react';
 import MateoBookArtwork from '@mateo/icons/svg/book.svg?react';
 import MateoBoxPencilArtwork from '@mateo/icons/svg/box-pencil.svg?react';
+import MateoBrokenHeartArtwork from '@mateo/icons/svg/broken-heart.svg?react';
 import MateoBroomArtwork from '@mateo/icons/svg/broom.svg?react';
 import MateoBuildingsArtwork from '@mateo/icons/svg/buildings.svg?react';
 import MateoBusFrontArtwork from '@mateo/icons/svg/bus-front.svg?react';
@@ -202,6 +203,11 @@ export function MateoBookIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the boxPencil artwork with Mateo icon appearance and accessibility. */
 export function MateoBoxPencilIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBoxPencilArtwork} />;
+}
+
+/** Renders the brokenHeart artwork with Mateo icon appearance and accessibility. */
+export function MateoBrokenHeartIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoBrokenHeartArtwork} />;
 }
 
 /** Renders the broom artwork with Mateo icon appearance and accessibility. */

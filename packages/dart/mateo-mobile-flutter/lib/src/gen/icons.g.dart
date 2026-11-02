@@ -130,6 +130,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.boxPencil(<params>);
 /// ```
 /// ```dart
+/// $Icons.brokenHeart(<params>);
+/// ```
+/// ```dart
 /// $Icons.broom(<params>);
 /// ```
 /// ```dart
@@ -632,6 +635,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _BoxPencil(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `BrokenHeart` widget from `brokenHeart.svg`.
+  static Widget brokenHeart({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _BrokenHeart(
     key: key,
     width: width,
     height: height,
@@ -2163,6 +2181,7 @@ abstract final class $Icons {
     ),
     'book.svg' => book(key: key, width: width, height: height),
     'box-pencil.svg' => boxPencil(key: key, width: width, height: height),
+    'broken-heart.svg' => brokenHeart(key: key, width: width, height: height),
     'broom.svg' => broom(key: key, width: width, height: height),
     'buildings.svg' => buildings(key: key, width: width, height: height),
     'bus-front.svg' => busFront(key: key, width: width, height: height),
@@ -4751,6 +4770,148 @@ class _BoxPencilPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BoxPencilPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/broken-heart.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _BrokenHeart extends StatelessWidget with _DotdartSvgSizing {
+  const _BrokenHeart({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _BrokenHeart._svgWidth;
+
+  @override
+  double get svgNativeHeight => _BrokenHeart._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _BrokenHeart._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _BrokenHeart._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _BrokenHeartPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _BrokenHeartPainter extends CustomPainter {
+  _BrokenHeartPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.798593928,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.798593928,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.014060723,
+    2.014060723,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(8.6057, 1.3144)
+    ..cubicTo(7.3653, 0.7421, 6.058, 0.6193, 4.8327, 0.8925)
+    ..cubicTo(2.9054, 1.3222, 1.2712, 2.7134, 0.4926, 4.6548)
+    ..cubicTo(-1.1109, 8.6533, 0.9865, 14.341, 9.5113, 19.1191)
+    ..cubicTo(9.815, 19.2893, 10.1852, 19.2893, 10.4888, 19.1191)
+    ..cubicTo(19.0136, 14.341, 21.111, 8.6532, 19.5074, 4.6548)
+    ..cubicTo(18.7288, 2.7134, 17.0947, 1.3222, 15.1673, 0.8924)
+    ..cubicTo(13.8011, 0.5878, 12.333, 0.7756, 10.9692, 1.5298)
+    ..cubicTo(9.887, 2.6948, 9.1057, 4.3986, 9.0099, 6.3469)
+    ..lineTo(12.1429, 9.48)
+    ..lineTo(10.948, 13.065)
+    ..cubicTo(10.7733, 13.5887, 10.2072, 13.8718, 9.6835, 13.6971)
+    ..cubicTo(9.1597, 13.5226, 8.8767, 12.9565, 9.0512, 12.4327)
+    ..lineTo(9.8556, 10.02)
+    ..lineTo(7.0007, 7.1651)
+    ..lineTo(7.0007, 6.751)
+    ..cubicTo(7.0007, 4.7328, 7.6054, 2.8332, 8.6057, 1.3144)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _BrokenHeart._viewBoxWidth;
+    final scaleY = size.height / _BrokenHeart._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_BrokenHeart._viewBoxMinX, -_BrokenHeart._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _BrokenHeartPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

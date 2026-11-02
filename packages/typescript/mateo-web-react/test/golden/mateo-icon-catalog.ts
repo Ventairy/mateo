@@ -15,6 +15,7 @@ export const mateoGoldenIconCatalog = {
   bidirecionalHorizontalArrow: MateoIcons.MateoBidirecionalHorizontalArrowIcon,
   book: MateoIcons.MateoBookIcon,
   boxPencil: MateoIcons.MateoBoxPencilIcon,
+  brokenHeart: MateoIcons.MateoBrokenHeartIcon,
   broom: MateoIcons.MateoBroomIcon,
   buildings: MateoIcons.MateoBuildingsIcon,
   busFront: MateoIcons.MateoBusFrontIcon,

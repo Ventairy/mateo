@@ -279,6 +279,7 @@ void main() {
   });
 
   for (final (icon, fileName) in [
+    (MateoIconData.brokenHeart, 'broken-heart.webp'),
     (MateoIconData.redFlag, 'red-flag.webp'),
     (MateoIconData.lifebuoy, 'lifebuoy.webp'),
     (MateoIconData.magnifyingGlass, 'magnifying-glass.webp'),

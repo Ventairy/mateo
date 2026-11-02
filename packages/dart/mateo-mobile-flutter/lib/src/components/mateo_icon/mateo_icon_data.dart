@@ -45,6 +45,9 @@ enum MateoIconData {
   /// The box pencil icon.
   boxPencil,
 
+  /// The broken heart icon.
+  brokenHeart,
+
   /// The broom icon.
   broom,
 
@@ -366,6 +369,7 @@ enum MateoIconData {
     bidirecionalHorizontalArrow => $Icons.bidirecionalHorizontalArrow(mateoOpticalSizeColor: color),
     book => $Icons.book(mateoOpticalSizeColor: color),
     boxPencil => $Icons.boxPencil(mateoOpticalSizeColor: color),
+    brokenHeart => $Icons.brokenHeart(mateoOpticalSizeColor: color),
     broom => $Icons.broom(mateoOpticalSizeColor: color),
     buildings => $Icons.buildings(mateoOpticalSizeColor: color),
     busFront => $Icons.busFront(mateoOpticalSizeColor: color),
@@ -469,6 +473,7 @@ enum MateoIconData {
       package: 'mateo_mobile',
       imageCache: imageCache,
     ),
+    brokenHeart => $ThreeDIcons.brokenHeart(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     handshake => $ThreeDIcons.handshake(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     lifebuoy => $ThreeDIcons.lifebuoy(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     magnifyingGlass => $ThreeDIcons.magnifyingGlass(
@@ -498,6 +503,7 @@ enum MateoIconData {
   }) {
     final precache = switch (this) {
       bidirecionalHorizontalArrow => $ThreeDIconsCache.precacheBidirecionalHorizontalArrow,
+      brokenHeart => $ThreeDIconsCache.precacheBrokenHeart,
       handshake => $ThreeDIconsCache.precacheHandshake,
       lifebuoy => $ThreeDIconsCache.precacheLifebuoy,
       magnifyingGlass => $ThreeDIconsCache.precacheMagnifyingGlass,

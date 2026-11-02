@@ -167,6 +167,9 @@ class _DotdartCachedImage extends ResizeImage {
 /// $ThreeDIcons.bidirecionalHorizontalArrow(<params>);
 /// ```
 /// ```dart
+/// $ThreeDIcons.brokenHeart(<params>);
+/// ```
+/// ```dart
 /// $ThreeDIcons.handshake(<params>);
 /// ```
 /// ```dart
@@ -206,6 +209,30 @@ abstract final class $ThreeDIcons {
     Color? color,
     BlendMode? colorBlendMode,
   }) => _BidirecionalHorizontalArrow(
+    key: key,
+    width: width,
+    height: height,
+    package: package,
+    imageCache: imageCache,
+    fit: fit,
+    alignment: alignment,
+    color: color,
+    colorBlendMode: colorBlendMode,
+  );
+
+  /// Builds the `BrokenHeart` widget from `brokenHeart.image`.
+  /// Pass [package] when this image belongs to a dependency package.
+  static Widget brokenHeart({
+    Key? key,
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Color? color,
+    BlendMode? colorBlendMode,
+  }) => _BrokenHeart(
     key: key,
     width: width,
     height: height,
@@ -433,6 +460,13 @@ abstract final class $ThreeDIcons {
       package: package,
       imageCache: imageCache,
     ),
+    'broken-heart.webp' => brokenHeart(
+      key: key,
+      width: width,
+      height: height,
+      package: package,
+      imageCache: imageCache,
+    ),
     'handshake.webp' => handshake(
       key: key,
       width: width,
@@ -501,6 +535,7 @@ abstract final class $ThreeDIconsCache {
   $ThreeDIconsCache._();
 
   static const _bidirecionalHorizontalArrowAssetPath = 'assets/three_d_icons/bidirecional-horizontal-arrow.webp';
+  static const _brokenHeartAssetPath = 'assets/three_d_icons/broken-heart.webp';
   static const _handshakeAssetPath = 'assets/three_d_icons/handshake.webp';
   static const _lifebuoyAssetPath = 'assets/three_d_icons/lifebuoy.webp';
   static const _magnifyingGlassAssetPath = 'assets/three_d_icons/magnifying-glass.webp';
@@ -562,6 +597,64 @@ abstract final class $ThreeDIconsCache {
         _bidirecionalHorizontalArrowAssetPath,
         package: package,
       ),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    );
+    final key = await provider.obtainKey(configuration);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
+  }
+
+  /// Decodes `brokenHeart` before its first render.
+  ///
+  /// [width] and [height] are logical pixels. Pass the same values to
+  /// `$ThreeDIcons.brokenHeart` so it reuses this cache entry.
+  /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
+  /// Omitting both values uses the widget's default display size.
+  static Future<void> precacheBrokenHeart(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
+  }) => precacheImage(
+    _provider(
+      context,
+      asset: AssetImage(_brokenHeartAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    ),
+    context,
+    onError: onError,
+  );
+
+  /// Removes the decoded `brokenHeart` entry from Flutter's image cache.
+  ///
+  /// Returns whether the matching entry existed. [width] and [height]
+  /// must match the values used to precache or render the image.
+  /// [package] and [imageCache] must match the image widget and precache call.
+  /// An image that is still displayed remains live until its last listener
+  /// is removed, preventing a duplicate decode during transitions.
+  static Future<bool> removeBrokenHeart(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+  }) async {
+    final configuration = createLocalImageConfiguration(context);
+    final provider = _provider(
+      context,
+      asset: AssetImage(_brokenHeartAssetPath, package: package),
       aspectRatio: 1,
       width: width,
       height: height,
@@ -1186,6 +1279,162 @@ class _BidirecionalHorizontalArrow extends StatelessWidget {
     _dominantColor,
   );
   static const String _assetPath = 'assets/three_d_icons/bidirecional-horizontal-arrow.webp';
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    const aspect = _aspectRatio;
+    final w = width ?? (height != null ? height! * aspect : 280.0);
+    final h = height ?? w / aspect;
+
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
+      key: key,
+      width: w,
+      height: h,
+      fit: fit,
+      alignment: alignment,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.low,
+      frameBuilder: _frameBuilder,
+    );
+
+    return RepaintBoundary(child: image);
+  }
+}
+
+/// A dotdart-generated image widget from `assets/three_d_icons/broken-heart.webp`.
+///
+/// Intrinsic 1254×1254 · WebP · aspect 1.0000.
+/// Decodes at display size × device pixel ratio for minimal memory.
+/// Renders a thumbhash placeholder in frame 1, then swaps to the image.
+class _BrokenHeart extends StatelessWidget {
+  const _BrokenHeart({
+    super.key,
+    this.width,
+    this.height,
+    this.package,
+    this.imageCache,
+    this.fit,
+    this.alignment = Alignment.center,
+    this.color,
+    this.colorBlendMode,
+  });
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// Package containing the image.
+  final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
+
+  /// How to inscribe the image in its bounds.
+  final BoxFit? fit;
+
+  /// Alignment within the widget bounds.
+  final AlignmentGeometry alignment;
+
+  /// A color to blend with the image.
+  final Color? color;
+
+  /// The blend mode applied when color is set.
+  final BlendMode? colorBlendMode;
+
+  static const double _aspectRatio = 1;
+  static const Color _dominantColor = Color(0xA39F282B);
+  static const int _thumbhashWidth = 8;
+  static const int _thumbhashHeight = 8;
+  static const List<Color> _thumbhashPixels = <Color>[
+    Color(0x57E9565C),
+    Color(0x89F75B5F),
+    Color(0xACED4347),
+    Color(0x81DB4248),
+    Color(0x89E3595D),
+    Color(0xADEE484C),
+    Color(0x88F13E43),
+    Color(0x55EE6C70),
+    Color(0x9BF0515E),
+    Color(0xDBEF535C),
+    Color(0xD6F04953),
+    Color(0xABE24A56),
+    Color(0xDFE8515A),
+    Color(0xDDF04C55),
+    Color(0xD6F0414C),
+    Color(0x90EE616C),
+    Color(0xBAED2A22),
+    Color(0xD0EE403B),
+    Color(0xC7EC2F29),
+    Color(0x9EE1271C),
+    Color(0xDCE63C38),
+    Color(0xD0EC352F),
+    Color(0xCAF21E12),
+    Color(0xAEE8403A),
+    Color(0xB4EA3C4F),
+    Color(0xD0F44A58),
+    Color(0xD9F03B4C),
+    Color(0xAAE5394E),
+    Color(0xBEE54C5B),
+    Color(0xDCF0404F),
+    Color(0xCFF63145),
+    Color(0xB0E84C5B),
+    Color(0x8EE73D32),
+    Color(0xC9F04742),
+    Color(0xCDF13830),
+    Color(0xB2E43126),
+    Color(0xA9E54C45),
+    Color(0xCCF13D36),
+    Color(0xCAEE2B20),
+    Color(0x90EA4E47),
+    Color(0x6DE1003D),
+    Color(0xAEEB3448),
+    Color(0xD0EA1232),
+    Color(0xB2E4002A),
+    Color(0xB6E93045),
+    Color(0xD0EB1F38),
+    Color(0xADE50027),
+    Color(0x6DE63854),
+    Color(0x5DE14948),
+    Color(0x73E95C5C),
+    Color(0xABE53C3B),
+    Color(0xB3E62F2D),
+    Color(0xC0E84645),
+    Color(0xADE64140),
+    Color(0x71E73836),
+    Color(0x5AE16160),
+    Color(0x49E60C3A),
+    Color(0x5AEB4C5A),
+    Color(0x60EB243D),
+    Color(0x81DA0021),
+    Color(0x84D53C49),
+    Color(0x61E93447),
+    Color(0x59F40021),
+    Color(0x49DF485B),
+  ];
+  static final ImageFrameBuilder _frameBuilder = _dotdartImageFrameBuilder(
+    _thumbhashWidth,
+    _thumbhashHeight,
+    _thumbhashPixels,
+    _dominantColor,
+  );
+  static const String _assetPath = 'assets/three_d_icons/broken-heart.webp';
 
   @override
   Widget build(BuildContext context) {
