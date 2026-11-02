@@ -85,6 +85,56 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets(
+    'when the keyboard reduces room for fitted scrolling content, it should cap the sheet and reveal the last item',
+    (
+      tester,
+    ) async {
+      await host(tester, reducedMotion: true);
+      unawaited(
+        showMateoSheet<void>(
+          context: launcher,
+          avoidBottomInset: true,
+          maxExtent: 500,
+          view: const MateoSheetView(
+            header: MateoSheetViewHeader(presentation: .handle()),
+            footer: MateoSheetViewFooter(principal: SizedBox(height: 40, child: Text('Continue'))),
+            surface: MateoSheetViewSurface.scrollable(
+              child: SizedBox(
+                height: 240,
+                child: Align(alignment: .bottomCenter, child: Text('Last item')),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final sheet = find.byType(MateoSheetView);
+      final initialBounds = tester.getRect(sheet);
+      final position = tester.state<ScrollableState>(find.byType(Scrollable)).position;
+      expect(initialBounds.height, lessThan(500));
+      expect(position.maxScrollExtent, 0);
+
+      setInset(280);
+      await tester.pumpAndSettle();
+      expect(tester.getSize(sheet).height, lessThan(initialBounds.height));
+      expect(position.maxScrollExtent, greaterThan(0));
+      position.jumpTo(position.maxScrollExtent);
+      await tester.pumpAndSettle();
+      expect(find.text('Last item').hitTestable(), findsOneWidget);
+      expect(
+        tester.getBottomLeft(find.text('Last item')).dy,
+        lessThanOrEqualTo(tester.getTopLeft(find.byType(MateoSheetViewFooter)).dy),
+      );
+
+      setInset(0);
+      await tester.pumpAndSettle();
+      expect(tester.getRect(sheet), initialBounds);
+      expect(position.maxScrollExtent, 0);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   for (final avoid in <bool?>[null, false]) {
     for (final scrollable in [false, true]) {
       testWidgets('avoidance $avoid keeps scrollable=$scrollable stable during an older keyboard dismissal', (

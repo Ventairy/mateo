@@ -303,6 +303,9 @@ enum MateoIconData {
   /// The star icon.
   star,
 
+  /// The three horizontal lines icon.
+  threeHorizontalLines,
+
   /// The tire icon.
   tire,
 
@@ -446,6 +449,7 @@ enum MateoIconData {
     socialMediaPost => $Icons.socialMediaPost(mateoOpticalSizeColor: color),
     stadium => $Icons.stadium(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
     star => $Icons.star(mateoOpticalSizeColor: color),
+    threeHorizontalLines => $Icons.threeHorizontalLines(mateoOpticalSizeColor: color),
     tire => $Icons.tire(mateoOpticalSizeColor: color),
     trainFront => $Icons.trainFront(mateoOpticalSizeColor: color),
     trash => $Icons.trash(mateoOpticalSizeColor: color),

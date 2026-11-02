@@ -118,9 +118,6 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   Widget build(BuildContext context) {
     final ancestorScrollController = _BaseMateoSurfaceRepaintScope.of(context);
     if (widget._scrollable) _scrollController ??= _BaseMateoSurfaceScrollController();
-    if (widget._scrollable && widget.height is MateoSurfaceHeightFit) {
-      throw FlutterError('Scrollable Mateo surfaces do not support height: .fit(). Use .fill() or .custom(...).');
-    }
     assert(widget.padding?.isNonNegative ?? true, 'padding must be nonnegative.');
     final content = _BaseMateoSurfaceContentLayout(
       obstruction: widget.obstruction,
@@ -133,7 +130,13 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
     );
     final viewport = KeyedSubtree(
       key: _viewportKey,
-      child: widget._scrollable ? _BaseMateoSurfaceScroll(controller: _scrollController!, child: content) : content,
+      child: widget._scrollable
+          ? _BaseMateoSurfaceScroll(
+              controller: _scrollController!,
+              fitHeight: widget.height is MateoSurfaceHeightFit,
+              child: content,
+            )
+          : content,
     );
     final surfaceColor = widget.color ?? MateoTheme.of(context).colorScheme.background;
     Widget withEdgeEffect(Widget child) =>

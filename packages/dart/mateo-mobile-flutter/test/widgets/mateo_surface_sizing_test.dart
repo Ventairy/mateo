@@ -283,10 +283,5 @@ void main() {
     expect(tester.getSize(find.byType(MateoSurface)), const Size(300, 200));
     expect(controller.position, same(position));
     expect(controller.offset, 120);
-    await tester.pumpWidget(host(const MateoSurface.scrollable(height: .fit(), child: SizedBox())));
-    expect(
-      tester.takeException(),
-      isA<FlutterError>().having((error) => error.toString(), 'message', contains('do not support height: .fit()')),
-    );
   });
 }

@@ -53,10 +53,11 @@ class MateoSurface extends StatelessWidget {
   /// Creates a surface that owns vertical scrolling around [child].
   ///
   /// Height defaults to filling a bounded parent. Supply a custom [height]
-  /// when the parent is unbounded. Fitted height is not supported yet. The scroll
-  /// viewport expands across available width even with fitted width. Short
-  /// content fills the viewport, including flexible space in a Column; long
-  /// content scrolls.
+  /// when the parent is unbounded, or use `.fit()` to size to content and scroll
+  /// only when it exceeds the available height. The scroll viewport expands
+  /// across available width even with fitted width. Filling and custom heights
+  /// let short content fill the viewport, including flexible space in a Column;
+  /// long content scrolls.
   ///
   /// [padding] travels with the content. Background, [shape], and
   /// [elevation] stay fixed. [color], [width], and [clipBehavior] follow the

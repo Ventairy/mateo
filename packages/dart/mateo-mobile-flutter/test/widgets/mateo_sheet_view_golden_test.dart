@@ -11,6 +11,46 @@ import '../fixtures/surface_transform_test_widgets.dart';
 Future<void> main() async {
   late BuildContext launcher;
   await goldenTest(
+    'when scrollable sheet content is short, it should fit its content beneath the fixed header',
+    fileName: 'mateo_sheet_view_fitted_scrollable',
+    constraints: const BoxConstraints.tightFor(width: 390, height: 844),
+    pumpBeforeTest: (tester) async {
+      await tester.pumpAndSettle();
+      unawaited(
+        showMateoSheet<void>(
+          context: launcher,
+          view: MateoSheetView(
+            header: const MateoSheetViewHeader(presentation: .closeButton()),
+            surface: MateoSheetViewSurface.scrollable(
+              child: Column(
+                mainAxisSize: .min,
+                crossAxisAlignment: .stretch,
+                children: [
+                  for (final label in ['Notifications', 'Privacy', 'Account'])
+                    Padding(
+                      padding: const .symmetric(vertical: 16),
+                      child: MateoText(label, presentation: const .interface(fontSize: 18)),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    },
+    builder: () => MateoApp(
+      theme: surfaceTransformTheme,
+      home: Builder(
+        builder: (context) {
+          launcher = context;
+          return const SizedBox.expand();
+        },
+      ),
+    ),
+  );
+
+  await goldenTest(
     'when a sheet has a colored scrolling surface, it should keep both fixed slots and their fades',
     fileName: 'mateo_sheet_view_scrolled',
     constraints: const BoxConstraints.tightFor(width: 390, height: 844),

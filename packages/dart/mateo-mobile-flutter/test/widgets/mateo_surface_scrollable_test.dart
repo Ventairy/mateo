@@ -12,6 +12,40 @@ void main() {
   ScrollController controller(WidgetTester tester) =>
       tester.widget<CustomScrollView>(find.byType(CustomScrollView)).controller!;
 
+  testWidgets('when fitted scrolling content has flexible space, it should fit naturally and scroll within a cap', (
+    tester,
+  ) async {
+    for (final contentHeight in [80.0, 500.0]) {
+      await tester.pumpWidget(
+        host(
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 200),
+            child: MateoSurface.scrollable(
+              color: color,
+              width: const .custom(240),
+              height: const .fit(),
+              padding: const .all(10),
+              child: Column(
+                children: [
+                  SizedBox(height: contentHeight),
+                  const Spacer(),
+                  const SizedBox(height: 20, child: Text('Last item')),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.getSize(find.byType(MateoSurface)).height, contentHeight == 80 ? 120 : 200);
+      expect(controller(tester).position.maxScrollExtent, contentHeight == 80 ? 0 : 340);
+      controller(tester).jumpTo(controller(tester).position.maxScrollExtent);
+      await tester.pumpAndSettle();
+      expect(find.text('Last item').hitTestable(), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+  });
+
   testWidgets('when shape and bounds change while scrolled, it should retain its viewport and update clipping', (
     tester,
   ) async {

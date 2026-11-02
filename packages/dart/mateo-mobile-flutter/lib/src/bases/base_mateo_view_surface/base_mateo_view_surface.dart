@@ -72,7 +72,7 @@ class BaseMateoViewSurface extends StatelessWidget {
     if (scrollable) {
       return BaseMateoSurface.scrollable(
         width: const .fill(),
-        height: const .fill(),
+        height: view.fitHeight ? const .fit() : const .fill(),
         paintBackground: false,
         color: color,
         shape: shape,

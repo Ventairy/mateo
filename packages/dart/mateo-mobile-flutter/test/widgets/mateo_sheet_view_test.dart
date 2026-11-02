@@ -35,6 +35,59 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets(
+    'when scrollable sheet content grows and shrinks, it should fit until capped and scroll only the overflow',
+    (
+      tester,
+    ) async {
+      await host(tester);
+      final contentHeight = ValueNotifier<double>(100);
+      addTearDown(contentHeight.dispose);
+      unawaited(
+        showMateoSheet<void>(
+          context: launcher,
+          maxExtent: 400,
+          view: MateoSheetView(
+            surface: MateoSheetViewSurface.scrollable(
+              child: ValueListenableBuilder<double>(
+                valueListenable: contentHeight,
+                builder: (context, height, child) => SizedBox(height: height, child: child),
+                child: const Text('Details'),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final sheet = find.byType(MateoSheetView);
+      final scroll = tester.state<ScrollableState>(find.byType(Scrollable)).position;
+      expect(tester.getSize(sheet).height, 140);
+      expect(scroll.maxScrollExtent, 0);
+
+      contentHeight.value = 180;
+      await tester.pumpAndSettle();
+      expect(tester.getSize(sheet).height, 220);
+      expect(scroll.maxScrollExtent, 0);
+
+      contentHeight.value = 800;
+      await tester.pumpAndSettle();
+      expect(tester.getSize(sheet).height, 400);
+      expect(scroll.maxScrollExtent, 440);
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, -150));
+      await tester.pumpAndSettle();
+      expect(scroll.pixels, greaterThan(0));
+      expect(tester.getSize(sheet).height, 400);
+
+      contentHeight.value = 160;
+      await tester.pumpAndSettle();
+      expect(tester.getSize(sheet).height, 200);
+      expect(tester.state<ScrollableState>(find.byType(Scrollable)).position, same(scroll));
+      expect(scroll.maxScrollExtent, 0);
+      expect(scroll.pixels, 0);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets('when a capped sheet contains a lazy list, it should build visible rows and scroll within fixed slots', (
     tester,
   ) async {

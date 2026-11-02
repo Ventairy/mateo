@@ -17,8 +17,6 @@ class MateoSheetViewSurface extends StatelessWidget {
 
   /// Creates a sheet surface that owns vertical scrolling around [child].
   ///
-  /// Short content fills the viewport; long content scrolls. The child must
-  /// support intrinsic sizing, such as a Column rather than another viewport.
   const MateoSheetViewSurface.scrollable({
     required this.child,
     this.color,
