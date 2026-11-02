@@ -183,6 +183,9 @@ enum MateoIconData {
   /// The letters A, B, C, and D icon.
   letters,
 
+  /// The lifebuoy icon.
+  lifebuoy,
+
   /// The lightning bolt icon.
   lightningBolt,
 
@@ -273,6 +276,12 @@ enum MateoIconData {
   /// The scissors icon.
   scissors,
 
+  /// The scroll icon.
+  scroll,
+
+  /// The shield with a lock icon.
+  shieldLock,
+
   /// The shopping bag icon.
   shoppingBag,
 
@@ -334,6 +343,7 @@ enum MateoIconData {
   padlockOpen;
 
   Widget _buildSvg({Color? color}) => switch (this) {
+    lifebuoy => $Icons.lifebuoy(mateoOpticalSizeColor: color),
     redFlag => throw UnsupportedError('Mateo icon $name has no SVG artwork.'),
     xLogo => $Icons.xLogo(mateoOpticalSizeColor: color),
     linkedinLogo => $Icons.linkedinLogo(mateoOpticalSizeColor: color),
@@ -427,6 +437,8 @@ enum MateoIconData {
     sadEmoticon => $Icons.sadEmoticon(mateoOpticalSizeColor: color),
     sadMaskHappyMask => $Icons.sadMaskHappyMask(mateoOpticalSizeColor: color),
     scissors => $Icons.scissors(mateoOpticalSizeColor: color),
+    scroll => $Icons.scroll(mateoOpticalSizeColor: color),
+    shieldLock => $Icons.shieldLock(mateoOpticalSizeColor: color),
     shoppingBag => $Icons.shoppingBag(mateoOpticalSizeColor: color),
     shoppingCart => $Icons.shoppingCart(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
     sleepingFigure => $Icons.sleepingFigure(mateoOpticalSizeColor: color),

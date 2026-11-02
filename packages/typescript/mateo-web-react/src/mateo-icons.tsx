@@ -62,6 +62,7 @@ import MateoInfoArtwork from '@mateo/icons/svg/info.svg?react';
 import MateoInstagramLogoArtwork from '@mateo/icons/svg/instagram-logo.svg?react';
 import MateoIntellectualPropertyArtwork from '@mateo/icons/svg/intellectual-property.svg?react';
 import MateoLettersArtwork from '@mateo/icons/svg/letters.svg?react';
+import MateoLifebuoyArtwork from '@mateo/icons/svg/lifebuoy.svg?react';
 import MateoLightningBoltArtwork from '@mateo/icons/svg/lightning-bolt.svg?react';
 import MateoLinkedinLogoArtwork from '@mateo/icons/svg/linkedin-logo.svg?react';
 import MateoLinktreeLogoArtwork from '@mateo/icons/svg/linktree-logo.svg?react';
@@ -94,6 +95,8 @@ import MateoRunningFigureArtwork from '@mateo/icons/svg/running-figure.svg?react
 import MateoSadEmoticonArtwork from '@mateo/icons/svg/sad-emoticon.svg?react';
 import MateoSadMaskHappyMaskArtwork from '@mateo/icons/svg/sad-mask-happy-mask.svg?react';
 import MateoScissorsArtwork from '@mateo/icons/svg/scissors.svg?react';
+import MateoScrollArtwork from '@mateo/icons/svg/scroll.svg?react';
+import MateoShieldLockArtwork from '@mateo/icons/svg/shield-lock.svg?react';
 import MateoShoppingBagArtwork from '@mateo/icons/svg/shopping-bag.svg?react';
 import MateoShoppingCartArtwork from '@mateo/icons/svg/shopping-cart.svg?react';
 import MateoSleepingFigureArtwork from '@mateo/icons/svg/sleeping-figure.svg?react';
@@ -458,6 +461,11 @@ export function MateoLettersIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoLettersArtwork} />;
 }
 
+/** Renders the lifebuoy artwork with Mateo icon appearance and accessibility. */
+export function MateoLifebuoyIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoLifebuoyArtwork} />;
+}
+
 /** Renders the lightningBolt artwork with Mateo icon appearance and accessibility. */
 export function MateoLightningBoltIcon(
   props: MateoNamedIconProps,
@@ -646,6 +654,16 @@ export function MateoSadMaskHappyMaskIcon(
 /** Renders the scissors artwork with Mateo icon appearance and accessibility. */
 export function MateoScissorsIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoScissorsArtwork} />;
+}
+
+/** Renders the scroll artwork with Mateo icon appearance and accessibility. */
+export function MateoScrollIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoScrollArtwork} />;
+}
+
+/** Renders the shieldLock artwork with Mateo icon appearance and accessibility. */
+export function MateoShieldLockIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoShieldLockArtwork} />;
 }
 
 /** Renders the shoppingBag artwork with Mateo icon appearance and accessibility. */

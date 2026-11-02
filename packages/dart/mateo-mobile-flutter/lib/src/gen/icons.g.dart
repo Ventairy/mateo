@@ -268,6 +268,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.letters(<params>);
 /// ```
 /// ```dart
+/// $Icons.lifebuoy(<params>);
+/// ```
+/// ```dart
 /// $Icons.lightningBolt(<params>);
 /// ```
 /// ```dart
@@ -362,6 +365,12 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 /// ```dart
 /// $Icons.scissors(<params>);
+/// ```
+/// ```dart
+/// $Icons.scroll(<params>);
+/// ```
+/// ```dart
+/// $Icons.shieldLock(<params>);
 /// ```
 /// ```dart
 /// $Icons.shoppingBag(<params>);
@@ -1317,6 +1326,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `Lifebuoy` widget from `lifebuoy.svg`.
+  static Widget lifebuoy({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Lifebuoy(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `LightningBolt` widget from `lightningBolt.svg`.
   static Widget lightningBolt({
     Key? key,
@@ -1797,6 +1821,36 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `Scroll` widget from `scroll.svg`.
+  static Widget scroll({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Scroll(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `ShieldLock` widget from `shieldLock.svg`.
+  static Widget shieldLock({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _ShieldLock(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `ShoppingBag` widget from `shoppingBag.svg`.
   static Widget shoppingBag({
     Key? key,
@@ -2181,6 +2235,7 @@ abstract final class $Icons {
       height: height,
     ),
     'letters.svg' => letters(key: key, width: width, height: height),
+    'lifebuoy.svg' => lifebuoy(key: key, width: width, height: height),
     'lightning-bolt.svg' => lightningBolt(
       key: key,
       width: width,
@@ -2253,6 +2308,8 @@ abstract final class $Icons {
       height: height,
     ),
     'scissors.svg' => scissors(key: key, width: width, height: height),
+    'scroll.svg' => scroll(key: key, width: width, height: height),
+    'shield-lock.svg' => shieldLock(key: key, width: width, height: height),
     'shopping-bag.svg' => shoppingBag(key: key, width: width, height: height),
     'shopping-cart.svg' => shoppingCart(key: key, width: width, height: height),
     'sleeping-figure.svg' => sleepingFigure(
@@ -13029,6 +13086,171 @@ class _LettersPainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/lifebuoy.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Lifebuoy extends StatelessWidget with _DotdartSvgSizing {
+  const _Lifebuoy({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Lifebuoy._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Lifebuoy._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Lifebuoy._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Lifebuoy._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _LifebuoyPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _LifebuoyPainter extends CustomPainter {
+  _LifebuoyPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.790806733,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.790806733,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.091932668,
+    2.091932668,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(2.2583, 3.6713)
+    ..cubicTo(0.8477, 5.3951, 0.0013, 7.5987, 0.0013, 10)
+    ..cubicTo(0.0013, 12.4013, 0.8477, 14.6049, 2.2584, 16.3288)
+    ..lineTo(6.1914, 12.3958)
+    ..cubicTo(5.7542, 11.702, 5.5013, 10.8806, 5.5013, 10)
+    ..cubicTo(5.5013, 9.1195, 5.7542, 8.298, 6.1913, 7.6043)
+    ..lineTo(2.2583, 3.6713)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(3.6732, 2.257)
+    ..lineTo(7.6062, 6.19)
+    ..cubicTo(8.2999, 5.7528, 9.1214, 5.4999, 10.0019, 5.4999)
+    ..cubicTo(10.8825, 5.4999, 11.704, 5.7528, 12.3977, 6.19)
+    ..lineTo(16.3307, 2.257)
+    ..cubicTo(14.6068, 0.8463, 12.4032, -0.0001, 10.0019, -0.0001)
+    ..cubicTo(7.6007, -0.0001, 5.3971, 0.8463, 3.6732, 2.257)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(17.743, 3.6713)
+    ..lineTo(13.81, 7.6043)
+    ..cubicTo(14.2471, 8.298, 14.5, 9.1194, 14.5, 10)
+    ..cubicTo(14.5, 10.8805, 14.247, 11.702, 13.8099, 12.3957)
+    ..lineTo(17.7429, 16.3287)
+    ..cubicTo(19.1536, 14.6049, 20, 12.4013, 20, 10)
+    ..cubicTo(20, 7.5987, 19.1536, 5.3951, 17.743, 3.6713)
+    ..close();
+
+  static final Path __path3 = Path()
+    ..moveTo(16.3306, 17.743)
+    ..lineTo(12.3976, 13.81)
+    ..cubicTo(11.7038, 14.2471, 10.8824, 14.5, 10.0019, 14.5)
+    ..cubicTo(9.1213, 14.5, 8.2999, 14.2471, 7.6062, 13.81)
+    ..lineTo(3.6732, 17.743)
+    ..cubicTo(5.3971, 19.1536, 7.6006, 20, 10.0019, 20)
+    ..cubicTo(12.4031, 20, 14.6067, 19.1536, 16.3306, 17.743)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Lifebuoy._viewBoxWidth;
+    final scaleY = size.height / _Lifebuoy._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Lifebuoy._viewBoxMinX, -_Lifebuoy._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path3, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _LifebuoyPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/lightning-bolt.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -18325,6 +18547,336 @@ class _ScissorsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ScissorsPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/scroll.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Scroll extends StatelessWidget with _DotdartSvgSizing {
+  const _Scroll({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Scroll._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Scroll._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Scroll._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Scroll._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ScrollPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ScrollPainter extends CustomPainter {
+  _ScrollPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.687693903,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.687693903,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    3.123060974,
+    3.123060974,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(10.5267, 14.211)
+    ..cubicTo(11.6894, 14.211, 12.632, 15.1536, 12.632, 16.3164)
+    ..cubicTo(12.632, 17.6638, 13.4773, 18.8102, 14.6653, 19.2636)
+    ..cubicTo(14.708, 19.2799, 14.7372, 19.3208, 14.7373, 19.3665)
+    ..cubicTo(14.7373, 19.4259, 14.6889, 19.4744, 14.6294, 19.4744)
+    ..lineTo(3.158, 19.4744)
+    ..cubicTo(1.4139, 19.4744, -0, 18.0605, -0, 16.3164)
+    ..cubicTo(-0, 15.1536, 0.9426, 14.211, 2.1053, 14.211)
+    ..lineTo(10.5267, 14.211)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(18.421, 0.5256)
+    ..cubicTo(19.293, 0.5256, 20, 1.2326, 20, 2.1046)
+    ..lineTo(20, 4.7363)
+    ..cubicTo(20, 5.899, 19.0574, 6.8416, 17.8946, 6.8416)
+    ..lineTo(16.842, 6.8416)
+    ..lineTo(16.842, 2.1046)
+    ..cubicTo(16.842, 1.2326, 17.549, 0.5256, 18.421, 0.5256)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(16.3135, 0.5254)
+    ..cubicTo(15.9822, 0.9656, 15.7832, 1.5112, 15.7832, 2.1045)
+    ..lineTo(15.7832, 17.3682)
+    ..cubicTo(15.7832, 17.9494, 15.2833, 18.443, 14.7734, 18.1641)
+    ..cubicTo(14.1206, 17.8065, 13.6777, 17.1123, 13.6777, 16.3154)
+    ..cubicTo(13.6776, 14.5714, 12.2636, 13.1572, 10.5195, 13.1572)
+    ..lineTo(3.1514, 13.1572)
+    ..lineTo(3.1514, 3.6836)
+    ..cubicTo(3.1514, 1.9395, 4.5655, 0.5254, 6.3096, 0.5254)
+    ..lineTo(16.3135, 0.5254)
+    ..close()
+    ..moveTo(6.9111, 7.5439)
+    ..cubicTo(6.4584, 7.5439, 6.091, 7.9106, 6.0908, 8.3633)
+    ..cubicTo(6.0908, 8.8161, 6.4583, 9.1836, 6.9111, 9.1836)
+    ..lineTo(9.8906, 9.1836)
+    ..cubicTo(10.3434, 9.1836, 10.7109, 8.8161, 10.7109, 8.3633)
+    ..cubicTo(10.7108, 7.9106, 10.3433, 7.5439, 9.8906, 7.5439)
+    ..lineTo(6.9111, 7.5439)
+    ..close()
+    ..moveTo(6.9111, 4.3057)
+    ..cubicTo(6.4583, 4.3057, 6.0908, 4.6732, 6.0908, 5.126)
+    ..cubicTo(6.091, 5.5786, 6.4584, 5.9453, 6.9111, 5.9453)
+    ..lineTo(12.5537, 5.9453)
+    ..cubicTo(13.0064, 5.9453, 13.3739, 5.5786, 13.374, 5.126)
+    ..cubicTo(13.374, 4.6732, 13.0065, 4.3057, 12.5537, 4.3057)
+    ..lineTo(6.9111, 4.3057)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Scroll._viewBoxWidth;
+    final scaleY = size.height / _Scroll._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Scroll._viewBoxMinX, -_Scroll._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ScrollPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/shield-lock.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ShieldLock extends StatelessWidget with _DotdartSvgSizing {
+  const _ShieldLock({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ShieldLock._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ShieldLock._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ShieldLock._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ShieldLock._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ShieldLockPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ShieldLockPainter extends CustomPainter {
+  _ShieldLockPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.756835997,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.756835997,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.431640035,
+    2.431640035,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(10, 5.9234)
+    ..cubicTo(10.8442, 5.9234, 11.5281, 6.6075, 11.5283, 7.4517)
+    ..lineTo(11.5283, 8.4712)
+    ..lineTo(8.4717, 8.4712)
+    ..lineTo(8.4717, 7.4517)
+    ..cubicTo(8.4719, 6.6075, 9.1558, 5.9234, 10, 5.9234)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(8.415, 0.3316)
+    ..cubicTo(9.4255, -0.1104, 10.5745, -0.1104, 11.585, 0.3316)
+    ..lineTo(16.5293, 2.4947)
+    ..cubicTo(17.969, 3.1245, 18.8994, 4.5472, 18.8994, 6.1187)
+    ..lineTo(18.8994, 11.1001)
+    ..cubicTo(18.8994, 16.0153, 14.9152, 19.9995, 10, 19.9995)
+    ..cubicTo(5.0849, 19.9995, 1.1006, 16.0153, 1.1006, 11.1001)
+    ..lineTo(1.1006, 6.1187)
+    ..cubicTo(1.1006, 4.5472, 2.031, 3.1245, 3.4707, 2.4947)
+    ..lineTo(8.415, 0.3316)
+    ..close()
+    ..moveTo(10, 4.9038)
+    ..cubicTo(8.5929, 4.9038, 7.4523, 6.0446, 7.4521, 7.4517)
+    ..lineTo(7.4521, 8.5357)
+    ..cubicTo(6.5731, 8.7619, 5.923, 9.5596, 5.9229, 10.5093)
+    ..lineTo(5.9229, 13.0571)
+    ..cubicTo(5.9229, 14.1829, 6.8361, 15.0962, 7.9619, 15.0962)
+    ..lineTo(12.0381, 15.0962)
+    ..cubicTo(13.1638, 15.0962, 14.0771, 14.1829, 14.0771, 13.0571)
+    ..lineTo(14.0771, 10.5093)
+    ..cubicTo(14.077, 9.5596, 13.4269, 8.7619, 12.5479, 8.5357)
+    ..lineTo(12.5479, 7.4517)
+    ..cubicTo(12.5477, 6.0446, 11.4071, 4.9038, 10, 4.9038)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ShieldLock._viewBoxWidth;
+    final scaleY = size.height / _ShieldLock._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ShieldLock._viewBoxMinX, -_ShieldLock._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ShieldLockPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

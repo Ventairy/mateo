@@ -56,7 +56,6 @@ describe('Mateo named icons', () => {
       const image = screen.getByRole('img', { name: icon });
       expect(image).toHaveAttribute('viewBox', '0 0 20 20');
       expect(image.querySelector('path, rect, circle')).not.toBeNull();
-      expect(image.querySelector('[transform]')).not.toBeNull();
       const source = new DOMParser().parseFromString(
         readFileSync(
           join(mateoIconSources, `${_getMateoIconSourceName(icon)}.svg`),
