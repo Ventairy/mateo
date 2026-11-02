@@ -170,6 +170,9 @@ class _DotdartCachedImage extends ResizeImage {
 /// $ThreeDIcons.handshake(<params>);
 /// ```
 /// ```dart
+/// $ThreeDIcons.lifebuoy(<params>);
+/// ```
+/// ```dart
 /// $ThreeDIcons.magnifyingGlass(<params>);
 /// ```
 /// ```dart
@@ -227,6 +230,30 @@ abstract final class $ThreeDIcons {
     Color? color,
     BlendMode? colorBlendMode,
   }) => _Handshake(
+    key: key,
+    width: width,
+    height: height,
+    package: package,
+    imageCache: imageCache,
+    fit: fit,
+    alignment: alignment,
+    color: color,
+    colorBlendMode: colorBlendMode,
+  );
+
+  /// Builds the `Lifebuoy` widget from `lifebuoy.image`.
+  /// Pass [package] when this image belongs to a dependency package.
+  static Widget lifebuoy({
+    Key? key,
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Color? color,
+    BlendMode? colorBlendMode,
+  }) => _Lifebuoy(
     key: key,
     width: width,
     height: height,
@@ -413,6 +440,13 @@ abstract final class $ThreeDIcons {
       package: package,
       imageCache: imageCache,
     ),
+    'lifebuoy.webp' => lifebuoy(
+      key: key,
+      width: width,
+      height: height,
+      package: package,
+      imageCache: imageCache,
+    ),
     'magnifying-glass.webp' => magnifyingGlass(
       key: key,
       width: width,
@@ -468,6 +502,7 @@ abstract final class $ThreeDIconsCache {
 
   static const _bidirecionalHorizontalArrowAssetPath = 'assets/three_d_icons/bidirecional-horizontal-arrow.webp';
   static const _handshakeAssetPath = 'assets/three_d_icons/handshake.webp';
+  static const _lifebuoyAssetPath = 'assets/three_d_icons/lifebuoy.webp';
   static const _magnifyingGlassAssetPath = 'assets/three_d_icons/magnifying-glass.webp';
   static const _padlockAssetPath = 'assets/three_d_icons/padlock.webp';
   static const _padlockOpenAssetPath = 'assets/three_d_icons/padlock-open.webp';
@@ -585,6 +620,64 @@ abstract final class $ThreeDIconsCache {
     final provider = _provider(
       context,
       asset: AssetImage(_handshakeAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    );
+    final key = await provider.obtainKey(configuration);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
+  }
+
+  /// Decodes `lifebuoy` before its first render.
+  ///
+  /// [width] and [height] are logical pixels. Pass the same values to
+  /// `$ThreeDIcons.lifebuoy` so it reuses this cache entry.
+  /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
+  /// Omitting both values uses the widget's default display size.
+  static Future<void> precacheLifebuoy(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
+  }) => precacheImage(
+    _provider(
+      context,
+      asset: AssetImage(_lifebuoyAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    ),
+    context,
+    onError: onError,
+  );
+
+  /// Removes the decoded `lifebuoy` entry from Flutter's image cache.
+  ///
+  /// Returns whether the matching entry existed. [width] and [height]
+  /// must match the values used to precache or render the image.
+  /// [package] and [imageCache] must match the image widget and precache call.
+  /// An image that is still displayed remains live until its last listener
+  /// is removed, preventing a duplicate decode during transitions.
+  static Future<bool> removeLifebuoy(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+  }) async {
+    final configuration = createLocalImageConfiguration(context);
+    final provider = _provider(
+      context,
+      asset: AssetImage(_lifebuoyAssetPath, package: package),
       aspectRatio: 1,
       width: width,
       height: height,
@@ -1249,6 +1342,162 @@ class _Handshake extends StatelessWidget {
     _dominantColor,
   );
   static const String _assetPath = 'assets/three_d_icons/handshake.webp';
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    const aspect = _aspectRatio;
+    final w = width ?? (height != null ? height! * aspect : 280.0);
+    final h = height ?? w / aspect;
+
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
+      key: key,
+      width: w,
+      height: h,
+      fit: fit,
+      alignment: alignment,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.low,
+      frameBuilder: _frameBuilder,
+    );
+
+    return RepaintBoundary(child: image);
+  }
+}
+
+/// A dotdart-generated image widget from `assets/three_d_icons/lifebuoy.webp`.
+///
+/// Intrinsic 1254×1254 · WebP · aspect 1.0000.
+/// Decodes at display size × device pixel ratio for minimal memory.
+/// Renders a thumbhash placeholder in frame 1, then swaps to the image.
+class _Lifebuoy extends StatelessWidget {
+  const _Lifebuoy({
+    super.key,
+    this.width,
+    this.height,
+    this.package,
+    this.imageCache,
+    this.fit,
+    this.alignment = Alignment.center,
+    this.color,
+    this.colorBlendMode,
+  });
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// Package containing the image.
+  final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
+
+  /// How to inscribe the image in its bounds.
+  final BoxFit? fit;
+
+  /// Alignment within the widget bounds.
+  final AlignmentGeometry alignment;
+
+  /// A color to blend with the image.
+  final Color? color;
+
+  /// The blend mode applied when color is set.
+  final BlendMode? colorBlendMode;
+
+  static const double _aspectRatio = 1;
+  static const Color _dominantColor = Color(0x8E894A23);
+  static const int _thumbhashWidth = 8;
+  static const int _thumbhashHeight = 8;
+  static const List<Color> _thumbhashPixels = <Color>[
+    Color(0x56ED6654),
+    Color(0x72EF8656),
+    Color(0x8CE57757),
+    Color(0x98F1663A),
+    Color(0x98F1663A),
+    Color(0x8CE57757),
+    Color(0x72EF8656),
+    Color(0x56ED6654),
+    Color(0x72E18656),
+    Color(0xBAEDA987),
+    Color(0xC3EE977A),
+    Color(0xAFEF7E4E),
+    Color(0xAFEF7E4E),
+    Color(0xC3EE977A),
+    Color(0xBAEDA987),
+    Color(0x72E18656),
+    Color(0x7EE87D5C),
+    Color(0xC2EF977A),
+    Color(0x97DDA794),
+    Color(0x6DE67F58),
+    Color(0x6DE67F58),
+    Color(0x97DDA794),
+    Color(0xC2EF977A),
+    Color(0x7EE87D5C),
+    Color(0x8CE96A3C),
+    Color(0xB5F27C4D),
+    Color(0x70E97D56),
+    Color(0x60ED764F),
+    Color(0x60ED764F),
+    Color(0x70E97D56),
+    Color(0xB5F27C4D),
+    Color(0x8CE96A3C),
+    Color(0x8CF06A3C),
+    Color(0xB5F07C4D),
+    Color(0x70E67D56),
+    Color(0x60F8764F),
+    Color(0x60F8764F),
+    Color(0x70E67D56),
+    Color(0xB5F07C4D),
+    Color(0x8CF06A3C),
+    Color(0x7EE77D5C),
+    Color(0xC2F5977A),
+    Color(0x97E4A794),
+    Color(0x6DE57F58),
+    Color(0x6DE57F58),
+    Color(0x97E4A794),
+    Color(0xC2F5977A),
+    Color(0x7EE77D5C),
+    Color(0x72DF8656),
+    Color(0xBAE7A987),
+    Color(0xC3E9977A),
+    Color(0xAFEE7E4E),
+    Color(0xAFEE7E4E),
+    Color(0xC3E9977A),
+    Color(0xBAE7A987),
+    Color(0x72DF8656),
+    Color(0x56D56654),
+    Color(0x72E08656),
+    Color(0x8CD87757),
+    Color(0x98E4663A),
+    Color(0x98E4663A),
+    Color(0x8CD87757),
+    Color(0x72E08656),
+    Color(0x56D56654),
+  ];
+  static final ImageFrameBuilder _frameBuilder = _dotdartImageFrameBuilder(
+    _thumbhashWidth,
+    _thumbhashHeight,
+    _thumbhashPixels,
+    _dominantColor,
+  );
+  static const String _assetPath = 'assets/three_d_icons/lifebuoy.webp';
 
   @override
   Widget build(BuildContext context) {

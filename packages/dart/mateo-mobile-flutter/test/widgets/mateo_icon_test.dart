@@ -280,6 +280,7 @@ void main() {
 
   for (final (icon, fileName) in [
     (MateoIconData.redFlag, 'red-flag.webp'),
+    (MateoIconData.lifebuoy, 'lifebuoy.webp'),
     (MateoIconData.magnifyingGlass, 'magnifying-glass.webp'),
   ]) {
     testWidgets('when ${icon.name} uses the 3D style, it should display the package artwork at the requested size', (

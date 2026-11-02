@@ -470,6 +470,7 @@ enum MateoIconData {
       imageCache: imageCache,
     ),
     handshake => $ThreeDIcons.handshake(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    lifebuoy => $ThreeDIcons.lifebuoy(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     magnifyingGlass => $ThreeDIcons.magnifyingGlass(
       width: size,
       height: size,
@@ -498,6 +499,7 @@ enum MateoIconData {
     final precache = switch (this) {
       bidirecionalHorizontalArrow => $ThreeDIconsCache.precacheBidirecionalHorizontalArrow,
       handshake => $ThreeDIconsCache.precacheHandshake,
+      lifebuoy => $ThreeDIconsCache.precacheLifebuoy,
       magnifyingGlass => $ThreeDIconsCache.precacheMagnifyingGlass,
       padlock => $ThreeDIconsCache.precachePadlock,
       padlockOpen => $ThreeDIconsCache.precachePadlockOpen,
