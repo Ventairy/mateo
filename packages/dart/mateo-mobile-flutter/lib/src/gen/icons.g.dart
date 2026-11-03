@@ -223,6 +223,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.flag(<params>);
 /// ```
 /// ```dart
+/// $Icons.flagCheck(<params>);
+/// ```
+/// ```dart
 /// $Icons.flame(<params>);
 /// ```
 /// ```dart
@@ -1103,6 +1106,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Flag(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `FlagCheck` widget from `flagCheck.svg`.
+  static Widget flagCheck({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _FlagCheck(
     key: key,
     width: width,
     height: height,
@@ -2254,6 +2272,7 @@ abstract final class $Icons {
       height: height,
     ),
     'flag.svg' => flag(key: key, width: width, height: height),
+    'flag-check.svg' => flagCheck(key: key, width: width, height: height),
     'flame.svg' => flame(key: key, width: width, height: height),
     'fork-knife.svg' => forkKnife(key: key, width: width, height: height),
     'gas-station.svg' => gasStation(key: key, width: width, height: height),
@@ -10077,6 +10096,184 @@ class _FlagPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _FlagPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/flag-check.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _FlagCheck extends StatelessWidget with _DotdartSvgSizing {
+  const _FlagCheck({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _FlagCheck._svgWidth;
+
+  @override
+  double get svgNativeHeight => _FlagCheck._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _FlagCheck._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _FlagCheck._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _FlagCheckPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _FlagCheckPainter extends CustomPainter {
+  _FlagCheckPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.740934316,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.740934316,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.590656843,
+    2.590656843,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(4.8867, 0)
+    ..cubicTo(7.3737, 0, 9.3898, 2.0161, 9.3898, 4.5032)
+    ..cubicTo(9.3898, 6.9902, 7.3737, 9.0063, 4.8867, 9.0063)
+    ..cubicTo(2.3996, 9.0063, 0.3835, 6.9902, 0.3835, 4.5032)
+    ..cubicTo(0.3835, 2.0161, 2.3996, 0, 4.8867, 0)
+    ..close()
+    ..moveTo(6.538, 2.7591)
+    ..cubicTo(6.383, 2.6553, 6.1734, 2.6969, 6.0697, 2.8519)
+    ..lineTo(4.1879, 5.6615)
+    ..lineTo(3.2121, 4.6808)
+    ..cubicTo(3.0805, 4.5486, 2.8667, 4.548, 2.7345, 4.6795)
+    ..cubicTo(2.6024, 4.8111, 2.6021, 5.0249, 2.7336, 5.1571)
+    ..lineTo(4.0001, 6.4302)
+    ..cubicTo(4.0715, 6.5019, 4.1712, 6.5376, 4.2719, 6.5278)
+    ..cubicTo(4.3726, 6.5181, 4.4636, 6.4637, 4.5199, 6.3796)
+    ..lineTo(6.6308, 3.2274)
+    ..cubicTo(6.7345, 3.0724, 6.6929, 2.8628, 6.538, 2.7591)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(17.0585, 2.1618)
+    ..cubicTo(17.3565, 2.1612, 17.9611, 2.1435, 18.2323, 2.1852)
+    ..cubicTo(18.5773, 2.2356, 18.898, 2.3919, 19.1513, 2.6315)
+    ..cubicTo(19.3676, 2.8426, 19.518, 3.1125, 19.5819, 3.4079)
+    ..cubicTo(19.6787, 3.8598, 19.5699, 4.3312, 19.2861, 4.696)
+    ..cubicTo(19.1995, 4.8091, 19.0131, 4.9992, 18.9101, 5.1091)
+    ..lineTo(18.3114, 5.7458)
+    ..lineTo(16.873, 7.2819)
+    ..cubicTo(16.732, 7.4314, 16.5771, 7.5824, 16.4462, 7.7399)
+    ..cubicTo(15.9339, 8.3569, 16.5107, 8.7867, 16.8984, 9.2106)
+    ..lineTo(18.3759, 10.7985)
+    ..cubicTo(18.5005, 10.9312, 18.6263, 11.0692, 18.7509, 11.2009)
+    ..cubicTo(19.1705, 11.6443, 19.5175, 11.9499, 19.5263, 12.6081)
+    ..cubicTo(19.5356, 13.0145, 19.3783, 13.4066, 19.0917, 13.695)
+    ..cubicTo(18.4907, 14.3038, 17.7, 14.1766, 16.912, 14.1696)
+    ..lineTo(8.789, 14.1686)
+    ..cubicTo(7.8611, 14.1706, 6.7661, 14.1413, 5.8495, 14.1823)
+    ..cubicTo(5.8398, 14.549, 5.8467, 14.9391, 5.8466, 15.3073)
+    ..lineTo(5.8466, 17.3532)
+    ..cubicTo(5.8473, 17.7975, 5.8663, 18.287, 5.831, 18.7253)
+    ..cubicTo(5.7843, 19.304, 5.2807, 19.8337, 4.7177, 19.9626)
+    ..cubicTo(4.3372, 20.0514, 3.9364, 19.9814, 3.6083, 19.7692)
+    ..cubicTo(3.3842, 19.6242, 3.2309, 19.4462, 3.1064, 19.2106)
+    ..cubicTo(2.8973, 18.8152, 2.9368, 18.3696, 2.9364, 17.9343)
+    ..lineTo(2.9355, 16.6481)
+    ..lineTo(2.9384, 12.5329)
+    ..lineTo(2.9374, 9.735)
+    ..cubicTo(3.5443, 9.9612, 4.2009, 10.0856, 4.8866, 10.0856)
+    ..cubicTo(7.97, 10.0855, 10.4696, 7.586, 10.4696, 4.5026)
+    ..cubicTo(10.4696, 3.666, 10.2838, 2.8732, 9.954, 2.1608)
+    ..lineTo(17.0585, 2.1618)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _FlagCheck._viewBoxWidth;
+    final scaleY = size.height / _FlagCheck._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_FlagCheck._viewBoxMinX, -_FlagCheck._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _FlagCheckPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

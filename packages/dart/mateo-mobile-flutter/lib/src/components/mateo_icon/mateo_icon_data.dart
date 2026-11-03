@@ -138,6 +138,9 @@ enum MateoIconData {
   /// The flag icon.
   flag,
 
+  /// The flag with a checkmark icon.
+  flagCheck,
+
   /// The flame icon.
   flame,
 
@@ -403,6 +406,7 @@ enum MateoIconData {
     ferrisWheel => $Icons.ferrisWheel(mateoOpticalSizeColor: color),
     figureCropCircle => $Icons.figureCropCircle(mateoOpticalSizeColor: color),
     flag => $Icons.flag(mateoOpticalSizeColor: color),
+    flagCheck => $Icons.flagCheck(mateoOpticalSizeColor: color),
     flame => $Icons.flame(mateoOpticalSizeColor: color),
     forkKnife => $Icons.forkKnife(mateoOpticalSizeColor: color),
     gasStation => $Icons.gasStation(mateoOpticalSizeColor: color),
