@@ -15,6 +15,8 @@ import 'package:oh_my_flutter/oh_my_flutter.dart'
 import '../../bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
 import '../../bases/base_mateo_edge_fade/mateo_edge_fade_band.dart';
 import '../../bases/base_mateo_edge_fade/mateo_edge_fade_profile.dart';
+import '../../bases/base_mateo_surface/mateo_surface_caret_client.dart';
+import '../../bases/base_mateo_surface/mateo_surface_caret_scope.dart';
 import '../../foundation/mateo_elevation.dart';
 import '../../foundation/mateo_environment/mateo_environment.dart';
 import '../../i18n/mateo_translations.dart';
@@ -99,15 +101,37 @@ class MateoTextInput extends StatefulWidget {
   State<MateoTextInput> createState() => _MateoTextInputState();
 }
 
-class _MateoTextInputState extends State<MateoTextInput> {
+class _MateoTextInputState extends State<MateoTextInput> implements MateoSurfaceCaretClient {
   material.ThemeData? _editingThemeData;
   TextEditingController? _ownedController;
   FocusNode? _ownedFocusNode;
+  FocusNode? _caretFocusNode;
+  TextEditingController? _caretTextController;
+  MateoSurfaceCaretScope? _caretScope;
   late final ValueChanged<String> _forwardChanged = _dispatchChanged;
   late final ValueChanged<String> _forwardSubmitted = _dispatchSubmitted;
 
   TextEditingController get _controller => widget.controller ?? (_ownedController ??= TextEditingController());
   FocusNode get _focusNode => widget.focusNode ?? (_ownedFocusNode ??= FocusNode());
+
+  @override
+  bool get isCaretActive => widget.onChanged != null && _focusNode.hasFocus;
+
+  @override
+  EditableTextState? get caretEditor => _focusNode.context?.findAncestorStateOfType<EditableTextState>();
+
+  void _notifyCaretChanged() => _caretScope?.onChanged(this);
+
+  void _bindCaretListeners() {
+    if (!identical(_caretFocusNode, _focusNode)) {
+      _caretFocusNode?.removeListener(_notifyCaretChanged);
+      _caretFocusNode = _focusNode..addListener(_notifyCaretChanged);
+    }
+    if (!identical(_caretTextController, _controller)) {
+      _caretTextController?.removeListener(_notifyCaretChanged);
+      _caretTextController = _controller..addListener(_notifyCaretChanged);
+    }
+  }
 
   void _clear() {
     if (widget.onChanged == null || _controller.text.isEmpty) return;
@@ -120,8 +144,19 @@ class _MateoTextInputState extends State<MateoTextInput> {
   void _dispatchSubmitted(String value) => widget.onSubmitted?.call(value);
 
   @override
+  void initState() {
+    super.initState();
+    _bindCaretListeners();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final caretScope = MateoSurfaceCaretScope.maybeOf(context);
+    if (!identical(caretScope, _caretScope)) _caretScope?.onRemoved(this);
+    _caretScope = caretScope;
+    MediaQuery.maybeTextScalerOf(context);
+    _notifyCaretChanged();
     if (defaultTargetPlatform != .android && defaultTargetPlatform != .fuchsia) {
       _editingThemeData = null;
       return;
@@ -139,10 +174,15 @@ class _MateoTextInputState extends State<MateoTextInput> {
     if (oldWidget.controller != null && widget.controller == null) {
       _controller.value = oldWidget.controller!.value;
     }
+    _bindCaretListeners();
+    _notifyCaretChanged();
   }
 
   @override
   void dispose() {
+    _caretScope?.onRemoved(this);
+    _caretFocusNode?.removeListener(_notifyCaretChanged);
+    _caretTextController?.removeListener(_notifyCaretChanged);
     _ownedController?.dispose();
     _ownedFocusNode?.dispose();
     super.dispose();

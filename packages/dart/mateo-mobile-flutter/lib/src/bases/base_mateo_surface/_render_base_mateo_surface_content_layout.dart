@@ -5,7 +5,20 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
     required this._obstruction,
     required this._padding,
     required this._alignment,
+    required this._revealBottomInset,
+    required this.onCaretReveal,
   }) : super(null);
+
+  bool Function(RenderObject? descendant)? onCaretReveal;
+  double _revealBottomInset;
+  double get revealBottomInset => _revealBottomInset;
+  set revealBottomInset(double value) {
+    if (_revealBottomInset == value) return;
+    _revealBottomInset = value;
+    markNeedsLayout();
+    markNeedsPaint();
+    markNeedsSemanticsUpdate();
+  }
 
   EdgeInsets _layoutInsets = EdgeInsets.zero;
   EdgeInsets _paintedInsets = EdgeInsets.zero;
@@ -56,7 +69,10 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  EdgeInsets get _insets => _obstruction?.layoutInsets ?? EdgeInsets.zero;
+  EdgeInsets get _insets {
+    final insets = _obstruction?.layoutInsets ?? EdgeInsets.zero;
+    return insets.copyWith(bottom: insets.bottom + _revealBottomInset);
+  }
 
   @override
   void attach(PipelineOwner owner) {
@@ -171,7 +187,8 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
   }
 
   void _updatePaintInsets() {
-    final insets = _obstruction?.resolvePaintInsets() ?? EdgeInsets.zero;
+    final obstruction = _obstruction?.resolvePaintInsets() ?? EdgeInsets.zero;
+    final insets = obstruction.copyWith(bottom: obstruction.bottom + _revealBottomInset);
     // The owner can refine clearance after placement. Paint with the latest
     // snapshot, then reconcile layout without a visible top jump.
     if (insets != _layoutInsets && !_layoutScheduled) {
@@ -210,5 +227,16 @@ class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
   void applyPaintTransform(RenderBox child, Matrix4 transform) {
     final offset = _contentOffset(_insets);
     transform.translateByDouble(offset.dx, offset.dy, 0, 1);
+  }
+
+  @override
+  void showOnScreen({
+    RenderObject? descendant,
+    Rect? rect,
+    Duration duration = Duration.zero,
+    Curve curve = Curves.ease,
+  }) {
+    if (onCaretReveal?.call(descendant) ?? false) return;
+    super.showOnScreen(descendant: descendant, rect: rect, duration: duration, curve: curve);
   }
 }

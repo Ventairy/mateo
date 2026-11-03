@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -12,9 +13,12 @@ import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
 import '../base_mateo_transform/base_mateo_transform.dart';
+import 'mateo_surface_caret_client.dart';
+import 'mateo_surface_caret_scope.dart';
 import 'mateo_surface_obstruction.dart';
 
 part '_base_mateo_surface_content_layer.dart';
+part '_base_mateo_surface_caret_coordinator.dart';
 part '_base_mateo_surface_content_layout.dart';
 part '_base_mateo_surface_decoration.dart';
 part '_base_mateo_surface_decoration_painter.dart';
@@ -107,9 +111,24 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   final GlobalKey _viewportKey = GlobalKey();
 
   _BaseMateoSurfaceScrollController? _scrollController;
+  _BaseMateoSurfaceCaretCoordinator? _caretCoordinator;
+
+  void _clearanceChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant BaseMateoSurface oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget._scrollable && !widget._scrollable) {
+      _caretCoordinator?.dispose();
+      _caretCoordinator = null;
+    }
+  }
 
   @override
   void dispose() {
+    _caretCoordinator?.dispose();
     _scrollController?.dispose();
     super.dispose();
   }
@@ -117,15 +136,37 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
   @override
   Widget build(BuildContext context) {
     final ancestorScrollController = _BaseMateoSurfaceRepaintScope.of(context);
-    if (widget._scrollable) _scrollController ??= _BaseMateoSurfaceScrollController();
+    if (widget._scrollable) {
+      _scrollController ??= _BaseMateoSurfaceScrollController();
+      _caretCoordinator ??= _BaseMateoSurfaceCaretCoordinator(
+        viewportKey: _viewportKey,
+        scrollController: _scrollController!,
+        onClearanceChanged: _clearanceChanged,
+      );
+      _caretCoordinator!.update(
+        obstruction: widget.obstruction,
+        parentScope: MateoSurfaceCaretScope.maybeOf(context),
+        view: View.of(context),
+        isCurrent: (ModalRoute.isCurrentOf(context) ?? true) && TickerMode.valuesOf(context).enabled,
+        reduceMotion: MediaQuery.maybeDisableAnimationsOf(context) ?? false,
+      );
+    }
     assert(widget.padding?.isNonNegative ?? true, 'padding must be nonnegative.');
     final content = _BaseMateoSurfaceContentLayout(
+      revealBottomInset: _caretCoordinator?.bottomClearance ?? 0,
+      onCaretReveal: _caretCoordinator?.handleReveal,
       obstruction: widget.obstruction,
       padding: widget.padding?.resolve(Directionality.maybeOf(context)) ?? EdgeInsets.zero,
       alignment: widget.alignment?.resolve(Directionality.maybeOf(context)),
       // Clearance can relayout the wrapper without changing the authored content.
       child: widget._scrollable
-          ? RepaintBoundary(child: widget.child)
+          ? MateoSurfaceCaretScope(
+              onChanged: _caretCoordinator!.caretChanged,
+              onRemoved: _caretCoordinator!.caretRemoved,
+              visibleRectIn: _caretCoordinator!.visibleRectIn,
+              geometryChanges: _caretCoordinator!,
+              child: RepaintBoundary(child: widget.child),
+            )
           : _BaseMateoSurfaceRepaintScope(controller: null, child: widget.child),
     );
     final viewport = KeyedSubtree(
