@@ -106,6 +106,7 @@ import MateoSocialMediaPostArtwork from '@mateo/icons/svg/social-media-post.svg?
 import MateoStadiumArtwork from '@mateo/icons/svg/stadium.svg?react';
 import MateoStarArtwork from '@mateo/icons/svg/star.svg?react';
 import MateoThreeHorizontalLinesArtwork from '@mateo/icons/svg/three-horizontal-lines.svg?react';
+import MateoThumbsDownArtwork from '@mateo/icons/svg/thumbs-down.svg?react';
 import MateoTireArtwork from '@mateo/icons/svg/tire.svg?react';
 import MateoTrainFrontArtwork from '@mateo/icons/svg/train-front.svg?react';
 import MateoTrashArtwork from '@mateo/icons/svg/trash.svg?react';
@@ -721,6 +722,11 @@ export function MateoThreeHorizontalLinesIcon(
   return (
     <BaseMateoIcon {...props} artwork={MateoThreeHorizontalLinesArtwork} />
   );
+}
+
+/** Renders the thumbsDown artwork with Mateo icon appearance and accessibility. */
+export function MateoThumbsDownIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoThumbsDownArtwork} />;
 }
 
 /** Renders the tire artwork with Mateo icon appearance and accessibility. */

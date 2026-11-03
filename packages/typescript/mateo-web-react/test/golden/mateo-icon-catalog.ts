@@ -105,6 +105,7 @@ export const mateoGoldenIconCatalog = {
   stadium: MateoIcons.MateoStadiumIcon,
   star: MateoIcons.MateoStarIcon,
   threeHorizontalLines: MateoIcons.MateoThreeHorizontalLinesIcon,
+  thumbsDown: MateoIcons.MateoThumbsDownIcon,
   tire: MateoIcons.MateoTireIcon,
   trainFront: MateoIcons.MateoTrainFrontIcon,
   trash: MateoIcons.MateoTrashIcon,

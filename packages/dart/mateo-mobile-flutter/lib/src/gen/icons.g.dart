@@ -400,6 +400,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.threeHorizontalLines(<params>);
 /// ```
 /// ```dart
+/// $Icons.thumbsDown(<params>);
+/// ```
+/// ```dart
 /// $Icons.tire(<params>);
 /// ```
 /// ```dart
@@ -1996,6 +1999,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `ThumbsDown` widget from `thumbsDown.svg`.
+  static Widget thumbsDown({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _ThumbsDown(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Tire` widget from `tire.svg`.
   static Widget tire({
     Key? key,
@@ -2367,6 +2385,7 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'thumbs-down.svg' => thumbsDown(key: key, width: width, height: height),
     'tire.svg' => tire(key: key, width: width, height: height),
     'train-front.svg' => trainFront(key: key, width: width, height: height),
     'trash.svg' => trash(key: key, width: width, height: height),
@@ -20441,6 +20460,164 @@ class _ThreeHorizontalLinesPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ThreeHorizontalLinesPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/thumbs-down.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ThumbsDown extends StatelessWidget with _DotdartSvgSizing {
+  const _ThumbsDown({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ThumbsDown._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ThumbsDown._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ThumbsDown._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ThumbsDown._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ThumbsDownPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ThumbsDownPainter extends CustomPainter {
+  _ThumbsDownPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.740405458,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.740405458,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.595945422,
+    2.595945422,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(5.5043, 1.0765)
+    ..cubicTo(6.1663, 1.0395, 6.8614, 1.0523, 7.5228, 1.109)
+    ..cubicTo(9.0719, 1.2416, 11.786, 1.7293, 13.0222, 2.7115)
+    ..cubicTo(13.6025, 3.1727, 13.918, 3.7555, 13.9979, 4.4908)
+    ..cubicTo(14.0409, 4.8851, 14.0199, 5.295, 14.0198, 5.6913)
+    ..lineTo(14.0191, 7.6689)
+    ..lineTo(14.0194, 9.7898)
+    ..cubicTo(14.0194, 10.203, 14.0352, 10.7547, 13.9851, 11.1523)
+    ..cubicTo(13.9312, 11.5964, 13.7893, 12.0253, 13.5678, 12.4142)
+    ..cubicTo(13.2011, 13.0482, 12.6006, 13.5245, 12.1357, 14.0929)
+    ..cubicTo(11.7501, 14.5644, 11.535, 15.0166, 11.2642, 15.5521)
+    ..cubicTo(11.0805, 15.9009, 10.9525, 16.26, 10.8192, 16.6279)
+    ..cubicTo(10.6233, 17.1691, 10.5706, 17.9867, 10.2067, 18.4337)
+    ..cubicTo(9.9776, 18.716, 9.6464, 18.8968, 9.2849, 18.9365)
+    ..cubicTo(8.7708, 18.9887, 8.3346, 18.7774, 7.9468, 18.4625)
+    ..cubicTo(7.3816, 17.9326, 7.0188, 16.9887, 7.0767, 16.2135)
+    ..cubicTo(7.1461, 15.2848, 7.6002, 14.3598, 7.8409, 13.4653)
+    ..cubicTo(7.9027, 13.2359, 7.8065, 13.0094, 7.5484, 12.9693)
+    ..cubicTo(7.1986, 12.9335, 6.8215, 12.9542, 6.4658, 12.9541)
+    ..lineTo(4.0288, 12.9535)
+    ..cubicTo(3.1057, 12.9542, 2.3969, 13.0417, 1.5509, 12.5835)
+    ..cubicTo(0.8498, 12.1966, 0.331, 11.5472, 0.1084, 10.7781)
+    ..cubicTo(-0.0735, 10.157, -0.0313, 9.4765, 0.2718, 8.9005)
+    ..cubicTo(0.3239, 8.8015, 0.3933, 8.7093, 0.4584, 8.6143)
+    ..cubicTo(0.5303, 8.5092, 0.543, 8.3773, 0.5067, 8.2552)
+    ..cubicTo(0.422, 7.9701, 0.3509, 7.7349, 0.342, 7.3992)
+    ..cubicTo(0.3256, 6.7742, 0.5675, 6.2238, 0.9653, 5.7508)
+    ..cubicTo(1.0824, 5.6064, 1.2364, 5.4778, 1.3053, 5.301)
+    ..cubicTo(1.3428, 5.2046, 1.331, 5.1132, 1.3298, 5.0138)
+    ..cubicTo(1.3284, 4.8978, 1.323, 4.7823, 1.3293, 4.6665)
+    ..cubicTo(1.3847, 3.7984, 1.7459, 2.9781, 2.3487, 2.351)
+    ..cubicTo(3.2019, 1.4494, 4.2959, 1.1107, 5.5043, 1.0765)
+    ..close();
+
+  static final RRect _rrect0 = RRect.fromRectAndRadius(
+    const Rect.fromLTWH(14.8993, 1.9369, 5.1007, 10.5387),
+    const Radius.circular(2.5504),
+  );
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ThumbsDown._viewBoxWidth;
+    final scaleY = size.height / _ThumbsDown._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ThumbsDown._viewBoxMinX, -_ThumbsDown._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawRRect(_rrect0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ThumbsDownPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
