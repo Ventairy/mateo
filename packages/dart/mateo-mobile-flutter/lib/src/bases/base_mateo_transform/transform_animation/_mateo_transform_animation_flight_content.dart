@@ -4,16 +4,19 @@ part of '../base_mateo_transform.dart';
 final class _MateoTransformAnimationFlightContent {
   _MateoTransformAnimationFlightContent({
     required this.size,
+    required this.alignment,
     required Iterable<_MateoTransformAnimationFlightLayer> layers,
   }) : layers = List.unmodifiable(layers);
 
   factory _MateoTransformAnimationFlightContent.capture(
     MorphEndpointContext endpoint,
-    Widget content,
-  ) {
+    Widget content, {
+    Alignment alignment = Alignment.center,
+  }) {
     final size = endpoint.overlayBounds.size;
     return _MateoTransformAnimationFlightContent(
       size: size,
+      alignment: alignment,
       layers: [
         _MateoTransformAnimationFlightLayer(
           capture: SizedBox.fromSize(
@@ -37,6 +40,7 @@ final class _MateoTransformAnimationFlightContent {
       source.size == destination.size,
       'Content layers must share a coordinate frame before combining.',
     );
+    assert(source.alignment == destination.alignment, 'Content layers must share an anchor before combining.');
     final layers = <_MateoTransformAnimationFlightLayerIdentity, _MateoTransformAnimationFlightLayer>{};
     for (final layer in source.layers.followedBy(destination.layers)) {
       if (layer.opacity == 0) continue;
@@ -50,21 +54,21 @@ final class _MateoTransformAnimationFlightContent {
     }
     return _MateoTransformAnimationFlightContent(
       size: source.size,
+      alignment: source.alignment,
       layers: layers.values,
     );
   }
 
   final Size size;
+  final Alignment alignment;
   final List<_MateoTransformAnimationFlightLayer> layers;
 
-  _MateoTransformAnimationFlightContent centeredIn(Size bounds) {
+  _MateoTransformAnimationFlightContent alignedIn(Size bounds) {
     if (bounds == size) return this;
-    final offset = Offset(
-      (bounds.width - size.width) / 2,
-      (bounds.height - size.height) / 2,
-    );
+    final offset = alignment.alongOffset(Offset(bounds.width - size.width, bounds.height - size.height));
     return _MateoTransformAnimationFlightContent(
       size: bounds,
+      alignment: alignment,
       layers: layers.map((layer) => layer.translate(offset)),
     );
   }
@@ -73,8 +77,9 @@ final class _MateoTransformAnimationFlightContent {
     if (factor == 1) return this;
     return _MateoTransformAnimationFlightContent(
       size: size,
+      alignment: alignment,
       layers: layers.map(
-        (layer) => layer.scale(factor, size.center(Offset.zero)),
+        (layer) => layer.scale(factor, alignment.alongSize(size)),
       ),
     );
   }
@@ -83,6 +88,7 @@ final class _MateoTransformAnimationFlightContent {
     if (visibility == 1) return this;
     return _MateoTransformAnimationFlightContent(
       size: size,
+      alignment: alignment,
       layers: layers.map((layer) => layer.fade(visibility)),
     );
   }

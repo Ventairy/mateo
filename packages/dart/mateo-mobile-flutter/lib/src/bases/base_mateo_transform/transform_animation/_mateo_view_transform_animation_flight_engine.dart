@@ -15,7 +15,9 @@ final class _MateoViewTransformAnimationFlightEngine {
       color: color,
       shape: capturedShape,
       shapeSize: shapeSize,
-      content: .capture(endpoint, content),
+      // Keep the complete view attached to the moving top edge, including
+      // when its content is scaled or the flight reverses.
+      content: .capture(endpoint, content, alignment: .topCenter),
       effects: effects,
     );
   }

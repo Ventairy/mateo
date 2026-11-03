@@ -143,103 +143,152 @@ void main() {
       );
     }
   }
-  for (final scrollable in [false, true]) {
-    for (final interrupted in [false, true]) {
-      testWidgets(
-        'when a complete view transforms with scrolling $scrollable and interruption $interrupted, it should carry every slot and preserve state on return',
-        (tester) async {
-          final navigator = GlobalKey<NavigatorState>();
-          final keys = List.generate(4, (_) => GlobalKey());
-          Widget marker(int index) => StatefulBuilder(
-            key: keys[index],
-            builder: (context, setState) => SizedBox(width: 24, height: 24, child: ColoredBox(color: _colors[index])),
-          );
-          final target = surfaceTransformTarget(
-            'complete-view',
-            duration: const Duration(seconds: 1),
-            curve: Curves.linear,
-          );
-          final surfaceAnimation = MateoSurfaceAnimation.transform(target: target);
-          final viewAnimation = MateoViewAnimation.transform(target: target);
-          const sourceBounds = Rect.fromLTWH(40, 40, 120, 80);
-          const destinationBounds = Rect.fromLTWH(40, 40, 320, 400);
-          final content = Center(child: marker(0));
-          final view = Stack(
-            children: [
-              Positioned.fromRect(
-                rect: destinationBounds,
-                child: MateoView(
-                  animation: viewAnimation,
-                  padding: EdgeInsets.zero,
-                  header: MateoViewHeader(principal: marker(1)),
-                  footer: MateoViewFooter(principal: marker(2)),
-                  overlay: Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(padding: const EdgeInsets.only(right: 20), child: marker(3)),
+  for (final sourceView in [false, true]) {
+    for (final scaleContent in [false, true]) {
+      for (final scrollable in [false, true]) {
+        for (final interrupted in [false, true]) {
+          testWidgets(
+            'when a ${sourceView ? "view" : "surface"} expands into a complete view with scaling $scaleContent, scrolling $scrollable, and interruption $interrupted, its content should follow the top edge and preserve state on return',
+            (tester) async {
+              final navigator = GlobalKey<NavigatorState>();
+              final keys = List.generate(4, (_) => GlobalKey());
+              Widget marker(int index) => StatefulBuilder(
+                key: keys[index],
+                builder: (context, setState) =>
+                    SizedBox(width: 24, height: 24, child: ColoredBox(color: _colors[index])),
+              );
+              final target = surfaceTransformTarget(
+                'complete-view',
+                duration: const Duration(seconds: 1),
+                curve: Curves.linear,
+              );
+              final effects = <MateoTransformAnimationContentEffect>[
+                const .crossfade(),
+                if (scaleContent) const .scale(),
+              ];
+              final surfaceAnimation = MateoSurfaceAnimation.transform(target: target, contentEffects: effects);
+              final viewAnimation = MateoViewAnimation.transform(target: target, contentEffects: effects);
+              const sourceBounds = Rect.fromLTWH(40, 200, 120, 80);
+              const destinationBounds = Rect.fromLTWH(40, 40, 320, 400);
+              final content = Center(child: marker(0));
+              final view = Stack(
+                children: [
+                  Positioned.fromRect(
+                    rect: destinationBounds,
+                    child: MateoView(
+                      animation: viewAnimation,
+                      padding: EdgeInsets.zero,
+                      header: MateoViewHeader(principal: marker(1)),
+                      footer: MateoViewFooter(principal: marker(2)),
+                      overlay: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(padding: const EdgeInsets.only(right: 20), child: marker(3)),
+                      ),
+                      surface: scrollable
+                          ? MateoViewSurface.scrollable(color: _black, child: content)
+                          : MateoViewSurface(color: _black, child: content),
+                    ),
                   ),
-                  surface: scrollable
-                      ? MateoViewSurface.scrollable(color: _black, child: content)
-                      : MateoViewSurface(color: _black, child: content),
+                ],
+              );
+              await tester.pumpWidget(
+                RepaintBoundary(
+                  key: _capture,
+                  child: MateoApp(
+                    theme: surfaceTransformTheme,
+                    navigatorKey: navigator,
+                    home: surfaceTransformEndpoint(
+                      bounds: sourceBounds,
+                      animation: surfaceAnimation,
+                      color: _black,
+                      view: sourceView,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              );
+              await tester.pumpAndSettle();
+              await startSurfaceTransformAnimationFlight(tester, navigator.currentState!, view);
+              final states = keys.map((key) => key.currentState).toList();
+              final centers = keys.map((key) => tester.getCenter(find.byKey(key))).toList();
+              await tester.pump(const Duration(milliseconds: 500));
+              final flightBounds = tester.getRect(surfaceFlight);
+              // All slots share the moving top edge. With scaling enabled the
+              // destination is 60% of its settled size halfway through expansion.
+              final contentScale = scaleContent ? .6 : 1.0;
+              Offset flightPoint(int index) =>
+                  flightBounds.topCenter + (centers[index] - destinationBounds.topCenter) * contentScale;
+              for (var i = 0; i < keys.length; i++) {
+                final point = flightPoint(i);
+                final pixel = await _pixel(tester, point);
+                final color = _colors[i];
+                final expected = [color.r, color.g, color.b].map((channel) => channel * 127.5).toList();
+                expect(keys[i].currentState, same(states[i]));
+                if (!flightBounds.contains(point)) {
+                  expect(
+                    pixel,
+                    isNot(
+                      pairwiseCompare<num, num>(
+                        expected,
+                        (actual, expected) => (actual - expected).abs() <= 3,
+                        'matching the visible slot color',
+                      ),
+                    ),
+                    reason: 'slot $i must remain clipped outside the surface',
+                  );
+                  continue;
+                }
+                for (var channel = 0; channel < 3; channel++) {
+                  expect(pixel[channel], closeTo(expected[channel], 3), reason: 'slot $i channel $channel at $point');
+                }
+              }
+              if (interrupted) {
+                final before = await _pixel(tester, flightPoint(1));
+                navigator.currentState!.pop();
+                await tester.pump();
+                await tester.pump();
+                expect(tester.getRect(surfaceFlight), rectMoreOrLessEquals(flightBounds));
+                expect(await _pixel(tester, flightPoint(1)), before);
+                await tester.pumpAndSettle();
+                expect(surfaceFlight, findsNothing);
+                expect(tester.takeException(), isNull);
+                return;
+              }
+              await tester.pump(const Duration(milliseconds: 250));
+              final expandedBounds = tester.getRect(surfaceFlight);
+              final expandedHeader =
+                  expandedBounds.topCenter + (centers[1] - destinationBounds.topCenter) * (scaleContent ? .8 : 1);
+              expect(
+                expandedHeader.dy,
+                lessThan(flightPoint(1).dy),
+                reason: 'the header rises with the expanding top edge',
+              );
+              expect((await _pixel(tester, expandedHeader))[1], closeTo(191.25, 3));
+              await tester.pumpAndSettle();
+              expect(surfaceFlight, findsNothing);
+              for (var i = 0; i < keys.length; i++) {
+                expect(tester.getCenter(find.byKey(keys[i])), centers[i]);
+                expect(keys[i].currentState, same(states[i]));
+              }
+              navigator.currentState!.pop();
+              await tester.pump();
+              await tester.pump();
+              await tester.pump(const Duration(milliseconds: 500));
+              expect(surfaceFlight, findsOneWidget);
+              final returningBounds = tester.getRect(surfaceFlight);
+              final headerPoint = returningBounds.topCenter + (centers[1] - destinationBounds.topCenter) * contentScale;
+              final headerPixel = await _pixel(tester, headerPoint);
+              expect(
+                headerPixel[1],
+                closeTo(127.5, 3),
+                reason: 'the returning header follows the same top-anchored path',
+              );
+              await tester.pumpAndSettle();
+              expect(surfaceFlight, findsNothing);
+              expect(tester.takeException(), isNull);
+            },
           );
-          await tester.pumpWidget(
-            RepaintBoundary(
-              key: _capture,
-              child: MateoApp(
-                theme: surfaceTransformTheme,
-                navigatorKey: navigator,
-                home: surfaceTransformEndpoint(bounds: sourceBounds, animation: surfaceAnimation, color: _black),
-              ),
-            ),
-          );
-          await tester.pumpAndSettle();
-          await startSurfaceTransformAnimationFlight(tester, navigator.currentState!, view);
-          final states = keys.map((key) => key.currentState).toList();
-          final centers = keys.map((key) => tester.getCenter(find.byKey(key))).toList();
-          await tester.pump(const Duration(milliseconds: 500));
-          final flightBounds = tester.getRect(surfaceFlight);
-          // The destination scales from 0.2 to 1: halfway, all four markers must
-          // paint at 0.6 of their endpoint offsets with the same half opacity.
-          for (var i = 0; i < keys.length; i++) {
-            final point = flightBounds.center + (centers[i] - destinationBounds.center) * .6;
-            final pixel = await _pixel(tester, point);
-            final color = _colors[i];
-            final expected = [color.r, color.g, color.b].map((channel) => channel * 127.5).toList();
-            for (var channel = 0; channel < 3; channel++) {
-              expect(pixel[channel], closeTo(expected[channel], 3), reason: 'slot $i channel $channel at $point');
-            }
-            expect(keys[i].currentState, same(states[i]));
-          }
-          if (interrupted) {
-            final before = await _pixel(tester, flightBounds.center + (centers[1] - destinationBounds.center) * .6);
-            navigator.currentState!.pop();
-            await tester.pump();
-            await tester.pump();
-            expect(tester.getRect(surfaceFlight), rectMoreOrLessEquals(flightBounds));
-            expect(await _pixel(tester, flightBounds.center + (centers[1] - destinationBounds.center) * .6), before);
-            await tester.pumpAndSettle();
-            expect(surfaceFlight, findsNothing);
-            expect(tester.takeException(), isNull);
-            return;
-          }
-          await tester.pumpAndSettle();
-          expect(surfaceFlight, findsNothing);
-          for (var i = 0; i < keys.length; i++) {
-            expect(tester.getCenter(find.byKey(keys[i])), centers[i]);
-            expect(keys[i].currentState, same(states[i]));
-          }
-          navigator.currentState!.pop();
-          await tester.pump();
-          await tester.pump();
-          await tester.pump(const Duration(milliseconds: 500));
-          expect(surfaceFlight, findsOneWidget);
-          await tester.pumpAndSettle();
-          expect(surfaceFlight, findsNothing);
-          expect(tester.takeException(), isNull);
-        },
-      );
+        }
+      }
     }
   }
 }

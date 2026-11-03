@@ -132,7 +132,7 @@ void main() {
     expect((flightFooter!.top - settledFooter!.top).abs(), lessThanOrEqualTo(2));
   });
 
-  _test('footer crossfades above a keyboard opening during the sheet-to-view flight', (tester) async {
+  _test('footer retains keyboard clearance within the travelling view and settles above the keyboard', (tester) async {
     debugDefaultTargetPlatformOverride = .iOS;
     final navigator = await _sheet(tester);
     const footerColor = Color(0xFFFF0000);
@@ -153,8 +153,14 @@ void main() {
     expect(surfaceFlight, findsOneWidget);
     final footerBounds = await _renderedColorBounds(tester, footerColor, tolerance: 220, minimumRedDominance: 40);
     expect(footerBounds, isNotNull);
-    expect(footerBounds!.bottom, lessThanOrEqualTo(500));
+    // The captured view travels as one object with the surface's top edge.
+    // Keyboard clearance belongs to its layout before that outer translation.
+    final flightBounds = tester.getRect(surfaceFlight);
+    expect(footerBounds!.bottom - flightBounds.top, lessThanOrEqualTo(500));
     await tester.pumpAndSettle();
+    final settledFooterBounds = await _renderedColorBounds(tester, footerColor);
+    expect(settledFooterBounds, isNotNull);
+    expect(settledFooterBounds!.bottom, lessThanOrEqualTo(500));
   });
 
   _test('the page behind the sheet remains painted after a page round trip', (tester) async {

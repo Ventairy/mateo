@@ -40,8 +40,8 @@ final class _MateoTransformAnimationContentEffects {
       progress.curvedProgress,
     )!;
     var content = (
-      source: source.centeredIn(size),
-      destination: destination.centeredIn(size),
+      source: source.alignedIn(size),
+      destination: destination.alignedIn(size),
     );
     for (final effect in _effects) {
       content = effect.apply(
