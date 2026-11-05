@@ -92,18 +92,20 @@ void main() {
               ),
             );
             await tester.pumpAndSettle();
-            final decoration = tester
+            final paintedShapes = tester
                 .widgetList<DecoratedBox>(find.byType(DecoratedBox))
                 .map((box) => box.decoration)
                 .whereType<ShapeDecoration>()
-                .single;
-            expect(decoration.shape, MateoRoundedShapeBorder(radius: configuration.$3));
+                .map((decoration) => decoration.shape);
+            final expectedShape = MateoRoundedShapeBorder(radius: configuration.$3);
+            expect(paintedShapes, isNotEmpty);
+            expect(paintedShapes, everyElement(expectedShape));
             if (configuration.$3 != 0) {
               final clippers = tester
                   .widgetList<ClipPath>(find.byType(ClipPath))
                   .map((clip) => clip.clipper)
                   .whereType<ShapeBorderClipper>();
-              expect(clippers.map((clipper) => clipper.shape), everyElement(decoration.shape));
+              expect(clippers.map((clipper) => clipper.shape), everyElement(expectedShape));
             }
             await tester.tapAt(const Offset(1, 1));
             expect(taps, configuration.$3 == 0 ? 1 : 0);

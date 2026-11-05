@@ -166,11 +166,11 @@ class _BaseMateoViewState extends State<BaseMateoView> {
     );
     final content = widget.isolateContentPaint ? RepaintBoundary(child: morphContent) : morphContent;
     final shape = widget.surfacePresentation.shape;
-    final background = _clipBackground(
-      context,
-      shape: shape,
-      child: ColoredBox(color: surfaceColor),
-    );
+    final background = shape == const MateoRoundedShapeBorder(radius: 0)
+        ? ColoredBox(color: surfaceColor)
+        : DecoratedBox(
+            decoration: ShapeDecoration(color: surfaceColor, shape: shape),
+          );
     final paintedBackground = switch (widget.surfaceBackgroundVisibility) {
       final visibility? => _ConditionalSurfaceBackground(
         listenable: visibility.listenable,
@@ -309,23 +309,6 @@ class _BaseMateoViewState extends State<BaseMateoView> {
           ),
         );
       },
-    );
-  }
-
-  Widget _clipBackground(
-    BuildContext context, {
-    required MateoRoundedShapeBorder shape,
-    required Widget child,
-  }) {
-    if (shape == const MateoRoundedShapeBorder(radius: 0)) {
-      return child;
-    }
-    return ClipPath(
-      clipper: ShapeBorderClipper(
-        shape: shape,
-        textDirection: Directionality.maybeOf(context),
-      ),
-      child: child,
     );
   }
 }
