@@ -20,6 +20,7 @@ import MateoBrokenHeartArtwork from '@mateo/icons/svg/broken-heart.svg?react';
 import MateoBroomArtwork from '@mateo/icons/svg/broom.svg?react';
 import MateoBuildingsArtwork from '@mateo/icons/svg/buildings.svg?react';
 import MateoBusFrontArtwork from '@mateo/icons/svg/bus-front.svg?react';
+import MateoCalendarArtwork from '@mateo/icons/svg/calendar.svg?react';
 import MateoCheckeredFlagArtwork from '@mateo/icons/svg/checkered-flag.svg?react';
 import MateoCheckmarkArtwork from '@mateo/icons/svg/checkmark.svg?react';
 import MateoChevronDownArtwork from '@mateo/icons/svg/chevron-down.svg?react';
@@ -225,6 +226,11 @@ export function MateoBuildingsIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the busFront artwork with Mateo icon appearance and accessibility. */
 export function MateoBusFrontIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoBusFrontArtwork} />;
+}
+
+/** Renders the calendar artwork with Mateo icon appearance and accessibility. */
+export function MateoCalendarIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoCalendarArtwork} />;
 }
 
 /** Renders the checkeredFlag artwork with Mateo icon appearance and accessibility. */

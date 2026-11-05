@@ -142,6 +142,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.busFront(<params>);
 /// ```
 /// ```dart
+/// $Icons.calendar(<params>);
+/// ```
+/// ```dart
 /// $Icons.checkeredFlag(<params>);
 /// ```
 /// ```dart
@@ -701,6 +704,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _BusFront(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Calendar` widget from `calendar.svg`.
+  static Widget calendar({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Calendar(
     key: key,
     width: width,
     height: height,
@@ -2221,6 +2239,7 @@ abstract final class $Icons {
     'broom.svg' => broom(key: key, width: width, height: height),
     'buildings.svg' => buildings(key: key, width: width, height: height),
     'bus-front.svg' => busFront(key: key, width: width, height: height),
+    'calendar.svg' => calendar(key: key, width: width, height: height),
     'checkered-flag.svg' => checkeredFlag(
       key: key,
       width: width,
@@ -5444,6 +5463,265 @@ class _BusFrontPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _BusFrontPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/calendar.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Calendar extends StatelessWidget with _DotdartSvgSizing {
+  const _Calendar({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Calendar._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Calendar._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Calendar._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Calendar._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CalendarPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CalendarPainter extends CustomPainter {
+  _CalendarPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.659700518,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.659700518,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    3.402994817,
+    3.402994817,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(14.0186, 0.1865)
+    ..cubicTo(14.5542, 0.1866, 14.9881, 0.6207, 14.9883, 1.1563)
+    ..lineTo(14.9883, 2.5283)
+    ..cubicTo(16.422, 2.5528, 17.2897, 2.6524, 17.9814, 3.0469)
+    ..cubicTo(18.6036, 3.4017, 19.1197, 3.9169, 19.4746, 4.5391)
+    ..cubicTo(20.0001, 5.4603, 20, 6.6942, 20, 9.1611)
+    ..lineTo(20, 13.1729)
+    ..cubicTo(20, 15.6398, 20, 16.8737, 19.4746, 17.7949)
+    ..cubicTo(19.1197, 18.4172, 18.6037, 18.9332, 17.9814, 19.2881)
+    ..cubicTo(17.0603, 19.8133, 15.8267, 19.8135, 13.3604, 19.8135)
+    ..lineTo(6.6396, 19.8135)
+    ..cubicTo(4.1733, 19.8135, 2.9397, 19.8133, 2.0185, 19.2881)
+    ..cubicTo(1.3963, 18.9332, 0.8803, 18.4172, 0.5254, 17.7949)
+    ..cubicTo(-0, 16.8737, 0, 15.6398, 0, 13.1729)
+    ..lineTo(0, 9.1611)
+    ..cubicTo(0, 6.6942, -0.0001, 5.4603, 0.5254, 4.5391)
+    ..cubicTo(0.8803, 3.9169, 1.3964, 3.4017, 2.0185, 3.0469)
+    ..cubicTo(2.7103, 2.6524, 3.5779, 2.5528, 5.0117, 2.5283)
+    ..lineTo(5.0117, 1.1563)
+    ..cubicTo(5.0119, 0.6207, 5.4458, 0.1866, 5.9814, 0.1865)
+    ..cubicTo(6.5171, 0.1865, 6.9519, 0.6206, 6.9521, 1.1563)
+    ..lineTo(6.9521, 2.5215)
+    ..lineTo(13.0488, 2.5215)
+    ..lineTo(13.0488, 1.1563)
+    ..cubicTo(13.0491, 0.6206, 13.4829, 0.1865, 14.0186, 0.1865)
+    ..close()
+    ..moveTo(4.5479, 7.2236)
+    ..cubicTo(3.4383, 7.2236, 2.8832, 7.2238, 2.4688, 7.46)
+    ..cubicTo(2.1888, 7.6196, 1.9566, 7.852, 1.7969, 8.1318)
+    ..cubicTo(1.5604, 8.5464, 1.5606, 9.1017, 1.5606, 10.2119)
+    ..lineTo(1.5606, 13.6494)
+    ..cubicTo(1.5606, 15.3037, 1.5598, 16.1312, 1.9121, 16.749)
+    ..cubicTo(2.1501, 17.1662, 2.4959, 17.512, 2.9131, 17.75)
+    ..cubicTo(3.5309, 18.1024, 4.3584, 18.1025, 6.0127, 18.1025)
+    ..lineTo(13.9912, 18.1025)
+    ..cubicTo(15.6441, 18.1025, 16.4707, 18.1021, 17.0879, 17.75)
+    ..cubicTo(17.5047, 17.5122, 17.8501, 17.1668, 18.0879, 16.75)
+    ..cubicTo(18.4399, 16.1328, 18.4395, 15.3062, 18.4395, 13.6533)
+    ..lineTo(18.4395, 10.2119)
+    ..cubicTo(18.4395, 9.1017, 18.4396, 8.5464, 18.2031, 8.1318)
+    ..cubicTo(18.0434, 7.852, 17.812, 7.6196, 17.5322, 7.46)
+    ..cubicTo(17.1177, 7.2235, 16.5622, 7.2236, 15.4521, 7.2236)
+    ..lineTo(4.5479, 7.2236)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(5.9292, 12.6631)
+    ..cubicTo(5.9292, 13.1411, 5.5417, 13.5286, 5.0637, 13.5286)
+    ..cubicTo(4.5858, 13.5286, 4.1983, 13.1411, 4.1983, 12.6631)
+    ..cubicTo(4.1983, 12.1851, 4.5858, 11.7976, 5.0637, 11.7976)
+    ..cubicTo(5.5417, 11.7976, 5.9292, 12.1851, 5.9292, 12.6631)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(5.9292, 15.646)
+    ..cubicTo(5.9292, 16.124, 5.5417, 16.5115, 5.0637, 16.5115)
+    ..cubicTo(4.5858, 16.5115, 4.1983, 16.124, 4.1983, 15.646)
+    ..cubicTo(4.1983, 15.168, 4.5858, 14.7806, 5.0637, 14.7806)
+    ..cubicTo(5.5417, 14.7806, 5.9292, 15.168, 5.9292, 15.646)
+    ..close();
+
+  static final Path __path3 = Path()
+    ..moveTo(9.184, 9.6801)
+    ..cubicTo(9.184, 10.1581, 8.7965, 10.5456, 8.3185, 10.5456)
+    ..cubicTo(7.8406, 10.5456, 7.4531, 10.1581, 7.4531, 9.6801)
+    ..cubicTo(7.4531, 9.2022, 7.8406, 8.8147, 8.3185, 8.8147)
+    ..cubicTo(8.7965, 8.8147, 9.184, 9.2022, 9.184, 9.6801)
+    ..close();
+
+  static final Path __path4 = Path()
+    ..moveTo(9.184, 12.6631)
+    ..cubicTo(9.184, 13.1411, 8.7965, 13.5286, 8.3185, 13.5286)
+    ..cubicTo(7.8406, 13.5286, 7.4531, 13.1411, 7.4531, 12.6631)
+    ..cubicTo(7.4531, 12.1851, 7.8406, 11.7976, 8.3185, 11.7976)
+    ..cubicTo(8.7965, 11.7976, 9.184, 12.1851, 9.184, 12.6631)
+    ..close();
+
+  static final Path __path5 = Path()
+    ..moveTo(12.4929, 9.6801)
+    ..cubicTo(12.4929, 10.1581, 12.1054, 10.5456, 11.6275, 10.5456)
+    ..cubicTo(11.1495, 10.5456, 10.762, 10.1581, 10.762, 9.6801)
+    ..cubicTo(10.762, 9.2022, 11.1495, 8.8147, 11.6275, 8.8147)
+    ..cubicTo(12.1054, 8.8147, 12.4929, 9.2022, 12.4929, 9.6801)
+    ..close();
+
+  static final Path __path6 = Path()
+    ..moveTo(9.184, 15.646)
+    ..cubicTo(9.184, 16.124, 8.7965, 16.5115, 8.3185, 16.5115)
+    ..cubicTo(7.8406, 16.5115, 7.4531, 16.124, 7.4531, 15.646)
+    ..cubicTo(7.4531, 15.168, 7.8406, 14.7806, 8.3185, 14.7806)
+    ..cubicTo(8.7965, 14.7806, 9.184, 15.168, 9.184, 15.646)
+    ..close();
+
+  static final Path __path7 = Path()
+    ..moveTo(12.4929, 12.6631)
+    ..cubicTo(12.4929, 13.1411, 12.1054, 13.5286, 11.6275, 13.5286)
+    ..cubicTo(11.1495, 13.5286, 10.762, 13.1411, 10.762, 12.6631)
+    ..cubicTo(10.762, 12.1851, 11.1495, 11.7976, 11.6275, 11.7976)
+    ..cubicTo(12.1054, 11.7976, 12.4929, 12.1851, 12.4929, 12.6631)
+    ..close();
+
+  static final Path __path8 = Path()
+    ..moveTo(15.8018, 9.6801)
+    ..cubicTo(15.8018, 10.1581, 15.4143, 10.5456, 14.9363, 10.5456)
+    ..cubicTo(14.4583, 10.5456, 14.0708, 10.1581, 14.0708, 9.6801)
+    ..cubicTo(14.0708, 9.2022, 14.4583, 8.8147, 14.9363, 8.8147)
+    ..cubicTo(15.4143, 8.8147, 15.8018, 9.2022, 15.8018, 9.6801)
+    ..close();
+
+  static final Path __path9 = Path()
+    ..moveTo(12.4929, 15.646)
+    ..cubicTo(12.4929, 16.124, 12.1054, 16.5115, 11.6275, 16.5115)
+    ..cubicTo(11.1495, 16.5115, 10.762, 16.124, 10.762, 15.646)
+    ..cubicTo(10.762, 15.168, 11.1495, 14.7806, 11.6275, 14.7806)
+    ..cubicTo(12.1054, 14.7806, 12.4929, 15.168, 12.4929, 15.646)
+    ..close();
+
+  static final Path __path10 = Path()
+    ..moveTo(15.8018, 12.6631)
+    ..cubicTo(15.8018, 13.1411, 15.4143, 13.5286, 14.9363, 13.5286)
+    ..cubicTo(14.4583, 13.5286, 14.0708, 13.1411, 14.0708, 12.6631)
+    ..cubicTo(14.0708, 12.1851, 14.4583, 11.7976, 14.9363, 11.7976)
+    ..cubicTo(15.4143, 11.7976, 15.8018, 12.1851, 15.8018, 12.6631)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Calendar._viewBoxWidth;
+    final scaleY = size.height / _Calendar._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Calendar._viewBoxMinX, -_Calendar._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path3, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path4, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path5, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path6, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path7, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path8, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path9, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path10, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CalendarPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

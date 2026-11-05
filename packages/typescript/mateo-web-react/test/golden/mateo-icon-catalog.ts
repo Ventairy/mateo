@@ -19,6 +19,7 @@ export const mateoGoldenIconCatalog = {
   broom: MateoIcons.MateoBroomIcon,
   buildings: MateoIcons.MateoBuildingsIcon,
   busFront: MateoIcons.MateoBusFrontIcon,
+  calendar: MateoIcons.MateoCalendarIcon,
   checkeredFlag: MateoIcons.MateoCheckeredFlagIcon,
   checkmark: MateoIcons.MateoCheckmarkIcon,
   chevronDown: MateoIcons.MateoChevronDownIcon,
