@@ -4,7 +4,7 @@ import math
 import unittest
 
 import numpy as np
-from optical_geometry import closure_measure, layer_span, soft_fill
+from optical_geometry import closure_measure, detached_ink_fraction, ink_concentration, layer_span, soft_fill
 from scipy import ndimage
 from svg_measurement import render_alpha
 
@@ -49,6 +49,66 @@ def _iterated_reference(image):
 
 
 class OpticalGeometryTests(unittest.TestCase):
+    def test_detached_fraction_matches_unequal_component_areas(self):
+        field = np.zeros((12, 20))
+        field[2:6, 2:5] = 1
+        field[2:6, 12:14] = 1
+        self.assertAlmostEqual(detached_ink_fraction(field), 8 / 20, places=12)
+
+    def test_a_faint_piece_or_bridge_changes_detachment_continuously(self):
+        field = np.zeros((10, 18))
+        field[2:6, 2:5] = 1
+        field[2:6, 10:13] = 1
+        for opacity in (0, 1e-12, 0.1, 0.499, 0.5, 0.501, 0.9, 1):
+            faint_piece = field.copy()
+            faint_piece[2:6, 10:13] *= opacity
+            self.assertAlmostEqual(detached_ink_fraction(faint_piece), opacity / 2, places=12)
+            bridge = field.copy()
+            bridge[3, 5:10] = opacity
+            self.assertAlmostEqual(detached_ink_fraction(bridge), (1 - opacity) / 2, places=12)
+
+    def test_detachment_is_translation_reflection_rotation_and_opacity_invariant(self):
+        field = np.zeros((12, 20))
+        field[2:6, 2:5] = 0.7
+        field[2:6, 12:14] = 1
+        expected = detached_ink_fraction(field)
+        for changed in (np.rot90(field), field[:, ::-1], np.pad(field, 3), field * 0.2):
+            self.assertAlmostEqual(detached_ink_fraction(changed), expected, places=12)
+
+    def test_connected_or_empty_detachment_has_explicit_results(self):
+        self.assertEqual(detached_ink_fraction(np.ones((8, 8))), 0)
+        with self.assertRaisesRegex(ValueError, "no visible area"):
+            detached_ink_fraction(np.zeros((8, 8)))
+
+    def test_filled_rectangle_has_the_analytic_covariance_concentration(self):
+        field = np.zeros((30, 40))
+        field[5:25, 10:20] = 1
+        self.assertAlmostEqual(ink_concentration(field, 1), 3 / math.pi, places=12)
+
+    def test_concentration_does_not_depend_on_orientation_translation_or_opacity(self):
+        field = np.zeros((25, 30))
+        field[5:21, 9:17] = 1
+        expected = ink_concentration(field, 8)
+        for changed in (np.rot90(field), field[:, ::-1], np.pad(field, 4), field * 0.2):
+            self.assertAlmostEqual(ink_concentration(changed, 8), expected, places=12)
+
+    def test_separated_strokes_have_less_concentration_than_a_compact_body(self):
+        compact = np.zeros((40, 40))
+        compact[10:30, 16:24] = 1
+        spread = np.zeros((40, 40))
+        spread[4:8, 5:35] = 1
+        spread[18:22, 5:35] = 1
+        spread[32:36, 5:35] = 1
+        self.assertGreater(ink_concentration(compact, 8), 0.9)
+        self.assertLess(ink_concentration(spread, 8), 0.5)
+
+    def test_concentration_rejects_empty_coverage_and_invalid_density(self):
+        with self.assertRaises(ValueError):
+            ink_concentration(np.zeros((4, 4)), 8)
+        for density in (0, math.nan, math.inf):
+            with self.assertRaises(ValueError):
+                ink_concentration(np.ones((4, 4)), density)
+
     def test_layer_span_matches_analytic_rectangle_and_cell_corner_diameter(self):
         alpha = np.zeros((20, 20))
         alpha[7:13, 8:14] = 1
@@ -187,6 +247,23 @@ class OpticalGeometryTests(unittest.TestCase):
             self.assertLessEqual(result["ink_area"], result["filled_area"])
             self.assertGreaterEqual(result["closure"], 0)
             self.assertLess(result["closure"], 1)
+            self.assertGreaterEqual(result["distributed_enclosure"], 0)
+            self.assertLessEqual(result["distributed_enclosure"], result["closure"] + 1e-12)
+
+    def test_body_and_cavity_distribution_are_rotation_reflection_and_opacity_invariant(self):
+        field = render_alpha(_ring(8), pixels_per_unit=8).alpha
+        original = closure_measure(field, 8)
+        for image in (np.rot90(field), field[:, ::-1], field * 0.2):
+            with self.subTest(shape=image.shape):
+                changed = closure_measure(image, 8)
+                np.testing.assert_allclose(changed["body_spreads"], original["body_spreads"], atol=1e-12)
+                self.assertAlmostEqual(changed["distributed_enclosure"], original["distributed_enclosure"], places=12)
+
+    def test_one_pixel_and_collinear_fields_have_finite_body_moments(self):
+        for field in (np.eye(5), np.array([[1, 0], [0, 0]], dtype=float)):
+            result = closure_measure(field, 8)
+            self.assertTrue(all(math.isfinite(v) and v > 0 for v in result["body_spreads"]))
+            self.assertTrue(math.isfinite(result["distributed_enclosure"]))
 
     def test_subpixel_opening_converges_with_sampling_resolution(self):
         measures = []

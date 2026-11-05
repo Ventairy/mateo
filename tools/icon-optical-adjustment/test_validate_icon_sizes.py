@@ -1,6 +1,8 @@
 """Regression checks for validation context fidelity, independent of model tuning."""
 
 import tempfile
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,6 +13,25 @@ SOURCE = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox
 
 
 class ValidationTests(unittest.TestCase):
+    def test_actual_28px_product_size_is_included_at_every_density(self):
+        contexts = display_samples(SOURCE)
+        for density in (1, 2, 3):
+            self.assertIn(f"28px@{density}x", contexts)
+
+    def test_catalog_renderer_accepts_the_28px_product_size(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            inputs, output = directory / "input", directory / "preview"
+            inputs.mkdir()
+            (inputs / "circle.svg").write_text(SOURCE)
+            result = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name("render_icon_sizes.py")),
+                 "--input", str(inputs), "--output-dir", str(output), "--size", "28"],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(list(output.glob("*.png")))
+
     def test_standalone_root_offsets_stay_inactive_when_rendering_contexts(self):
         offset = SOURCE.replace("<svg ", '<svg x="100" y="100" ')
         self.assertEqual(display_samples(offset), display_samples(SOURCE))

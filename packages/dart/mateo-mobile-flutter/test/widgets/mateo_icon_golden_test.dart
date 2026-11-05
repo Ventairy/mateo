@@ -6,7 +6,7 @@ import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
   await goldenTest(
-    'when sparse icons have broad contours, it should balance their size beside filled icons',
+    'when icons mix open strokes and enclosed bodies, it should preserve their optical balance',
     fileName: 'mateo_icon_optical_balance',
     builder: () => MateoTheme(
       data: surfaceTransformTheme,
@@ -14,6 +14,47 @@ Future<void> main() async {
         columns: 2,
         children: [
           for (final (group, icons) in [
+            (
+              'Separated silhouettes',
+              [
+                MateoIconData.discoBall,
+                MateoIconData.eraser,
+                MateoIconData.parkingSign,
+                MateoIconData.runningFigure,
+                MateoIconData.prayingFigure,
+              ],
+            ),
+            (
+              'Compact narrow bodies',
+              [
+                MateoIconData.magnifyingGlass,
+                MateoIconData.heart,
+                MateoIconData.popcorn,
+                MateoIconData.parkingSign,
+                MateoIconData.paperPlaneUpRight,
+                MateoIconData.evPlug,
+              ],
+            ),
+            (
+              'Enclosed bodies',
+              [
+                MateoIconData.magnifyingGlass,
+                MateoIconData.heart,
+                MateoIconData.monkeyHead,
+                MateoIconData.medicalCross,
+                MateoIconData.numbers,
+              ],
+            ),
+            (
+              'Dates and local cavities',
+              [
+                MateoIconData.calendar,
+                MateoIconData.clock,
+                MateoIconData.parkingSign,
+                MateoIconData.helicopterFront,
+                MateoIconData.hookah,
+              ],
+            ),
             (
               'Settings',
               [

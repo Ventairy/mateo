@@ -12,6 +12,7 @@ from pathlib import Path
 
 import resvg_py
 from PIL import Image, ImageDraw, ImageFont
+from adjust_icon_sizes import DISPLAY_SIZES
 
 
 def font(size):
@@ -35,7 +36,7 @@ def draw_icon(canvas, source, x, y, size, circle, density):
 
 def draw_pairs(directory, pairs, output, label, density):
     column_width, row_height = 184, 118
-    canvas = Image.new("RGB", ((56 + len(pairs) * column_width) * density, 454 * density), "white")
+    canvas = Image.new("RGB", ((56 + len(pairs) * column_width) * density, (100 + len(DISPLAY_SIZES) * row_height) * density), "white")
     drawing = ImageDraw.Draw(canvas)
     drawing.text((20 * density, 14 * density), label, fill="#181818", font=font(20 * density))
     drawing.text(
@@ -44,8 +45,9 @@ def draw_pairs(directory, pairs, output, label, density):
         fill="#636363",
         font=font(12 * density),
     )
-    for row, size in enumerate((16, 20, 24)):
-        circle = {16: 40, 20: 48, 24: 56}[size]
+    for row, size in enumerate(DISPLAY_SIZES):
+        size = int(size)
+        circle = size * 2 + 8
         y = 98 + row * row_height
         drawing.text(
             (10 * density, (y + circle // 2 - 6) * density),
@@ -74,7 +76,7 @@ def main():
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--label", default="Optically sized icons")
-    parser.add_argument("--size", type=int, choices=(16, 20, 24), default=20)
+    parser.add_argument("--size", type=int, choices=tuple(map(int, DISPLAY_SIZES)), default=20)
     parser.add_argument("--density", type=int, choices=(1, 2, 3), default=2)
     parser.add_argument("--columns", type=int, default=6)
     parser.add_argument("--per-page", type=int, default=36)
@@ -82,7 +84,7 @@ def main():
         "--pair",
         action="append",
         metavar="FIRST,SECOND",
-        help="Render named review pairs at16/20/24px instead of a catalog",
+        help="Render named review pairs at the model's display sizes instead of a catalog",
     )
     args = parser.parse_args()
     if not 1 <= args.columns <= 12 or not 1 <= args.per_page <= 120:
@@ -97,12 +99,13 @@ def main():
         if any(len(pair) != 2 or any(name not in names for name in pair) for pair in pairs):
             parser.error("--pair must name two existing icons separated by one comma")
         draw_pairs(args.input, pairs, args.output_dir, args.label, args.density)
-        print(f"{len(pairs)} pairs rendered at 16, 20, and 24px")
+        sizes = ", ".join(str(int(size)) for size in DISPLAY_SIZES)
+        print(f"{len(pairs)} pairs rendered at {sizes}px")
         return
 
     density = args.density
     column_width, row_height = 156, 104
-    circle = {16: 40, 20: 48, 24: 56}[args.size]
+    circle = args.size * 2 + 8
     for page, start in enumerate(range(0, len(paths), args.per_page), 1):
         subset = paths[start : start + args.per_page]
         rows = math.ceil(len(subset) / args.columns)

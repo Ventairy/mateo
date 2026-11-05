@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adjust icon sizes optically using geometry and a learned visual descriptor.
+"""Adjust icon sizes optically using span, body, and detached-piece geometry.
 
 Only one uniform transform is generated inside each existing 20px SVG frame.
 No filename, family, catalog statistic, or per-icon adjustment enters the model.
@@ -20,9 +20,9 @@ from dataclasses import dataclass, replace
 from functools import lru_cache
 from pathlib import Path
 
-import learned_presence
+import optical_model
 import numpy as np
-from optical_geometry import closure_measure, layer_span
+from optical_geometry import closure_measure, detached_ink_fraction, ink_concentration, layer_span
 from scipy import fft
 from svg_measurement import (
     FRAME,
@@ -34,20 +34,20 @@ from svg_measurement import (
 )
 
 ICONS = Path(__file__).resolve().parents[2] / "design-system/foundation/assets/icons/svg"
-MODEL_DATA = learned_presence.read_model()
+MODEL_DATA = optical_model.read_model()
 MODEL_VERSION = MODEL_DATA["model"]
 MAX_EXTENT = MODEL_DATA["max_extent"]
 REFERENCE_DIAMETER = MODEL_DATA["reference_diameter"]
-PIXELS_PER_UNIT = learned_presence.PIXELS_PER_UNIT
-ANALYSIS_PIXELS_PER_UNIT = 8
+PIXELS_PER_UNIT = MODEL_DATA["pixels_per_unit"]
+ANALYSIS_PIXELS_PER_UNIT = MODEL_DATA["analysis_pixels_per_unit"]
 # Fixed shared calibration; none of these values depends on the input catalog.
-ORIENTATION_COEFFICIENT = 0.03577135033431072
-EMPTY_SPACE_WEIGHT = 0.20
-CONTRAST_CUE_WEIGHT = 0.03
-DIAGONAL_CUE_WEIGHT = 0.25
-CLOSURE_SIGMAS = (0.35, 0.70, 1.40)
+ORIENTATION_COEFFICIENT = MODEL_DATA["orientation"]
+EMPTY_SPACE_WEIGHT = MODEL_DATA["empty_space"]
+CONTRAST_CUE_WEIGHT = MODEL_DATA["contrast_cue"]
+DIAGONAL_CUE_WEIGHT = MODEL_DATA["diagonal_extent"]
+CLOSURE_SIGMAS = tuple(MODEL_DATA["closure_sigmas"])
 # Fixed model sampling contexts, independent of current component size tokens.
-DISPLAY_SIZES = (16.0, 20.0, 24.0)
+DISPLAY_SIZES = tuple(MODEL_DATA["display_sizes"])
 BLUR_SCALES = ((0.45, 0.50), (0.90, 0.35), (1.80, 0.15))
 SOLVER_STEPS = 36
 TRANSFORM_TOLERANCE = 1e-4
@@ -153,6 +153,10 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
         unoccupied_fraction=unoccupied_fraction,
         closure=closure["closure"],
         closure_filled_areas=closure["filled_areas"],
+        body_spreads=closure["body_spreads"],
+        distributed_enclosure=closure["distributed_enclosure"],
+        ink_concentration=ink_concentration(coverage, ANALYSIS_PIXELS_PER_UNIT),
+        detached_ink_fraction=detached_ink_fraction(coverage),
         orientation=orientation,
         radial_spread=math.sqrt(vx + vy) / pixels_per_unit,
         orientation_log_bias=ORIENTATION_COEFFICIENT * orientation,
@@ -169,53 +173,81 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
 
 @lru_cache(maxsize=1)
 def _reference_geometry():
-    return _measure_geometry(learned_presence.REFERENCE_SOURCE)
+    return _measure_geometry(optical_model.REFERENCE_SOURCE)
 
 
-def _limit_sparse_enlargement(icon, correction):
-    """Keep learned enlargement from exaggerating already spread-out strokes.
+@lru_cache(maxsize=1)
+def _require_runtime():
+    optical_model.require_packages(MODEL_DATA)
 
-    The disk's RMS distance from its ink centroid supplies a second, independent
-    span cue. It can limit learned enlargement, never reduce the geometric size
-    or change a learned size reduction. Compact symbols remain free to enlarge.
-    """
-    if correction >= 0:
-        return correction
-    features = icon.features
-    ink_fraction = features["ink_area"] / features["axis_extent"] ** 2
-    guard = MODEL_DATA["sparse_spread_guard"]
-    full = guard["full_strength_ink_fraction"]
-    zero = guard["zero_strength_ink_fraction"]
-    if ink_fraction >= zero:
-        return correction
-    reference = _reference_geometry().features
-    spread_presence = (
-        reference["geometry_presence"] * features["radial_spread"] / reference["radial_spread"]
-    )
-    correction_floor = min(0.0, math.log(spread_presence / features["geometry_presence"]))
-    if correction >= correction_floor:
-        return correction
-    progress = min(1.0, (zero - ink_fraction) / (zero - full))
-    strength = progress * progress * (3 - 2 * progress)
-    return correction + strength * (correction_floor - correction)
+
+def _smooth_progress(value, interval):
+    low, high = interval
+    progress = min(1.0, max(0.0, (value - low) / (high - low)))
+    return progress * progress * (3 - 2 * progress)
 
 
 def measure(source, *, pixels_per_unit=PIXELS_PER_UNIT):
-    """Apply one fixed visual correction to the authored geometry measurement."""
+    """Balance outer span with enclosed, narrow, and separated broad bodies."""
     if pixels_per_unit != PIXELS_PER_UNIT:
         raise ValueError("The fixed icon model requires 32 geometry samples per unit")
-    original = unwrap(source)
-    measured = _measure_geometry(original, pixels_per_unit=pixels_per_unit)
-    model = learned_presence.get_model()
-    raw = model.raw_features(original, measured, pixels_per_unit=pixels_per_unit)
-    learned_correction = learned_presence.readout(raw, model.data)
-    correction = _limit_sparse_enlargement(measured, learned_correction)
+    _require_runtime()
+    measured = _measure_geometry(source, pixels_per_unit=pixels_per_unit)
     features = dict(measured.features)
+    reference = _reference_geometry().features
+    area_ratio = math.sqrt(features["filled_area"] / reference["filled_area"])
+    spread_ratio = math.exp(
+        sum(
+            math.log(a / b)
+            for a, b in zip(features["body_spreads"], reference["body_spreads"], strict=True)
+        ) / len(features["body_spreads"])
+    )
+    area_weight = MODEL_DATA["body_area_weight"]
+    body_ratio = area_ratio**area_weight * spread_ratio**(1 - area_weight)
+    body_presence = (
+        reference["geometry_presence"] * body_ratio * math.exp(features["orientation_log_bias"])
+    )
+    gain = MODEL_DATA["body_evidence_gain"]
+    enclosure_weight = 1 - (1 - features["distributed_enclosure"]) ** gain
+    concentration = _smooth_progress(
+        features["ink_concentration"], MODEL_DATA["compact_body_concentration_range"]
+    )
+    aspect = min(features["width"], features["height"]) / features["axis_extent"]
+    broadness = _smooth_progress(aspect, MODEL_DATA["compact_body_aspect_range"])
+    narrowness = 1 - broadness
+    # Concentration is confidence, rather than another signal to amplify.
+    # Otherwise a weakly packed narrow mark can receive almost full body weight.
+    compact_weight = concentration * (1 - (1 - narrowness) ** gain)
+    strength = 1 - (1 - enclosure_weight) * (1 - compact_weight)
+    body_log_ratio = math.log(body_presence / features["geometry_presence"])
+    # Detached, partly filled silhouettes can need body support even when broad.
+    # Connected strokes and dense solids do not supply this additional evidence.
+    broad_weight = (
+        broadness
+        * _smooth_progress(features["ink_concentration"], MODEL_DATA["broad_body_concentration_rise"])
+        * (1 - _smooth_progress(features["ink_concentration"], MODEL_DATA["broad_body_concentration_fall"]))
+        * _smooth_progress(features["detached_ink_fraction"], MODEL_DATA["detached_ink_range"])
+    )
+    if body_log_ratio < 0:
+        # Limit only the new cue's extra enlargement. Existing body corrections
+        # and the fixed 20px frame retain their independent contracts.
+        broad_weight = min(
+            broad_weight,
+            strength + math.log(MODEL_DATA["broad_body_max_enlargement"]) / -body_log_ratio,
+        )
+        strength = max(strength, broad_weight)
+    else:
+        broad_weight = 0.0
+    correction = strength * body_log_ratio
     features.update(
-        learned_raw_cues=raw.tolist(),
-        learned_log_correction_before_spread_limit=learned_correction,
-        learned_log_correction=correction,
-        learned_gate=math.exp(-max(float(raw[2]), 0)),
+        body_area_ratio=area_ratio,
+        body_spread_ratio=spread_ratio,
+        body_presence=body_presence,
+        body_weight=strength,
+        enclosure_body_weight=enclosure_weight,
+        compact_body_weight=compact_weight,
+        broad_body_weight=broad_weight,
+        body_log_correction=correction,
         base_geometry_presence=features["geometry_presence"],
     )
     features["geometry_presence"] *= math.exp(correction)
@@ -254,8 +286,8 @@ def reference_target(*, pixels_per_unit=PIXELS_PER_UNIT):
     """A synthetic disk fixes overall size without depending on a catalog member."""
     if pixels_per_unit != PIXELS_PER_UNIT:
         raise ValueError("The fixed icon model requires 32 geometry samples per unit")
+    _require_runtime()
     disk = _reference_geometry()
-    learned_presence.get_model().verify_reference_geometry(disk)
     return presence(disk, REFERENCE_DIAMETER / FRAME)
 
 
@@ -452,11 +484,11 @@ def main(argv=None):
                 packages={
                     name: importlib.metadata.version(name) for name in MODEL_DATA["packages"]
                 },
-                learned_model=dict(
+                model_details=dict(
                     parameters=MODEL_DATA,
-                    parameters_sha256=learned_presence.digest_file(learned_presence.MODEL_PATH),
-                    formula="P(s) = P_base(s) * exp(C); C is the bounded learned correction after the dense-ink and sparse-spread enlargement limits.",
-                    inference="Verified local weights; no downloads or fitting during optical size adjustment.",
+                    parameters_sha256=optical_model.digest_file(optical_model.MODEL_PATH),
+                    formula="P(s) = P_span(s) * exp(w * log(P_body / P_span)); w combines enclosed and narrow-body evidence with bounded support for separated broad silhouettes.",
+                    inference="Deterministic geometry; no learned weights, downloads, fitting, or catalog statistics.",
                 ),
                 input_directory=str(source_dir),
                 output_directory=str(destination),
@@ -479,7 +511,7 @@ def main(argv=None):
     limited = sum(metrics["limited"] for _, _, _, metrics in results)
     print(
         f"{len(results)} icons; {len(changes)} {'out of date' if args.check else 'updated'}; "
-        f"{limited} extent-limited; shared geometry and learned visual model."
+        f"{limited} extent-limited; shared span and body geometry model."
     )
     return int(args.check and bool(changes))
 

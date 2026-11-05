@@ -17,9 +17,9 @@ from pathlib import Path
 
 import numpy as np
 import resvg_py
-from adjust_icon_sizes import adjust_icon_size, reference_target
+from adjust_icon_sizes import DISPLAY_SIZES, MAX_EXTENT, adjust_icon_size, reference_target
 from PIL import Image
-from svg_measurement import render_alpha, unwrap
+from svg_measurement import FRAME, render_alpha, unwrap
 
 
 def display_samples(source):
@@ -30,7 +30,8 @@ def display_samples(source):
     root.attrib.pop("y", None)
     nested = ET.tostring(root, encoding="unicode")
     results = {}
-    for size in (16, 20, 24):
+    for display_size in DISPLAY_SIZES:
+        size = int(display_size)
         for dpr in (1, 2, 3):
             areas, peaks = [], []
             for x, y in ((0, 0), (0.5, 0), (0, 0.5), (0.5, 0.5)):
@@ -67,7 +68,8 @@ def audit(original_path, adjusted_path, target, pixels_per_unit=32):
     centered = (
         abs(bounds[0] + bounds[2] - 20) <= 1 / 32 and abs(bounds[1] + bounds[3] - 20) <= 1 / 32
     )
-    contained = min(bounds[:2]) >= 1 - 1 / 64 and max(bounds[2:]) <= 19 + 1 / 64
+    margin = (FRAME - MAX_EXTENT) / 2
+    contained = min(bounds[:2]) >= margin - 1 / 64 and max(bounds[2:]) <= FRAME - margin + 1 / 64
     contexts = display_samples(output)
     return dict(
         source_preserved=source_preserved,
@@ -129,7 +131,7 @@ def main(argv=None):
         )
     ]
     report = dict(
-        scope="Source preservation, deterministic generation, centered 18px bounds; 36 raster contexts per icon. Not a human perceptual test.",
+        scope=f"Source preservation, deterministic generation, centered {MAX_EXTENT:g}px bounds; {len(DISPLAY_SIZES) * 12} raster contexts per icon. Not a human perceptual test.",
         count=len(results),
         pixels_per_unit=args.pixels_per_unit,
         failed=failures,
@@ -140,7 +142,7 @@ def main(argv=None):
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(
-        f"{len(results)} icons, {len(results) * 36} display samples; {len(failures)} contract failures; "
+        f"{len(results)} icons, {len(results) * len(DISPLAY_SIZES) * 12} display samples; {len(failures)} contract failures; "
         f"{report['extent_limited']} extent-limited."
     )
     return int(bool(failures))

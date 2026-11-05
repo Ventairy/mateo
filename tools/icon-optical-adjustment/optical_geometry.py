@@ -138,7 +138,7 @@ def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
     ink_area = float(field.sum() * pixel_area)
     if not math.isfinite(ink_area) or ink_area <= 0:
         raise ValueError("Icon has no finite measurable area")
-    filled_areas = []
+    filled_areas, body_spreads, distributed_holes = [], [], []
     for sigma in sigmas:
         blurred = ndimage.gaussian_filter(
             field, sigma * pixels_per_unit, mode="constant", truncate=5
@@ -148,11 +148,86 @@ def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
         np.clip(blurred, 0, 1, out=blurred)
         # Padding retains the Gaussian integral. Reconstruction is extensive;
         # max removes only floating-point error at the ink-area lower bound.
-        filled_areas.append(max(ink_area, float(soft_fill(blurred).sum() * pixel_area)))
+        filled = soft_fill(blurred)
+        filled_area_at_scale = max(ink_area, float(filled.sum() * pixel_area))
+        filled_areas.append(filled_area_at_scale)
+        body_variance, body_determinant = _spatial_moments(filled, pixels_per_unit)
+        body_spreads.append(math.sqrt(body_variance))
+        holes = np.maximum(filled - blurred, 0)
+        added_area = float(holes.sum() * pixel_area)
+        distribution = 0.0
+        if added_area > 0:
+            _, hole_determinant = _spatial_moments(holes, pixels_per_unit)
+            # A covariance ellipse's linear scale is det(covariance) ** 1/4.
+            # A small local cavity must not resize the whole enclosing symbol.
+            distribution = min(1.0, (hole_determinant / body_determinant) ** 0.25)
+        distributed_holes.append(added_area * distribution)
     filled_area = max(ink_area, float(np.dot(weights, filled_areas)))
     return dict(
         ink_area=ink_area,
         filled_area=filled_area,
         closure=1 - ink_area / filled_area,
         filled_areas=tuple(filled_areas),
+        body_spreads=tuple(body_spreads),
+        distributed_enclosure=float(np.dot(weights, distributed_holes)) / filled_area,
     )
+
+
+def _spatial_moments(field, pixels_per_unit):
+    """Return radial variance and covariance determinant of fractional cells."""
+    mass = float(field.sum())
+    yy, xx = np.indices(field.shape, dtype=float)
+    cx, cy = float((xx * field).sum() / mass), float((yy * field).sum() / mass)
+    # Each sample occupies a square cell, not a dimensionless point. This also
+    # keeps the determinant positive for one-pixel and collinear coverage.
+    cell_variance = 1 / (12 * pixels_per_unit**2)
+    vx = float(((xx - cx) ** 2 * field).sum() / mass) / pixels_per_unit**2 + cell_variance
+    vy = float(((yy - cy) ** 2 * field).sum() / mass) / pixels_per_unit**2 + cell_variance
+    vxy = float(((xx - cx) * (yy - cy) * field).sum() / mass) / pixels_per_unit**2
+    return vx + vy, max(vx * vy - vxy**2, cell_variance**2)
+
+
+def ink_concentration(alpha, pixels_per_unit):
+    """Measure packed ink relative to its covariance-equivalent ellipse.
+
+    A uniformly filled ellipse approaches one; separated or spread-out strokes
+    occupy less of their moment ellipse. Peak normalization removes opacity as
+    a sizing cue. Covariance makes the measurement orientation-independent.
+    """
+    alpha = _coverage(alpha)
+    if (
+        not isinstance(pixels_per_unit, (int, float))
+        or not math.isfinite(pixels_per_unit)
+        or pixels_per_unit <= 0
+    ):
+        raise ValueError("Expected positive finite sampling density")
+    peak = float(alpha.max())
+    if peak <= 0:
+        raise ValueError("Icon has no visible area")
+    normalized = alpha / peak
+    area = float(normalized.sum()) / pixels_per_unit**2
+    _, determinant = _spatial_moments(normalized, pixels_per_unit)
+    return min(1.0, area / (4 * math.pi * math.sqrt(determinant)))
+
+
+def detached_ink_fraction(alpha):
+    """Integrate ink outside the largest connected piece over all alpha cuts.
+
+    Each cut uses four-neighbor connectivity. Integrating every observed alpha
+    interval lets a faint piece or bridge contribute gradually, without choosing
+    one opacity threshold. Overlapping source paths are measured as one drawing.
+    """
+    alpha = _coverage(alpha)
+    levels = np.unique(alpha)
+    levels = levels[levels > 0]
+    if not len(levels):
+        raise ValueError("Icon has no visible area")
+    if len(levels) > 4096:
+        raise ValueError("Detached ink exceeds 4096 distinct alpha values")
+    intervals = np.diff(np.r_[0.0, levels / levels[-1]])
+    detached = 0.0
+    for level, interval in zip(levels, intervals, strict=True):
+        labels, _ = ndimage.label(alpha >= level, structure=_CONNECTIVITY)
+        areas = np.bincount(labels.ravel())[1:]
+        detached += float(interval) * (1 - float(areas.max()) / float(areas.sum()))
+    return detached

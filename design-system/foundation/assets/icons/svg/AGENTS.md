@@ -11,8 +11,8 @@ Whenever an SVG icon is added or modified, you must run the
 [optical icon sizing tools](../../../../../tools/icon-optical-adjustment/README.md)
 before considering the change complete. This applies even to small edits.
 
-1. Follow the tool README to set up its pinned dependencies and verified model
-   weights. It includes commands for Linux, macOS, and Windows.
+1. Follow the tool README to set up its pinned numerical and rendering
+   dependencies. It includes commands for Linux, macOS, and Windows.
 2. After the final artwork edit, run `adjust_icon_sizes.py` to apply optical
    sizing, then run it with `--check`. The check must report no out-of-date icons.
    From the repository root, using the setup variables from the tool README:
@@ -26,6 +26,9 @@ before considering the change complete. This applies even to small edits.
    the changed icons at their intended display sizes alongside related icons.
 4. Keep the adjusted SVGs as the final assets. If you edit the artwork again,
    repeat the adjustment and checks.
+5. Follow the tool README's package integration steps. Keep the Flutter SVG
+   copies byte-identical to this directory, regenerate its icon painters, and
+   rebuild the static SVG and React packages from these adjusted assets.
 
 Let the tool manage the generated `mateo-optical-size` transform. Do not
 hand-tune it or change the model to compensate for an individual icon. If

@@ -167,8 +167,8 @@ language conventions, such as `arrowLeft` in Dart.
 
 ### Size and placement
 
-- SVG icons use a 20 × 20 frame with optical sizing built into the artwork. Preserve this internal spacing
-  when using the assets.
+- SVG icons use a 20 × 20 frame with optical sizing built into the artwork.
+  Preserve this internal spacing when using the assets.
 - Preserve the icon's aspect ratio. Do not stretch it to fill a square.
 - Choose icon size in the component or platform specification, and test the
   result at its actual rendered size. Small icons must remain recognizable.
@@ -182,9 +182,11 @@ language conventions, such as `arrowLeft` in Dart.
 #### Optical sizing
 
 Icons balance visible mass and apparent span at a displayed size of 20px.
-Their internal bounds intentionally differ: open contours, enclosed shapes,
-and narrow symbols can need different spans to look balanced. The SVG artwork
-is the source of truth for each icon's scale and internal spacing.
+Their internal bounds intentionally differ: open contours, enclosed bodies,
+narrow shapes, and silhouettes with detached pieces can need different spans
+to look balanced. The SVG artwork is the source of truth for each icon's scale
+and internal spacing. Use the same component size for icons that share a role;
+do not add individual scale overrides around the exported artwork.
 
 Judge the set together at its displayed size. Compare how strongly each icon
 stands out beside its neighbors, including its filled regions, negative space,
@@ -194,6 +196,11 @@ to force matching bounds. Compare directional variants inside identical
 buttons as well. A tall chevron can need a smaller visible span than a wide
 chevron to balance their presence. Keep the component's icon box the same;
 the correction is already included in the artwork.
+
+Compare the main bodies of icons with detached pieces as well as their full
+reach. A running figure's head and limbs, or a disco ball's sparkles, must not
+leave its body visibly weaker than neighboring symbols. Preserve those pieces
+and their proportions; their optical spacing is included in the asset.
 
 Scaling an icon also scales its strokes. This sizing keeps the authored visual
 family while balancing its presence; it does not make every stroke identical.

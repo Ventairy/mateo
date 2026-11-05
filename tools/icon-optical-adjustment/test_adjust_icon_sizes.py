@@ -45,10 +45,10 @@ ASYMMETRIC = '<path d="M2 4 L16 6 L12 17 L9 10 L3 12Z" fill="black"/>'
 
 class GeometricContractTests(unittest.TestCase):
     def test_reference_is_synthetic_and_has_the_requested_diameter(self):
-        self.assertEqual(REFERENCE_DISK, sizing_tool.learned_presence.REFERENCE_SOURCE)
+        self.assertEqual(REFERENCE_DISK, sizing_tool.optical_model.REFERENCE_SOURCE)
         reference = measure(REFERENCE_DISK)
         geometry = sizing_tool._measure_geometry(REFERENCE_DISK)
-        self.assertAlmostEqual(reference.features["learned_log_correction"], 0, delta=1e-10)
+        self.assertAlmostEqual(reference.features["body_log_correction"], 0, delta=1e-10)
         self.assertEqual(
             target(), sizing_tool.presence(geometry, sizing_tool.REFERENCE_DIAMETER / 20)
         )
@@ -155,15 +155,15 @@ class GeometricContractTests(unittest.TestCase):
             extents.append(sizing_tool.sizing(geometry, base_target)["extent"])
         self.assertLess(max(extents) - min(extents), 0.04)
 
-    def test_fixed_model_rejects_other_densities_before_loading_weights(self):
-        with patch.object(sizing_tool.learned_presence, "get_model") as load_model:
+    def test_fixed_model_rejects_other_densities_before_runtime_setup(self):
+        with patch.object(sizing_tool, "_require_runtime") as setup:
             for density in (16, 64):
                 with self.subTest(density=density):
                     with self.assertRaisesRegex(ValueError, "requires 32"):
                         sizing_tool.measure(RECT, pixels_per_unit=density)
                     with self.assertRaisesRegex(ValueError, "requires 32"):
                         sizing_tool.reference_target(pixels_per_unit=density)
-            load_model.assert_not_called()
+            setup.assert_not_called()
 
     def test_safety_bound_contains_all_visible_geometry(self):
         source = svg(
@@ -172,32 +172,39 @@ class GeometricContractTests(unittest.TestCase):
         output, metrics = sizing_tool.adjust_icon_size(source, target() * 2)
         raster = render_alpha(output, pixels_per_unit=64)
         self.assertTrue(metrics["limited"])
-        self.assertLessEqual(metrics["extent"], 18)
-        self.assertGreaterEqual(min(raster.bounds[:2]), 0.99)
-        self.assertLessEqual(max(raster.bounds[2:]), 19.01)
+        self.assertLessEqual(metrics["extent"], sizing_tool.MAX_EXTENT)
+        margin = (20 - sizing_tool.MAX_EXTENT) / 2
+        self.assertGreaterEqual(min(raster.bounds[:2]), margin - 0.01)
+        self.assertLessEqual(max(raster.bounds[2:]), 20 - margin + 0.01)
         self.assertLess(metrics["relative_presence_residual"], 0)
 
 
 class ContrastAndSolverTests(unittest.TestCase):
-    def test_correction_multiplies_presence_without_changing_geometry_or_spectrum(self):
-        geometry = sizing_tool._measure_geometry(RECT)
-        corrected = measure(RECT)
+    def test_detached_body_support_enlarges_a_decorated_body_within_its_shared_limit(self):
+        source = svg('<circle cx="9" cy="11" r="5"/><circle cx="16" cy="4" r="2"/>')
+        _, adjusted = sizing_tool.adjust_icon_size(source)
+        with patch.dict(sizing_tool.MODEL_DATA, {"broad_body_max_enlargement": 1}):
+            _, baseline = sizing_tool.adjust_icon_size(source)
+        ratio = adjusted["extent"] / baseline["extent"]
+        self.assertGreater(ratio, 1.1)
+        self.assertLessEqual(ratio, 1.2)
+
+    def test_body_balance_preserves_authored_geometry_and_the_visibility_spectrum(self):
+        source = svg('<circle cx="10" cy="10" r="8" fill="none" stroke="black" stroke-width="2"/>')
+        geometry = sizing_tool._measure_geometry(source)
+        corrected = measure(source)
         self.assertEqual(corrected.source_bounds, geometry.source_bounds)
         self.assertEqual(corrected.source_to_canonical, geometry.source_to_canonical)
         np.testing.assert_array_equal(corrected.frequency_squared, geometry.frequency_squared)
         np.testing.assert_array_equal(corrected.spectral_energy, geometry.spectral_energy)
-        self.assertEqual(
-            corrected.features["base_geometry_presence"], geometry.features["geometry_presence"]
-        )
-        factor = math.exp(corrected.features["learned_log_correction"])
+        self.assertEqual(corrected.features["base_geometry_presence"], geometry.features["geometry_presence"])
+        factor = math.exp(corrected.features["body_log_correction"])
         for scale in (0.001, 0.4, 0.9, 4):
-            with self.subTest(scale=scale):
-                actual = sizing_tool.presence(corrected, scale) / sizing_tool.presence(
-                    geometry, scale
-                )
-                self.assertAlmostEqual(actual, factor, places=12)
+            self.assertAlmostEqual(
+                sizing_tool.presence(corrected, scale) / sizing_tool.presence(geometry, scale), factor,
+            )
 
-    def test_learned_enlargement_does_not_expand_sparse_peripheral_strokes(self):
+    def test_open_peripheral_strokes_keep_their_span_based_size(self):
         for drawing in (
             '<path d="M17 3H3V17H17" fill="none" stroke="black" stroke-width="2"/>',
             '<path d="M3 3V17M17 3V17" fill="none" stroke="black" stroke-width="2"/>',
@@ -206,36 +213,18 @@ class ContrastAndSolverTests(unittest.TestCase):
                 source = svg(drawing)
                 geometry = sizing_tool._measure_geometry(source)
                 base_extent = sizing_tool.sizing(geometry, target())["extent"]
-                with patch.object(sizing_tool.learned_presence, "readout", return_value=-0.1):
-                    _, adjusted = sizing_tool.adjust_icon_size(source, target())
-                self.assertAlmostEqual(adjusted["extent"], base_extent, places=7)
+                _, adjusted = sizing_tool.adjust_icon_size(source, target())
+                self.assertLess(abs(adjusted["extent"] - base_extent), 0.05)
 
-    def test_spread_limit_preserves_compact_enlargement_and_size_reduction(self):
-        compact_cross = svg(
-            '<path d="M10 3V17M3 10H17" stroke="black" stroke-width="2"/>'
-        )
-        for source, correction in ((compact_cross, -0.1), (RECT, -0.1), (compact_cross, 0.1)):
-            with self.subTest(source=source, correction=correction):
-                with patch.object(
-                    sizing_tool.learned_presence, "readout", return_value=correction
-                ):
-                    adjusted = sizing_tool.measure(source)
-                self.assertEqual(adjusted.features["learned_log_correction"], correction)
+    def test_broad_filled_shapes_do_not_receive_enclosure_or_narrow_body_enlargement(self):
+        for source in (DISK, svg('<path d="M10 3V17M3 10H17" stroke="black" stroke-width="2"/>')):
+            with self.subTest(source=source):
+                self.assertLess(abs(measure(source).features["body_log_correction"]), 1e-5)
 
-    def test_sparse_spread_transition_has_no_jump_at_either_ink_boundary(self):
-        geometry = sizing_tool._measure_geometry(svg(
-            '<path d="M17 3H3V17H17" fill="none" stroke="black" stroke-width="2"/>'
-        ))
-        for boundary in sizing_tool.MODEL_DATA["sparse_spread_guard"].values():
-            corrections = []
-            for fraction in (boundary - 1e-6, boundary, boundary + 1e-6):
-                features = dict(
-                    geometry.features,
-                    ink_area=fraction * geometry.features["axis_extent"] ** 2,
-                )
-                icon = replace(geometry, features=features)
-                corrections.append(sizing_tool._limit_sparse_enlargement(icon, -0.1))
-            self.assertLess(max(corrections) - min(corrections), 1e-9)
+    def test_a_subpixel_opening_does_not_cause_a_size_jump(self):
+        from test_optical_geometry import _ring
+        extents = [sizing_tool.sizing(measure(_ring(gap)), target())["extent"] for gap in (0, 0.25, 0.5, 1)]
+        self.assertLess(max(abs(a - b) for a, b in zip(extents, extents[1:])), 0.12)
 
     def test_score_is_strictly_increasing_over_several_orders_of_magnitude(self):
         for source in (
@@ -366,49 +355,24 @@ class TransformStabilityTests(unittest.TestCase):
 
 
 class BatchContractTests(unittest.TestCase):
-    def test_missing_weights_and_setup_failure_leave_the_batch_untouched(self):
+    def test_runtime_setup_failure_leaves_the_batch_untouched(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary) / "input"
             directory.mkdir()
-            empty_cache = Path(temporary) / "unprepared-weights"
-            empty_cache.mkdir()
             (directory / "a.svg").write_text(RECT)
             (directory / "b.svg").write_text(svg(ASYMMETRIC))
             report = Path(temporary) / "report.json"
             before = {path.name: path.read_bytes() for path in directory.iterdir()}
-            failures = (
-                (
-                    "missing weights",
-                    lambda: sizing_tool.learned_presence.LearnedPresence(cache_dir=empty_cache),
-                    "weights are missing or invalid",
-                ),
-                (
-                    "runtime setup",
-                    sizing_tool.learned_presence.ModelSetupError(
-                        "simulated incompatible model runtime"
-                    ),
-                    "simulated incompatible model runtime",
-                ),
-            )
-            for label, failure, message in failures:
-                with self.subTest(failure=label):
-                    stderr = io.StringIO()
-                    with (
-                        patch.object(
-                            sizing_tool.learned_presence, "get_model", side_effect=failure
-                        ),
-                        redirect_stderr(stderr),
-                        self.assertRaises(SystemExit) as error,
-                    ):
-                        sizing_tool.main(
-                            ["--input", str(directory), "--report", str(report), "--jobs", "4"]
-                        )
-                    self.assertEqual(error.exception.code, 2)
-                    self.assertIn(message, stderr.getvalue())
-                    self.assertEqual(
-                        before, {path.name: path.read_bytes() for path in directory.iterdir()}
-                    )
-                    self.assertFalse(report.exists())
+            stderr = io.StringIO()
+            with (
+                patch.object(sizing_tool, "_require_runtime", side_effect=sizing_tool.optical_model.ModelSetupError("incompatible runtime")),
+                redirect_stderr(stderr), self.assertRaises(SystemExit) as error,
+            ):
+                sizing_tool.main(["--input", str(directory), "--report", str(report), "--jobs", "4"])
+            self.assertEqual(error.exception.code, 2)
+            self.assertIn("incompatible runtime", stderr.getvalue())
+            self.assertEqual(before, {path.name: path.read_bytes() for path in directory.iterdir()})
+            self.assertFalse(report.exists())
 
     def test_worker_counts_produce_identical_bytes_from_fresh_processes(self):
         with tempfile.TemporaryDirectory() as temporary:
