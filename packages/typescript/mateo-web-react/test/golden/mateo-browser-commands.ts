@@ -120,8 +120,7 @@ export const mateoGoldenCommands = {
       if (!bounds) throw new Error(`Missing golden canvas: ${testId}`);
       const image = await page.screenshot({
         clip: bounds,
-        // These states have settled; finalize the compositor's transition layers.
-        animations: 'disabled',
+        animations: 'allow',
       });
       return image.toString('base64');
     },

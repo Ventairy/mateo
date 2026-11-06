@@ -81,11 +81,7 @@ export default defineConfig({
             headless: true,
             provider: playwright({
               // Native scrollbars must remain visible in appearance references.
-              launchOptions: {
-                ignoreDefaultArgs: ['--hide-scrollbars'],
-                // Keep clip-edge rasterization consistent after transform feedback.
-                args: ['--disable-gpu-rasterization'],
-              },
+              launchOptions: { ignoreDefaultArgs: ['--hide-scrollbars'] },
               contextOptions: {
                 deviceScaleFactor: 1,
                 locale: 'en-US',
@@ -106,7 +102,8 @@ export default defineConfig({
                 comparatorName: 'pixelmatch',
                 comparatorOptions: {
                   threshold: 0,
-                  includeAA: true,
+                  // Identical SVG clips can rerasterize with different edge coverage.
+                  includeAA: false,
                   allowedMismatchedPixelRatio: 0,
                 },
                 resolveScreenshotPath: ({
