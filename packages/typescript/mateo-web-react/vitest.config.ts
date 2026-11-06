@@ -73,13 +73,19 @@ export default defineConfig({
           include: [mateoGoldenPattern],
           setupFiles: ['test/golden/mateo-golden-setup.ts'],
           attachmentsDir: '.vitest/golden',
-          testTimeout: 30_000,
+          // Keep screenshot-heavy suites from competing for the CI renderer.
+          fileParallelism: false,
+          testTimeout: 60_000,
           browser: {
             enabled: true,
             headless: true,
             provider: playwright({
               // Native scrollbars must remain visible in appearance references.
-              launchOptions: { ignoreDefaultArgs: ['--hide-scrollbars'] },
+              launchOptions: {
+                ignoreDefaultArgs: ['--hide-scrollbars'],
+                // Keep clip-edge rasterization consistent after transform feedback.
+                args: ['--disable-gpu-rasterization'],
+              },
               contextOptions: {
                 deviceScaleFactor: 1,
                 locale: 'en-US',
