@@ -104,6 +104,9 @@ export const mateoGoldenCommands = {
   ),
   mateoGroupViewport: defineBrowserCommand(
     async ({ page, iframe }, width: number, height: number) => {
+      await page.evaluate(() => {
+        document.documentElement.style.scrollbarWidth = 'none';
+      });
       await page.setViewportSize({ width, height });
       await iframe.owner().evaluate(
         (element, bounds) => {
