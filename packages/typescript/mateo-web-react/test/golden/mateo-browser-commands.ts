@@ -118,11 +118,19 @@ export const mateoGoldenCommands = {
     async ({ page, iframe }, testId: string) => {
       const bounds = await iframe.getByTestId(testId).boundingBox();
       if (!bounds) throw new Error(`Missing golden canvas: ${testId}`);
-      const image = await page.screenshot({
+      const options = {
         clip: bounds,
         animations: 'allow',
-      });
-      return image.toString('base64');
+      } as const;
+      // A finished transition can still leave its last raster frame pending.
+      // Freeze the state only after consecutive captures agree exactly.
+      let previous = await page.screenshot(options);
+      for (let attempt = 0; attempt < 10; attempt++) {
+        const image = await page.screenshot(options);
+        if (image.equals(previous)) return image.toString('base64');
+        previous = image;
+      }
+      throw new Error(`Golden canvas did not settle: ${testId}`);
     },
   ),
   mateoScrollbarDrag: defineBrowserCommand(
