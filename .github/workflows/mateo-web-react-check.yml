@@ -39,6 +39,10 @@ jobs:
       - name: Install golden browser
         run: pnpm --filter @mateo/web-react exec playwright install chromium
 
+      - name: Match native scrollbar references
+        # Runner VMs can use classic gutters instead of the authored overlays.
+        run: defaults write NSGlobalDomain AppleShowScrollBars -string WhenScrolling
+
       - name: Check workspace and package
         run: pnpm check
 
