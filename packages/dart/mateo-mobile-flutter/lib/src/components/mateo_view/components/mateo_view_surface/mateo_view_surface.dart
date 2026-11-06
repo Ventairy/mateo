@@ -23,7 +23,7 @@ class MateoViewSurface extends StatelessWidget {
   ///
   /// [color] defaults to the theme background. [shape] shapes and clips
   /// the surface. [padding] must be nonnegative.
-  const MateoViewSurface({
+  const new({
     required this.child,
     super.key,
     this.color,
@@ -55,7 +55,7 @@ class MateoViewSurface extends StatelessWidget {
   ///   ),
   /// )
   /// ```
-  const MateoViewSurface.scrollable({
+  const new scrollable({
     required this.child,
     super.key,
     this.color,

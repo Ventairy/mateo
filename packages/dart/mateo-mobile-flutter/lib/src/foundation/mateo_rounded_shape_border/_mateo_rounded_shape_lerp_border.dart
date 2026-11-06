@@ -1,7 +1,7 @@
 part of 'mateo_rounded_shape_border.dart';
 
 final class _MateoRoundedShapeLerpBorder extends ShapeBorder {
-  const _MateoRoundedShapeLerpBorder({required this.begin, required this.end, required this.progress});
+  const new({required this.begin, required this.end, required this.progress});
 
   final MateoRoundedShapeBorder begin;
   final MateoRoundedShapeBorder end;

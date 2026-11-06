@@ -1,7 +1,7 @@
 part of 'mateo_press.dart';
 
 class _MateoPressScale extends SingleChildRenderObjectWidget {
-  const _MateoPressScale({required this.scale, required super.child});
+  const new({required this.scale, required super.child});
 
   final Animation<double> scale;
 

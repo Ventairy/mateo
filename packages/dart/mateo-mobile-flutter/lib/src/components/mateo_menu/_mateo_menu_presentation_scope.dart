@@ -1,7 +1,7 @@
 part of 'mateo_menu.dart';
 
 class _MateoMenuPresentationScope extends InheritedWidget {
-  const _MateoMenuPresentationScope({required super.child, this.onItemPressed});
+  const new({required super.child, this.onItemPressed});
 
   final FutureOr<void> Function(MateoMenuOptionsPresentationItem item)? onItemPressed;
 

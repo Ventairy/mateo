@@ -4,7 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_view/base_mateo_view.dart';
 
 class _KeyboardHost {
-  _KeyboardHost(this.safeBottom, {this.fitHeight = false});
+  new(this.safeBottom, {this.fitHeight = false});
 
   final double safeBottom;
   final bool fitHeight;

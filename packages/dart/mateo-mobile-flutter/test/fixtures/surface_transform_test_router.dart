@@ -7,7 +7,7 @@ import 'surface_transform_test_widgets.dart';
 class SurfaceTransformTestRouter extends RouterDelegate<Object>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
   /// Creates a router starting at [home].
-  SurfaceTransformTestRouter({required this.home});
+  new({required this.home});
 
   /// The initial route's content.
   final Widget home;

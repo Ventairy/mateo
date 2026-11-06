@@ -1,7 +1,7 @@
 part of 'mateo_theme.dart';
 
 class _MateoThemeScope extends InheritedWidget {
-  const _MateoThemeScope({required this.data, required super.child});
+  const new({required this.data, required super.child});
 
   final MateoThemeData data;
 

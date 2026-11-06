@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 @immutable
 class MateoMenuOptionsPresentationItem {
   /// Creates an option with optional content.
-  const MateoMenuOptionsPresentationItem({this.leading, this.principal, this.supporting});
+  const new({this.leading, this.principal, this.supporting});
 
   /// The content preceding the principal content.
   final Widget? leading;

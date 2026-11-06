@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoToastStatusColorScheme {
   /// Creates the complete color treatment for a toast status.
-  const MateoToastStatusColorScheme({required this.background, required this.foreground, required this.icon});
+  const new({required this.background, required this.foreground, required this.icon});
 
   /// The background color.
   final Color background;

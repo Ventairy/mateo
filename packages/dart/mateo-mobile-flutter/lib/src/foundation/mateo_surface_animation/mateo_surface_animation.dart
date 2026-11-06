@@ -13,10 +13,10 @@ part 'mateo_surface_animation_transform.dart';
 /// An animation style for a Mateo surface.
 @immutable
 sealed class MateoSurfaceAnimation {
-  const MateoSurfaceAnimation._();
+  const new _();
 
   /// Creates a surface animation with no transition.
-  const factory MateoSurfaceAnimation.none() = MateoSurfaceAnimationNone;
+  const factory none() = MateoSurfaceAnimationNone;
 
   /// Creates an entrance with an animation that pops in
   ///
@@ -29,13 +29,13 @@ sealed class MateoSurfaceAnimation {
   ///   child: MateoText('Welcome', presentation: .interface()),
   /// )
   /// ```
-  const factory MateoSurfaceAnimation.pop({Duration duration, Curve curve}) = MateoSurfaceAnimationPop;
+  const factory pop({Duration duration, Curve curve}) = MateoSurfaceAnimationPop;
 
   /// Connects surfaces using the same transform target.
   ///
   /// Retain a [MateoTransformTarget] in a shared owner and pass it to
   /// both surfaces. The target owns timing; each surface defines its appearance.
-  const factory MateoSurfaceAnimation.transform({
+  const factory transform({
     required MateoTransformTarget target,
     MateoShape? shape,
     List<MateoTransformAnimationContentEffect> contentEffects,

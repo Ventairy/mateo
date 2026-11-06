@@ -38,7 +38,7 @@ class MateoApp extends StatefulWidget {
   ///
   /// Navigation starts at `/`. Subsequent routes supplied to the navigator
   /// own their transitions. Use [MateoApp.router] for deep-link handling.
-  const MateoApp({
+  const new({
     required this.theme,
     required Widget this.home,
     super.key,
@@ -66,7 +66,7 @@ class MateoApp extends StatefulWidget {
   ///   return MateoApp.router(theme: theme, routerConfig: router);
   /// }
   /// ```
-  const MateoApp.router({
+  const new router({
     required this.theme,
     required RouterConfig<Object> this.routerConfig,
     super.key,

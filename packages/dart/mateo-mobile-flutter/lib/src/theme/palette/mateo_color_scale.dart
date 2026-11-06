@@ -7,14 +7,14 @@ part of 'mateo_palette.dart';
 /// shade. Color operations such as `withValues` return a regular [Color].
 @immutable
 final class MateoColorScale extends Color {
-  factory MateoColorScale._(List<Color> colors) {
+  factory _(List<Color> colors) {
     if (colors.length != 12) {
       throw ArgumentError.value(colors.length, 'colors.length', 'must contain exactly 12 colors');
     }
     return MateoColorScale._immutable(List.unmodifiable(colors));
   }
 
-  MateoColorScale._immutable(this.colors)
+  new _immutable(this.colors)
     : super.from(
         alpha: colors[8].a,
         red: colors[8].r,

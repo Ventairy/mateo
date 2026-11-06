@@ -7,7 +7,7 @@ import '../../widgets/mateo_page/mateo_page.dart' show MateoPage;
 
 @internal
 abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
-  BaseMateoPageRoute({required MateoPage<T> page, required this.reducedMotion}) : super(settings: page);
+  new({required MateoPage<T> page, required this.reducedMotion}) : super(settings: page);
 
   void useSurfaceTransition({
     required Route<dynamic> sourceRoute,

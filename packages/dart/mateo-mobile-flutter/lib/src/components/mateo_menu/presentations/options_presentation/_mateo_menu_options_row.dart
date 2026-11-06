@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 class _MateoMenuOptionsRow extends MultiChildRenderObjectWidget {
-  const _MateoMenuOptionsRow({
+  const new({
     required this.hasSupporting,
     required this.singleLineHeight,
     required super.children,

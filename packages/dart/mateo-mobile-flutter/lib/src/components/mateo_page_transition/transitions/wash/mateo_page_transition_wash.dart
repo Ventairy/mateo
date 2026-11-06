@@ -8,7 +8,7 @@ final class MateoPageTransitionWash extends MateoPageTransition {
   /// Creates a wash page transition.
   ///
   /// Durations must be nonnegative. An omitted [reverseDuration] uses [duration].
-  const MateoPageTransitionWash({
+  const new({
     this.direction = .up,
     super.duration = const .new(milliseconds: 600),
     Duration? reverseDuration,

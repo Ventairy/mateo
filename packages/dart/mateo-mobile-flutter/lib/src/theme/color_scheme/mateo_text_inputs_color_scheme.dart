@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The semantic color treatments for Mateo text inputs.
 @immutable
 final class MateoTextInputsColorScheme {
-  const MateoTextInputsColorScheme._({required this.filled, required this.plain});
+  const new _({required this.filled, required this.plain});
 
   /// The filled treatments.
   final MateoFilledTextInputColorScheme filled;

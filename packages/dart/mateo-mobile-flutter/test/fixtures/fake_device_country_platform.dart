@@ -2,7 +2,7 @@ import 'package:oh_my_flutter/src/device/device_locale/device_locale_platform.da
 import 'package:oh_my_flutter/src/device/device_sim/device_sim_platform.dart';
 
 final class FakeDeviceCountryPlatform extends DeviceSimPlatform implements DeviceLocalePlatform {
-  FakeDeviceCountryPlatform(this._getCountry);
+  new(this._getCountry);
 
   final Future<String?> Function() _getCountry;
 

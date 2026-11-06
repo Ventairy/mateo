@@ -12,7 +12,7 @@ part '_render_mateo_view_footer_content.dart';
 
 @internal
 class BaseMateoViewFooter extends StatelessWidget {
-  const BaseMateoViewFooter({
+  const new({
     this.padding,
     this.principal,
     this.leading,

@@ -1,7 +1,7 @@
 part of 'mateo_page.dart';
 
 final class _MateoPredictiveBackGestureDetector extends StatefulWidget {
-  const _MateoPredictiveBackGestureDetector({
+  const new({
     required this.route,
     required this.child,
   });

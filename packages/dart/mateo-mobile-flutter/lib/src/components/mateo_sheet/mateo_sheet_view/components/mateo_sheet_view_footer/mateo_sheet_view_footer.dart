@@ -5,7 +5,7 @@ part of '../../../show_mateo_sheet.dart';
 /// Supply this to [MateoSheetView.footer].
 class MateoSheetViewFooter extends StatelessWidget {
   /// Creates a footer arranging [leading], [principal], and [trailing].
-  const MateoSheetViewFooter({this.leading, this.principal, this.trailing, super.key});
+  const new({this.leading, this.principal, this.trailing, super.key});
 
   /// The content at the directional start.
   final Widget? leading;

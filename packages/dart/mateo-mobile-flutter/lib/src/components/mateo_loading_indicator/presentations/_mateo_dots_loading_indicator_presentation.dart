@@ -1,7 +1,7 @@
 part of '../mateo_loading_indicator.dart';
 
 final class _MateoDotsLoadingIndicatorPresentation extends MateoLoadingIndicatorPresentation {
-  const _MateoDotsLoadingIndicatorPresentation({required this.color, this.height = 20})
+  const new({required this.color, this.height = 20})
     : assert(height >= 0 && height < double.infinity, 'height must be finite and nonnegative.'),
       super._();
 

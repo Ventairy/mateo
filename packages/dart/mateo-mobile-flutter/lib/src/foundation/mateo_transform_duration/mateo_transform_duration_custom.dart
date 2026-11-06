@@ -3,9 +3,7 @@ part of 'mateo_transform_duration.dart';
 /// An independent transform clock with a fixed duration.
 final class MateoTransformDurationCustom extends MateoTransformDuration {
   /// Creates an independent transform clock with a nonnegative [duration].
-  MateoTransformDurationCustom({required this.duration})
-    : assert(!duration.isNegative, 'duration must not be negative.'),
-      super._();
+  new({required this.duration}) : assert(!duration.isNegative, 'duration must not be negative.'), super._();
 
   /// The nonnegative length of the transform.
   final Duration duration;

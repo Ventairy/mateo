@@ -1,7 +1,7 @@
 part of 'show_mateo_menu.dart';
 
 class _MateoMenuOverlay extends StatelessWidget {
-  const _MateoMenuOverlay({required this.route, required this.child});
+  const new({required this.route, required this.child});
   final _MateoMenuRoute route;
   final Widget child;
 

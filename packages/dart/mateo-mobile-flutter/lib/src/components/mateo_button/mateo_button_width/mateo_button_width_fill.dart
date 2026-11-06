@@ -3,7 +3,7 @@ part of 'mateo_button_width.dart';
 /// A fill width request for a labeled button.
 final class MateoButtonWidthFill extends MateoButtonWidth {
   /// Creates a fill width request, optionally capped by [maxWidth].
-  const MateoButtonWidthFill({this.maxWidth})
+  const new({this.maxWidth})
     : assert(
         maxWidth == null || (maxWidth >= 0 && maxWidth < double.infinity),
         'maxWidth must be finite and nonnegative.',

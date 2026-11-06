@@ -36,7 +36,7 @@ part 'presentations/options_presentation/_render_mateo_menu_viewport_paint_cull.
 /// ```
 class MateoMenu extends StatelessWidget {
   /// Creates an inline menu using [presentation].
-  const MateoMenu({required this.presentation, this.onItemPressed, super.key});
+  const new({required this.presentation, this.onItemPressed, super.key});
 
   /// The content and appearance of the menu.
   final MateoMenuPresentation presentation;

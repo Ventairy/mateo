@@ -1,7 +1,7 @@
 part of 'mateo_loading_indicator.dart';
 
 class _MateoDotsLoadingIndicatorPainter extends CustomPainter {
-  _MateoDotsLoadingIndicatorPainter({
+  new({
     required this.color,
     required this.dotCount,
     required this.dotRadius,

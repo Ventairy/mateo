@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoWashPageTransitionView extends StatefulWidget {
-  const _MateoWashPageTransitionView({
+  const new({
     required this.animation,
     required this.transition,
     required this.allowSnapshotting,

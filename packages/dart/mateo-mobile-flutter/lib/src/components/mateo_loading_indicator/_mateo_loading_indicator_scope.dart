@@ -1,7 +1,7 @@
 part of 'mateo_loading_indicator.dart';
 
 class _MateoLoadingIndicatorScope extends InheritedWidget {
-  const _MateoLoadingIndicatorScope({required this.progress, required this.semanticLabel, required super.child});
+  const new({required this.progress, required this.semanticLabel, required super.child});
 
   final Animation<double>? progress;
   final String? semanticLabel;

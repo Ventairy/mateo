@@ -4,7 +4,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 /// A restorable counter for verifying app state preservation.
 class AppTestCounter extends StatefulWidget {
   /// Creates the test counter.
-  const AppTestCounter({super.key});
+  const new({super.key});
 
   /// Creates the counter's state.
   @override

@@ -6,7 +6,7 @@ part of 'mateo_menu_button_animation.dart';
 /// Shows an adjacent menu using the surface pop entrance.
 final class MateoMenuButtonAnimationPop extends MateoMenuButtonAnimation {
   /// Creates a pop menu style.
-  const MateoMenuButtonAnimationPop()
+  const new()
     : duration = const Duration(milliseconds: 400),
       curve = Curves.easeOutBack,
       exitDuration = const Duration(milliseconds: 210),

@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceSize extends SingleChildRenderObjectWidget {
-  const _BaseMateoSurfaceSize({required this.width, required this.height, required super.child, super.key});
+  const new({required this.width, required this.height, required super.child, super.key});
 
   final MateoSurfaceWidth width;
   final MateoSurfaceHeight height;

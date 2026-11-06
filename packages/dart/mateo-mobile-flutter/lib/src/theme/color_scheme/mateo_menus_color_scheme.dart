@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The semantic color treatments for Mateo menus.
 @immutable
 final class MateoMenusColorScheme {
-  const MateoMenusColorScheme._({required this.options});
+  const new _({required this.options});
 
   /// The colors of an options menu.
   final MateoOptionsMenuColorScheme options;

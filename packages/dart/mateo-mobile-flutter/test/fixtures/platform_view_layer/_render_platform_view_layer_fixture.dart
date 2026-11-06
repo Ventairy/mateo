@@ -1,7 +1,7 @@
 part of 'platform_view_layer_fixture.dart';
 
 class _RenderPlatformViewLayerFixture extends RenderBox {
-  _RenderPlatformViewLayerFixture({required this.onPaint, required this.onRasterizationCheck});
+  new({required this.onPaint, required this.onRasterizationCheck});
 
   VoidCallback onPaint;
   VoidCallback onRasterizationCheck;

@@ -1,7 +1,7 @@
 part of 'show_mateo_sheet.dart';
 
 class _MateoSheetStackEntry extends ChangeNotifier {
-  _MateoSheetStackEntry({required this.source, required TickerProvider vsync, required bool reducedMotion})
+  new({required this.source, required TickerProvider vsync, required bool reducedMotion})
     : _returnController = AnimationController(
         vsync: vsync,
         value: 1,

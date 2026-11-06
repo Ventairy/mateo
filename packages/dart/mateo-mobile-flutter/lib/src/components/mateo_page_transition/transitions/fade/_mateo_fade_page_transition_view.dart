@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoFadePageTransitionView extends StatefulWidget {
-  const _MateoFadePageTransitionView({
+  const new({
     required this.animation,
     required this.transition,
     required this.useLinearProgress,

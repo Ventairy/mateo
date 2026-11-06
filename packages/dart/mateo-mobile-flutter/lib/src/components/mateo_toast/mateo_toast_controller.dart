@@ -5,7 +5,7 @@ part of 'mateo_toast.dart';
 /// Keep the returned controller when a toast may need to be cancelled before
 /// its delay ends or dismissed after it appears.
 final class MateoToastController {
-  MateoToastController._(this._host);
+  new _(this._host);
 
   _MateoToastHostState? _host;
 

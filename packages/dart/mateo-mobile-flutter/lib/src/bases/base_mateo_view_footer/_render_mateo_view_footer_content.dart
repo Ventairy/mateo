@@ -2,7 +2,7 @@ part of 'base_mateo_view_footer.dart';
 
 final class _RenderMateoViewFooterContent extends RenderBox
     with SlottedContainerRenderObjectMixin<_MateoViewFooterSlot, RenderBox> {
-  _RenderMateoViewFooterContent({required this._textDirection});
+  new({required this._textDirection});
 
   static const double _spacing = 16;
 

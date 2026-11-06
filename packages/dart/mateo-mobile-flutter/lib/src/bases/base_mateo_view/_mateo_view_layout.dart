@@ -1,7 +1,7 @@
 part of 'base_mateo_view.dart';
 
 class _MateoViewLayout extends MultiChildRenderObjectWidget {
-  const _MateoViewLayout({
+  const new({
     required this.layout,
     required this.fitHeight,
     required this.reserveHeaderSpace,

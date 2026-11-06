@@ -6,9 +6,9 @@ typedef _MateoTransformAnimationContentEndpoints = ({
 });
 
 abstract class _MateoTransformAnimationContentEffect {
-  const _MateoTransformAnimationContentEffect({this.curve});
+  const new({this.curve});
 
-  factory _MateoTransformAnimationContentEffect.from(
+  factory from(
     MateoTransformAnimationContentEffect effect,
   ) => switch (effect) {
     MateoTransformAnimationContentEffectCrossfade(:final curve) => _MateoTransformAnimationContentCrossfade(

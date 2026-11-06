@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 class _RenderMateoMenuOptionsRow extends RenderFlex {
-  _RenderMateoMenuOptionsRow({
+  new({
     required this._hasSupporting,
     required this._singleLineHeight,
     required super.textDirection,

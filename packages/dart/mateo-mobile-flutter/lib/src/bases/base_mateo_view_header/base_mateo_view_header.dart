@@ -15,7 +15,7 @@ part '_render_mateo_view_header_content.dart';
 
 @internal
 class BaseMateoViewHeader extends StatelessWidget {
-  const BaseMateoViewHeader({this.padding, this.principal, this.leading, this.trailing, super.key});
+  const new({this.padding, this.principal, this.leading, this.trailing, super.key});
 
   final EdgeInsetsGeometry? padding;
   final Widget? principal;

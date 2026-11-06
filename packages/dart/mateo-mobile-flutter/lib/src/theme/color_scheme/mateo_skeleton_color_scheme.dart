@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoSkeletonColorScheme {
   /// Creates the color roles of a skeleton.
-  const MateoSkeletonColorScheme({required this.bone});
+  const new({required this.bone});
 
   /// The fill color for skeleton bones.
   final Color bone;

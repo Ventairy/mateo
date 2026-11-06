@@ -3,7 +3,7 @@ part of 'mateo_transform_animation_content_effect.dart';
 /// Scales captured content proportionally during a transform animation.
 final class MateoTransformAnimationContentEffectScale extends MateoTransformAnimationContentEffect {
   /// Creates a content scale effect.
-  const MateoTransformAnimationContentEffectScale({this.curve}) : super._();
+  const new({this.curve}) : super._();
 
   /// The effect easing, or null to follow the transform timing.
   @override

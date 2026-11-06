@@ -1,7 +1,7 @@
 part of 'layout_counter.dart';
 
 class _RenderLayoutCounter extends RenderProxyBox {
-  _RenderLayoutCounter(this.onLayout);
+  new(this.onLayout);
 
   final VoidCallback onLayout;
 

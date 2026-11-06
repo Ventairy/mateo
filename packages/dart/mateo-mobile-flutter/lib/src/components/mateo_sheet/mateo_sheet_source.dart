@@ -17,7 +17,7 @@ enum MateoSheetSource {
     reverseCurve: FlippedCurve(_MateoSheetExitCurve()),
   );
 
-  const MateoSheetSource({
+  new({
     required this._dismissDirection,
     required this._sheetAlignment,
     required this._beginOffset,

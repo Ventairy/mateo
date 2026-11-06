@@ -1,7 +1,7 @@
 part of '../../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationContentSwitch extends _MateoTransformAnimationContentEffect {
-  const _MateoTransformAnimationContentSwitch();
+  const new();
 
   @override
   _MateoTransformAnimationContentEndpoints apply(

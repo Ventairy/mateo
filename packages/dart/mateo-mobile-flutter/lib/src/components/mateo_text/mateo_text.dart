@@ -14,7 +14,7 @@ part 'presentations/mateo_text_presentation.dart';
 /// Plain text with an interface or decorative Mateo treatment.
 class MateoText extends StatelessWidget {
   /// Creates text with an explicit [presentation].
-  const MateoText(
+  const new(
     this.data, {
     required this.presentation,
     this.semanticsLabel,

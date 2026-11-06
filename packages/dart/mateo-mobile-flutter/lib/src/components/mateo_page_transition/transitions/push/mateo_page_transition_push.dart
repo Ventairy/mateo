@@ -8,7 +8,7 @@ final class MateoPageTransitionPush extends MateoPageTransition {
   /// Creates a push page transition.
   ///
   /// Durations must be nonnegative. An omitted [reverseDuration] uses [duration].
-  const MateoPageTransitionPush({
+  const new({
     this.direction = .up,
     super.duration = const .new(milliseconds: 600),
     Duration? reverseDuration,

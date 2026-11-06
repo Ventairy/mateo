@@ -1,7 +1,7 @@
 part of 'mateo_button_appearance_scope.dart';
 
 class _ResolvedMateoButtonAppearanceScope extends InheritedTheme {
-  const _ResolvedMateoButtonAppearanceScope({
+  const new({
     required this.variant,
     required this.elevation,
     required this.size,

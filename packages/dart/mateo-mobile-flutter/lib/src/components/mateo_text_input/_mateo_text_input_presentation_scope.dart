@@ -1,7 +1,7 @@
 part of 'mateo_text_input.dart';
 
 class _MateoTextInputPresentationScope extends InheritedWidget {
-  const _MateoTextInputPresentationScope({
+  const new({
     required this.controller,
     required this.focusNode,
     required this.autofocus,

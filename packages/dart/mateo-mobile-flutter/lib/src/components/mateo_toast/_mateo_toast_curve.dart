@@ -1,7 +1,7 @@
 part of 'mateo_toast.dart';
 
 class _MateoToastCurve extends Curve {
-  const _MateoToastCurve();
+  const new();
 
   static const double _frequency = 2 * math.pi;
   static const _tailStart = 0.6;

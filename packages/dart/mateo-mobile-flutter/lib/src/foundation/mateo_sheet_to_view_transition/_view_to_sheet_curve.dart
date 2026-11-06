@@ -1,7 +1,7 @@
 part of 'mateo_sheet_to_view_transition.dart';
 
 class _ViewToSheetCurve extends Curve {
-  const _ViewToSheetCurve();
+  const new();
 
   static const _landingStart = 0.5;
 

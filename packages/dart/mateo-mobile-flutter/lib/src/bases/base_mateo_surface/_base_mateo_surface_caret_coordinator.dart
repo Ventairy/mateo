@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceCaretCoordinator extends ChangeNotifier with WidgetsBindingObserver {
-  _BaseMateoSurfaceCaretCoordinator({
+  new({
     required this.viewportKey,
     required this.scrollController,
     required this.onClearanceChanged,

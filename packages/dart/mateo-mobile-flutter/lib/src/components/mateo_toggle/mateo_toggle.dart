@@ -24,7 +24,7 @@ part 'mateo_toggle_controller.dart';
 /// ```
 class MateoToggle extends StatefulWidget {
   /// Creates an on/off control, initially off without a [controller].
-  const MateoToggle({super.key, this.controller, this.onChanged, this.semanticsLabel});
+  const new({super.key, this.controller, this.onChanged, this.semanticsLabel});
 
   /// The optional state controller, owned and disposed by its caller.
   final MateoToggleController? controller;

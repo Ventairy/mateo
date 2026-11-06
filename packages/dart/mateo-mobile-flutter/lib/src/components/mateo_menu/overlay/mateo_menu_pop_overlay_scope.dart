@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 @internal
 class MateoMenuPopOverlayScope extends InheritedWidget {
-  const MateoMenuPopOverlayScope({required super.child, super.key});
+  const new({required super.child, super.key});
 
   static bool exists(BuildContext context) => context.getInheritedWidgetOfExactType<MateoMenuPopOverlayScope>() != null;
 

@@ -1,9 +1,7 @@
 part of 'mateo_press.dart';
 
 class _RenderMateoPressFade extends RenderProxyBox {
-  _RenderMateoPressFade(Animation<double> opacity)
-    : _opacity = opacity,
-      _alpha = Color.getAlphaFromOpacity(opacity.value);
+  new(Animation<double> opacity) : _opacity = opacity, _alpha = Color.getAlphaFromOpacity(opacity.value);
 
   Animation<double> _opacity;
   int _alpha;

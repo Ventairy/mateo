@@ -1,7 +1,7 @@
 part of '../../mateo_text_input.dart';
 
 class _MateoPhoneCountryRow extends StatelessWidget {
-  const _MateoPhoneCountryRow({
+  const new({
     required this.country,
     required this.selected,
     this.name,

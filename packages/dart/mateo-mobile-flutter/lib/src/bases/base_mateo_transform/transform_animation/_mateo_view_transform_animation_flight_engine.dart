@@ -1,7 +1,7 @@
 part of '../base_mateo_transform.dart';
 
 final class _MateoViewTransformAnimationFlightEngine {
-  const _MateoViewTransformAnimationFlightEngine._();
+  const new _();
 
   static _MateoViewTransformAnimationFlightFrame capture(
     MorphEndpointContext endpoint, {
@@ -51,7 +51,7 @@ final class _MateoViewTransformAnimationFlightEngine {
 }
 
 final class _MateoTransformAnimationFlightGeometry {
-  const _MateoTransformAnimationFlightGeometry._();
+  const new _();
 
   static ({MateoRoundedShapeBorder capturedShape, Size shapeSize}) captureShape(
     MorphEndpointContext endpoint,

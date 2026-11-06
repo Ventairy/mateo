@@ -1,7 +1,7 @@
 part of 'mateo_button.dart';
 
 class _MateoButtonPresentationScope extends InheritedWidget {
-  const _MateoButtonPresentationScope({
+  const new({
     required this.enabledProgress,
     required this.interactive,
     required this.loading,

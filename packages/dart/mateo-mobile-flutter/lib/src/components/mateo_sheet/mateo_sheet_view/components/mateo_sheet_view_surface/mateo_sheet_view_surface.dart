@@ -6,7 +6,7 @@ part of '../../../show_mateo_sheet.dart';
 /// header and footer when enabled.
 class MateoSheetViewSurface extends StatelessWidget {
   /// Creates a sheet surface around [child].
-  const MateoSheetViewSurface({
+  const new({
     required this.child,
     this.color,
     this.padding,
@@ -17,7 +17,7 @@ class MateoSheetViewSurface extends StatelessWidget {
 
   /// Creates a sheet surface that owns vertical scrolling around [child].
   ///
-  const MateoSheetViewSurface.scrollable({
+  const new scrollable({
     required this.child,
     this.color,
     this.padding,

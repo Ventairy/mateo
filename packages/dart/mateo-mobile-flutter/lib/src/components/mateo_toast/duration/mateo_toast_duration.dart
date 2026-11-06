@@ -7,14 +7,14 @@ part 'mateo_toast_duration_until_dismissed.dart';
 /// Selects how long a toast remains visible before automatic dismissal.
 @immutable
 sealed class MateoToastDuration {
-  const MateoToastDuration._();
+  const new _();
 
   /// Estimates reading time from the toast message, between 2.5 and 8 seconds.
-  const factory MateoToastDuration.auto() = MateoToastDurationAuto;
+  const factory auto() = MateoToastDurationAuto;
 
   /// Keeps the toast visible until it is dismissed or replaced.
-  const factory MateoToastDuration.untilDismissed() = MateoToastDurationUntilDismissed;
+  const factory untilDismissed() = MateoToastDurationUntilDismissed;
 
   /// Dismisses the toast after the given nonnegative [duration].
-  factory MateoToastDuration.custom({required Duration duration}) = MateoToastDurationCustom;
+  factory custom({required Duration duration}) = MateoToastDurationCustom;
 }

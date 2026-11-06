@@ -1,7 +1,7 @@
 part of '../show_mateo_sheet.dart';
 
 class _RenderMateoSheetFrame extends RenderProxyBox {
-  _RenderMateoSheetFrame({required this._stackEntry, required this._color, required this._dimColor});
+  new({required this._stackEntry, required this._color, required this._dimColor});
 
   _MateoSheetStackEntry _stackEntry;
   Rect? _paintedFrame;

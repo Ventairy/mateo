@@ -37,7 +37,7 @@ part '_render_base_mateo_surface_size.dart';
 
 @internal
 class BaseMateoSurface extends StatefulWidget {
-  const BaseMateoSurface({
+  const new({
     required this.child,
     this.animation = const .none(),
     this.color,
@@ -54,7 +54,7 @@ class BaseMateoSurface extends StatefulWidget {
     super.key,
   }) : _scrollable = false;
 
-  const BaseMateoSurface.scrollable({
+  const new scrollable({
     required this.child,
     this.animation = const .none(),
     this.color,

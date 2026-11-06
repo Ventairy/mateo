@@ -1,7 +1,7 @@
 part of 'show_mateo_menu.dart';
 
 class _MateoMenuRoute extends PopupRoute<MateoMenuOptionsPresentationItem> {
-  _MateoMenuRoute({
+  new({
     required this.menu,
     required this.surfaceAnimation,
     required this.placement,

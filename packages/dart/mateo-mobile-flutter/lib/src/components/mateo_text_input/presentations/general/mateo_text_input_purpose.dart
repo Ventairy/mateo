@@ -60,7 +60,7 @@ enum MateoTextInputPurpose {
     autofillHints: [],
   );
 
-  const MateoTextInputPurpose({
+  new({
     required this.keyboardType,
     required this.textCapitalization,
     required this.autocorrect,

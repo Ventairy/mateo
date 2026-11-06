@@ -272,7 +272,7 @@ void _testWidgets(String description, WidgetTesterCallback callback) {
 }
 
 class _DeclarativeNavigatorHarness extends StatefulWidget {
-  const _DeclarativeNavigatorHarness({super.key});
+  const new({super.key});
 
   @override
   State<_DeclarativeNavigatorHarness> createState() => _DeclarativeNavigatorHarnessState();

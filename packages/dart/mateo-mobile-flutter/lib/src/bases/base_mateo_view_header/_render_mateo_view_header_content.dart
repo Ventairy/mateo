@@ -2,7 +2,7 @@ part of 'base_mateo_view_header.dart';
 
 final class _RenderMateoViewHeaderContent extends RenderBox
     with SlottedContainerRenderObjectMixin<_MateoViewHeaderSlot, RenderBox> {
-  _RenderMateoViewHeaderContent({required this._textDirection});
+  new({required this._textDirection});
 
   static const double _spacing = 16;
 

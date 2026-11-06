@@ -1,7 +1,7 @@
 part of '../../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationContentEffects {
-  factory _MateoTransformAnimationContentEffects(
+  factory(
     List<MateoTransformAnimationContentEffect> configuration,
   ) {
     final unique = <Type, MateoTransformAnimationContentEffect>{};
@@ -23,7 +23,7 @@ final class _MateoTransformAnimationContentEffects {
     ]);
   }
 
-  _MateoTransformAnimationContentEffects._(
+  new _(
     List<_MateoTransformAnimationContentEffect> effects,
   ) : _effects = List.unmodifiable(effects);
 

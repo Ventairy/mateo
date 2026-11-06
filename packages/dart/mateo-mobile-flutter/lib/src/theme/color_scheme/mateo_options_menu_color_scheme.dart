@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoOptionsMenuColorScheme {
   /// Creates the color roles of an options menu.
-  const MateoOptionsMenuColorScheme({
+  const new({
     required this.background,
     required this.leading,
     required this.principal,

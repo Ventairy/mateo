@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The shared inverse color roles in a Mateo scheme.
 @immutable
 final class MateoInverseColorScheme {
-  const MateoInverseColorScheme._({required this.background, required this.onBackground, required this.accent});
+  const new _({required this.background, required this.onBackground, required this.accent});
 
   /// The background for an inverse surface.
   final Color background;

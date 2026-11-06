@@ -3,7 +3,7 @@ part of 'mateo_surface_animation.dart';
 /// A transform connecting Mateo surfaces with a shared target.
 final class MateoSurfaceAnimationTransform extends MateoSurfaceAnimation {
   /// Creates a transform connecting elements with the same [target].
-  const MateoSurfaceAnimationTransform({
+  const new({
     required this.target,
     this.shape,
     this.contentEffects = const [.crossfade(), .scale()],

@@ -38,7 +38,7 @@ void main() {
 }
 
 class _CountingPainter extends CustomPainter {
-  _CountingPainter(this.onPaint);
+  new(this.onPaint);
 
   final VoidCallback onPaint;
 

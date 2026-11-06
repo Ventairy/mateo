@@ -33,7 +33,7 @@ final class MateoColorScheme {
   ///
   /// [onAccent] is preserved exactly; callers must verify contrast against
   /// their accent. This constructor does not accept individual role overrides.
-  factory MateoColorScheme.light({required MateoPalette palette, required Color onAccent}) => MateoColorScheme._(
+  factory light({required MateoPalette palette, required Color onAccent}) => MateoColorScheme._(
     background: palette.white,
     accent: palette.accent[9],
     onAccent: onAccent,
@@ -168,10 +168,10 @@ final class MateoColorScheme {
   ///
   /// Passes [palette] and [onAccent] unchanged to [MateoColorScheme.light]
   /// until Mateo's dark color mappings are authored.
-  factory MateoColorScheme.dark({required MateoPalette palette, required Color onAccent}) =>
+  factory dark({required MateoPalette palette, required Color onAccent}) =>
       MateoColorScheme.light(palette: palette, onAccent: onAccent);
 
-  const MateoColorScheme._({
+  const new _({
     required this.background,
     required this.accent,
     required this.onAccent,

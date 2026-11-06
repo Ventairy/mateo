@@ -6,19 +6,19 @@ import 'mateo_edge_fade_profile.dart';
 @internal
 @immutable
 class MateoEdgeFadeBand {
-  MateoEdgeFadeBand.top({required this.extent, required this.profile}) : edge = .up {
+  new top({required this.extent, required this.profile}) : edge = .up {
     _validateExtent();
   }
 
-  MateoEdgeFadeBand.bottom({required this.extent, required this.profile}) : edge = .down {
+  new bottom({required this.extent, required this.profile}) : edge = .down {
     _validateExtent();
   }
 
-  MateoEdgeFadeBand.left({required this.extent, required this.profile}) : edge = .left {
+  new left({required this.extent, required this.profile}) : edge = .left {
     _validateExtent();
   }
 
-  MateoEdgeFadeBand.right({required this.extent, required this.profile}) : edge = .right {
+  new right({required this.extent, required this.profile}) : edge = .right {
     _validateExtent();
   }
 

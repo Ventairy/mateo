@@ -6,18 +6,18 @@ import '../mateo_rounded_shape_border/mateo_rounded_shape_border.dart';
 @immutable
 final class MateoShape {
   /// Creates a shape with no treatment of its rectangular boundary.
-  const MateoShape.none() : _border = const MateoRoundedShapeBorder(radius: 0), _radius = 0;
+  const new none() : _border = const MateoRoundedShapeBorder(radius: 0), _radius = 0;
 
   /// Creates a capsule that adapts to its bounds.
   ///
   /// Equal width and height produce a circle.
   /// See the [rounded-shape foundation](https://github.com/Ventairy/mateo/blob/main/design-system/foundation/rounded-shape.md).
-  const MateoShape.capsule() : _border = const MateoRoundedShapeBorder.capsule(), _radius = 0;
+  const new capsule() : _border = const MateoRoundedShapeBorder.capsule(), _radius = 0;
 
   /// Creates a rounded shape with the requested rounding [radius].
   // Keep the public argument name independent of private storage.
   // ignore: prefer_initializing_formals
-  const MateoShape.rounded({required double radius}) : _border = null, _radius = radius;
+  const new rounded({required double radius}) : _border = null, _radius = radius;
 
   @internal
   // Internal rendering inputs do not have consumer Dartdoc.

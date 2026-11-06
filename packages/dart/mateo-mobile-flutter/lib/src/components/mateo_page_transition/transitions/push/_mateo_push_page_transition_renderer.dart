@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoPushPageTransitionRenderer extends SingleChildRenderObjectWidget {
-  _MateoPushPageTransitionRenderer({
+  new({
     required this.animation,
     required this.transition,
     required this.outgoing,

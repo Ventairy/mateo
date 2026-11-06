@@ -8,10 +8,9 @@ enum _MateoTransformRelationship {
 
 @internal
 final class BaseMateoTransformTargets {
-  factory BaseMateoTransformTargets(MateoTransformTarget target) =>
-      _targets[target] ??= BaseMateoTransformTargets._(target);
+  factory(MateoTransformTarget target) => _targets[target] ??= BaseMateoTransformTargets._(target);
 
-  BaseMateoTransformTargets._(MateoTransformTarget target)
+  new _(MateoTransformTarget target)
     : surfaceToSurface = _target(target, .surfaceToSurface),
       surfaceToView = _target(target, .surfaceToView),
       viewToView = _target(target, .viewToView);

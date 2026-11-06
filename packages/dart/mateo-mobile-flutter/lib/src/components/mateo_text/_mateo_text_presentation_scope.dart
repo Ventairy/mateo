@@ -1,7 +1,7 @@
 part of 'mateo_text.dart';
 
 class _MateoTextPresentationScope extends InheritedWidget {
-  const _MateoTextPresentationScope({required this.text, required super.child});
+  const new({required this.text, required super.child});
 
   final MateoText text;
 

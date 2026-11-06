@@ -3,7 +3,7 @@ part of 'mateo_surface_height.dart';
 /// A fit height request for a Mateo surface.
 final class MateoSurfaceHeightFit extends MateoSurfaceHeight {
   /// Creates a fit height request.
-  const MateoSurfaceHeightFit() : super._();
+  const new() : super._();
 
   /// Whether both values describe the same height request.
   @override

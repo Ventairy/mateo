@@ -1,7 +1,7 @@
 part of '../../mateo_text_input.dart';
 
 final class _MateoSearchTextInputPresentation extends MateoTextInputPresentation {
-  const _MateoSearchTextInputPresentation({required this.variant, this.size = .standard, this.elevation = 0})
+  const new({required this.variant, this.size = .standard, this.elevation = 0})
     : assert(variant != MateoTextInputVariant.plain, 'Plain is not supported by search'),
       super._();
 

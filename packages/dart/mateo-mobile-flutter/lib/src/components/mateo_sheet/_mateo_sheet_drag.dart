@@ -1,7 +1,7 @@
 part of 'show_mateo_sheet.dart';
 
 class _MateoSheetDrag extends StatefulWidget {
-  const _MateoSheetDrag({
+  const new({
     required this.child,
     required this.from,
     required this.canStartDrag,

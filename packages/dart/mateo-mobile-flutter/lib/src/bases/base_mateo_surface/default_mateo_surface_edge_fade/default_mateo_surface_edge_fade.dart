@@ -10,7 +10,7 @@ part '_default_mateo_surface_edge_fade_profile.dart';
 
 @internal
 final class DefaultMateoSurfaceEdgeFade extends StatelessWidget {
-  DefaultMateoSurfaceEdgeFade({
+  new({
     required this.surfaceColor,
     required Set<MateoEdgeEffectSide> sides,
     required this.child,

@@ -11,7 +11,7 @@ enum MateoPressAnimationType {
   /// Keeps the content unchanged while pressed.
   none(pressDuration: Duration.zero, releaseDuration: Duration.zero);
 
-  const MateoPressAnimationType({
+  new({
     this.pressedScale = 1,
     this.pressedOpacity = 1,
     this.pressDuration = const Duration(milliseconds: 150),

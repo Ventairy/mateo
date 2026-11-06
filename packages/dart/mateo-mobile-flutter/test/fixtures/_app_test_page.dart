@@ -1,7 +1,7 @@
 part of 'app_test_router_delegate.dart';
 
 class _AppTestPage extends Page<void> {
-  const _AppTestPage({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 

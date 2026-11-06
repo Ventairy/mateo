@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 class PaintCounter extends CustomPainter {
-  PaintCounter({required this.onPaint, required this.color});
+  new({required this.onPaint, required this.color});
 
   final VoidCallback onPaint;
   final Color color;

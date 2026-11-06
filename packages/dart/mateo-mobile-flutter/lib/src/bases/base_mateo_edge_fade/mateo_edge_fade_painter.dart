@@ -6,8 +6,7 @@ import 'mateo_edge_fade_band_paint.dart';
 
 @internal
 class MateoEdgeFadePainter extends CustomPainter {
-  MateoEdgeFadePainter({required this.color, required this.resolveBands, required this.bands, this.signal})
-    : super(repaint: signal);
+  new({required this.color, required this.resolveBands, required this.bands, this.signal}) : super(repaint: signal);
 
   final Listenable? signal;
   final Color? color;

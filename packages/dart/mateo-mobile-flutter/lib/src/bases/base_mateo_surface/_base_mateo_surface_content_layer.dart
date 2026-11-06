@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceContentLayer extends ContainerLayer {
-  _BaseMateoSurfaceContentLayer(this.resolveOffset);
+  new(this.resolveOffset);
 
   final ValueGetter<Offset> resolveOffset;
   Offset _offset = Offset.zero;

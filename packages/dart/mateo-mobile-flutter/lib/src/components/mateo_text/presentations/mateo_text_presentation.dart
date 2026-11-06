@@ -3,10 +3,10 @@ part of '../mateo_text.dart';
 /// The typography and layout treatment mounted by [MateoText].
 @immutable
 sealed class MateoTextPresentation extends StatelessWidget {
-  const MateoTextPresentation._();
+  const new _();
 
   /// Ordinary interface text like button labels, body text etc.
-  const factory MateoTextPresentation.interface({
+  const factory interface({
     double? fontSize,
     FontWeight? fontWeight,
     Color? color,
@@ -21,7 +21,7 @@ sealed class MateoTextPresentation extends StatelessWidget {
   /// A decorative typeface with contextual typography defaults.
   ///
   /// Use for short expressive phrases.
-  const factory MateoTextPresentation.decorative({
+  const factory decorative({
     required MateoDecorativeTextVariant variant,
     double? fontSize,
     Color? color,

@@ -1,7 +1,7 @@
 part of 'mateo_toast.dart';
 
 class _MateoToastOverlay extends StatefulWidget {
-  const _MateoToastOverlay({
+  const new({
     required this.toast,
     required this.duration,
     required this.dismissible,

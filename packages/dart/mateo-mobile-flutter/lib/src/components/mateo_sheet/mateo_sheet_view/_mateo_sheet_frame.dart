@@ -1,7 +1,7 @@
 part of '../show_mateo_sheet.dart';
 
 class _MateoSheetFrame extends SingleChildRenderObjectWidget {
-  const _MateoSheetFrame({
+  const new({
     required this.stackEntry,
     required this.color,
     required this.dimColor,

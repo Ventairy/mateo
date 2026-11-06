@@ -14,7 +14,7 @@ final class MateoElevation {
   ///
   /// Fractional levels are supported. Throws [ArgumentError] for invalid
   /// levels in every build mode.
-  MateoElevation({required this.level}) {
+  new({required this.level}) {
     if (!level.isFinite || level < 0 || level > 2) {
       throw ArgumentError.value(level, 'level', 'Must be finite and between 0 and 2, inclusive.');
     }

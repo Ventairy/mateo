@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfacePop extends StatefulWidget {
-  const _BaseMateoSurfacePop({required this.animation, required this.child});
+  const new({required this.animation, required this.child});
 
   final MateoSurfaceAnimationPop animation;
   final Widget child;

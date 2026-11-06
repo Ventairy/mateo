@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _RenderBaseMateoSurfaceSize extends RenderProxyBox {
-  _RenderBaseMateoSurfaceSize({required this._width, required this._height});
+  new({required this._width, required this._height});
 
   MateoSurfaceWidth _width;
   MateoSurfaceWidth get width => _width;

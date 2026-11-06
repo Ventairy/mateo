@@ -1,7 +1,7 @@
 part of 'mateo_drag_resistance.dart';
 
 class _RenderMateoDragResistanceTransform extends RenderTransform {
-  _RenderMateoDragResistanceTransform(this._translation) : super(transform: Matrix4.identity()) {
+  new(this._translation) : super(transform: Matrix4.identity()) {
     _syncTranslation();
   }
 

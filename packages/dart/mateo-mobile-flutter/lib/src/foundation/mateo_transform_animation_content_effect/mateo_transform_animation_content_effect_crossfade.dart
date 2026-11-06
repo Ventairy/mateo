@@ -3,7 +3,7 @@ part of 'mateo_transform_animation_content_effect.dart';
 /// Blends captured outgoing and incoming content during a transform animation.
 final class MateoTransformAnimationContentEffectCrossfade extends MateoTransformAnimationContentEffect {
   /// Creates a content crossfade effect.
-  const MateoTransformAnimationContentEffectCrossfade({this.curve}) : super._();
+  const new({this.curve}) : super._();
 
   /// The effect easing, or null to follow the transform timing.
   @override

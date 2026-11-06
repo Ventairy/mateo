@@ -5,7 +5,7 @@ part of 'show_mateo_sheet.dart';
 // jerk at both endpoints, and finishes with zero velocity. Keep the
 // coefficients together: they encode those boundary conditions.
 class _MateoSheetExitCurve extends Curve {
-  const _MateoSheetExitCurve();
+  const new();
 
   @override
   double transformInternal(double t) {

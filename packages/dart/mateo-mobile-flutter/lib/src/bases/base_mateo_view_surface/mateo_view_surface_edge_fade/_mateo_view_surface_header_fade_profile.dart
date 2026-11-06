@@ -1,7 +1,7 @@
 part of '../base_mateo_view_surface.dart';
 
 final class _MateoViewSurfaceHeaderFadeProfile extends MateoEdgeFadeProfile {
-  _MateoViewSurfaceHeaderFadeProfile()
+  new()
     : super(
         stops: List.generate(33, (index) => index / 32),
         visibility: List.generate(33, (index) {

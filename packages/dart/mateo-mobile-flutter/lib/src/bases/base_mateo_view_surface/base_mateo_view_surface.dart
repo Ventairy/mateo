@@ -19,7 +19,7 @@ part 'mateo_view_surface_edge_fade/_mateo_view_surface_header_fade_profile.dart'
 
 @internal
 class BaseMateoViewSurface extends StatelessWidget {
-  const BaseMateoViewSurface({
+  const new({
     required this.child,
     required this.scrollable,
     this.shape,

@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceDecorationPainter extends BoxPainter {
-  _BaseMateoSurfaceDecorationPainter(this.decoration, super.onChanged)
+  new(this.decoration, super.onChanged)
     : _fillPaint = Paint()..color = decoration.color!,
       _shadowPaints = [
         for (final shadow in decoration.shadows!) shadow.toPaint(),

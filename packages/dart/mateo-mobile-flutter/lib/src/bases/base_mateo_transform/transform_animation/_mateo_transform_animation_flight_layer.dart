@@ -7,7 +7,7 @@ typedef _MateoTransformAnimationFlightLayerIdentity = ({
 
 @immutable
 final class _MateoTransformAnimationFlightLayer {
-  const _MateoTransformAnimationFlightLayer({
+  const new({
     required this.capture,
     required this.bounds,
     this.opacity = 1,

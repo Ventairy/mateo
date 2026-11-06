@@ -12,7 +12,7 @@ import '../fixtures/surface_transform_test_widgets.dart';
 const ValueKey<String> _frameKey = ValueKey('nested-morph-frame');
 
 final class _FlightGeometryDelegate extends MorphFlightDelegate<Rect> {
-  const _FlightGeometryDelegate(this.onFlight);
+  const new(this.onFlight);
 
   final void Function(MorphFlight<Rect>) onFlight;
 

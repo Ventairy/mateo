@@ -1,7 +1,7 @@
 part of 'mateo_page.dart';
 
 final class _MateoPageRoute<T> extends BaseMateoPageRoute<T> {
-  _MateoPageRoute({
+  new({
     required super.page,
     required super.reducedMotion,
   }) : _builder = MateoPageTransitionsBuilder(transition: page.transition!) {

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart' show internal;
 
 @internal
 class ThreeDIconUsage {
-  const ThreeDIconUsage({required this.icon, required this.size, required this.background});
+  const new({required this.icon, required this.size, required this.background});
 
   static const backgroundArtworkScale = 0.65;
 

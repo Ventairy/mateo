@@ -9,7 +9,7 @@ import 'mateo_edge_fade_painter.dart';
 @internal
 class BaseMateoEdgeFade extends StatefulWidget {
   // The nullable storage distinguishes the mask without a second mode flag.
-  const BaseMateoEdgeFade.overlay({
+  const new overlay({
     required Color this.color,
     required this.resolveBands,
     required this.child,
@@ -17,8 +17,7 @@ class BaseMateoEdgeFade extends StatefulWidget {
     super.key,
   });
 
-  const BaseMateoEdgeFade.mask({required this.resolveBands, required this.child, this.repaint, super.key})
-    : color = null;
+  const new mask({required this.resolveBands, required this.child, this.repaint, super.key}) : color = null;
 
   final Color? color;
   final List<MateoEdgeFadeBand> Function(Size size) resolveBands;

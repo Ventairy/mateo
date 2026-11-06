@@ -1,7 +1,7 @@
 part of 'base_mateo_view_footer.dart';
 
 final class _MateoViewFooterContent extends SlottedMultiChildRenderObjectWidget<_MateoViewFooterSlot, RenderBox> {
-  const _MateoViewFooterContent({
+  const new({
     required this.textDirection,
     this.principal,
     this.leading,

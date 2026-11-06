@@ -94,7 +94,7 @@ typedef _MateoToastRequest = ({MateoToastController controller, _MateoToastBuild
 
 @internal
 class MateoToastHost extends StatefulWidget {
-  const MateoToastHost({required this.child, super.key});
+  const new({required this.child, super.key});
   final Widget child;
 
   @override

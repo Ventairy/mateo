@@ -6,7 +6,7 @@ part of 'mateo_surface_animation.dart';
 /// A surface entrance with coordinated fading and scaling.
 final class MateoSurfaceAnimationPop extends MateoSurfaceAnimation {
   /// Creates a centered surface entrance.
-  const MateoSurfaceAnimationPop({
+  const new({
     this.duration = const .new(milliseconds: 320),
     this.curve = Curves.easeOutBack,
   }) : beginScale = 0.75,

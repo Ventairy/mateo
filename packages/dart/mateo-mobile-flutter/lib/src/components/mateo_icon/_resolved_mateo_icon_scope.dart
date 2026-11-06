@@ -1,7 +1,7 @@
 part of 'mateo_icon_scope.dart';
 
 class _ResolvedMateoIconScope extends InheritedWidget {
-  const _ResolvedMateoIconScope({
+  const new({
     required this.size,
     required this.sizeWithBackground,
     required this.color,

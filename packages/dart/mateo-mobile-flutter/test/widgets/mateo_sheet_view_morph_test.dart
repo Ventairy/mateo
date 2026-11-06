@@ -548,7 +548,7 @@ Future<Rect?> _renderedColorBounds(
     find.byKey(const ValueKey('capture')),
   );
   final argb = color.toARGB32();
-  return tester.runAsync<Rect?>(() async {
+  return await tester.runAsync<Rect?>(() async {
     final image = await boundary.toImage();
     final bytes = (await image.toByteData(format: .rawRgba))!;
     final red = (argb >> 16) & 0xff;

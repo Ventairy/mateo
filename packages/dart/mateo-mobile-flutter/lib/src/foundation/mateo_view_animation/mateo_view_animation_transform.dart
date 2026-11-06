@@ -3,7 +3,7 @@ part of 'mateo_view_animation.dart';
 /// A transform connecting a Mateo view to another Mateo element.
 final class MateoViewAnimationTransform extends MateoViewAnimation {
   /// Creates a transform through a shared [target].
-  const MateoViewAnimationTransform({
+  const new({
     required this.target,
     this.shape,
     this.contentEffects = const [.crossfade(), .scale()],

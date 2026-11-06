@@ -23,7 +23,7 @@ part '_mateo_predictive_back_gesture_detector.dart';
 /// ```
 class MateoPage<T> extends Page<T> {
   /// Creates a page with [child] as its route content.
-  const MateoPage({
+  const new({
     required this.child,
     this.transition,
     this.title,

@@ -364,7 +364,7 @@ Widget _app(ValueNotifier<List<Page<void>>> pages, {ValueNotifier<bool>? reduced
 );
 
 class _TestPage extends Page<void> {
-  _TestPage({required this.id, required this.builder, this.allowSnapshotting = true}) : super(key: ValueKey(id));
+  new({required this.id, required this.builder, this.allowSnapshotting = true}) : super(key: ValueKey(id));
   final String id;
   final MateoPageTransitionsBuilder builder;
   final bool allowSnapshotting;
@@ -373,7 +373,7 @@ class _TestPage extends Page<void> {
 }
 
 class _BuilderRoute extends PageRoute<void> {
-  _BuilderRoute(_TestPage page) : super(settings: page);
+  new(_TestPage page) : super(settings: page);
   _TestPage get page => settings as _TestPage;
   @override
   bool get maintainState => true;

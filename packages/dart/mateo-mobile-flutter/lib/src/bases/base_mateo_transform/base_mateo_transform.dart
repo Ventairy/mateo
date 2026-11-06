@@ -25,7 +25,7 @@ part 'transform_animation/effects/_mateo_transform_animation_content_switch.dart
 
 @internal
 class BaseMateoTransform extends StatelessWidget {
-  const BaseMateoTransform({
+  const new({
     required this.child,
     required this.content,
     required this.color,

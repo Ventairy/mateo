@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The semantic color treatments for Mateo buttons.
 @immutable
 final class MateoButtonsColorScheme {
-  const MateoButtonsColorScheme._({required this.primary, required this.secondary, required this.tertiary});
+  const new _({required this.primary, required this.secondary, required this.tertiary});
 
   /// The prominent button colors.
   final MateoPrimaryButtonColorScheme primary;

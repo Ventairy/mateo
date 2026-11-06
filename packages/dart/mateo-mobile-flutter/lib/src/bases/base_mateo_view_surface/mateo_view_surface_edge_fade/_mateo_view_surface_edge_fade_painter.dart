@@ -1,7 +1,7 @@
 part of '../base_mateo_view_surface.dart';
 
 class _MateoViewSurfaceEdgeFadePainter extends MateoEdgeFadePainter {
-  _MateoViewSurfaceEdgeFadePainter({
+  new({
     required super.color,
     required super.resolveBands,
     required this.view,

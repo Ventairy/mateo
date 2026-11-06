@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoSheetColorScheme {
   /// Creates the color roles of a sheet.
-  const MateoSheetColorScheme({required this.scrim, required this.handle});
+  const new({required this.scrim, required this.handle});
 
   /// The translucent color that dims content behind a sheet.
   final Color scrim;

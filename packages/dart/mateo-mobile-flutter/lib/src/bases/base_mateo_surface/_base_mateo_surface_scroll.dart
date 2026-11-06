@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceScroll extends StatefulWidget {
-  const _BaseMateoSurfaceScroll({required this.controller, required this.fitHeight, required this.child});
+  const new({required this.controller, required this.fitHeight, required this.child});
 
   final _BaseMateoSurfaceScrollController controller;
   final bool fitHeight;

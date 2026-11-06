@@ -13,7 +13,7 @@ part '_resolved_mateo_button_appearance_scope.dart';
 @internal
 class MateoButtonAppearanceScope extends StatelessWidget {
   /// Creates appearance defaults for [child].
-  const MateoButtonAppearanceScope({
+  const new({
     required this.child,
     super.key,
     this.variant,

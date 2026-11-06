@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The semantic color treatments for toast statuses.
 @immutable
 final class MateoToastColorScheme {
-  const MateoToastColorScheme._({
+  const new _({
     required this.neutral,
     required this.error,
     required this.warning,

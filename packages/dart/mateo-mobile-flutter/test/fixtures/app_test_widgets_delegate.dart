@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 /// A consumer override that supplies left-to-right widget localization.
 class AppTestWidgetsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   /// Creates the consumer delegate.
-  const AppTestWidgetsDelegate();
+  const new();
 
   /// Whether this delegate supports [locale].
   @override

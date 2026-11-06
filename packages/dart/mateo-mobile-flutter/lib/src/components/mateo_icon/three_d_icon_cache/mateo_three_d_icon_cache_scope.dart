@@ -1,7 +1,7 @@
 part of '../mateo_icon.dart';
 
 class _MateoThreeDIconCacheScope extends InheritedWidget {
-  const _MateoThreeDIconCacheScope({required this.imageCache, required super.child});
+  const new({required this.imageCache, required super.child});
 
   final ImageCache imageCache;
 

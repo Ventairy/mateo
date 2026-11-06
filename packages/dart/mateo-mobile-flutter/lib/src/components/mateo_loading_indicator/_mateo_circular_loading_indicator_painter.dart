@@ -1,7 +1,7 @@
 part of 'mateo_loading_indicator.dart';
 
 class _MateoCircularLoadingIndicatorPainter extends CustomPainter {
-  _MateoCircularLoadingIndicatorPainter({
+  new({
     required Color color,
     required Color trackColor,
     required Animation<double>? progress,

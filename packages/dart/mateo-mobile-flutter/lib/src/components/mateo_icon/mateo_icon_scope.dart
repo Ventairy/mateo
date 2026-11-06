@@ -17,7 +17,7 @@ part '_resolved_mateo_icon_scope.dart';
 /// ```
 class MateoIconScope extends StatelessWidget {
   /// Creates defaults for [child] using optional [size], [sizeWithBackground], and [color].
-  const MateoIconScope({required this.child, super.key, this.size, this.sizeWithBackground, this.color})
+  const new({required this.child, super.key, this.size, this.sizeWithBackground, this.color})
     : assert(size == null || (size >= 0 && size < double.infinity), 'size must be finite and nonnegative.'),
       assert(
         sizeWithBackground == null || (sizeWithBackground >= 0 && sizeWithBackground < double.infinity),

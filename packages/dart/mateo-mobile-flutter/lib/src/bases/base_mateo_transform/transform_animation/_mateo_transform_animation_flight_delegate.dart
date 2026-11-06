@@ -1,7 +1,7 @@
 part of '../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationFlightDelegate extends MorphFlightDelegate<_MateoTransformAnimationFlightFrame> {
-  _MateoTransformAnimationFlightDelegate({
+  new({
     required this.color,
     required this.content,
     required List<BaseMateoTransformCandidate> candidates,
