@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class MateoGoldenFileComparator extends LocalFileComparator {
-  MateoGoldenFileComparator(super.testFile);
+  new(super.testFile);
 
   Future<bool> _onlyRgbRoundingDiffers(ComparisonResult result) async {
     final actual = result.diffs?['testImage'];

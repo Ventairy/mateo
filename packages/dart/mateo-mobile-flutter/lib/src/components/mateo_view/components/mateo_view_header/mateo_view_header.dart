@@ -15,7 +15,7 @@ import '../../mateo_view.dart';
 /// ```
 class MateoViewHeader extends StatelessWidget {
   /// Creates a header arranging [leading], [principal], and [trailing].
-  const MateoViewHeader({this.principal, this.leading, this.trailing, this.padding, super.key});
+  const new({this.principal, this.leading, this.trailing, this.padding, super.key});
 
   /// The local padding, or null to inherit spacing from the owning view.
   ///

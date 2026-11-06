@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceScrollPosition extends ScrollPositionWithSingleContext {
-  _BaseMateoSurfaceScrollPosition({
+  new({
     required super.physics,
     required super.context,
     required super.oldPosition,

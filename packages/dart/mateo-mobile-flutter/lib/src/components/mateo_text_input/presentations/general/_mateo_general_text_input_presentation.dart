@@ -1,7 +1,7 @@
 part of '../../mateo_text_input.dart';
 
 final class _MateoGeneralTextInputPresentation extends MateoTextInputPresentation {
-  const _MateoGeneralTextInputPresentation({
+  const new({
     required this.variant,
     this.size = .standard,
     this.purpose = .text,

@@ -2,7 +2,7 @@ part of 'base_mateo_view.dart';
 
 @internal
 class MateoViewLayoutScope extends InheritedWidget {
-  const MateoViewLayoutScope._({
+  const new _({
     required this.padding,
     required this.fitHeight,
     required this.reserveHeaderSpace,

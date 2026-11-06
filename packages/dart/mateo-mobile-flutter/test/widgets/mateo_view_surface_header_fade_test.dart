@@ -382,14 +382,14 @@ void main() {
 }
 
 class _LayoutCounter extends SingleChildRenderObjectWidget {
-  const _LayoutCounter({required this.onLayout, required super.child});
+  const new({required this.onLayout, required super.child});
   final VoidCallback onLayout;
   @override
   RenderObject createRenderObject(BuildContext context) => _LayoutCounterRenderBox(onLayout);
 }
 
 class _LayoutCounterRenderBox extends RenderProxyBox {
-  _LayoutCounterRenderBox(this.onLayout);
+  new(this.onLayout);
   final VoidCallback onLayout;
   @override
   void performLayout() {

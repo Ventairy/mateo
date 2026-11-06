@@ -18,7 +18,7 @@ import '../../mateo_view.dart';
 /// ```
 class MateoViewFooter extends StatelessWidget {
   /// Creates a footer arranging [leading], [principal], and [trailing].
-  const MateoViewFooter({
+  const new({
     this.principal,
     this.leading,
     this.trailing,

@@ -2,7 +2,7 @@ part of 'mateo_text.dart';
 
 @internal
 class MateoTextScope extends StatelessWidget {
-  const MateoTextScope({
+  const new({
     required this.child,
     super.key,
     this.inherit = true,

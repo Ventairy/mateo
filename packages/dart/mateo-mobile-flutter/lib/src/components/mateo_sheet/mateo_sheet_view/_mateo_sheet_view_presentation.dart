@@ -1,7 +1,7 @@
 part of '../show_mateo_sheet.dart';
 
 class _MateoSheetViewPresentation extends StatefulWidget {
-  const _MateoSheetViewPresentation({
+  const new({
     required this.stackEntry,
     required this.color,
     required this.dimColor,

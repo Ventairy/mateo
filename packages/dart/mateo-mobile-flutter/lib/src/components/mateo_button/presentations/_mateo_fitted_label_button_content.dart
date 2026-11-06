@@ -1,7 +1,7 @@
 part of '../mateo_button.dart';
 
 final class _MateoFittedLabelButtonContent extends MultiChildRenderObjectWidget {
-  _MateoFittedLabelButtonContent({
+  new({
     required this.progress,
     required this.alignment,
     required Widget content,

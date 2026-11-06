@@ -3,13 +3,13 @@ part of '../mateo_text_input.dart';
 /// The visual presentation of a Mateo text input.
 @immutable
 sealed class MateoTextInputPresentation extends StatefulWidget {
-  const MateoTextInputPresentation._();
+  const new _();
 
   /// Creates a general-purpose, single-line text input presentation.
   ///
   /// The [purpose] selects typing assistance and defaults to
   /// [MateoTextInputPurpose.text].
-  const factory MateoTextInputPresentation.general({
+  const factory general({
     required MateoTextInputVariant variant,
     MateoTextInputSize size,
     MateoTextInputPurpose purpose,
@@ -20,7 +20,7 @@ sealed class MateoTextInputPresentation extends StatefulWidget {
   /// ```dart
   /// MateoTextInputPresentation.search(variant: .filled.base, elevation: 1)
   /// ```
-  const factory MateoTextInputPresentation.search({
+  const factory search({
     required MateoTextInputVariant variant,
     MateoTextInputSize size,
     double elevation,
@@ -30,7 +30,7 @@ sealed class MateoTextInputPresentation extends StatefulWidget {
   ///
   /// When [initialCountry] is omitted, Mateo selects a likely country from
   /// device knowledge, the resolved app locale, or a fallback (United States)
-  const factory MateoTextInputPresentation.phone({
+  const factory phone({
     Country? initialCountry,
     MateoTextInputSize size,
   }) = _MateoPhoneTextInputPresentation;

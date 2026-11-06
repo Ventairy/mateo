@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _RenderBaseMateoSurfaceContentLayout extends RenderShiftedBox {
-  _RenderBaseMateoSurfaceContentLayout({
+  new({
     required this._obstruction,
     required this._padding,
     required this._alignment,

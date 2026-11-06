@@ -28,7 +28,7 @@ part 'mateo_view_layout_scope.dart';
 
 @internal
 class BaseMateoView extends StatefulWidget {
-  const BaseMateoView({
+  const new({
     required this.surface,
     required this.fitHeight,
     this.surfacePresentation = const (

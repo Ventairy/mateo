@@ -3,10 +3,10 @@ part of '../mateo_button.dart';
 /// The content and visual treatment mounted by a Mateo button.
 @immutable
 sealed class MateoButtonPresentation extends StatefulWidget {
-  const MateoButtonPresentation._();
+  const new _();
 
   /// Creates a labeled button with optional supporting icons.
-  const factory MateoButtonPresentation.label({
+  const factory label({
     required String label,
     MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,
@@ -19,7 +19,7 @@ sealed class MateoButtonPresentation extends StatefulWidget {
   }) = _MateoLabelButtonPresentation;
 
   /// Creates a circular action without labels.
-  const factory MateoButtonPresentation.icon({
+  const factory icon({
     required Widget icon,
     MateoButtonVariant? variant,
     MateoButtonColorScheme? colorScheme,

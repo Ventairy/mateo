@@ -2,7 +2,7 @@ part of '../mateo_button.dart';
 
 final class _RenderMateoFittedLabelButtonContent extends RenderBox
     with ContainerRenderObjectMixin<RenderBox, ContainerBoxParentData<RenderBox>> {
-  _RenderMateoFittedLabelButtonContent({required this._progress, required this._alignment});
+  new({required this._progress, required this._alignment});
 
   Animation<double> _progress;
   Alignment _alignment;

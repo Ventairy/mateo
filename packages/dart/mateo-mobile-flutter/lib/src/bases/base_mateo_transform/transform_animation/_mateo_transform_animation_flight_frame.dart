@@ -2,7 +2,7 @@ part of '../base_mateo_transform.dart';
 
 @immutable
 sealed class _MateoTransformAnimationFlightFrame {
-  const _MateoTransformAnimationFlightFrame({
+  const new({
     required this.color,
     required this.shape,
     required this.shapeSize,
@@ -25,7 +25,7 @@ sealed class _MateoTransformAnimationFlightFrame {
 }
 
 final class _MateoSurfaceTransformAnimationFlightFrame extends _MateoTransformAnimationFlightFrame {
-  const _MateoSurfaceTransformAnimationFlightFrame({
+  const new({
     required super.color,
     required super.shape,
     required super.shapeSize,
@@ -35,7 +35,7 @@ final class _MateoSurfaceTransformAnimationFlightFrame extends _MateoTransformAn
 }
 
 final class _MateoViewTransformAnimationFlightFrame extends _MateoTransformAnimationFlightFrame {
-  const _MateoViewTransformAnimationFlightFrame({
+  const new({
     required super.color,
     required super.shape,
     required super.shapeSize,

@@ -7,7 +7,7 @@ part '_rasterization_counter_platform_view_layer.dart';
 /// Paints a native platform layer and counts attempts to rasterize it.
 class PlatformViewLayerFixture extends LeafRenderObjectWidget {
   /// Creates a native-layer fixture without registering a platform view.
-  const PlatformViewLayerFixture({required this.onPaint, required this.onRasterizationCheck, super.key});
+  const new({required this.onPaint, required this.onRasterizationCheck, super.key});
 
   /// Records native layer painting.
   final VoidCallback onPaint;

@@ -1,7 +1,7 @@
 part of '../base_mateo_view_surface.dart';
 
 final class _MateoViewSurfaceEdgeFade extends StatelessWidget {
-  _MateoViewSurfaceEdgeFade({
+  new({
     required this.surfaceColor,
     required this.contentTopPadding,
     required Set<MateoEdgeEffectSide> sides,

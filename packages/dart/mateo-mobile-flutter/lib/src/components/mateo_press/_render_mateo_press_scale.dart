@@ -1,7 +1,7 @@
 part of 'mateo_press.dart';
 
 class _RenderMateoPressScale extends RenderProxyBox {
-  _RenderMateoPressScale(Animation<double> scale) : _scale = scale, _value = scale.value;
+  new(Animation<double> scale) : _scale = scale, _value = scale.value;
 
   Animation<double> _scale;
   double _value;

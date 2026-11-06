@@ -23,7 +23,7 @@
   "body_area_weight": 0.5,
   "packages": {
     "numpy": "2.2.6",
-    "Pillow": "11.2.1",
+    "Pillow": "13.0.0",
     "resvg-py": "0.3.3",
     "scipy": "1.15.3",
     "scikit-image": "0.25.2"

@@ -16,7 +16,7 @@ class MateoToggleController extends ChangeNotifier implements ValueListenable<bo
   /// Creates a toggle controller with an optional initial [value].
   // The public parameter name intentionally differs from the private field.
   // ignore: prefer_initializing_formals
-  MateoToggleController({bool value = false}) : _value = value;
+  new({bool value = false}) : _value = value;
 
   _MateoToggleControllerClient? _client;
   Future<void> _animation = Future<void>.value();
@@ -79,7 +79,6 @@ class MateoToggleController extends ChangeNotifier implements ValueListenable<bo
 }
 
 // The interface gives the controller an attachable client identity.
-// ignore: one_member_abstracts
 abstract interface class _MateoToggleControllerClient {
   Future<void> setToggleValue(
     // Mirrors the controller's positional boolean API internally.

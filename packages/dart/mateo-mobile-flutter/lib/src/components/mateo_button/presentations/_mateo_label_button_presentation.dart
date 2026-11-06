@@ -1,7 +1,7 @@
 part of '../mateo_button.dart';
 
 final class _MateoLabelButtonPresentation extends MateoButtonPresentation {
-  const _MateoLabelButtonPresentation({
+  const new({
     required this.label,
     this.variant,
     this.colorScheme,

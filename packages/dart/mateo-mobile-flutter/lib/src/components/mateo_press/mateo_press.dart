@@ -37,7 +37,7 @@ part '_render_mateo_press_scale.dart';
 ///    the guidance for assigning spacing to actions.
 class MateoPress extends StatefulWidget {
   /// Creates a press target around [child].
-  const MateoPress({
+  const new({
     required this.child,
     this.onPressed,
     this.onPressChanged,

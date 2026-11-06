@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _RenderMateoPushPageTransition extends RenderProxyBox implements MaybeSafeAreaTransform {
-  _RenderMateoPushPageTransition({
+  new({
     required this._animation,
     required this._transition,
     required this._outgoing,

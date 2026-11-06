@@ -8,7 +8,7 @@ final class MateoPageTransitionSlide extends MateoPageTransition {
   /// Creates a slide page transition.
   ///
   /// Durations must be nonnegative.
-  const MateoPageTransitionSlide({
+  const new({
     this.direction = .up,
     super.duration = const .new(milliseconds: 320),
     super.reverseDuration = const .new(milliseconds: 260),

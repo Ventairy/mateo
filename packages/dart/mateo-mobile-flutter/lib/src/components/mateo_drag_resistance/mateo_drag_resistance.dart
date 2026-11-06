@@ -26,9 +26,7 @@ part '_render_mateo_drag_resistance_transform.dart';
 /// See [Drag resistance](https://github.com/Ventairy/mateo/blob/main/design-system/mobile/drag-resistance.md).
 class MateoDragResistance extends StatefulWidget {
   /// Creates a boundary that observes pointer movement around [child].
-  const MateoDragResistance({required this.child, this.resistance = const .all(6), super.key})
-    : dragOffset = null,
-      _driven = false;
+  const new({required this.child, this.resistance = const .all(6), super.key}) : dragOffset = null, _driven = false;
 
   /// Creates a boundary controlled by an existing drag interaction.
   ///
@@ -44,7 +42,7 @@ class MateoDragResistance extends StatefulWidget {
   ///   child: child,
   /// )
   /// ```
-  const MateoDragResistance.driven({
+  const new driven({
     required this.child,
     required this.dragOffset,
     this.resistance = const .all(6),

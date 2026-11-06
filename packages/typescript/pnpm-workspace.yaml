@@ -9,4 +9,4 @@ verifyDepsBeforeRun: false
 
 # Develop React against the local palette; consumers use its Git dependency.
 overrides:
-  '@mateo/web-react>@mateo/palette': workspace:*
+  "@mateo/web-react>@mateo/palette": workspace:*

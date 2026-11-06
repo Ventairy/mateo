@@ -1,7 +1,7 @@
 part of 'mateo_toggle.dart';
 
 class _MateoTogglePainter extends CustomPainter {
-  _MateoTogglePainter({required this.position, required this.colors, required this.enabled, required this.direction})
+  new({required this.position, required this.colors, required this.enabled, required this.direction})
     : super(repaint: position);
 
   static const _trackSize = Size(74, 32);

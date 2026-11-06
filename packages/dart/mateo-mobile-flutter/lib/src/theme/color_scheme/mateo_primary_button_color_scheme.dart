@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The colors of the prominent button treatments.
 @immutable
 final class MateoPrimaryButtonColorScheme {
-  const MateoPrimaryButtonColorScheme._({
+  const new _({
     required this.accent,
     required this.success,
     required this.warning,

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mateo_mobile/src/bases/base_mateo_surface/mateo_surface_obstruction.dart';
 
 class ObstructionInsetsSource implements MateoSurfaceObstruction {
-  ObstructionInsetsSource(EdgeInsets initialInsets) : insets = ValueNotifier(initialInsets);
+  new(EdgeInsets initialInsets) : insets = ValueNotifier(initialInsets);
 
   @override
   EdgeInsets get layoutInsets => insets.value;

@@ -6,7 +6,7 @@ part of '../../../show_mateo_sheet.dart';
 /// to choose a drag handle, a close button, or custom content.
 class MateoSheetViewHeader extends StatelessWidget {
   /// Creates a sheet header using [presentation].
-  const MateoSheetViewHeader({required this.presentation, super.key});
+  const new({required this.presentation, super.key});
 
   /// The content and interaction provided by the header.
   final MateoSheetViewHeaderPresentation presentation;

@@ -2,7 +2,7 @@ part of 'mateo_text_input.dart';
 
 /// Extends Flutter's selection highlight past the paragraph's left paint bound.
 class _MateoTextInputSelectionOverflow extends SingleChildRenderObjectWidget {
-  const _MateoTextInputSelectionOverflow({required this.repaint, required super.child});
+  const new({required this.repaint, required super.child});
 
   final Listenable repaint;
 
@@ -21,7 +21,7 @@ class _MateoTextInputSelectionOverflow extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMateoTextInputSelectionOverflow extends RenderProxyBox {
-  _RenderMateoTextInputSelectionOverflow(this._repaint, TextEditingController controller)
+  new(this._repaint, TextEditingController controller)
     : _controller = controller,
       _selectionCanPaint = _hasSelection(controller);
 

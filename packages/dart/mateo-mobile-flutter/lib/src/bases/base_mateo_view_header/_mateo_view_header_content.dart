@@ -1,7 +1,7 @@
 part of 'base_mateo_view_header.dart';
 
 final class _MateoViewHeaderContent extends SlottedMultiChildRenderObjectWidget<_MateoViewHeaderSlot, RenderBox> {
-  const _MateoViewHeaderContent({
+  const new({
     required this.textDirection,
     this.principal,
     this.leading,

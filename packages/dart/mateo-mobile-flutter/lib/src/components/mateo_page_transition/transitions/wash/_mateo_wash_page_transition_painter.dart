@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoWashPageTransitionPainter extends SnapshotPainter {
-  _MateoWashPageTransitionPainter({
+  new({
     required this.animation,
     required this._transition,
     required this._useLinearProgress,

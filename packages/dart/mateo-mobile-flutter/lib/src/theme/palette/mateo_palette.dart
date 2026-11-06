@@ -26,7 +26,7 @@ final class MateoPalette {
   /// seed is preserved at step 9 and generates the other steps in OKLCH.
   /// Pale, muted, and very dark seeds need visual review. Translucent seeds
   /// throw [ArgumentError]. The fixed scales never change with the accent.
-  factory MateoPalette({Color accentColor = const Color(0xFF4A5CFF)}) {
+  factory({Color accentColor = const Color(0xFF4A5CFF)}) {
     if (accentColor.a != 1) {
       throw ArgumentError.value(accentColor, 'accentColor', 'must be fully opaque');
     }
@@ -36,7 +36,7 @@ final class MateoPalette {
     return MateoPalette._(_generateAccent(accentColor));
   }
 
-  const MateoPalette._(this.accent);
+  const new _(this.accent);
 
   /// The absolute white primitive outside the numbered scales.
   Color get white => const Color(0xFFFFFFFF);

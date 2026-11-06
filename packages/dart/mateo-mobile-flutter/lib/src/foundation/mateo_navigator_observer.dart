@@ -25,7 +25,7 @@ import 'mateo_sheet_to_view_transition/mateo_sheet_to_view_transition.dart';
 /// ```
 class MateoNavigatorObserver extends MorphNavigatorObserver {
   /// Creates an observer for one navigator containing Mateo surfaces.
-  MateoNavigatorObserver();
+  new();
 
   @internal
   // Internal coordination is not part of the consumer API.

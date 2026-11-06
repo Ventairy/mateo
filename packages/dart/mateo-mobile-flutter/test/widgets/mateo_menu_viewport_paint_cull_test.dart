@@ -9,7 +9,7 @@ class _PaintRecorder {
 }
 
 class _PaintProbe extends StatefulWidget {
-  const _PaintProbe({required this.index, required this.recorder});
+  const new({required this.index, required this.recorder});
 
   final int index;
   final _PaintRecorder recorder;
@@ -39,7 +39,7 @@ class _PaintProbeState extends State<_PaintProbe> {
 }
 
 class _CountingPainter extends CustomPainter {
-  const _CountingPainter({required this.index, required this.recorder});
+  const new({required this.index, required this.recorder});
 
   final int index;
   final _PaintRecorder recorder;

@@ -1,7 +1,7 @@
 part of '../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationFlightScaledBorder extends ShapeBorder {
-  const _MateoTransformAnimationFlightScaledBorder({
+  const new({
     required this.shape,
     required this.size,
   });

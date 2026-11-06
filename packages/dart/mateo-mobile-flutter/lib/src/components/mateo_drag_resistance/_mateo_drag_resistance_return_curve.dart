@@ -6,7 +6,7 @@ part of 'mateo_drag_resistance.dart';
 // zero at landing, without truncating the spring's nonzero exponential tail.
 // Keep these coefficients together; they solve those boundary conditions.
 class _MateoDragResistanceReturnCurve extends Curve {
-  const _MateoDragResistanceReturnCurve();
+  const new();
 
   @override
   double transformInternal(double t) {

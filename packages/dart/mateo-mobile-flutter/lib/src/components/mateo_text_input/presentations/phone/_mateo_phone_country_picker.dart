@@ -4,7 +4,7 @@ typedef _MateoPhoneCountryCatalog =
     List<({Country country, String name, String normalizedName, String lowercaseIso2, String lowercaseIso3})>;
 
 class _MateoPhoneCountryPicker extends StatefulWidget {
-  const _MateoPhoneCountryPicker({
+  const new({
     required this.selectedCountry,
     required this.query,
     required this.catalogLocale,

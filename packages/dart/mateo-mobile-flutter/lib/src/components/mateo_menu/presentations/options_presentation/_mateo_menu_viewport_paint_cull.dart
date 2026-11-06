@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 class _MateoMenuViewportPaintCull extends SingleChildRenderObjectWidget {
-  const _MateoMenuViewportPaintCull({required this.enabled, required super.child});
+  const new({required this.enabled, required super.child});
 
   final bool enabled;
 

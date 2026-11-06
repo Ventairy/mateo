@@ -8,7 +8,7 @@ part '_mateo_environment_provider.dart';
 /// Provides runtime environment knowledge to Mateo components.
 class MateoEnvironment extends StatefulWidget {
   /// Creates the environment for [child].
-  const MateoEnvironment({required this.child, super.key});
+  const new({required this.child, super.key});
 
   /// The subtree that can read Mateo's environment knowledge.
   final Widget child;

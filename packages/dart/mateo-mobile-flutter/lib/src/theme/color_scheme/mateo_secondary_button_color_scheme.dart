@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The colors of the quieter button treatments.
 @immutable
 final class MateoSecondaryButtonColorScheme {
-  const MateoSecondaryButtonColorScheme._({required this.accent, required this.neutral});
+  const new _({required this.accent, required this.neutral});
 
   /// The soft accent treatment.
   final MateoButtonColorScheme accent;

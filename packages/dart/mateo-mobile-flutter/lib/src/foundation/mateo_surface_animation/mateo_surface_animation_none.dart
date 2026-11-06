@@ -3,7 +3,7 @@ part of 'mateo_surface_animation.dart';
 /// A surface animation with no transition.
 final class MateoSurfaceAnimationNone extends MateoSurfaceAnimation {
   /// Creates a surface animation with no transition.
-  const MateoSurfaceAnimationNone() : super._();
+  const new() : super._();
 
   /// The fixed duration of this animation style.
   Duration get duration => .zero;

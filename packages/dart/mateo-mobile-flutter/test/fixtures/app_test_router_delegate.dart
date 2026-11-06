@@ -7,7 +7,7 @@ part '_app_test_page.dart';
 class AppTestRouterDelegate extends RouterDelegate<Object>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
   /// Creates a router whose initial page displays [home].
-  AppTestRouterDelegate({required this.home});
+  new({required this.home});
 
   /// The content of the initial page.
   final Widget home;

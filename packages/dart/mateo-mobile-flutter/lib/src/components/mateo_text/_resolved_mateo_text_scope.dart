@@ -1,7 +1,7 @@
 part of 'mateo_text.dart';
 
 class _ResolvedMateoTextScope extends InheritedTheme {
-  const _ResolvedMateoTextScope({
+  const new({
     required super.child,
     required this.fontSize,
     required this.fontWeight,

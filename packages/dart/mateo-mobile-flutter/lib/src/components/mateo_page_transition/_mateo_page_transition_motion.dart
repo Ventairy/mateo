@@ -1,7 +1,7 @@
 part of 'mateo_page_transition.dart';
 
 class _MateoPageTransitionMotion extends StatelessWidget {
-  const _MateoPageTransitionMotion({
+  const new({
     required this.animation,
     required this.builder,
     required this.child,

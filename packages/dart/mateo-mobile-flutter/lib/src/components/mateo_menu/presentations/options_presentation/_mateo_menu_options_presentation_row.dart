@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 class _MateoMenuOptionsPresentationRow extends StatelessWidget {
-  const _MateoMenuOptionsPresentationRow({
+  const new({
     required this.item,
     required this.density,
     required this.topInset,

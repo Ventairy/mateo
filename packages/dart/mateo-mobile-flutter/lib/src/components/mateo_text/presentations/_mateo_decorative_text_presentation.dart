@@ -1,7 +1,7 @@
 part of '../mateo_text.dart';
 
 final class _MateoDecorativeTextPresentation extends MateoTextPresentation {
-  const _MateoDecorativeTextPresentation({
+  const new({
     required this.variant,
     this.fontSize,
     this.color,

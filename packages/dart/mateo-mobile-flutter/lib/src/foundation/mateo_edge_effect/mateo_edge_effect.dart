@@ -14,16 +14,14 @@ import 'mateo_edge_effect_type.dart';
 @immutable
 final class MateoEdgeEffect {
   /// Creates a declaration with no edge treatment and no selected sides.
-  const MateoEdgeEffect.none() : type = .none, at = const {};
+  const new none() : type = .none, at = const {};
 
   /// Creates a fade declaration for [at], defaulting to both vertical sides.
   ///
   /// Copies the selection into an unmodifiable set. Duplicates collapse and
   /// order has no meaning. An explicitly empty selection stays empty.
   /// This constructor is non-const so later input mutations cannot change it.
-  MateoEdgeEffect.fade({Iterable<MateoEdgeEffectSide> at = const [.top, .bottom]})
-    : type = .fade,
-      at = Set.unmodifiable(at);
+  new fade({Iterable<MateoEdgeEffectSide> at = const [.top, .bottom]}) : type = .fade, at = Set.unmodifiable(at);
 
   /// The treatment selected by the constructor.
   final MateoEdgeEffectType type;

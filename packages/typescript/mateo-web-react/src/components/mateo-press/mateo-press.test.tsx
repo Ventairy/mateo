@@ -33,6 +33,35 @@ function fireMateoPointer(
   act(() => target.dispatchEvent(new MateoTestPointerEvent(type, init)));
 }
 
+function MateoStatefulPressContent({
+  initialize,
+}: {
+  readonly initialize: () => number;
+}) {
+  const [value] = useState(initialize);
+  return <span>Count {value}</span>;
+}
+
+function MateoPressStateFixture({
+  enabled,
+  initialize,
+  theme,
+}: {
+  readonly enabled: boolean;
+  readonly initialize: () => number;
+  readonly theme: ReturnType<typeof createMateoTheme>;
+}) {
+  return (
+    <MateoTheme data={theme}>
+      <MateoPress {...(enabled ? { onPressed: () => {} } : {})}>
+        <MateoSurface padding={16}>
+          <MateoStatefulPressContent initialize={initialize} />
+        </MateoSurface>
+      </MateoPress>
+    </MateoTheme>
+  );
+}
+
 describe('MateoPress', () => {
   it('should expose an enabled native link when a destination is provided without a callback', () => {
     const ref = createRef<HTMLAnchorElement>();
@@ -260,29 +289,26 @@ describe('MateoPress', () => {
 
   it('should preserve surface child state when feedback and enabled state change', () => {
     const initializeMateoContent = vi.fn(() => 1);
-    function MateoStatefulContent() {
-      const [value] = useState(initializeMateoContent);
-      return <span>Count {value}</span>;
-    }
     const theme = createMateoTheme({
       accentColor: '#4A5CFF',
       onAccent: '#FFF',
     });
-    function MateoPressFixture({ enabled }: { enabled: boolean }) {
-      return (
-        <MateoTheme data={theme}>
-          <MateoPress {...(enabled ? { onPressed: () => {} } : {})}>
-            <MateoSurface padding={16}>
-              <MateoStatefulContent />
-            </MateoSurface>
-          </MateoPress>
-        </MateoTheme>
-      );
-    }
-    const view = render(<MateoPressFixture enabled />);
+    const view = render(
+      <MateoPressStateFixture
+        enabled
+        initialize={initializeMateoContent}
+        theme={theme}
+      />,
+    );
     const content = screen.getByText('Count 1');
     fireMateoPointer(screen.getByRole('button'), 'pointerdown');
-    view.rerender(<MateoPressFixture enabled={false} />);
+    view.rerender(
+      <MateoPressStateFixture
+        enabled={false}
+        initialize={initializeMateoContent}
+        theme={theme}
+      />,
+    );
     expect(screen.getByText('Count 1')).toBe(content);
     expect(initializeMateoContent).toHaveBeenCalledOnce();
   });

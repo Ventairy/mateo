@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The shared text color roles in a Mateo scheme.
 @immutable
 final class MateoTextColorScheme {
-  const MateoTextColorScheme._({
+  const new _({
     required this.primary,
     required this.secondary,
     required this.tertiary,

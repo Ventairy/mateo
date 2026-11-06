@@ -1,7 +1,7 @@
 part of '../../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationContentScale extends _MateoTransformAnimationContentEffect {
-  const _MateoTransformAnimationContentScale({super.curve});
+  const new({super.curve});
 
   double _fittedScale(Size content, Size bounds) =>
       applyBoxFit(BoxFit.contain, content, bounds).destination.width / content.width;

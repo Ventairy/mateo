@@ -3,7 +3,7 @@ part of 'mateo_transform_duration.dart';
 /// Automatic transform timing selected from the transition context.
 final class MateoTransformDurationAuto extends MateoTransformDuration {
   /// Creates automatic transform timing.
-  const MateoTransformDurationAuto() : super._();
+  const new() : super._();
 
   @override
   Duration? get value => null;

@@ -3,7 +3,7 @@ part of 'mateo_color_scheme.dart';
 /// The colors of the filled text input treatments.
 @immutable
 final class MateoFilledTextInputColorScheme {
-  const MateoFilledTextInputColorScheme._({required this.neutral, required this.base});
+  const new _({required this.neutral, required this.base});
 
   /// The gray surface treatment.
   final MateoTextInputColorScheme neutral;

@@ -3,7 +3,7 @@ part of 'mateo_environment.dart';
 enum _MateoEnvironmentAspect { likelyPhoneCountry }
 
 class _MateoEnvironmentProvider extends InheritedModel<_MateoEnvironmentAspect> {
-  const _MateoEnvironmentProvider({
+  const new({
     required this.likelyPhoneCountry,
     required super.child,
   });

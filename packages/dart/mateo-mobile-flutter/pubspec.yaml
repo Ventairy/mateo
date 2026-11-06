@@ -13,7 +13,7 @@ environment:
   flutter: ">=3.48.0-0.5.pre"
 
 dependencies:
-  code_assets: ^2.0.0
+  code_assets: ^2.1.0
   data_assets: ^0.20.0
   diacritic: ^0.1.6
   flutter:
@@ -23,14 +23,14 @@ dependencies:
   hooks: ^2.2.0
   intl: ^0.20.3
   meta: ^1.17.0
-  native_toolchain_c: ^0.19.4
+  native_toolchain_c: ^0.19.5
   oh_my_flutter: ^0.29.0-beta.2
   record_use: ^1.1.1
   slang: ^4.19.2
 
 dev_dependencies:
-  alchemist: ^0.14.0
-  build_runner: ^2.15.0
+  alchemist: ^0.14.1
+  build_runner: ^2.16.2
   dotdart: ^0.11.4
   flutter_test:
     sdk: flutter

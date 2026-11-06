@@ -81,7 +81,7 @@ Future<void> main() async {
 }
 
 class _Toggle extends StatefulWidget {
-  const _Toggle({required this.value, required this.enabled});
+  const new({required this.value, required this.enabled});
   final bool value;
   final bool enabled;
   @override

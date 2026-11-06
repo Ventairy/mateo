@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceDecoration extends ShapeDecoration {
-  const _BaseMateoSurfaceDecoration({
+  const new({
     required Color super.color,
     required MateoRoundedShapeBorder super.shape,
     required List<BoxShadow> super.shadows,

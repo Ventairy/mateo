@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceRepaintBoundary extends SingleChildRenderObjectWidget {
-  const _BaseMateoSurfaceRepaintBoundary({required this.controller, required super.child});
+  const new({required this.controller, required super.child});
 
   final _BaseMateoSurfaceScrollController controller;
 

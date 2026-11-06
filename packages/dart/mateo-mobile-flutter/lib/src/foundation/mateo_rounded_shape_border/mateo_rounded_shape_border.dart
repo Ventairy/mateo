@@ -22,12 +22,12 @@ part '_mateo_rounded_shape_path.dart';
 /// See the [rounded-shape foundation](https://github.com/Ventairy/mateo/blob/main/design-system/foundation/rounded-shape.md).
 final class MateoRoundedShapeBorder extends ShapeBorder {
   /// Creates a rounded shape with a finite, nonnegative [radius].
-  const MateoRoundedShapeBorder({required double radius})
+  const new({required double radius})
     : assert(radius >= 0 && radius < double.infinity, 'radius must be finite and nonnegative'),
       radius = radius;
 
   /// Creates full rounding that follows the current bounds.
-  const MateoRoundedShapeBorder.capsule() : radius = null;
+  const new capsule() : radius = null;
 
   /// The requested rounding, or null for full rounding from the bounds.
   ///

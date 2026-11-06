@@ -3,7 +3,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 class DragResistanceOverdragScene extends StatefulWidget {
-  const DragResistanceOverdragScene({required this.onDismiss, this.scrollController, super.key});
+  const new({required this.onDismiss, this.scrollController, super.key});
 
   final VoidCallback onDismiss;
   final ScrollController? scrollController;

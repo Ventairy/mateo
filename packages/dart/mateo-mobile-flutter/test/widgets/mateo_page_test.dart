@@ -1451,7 +1451,7 @@ Future<void> _pumpPushTransitionApp(
 }
 
 class _PushApp extends StatelessWidget {
-  const _PushApp({
+  const new({
     required this.platform,
     required this.page,
     this.disableAnimations = false,
@@ -1500,7 +1500,7 @@ class _PushApp extends StatelessWidget {
 void _noop() {}
 
 class _PushTransitionApp extends StatelessWidget {
-  const _PushTransitionApp({required this.direction});
+  const new({required this.direction});
 
   final MateoPageTransitionDirection direction;
 
@@ -1546,7 +1546,7 @@ class _PushTransitionApp extends StatelessWidget {
 }
 
 class _DeclarativePageApp extends StatefulWidget {
-  const _DeclarativePageApp({super.key});
+  const new({super.key});
 
   @override
   State<_DeclarativePageApp> createState() => _DeclarativePageAppState();
@@ -1603,7 +1603,7 @@ class _DeclarativePageAppState extends State<_DeclarativePageApp> {
 }
 
 class _ResultApp extends StatelessWidget {
-  const _ResultApp({required this.onResult});
+  const new({required this.onResult});
 
   final ValueChanged<int?> onResult;
 
@@ -1641,7 +1641,7 @@ class _ResultApp extends StatelessWidget {
 }
 
 class _PaintCounter extends SingleChildRenderObjectWidget {
-  const _PaintCounter({required this.onPaint, required super.child});
+  const new({required this.onPaint, required super.child});
 
   final VoidCallback onPaint;
 
@@ -1660,7 +1660,7 @@ class _PaintCounter extends SingleChildRenderObjectWidget {
 }
 
 class _RenderPaintCounter extends RenderProxyBox {
-  _RenderPaintCounter(this.onPaint);
+  new(this.onPaint);
 
   VoidCallback onPaint;
 
@@ -1672,7 +1672,7 @@ class _RenderPaintCounter extends RenderProxyBox {
 }
 
 class _MateoTestApp extends StatelessWidget {
-  const _MateoTestApp({required this.home, this.platform = TargetPlatform.android, this.builder});
+  const new({required this.home, this.platform = TargetPlatform.android, this.builder});
   final Widget home;
   final TargetPlatform platform;
   final TransitionBuilder? builder;
@@ -1686,14 +1686,14 @@ class _MateoTestApp extends StatelessWidget {
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF7551FF), onAccent: const Color(0xFFFFFFFF));
 
 class _TestSurface extends StatelessWidget {
-  const _TestSurface({required this.body});
+  const new({required this.body});
   final Widget body;
   @override
   Widget build(BuildContext context) => ColoredBox(color: _theme.colorScheme.background, child: body);
 }
 
 class _TestAction extends StatelessWidget {
-  const _TestAction({required this.onPressed, required this.child, super.key});
+  const new({required this.onPressed, required this.child, super.key});
   final VoidCallback onPressed;
   final Widget child;
   @override

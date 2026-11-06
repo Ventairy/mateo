@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 @internal
 @immutable
 class MateoEdgeFadeProfile {
-  MateoEdgeFadeProfile({required List<double> stops, required List<double> visibility})
+  new({required List<double> stops, required List<double> visibility})
     : stops = List.unmodifiable(stops),
       visibility = List.unmodifiable(visibility) {
     if (this.stops.length < 2 || this.stops.length != this.visibility.length) {

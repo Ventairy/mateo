@@ -52,20 +52,21 @@ it('should apply text defaults and the nearest theme without extra HTML when nes
   expect(rootStyle?.getPropertyValue('--mateo-letter-spacing')).toBe('-0.02em');
 });
 
+function MateoSurfaceExample() {
+  const [theme, setTheme] = useState(outerMateoTheme);
+  return (
+    <MateoTheme data={theme}>
+      <main style={getMateoThemeStyle(theme)}>
+        <ReadMateoTheme label="active" />
+        <button type="button" onClick={() => setTheme(innerMateoTheme)}>
+          Change theme
+        </button>
+      </main>
+    </MateoTheme>
+  );
+}
+
 it('should update the nearest theme colors when changing the theme', () => {
-  function MateoSurfaceExample() {
-    const [theme, setTheme] = useState(outerMateoTheme);
-    return (
-      <MateoTheme data={theme}>
-        <main style={getMateoThemeStyle(theme)}>
-          <ReadMateoTheme label="active" />
-          <button type="button" onClick={() => setTheme(innerMateoTheme)}>
-            Change theme
-          </button>
-        </main>
-      </MateoTheme>
-    );
-  }
   render(<MateoSurfaceExample />);
   fireEvent.click(screen.getByRole('button', { name: 'Change theme' }));
   expect(screen.getByTestId('active')).toHaveTextContent('#00A86B');

@@ -1,7 +1,7 @@
 part of 'mateo_page.dart';
 
 final class _MateoAndroidPageRoute<T> extends BaseMateoPageRoute<T> {
-  _MateoAndroidPageRoute({
+  new({
     required super.page,
     required super.reducedMotion,
     required Color backgroundColor,

@@ -1,7 +1,7 @@
 part of 'base_mateo_view.dart';
 
 class _ConditionalSurfaceBackground extends StatefulWidget {
-  const _ConditionalSurfaceBackground({
+  const new({
     required this.listenable,
     required this.isVisible,
     required this.child,

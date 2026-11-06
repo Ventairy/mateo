@@ -7,7 +7,7 @@ import 'package:mateo_mobile/src/components/mateo_menu/overlay/show_mateo_menu.d
 import 'surface_transform_test_widgets.dart';
 
 class MenuOverlayGoldenScene extends StatefulWidget {
-  const MenuOverlayGoldenScene({required this.anchorTop, this.direction = .ltr, this.width = .fit, super.key});
+  const new({required this.anchorTop, this.direction = .ltr, this.width = .fit, super.key});
   final double anchorTop;
   final TextDirection direction;
   final MateoMenuWidth width;

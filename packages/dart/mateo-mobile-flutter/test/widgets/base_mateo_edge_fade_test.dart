@@ -135,7 +135,7 @@ void main() {
             captureKey: key,
           ),
         );
-        return _pixel(tester, key, 50, 50);
+        return await _pixel(tester, key, 50, 50);
       }
 
       final forward = await render(bands);

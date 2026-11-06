@@ -27,7 +27,7 @@ enum MateoTextInputSize {
     trailingPadding: 14,
   );
 
-  const MateoTextInputSize({
+  new({
     required this.height,
     required this.leadingIconSize,
     required this.trailingIconSize,

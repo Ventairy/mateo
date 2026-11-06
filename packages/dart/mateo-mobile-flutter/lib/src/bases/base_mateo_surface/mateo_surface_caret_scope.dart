@@ -5,7 +5,7 @@ import 'mateo_surface_caret_client.dart';
 
 @internal
 class MateoSurfaceCaretScope extends InheritedWidget {
-  const MateoSurfaceCaretScope({
+  const new({
     required this.onChanged,
     required this.onRemoved,
     required this.visibleRectIn,

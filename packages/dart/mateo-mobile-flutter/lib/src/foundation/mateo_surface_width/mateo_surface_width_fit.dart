@@ -3,7 +3,7 @@ part of 'mateo_surface_width.dart';
 /// A fit width request for a Mateo surface.
 final class MateoSurfaceWidthFit extends MateoSurfaceWidth {
   /// Creates a fit width request.
-  const MateoSurfaceWidthFit() : super._();
+  const new() : super._();
 
   /// Whether both values describe the same width request.
   @override

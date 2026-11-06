@@ -1,7 +1,7 @@
 part of 'mateo_toast.dart';
 
 class _MateoToastShadow extends CustomPainter {
-  const _MateoToastShadow({required this.color, required this.transparentOccluder});
+  const new({required this.color, required this.transparentOccluder});
 
   // One path shadow keeps the toast lifted without rasterizing two wide blurs.
   static const _opacity = 0.35;

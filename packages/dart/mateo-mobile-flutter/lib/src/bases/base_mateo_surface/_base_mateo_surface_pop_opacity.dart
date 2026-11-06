@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfacePopOpacity extends Animatable<double> {
-  _BaseMateoSurfacePopOpacity(this.curve);
+  new(this.curve);
 
   final Curve curve;
 

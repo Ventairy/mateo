@@ -1,7 +1,7 @@
 part of '../../mateo_text_input.dart';
 
 class _MateoPhoneTextInputCountrySelector extends StatefulWidget {
-  const _MateoPhoneTextInputCountrySelector({
+  const new({
     required this.country,
     required this.size,
     required this.textStyle,

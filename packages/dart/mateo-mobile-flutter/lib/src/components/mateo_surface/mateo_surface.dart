@@ -35,7 +35,7 @@ class MateoSurface extends StatelessWidget {
   /// [color] defaults to the theme background. [shape] defines its outline;
   /// [clipBehavior] controls clipping of its content. [padding] must be
   /// nonnegative.
-  const MateoSurface({
+  const new({
     required this.child,
     super.key,
     this.color,
@@ -76,7 +76,7 @@ class MateoSurface extends StatelessWidget {
   ///   ),
   /// )
   /// ```
-  const MateoSurface.scrollable({
+  const new scrollable({
     required this.child,
     super.key,
     this.color,

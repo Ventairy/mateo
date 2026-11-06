@@ -31,7 +31,7 @@ import 'animation/mateo_menu_button_animation.dart';
 ///  * [MateoMenuPresentation], the content and treatment of the menu.
 class MateoMenuButton extends StatefulWidget {
   /// Creates a menu trigger using [buttonPresentation] and [menuPresentation].
-  const MateoMenuButton({
+  const new({
     required this.buttonPresentation,
     required this.menuPresentation,
     required this.animation,

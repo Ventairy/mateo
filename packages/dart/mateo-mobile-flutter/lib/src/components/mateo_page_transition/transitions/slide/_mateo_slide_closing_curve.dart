@@ -6,7 +6,7 @@ part of '../../mateo_page_transition.dart';
 // both endpoints, and finishes with zero velocity. Keep the coefficients
 // together: they encode those boundary conditions.
 final class _MateoSlideClosingCurve extends Curve {
-  const _MateoSlideClosingCurve();
+  const new();
 
   @override
   double transformInternal(double t) {

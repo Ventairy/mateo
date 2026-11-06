@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoToggleColorScheme {
   /// Creates the complete color contract for a Mateo toggle.
-  const MateoToggleColorScheme({
+  const new({
     required this.trackOn,
     required this.trackOff,
     required this.trackDisabled,

@@ -5,7 +5,7 @@ part of 'show_mateo_sheet.dart';
 // with zero velocity and acceleration. Keep the full-precision coefficients
 // together: they encode those boundary conditions.
 class _MateoSheetLandingCurve extends Curve {
-  const _MateoSheetLandingCurve();
+  const new();
 
   @override
   double transformInternal(double t) {

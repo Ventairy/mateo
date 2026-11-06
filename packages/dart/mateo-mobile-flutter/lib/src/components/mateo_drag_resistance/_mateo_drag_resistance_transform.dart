@@ -1,7 +1,7 @@
 part of 'mateo_drag_resistance.dart';
 
 class _MateoDragResistanceTransform extends SingleChildRenderObjectWidget {
-  const _MateoDragResistanceTransform({required this.translation, required super.child});
+  const new({required this.translation, required super.child});
 
   final ValueListenable<Offset> translation;
 

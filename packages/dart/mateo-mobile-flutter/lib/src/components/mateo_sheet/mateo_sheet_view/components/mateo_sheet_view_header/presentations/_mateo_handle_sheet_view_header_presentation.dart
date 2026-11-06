@@ -1,7 +1,7 @@
 part of '../../../../show_mateo_sheet.dart';
 
 class _MateoHandleSheetViewHeaderPresentation extends MateoSheetViewHeaderPresentation {
-  const _MateoHandleSheetViewHeaderPresentation() : super._();
+  const new() : super._();
 
   @override
   Widget build(BuildContext context) => InteractiveSwipeDismissHandle(

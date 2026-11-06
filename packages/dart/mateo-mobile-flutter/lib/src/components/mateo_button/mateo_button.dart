@@ -43,7 +43,7 @@ part 'presentations/mateo_button_presentation.dart';
 ///  * [MateoButtonPresentation], the content and treatment of the button.
 class MateoButton extends StatefulWidget {
   /// Creates an action using [presentation].
-  const MateoButton({required this.presentation, super.key, this.onPressed, this.isLoading = false});
+  const new({required this.presentation, super.key, this.onPressed, this.isLoading = false});
 
   /// The content, treatment, and layout of this action.
   final MateoButtonPresentation presentation;

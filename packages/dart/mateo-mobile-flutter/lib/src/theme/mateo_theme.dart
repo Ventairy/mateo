@@ -30,7 +30,7 @@ part '_mateo_theme_scope.dart';
 /// ```
 class MateoTheme extends StatelessWidget {
   /// Creates a theme applying [data] to [child].
-  const MateoTheme({required this.data, required this.child, super.key});
+  const new({required this.data, required this.child, super.key});
 
   /// The immutable appearance provided to descendants.
   final MateoThemeData data;

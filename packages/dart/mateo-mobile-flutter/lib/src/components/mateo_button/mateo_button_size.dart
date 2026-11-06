@@ -9,7 +9,7 @@ enum MateoButtonSize {
   /// A generous surface for standalone actions.
   standard(height: 56);
 
-  const MateoButtonSize({required this.height});
+  new({required this.height});
 
   /// The minimum label surface height and the icon surface diameter.
   final double height;

@@ -1,7 +1,7 @@
 part of '../../../../show_mateo_sheet.dart';
 
 class _MateoCloseButtonSheetViewHeaderPresentation extends MateoSheetViewHeaderPresentation {
-  const _MateoCloseButtonSheetViewHeaderPresentation() : super._();
+  const new() : super._();
 
   @override
   Widget build(BuildContext context) {

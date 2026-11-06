@@ -165,7 +165,7 @@ enum _PageTransition {
   push(description: 'push moves', goldenDuration: Duration(milliseconds: 300)),
   slide(description: 'slide moves the destination', goldenDuration: Duration(milliseconds: 195));
 
-  const _PageTransition({required this.description, required this.goldenDuration});
+  new({required this.description, required this.goldenDuration});
 
   final String description;
   final Duration goldenDuration;
@@ -178,7 +178,7 @@ enum _PageTransition {
 }
 
 class _Scene extends StatelessWidget {
-  const _Scene({required this.direction, required this.transition, this.snapshotting = true, this.reduced = false});
+  const new({required this.direction, required this.transition, this.snapshotting = true, this.reduced = false});
   final MateoPageTransitionDirection direction;
   final MateoPageTransition transition;
   final bool snapshotting;

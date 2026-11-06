@@ -3,7 +3,7 @@ part of 'mateo_surface_width.dart';
 /// A fill width request for a Mateo surface.
 final class MateoSurfaceWidthFill extends MateoSurfaceWidth {
   /// Creates a fill width request, optionally capped by [maxWidth].
-  const MateoSurfaceWidthFill({this.maxWidth})
+  const new({this.maxWidth})
     : assert(
         maxWidth == null || (maxWidth >= 0 && maxWidth < double.infinity),
         'maxWidth must be finite and nonnegative.',

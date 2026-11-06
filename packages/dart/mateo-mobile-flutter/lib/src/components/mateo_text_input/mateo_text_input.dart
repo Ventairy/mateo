@@ -57,7 +57,7 @@ part 'presentations/search/_mateo_search_text_input_presentation.dart';
 /// ```
 class MateoTextInput extends StatefulWidget {
   /// Creates an input using [presentation].
-  const MateoTextInput({
+  const new({
     required this.placeholder,
     required this.presentation,
     this.controller,

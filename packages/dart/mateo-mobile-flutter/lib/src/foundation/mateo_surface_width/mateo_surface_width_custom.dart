@@ -3,7 +3,7 @@ part of 'mateo_surface_width.dart';
 /// A custom width request for a Mateo surface.
 final class MateoSurfaceWidthCustom extends MateoSurfaceWidth {
   /// Creates a custom width request.
-  const MateoSurfaceWidthCustom(this.value)
+  const new(this.value)
     : assert(value >= 0 && value < double.infinity, 'width must be finite and nonnegative.'),
       super._();
 

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 @internal
 class MateoViewScope extends InheritedWidget {
-  const MateoViewScope({required super.child, this.padding, super.key});
+  const new({required super.child, this.padding, super.key});
 
   final EdgeInsetsGeometry? padding;
 

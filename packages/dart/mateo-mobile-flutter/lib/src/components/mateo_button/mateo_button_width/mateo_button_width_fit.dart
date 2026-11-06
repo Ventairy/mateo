@@ -3,7 +3,7 @@ part of 'mateo_button_width.dart';
 /// A fit width request for a labeled button.
 final class MateoButtonWidthFit extends MateoButtonWidth {
   /// Creates a fit width request.
-  const MateoButtonWidthFit() : super._();
+  const new() : super._();
 
   /// Whether both values describe the same width request.
   @override

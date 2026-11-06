@@ -2,7 +2,7 @@ part of '../mateo_icon.dart';
 
 @internal
 class MateoThreeDIconCacheHost extends StatefulWidget {
-  const MateoThreeDIconCacheHost({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 

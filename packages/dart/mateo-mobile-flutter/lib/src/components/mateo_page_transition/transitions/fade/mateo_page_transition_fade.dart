@@ -9,7 +9,7 @@ final class MateoPageTransitionFade extends MateoPageTransition {
   ///
   /// Durations must be nonnegative. Opening defaults to 600 milliseconds and
   /// closing to 300 milliseconds, independently of a custom opening duration.
-  const MateoPageTransitionFade({
+  const new({
     super.duration = const .new(milliseconds: 600),
     super.reverseDuration = const .new(milliseconds: 300),
   }) : openingCurve = const _MateoFadeOpeningCurve(),

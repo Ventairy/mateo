@@ -15,7 +15,7 @@ import '../../gen/flags.g.dart';
 /// ```
 class MateoCountryFlag extends StatelessWidget {
   /// Creates a flag for [country] at the requested [size].
-  const MateoCountryFlag({
+  const new({
     required this.country,
     required this.size,
     this.semanticLabel,

@@ -37,7 +37,7 @@ part 'three_d_icon_cache/mateo_three_d_icon_image_cache.dart';
 @RecordUse()
 final class MateoIcon extends StatelessWidget {
   /// Creates a catalog icon with optional size, foreground, background, and label.
-  const MateoIcon(
+  const new(
     this.icon, {
     super.key,
     this.style = .svg,

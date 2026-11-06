@@ -1,7 +1,7 @@
 part of '../mateo_loading_indicator.dart';
 
 final class _MateoCircularLoadingIndicatorPresentation extends MateoLoadingIndicatorPresentation {
-  const _MateoCircularLoadingIndicatorPresentation({required this.color, this.size = 24})
+  const new({required this.color, this.size = 24})
     : assert(size >= 0 && size < double.infinity, 'size must be finite and nonnegative.'),
       super._();
 

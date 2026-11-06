@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _RenderBaseMateoSurfaceRepaintBoundary extends RenderRepaintBoundary {
-  _RenderBaseMateoSurfaceRepaintBoundary(this._controller);
+  new(this._controller);
 
   final _originalCacheHints = <PictureLayer, bool>{};
   _BaseMateoSurfaceScrollController _controller;

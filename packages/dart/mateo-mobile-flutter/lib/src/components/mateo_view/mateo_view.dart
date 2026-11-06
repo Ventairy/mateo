@@ -19,7 +19,7 @@ import 'components/mateo_view_surface/mateo_view_surface.dart';
 /// ```
 class MateoView extends StatelessWidget {
   /// Creates a view hosting [surface] within its parent's bounded space.
-  const MateoView({
+  const new({
     required this.surface,
     this.header,
     this.footer,

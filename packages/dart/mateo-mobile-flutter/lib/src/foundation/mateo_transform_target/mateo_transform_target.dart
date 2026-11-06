@@ -13,7 +13,7 @@ final class MateoTransformTarget {
   // Targets match by identity, so const canonicalization would connect
   // separately constructed targets.
   // ignore: prefer_const_constructors_in_immutables
-  MateoTransformTarget({
+  new({
     this.duration = const .auto(),
     MateoTransformDuration? reverseDuration,
     this.curve = Curves.easeOutCubic,

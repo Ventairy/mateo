@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfaceContentLayout extends SingleChildRenderObjectWidget {
-  const _BaseMateoSurfaceContentLayout({
+  const new({
     required this.obstruction,
     required this.padding,
     required this.alignment,

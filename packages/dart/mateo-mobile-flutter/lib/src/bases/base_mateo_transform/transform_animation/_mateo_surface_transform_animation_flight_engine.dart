@@ -1,7 +1,7 @@
 part of '../base_mateo_transform.dart';
 
 final class _MateoSurfaceTransformAnimationFlightEngine {
-  const _MateoSurfaceTransformAnimationFlightEngine._();
+  const new _();
 
   static _MateoSurfaceTransformAnimationFlightFrame capture(
     MorphEndpointContext endpoint, {

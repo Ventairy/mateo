@@ -31,30 +31,30 @@ part 'transitions/wash/mateo_page_transition_wash.dart';
 /// Use with MateoPage or MateoPageTransitionsBuilder.
 @immutable
 sealed class MateoPageTransition {
-  const MateoPageTransition._({required this.duration, required this.reverseDuration});
+  const new _({required this.duration, required this.reverseDuration});
 
   /// Creates a full-page fade over a stationary previous page.
-  const factory MateoPageTransition.fade({
+  const factory fade({
     Duration duration,
     Duration reverseDuration,
   }) = MateoPageTransitionFade;
 
   /// Creates a feathered reveal of the destination from a screen edge.
-  const factory MateoPageTransition.wash({
+  const factory wash({
     MateoPageTransitionDirection direction,
     Duration duration,
     Duration? reverseDuration,
   }) = MateoPageTransitionWash;
 
   /// Creates attached page movement that blends the departing page into the destination edge.
-  const factory MateoPageTransition.push({
+  const factory push({
     MateoPageTransitionDirection direction,
     Duration duration,
     Duration? reverseDuration,
   }) = MateoPageTransitionPush;
 
   /// Creates page movement from a screen edge while the previous page stays still.
-  const factory MateoPageTransition.slide({
+  const factory slide({
     MateoPageTransitionDirection direction,
     Duration duration,
     Duration reverseDuration,

@@ -15,7 +15,7 @@ final class MateoThemeData {
   ///
   /// The accent must be opaque. The foreground is preserved exactly; choose
   /// an [onAccent] with sufficient contrast for the intended content.
-  factory MateoThemeData.light({required Color accentColor, required Color onAccent}) {
+  factory light({required Color accentColor, required Color onAccent}) {
     final palette = MateoPalette(accentColor: accentColor);
     return MateoThemeData._(
       brightness: .light,
@@ -29,10 +29,10 @@ final class MateoThemeData {
   /// Both [accentColor] and [onAccent] are passed to [MateoThemeData.light].
   /// Until dark colors are authored, this returns the light appearance and
   /// [brightness] remains [Brightness.light].
-  factory MateoThemeData.dark({required Color accentColor, required Color onAccent}) =>
+  factory dark({required Color accentColor, required Color onAccent}) =>
       MateoThemeData.light(accentColor: accentColor, onAccent: onAccent);
 
-  const MateoThemeData._({required this.brightness, required this.palette, required this.colorScheme});
+  const new _({required this.brightness, required this.palette, required this.colorScheme});
 
   /// The resolved appearance, including the current light fallback for dark.
   final Brightness brightness;

@@ -73,7 +73,9 @@ export default defineConfig({
           include: [mateoGoldenPattern],
           setupFiles: ['test/golden/mateo-golden-setup.ts'],
           attachmentsDir: '.vitest/golden',
-          testTimeout: 30_000,
+          // Keep screenshot-heavy suites from competing for the CI renderer.
+          fileParallelism: false,
+          testTimeout: 60_000,
           browser: {
             enabled: true,
             headless: true,
@@ -100,7 +102,8 @@ export default defineConfig({
                 comparatorName: 'pixelmatch',
                 comparatorOptions: {
                   threshold: 0,
-                  includeAA: true,
+                  // Identical SVG clips can rerasterize with different edge coverage.
+                  includeAA: false,
                   allowedMismatchedPixelRatio: 0,
                 },
                 resolveScreenshotPath: ({

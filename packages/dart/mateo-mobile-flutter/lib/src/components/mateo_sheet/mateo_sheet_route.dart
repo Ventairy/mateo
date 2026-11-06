@@ -2,7 +2,7 @@ part of 'show_mateo_sheet.dart';
 
 @internal
 class MateoSheetRoute<T> extends PopupRoute<T> {
-  MateoSheetRoute({
+  new({
     required this.view,
     required this.avoidBottomInset,
     required this.from,

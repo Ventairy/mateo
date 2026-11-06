@@ -15,7 +15,7 @@ part of '../show_mateo_sheet.dart';
 /// ```
 class MateoSheetView extends StatelessWidget {
   /// Creates a sheet with [surface] and optional fixed content.
-  const MateoSheetView({
+  const new({
     required this.surface,
     this.header,
     this.footer,

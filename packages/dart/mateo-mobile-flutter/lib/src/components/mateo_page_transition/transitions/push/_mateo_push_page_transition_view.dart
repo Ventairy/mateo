@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoPushPageTransitionView extends StatefulWidget {
-  const _MateoPushPageTransitionView({
+  const new({
     required this.animation,
     required this.transition,
     required this.outgoing,

@@ -1,7 +1,7 @@
 part of '../../mateo_text_input.dart';
 
 final class _MateoPhoneTextInputPresentation extends MateoTextInputPresentation {
-  const _MateoPhoneTextInputPresentation({
+  const new({
     this.initialCountry,
     this.size = .standard,
   }) : super._();

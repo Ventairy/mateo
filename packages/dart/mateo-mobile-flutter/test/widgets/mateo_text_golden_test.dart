@@ -9,7 +9,7 @@ Future<void> main() async {
       platformGoldensConfig: PlatformGoldensConfig(enabled: false),
       ciGoldensConfig: CiGoldensConfig(obscureText: false),
     ),
-    run: () async => goldenTest(
+    run: () => goldenTest(
       'interface and decorative faces retain accents and natural metrics at accessible sizes',
       fileName: 'mateo_text',
       builder: () {

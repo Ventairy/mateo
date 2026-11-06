@@ -1,7 +1,7 @@
 part of 'mateo_page.dart';
 
 final class _MateoIosPageRoute<T> extends BaseMateoPageRoute<T> with CupertinoRouteTransitionMixin<T> {
-  _MateoIosPageRoute({required super.page, required super.reducedMotion});
+  new({required super.page, required super.reducedMotion});
 
   @override
   Duration get transitionDuration => reducedMotion ? .zero : transitionDurations?.forward ?? super.transitionDuration;

@@ -5,14 +5,14 @@ enum _MateoTransformFlightEngine { surface, view }
 @internal
 @immutable
 final class BaseMateoTransformCandidate {
-  BaseMateoTransformCandidate.surface({
+  new surface({
     required this.target,
     required this.shape,
     required List<MateoTransformAnimationContentEffect> contentEffects,
   }) : _contentEffects = _MateoTransformAnimationContentEffects(contentEffects),
        _engine = .surface;
 
-  BaseMateoTransformCandidate.view({
+  new view({
     required this.target,
     required this.shape,
     required List<MateoTransformAnimationContentEffect> contentEffects,

@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 final class _MateoMenuOptionsPresentation extends MateoMenuPresentation {
-  _MateoMenuOptionsPresentation({
+  new({
     required List<MateoMenuOptionsPresentationItem> items,
     super.density = .standard,
     super.width = .fit,

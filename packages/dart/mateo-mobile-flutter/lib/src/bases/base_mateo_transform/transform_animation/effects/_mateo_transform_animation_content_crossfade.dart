@@ -1,7 +1,7 @@
 part of '../../base_mateo_transform.dart';
 
 final class _MateoTransformAnimationContentCrossfade extends _MateoTransformAnimationContentEffect {
-  const _MateoTransformAnimationContentCrossfade({super.curve});
+  const new({super.curve});
 
   @override
   _MateoTransformAnimationContentEndpoints apply(

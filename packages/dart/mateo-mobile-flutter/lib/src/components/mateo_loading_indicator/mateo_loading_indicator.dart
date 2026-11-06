@@ -20,7 +20,7 @@ part '_mateo_dots_loading_indicator_painter.dart';
 /// See [loading indicator guidance](https://github.com/Ventairy/mateo/blob/main/design-system/mobile/loading-indicator.md).
 class MateoLoadingIndicator extends StatefulWidget {
   /// Creates a loading indicator using [presentation].
-  const MateoLoadingIndicator({required this.presentation, this.semanticLabel, super.key});
+  const new({required this.presentation, this.semanticLabel, super.key});
 
   /// The visual form and appearance of the activity.
   final MateoLoadingIndicatorPresentation presentation;

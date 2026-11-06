@@ -1,7 +1,7 @@
 part of 'base_mateo_surface.dart';
 
 class _BaseMateoSurfacePopScale extends Animatable<double> {
-  _BaseMateoSurfacePopScale(this.animation);
+  new(this.animation);
 
   final MateoSurfaceAnimationPop animation;
 

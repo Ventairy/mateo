@@ -1,4 +1,8 @@
 /* Test canvas only; package styles are consumed unchanged from dist. */
+html {
+  /* The fixture viewport sits outside the component being captured. */
+  scrollbar-width: none;
+}
 body {
   margin: 0;
 }

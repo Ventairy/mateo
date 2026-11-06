@@ -11,10 +11,10 @@ part 'mateo_view_animation_transform.dart';
 /// An animation style for a Mateo view.
 @immutable
 sealed class MateoViewAnimation {
-  const MateoViewAnimation._();
+  const new _();
 
   /// Connects a view to another Mateo element using a shared transform target.
-  const factory MateoViewAnimation.transform({
+  const factory transform({
     required MateoTransformTarget target,
     MateoShape? shape,
     List<MateoTransformAnimationContentEffect> contentEffects,

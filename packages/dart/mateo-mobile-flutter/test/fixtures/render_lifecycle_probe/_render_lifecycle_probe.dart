@@ -1,7 +1,7 @@
 part of 'render_lifecycle_probe.dart';
 
 class _RenderLifecycleProbe extends RenderProxyBox {
-  _RenderLifecycleProbe({required this.onAttach, required this.onDetach});
+  new({required this.onAttach, required this.onDetach});
 
   final VoidCallback onAttach;
   final VoidCallback onDetach;

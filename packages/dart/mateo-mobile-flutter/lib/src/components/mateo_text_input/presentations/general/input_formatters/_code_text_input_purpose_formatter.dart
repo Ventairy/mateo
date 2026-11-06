@@ -1,7 +1,7 @@
 part of '../mateo_text_input_purpose.dart';
 
 final class _CodeTextInputFormatter extends TextInputFormatter {
-  const _CodeTextInputFormatter();
+  const new();
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {

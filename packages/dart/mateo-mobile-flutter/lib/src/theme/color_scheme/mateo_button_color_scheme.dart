@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoButtonColorScheme {
   /// Creates a complete button treatment for available and unavailable states.
-  const MateoButtonColorScheme({
+  const new({
     required this.background,
     required this.foreground,
     required this.backgroundDisabled,

@@ -1,7 +1,7 @@
 part of 'mateo_press.dart';
 
 class _MateoPressFade extends SingleChildRenderObjectWidget {
-  const _MateoPressFade({required this.opacity, required super.child});
+  const new({required this.opacity, required super.child});
 
   final Animation<double> opacity;
 

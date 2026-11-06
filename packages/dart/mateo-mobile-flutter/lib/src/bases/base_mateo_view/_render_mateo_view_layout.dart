@@ -4,7 +4,7 @@ class _RenderMateoViewLayout extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, MultiChildLayoutParentData> {
-  _RenderMateoViewLayout({
+  new({
     required this._layout,
     required this._fitHeight,
     required this._reserveHeaderSpace,

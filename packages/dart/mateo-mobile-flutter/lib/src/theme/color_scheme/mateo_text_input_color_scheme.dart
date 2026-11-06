@@ -4,7 +4,7 @@ part of 'mateo_color_scheme.dart';
 @immutable
 final class MateoTextInputColorScheme {
   /// Creates a complete text input treatment for available and unavailable states.
-  const MateoTextInputColorScheme({
+  const new({
     required this.background,
     required this.text,
     required this.placeholder,

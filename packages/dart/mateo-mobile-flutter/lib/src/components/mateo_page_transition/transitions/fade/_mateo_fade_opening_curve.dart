@@ -1,7 +1,7 @@
 part of '../../mateo_page_transition.dart';
 
 final class _MateoFadeOpeningCurve extends Curve {
-  const _MateoFadeOpeningCurve();
+  const new();
 
   @override
   double transformInternal(double t) {

@@ -1,7 +1,7 @@
 part of '../../mateo_menu.dart';
 
 class _RenderMateoMenuViewportPaintCull extends RenderProxyBox {
-  _RenderMateoMenuViewportPaintCull({required this._enabled});
+  new({required this._enabled});
 
   bool _enabled;
 

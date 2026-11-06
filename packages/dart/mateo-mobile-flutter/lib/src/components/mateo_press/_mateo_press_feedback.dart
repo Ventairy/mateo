@@ -1,7 +1,7 @@
 part of 'mateo_press.dart';
 
 class _MateoPressFeedback extends StatefulWidget {
-  const _MateoPressFeedback({required this.animation, required this.type, required this.child});
+  const new({required this.animation, required this.type, required this.child});
 
   final Animation<double> animation;
   final MateoPressAnimationType type;

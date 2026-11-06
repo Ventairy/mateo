@@ -2,13 +2,13 @@ part of '../base_mateo_transform.dart';
 
 @immutable
 final class _MateoTransformAnimationFlightContent {
-  _MateoTransformAnimationFlightContent({
+  new({
     required this.size,
     required this.alignment,
     required Iterable<_MateoTransformAnimationFlightLayer> layers,
   }) : layers = List.unmodifiable(layers);
 
-  factory _MateoTransformAnimationFlightContent.capture(
+  factory capture(
     MorphEndpointContext endpoint,
     Widget content, {
     Alignment alignment = Alignment.center,
@@ -32,7 +32,7 @@ final class _MateoTransformAnimationFlightContent {
     );
   }
 
-  factory _MateoTransformAnimationFlightContent.combine(
+  factory combine(
     _MateoTransformAnimationFlightContent source,
     _MateoTransformAnimationFlightContent destination,
   ) {

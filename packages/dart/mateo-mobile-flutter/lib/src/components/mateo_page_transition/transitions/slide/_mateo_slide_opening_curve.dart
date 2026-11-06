@@ -6,7 +6,7 @@ part of '../../mateo_page_transition.dart';
 // Keep the full-precision coefficients together: they encode those boundary
 // conditions for the opening trajectory.
 final class _MateoSlideOpeningCurve extends Curve {
-  const _MateoSlideOpeningCurve();
+  const new();
 
   static const _frequency = 7.5;
   static const double _tailStart = 0.62;

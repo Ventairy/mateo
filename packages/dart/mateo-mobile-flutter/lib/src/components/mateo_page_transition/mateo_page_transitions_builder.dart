@@ -10,7 +10,7 @@ import 'mateo_page_transition.dart';
 /// Keep the builder for the lifetime of its configuration; it holds no route state.
 class MateoPageTransitionsBuilder extends PageTransitionsBuilder {
   /// Creates a route adapter for [transition].
-  const MateoPageTransitionsBuilder({required this.transition});
+  const new({required this.transition});
 
   /// The Mateo motion interpreted by this builder.
   final MateoPageTransition transition;

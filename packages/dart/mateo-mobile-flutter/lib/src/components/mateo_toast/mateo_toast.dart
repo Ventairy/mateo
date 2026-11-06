@@ -31,7 +31,7 @@ part 'mateo_toast_host.dart';
 /// instructions or decisions that require a response.
 class MateoToast extends StatelessWidget {
   /// Creates a toast with a [message], [status], and optional [icon] and [onPressed] action.
-  const MateoToast({required this.message, required this.status, this.icon, this.onPressed, super.key});
+  const new({required this.message, required this.status, this.icon, this.onPressed, super.key});
 
   /// The localized message, displayed on at most two lines.
   final String message;

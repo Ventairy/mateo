@@ -6,7 +6,7 @@ import '../../foundation/mateo_surface_animation/mateo_surface_animation.dart';
 
 @internal
 class MateoSurfaceScope extends InheritedWidget {
-  const MateoSurfaceScope({required super.child, this.animation = const .none(), this.shape, super.key});
+  const new({required super.child, this.animation = const .none(), this.shape, super.key});
 
   final MateoSurfaceAnimation animation;
   final MateoRoundedShapeBorder? shape;

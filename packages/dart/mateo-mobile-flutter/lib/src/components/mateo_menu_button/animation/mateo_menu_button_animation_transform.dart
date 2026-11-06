@@ -6,7 +6,7 @@ part of 'mateo_menu_button_animation.dart';
 /// An animation style that transforms the trigger into the menu panel.
 final class MateoMenuButtonAnimationTransform extends MateoMenuButtonAnimation {
   /// Creates a transform animation style.
-  const MateoMenuButtonAnimationTransform()
+  const new()
     : duration = const Duration(milliseconds: 230),
       curve = const Cubic(0.35, 1, 0.35, 1),
       buttonContentEffects = const [.crossfade(curve: Interval(0, 0.35, curve: Curves.easeOut))],
