@@ -23,6 +23,8 @@ function _clampMateoScroll(value: number, maximum: number) {
 // CSS hiding is scoped to the target; nested native viewports remain untouched.
 export function attachMateoScrollbar(
   target: HTMLElement,
+  viewport: HTMLElement,
+  layer: HTMLDivElement,
   vertical: HTMLDivElement,
   horizontal: HTMLDivElement,
   id: string,
@@ -34,6 +36,9 @@ export function attachMateoScrollbar(
   const ownerWindow = target.ownerDocument.defaultView;
   if (!ownerWindow) return;
   const win = ownerWindow;
+  const pageScroll = target !== viewport;
+  const visualViewport = pageScroll ? win.visualViewport : undefined;
+  const scrollEvents = pageScroll ? target.ownerDocument : target;
   mateoScrollbarOwners.add(target);
   const originalId = target.getAttribute('id');
   const originalMarker = target.getAttribute('data-mateo-overlay-scrollbar');
@@ -89,7 +94,7 @@ export function attachMateoScrollbar(
         target.ownerDocument.activeElement === vertical ||
         target.ownerDocument.activeElement === horizontal
       )
-        target.focus({ preventScroll: true });
+        viewport.focus({ preventScroll: true });
       if (originalMarker === null)
         target.removeAttribute('data-mateo-overlay-scrollbar');
       else target.setAttribute('data-mateo-overlay-scrollbar', originalMarker);
@@ -103,12 +108,14 @@ export function attachMateoScrollbar(
     const scrollLeft = target.scrollLeft;
     const scrollTop = target.scrollTop;
     const maxima = {
-      vertical: /^(auto|scroll|overlay)$/.test(targetStyle.overflowY)
-        ? Math.max(0, scrollHeight - height)
-        : 0,
-      horizontal: /^(auto|scroll|overlay)$/.test(targetStyle.overflowX)
-        ? Math.max(0, scrollWidth - width)
-        : 0,
+      vertical:
+        pageScroll || /^(auto|scroll|overlay)$/.test(targetStyle.overflowY)
+          ? Math.max(0, scrollHeight - height)
+          : 0,
+      horizontal:
+        pageScroll || /^(auto|scroll|overlay)$/.test(targetStyle.overflowX)
+          ? Math.max(0, scrollWidth - width)
+          : 0,
     };
     const inheritedLabel = label ?? target.getAttribute('aria-label');
     const inheritedLabelledBy =
@@ -118,9 +125,30 @@ export function attachMateoScrollbar(
       appliedLabel !== inheritedLabel ||
       appliedLabelledBy !== inheritedLabelledBy;
     const next = new Map<MateoScrollbarAxis, MateoScrollbarGeometry>();
+    const visibleWidth = visualViewport?.width ?? width;
+    const visibleHeight = visualViewport?.height ?? height;
+    if (pageScroll) {
+      layer.style.setProperty(
+        '--mateo-scrollbar-viewport-top',
+        `${visualViewport?.offsetTop ?? 0}px`,
+      );
+      layer.style.setProperty(
+        '--mateo-scrollbar-viewport-left',
+        `${visualViewport?.offsetLeft ?? 0}px`,
+      );
+      layer.style.setProperty(
+        '--mateo-scrollbar-viewport-width',
+        `${visibleWidth}px`,
+      );
+      layer.style.setProperty(
+        '--mateo-scrollbar-viewport-height',
+        `${visibleHeight}px`,
+      );
+    }
     // Read geometry first; apply all visual updates afterwards.
     for (const axis of ['vertical', 'horizontal'] as const) {
-      const extent = axis === 'vertical' ? height : width;
+      const layoutExtent = axis === 'vertical' ? height : width;
+      const extent = axis === 'vertical' ? visibleHeight : visibleWidth;
       const other = axis === 'vertical' ? 'horizontal' : 'vertical';
       const trackLength = Math.max(
         0,
@@ -131,7 +159,7 @@ export function attachMateoScrollbar(
         trackLength,
         Math.max(
           mateoScrollbarInteraction.minimumThumbPx,
-          (trackLength * extent) / (extent + maximum || 1),
+          (trackLength * layoutExtent) / (layoutExtent + maximum || 1),
         ),
       );
       const position = _clampMateoScroll(
@@ -163,7 +191,7 @@ export function attachMateoScrollbar(
       );
       const visible = !forced && maximum > 0 && trackLength > 0;
       if (!visible && target.ownerDocument.activeElement === track)
-        target.focus({ preventScroll: true });
+        viewport.focus({ preventScroll: true });
       track.style.setProperty(
         '--mateo-scrollbar-display',
         visible ? 'block' : 'none',
@@ -194,12 +222,12 @@ export function attachMateoScrollbar(
     resize.observe(element);
   }
   function _observeMateoSubtree(node: Node) {
-    if (!(node instanceof win.Element) || !target.contains(node)) return;
+    if (!(node instanceof win.Element) || !viewport.contains(node)) return;
     _observeMateoElement(node);
     for (const child of node.querySelectorAll('*')) _observeMateoElement(child);
   }
   function _releaseMateoSubtree(node: Node) {
-    if (!(node instanceof win.Element) || target.contains(node)) return;
+    if (!(node instanceof win.Element) || viewport.contains(node)) return;
     for (const element of [node, ...node.querySelectorAll('*')]) {
       if (!observed.delete(element)) continue;
       resize.unobserve(element);
@@ -245,7 +273,7 @@ export function attachMateoScrollbar(
     if (changed) _scheduleMateoScrollbar();
   });
   // Watch content/style changes, not our target marker or scrolling ARIA writes.
-  mutation.observe(target, {
+  mutation.observe(viewport, {
     subtree: true,
     childList: true,
     characterData: true,
@@ -260,8 +288,17 @@ export function attachMateoScrollbar(
       'aria-labelledby',
     ],
   });
-  _observeMateoSubtree(target);
-  target.addEventListener('scroll', _scheduleMateoScrollbar, {
+  _observeMateoSubtree(viewport);
+  if (pageScroll) {
+    resize.observe(target);
+    visualViewport?.addEventListener('resize', _scheduleMateoScrollbar, {
+      signal,
+    });
+    visualViewport?.addEventListener('scroll', _scheduleMateoScrollbar, {
+      signal,
+    });
+  }
+  scrollEvents.addEventListener('scroll', _scheduleMateoScrollbar, {
     passive: true,
     signal,
   });

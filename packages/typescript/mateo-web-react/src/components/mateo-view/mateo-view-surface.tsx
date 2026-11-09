@@ -106,6 +106,7 @@ export function MateoViewSurface({
       {...(color === undefined ? {} : { color })}
       shape={shape}
       scroll={{
+        page: view.page,
         extendBehindScrollbar,
         clampOverscroll: overscrollBehavior === 'clamp',
         clearanceBlockStart: hasHeader ? header.height : 0,

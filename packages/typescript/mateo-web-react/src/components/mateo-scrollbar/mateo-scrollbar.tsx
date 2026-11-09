@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { mateoScrollbarDimensions } from '../../theme/mateo-scrollbar.js';
 import { useMateoTheme } from '../../theme/mateo-theme-context.js';
+import { getMateoScrollTarget } from './mateo-scroll-target.js';
 import { attachMateoScrollbar } from './mateo-scrollbar-controller.js';
 
 /** Stationary controls for a native scrolling element. */
@@ -51,6 +52,7 @@ export function MateoScrollbar({
   'aria-labelledby': labelledBy,
 }: MateoScrollbarProps) {
   const theme = useMateoTheme();
+  const layer = useRef<HTMLDivElement>(null);
   const vertical = useRef<HTMLDivElement>(null);
   const horizontal = useRef<HTMLDivElement>(null);
   const id = useId();
@@ -62,7 +64,8 @@ export function MateoScrollbar({
   } | null>(null);
   // Check refs after commits without restarting a stable viewport's gestures.
   useLayoutEffect(() => {
-    const target = scrollRef.current;
+    const viewport = scrollRef.current;
+    const target = viewport && getMateoScrollTarget(viewport);
     const current = controller.current;
     if (
       current?.target === target &&
@@ -74,8 +77,17 @@ export function MateoScrollbar({
     controller.current = null;
     const y = vertical.current;
     const x = horizontal.current;
-    if (!target || !y || !x) return;
-    const release = attachMateoScrollbar(target, y, x, id, label, labelledBy);
+    if (!viewport || !target || !layer.current || !y || !x) return;
+    const release = attachMateoScrollbar(
+      target,
+      viewport,
+      layer.current,
+      y,
+      x,
+      id,
+      label,
+      labelledBy,
+    );
     if (release) controller.current = { target, label, labelledBy, release };
   });
   useLayoutEffect(
@@ -106,6 +118,8 @@ export function MateoScrollbar({
     'mateo:absolute mateo:box-border mateo:rounded-[calc(var(--mateo-scrollbar-size)/2)] mateo:border-solid mateo:border-transparent mateo:border-(length:--mateo-scrollbar-inset) mateo:bg-(--mateo-scrollbar-thumb) mateo:bg-clip-padding mateo:group-hover/mateo-scrollbar:bg-(--mateo-scrollbar-thumb-hover) mateo:group-data-dragging/mateo-scrollbar:bg-(--mateo-scrollbar-thumb-hover)';
   return (
     <div
+      ref={layer}
+      data-mateo-scrollbar-layer
       style={style}
       className="mateo:absolute mateo:inset-[0px] mateo:z-[2] mateo:pointer-events-none"
     >

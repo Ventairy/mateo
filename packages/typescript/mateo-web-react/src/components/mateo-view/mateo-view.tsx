@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { type ReactNode, use } from 'react';
 import { MateoViewContext } from './mateo-view-context.js';
 import {
   type MateoViewPadding,
@@ -12,8 +12,8 @@ import {
  * Composition and sizing for a bounded Mateo view.
  *
  * @remarks
- * The parent supplies a resolved height. The view fills that height and available
- * width. `maxWidth` limits only the content and header. Compose a
+ * The view fills the available width. For a scrolling panel, give its parent
+ * a resolved height. `maxWidth` limits only the content and header. Compose a
  * MateoViewSurface and optional MateoViewHeader through the named slots.
  */
 export interface MateoViewProps {
@@ -47,7 +47,9 @@ export interface MateoViewProps {
  * Composes a bounded scrolling surface with an optional stationary header.
  *
  * @remarks
- * Requires a parent with a resolved height. `maxWidth` centers and limits the
+ * On mobile Safari, the outermost view uses document scrolling so content
+ * can pass beneath the browser controls. A view nested inside another MateoView
+ * scrolls within its own bounds. `maxWidth` centers and limits the
  * content and header; a header can have a smaller cap. The surface background
  * and native scroll viewport fill the view, with the scrollbar at its edge.
  * MateoViewSurface owns scrolling, fades, and clearance below the measured header.
@@ -69,6 +71,7 @@ export function MateoView({
   padding,
   maxWidth,
 }: MateoViewProps) {
+  const page = use(MateoViewContext) === null;
   if (maxWidth !== undefined && (!Number.isFinite(maxWidth) || maxWidth < 0)) {
     throw new TypeError('MateoView maxWidth must be finite and nonnegative.');
   }
@@ -76,8 +79,13 @@ export function MateoView({
     padding ?? mateoViewSpacing.padding,
   );
   return (
-    <MateoViewContext value={{ header, padding: resolvedPadding, maxWidth }}>
-      <div className="mateo:box-border mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px]">
+    <MateoViewContext
+      value={{ header, padding: resolvedPadding, maxWidth, page }}
+    >
+      <div
+        data-mateo-page-view={page ? '' : undefined}
+        className="mateo:box-border mateo:h-full mateo:w-full mateo:min-h-[0px] mateo:min-w-[0px]"
+      >
         {surface}
       </div>
     </MateoViewContext>

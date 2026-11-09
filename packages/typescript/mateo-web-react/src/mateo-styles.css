@@ -118,3 +118,33 @@
     }
   }
 }
+
+/* Let Safari composite document content beneath its browser controls. */
+@supports (-webkit-hyphens: none) {
+  @media (hover: none) and (pointer: coarse) {
+    [data-mateo-page-view]:not([data-mateo-contained-view]) {
+      height: auto;
+      overflow: clip;
+    }
+    [data-mateo-page-view]:not([data-mateo-contained-view])
+      [data-mateo-page-scroll] {
+      height: auto;
+      overflow: visible;
+    }
+    [data-mateo-page-view]:not([data-mateo-contained-view])
+      [data-mateo-page-scroll]
+      + [data-mateo-scrollbar-layer] {
+      position: fixed;
+      inset: var(--mateo-scrollbar-viewport-top, 0px) auto auto
+        var(--mateo-scrollbar-viewport-left, 0px);
+      width: var(--mateo-scrollbar-viewport-width, 100%);
+      height: var(--mateo-scrollbar-viewport-height, 100dvh);
+    }
+    html:has(
+        [data-mateo-page-view]:not([data-mateo-contained-view])
+          [data-mateo-page-scroll="header"]
+      ) {
+      scroll-padding-block-start: 96px;
+    }
+  }
+}

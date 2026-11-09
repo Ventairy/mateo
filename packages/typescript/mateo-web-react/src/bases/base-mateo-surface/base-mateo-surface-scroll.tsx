@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useLayoutEffect, useRef } from 'react';
+import { getMateoScrollTarget } from '../../components/mateo-scrollbar/mateo-scroll-target.js';
 import { MateoScrollbar } from '../../components/mateo-scrollbar/mateo-scrollbar.js';
 import {
   getMateoBoundaryDepth,
@@ -8,6 +9,7 @@ import {
 
 export interface BaseMateoSurfaceScrollOptions {
   readonly clearanceBlockStart: number;
+  readonly page?: boolean;
   readonly extendBehindScrollbar?: boolean;
   readonly clampOverscroll?: boolean;
   readonly contentMaxWidth?: number;
@@ -41,11 +43,22 @@ export function BaseMateoSurfaceScroll({
     if (!node || !body || !fade) return;
     const ownerDocument = node.ownerDocument;
     const ownerWindow = ownerDocument.defaultView;
+    const scroller = getMateoScrollTarget(node);
+    const pageScroll = scroller !== node;
+    const scrollEvents = pageScroll ? ownerDocument : node;
+    const visualViewport = pageScroll ? ownerWindow?.visualViewport : undefined;
+    const initialPadding = [
+      scroller.style.scrollPaddingBlockStart,
+      scroller.style.scrollPaddingBlockEnd,
+    ] as const;
     let previousTop: number | undefined;
     const updateMateoScrollBoundary = () => {
-      const height = node.clientHeight;
-      const maximum = Math.max(0, node.scrollHeight - height);
-      const position = Math.max(0, Math.min(maximum, node.scrollTop));
+      const height = visualViewport?.height ?? scroller.clientHeight;
+      const maximum = Math.max(
+        0,
+        scroller.scrollHeight - scroller.clientHeight,
+      );
+      const position = Math.max(0, Math.min(maximum, scroller.scrollTop));
       const depths = getMateoBoundaryDepth(
         height,
         position,
@@ -63,16 +76,17 @@ export function BaseMateoSurfaceScroll({
         previousTop = depths.top;
       }
       const clearance = `${depths.clearTop}px`;
-      if (node.style.scrollPaddingBlockStart !== clearance)
-        node.style.scrollPaddingBlockStart = clearance;
-      if (node.style.scrollPaddingBlockEnd !== '0px')
-        node.style.scrollPaddingBlockEnd = '0px';
+      if (scroller.style.scrollPaddingBlockStart !== clearance)
+        scroller.style.scrollPaddingBlockStart = clearance;
+      if (scroller.style.scrollPaddingBlockEnd !== '0px')
+        scroller.style.scrollPaddingBlockEnd = '0px';
     };
     updateMateoScrollBoundary();
     const observer = new ResizeObserver(updateMateoScrollBoundary);
     observer.observe(node);
     observer.observe(body);
-    node.addEventListener('scroll', updateMateoScrollBoundary, {
+    visualViewport?.addEventListener('resize', updateMateoScrollBoundary);
+    scrollEvents.addEventListener('scroll', updateMateoScrollBoundary, {
       passive: true,
     });
     // Keep intent local to this viewport. The event path also covers presses on
@@ -127,19 +141,31 @@ export function BaseMateoSurfaceScroll({
       if (pointerFocused) return;
       const target = event.target.getBoundingClientRect();
       const bounds = node.getBoundingClientRect();
+      const visibleTop = pageScroll
+        ? (visualViewport?.offsetTop ?? 0)
+        : bounds.top;
+      const visibleBottom = pageScroll
+        ? visibleTop + (visualViewport?.height ?? scroller.clientHeight)
+        : bounds.bottom;
       const top =
-        bounds.top + Number.parseFloat(node.style.scrollPaddingBlockStart);
+        visibleTop + Number.parseFloat(scroller.style.scrollPaddingBlockStart);
       const bottom =
-        bounds.bottom - Number.parseFloat(node.style.scrollPaddingBlockEnd);
-      if (target.top < top) node.scrollTop += target.top - top;
-      else if (target.bottom > bottom) node.scrollTop += target.bottom - bottom;
+        visibleBottom - Number.parseFloat(scroller.style.scrollPaddingBlockEnd);
+      if (target.top < top) scroller.scrollTop += target.top - top;
+      else if (target.bottom > bottom)
+        scroller.scrollTop += target.bottom - bottom;
       updateMateoScrollBoundary();
     };
     node.addEventListener('focusin', revealMateoFocusedContent);
     return () => {
       pointerListeners.abort();
       observer.disconnect();
-      node.removeEventListener('scroll', updateMateoScrollBoundary);
+      visualViewport?.removeEventListener('resize', updateMateoScrollBoundary);
+      scrollEvents.removeEventListener('scroll', updateMateoScrollBoundary);
+      if (pageScroll) {
+        scroller.style.scrollPaddingBlockStart = initialPadding[0];
+        scroller.style.scrollPaddingBlockEnd = initialPadding[1];
+      }
       node.removeEventListener('focusin', revealMateoFocusedContent);
     };
   }, [clearanceBlockStart, padding.blockStart, surfaceColor]);
@@ -160,6 +186,9 @@ export function BaseMateoSurfaceScroll({
     <>
       <div
         ref={viewport}
+        data-mateo-page-scroll={
+          options.page ? (header ? 'header' : '') : undefined
+        }
         data-mateo-scrollbar-presentation={
           options.extendBehindScrollbar ? 'overlay' : undefined
         }

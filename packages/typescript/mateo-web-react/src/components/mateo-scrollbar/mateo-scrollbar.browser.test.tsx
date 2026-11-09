@@ -10,6 +10,7 @@ import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi } from 'vitest';
 import { commands, page, server, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-react';
 import {
   getMateoGoldenElement,
   mateoGoldenTheme,
@@ -67,6 +68,40 @@ it('should scroll each native axis with accessible controls when using the keybo
   await userEvent.keyboard('[ArrowRight]');
   expect(viewport.scrollLeft).toBe(40);
 });
+
+it.skipIf(server.browser !== 'webkit')(
+  'should control document scrolling when MateoView fills a mobile Safari page',
+  async () => {
+    const view = await render(
+      <MateoTheme data={mateoGoldenTheme}>
+        <main style={{ height: '100dvh' }}>
+          <MateoView
+            surface={
+              <MateoViewSurface extendBehindScrollbar padding={0}>
+                <h1>Page start</h1>
+                <div style={{ height: '200dvh' }} />
+                <h2>Page end</h2>
+              </MateoViewSurface>
+            }
+          />
+        </main>
+      </MateoTheme>,
+    );
+    const scrollbar = page.getByRole('scrollbar');
+    await expect.element(scrollbar).toBeVisible();
+    await scrollbar.element().focus();
+    await userEvent.keyboard('[End]');
+    await expect.element(scrollbar).toHaveAttribute('aria-valuenow', '100');
+    expect(window.scrollY).toBeGreaterThan(window.innerHeight);
+    await userEvent.keyboard('[Home]');
+    expect(window.scrollY).toBe(0);
+    await view.unmount();
+    expect(
+      document.documentElement.hasAttribute('data-mateo-overlay-scrollbar'),
+    ).toBe(false);
+    expect(document.documentElement.style.scrollPaddingBlockStart).toBe('');
+  },
+);
 
 // Touch-enabled WebKit does not arrow-scroll a plain focused div either.
 // Keep this platform behavior separate from the custom controls above.
