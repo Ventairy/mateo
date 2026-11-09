@@ -1,31 +1,22 @@
-import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-test('should share palette runtime and public types when installed outside the workspace', async () => {
+test('should provide palette runtime and public types when only web-react is installed', async () => {
   const consumer = await mkdtemp(
     join(tmpdir(), 'mateo-react-palette-consumer-'),
   );
   const packageRoot = fileURLToPath(new URL('..', import.meta.url));
   try {
-    for (const [directory, filename] of [
-      [packageRoot, 'react.tgz'],
-      [join(packageRoot, '../mateo-palette'), 'palette.tgz'],
-    ] as const) {
-      execFileSync(
-        'pnpm',
-        ['pack', '--ignore-scripts', '--out', join(consumer, filename)],
-        {
-          cwd: directory,
-          stdio: 'pipe',
-        },
-      );
-    }
+    execFileSync(
+      'pnpm',
+      ['pack', '--ignore-scripts', '--out', join(consumer, 'react.tgz')],
+      { cwd: packageRoot, stdio: 'pipe' },
+    );
     await writeFile(
       join(consumer, 'package.json'),
       JSON.stringify({
@@ -40,26 +31,10 @@ test('should share palette runtime and public types when installed outside the w
         },
       }),
     );
-    // The Git revision cannot contain unpushed changes. Supply the packed
-    // palette through consumer resolution without rewriting React's manifest.
-    await writeFile(
-      join(consumer, 'pnpm-workspace.yaml'),
-      "overrides:\n  '@mateo/palette': file:./palette.tgz\n",
-    );
-    execFileSync('pnpm', ['install', '--ignore-scripts'], {
+    execFileSync('pnpm', ['install', '--ignore-pnpmfile', '--ignore-scripts'], {
       cwd: consumer,
       stdio: 'pipe',
     });
-    const manifest = JSON.parse(
-      await readFile(
-        join(consumer, 'node_modules/@mateo/web-react/package.json'),
-        'utf8',
-      ),
-    );
-    assert.equal(
-      manifest.dependencies['@mateo/palette'],
-      'github:Ventairy/mateo#main&path:/packages/typescript/mateo-palette',
-    );
     const entry = join(consumer, 'consumer.ts');
     await writeFile(
       entry,
@@ -96,24 +71,20 @@ test('should share palette runtime and public types when installed outside the w
       join(consumer, 'runtime.mjs'),
       `
       import assert from 'node:assert/strict';
-      import { createMateoPalette } from '@mateo/web-react';
-      const reactEntry = import.meta.resolve('@mateo/web-react');
-      const paletteEntry = import.meta.resolve('@mateo/palette', reactEntry);
-      const { createMateoPalette: sharedFactory, MateoDefaultPalette } = await import(paletteEntry);
-      assert.equal(createMateoPalette, sharedFactory);
-      assert.equal(createMateoPalette(), MateoDefaultPalette);
+      import { createMateoPalette, createMateoTheme } from '@mateo/web-react';
+      const accentColor = '#00A86B';
+      assert.deepEqual(
+        createMateoTheme({ accentColor, onAccent: '#000000' }).palette,
+        createMateoPalette({ accentColor }),
+      );
       assert.equal(createMateoPalette().green[11], '#006F29');
-      assert.equal(createMateoPalette({ accentColor: '#00A86B' }).accent[9], '#00A86B');
+      assert.equal(createMateoPalette({ accentColor }).accent[9], accentColor);
     `,
     );
-    execFileSync(
-      process.execPath,
-      ['--experimental-import-meta-resolve', 'runtime.mjs'],
-      {
-        cwd: consumer,
-        stdio: 'pipe',
-      },
-    );
+    execFileSync(process.execPath, ['runtime.mjs'], {
+      cwd: consumer,
+      stdio: 'pipe',
+    });
   } finally {
     await rm(consumer, { recursive: true, force: true });
   }

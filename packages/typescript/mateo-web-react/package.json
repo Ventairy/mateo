@@ -39,7 +39,7 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "node scripts/generate-mateo-icons.mjs && vite build && tsc -p tsconfig.build.json && node scripts/check-mateo-build.mjs && node scripts/check-mateo-icon-delivery.mjs",
+    "build": "node scripts/generate-mateo-icons.mjs && vite build && tsc -p tsconfig.build.json && node scripts/bundle-mateo-palette-artifacts.mjs && node scripts/check-mateo-build.mjs && node scripts/check-mateo-icon-delivery.mjs",
     "prepare": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . --error-on-warnings",
@@ -62,6 +62,7 @@
   "devDependencies": {
     "@babel/types": "7.29.8",
     "@mateo/icons": "workspace:*",
+    "@mateo/palette": "workspace:*",
     "@tailwindcss/vite": "4.3.3",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
@@ -83,8 +84,5 @@
   },
   "sideEffects": [
     "**/*.css"
-  ],
-  "dependencies": {
-    "@mateo/palette": "github:Ventairy/mateo#main&path:/packages/typescript/mateo-palette"
-  }
+  ]
 }
