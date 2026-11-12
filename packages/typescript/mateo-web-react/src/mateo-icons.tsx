@@ -7,6 +7,7 @@ import MateoArrowDownArtwork from '@mateo/icons/svg/arrow-down.svg?react';
 import MateoArrowLeftArtwork from '@mateo/icons/svg/arrow-left.svg?react';
 import MateoArrowRightArtwork from '@mateo/icons/svg/arrow-right.svg?react';
 import MateoArrowRotateClockwiseArtwork from '@mateo/icons/svg/arrow-rotate-clockise.svg?react';
+import MateoArrowTurnUpRightArtwork from '@mateo/icons/svg/arrow-turn-up-right.svg?react';
 import MateoArrowUpArtwork from '@mateo/icons/svg/arrow-up.svg?react';
 import MateoAsteriskArtwork from '@mateo/icons/svg/asterisk.svg?react';
 import MateoBankBuildingArtwork from '@mateo/icons/svg/bank-building.svg?react';
@@ -152,6 +153,13 @@ export function MateoArrowRotateClockwiseIcon(
   return (
     <BaseMateoIcon {...props} artwork={MateoArrowRotateClockwiseArtwork} />
   );
+}
+
+/** Renders the arrowTurnUpRight artwork with Mateo icon appearance and accessibility. */
+export function MateoArrowTurnUpRightIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoArrowTurnUpRightArtwork} />;
 }
 
 /** Renders the arrowUp artwork with Mateo icon appearance and accessibility. */

@@ -103,6 +103,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.arrowRotateClockise(<params>);
 /// ```
 /// ```dart
+/// $Icons.arrowTurnUpRight(<params>);
+/// ```
+/// ```dart
 /// $Icons.arrowUp(<params>);
 /// ```
 /// ```dart
@@ -509,6 +512,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _ArrowRotateClockise(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `ArrowTurnUpRight` widget from `arrowTurnUpRight.svg`.
+  static Widget arrowTurnUpRight({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _ArrowTurnUpRight(
     key: key,
     width: width,
     height: height,
@@ -2222,6 +2240,11 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'arrow-turn-up-right.svg' => arrowTurnUpRight(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'arrow-up.svg' => arrowUp(key: key, width: width, height: height),
     'asterisk.svg' => asterisk(key: key, width: width, height: height),
     'bank-building.svg' => bankBuilding(key: key, width: width, height: height),
@@ -3145,6 +3168,142 @@ class _ArrowRotateClockisePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArrowRotateClockisePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/arrow-turn-up-right.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ArrowTurnUpRight extends StatelessWidget with _DotdartSvgSizing {
+  const _ArrowTurnUpRight({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ArrowTurnUpRight._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ArrowTurnUpRight._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ArrowTurnUpRight._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ArrowTurnUpRight._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ArrowTurnUpRightPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrowTurnUpRightPainter extends CustomPainter {
+  _ArrowTurnUpRightPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.864095418,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.864095418,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.359045816,
+    1.359045816,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(9.9688, 3.7632)
+    ..cubicTo(9.9688, 2.1597, 11.8975, 1.3457, 13.0464, 2.4643)
+    ..lineTo(19.4518, 8.7012)
+    ..cubicTo(20.1827, 9.4128, 20.1827, 10.5872, 19.4518, 11.2989)
+    ..lineTo(13.0464, 17.5357)
+    ..cubicTo(11.8975, 18.6543, 9.9688, 17.8403, 9.9688, 16.2368)
+    ..lineTo(9.9688, 14.0859)
+    ..cubicTo(6.8707, 14.1349, 5.1416, 14.4419, 4.0659, 14.9315)
+    ..cubicTo(2.9814, 15.425, 2.4946, 16.1318, 1.8847, 17.3216)
+    ..cubicTo(1.3789, 18.3081, -0.0102, 17.8503, 0.0001, 16.8546)
+    ..cubicTo(0.0387, 13.11, 0.6341, 10.286, 2.4287, 8.4363)
+    ..cubicTo(4.0876, 6.7265, 6.588, 6.0343, 9.9688, 5.934)
+    ..lineTo(9.9688, 3.7632)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ArrowTurnUpRight._viewBoxWidth;
+    final scaleY = size.height / _ArrowTurnUpRight._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_ArrowTurnUpRight._viewBoxMinX,
+        -_ArrowTurnUpRight._viewBoxMinY,
+      );
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ArrowTurnUpRightPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
