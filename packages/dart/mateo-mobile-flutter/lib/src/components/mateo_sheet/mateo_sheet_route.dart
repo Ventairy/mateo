@@ -14,7 +14,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     this.maxExtent,
   }) : super(requestFocus: true);
 
-  final MateoSheetView view;
+  final Widget view;
   final bool avoidBottomInset;
   final double? maxExtent;
   final MateoSheetShouldDismiss? shouldDismiss;

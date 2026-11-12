@@ -27,10 +27,10 @@ import '../mateo_icon/mateo_icon.dart';
 part '_mateo_sheet_drag.dart';
 part '_mateo_sheet_exit_curve.dart';
 part '_mateo_sheet_landing_curve.dart';
-part 'mateo_sheet_route.dart';
 part '_mateo_sheet_stack_entry.dart';
 part '_mateo_sheet_stack_scope.dart';
 part 'mateo_sheet_dismiss_source.dart';
+part 'mateo_sheet_route.dart';
 part 'mateo_sheet_should_dismiss.dart';
 part 'mateo_sheet_source.dart';
 part 'mateo_sheet_view/_mateo_sheet_frame.dart';
@@ -75,7 +75,7 @@ part 'mateo_sheet_view/mateo_sheet_view.dart';
 /// ```
 Future<T?> showMateoSheet<T>({
   required BuildContext context,
-  required MateoSheetView view,
+  required Widget view,
   MateoSheetShouldDismiss? shouldDismiss,
   double? maxExtent,
   bool avoidBottomInset = false,
