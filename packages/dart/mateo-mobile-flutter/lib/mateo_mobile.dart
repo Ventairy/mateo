@@ -14,6 +14,8 @@ export 'src/components/mateo_country_flag/mateo_country_flag.dart' show MateoCou
 export 'src/components/mateo_drag_resistance/mateo_drag_resistance.dart' show MateoDragResistance;
 export 'src/components/mateo_drag_resistance/mateo_drag_resistance_config.dart' show MateoDragResistanceConfig;
 export 'src/components/mateo_icon/mateo_icon.dart' show MateoIcon, MateoIconData;
+export 'src/components/mateo_icon/mateo_icon_background.dart'
+    show MateoIconBackground, MateoIconBackgroundColored, MateoIconBackgroundCustom;
 export 'src/components/mateo_icon/mateo_icon_scope.dart' show MateoIconScope;
 export 'src/components/mateo_icon/mateo_icon_style.dart' show MateoIconStyle;
 export 'src/components/mateo_loading_indicator/mateo_loading_indicator.dart'

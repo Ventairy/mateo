@@ -24,7 +24,7 @@ void main() {
                   .magnifyingGlass,
                   style: .threeD,
                   size: scenario.size,
-                  backgroundColor: scenario.background ? palette.white : null,
+                  background: scenario.background ? .colored(color: palette.white) : null,
                 ),
               ),
             ),
@@ -45,7 +45,7 @@ void main() {
         final icon = MateoIcon(
           .magnifyingGlass,
           style: .threeD,
-          backgroundColor: scenario.background ? MateoPalette().white : null,
+          background: scenario.background ? .colored(color: MateoPalette().white) : null,
         );
         late BuildContext preloadContext;
         Widget host(Widget child) => Directionality(

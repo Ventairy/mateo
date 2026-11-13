@@ -9,6 +9,7 @@ import '../../gen/icons.g.dart';
 import '../../gen/three_d_icons.g.dart';
 import '../../theme/mateo_theme.dart';
 import '../mateo_text/mateo_text.dart';
+import 'mateo_icon_background.dart';
 import 'mateo_icon_scope.dart';
 import 'mateo_icon_style.dart';
 import 'three_d_icon_cache/three_d_icon_metadata_native.dart';
@@ -43,7 +44,7 @@ final class MateoIcon extends StatelessWidget {
     this.style = .svg,
     this.size,
     this.color,
-    this.backgroundColor,
+    this.background,
     this.semanticLabel,
   }) : assert(size == null || (size >= 0 && size < double.infinity), 'size must be finite and nonnegative.');
 
@@ -68,11 +69,11 @@ final class MateoIcon extends StatelessWidget {
   /// text color, then the asset's authored color.
   final Color? color;
 
-  /// The circular background color, or null to display the artwork alone.
+  /// The decorative circular background, or null to display the artwork alone.
   ///
   /// Adds proportional spacing inside [size]. Choose a [color] or inherited
   /// foreground that contrasts with this background.
-  final Color? backgroundColor;
+  final MateoIconBackground? background;
 
   /// The localized image label, or null for a decorative icon.
   final String? semanticLabel;
@@ -81,11 +82,11 @@ final class MateoIcon extends StatelessWidget {
     var iconSize = size;
     if (iconSize == null) {
       final defaults = MateoIconScope.of(context);
-      iconSize = (backgroundColor != null ? defaults.sizeWithBackground : null) ?? defaults.size ?? _defaultSize;
+      iconSize = (background != null ? defaults.sizeWithBackground : null) ?? defaults.size ?? _defaultSize;
     }
     return (
       icon: iconSize,
-      artwork: backgroundColor == null ? iconSize : iconSize * ThreeDIconUsage.backgroundArtworkScale,
+      artwork: background == null ? iconSize : iconSize * ThreeDIconUsage.backgroundArtworkScale,
     );
   }
 
@@ -94,7 +95,6 @@ final class MateoIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolvedSizes = _resolvedSizes(context);
     if (resolvedSizes.icon == 0) return const SizedBox.shrink();
-    final background = backgroundColor;
     var artwork = switch (style) {
       .svg => icon._buildSvg(
         color:
@@ -105,11 +105,14 @@ final class MateoIcon extends StatelessWidget {
       ),
       .threeD => icon._buildThreeD(size: resolvedSizes.artwork, imageCache: MateoThreeDIconCacheHost.cacheOf(context)),
     };
-    if (background != null) {
+    if (Directionality.maybeOf(context) == TextDirection.rtl) {
+      artwork = Transform.flip(flipX: true, child: artwork);
+    }
+    if (background case MateoIconBackgroundColored(:final color)) {
       artwork = SizedBox.square(
         dimension: _defaultSize,
         child: DecoratedBox(
-          decoration: BoxDecoration(color: background, shape: .circle),
+          decoration: BoxDecoration(color: color, shape: .circle),
           child: FractionallySizedBox(
             widthFactor: ThreeDIconUsage.backgroundArtworkScale,
             heightFactor: ThreeDIconUsage.backgroundArtworkScale,
@@ -118,13 +121,32 @@ final class MateoIcon extends StatelessWidget {
         ),
       );
     }
-    artwork = SizedBox.square(
-      dimension: resolvedSizes.icon,
-      child: FittedBox(child: artwork),
-    );
-    if (Directionality.maybeOf(context) == TextDirection.rtl) {
-      artwork = Transform.flip(flipX: true, child: artwork);
+    if (background case MateoIconBackgroundCustom(:final child)) {
+      final foreground = artwork;
+      artwork = LayoutBuilder(
+        builder: (context, constraints) => Center(
+          child: SizedBox.square(
+            dimension: constraints.biggest.shortestSide,
+            child: Stack(
+              fit: .expand,
+              children: [
+                ClipOval(
+                  child: IgnorePointer(child: ExcludeSemantics(child: child)),
+                ),
+                FractionallySizedBox(
+                  widthFactor: ThreeDIconUsage.backgroundArtworkScale,
+                  heightFactor: ThreeDIconUsage.backgroundArtworkScale,
+                  child: FittedBox(child: foreground),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      artwork = FittedBox(child: artwork);
     }
+    artwork = SizedBox.square(dimension: resolvedSizes.icon, child: artwork);
 
     return Semantics(
       label: semanticLabel,

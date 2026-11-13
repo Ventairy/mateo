@@ -43,7 +43,7 @@ Future<void> main() async {
                         MateoMenuOptionsPresentationItem(
                           leading: MateoIcon(
                             .paperPlaneUpRight,
-                            backgroundColor: surfaceTransformTheme.colorScheme.background,
+                            background: .colored(color: surfaceTransformTheme.colorScheme.background),
                             color: surfaceTransformTheme.colorScheme.menus.options.background,
                           ),
                           principal: const MateoText(

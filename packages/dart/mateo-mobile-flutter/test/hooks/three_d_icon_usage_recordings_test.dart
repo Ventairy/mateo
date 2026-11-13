@@ -19,7 +19,7 @@ void main() {
         'icon': icon,
         'style': style,
         'size': DoubleConstant(104),
-        'backgroundColor': NullConstant(),
+        'background': NullConstant(),
       },
     ),
     loadingUnit: LoadingUnit('main'),
@@ -43,7 +43,7 @@ void main() {
           const InstanceCreationReference(
             definition: Constructor('', iconClass),
             positionalArguments: [icon],
-            namedArguments: {'style': style, 'size': NonConstant(), 'backgroundColor': NullConstant()},
+            namedArguments: {'style': style, 'size': NonConstant(), 'background': NullConstant()},
             loadingUnit: LoadingUnit('main'),
           ),
         ],
@@ -76,8 +76,8 @@ void main() {
                     name: scenario.styleName,
                   ),
                   'size': IntConstant(scenario.size),
-                  'backgroundColor': scenario.background
-                      ? const UnsupportedConstant('A constant Color')
+                  'background': scenario.background
+                      ? const UnsupportedConstant('A constant MateoIconBackground')
                       : const NullConstant(),
                 },
                 loadingUnit: const LoadingUnit('main'),

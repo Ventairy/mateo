@@ -40,7 +40,9 @@ void main() {
                         child: MateoIcon(
                           .cross,
                           size: explicitSize,
-                          backgroundColor: withBackground ? surfaceTransformTheme.colorScheme.background : null,
+                          background: withBackground
+                              ? .colored(color: surfaceTransformTheme.colorScheme.background)
+                              : null,
                         ),
                       ),
                       principal: const Text('Option'),

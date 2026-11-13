@@ -23,6 +23,12 @@ void main() {
 
   Color painterColor(WidgetTester tester) => painterColors(tester).first;
 
+  Rect boundsInIcon(WidgetTester tester, Finder finder) {
+    final child = tester.renderObject<RenderBox>(finder);
+    final box = tester.renderObject<RenderBox>(find.byType(MateoIcon));
+    return MatrixUtils.transformRect(child.getTransformTo(box), Offset.zero & child.size);
+  }
+
   test('when background size is configured, it should support const values and reject invalid dimensions', () {
     const scope = MateoIconScope(sizeWithBackground: 42, child: SizedBox());
     expect(scope.sizeWithBackground, 42);
@@ -34,7 +40,10 @@ void main() {
   testWidgets('when scopes nest and update, background size should inherit independently of ordinary size', (
     tester,
   ) async {
-    const child = MateoIconScope(size: 20, child: MateoIcon(.cross, backgroundColor: blue));
+    const child = MateoIconScope(
+      size: 20,
+      child: MateoIcon(.cross, background: .colored(color: blue)),
+    );
     for (final backgroundSize in [42.0, 34.0, null]) {
       await tester.pumpWidget(host(MateoIconScope(size: 30, sizeWithBackground: backgroundSize, child: child)));
       expect(tester.getSize(find.byType(MateoIcon)), Size.square(backgroundSize ?? 20));
@@ -43,7 +52,10 @@ void main() {
       host(
         const MateoIconScope(
           sizeWithBackground: 42,
-          child: MateoIconScope(sizeWithBackground: 34, child: MateoIcon(.cross, backgroundColor: blue)),
+          child: MateoIconScope(
+            sizeWithBackground: 34,
+            child: MateoIcon(.cross, background: .colored(color: blue)),
+          ),
         ),
       ),
     );
@@ -59,7 +71,7 @@ void main() {
           MateoIconScope(
             size: 30,
             sizeWithBackground: 42,
-            child: MateoIcon(.cross, backgroundColor: background),
+            child: MateoIcon(.cross, background: background == null ? null : .colored(color: background)),
           ),
         ),
       );
@@ -71,7 +83,11 @@ void main() {
           MateoIconScope(
             size: 30,
             sizeWithBackground: 42,
-            child: MateoIcon(.cross, size: explicitSize, backgroundColor: blue),
+            child: MateoIcon(
+              .cross,
+              size: explicitSize,
+              background: const .colored(color: blue),
+            ),
           ),
         ),
       );
@@ -82,11 +98,139 @@ void main() {
         const SizedBox(
           width: 24,
           height: 24,
-          child: MateoIconScope(sizeWithBackground: 42, child: MateoIcon(.cross, backgroundColor: blue)),
+          child: MateoIconScope(
+            sizeWithBackground: 42,
+            child: MateoIcon(.cross, background: .colored(color: blue)),
+          ),
         ),
       ),
     );
     expect(tester.getSize(find.byType(MateoIcon)), const Size.square(24));
+  });
+
+  testWidgets('when a custom background is sized, it should fill the circle and preserve artwork spacing', (
+    tester,
+  ) async {
+    const backgroundKey = ValueKey('custom-background');
+    for (final (size, scopedSize, parentSize, expected) in [
+      (48.0, 42.0, null, const Size.square(48)),
+      (null, 42.0, null, const Size.square(42)),
+      (null, null, null, const Size.square(30)),
+      (48.0, 42.0, const Size(40, 24), const Size.square(24)),
+    ]) {
+      BoxConstraints? childConstraints;
+      Widget child = MateoIconScope(
+        size: 30,
+        sizeWithBackground: scopedSize,
+        child: MateoIcon(
+          .instagramLogo,
+          size: size,
+          color: red,
+          background: .custom(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                childConstraints = constraints;
+                return const ColoredBox(key: backgroundKey, color: blue);
+              },
+            ),
+          ),
+        ),
+      );
+      if (parentSize != null) child = SizedBox.fromSize(size: parentSize, child: child);
+      await tester.pumpWidget(host(child));
+      expect(tester.getSize(find.byKey(backgroundKey)), expected);
+      expect(childConstraints, BoxConstraints.tight(expected));
+      expect(
+        boundsInIcon(tester, find.byType(CustomPaint)),
+        rectMoreOrLessEquals(
+          Rect.fromCenter(
+            center: boundsInIcon(tester, find.byKey(backgroundKey)).center,
+            width: expected.width * 0.65,
+            height: expected.height * 0.65,
+          ),
+        ),
+      );
+      expect(tester.getCenter(find.byType(CustomPaint)), tester.getCenter(find.byKey(backgroundKey)));
+      expect(painterColor(tester), red);
+    }
+    await tester.pumpWidget(
+      host(
+        const MateoIcon(
+          .instagramLogo,
+          size: 0,
+          background: .custom(
+            child: ColoredBox(key: backgroundKey, color: blue),
+          ),
+        ),
+      ),
+    );
+    expect(find.byKey(backgroundKey), findsNothing);
+    expect(tester.getSize(find.byType(MateoIcon)), Size.zero);
+  });
+
+  testWidgets(
+    'when a custom background has gestures and a label, only the owning control should respond and announce',
+    (tester) async {
+      final semantics = tester.ensureSemantics();
+      var backgroundTaps = 0;
+      var controlTaps = 0;
+      await tester.pumpWidget(
+        host(
+          GestureDetector(
+            onTap: () => controlTaps++,
+            child: MateoIcon(
+              .instagramLogo,
+              size: 48,
+              semanticLabel: 'Instagram',
+              background: .custom(
+                child: GestureDetector(
+                  onTap: () => backgroundTaps++,
+                  child: Semantics(
+                    label: 'Background image',
+                    child: const ColoredBox(color: blue),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      expect(find.bySemanticsLabel('Background image'), findsNothing);
+      expect(find.bySemanticsLabel('Instagram'), findsOneWidget);
+      await tester.tap(find.byType(MateoIcon));
+      expect((backgroundTaps, controlTaps), (0, 1));
+      semantics.dispose();
+    },
+  );
+
+  testWidgets('when a custom background is shown in RTL, it should keep its orientation while artwork mirrors', (
+    tester,
+  ) async {
+    const backgroundKey = ValueKey('background');
+    for (final direction in TextDirection.values) {
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: direction,
+          child: const Center(
+            child: MateoIcon(
+              .arrowLeft,
+              size: 48,
+              background: .custom(
+                child: ColoredBox(key: backgroundKey, color: blue),
+              ),
+            ),
+          ),
+        ),
+      );
+      final iconBox = tester.renderObject<RenderBox>(find.byType(MateoIcon));
+      final backgroundBox = tester.renderObject<RenderBox>(find.byKey(backgroundKey));
+      final artworkBox = tester.renderObject<RenderBox>(find.byType(CustomPaint));
+      expect(backgroundBox.getTransformTo(iconBox).storage[0], greaterThan(0));
+      expect(
+        artworkBox.getTransformTo(iconBox).storage[0],
+        direction == TextDirection.rtl ? lessThan(0) : greaterThan(0),
+      );
+    }
   });
 
   testWidgets('when coloring SVG catalog icons, it should recolor every paint through explicit and inherited colors', (
@@ -110,12 +254,6 @@ void main() {
       }
     }
   });
-
-  Rect boundsInIcon(WidgetTester tester, Finder finder) {
-    final child = tester.renderObject<RenderBox>(finder);
-    final box = tester.renderObject<RenderBox>(find.byType(MateoIcon));
-    return MatrixUtils.transformRect(child.getTransformTo(box), Offset.zero & child.size);
-  }
 
   testWidgets('when sizing artwork, it should resolve square sizes and respect parent constraints', (tester) async {
     await tester.pumpWidget(host(const MateoIcon(.arrowDown)));
@@ -163,7 +301,15 @@ void main() {
     tester,
   ) async {
     for (final size in [20.0, 24.0, 48.0]) {
-      await tester.pumpWidget(host(MateoIcon(.arrowUp, size: size, backgroundColor: blue)));
+      await tester.pumpWidget(
+        host(
+          MateoIcon(
+            .arrowUp,
+            size: size,
+            background: const .colored(color: blue),
+          ),
+        ),
+      );
       expect(tester.getSize(find.byType(MateoIcon)), Size.square(size));
       expect(boundsInIcon(tester, find.byType(DecoratedBox)), Rect.fromLTWH(0, 0, size, size));
       expect(
@@ -175,22 +321,37 @@ void main() {
       expect(decoration.color, blue);
     }
     await tester.pumpWidget(
-      host(const SizedBox(width: 40, height: 24, child: MateoIcon(.arrowUp, size: 48, backgroundColor: blue))),
+      host(
+        const SizedBox(
+          width: 40,
+          height: 24,
+          child: MateoIcon(.arrowUp, size: 48, background: .colored(color: blue)),
+        ),
+      ),
     );
     expect(boundsInIcon(tester, find.byType(DecoratedBox)), const Rect.fromLTWH(8, 0, 24, 24));
     expect(
       boundsInIcon(tester, find.byType(CustomPaint)),
       rectMoreOrLessEquals(const Rect.fromLTWH(12.2, 4.2, 15.6, 15.6)),
     );
-    await tester.pumpWidget(host(const MateoIconScope(size: 24, child: MateoIcon(.arrowUp, backgroundColor: blue))));
+    await tester.pumpWidget(
+      host(
+        const MateoIconScope(
+          size: 24,
+          child: MateoIcon(.arrowUp, background: .colored(color: blue)),
+        ),
+      ),
+    );
     expect(tester.getSize(find.byType(MateoIcon)), const Size.square(24));
-    await tester.pumpWidget(host(const MateoIcon(.arrowUp, backgroundColor: blue)));
+    await tester.pumpWidget(host(const MateoIcon(.arrowUp, background: .colored(color: blue))));
     expect(tester.getSize(find.byType(MateoIcon)), const Size.square(20));
   });
 
   testWidgets('when size is zero, it should render empty with or without a background', (tester) async {
     for (final background in [null, blue]) {
-      await tester.pumpWidget(host(MateoIcon(.cross, size: 0, backgroundColor: background)));
+      await tester.pumpWidget(
+        host(MateoIcon(.cross, size: 0, background: background == null ? null : .colored(color: background))),
+      );
       expect(tester.getSize(find.byType(MateoIcon)), Size.zero);
       expect(tester.takeException(), isNull);
     }
@@ -209,7 +370,11 @@ void main() {
         (null, null, null, true, theme.colorScheme.text.primary),
         (null, null, null, false, palette.black),
       ]) {
-        Widget child = MateoIcon(.cross, color: explicit, backgroundColor: background);
+        Widget child = MateoIcon(
+          .cross,
+          color: explicit,
+          background: .colored(color: background),
+        );
         if (scoped != null) child = MateoIconScope(color: scoped, child: child);
         if (textColor != null) {
           child = MateoTextScope(
@@ -253,7 +418,15 @@ void main() {
     final semantics = tester.ensureSemantics();
     await tester.pumpWidget(host(const MateoIcon(.cross)));
     expect(find.bySemanticsLabel('Close'), findsNothing);
-    await tester.pumpWidget(host(const MateoIcon(.cross, backgroundColor: blue, semanticLabel: 'Close')));
+    await tester.pumpWidget(
+      host(
+        const MateoIcon(
+          .cross,
+          background: .colored(color: blue),
+          semanticLabel: 'Close',
+        ),
+      ),
+    );
     expect(find.bySemanticsLabel('Close'), findsOneWidget);
     expect(tester.getSemantics(find.byType(MateoIcon)), matchesSemantics(label: 'Close', isImage: true));
     semantics.dispose();
@@ -264,7 +437,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: direction,
-          child: const Center(child: MateoIcon(.arrowLeft, backgroundColor: blue)),
+          child: const Center(
+            child: MateoIcon(.arrowLeft, background: .colored(color: blue)),
+          ),
         ),
       );
       expect(find.byType(Transform), direction == TextDirection.rtl ? findsOneWidget : findsNothing);

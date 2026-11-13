@@ -12,13 +12,13 @@ abstract final class ThreeDIconUsageRecordings {
           fields['icon'],
           fields['style'],
           fields['size'],
-          fields['backgroundColor'],
+          fields['background'],
         ),
         InstanceCreationReference(positionalArguments: [final icon, ...], namedArguments: final named) => (
           icon,
           named['style'],
           named['size'],
-          named['backgroundColor'],
+          named['background'],
         ),
         _ => (null, null, null, null),
       };

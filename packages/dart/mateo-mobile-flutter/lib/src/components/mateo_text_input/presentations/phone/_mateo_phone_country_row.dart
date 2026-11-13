@@ -86,7 +86,7 @@ class _MateoPhoneCountryRow extends StatelessWidget {
                 .checkmark,
                 size: 26,
                 color: theme.colorScheme.onAccent,
-                backgroundColor: theme.colorScheme.accent,
+                background: .colored(color: theme.colorScheme.accent),
               ),
               const SizedBox(width: 11),
             ],
