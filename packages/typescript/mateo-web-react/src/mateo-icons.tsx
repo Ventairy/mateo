@@ -42,6 +42,7 @@ import MateoDoubleCrossArtwork from '@mateo/icons/svg/double-cross.svg?react';
 import MateoDropArtwork from '@mateo/icons/svg/drop.svg?react';
 import MateoDropFoamArtwork from '@mateo/icons/svg/drop-foam.svg?react';
 import MateoDumbbellArtwork from '@mateo/icons/svg/dumbbell.svg?react';
+import MateoEnvelopeArtwork from '@mateo/icons/svg/envelope.svg?react';
 import MateoEraserArtwork from '@mateo/icons/svg/eraser.svg?react';
 import MateoEvPlugArtwork from '@mateo/icons/svg/ev-plug.svg?react';
 import MateoExclamationChatBubbleArtwork from '@mateo/icons/svg/exclamation-chat-bubble.svg?react';
@@ -350,6 +351,11 @@ export function MateoDropIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the dumbbell artwork with Mateo icon appearance and accessibility. */
 export function MateoDumbbellIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoDumbbellArtwork} />;
+}
+
+/** Renders the envelope artwork with Mateo icon appearance and accessibility. */
+export function MateoEnvelopeIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoEnvelopeArtwork} />;
 }
 
 /** Renders the eraser artwork with Mateo icon appearance and accessibility. */

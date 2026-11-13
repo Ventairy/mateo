@@ -123,6 +123,9 @@ enum MateoIconData {
   /// The dumbbell icon.
   dumbbell,
 
+  /// The envelope icon.
+  envelope,
+
   /// The eraser icon.
   eraser,
 
@@ -422,6 +425,7 @@ enum MateoIconData {
     drop => $Icons.drop(mateoOpticalSizeColor: color),
     dropFoam => $Icons.dropFoam(mateoOpticalSizeColor: color),
     dumbbell => $Icons.dumbbell(mateoOpticalSizeColor: color),
+    envelope => $Icons.envelope(mateoOpticalSizeColor: color),
     eraser => $Icons.eraser(mateoOpticalSizeColor: color),
     evPlug => $Icons.evPlug(mateoOpticalSizeColor: color),
     exclamationChatBubble => $Icons.exclamationChatBubble(mateoOpticalSizeColor: color),
