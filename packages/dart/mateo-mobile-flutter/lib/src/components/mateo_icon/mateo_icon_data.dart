@@ -63,6 +63,9 @@ enum MateoIconData {
   /// The calendar icon.
   calendar,
 
+  /// The chat bubble icon.
+  chatBubble,
+
   /// The checkered flag icon.
   checkeredFlag,
 
@@ -396,6 +399,7 @@ enum MateoIconData {
     buildings => $Icons.buildings(mateoOpticalSizeColor: color),
     busFront => $Icons.busFront(mateoOpticalSizeColor: color),
     calendar => $Icons.calendar(mateoOpticalSizeColor: color),
+    chatBubble => $Icons.chatBubble(mateoOpticalSizeColor: color),
     checkeredFlag => $Icons.checkeredFlag(mateoOpticalSizeColor: color),
     checkmark => $Icons.checkmark(mateoOpticalSizeColor: color),
     chevronDown => $Icons.chevronDown(mateoOpticalSizeColor: color),

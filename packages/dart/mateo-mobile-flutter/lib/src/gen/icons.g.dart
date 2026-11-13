@@ -148,6 +148,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.calendar(<params>);
 /// ```
 /// ```dart
+/// $Icons.chatBubble(<params>);
+/// ```
+/// ```dart
 /// $Icons.checkeredFlag(<params>);
 /// ```
 /// ```dart
@@ -746,6 +749,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Calendar(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `ChatBubble` widget from `chatBubble.svg`.
+  static Widget chatBubble({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _ChatBubble(
     key: key,
     width: width,
     height: height,
@@ -2317,6 +2335,7 @@ abstract final class $Icons {
     'buildings.svg' => buildings(key: key, width: width, height: height),
     'bus-front.svg' => busFront(key: key, width: width, height: height),
     'calendar.svg' => calendar(key: key, width: width, height: height),
+    'chat-bubble.svg' => chatBubble(key: key, width: width, height: height),
     'checkered-flag.svg' => checkeredFlag(
       key: key,
       width: width,
@@ -5942,6 +5961,147 @@ class _CalendarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CalendarPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/chat-bubble.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _ChatBubble extends StatelessWidget with _DotdartSvgSizing {
+  const _ChatBubble({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _ChatBubble._svgWidth;
+
+  @override
+  double get svgNativeHeight => _ChatBubble._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _ChatBubble._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _ChatBubble._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _ChatBubblePainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChatBubblePainter extends CustomPainter {
+  _ChatBubblePainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.758654035,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.758654035,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.413459653,
+    2.413459653,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 1.4287)
+    ..cubicTo(12.9186, 1.4287, 15.419, 2.1822, 17.207, 3.6728)
+    ..cubicTo(19.016, 5.181, 20, 7.3652, 20, 10)
+    ..cubicTo(20, 12.6348, 19.016, 14.8191, 17.207, 16.3271)
+    ..cubicTo(15.4189, 17.8178, 12.9187, 18.5713, 10, 18.5713)
+    ..cubicTo(8.4579, 18.5713, 6.7217, 18.4287, 5.1582, 17.75)
+    ..cubicTo(4.8924, 17.8985, 4.5263, 18.0797, 4.0918, 18.2305)
+    ..cubicTo(3.1859, 18.5447, 1.8659, 18.7662, 0.5449, 18.1406)
+    ..cubicTo(0.2857, 18.0178, 0.0955, 17.7844, 0.0273, 17.5059)
+    ..cubicTo(-0.0407, 17.2273, 0.0201, 16.9325, 0.1934, 16.7041)
+    ..cubicTo(0.8488, 15.8395, 1.0561, 15.1691, 1.1133, 14.7402)
+    ..cubicTo(1.1545, 14.4311, 1.1215, 14.2208, 1.0986, 14.124)
+    ..lineTo(1.083, 14.0674)
+    ..lineTo(1.0801, 14.0615)
+    ..lineTo(1.0732, 14.0439)
+    ..lineTo(1.0606, 14.0146)
+    ..cubicTo(0.9874, 13.8393, 0.7295, 13.208, 0.4883, 12.4551)
+    ..cubicTo(0.2566, 11.7319, 0, 10.7776, 0, 10)
+    ..cubicTo(0, 7.3652, 0.984, 5.181, 2.793, 3.6728)
+    ..cubicTo(4.5811, 2.1822, 7.0814, 1.4287, 10, 1.4287)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _ChatBubble._viewBoxWidth;
+    final scaleY = size.height / _ChatBubble._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_ChatBubble._viewBoxMinX, -_ChatBubble._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ChatBubblePainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
