@@ -35,9 +35,48 @@ void main() {
     expect(style.height, _ambient.height);
   });
 
+  for (final (name, fontSize, expectedSize) in <(String, MateoTextInterfaceFontSize, double)>[
+    ('body', .body, 15.7),
+    ('custom', const .custom(32), 32),
+  ]) {
+    testWidgets('when $name size is explicit, it should override inherited size and scale tracking', (tester) async {
+      for (final scale in [1.0, 2.0]) {
+        await tester.pumpWidget(
+          _host(
+            MateoText('Body', presentation: .interface(fontSize: fontSize)),
+            scale: scale,
+          ),
+        );
+        final paragraph = _paragraph(tester);
+        final style = paragraph.text.style!;
+        expect(style.fontSize, expectedSize);
+        expect(paragraph.textScaler.scale(expectedSize), expectedSize * scale);
+        expect(style.letterSpacing, closeTo(expectedSize * scale * -0.02, 0.000001));
+        expect(style.fontWeight, _ambient.fontWeight);
+        expect(style.color, _ambient.color);
+        expect(style.height, _ambient.height);
+      }
+    });
+  }
+
+  testWidgets('when interface size is omitted without scoped defaults, it should use 14', (tester) async {
+    await tester.pumpWidget(_host(const MateoText('Default', presentation: .interface()), style: const TextStyle()));
+    expect(_paragraph(tester).text.style!.fontSize, 14);
+  });
+
+  testWidgets('when body and custom presentations are const, it should render their sizes', (tester) async {
+    for (final (presentation, expectedSize) in <(MateoTextPresentation, double)>[
+      (const .interface(fontSize: .body), 15.7),
+      (const .interface(fontSize: .custom(32)), 32),
+    ]) {
+      await tester.pumpWidget(_host(MateoText('Const', presentation: presentation)));
+      expect(_paragraph(tester).text.style!.fontSize, expectedSize);
+    }
+  });
+
   testWidgets('interface applies explicit typography and updates content', (tester) async {
     const presentation = MateoTextPresentation.interface(
-      fontSize: 23,
+      fontSize: .custom(23),
       fontWeight: .w500,
       color: Color(0xFF153040),
       height: 1.2,
@@ -139,7 +178,7 @@ void main() {
 
   testWidgets('text retains ambient direction, locale and accessibility scaling', (tester) async {
     for (final presentation in <MateoTextPresentation>[
-      const .interface(fontSize: 30),
+      const .interface(fontSize: .custom(30)),
       const .decorative(variant: .cursive, fontSize: 30),
     ]) {
       await tester.pumpWidget(
@@ -156,7 +195,7 @@ void main() {
       await tester.pumpWidget(_host(MateoText('Olá', presentation: presentation), scale: 2, direction: .rtl));
       expect(_paragraph(tester).textDirection, TextDirection.rtl);
       expect(_paragraph(tester).size.height, greaterThan(initialHeight));
-      if (presentation == const MateoTextPresentation.interface(fontSize: 30)) {
+      if (presentation == const MateoTextPresentation.interface(fontSize: .custom(30))) {
         expect(_paragraph(tester).text.style!.letterSpacing, -1.2);
       }
     }

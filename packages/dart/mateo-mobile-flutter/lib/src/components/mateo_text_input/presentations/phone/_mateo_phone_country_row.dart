@@ -60,7 +60,7 @@ class _MateoPhoneCountryRow extends StatelessWidget {
                     MateoText(
                       name,
                       presentation: .interface(
-                        fontSize: 16.5,
+                        fontSize: const .custom(16.5),
                         height: 1.25,
                         fontWeight: .w600,
                         color: theme.colorScheme.text.primary,
@@ -71,7 +71,7 @@ class _MateoPhoneCountryRow extends StatelessWidget {
                   MateoText(
                     '+${country.callingCode}',
                     presentation: .interface(
-                      fontSize: 15,
+                      fontSize: const .custom(15),
                       height: 1.25,
                       fontWeight: .w500,
                       color: theme.colorScheme.text.tertiary,

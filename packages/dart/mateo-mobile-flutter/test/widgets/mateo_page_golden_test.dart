@@ -212,7 +212,7 @@ class _Scene extends StatelessWidget {
                           'Details',
                           presentation: MateoTextPresentation.interface(
                             color: _theme.colorScheme.onAccent,
-                            fontSize: 26,
+                            fontSize: const .custom(26),
                           ),
                         ),
                       ),
@@ -223,7 +223,10 @@ class _Scene extends StatelessWidget {
             ),
             child: MateoText(
               'Discover',
-              presentation: MateoTextPresentation.interface(color: _theme.colorScheme.text.primary, fontSize: 26),
+              presentation: MateoTextPresentation.interface(
+                color: _theme.colorScheme.text.primary,
+                fontSize: const .custom(26),
+              ),
             ),
           ),
         ),

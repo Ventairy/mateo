@@ -16,7 +16,10 @@ Widget mateoTextPreview() {
           crossAxisAlignment: .start,
           spacing: 24,
           children: [
-            MateoText('Uma oportunidade perto de você', presentation: .interface(fontSize: 20, fontWeight: .w600)),
+            MateoText(
+              'Uma oportunidade perto de você',
+              presentation: .interface(fontSize: .custom(20), fontWeight: .w600),
+            ),
             MateoText('Olá, coração!', presentation: .decorative(variant: .rounded, fontSize: 40)),
             MateoText('Feito com carinho', presentation: .decorative(variant: .cursive, fontSize: 40)),
           ],

@@ -119,7 +119,7 @@ void main() {
             principal: const MateoText(
               'principal',
               key: ValueKey('explicit-text'),
-              presentation: .interface(fontSize: 23, fontWeight: .w400, color: Color(0xFF123456), height: 1.5),
+              presentation: .interface(fontSize: .custom(23), fontWeight: .w400, color: Color(0xFF123456), height: 1.5),
             ),
             trailing: const SizedBox.shrink(),
           ),

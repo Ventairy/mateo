@@ -23,7 +23,7 @@ Future<void> main() async {
               children: [
                 for (final scale in [1.0, 2.0])
                   for (final (name, presentation) in <(String, MateoTextPresentation)>[
-                    ('Interface', const .interface(fontSize: 20, fontWeight: .w600, height: 1.3)),
+                    ('Interface', const .interface(fontSize: .custom(20), fontWeight: .w600, height: 1.3)),
                     ('Rounded', const .decorative(variant: .rounded, fontSize: 32)),
                     ('Cursive', const .decorative(variant: .cursive, fontSize: 32)),
                   ])

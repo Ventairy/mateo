@@ -180,7 +180,7 @@ void main() {
           host(
             MateoSurface(
               width: scenario.width,
-              child: MateoText('word ' * 20, presentation: const .interface(fontSize: 14)),
+              child: MateoText('word ' * 20, presentation: const .interface(fontSize: .custom(14))),
             ),
             constraints: const BoxConstraints(maxWidth: 600, maxHeight: 400),
           ),

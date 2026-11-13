@@ -71,7 +71,7 @@ Future<void> main() async {
                                                         'Content $index',
                                                         presentation: MateoTextPresentation.interface(
                                                           color: theme.colorScheme.text.primary,
-                                                          fontSize: 12,
+                                                          fontSize: const .custom(12),
                                                         ),
                                                       ),
                                                     ),

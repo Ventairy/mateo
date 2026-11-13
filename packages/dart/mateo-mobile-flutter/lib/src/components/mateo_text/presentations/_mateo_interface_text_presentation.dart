@@ -14,7 +14,7 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
   }) : assert(maxLines == null || maxLines > 0, 'maxLines must be positive.'),
        super._();
 
-  final double? fontSize;
+  final MateoTextInterfaceFontSize? fontSize;
   final FontWeight? fontWeight;
   final Color? color;
   final TextAlign? textAlign;
@@ -28,7 +28,7 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
   Widget build(BuildContext context) {
     final text = _MateoTextPresentationScope.of(context);
     final defaults = MateoTextScope.of(context);
-    final resolvedFontSize = fontSize ?? defaults.fontSize ?? 14;
+    final resolvedFontSize = fontSize?.value ?? defaults.fontSize ?? 14;
     final scaler = MediaQuery.maybeTextScalerOf(context) ?? TextScaler.noScaling;
     final style = TextStyle(
       inherit: false,

@@ -7,7 +7,7 @@ sealed class MateoTextPresentation extends StatelessWidget {
 
   /// Ordinary interface text like button labels, body text etc.
   const factory interface({
-    double? fontSize,
+    MateoTextInterfaceFontSize? fontSize,
     FontWeight? fontWeight,
     Color? color,
     TextAlign? textAlign,

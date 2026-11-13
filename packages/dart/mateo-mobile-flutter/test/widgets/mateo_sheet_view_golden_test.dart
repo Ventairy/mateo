@@ -29,7 +29,7 @@ Future<void> main() async {
                   for (final label in ['Notifications', 'Privacy', 'Account'])
                     Padding(
                       padding: const .symmetric(vertical: 16),
-                      child: MateoText(label, presentation: const .interface(fontSize: 18)),
+                      child: MateoText(label, presentation: const .interface(fontSize: .custom(18))),
                     ),
                 ],
               ),
@@ -166,7 +166,7 @@ Future<void> main() async {
                         'A quiet place to arrive',
                         presentation: MateoTextPresentation.interface(
                           color: surfaceTransformTheme.colorScheme.text.primary,
-                          fontSize: 20,
+                          fontSize: const .custom(20),
                           fontWeight: FontWeight.w700,
                         ),
                       ),

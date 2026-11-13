@@ -49,7 +49,8 @@ export 'src/components/mateo_sheet/show_mateo_sheet.dart'
         MateoSheetViewSurface,
         showMateoSheet;
 export 'src/components/mateo_surface/mateo_surface.dart' show MateoSurface;
-export 'src/components/mateo_text/mateo_text.dart' show MateoDecorativeTextVariant, MateoText, MateoTextPresentation;
+export 'src/components/mateo_text/mateo_text.dart'
+    show MateoDecorativeTextVariant, MateoText, MateoTextInterfaceFontSize, MateoTextPresentation;
 export 'src/components/mateo_text_input/mateo_text_input.dart' show MateoTextInput, MateoTextInputPresentation;
 export 'src/components/mateo_text_input/mateo_text_input_size.dart' show MateoTextInputSize;
 export 'src/components/mateo_text_input/mateo_text_input_variant.dart'

@@ -5,6 +5,7 @@ import '../../theme/mateo_typography.dart';
 
 part '_mateo_text_presentation_scope.dart';
 part 'mateo_text_scope.dart';
+part 'mateo_text_interface_font_size.dart';
 part '_resolved_mateo_text_scope.dart';
 part 'mateo_decorative_text_variant.dart';
 part 'presentations/_mateo_decorative_text_presentation.dart';

@@ -155,7 +155,7 @@ class _MateoPhoneCountryPickerState extends State<_MateoPhoneCountryPicker> {
                         child: MateoText(
                           translations.noCountriesFound,
                           presentation: .interface(
-                            fontSize: 15,
+                            fontSize: const .custom(15),
                             height: 1.4,
                             fontWeight: .w500,
                             color: MateoTheme.of(context).colorScheme.text.tertiary,

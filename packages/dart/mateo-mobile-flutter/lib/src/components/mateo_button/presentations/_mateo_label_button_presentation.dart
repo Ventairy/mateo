@@ -191,7 +191,7 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
                         child: MateoText(
                           widget.label,
                           presentation: .interface(
-                            fontSize: dimensions.fontSize,
+                            fontSize: .custom(dimensions.fontSize),
                             height: dimensions.lineHeight / dimensions.fontSize,
                             fontWeight: .w600,
                             color: foreground,

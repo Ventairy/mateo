@@ -200,6 +200,11 @@ class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInpu
     }
   }
 
+  MateoTextInterfaceFontSize? get _callingCodeFontSize => switch (widget.textStyle.fontSize) {
+    final double fontSize => .custom(fontSize),
+    null => null,
+  };
+
   @override
   Widget build(BuildContext context) {
     final countryName = widget.country.displayName(Localizations.localeOf(context));
@@ -234,7 +239,7 @@ class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInpu
                 child: MateoText(
                   '+${widget.country.callingCode}',
                   presentation: .interface(
-                    fontSize: widget.textStyle.fontSize,
+                    fontSize: _callingCodeFontSize,
                     fontWeight: widget.textStyle.fontWeight,
                     color: widget.textStyle.color,
                     height: widget.textStyle.height,

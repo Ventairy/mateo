@@ -41,7 +41,7 @@ Future<void> main() async {
                                 'Your collection\nSaved for later',
                                 presentation: MateoTextPresentation.interface(
                                   color: theme.colorScheme.text.primary,
-                                  fontSize: 20,
+                                  fontSize: const .custom(20),
                                   textAlign: .center,
                                 ),
                               ),
@@ -72,7 +72,7 @@ Future<void> main() async {
                                                 'Messages, ideas and places $i',
                                                 presentation: MateoTextPresentation.interface(
                                                   color: theme.colorScheme.text.primary,
-                                                  fontSize: 18,
+                                                  fontSize: const .custom(18),
                                                 ),
                                               )
                                             : Row(

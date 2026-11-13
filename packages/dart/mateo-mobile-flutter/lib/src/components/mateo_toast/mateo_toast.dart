@@ -118,7 +118,7 @@ class MateoToast extends StatelessWidget {
                     presentation: .interface(
                       color: colors.foreground,
                       fontWeight: .w600,
-                      fontSize: 14,
+                      fontSize: const .custom(14),
                       maxLines: _maxLines,
                       overflow: .ellipsis,
                     ),
