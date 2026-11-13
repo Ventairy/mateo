@@ -271,6 +271,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.hotCoffeeCup(<params>);
 /// ```
 /// ```dart
+/// $Icons.incognito(<params>);
+/// ```
+/// ```dart
 /// $Icons.info(<params>);
 /// ```
 /// ```dart
@@ -1365,6 +1368,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `Incognito` widget from `incognito.svg`.
+  static Widget incognito({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Incognito(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Info` widget from `info.svg`.
   static Widget info({
     Key? key,
@@ -2380,6 +2398,7 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'incognito.svg' => incognito(key: key, width: width, height: height),
     'info.svg' => info(key: key, width: width, height: height),
     'instagram-logo.svg' => instagramLogo(
       key: key,
@@ -13225,6 +13244,176 @@ class _HotCoffeeCupPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HotCoffeeCupPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/incognito.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Incognito extends StatelessWidget with _DotdartSvgSizing {
+  const _Incognito({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Incognito._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Incognito._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Incognito._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Incognito._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _IncognitoPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _IncognitoPainter extends CustomPainter {
+  _IncognitoPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.852876036,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.852876036,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.471239641,
+    1.471239641,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(11.3045, 12.7631)
+    ..cubicTo(12.9414, 10.0342, 17.291, 10.2345, 18.412, 13.3578)
+    ..cubicTo(19.1382, 15.3823, 17.9091, 17.6362, 15.9471, 18.3285)
+    ..cubicTo(14.8798, 18.705, 13.8119, 18.5822, 12.8182, 18.101)
+    ..lineTo(12.8075, 18.0961)
+    ..cubicTo(12.3117, 17.826, 11.8781, 17.4527, 11.536, 17.0033)
+    ..cubicTo(10.8646, 16.114, 10.6782, 15.221, 10.7938, 14.1732)
+    ..cubicTo(10.5672, 14.0592, 10.2921, 14.0002, 10.0086, 14.0023)
+    ..cubicTo(9.726, 14.0045, 9.4478, 14.0668, 9.2167, 14.1791)
+    ..cubicTo(9.2213, 14.2252, 9.2281, 14.2715, 9.2313, 14.3178)
+    ..cubicTo(9.3881, 16.5877, 7.4552, 18.641, 5.163, 18.5424)
+    ..cubicTo(5.0411, 18.5411, 4.9227, 18.5292, 4.8143, 18.5189)
+    ..cubicTo(3.0321, 18.3499, 1.4807, 16.7683, 1.3837, 14.9603)
+    ..lineTo(1.3768, 14.766)
+    ..cubicTo(1.3687, 13.8, 1.7257, 12.8633, 2.3797, 12.1459)
+    ..cubicTo(3.1227, 11.3312, 4.1033, 10.9167, 5.1864, 10.8685)
+    ..cubicTo(6.6952, 10.7953, 7.9922, 11.4412, 8.7391, 12.7494)
+    ..cubicTo(8.8071, 12.7205, 8.875, 12.6944, 8.9276, 12.6771)
+    ..lineTo(9.2723, 12.5795)
+    ..cubicTo(9.9897, 12.4102, 10.625, 12.4778, 11.3045, 12.7631)
+    ..close()
+    ..moveTo(14.3749, 12.3236)
+    ..cubicTo(13.0773, 12.4889, 12.1564, 13.6719, 12.3153, 14.9701)
+    ..cubicTo(12.4745, 16.2681, 13.6532, 17.194, 14.952, 17.0414)
+    ..cubicTo(16.2595, 16.8873, 17.1931, 15.6988, 17.0331, 14.392)
+    ..cubicTo(16.8729, 13.0853, 15.6808, 12.1577, 14.3749, 12.3236)
+    ..close()
+    ..moveTo(5.2342, 12.3051)
+    ..cubicTo(3.9287, 12.3417, 2.8978, 13.4261, 2.9266, 14.7318)
+    ..cubicTo(2.9558, 16.0375, 4.0339, 17.0746, 5.3397, 17.0531)
+    ..cubicTo(6.656, 17.0311, 7.7037, 15.9424, 7.6747, 14.6263)
+    ..cubicTo(7.6453, 13.3102, 6.5503, 12.2687, 5.2342, 12.3051)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(17.3579, 4.2558)
+    ..lineTo(17.8673, 7.3941)
+    ..lineTo(19, 7.3941)
+    ..cubicTo(19.5523, 7.3941, 20, 7.8418, 20, 8.3941)
+    ..cubicTo(20, 8.9464, 19.5523, 9.3941, 19, 9.3941)
+    ..lineTo(1, 9.3941)
+    ..cubicTo(0.4477, 9.3941, 0, 8.9464, 0, 8.3941)
+    ..cubicTo(0, 7.8418, 0.4477, 7.3941, 1, 7.3941)
+    ..lineTo(2.1327, 7.3941)
+    ..lineTo(2.6421, 4.2558)
+    ..cubicTo(2.9236, 2.2852, 4.5694, 1.4504, 6.56, 1.4504)
+    ..lineTo(13.3562, 1.4504)
+    ..cubicTo(15.3468, 1.4504, 17.0764, 2.2852, 17.3579, 4.2558)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Incognito._viewBoxWidth;
+    final scaleY = size.height / _Incognito._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Incognito._viewBoxMinX, -_Incognito._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _IncognitoPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

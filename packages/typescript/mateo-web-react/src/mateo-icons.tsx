@@ -63,6 +63,7 @@ import MateoHeartArtwork from '@mateo/icons/svg/heart.svg?react';
 import MateoHelicopterFrontArtwork from '@mateo/icons/svg/helicopter-front.svg?react';
 import MateoHookahArtwork from '@mateo/icons/svg/hookah.svg?react';
 import MateoHotCoffeeCupArtwork from '@mateo/icons/svg/hot-coffee-cup.svg?react';
+import MateoIncognitoArtwork from '@mateo/icons/svg/incognito.svg?react';
 import MateoInfoArtwork from '@mateo/icons/svg/info.svg?react';
 import MateoInstagramLogoArtwork from '@mateo/icons/svg/instagram-logo.svg?react';
 import MateoIntellectualPropertyArtwork from '@mateo/icons/svg/intellectual-property.svg?react';
@@ -475,6 +476,11 @@ export function MateoHotCoffeeCupIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoHotCoffeeCupArtwork} />;
+}
+
+/** Renders the incognito artwork with Mateo icon appearance and accessibility. */
+export function MateoIncognitoIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoIncognitoArtwork} />;
 }
 
 /** Renders the info artwork with Mateo icon appearance and accessibility. */

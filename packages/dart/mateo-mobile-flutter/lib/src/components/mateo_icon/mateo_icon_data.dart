@@ -186,6 +186,9 @@ enum MateoIconData {
   /// The hot coffee cup icon.
   hotCoffeeCup,
 
+  /// The incognito hat and glasses icon.
+  incognito,
+
   /// The Instagram logo icon.
   instagramLogo,
 
@@ -434,6 +437,7 @@ enum MateoIconData {
     helicopterFront => $Icons.helicopterFront(mateoOpticalSizeColor: color),
     hookah => $Icons.hookah(mateoOpticalSizeColor: color),
     hotCoffeeCup => $Icons.hotCoffeeCup(mateoOpticalSizeColor: color),
+    incognito => $Icons.incognito(mateoOpticalSizeColor: color),
     intellectualProperty => $Icons.intellectualProperty(mateoOpticalSizeColor: color),
     info => $Icons.info(mateoOpticalSizeColor: color),
     letters => $Icons.letters(mateoOpticalSizeColor: color),
