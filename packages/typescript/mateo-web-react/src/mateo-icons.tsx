@@ -112,6 +112,7 @@ import MateoSmartphoneArtwork from '@mateo/icons/svg/smartphone.svg?react';
 import MateoSocialMediaPostArtwork from '@mateo/icons/svg/social-media-post.svg?react';
 import MateoStadiumArtwork from '@mateo/icons/svg/stadium.svg?react';
 import MateoStarArtwork from '@mateo/icons/svg/star.svg?react';
+import MateoTelegramArtwork from '@mateo/icons/svg/telegram.svg?react';
 import MateoThreeHorizontalLinesArtwork from '@mateo/icons/svg/three-horizontal-lines.svg?react';
 import MateoThumbsDownArtwork from '@mateo/icons/svg/thumbs-down.svg?react';
 import MateoTireArtwork from '@mateo/icons/svg/tire.svg?react';
@@ -764,6 +765,11 @@ export function MateoStadiumIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the star artwork with Mateo icon appearance and accessibility. */
 export function MateoStarIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoStarArtwork} />;
+}
+
+/** Renders the telegram artwork with Mateo icon appearance and accessibility. */
+export function MateoTelegramIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoTelegramArtwork} />;
 }
 
 /** Renders the threeHorizontalLines artwork with Mateo icon appearance and accessibility. */

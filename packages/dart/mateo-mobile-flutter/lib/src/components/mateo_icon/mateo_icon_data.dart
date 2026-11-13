@@ -327,6 +327,9 @@ enum MateoIconData {
   /// The star icon.
   star,
 
+  /// The Telegram logo icon.
+  telegram,
+
   /// The three horizontal lines icon.
   threeHorizontalLines,
 
@@ -484,6 +487,7 @@ enum MateoIconData {
     socialMediaPost => $Icons.socialMediaPost(mateoOpticalSizeColor: color),
     stadium => $Icons.stadium(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
     star => $Icons.star(mateoOpticalSizeColor: color),
+    telegram => $Icons.telegram(mateoOpticalSizeColor: color),
     threeHorizontalLines => $Icons.threeHorizontalLines(mateoOpticalSizeColor: color),
     thumbsDown => $Icons.thumbsDown(mateoOpticalSizeColor: color),
     tire => $Icons.tire(mateoOpticalSizeColor: color),

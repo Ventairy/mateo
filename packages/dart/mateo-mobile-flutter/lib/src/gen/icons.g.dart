@@ -418,6 +418,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.star(<params>);
 /// ```
 /// ```dart
+/// $Icons.telegram(<params>);
+/// ```
+/// ```dart
 /// $Icons.threeHorizontalLines(<params>);
 /// ```
 /// ```dart
@@ -2110,6 +2113,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `Telegram` widget from `telegram.svg`.
+  static Widget telegram({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Telegram(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `ThreeHorizontalLines` widget from `threeHorizontalLines.svg`.
   static Widget threeHorizontalLines({
     Key? key,
@@ -2521,6 +2539,7 @@ abstract final class $Icons {
     ),
     'stadium.svg' => stadium(key: key, width: width, height: height),
     'star.svg' => star(key: key, width: width, height: height),
+    'telegram.svg' => telegram(key: key, width: width, height: height),
     'three-horizontal-lines.svg' => threeHorizontalLines(
       key: key,
       width: width,
@@ -21715,6 +21734,146 @@ class _StarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _StarPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/telegram.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Telegram extends StatelessWidget with _DotdartSvgSizing {
+  const _Telegram({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Telegram._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Telegram._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Telegram._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Telegram._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _TelegramPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _TelegramPainter extends CustomPainter {
+  _TelegramPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.760332241,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.760332241,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.396677592,
+    2.396677592,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(1.3749, 8.848)
+    ..cubicTo(6.7436, 6.5089, 10.3236, 4.9668, 12.1148, 4.2218)
+    ..cubicTo(17.2292, 2.0946, 18.2919, 1.725, 18.9846, 1.7128)
+    ..cubicTo(19.1369, 1.7102, 19.4776, 1.7479, 19.6982, 1.9269)
+    ..cubicTo(19.8845, 2.0781, 19.9358, 2.2824, 19.9603, 2.4257)
+    ..cubicTo(19.9848, 2.569, 20.0154, 2.8955, 19.9911, 3.1507)
+    ..cubicTo(19.714, 6.0627, 18.5147, 13.1295, 17.9046, 16.391)
+    ..cubicTo(17.6465, 17.7711, 17.1382, 18.2338, 16.6461, 18.2791)
+    ..cubicTo(15.5766, 18.3775, 14.7645, 17.5723, 13.7287, 16.8933)
+    ..cubicTo(12.1078, 15.8308, 11.1921, 15.1694, 9.6188, 14.1326)
+    ..cubicTo(7.8005, 12.9344, 8.9792, 12.2758, 10.0154, 11.1996)
+    ..cubicTo(10.2866, 10.9179, 14.9987, 6.6319, 15.0899, 6.2431)
+    ..cubicTo(15.1013, 6.1945, 15.1119, 6.0132, 15.0042, 5.9175)
+    ..cubicTo(14.8965, 5.8218, 14.7376, 5.8545, 14.6229, 5.8806)
+    ..cubicTo(14.4604, 5.9175, 11.871, 7.6289, 6.8549, 11.015)
+    ..cubicTo(6.1199, 11.5197, 5.4542, 11.7656, 4.8577, 11.7527)
+    ..cubicTo(4.2001, 11.7385, 2.9353, 11.3809, 1.995, 11.0752)
+    ..cubicTo(0.8417, 10.7003, -0.075, 10.5021, 0.0048, 9.8654)
+    ..cubicTo(0.0464, 9.5338, 0.5031, 9.1946, 1.3749, 8.848)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Telegram._viewBoxWidth;
+    final scaleY = size.height / _Telegram._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Telegram._viewBoxMinX, -_Telegram._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _TelegramPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
