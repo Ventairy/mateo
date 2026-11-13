@@ -48,6 +48,7 @@ import MateoExclamationCircleArtwork from '@mateo/icons/svg/exclamation-circle.s
 import MateoExclamationTriangleArtwork from '@mateo/icons/svg/exclamation-triangle.svg?react';
 import MateoFerrisWheelArtwork from '@mateo/icons/svg/ferris-wheel.svg?react';
 import MateoFigureCropCircleArtwork from '@mateo/icons/svg/figure-crop-circle.svg?react';
+import MateoFigureCropCircleQuestionmarkArtwork from '@mateo/icons/svg/figure-crop-circle-questionmark.svg?react';
 import MateoFlagArtwork from '@mateo/icons/svg/flag.svg?react';
 import MateoFlagCheckArtwork from '@mateo/icons/svg/flag-check.svg?react';
 import MateoFlameArtwork from '@mateo/icons/svg/flame.svg?react';
@@ -76,6 +77,7 @@ import MateoMagnifyingGlassArtwork from '@mateo/icons/svg/magnifying-glass.svg?r
 import MateoMagnifyingGlassSadFaceArtwork from '@mateo/icons/svg/magnifying-glass-sad-face.svg?react';
 import MateoMatiniGlassArtwork from '@mateo/icons/svg/matini-glass.svg?react';
 import MateoMedicalCrossArtwork from '@mateo/icons/svg/medical-cross.svg?react';
+import MateoMegaphoneArtwork from '@mateo/icons/svg/megaphone.svg?react';
 import MateoMonkeyHeadArtwork from '@mateo/icons/svg/monkey-head.svg?react';
 import MateoNumbersArtwork from '@mateo/icons/svg/numbers.svg?react';
 import MateoPadlockArtwork from '@mateo/icons/svg/padlock.svg?react';
@@ -387,6 +389,18 @@ export function MateoFigureCropCircleIcon(
   return <BaseMateoIcon {...props} artwork={MateoFigureCropCircleArtwork} />;
 }
 
+/** Renders the figureCropCircleQuestionmark artwork with Mateo icon appearance and accessibility. */
+export function MateoFigureCropCircleQuestionmarkIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return (
+    <BaseMateoIcon
+      {...props}
+      artwork={MateoFigureCropCircleQuestionmarkArtwork}
+    />
+  );
+}
+
 /** Renders the flag artwork with Mateo icon appearance and accessibility. */
 export function MateoFlagIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoFlagArtwork} />;
@@ -551,6 +565,11 @@ export function MateoMedicalCrossIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoMedicalCrossArtwork} />;
+}
+
+/** Renders the megaphone artwork with Mateo icon appearance and accessibility. */
+export function MateoMegaphoneIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoMegaphoneArtwork} />;
 }
 
 /** Renders the monkeyHead artwork with Mateo icon appearance and accessibility. */

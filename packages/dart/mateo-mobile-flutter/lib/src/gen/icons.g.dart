@@ -226,6 +226,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.figureCropCircle(<params>);
 /// ```
 /// ```dart
+/// $Icons.figureCropCircleQuestionmark(<params>);
+/// ```
+/// ```dart
 /// $Icons.flag(<params>);
 /// ```
 /// ```dart
@@ -308,6 +311,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 /// ```dart
 /// $Icons.medicalCross(<params>);
+/// ```
+/// ```dart
+/// $Icons.megaphone(<params>);
 /// ```
 /// ```dart
 /// $Icons.monkeyHead(<params>);
@@ -1134,6 +1140,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `FigureCropCircleQuestionmark` widget from `figureCropCircleQuestionmark.svg`.
+  static Widget figureCropCircleQuestionmark({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _FigureCropCircleQuestionmark(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Flag` widget from `flag.svg`.
   static Widget flag({
     Key? key,
@@ -1547,6 +1568,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _MedicalCross(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Megaphone` widget from `megaphone.svg`.
+  static Widget megaphone({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Megaphone(
     key: key,
     width: width,
     height: height,
@@ -2313,6 +2349,11 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'figure-crop-circle-questionmark.svg' => figureCropCircleQuestionmark(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'flag.svg' => flag(key: key, width: width, height: height),
     'flag-check.svg' => flagCheck(key: key, width: width, height: height),
     'flame.svg' => flame(key: key, width: width, height: height),
@@ -2373,6 +2414,7 @@ abstract final class $Icons {
     ),
     'matini-glass.svg' => matiniGlass(key: key, width: width, height: height),
     'medical-cross.svg' => medicalCross(key: key, width: width, height: height),
+    'megaphone.svg' => megaphone(key: key, width: width, height: height),
     'monkey-head.svg' => monkeyHead(key: key, width: width, height: height),
     'numbers.svg' => numbers(key: key, width: width, height: height),
     'padlock.svg' => padlock(key: key, width: width, height: height),
@@ -10379,6 +10421,195 @@ class _FigureCropCirclePainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/figure-crop-circle-questionmark.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _FigureCropCircleQuestionmark extends StatelessWidget with _DotdartSvgSizing {
+  const _FigureCropCircleQuestionmark({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _FigureCropCircleQuestionmark._svgWidth;
+
+  @override
+  double get svgNativeHeight => _FigureCropCircleQuestionmark._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _FigureCropCircleQuestionmark._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _FigureCropCircleQuestionmark._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _FigureCropCircleQuestionmarkPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _FigureCropCircleQuestionmarkPainter extends CustomPainter {
+  _FigureCropCircleQuestionmarkPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.796832602,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.796832602,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.031673981,
+    2.031673981,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(4.7217, 10.5576)
+    ..cubicTo(7.329, 10.5578, 9.4422, 12.671, 9.4424, 15.2783)
+    ..cubicTo(9.4424, 17.8858, 7.3291, 19.9999, 4.7217, 20)
+    ..cubicTo(2.1141, 20, 0, 17.8859, 0, 15.2783)
+    ..cubicTo(0.0001, 12.6709, 2.1142, 10.5576, 4.7217, 10.5576)
+    ..close()
+    ..moveTo(4.7217, 16.7422)
+    ..cubicTo(4.4089, 16.7422, 4.1544, 16.9958, 4.1543, 17.3086)
+    ..cubicTo(4.1543, 17.6215, 4.4088, 17.875, 4.7217, 17.875)
+    ..cubicTo(5.0344, 17.8748, 5.2881, 17.6214, 5.2881, 17.3086)
+    ..cubicTo(5.2879, 16.9959, 5.0344, 16.7424, 4.7217, 16.7422)
+    ..close()
+    ..moveTo(4.8242, 12.6846)
+    ..cubicTo(4.2273, 12.6514, 3.4806, 12.9729, 3.3154, 13.752)
+    ..cubicTo(3.2617, 14.0069, 3.4248, 14.2575, 3.6797, 14.3115)
+    ..cubicTo(3.9345, 14.3653, 4.1851, 14.202, 4.2393, 13.9473)
+    ..cubicTo(4.2773, 13.7686, 4.4751, 13.6105, 4.7715, 13.627)
+    ..cubicTo(4.9059, 13.6345, 5.0131, 13.6809, 5.0801, 13.7422)
+    ..cubicTo(5.1382, 13.7954, 5.1933, 13.8837, 5.1934, 14.0479)
+    ..cubicTo(5.1934, 14.17, 5.1637, 14.2322, 5.1309, 14.2793)
+    ..cubicTo(5.0848, 14.3452, 5.0198, 14.4024, 4.8896, 14.5117)
+    ..cubicTo(4.7755, 14.6077, 4.6052, 14.7497, 4.4736, 14.9512)
+    ..cubicTo(4.3328, 15.1671, 4.249, 15.4277, 4.249, 15.751)
+    ..cubicTo(4.2492, 16.0116, 4.461, 16.2227, 4.7217, 16.2227)
+    ..cubicTo(4.9822, 16.2225, 5.1932, 16.0115, 5.1934, 15.751)
+    ..cubicTo(5.1934, 15.6022, 5.2285, 15.5221, 5.2646, 15.4668)
+    ..cubicTo(5.31, 15.3974, 5.3756, 15.3365, 5.4971, 15.2344)
+    ..cubicTo(5.603, 15.1453, 5.7743, 15.0079, 5.9053, 14.8203)
+    ..cubicTo(6.0494, 14.6138, 6.1377, 14.3625, 6.1377, 14.0479)
+    ..cubicTo(6.1377, 13.9047, 6.1183, 13.7699, 6.083, 13.6445)
+    ..cubicTo(6.0733, 13.6127, 6.062, 13.5816, 6.0508, 13.5508)
+    ..cubicTo(6.058, 13.5707, 6.0676, 13.59, 6.0742, 13.6104)
+    ..cubicTo(6.0053, 13.3877, 5.8823, 13.1966, 5.7178, 13.0459)
+    ..cubicTo(5.4626, 12.8123, 5.136, 12.702, 4.8242, 12.6846)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10.6719, 0)
+    ..cubicTo(15.8239, 0, 20, 4.1766, 20, 9.3281)
+    ..cubicTo(19.9998, 14.4795, 15.8238, 18.6553, 10.6719, 18.6553)
+    ..cubicTo(10.2408, 18.6553, 9.8169, 18.623, 9.4014, 18.5664)
+    ..cubicTo(9.7789, 18.03, 10.0663, 17.4265, 10.2422, 16.7764)
+    ..cubicTo(10.3844, 16.7844, 10.5276, 16.79, 10.6719, 16.79)
+    ..cubicTo(12.7596, 16.79, 14.6475, 15.9326, 16.0029, 14.5508)
+    ..cubicTo(14.7605, 13.0639, 12.9054, 12.126, 10.6719, 12.126)
+    ..cubicTo(10.2857, 12.126, 9.9111, 12.1559, 9.5488, 12.21)
+    ..cubicTo(8.5335, 10.6159, 6.7517, 9.5577, 4.7217, 9.5576)
+    ..cubicTo(3.4972, 9.5576, 2.3632, 9.9435, 1.4326, 10.5986)
+    ..cubicTo(1.376, 10.1831, 1.3447, 9.7592, 1.3447, 9.3281)
+    ..cubicTo(1.3447, 4.1767, 5.5199, 0.0002, 10.6719, 0)
+    ..close()
+    ..moveTo(10.6719, 4.4307)
+    ..cubicTo(8.9974, 4.4309, 7.6408, 5.7879, 7.6406, 7.4619)
+    ..cubicTo(7.6406, 9.136, 8.9973, 10.4939, 10.6719, 10.4941)
+    ..cubicTo(12.3467, 10.4941, 13.7041, 9.1362, 13.7041, 7.4619)
+    ..cubicTo(13.704, 5.7878, 12.3466, 4.4307, 10.6719, 4.4307)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _FigureCropCircleQuestionmark._viewBoxWidth;
+    final scaleY = size.height / _FigureCropCircleQuestionmark._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(
+        -_FigureCropCircleQuestionmark._viewBoxMinX,
+        -_FigureCropCircleQuestionmark._viewBoxMinY,
+      );
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(
+    covariant _FigureCropCircleQuestionmarkPainter oldDelegate,
+  ) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/flag.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -15471,6 +15702,182 @@ class _MedicalCrossPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MedicalCrossPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/megaphone.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Megaphone extends StatelessWidget with _DotdartSvgSizing {
+  const _Megaphone({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Megaphone._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Megaphone._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Megaphone._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Megaphone._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _MegaphonePainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _MegaphonePainter extends CustomPainter {
+  _MegaphonePainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.86078026,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.86078026,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.392197399,
+    1.392197399,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(6.4286, 14.0652)
+    ..lineTo(6.8153, 14.0642)
+    ..cubicTo(7.2708, 14.0682, 7.7256, 14.0928, 8.1776, 14.1375)
+    ..cubicTo(8.1906, 14.147, 8.2042, 14.158, 8.2166, 14.1707)
+    ..cubicTo(8.3155, 14.2744, 9.0237, 16.4508, 9.0956, 16.7419)
+    ..cubicTo(9.138, 16.9174, 9.1596, 17.0977, 9.16, 17.2781)
+    ..cubicTo(9.1632, 17.8704, 8.9253, 18.392, 8.5145, 18.8113)
+    ..cubicTo(7.2702, 19.9873, 5.3158, 19.3694, 4.8231, 17.7947)
+    ..cubicTo(4.6999, 17.4009, 3.63, 14.1567, 3.6502, 14.0779)
+    ..lineTo(3.6942, 14.0652)
+    ..cubicTo(4.5973, 14.0537, 5.5234, 14.0665, 6.4286, 14.0652)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(17.7811, 0.5808)
+    ..cubicTo(18.0115, 0.5617, 18.32, 0.6098, 18.5379, 0.6863)
+    ..cubicTo(19.065, 0.8723, 19.4979, 1.2586, 19.742, 1.7615)
+    ..cubicTo(19.9951, 2.2907, 19.9596, 2.7989, 19.9598, 3.366)
+    ..lineTo(19.9598, 4.6921)
+    ..lineTo(19.9647, 8.7146)
+    ..lineTo(19.9832, 12.9988)
+    ..cubicTo(19.9874, 13.6913, 20.0172, 14.6783, 19.9842, 15.3621)
+    ..cubicTo(19.9753, 15.585, 19.9342, 15.8056, 19.8612, 16.0164)
+    ..cubicTo(19.6703, 16.5577, 19.2707, 17.0006, 18.7518, 17.2459)
+    ..cubicTo(18.2488, 17.4791, 17.6731, 17.5009, 17.1532, 17.3074)
+    ..cubicTo(16.662, 17.1187, 16.2553, 16.759, 16.0077, 16.2947)
+    ..cubicTo(15.9347, 16.1556, 15.8425, 15.832, 15.7391, 15.7517)
+    ..cubicTo(15.6024, 15.646, 15.331, 15.491, 15.1786, 15.4041)
+    ..cubicTo(14.2699, 14.8841, 13.3183, 14.4424, 12.3348, 14.0837)
+    ..cubicTo(10.5422, 13.4165, 8.6449, 13.072, 6.7323, 13.0662)
+    ..lineTo(6.7342, 5.1873)
+    ..cubicTo(7.3214, 5.1783, 7.9076, 5.1323, 8.4891, 5.0505)
+    ..cubicTo(10.7083, 4.7545, 13.0117, 3.9318, 14.9481, 2.8181)
+    ..cubicTo(15.2088, 2.6514, 15.5325, 2.5023, 15.7586, 2.2927)
+    ..cubicTo(15.8397, 2.1873, 15.8787, 2.0181, 15.9286, 1.9021)
+    ..cubicTo(16.2689, 1.1128, 16.9308, 0.6431, 17.7811, 0.5808)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(5.7381, 9.4246)
+    ..cubicTo(5.7382, 10.6321, 5.7501, 11.8601, 5.7352, 13.0662)
+    ..lineTo(4.3211, 13.0662)
+    ..cubicTo(3.5728, 13.0662, 3.0914, 13.0773, 2.371, 12.8171)
+    ..cubicTo(1.9529, 12.6485, 1.568, 12.4065, 1.2352, 12.1023)
+    ..cubicTo(0.4944, 11.4313, 0.0526, 10.4916, 0.0086, 9.4929)
+    ..cubicTo(-0.0258, 8.7423, 0.0294, 8.0997, 0.3495, 7.408)
+    ..cubicTo(1.0039, 5.9938, 2.1839, 5.2503, 3.7137, 5.1873)
+    ..lineTo(5.7352, 5.1853)
+    ..lineTo(5.7381, 9.4246)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Megaphone._viewBoxWidth;
+    final scaleY = size.height / _Megaphone._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Megaphone._viewBoxMinX, -_Megaphone._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _MegaphonePainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

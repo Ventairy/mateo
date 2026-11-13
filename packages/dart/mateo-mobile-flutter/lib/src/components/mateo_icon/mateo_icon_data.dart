@@ -141,6 +141,9 @@ enum MateoIconData {
   /// The figure crop circle icon.
   figureCropCircle,
 
+  /// The figure in a circle with a question mark icon.
+  figureCropCircleQuestionmark,
+
   /// The flag icon.
   flag,
 
@@ -224,6 +227,9 @@ enum MateoIconData {
 
   /// The medical cross icon.
   medicalCross,
+
+  /// The megaphone icon.
+  megaphone,
 
   /// The monkey head icon.
   monkeyHead,
@@ -413,6 +419,7 @@ enum MateoIconData {
     exclamationTriangle => $Icons.exclamationTriangle(mateoOpticalSizeColor: color),
     ferrisWheel => $Icons.ferrisWheel(mateoOpticalSizeColor: color),
     figureCropCircle => $Icons.figureCropCircle(mateoOpticalSizeColor: color),
+    figureCropCircleQuestionmark => $Icons.figureCropCircleQuestionmark(mateoOpticalSizeColor: color),
     flag => $Icons.flag(mateoOpticalSizeColor: color),
     flagCheck => $Icons.flagCheck(mateoOpticalSizeColor: color),
     flame => $Icons.flame(mateoOpticalSizeColor: color),
@@ -437,6 +444,7 @@ enum MateoIconData {
     mapPin => $Icons.locationPin(mateoOpticalSizeColor: color),
     matiniGlass => $Icons.matiniGlass(mateoOpticalSizeColor: color),
     medicalCross => $Icons.medicalCross(mateoOpticalSizeColor: color),
+    megaphone => $Icons.megaphone(mateoOpticalSizeColor: color),
     monkeyHead => $Icons.monkeyHead(mateoOpticalSizeColor: color),
     numbers => $Icons.numbers(mateoOpticalSizeColor: color),
     padlock => $Icons.padlock(mateoOpticalSizeColor: color),
