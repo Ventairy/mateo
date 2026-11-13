@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
+import '../fixtures/sheet_lifecycle_test_widget.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 void main() {
@@ -92,6 +93,33 @@ void main() {
     expect(checks, 0);
     expect(sheet(0), findsOneWidget);
     expect(ModalRoute.of(tester.element(sheet(0)))!.isCurrent, isTrue);
+  });
+
+  testWidgets('stack dismissal keeps sheet content mounted until the exit completes', (tester) async {
+    await host(tester);
+    var deactivations = 0;
+    unawaited(
+      showMateoSheet<void>(
+        context: launcher,
+        view: SheetLifecycleTestWidget(
+          key: GlobalKey(),
+          onDeactivate: () => deactivations++,
+          child: const MateoSheetView(
+            surface: MateoSheetViewSurface(child: SizedBox(height: 100)),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final completed = dismissMateoSheetStack(launcher);
+    await tester.pump();
+    expect(deactivations, 0);
+    await tester.pump(const Duration(milliseconds: 80));
+    expect(deactivations, 0);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(deactivations, 1);
+    expect(tester.takeException(), isNull);
   });
 
   for (final count in [1, 3, 5]) {

@@ -244,21 +244,23 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     Widget child,
   ) {
     final stackDismissal = _stackDismissal;
-    if (stackDismissal != null) {
-      return AnimatedBuilder(
-        animation: stackDismissal.controller,
-        builder: (context, child) => Transform.translate(
-          offset: Offset(0, stackDismissal.distance * stackDismissal.progress),
-          child: child,
-        ),
-        child: ExcludeSemantics(
-          child: ExcludeFocus(
-            child: AbsorbPointer(child: _buildSheetTransition(context, child)),
+    return AnimatedBuilder(
+      animation: stackDismissal?.controller ?? kAlwaysDismissedAnimation,
+      builder: (context, child) => Transform.translate(
+        offset: stackDismissal == null ? .zero : Offset(0, stackDismissal.distance * stackDismissal.progress),
+        child: child,
+      ),
+      child: ExcludeSemantics(
+        excluding: stackDismissal != null,
+        child: ExcludeFocus(
+          excluding: stackDismissal != null,
+          child: AbsorbPointer(
+            absorbing: stackDismissal != null,
+            child: _buildSheetTransition(context, child),
           ),
         ),
-      );
-    }
-    return _buildSheetTransition(context, child);
+      ),
+    );
   }
 
   Widget _buildSheetTransition(BuildContext context, Widget child) {
