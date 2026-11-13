@@ -7,7 +7,7 @@ import 'package:mateo_mobile/mateo_mobile.dart';
 import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
-  for (final phase in ['three', 'four', 'entering', 'taller_entering', 'returning']) {
+  for (final phase in ['three', 'four', 'entering', 'taller_entering', 'returning', 'dismissing']) {
     late BuildContext launcher;
     await goldenTest(
       'when a stack is $phase, it should show stepped frames and preserve the front content',
@@ -41,6 +41,11 @@ Future<void> main() async {
           } else {
             await tester.pumpAndSettle();
           }
+        }
+        if (phase == 'dismissing') {
+          unawaited(dismissMateoSheetStack(launcher));
+          await tester.pump();
+          await tester.pump(const Duration(milliseconds: 80));
         }
         if (phase == 'returning') {
           Navigator.of(launcher).pop();

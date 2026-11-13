@@ -47,6 +47,8 @@ export 'src/components/mateo_sheet/show_mateo_sheet.dart'
         MateoSheetViewHeader,
         MateoSheetViewHeaderPresentation,
         MateoSheetViewSurface,
+        dismissMateoSheet,
+        dismissMateoSheetStack,
         showMateoSheet;
 export 'src/components/mateo_surface/mateo_surface.dart' show MateoSurface;
 export 'src/components/mateo_text/mateo_text.dart'

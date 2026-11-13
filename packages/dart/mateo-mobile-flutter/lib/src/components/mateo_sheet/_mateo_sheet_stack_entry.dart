@@ -79,7 +79,17 @@ class _MateoSheetStackEntry extends ChangeNotifier {
   // p^2.5 without pow in the per-frame stack geometry path.
   double get coverage => progress * progress * math.sqrt(progress) * (1 - dismissProgress.clamp(0.0, 1.0));
 
+  Rect? _dismissalFrame;
+  double? _dismissalDepth;
+
+  void freezeForDismissal() {
+    _dismissalFrame = frame;
+    _dismissalDepth = depth;
+    _returnController.stop();
+  }
+
   double get depth {
+    if (_dismissalDepth case final depth?) return depth;
     final restoringDepth = _returnDepth * (1 - _returnProgress);
     final departingDepth = _departing == null
         ? restoringDepth
@@ -91,6 +101,7 @@ class _MateoSheetStackEntry extends ChangeNotifier {
   double get opacity => (3 - depth).clamp(0.0, 1.0);
 
   Rect get frame {
+    if (_dismissalFrame case final frame?) return frame;
     final natural = Rect.lerp(
       _returnFrame?.shift(Offset(0, bottomOffset)) ?? _restingFrame,
       _restingFrame,

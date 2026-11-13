@@ -69,6 +69,176 @@ void main() {
     if (settle) await tester.pumpAndSettle();
   }
 
+  testWidgets('explicit dismissal returns a result and restores the previous sheet despite a guard', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    var checks = 0;
+    final result = showMateoSheet<String>(
+      context: launcher,
+      shouldDismiss: (_) {
+        checks++;
+        return false;
+      },
+      view: const MateoSheetView(surface: MateoSheetViewSurface(child: SizedBox(height: 120))),
+    );
+    await tester.pumpAndSettle();
+    final completed = dismissMateoSheet<String>(launcher, result: 'saved');
+    var exited = false;
+    unawaited(completed.then((_) => exited = true));
+    expect(await result, 'saved');
+    expect(exited, isFalse);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(checks, 0);
+    expect(sheet(0), findsOneWidget);
+    expect(ModalRoute.of(tester.element(sheet(0)))!.isCurrent, isTrue);
+  });
+
+  for (final count in [1, 3, 5]) {
+    testWidgets('explicit stack dismissal closes $count guarded sheets together with null results', (tester) async {
+      await host(tester);
+      final results = <Future<String?>>[];
+      for (var index = 0; index < count; index++) {
+        results.add(
+          showMateoSheet<String>(
+            context: launcher,
+            shouldDismiss: (_) => false,
+            view: MateoSheetView(
+              key: ValueKey('sheet-$index'),
+              surface: MateoSheetViewSurface(child: SizedBox(height: 100.0 + index * 35)),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+      }
+      final before = [for (var index = 0; index < count; index++) bounds(tester, index)];
+      final opacities = [for (var index = 0; index < count; index++) opacity(tester, index)];
+      final completed = dismissMateoSheetStack(tester.element(sheet(count - 1)));
+      expect(identical(dismissMateoSheetStack(launcher), completed), isTrue);
+      expect(identical(dismissMateoSheet<void>(launcher), completed), isTrue);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 80));
+      final displacement = bounds(tester, count - 1).top - before.last.top;
+      expect(displacement, greaterThan(0));
+      for (var index = 0; index < count; index++) {
+        expect(bounds(tester, index).width, closeTo(before[index].width, .001));
+        expect(bounds(tester, index).height, closeTo(before[index].height, .001));
+        expect(bounds(tester, index).top - before[index].top, closeTo(displacement, .001));
+        expect(opacity(tester, index), opacities[index]);
+      }
+      await tester.pumpAndSettle();
+      await completed;
+      expect(await Future.wait(results), everyElement(isNull));
+      expect(find.byType(MateoSheetView), findsNothing);
+      expect(navigator.currentState!.canPop(), isFalse);
+    });
+  }
+
+  testWidgets('dismissal helpers leave a covering page and covered sheets intact', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    navigator.currentState!.push<void>(PageRouteBuilder<void>(pageBuilder: (_, _, _) => const Text('Cover')));
+    await tester.pumpAndSettle();
+    await dismissMateoSheet<void>(launcher);
+    await dismissMateoSheetStack(launcher);
+    expect(find.text('Cover'), findsOneWidget);
+    navigator.currentState!.pop();
+    await tester.pumpAndSettle();
+    expect(sheet(0), findsOneWidget);
+  });
+
+  testWidgets('a page pushed during stack dismissal survives cleanup', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    await push(tester, 1);
+    final completed = dismissMateoSheetStack(launcher);
+    await tester.pump();
+    navigator.currentState!.push<void>(PageRouteBuilder<void>(pageBuilder: (_, _, _) => const Text('New page')));
+    await tester.pumpAndSettle();
+    await completed;
+    expect(find.text('New page'), findsOneWidget);
+    expect(find.byType(MateoSheetView, skipOffstage: false), findsNothing);
+  });
+
+  for (final reducedMotion in [false, true]) {
+    testWidgets('stack dismissal during entrance completes with reduced motion $reducedMotion', (tester) async {
+      await host(tester, reducedMotion: reducedMotion);
+      await push(tester, 0);
+      await push(tester, 1, settle: false);
+      await tester.pump(const Duration(milliseconds: 80));
+      final before = bounds(tester, 0);
+      final completed = dismissMateoSheetStack(launcher);
+      await tester.pump();
+      if (!reducedMotion) expect(bounds(tester, 0), before);
+      await tester.pumpAndSettle();
+      await completed;
+      expect(find.byType(MateoSheetView), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('stack dismissal stops at a page between two sheet groups', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    navigator.currentState!.push<void>(PageRouteBuilder<void>(pageBuilder: (_, _, _) => const Text('Middle page')));
+    await tester.pumpAndSettle();
+    await push(tester, 1);
+    await push(tester, 2);
+    final completed = dismissMateoSheetStack(launcher);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(find.text('Middle page'), findsOneWidget);
+    navigator.currentState!.pop();
+    await tester.pumpAndSettle();
+    expect(sheet(0), findsOneWidget);
+    expect(sheet(1), findsNothing);
+    expect(sheet(2), findsNothing);
+  });
+
+  testWidgets('system back cannot interrupt a coordinated stack exit', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    await push(tester, 1);
+    final completed = dismissMateoSheetStack(launcher);
+    await tester.pump();
+    await navigator.currentState!.maybePop();
+    expect(ModalRoute.of(tester.element(sheet(1)))!.isCurrent, isTrue);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(find.byType(MateoSheetView), findsNothing);
+  });
+
+  testWidgets('disposing the navigator during stack exit releases the dismissal', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    await push(tester, 1);
+    final completed = dismissMateoSheetStack(launcher);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 40));
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+    await completed;
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('repeated single dismissal requests close only the current sheet', (tester) async {
+    await host(tester);
+    await push(tester, 0);
+    await push(tester, 1);
+    final completed = dismissMateoSheet<void>(tester.element(sheet(1)));
+    expect(identical(dismissMateoSheet<void>(launcher), completed), isTrue);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(sheet(1), findsNothing);
+    expect(sheet(0), findsOneWidget);
+    final last = dismissMateoSheet<void>(launcher);
+    await tester.pumpAndSettle();
+    await last;
+    await dismissMateoSheet<void>(launcher);
+    await dismissMateoSheetStack(launcher);
+    expect(navigator.currentState!.canPop(), isFalse);
+  });
+
   for (final height in [80.0, 160.0, 400.0]) {
     testWidgets('when a $height tall sheet opens, the stack should ease into movement and land with it', (
       tester,
@@ -411,6 +581,12 @@ void main() {
     }
     expect(bounds(tester, 0), outer);
     expect(bounds(tester, 1).width, bounds(tester, 2).width - 32);
+    final completed = dismissMateoSheetStack(nested);
+    await tester.pumpAndSettle();
+    await completed;
+    expect(sheet(1), findsNothing);
+    expect(sheet(2), findsNothing);
+    expect(bounds(tester, 0), outer);
     expect(tester.takeException(), isNull);
   });
   testWidgets(

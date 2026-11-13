@@ -25,6 +25,9 @@ import '../mateo_drag_resistance/mateo_drag_resistance.dart';
 import '../mateo_icon/mateo_icon.dart';
 
 part '_mateo_sheet_drag.dart';
+part '_mateo_sheet_stack_dismissal.dart';
+part 'dismiss_mateo_sheet.dart';
+part 'dismiss_mateo_sheet_stack.dart';
 part '_mateo_sheet_exit_curve.dart';
 part '_mateo_sheet_landing_curve.dart';
 part '_mateo_sheet_stack_entry.dart';

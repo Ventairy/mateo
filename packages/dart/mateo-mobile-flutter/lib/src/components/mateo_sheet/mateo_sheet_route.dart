@@ -14,6 +14,19 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     this.maxExtent,
   }) : super(requestFocus: true);
 
+  static final _routes = Expando<List<MateoSheetRoute<dynamic>>>();
+  static final _pendingDismissals = Expando<Future<void>>();
+
+  static MateoSheetRoute<dynamic>? _currentSheet(NavigatorState navigator) {
+    for (final route in _routes[navigator] ?? <MateoSheetRoute<dynamic>>[]) {
+      if (route.isCurrent) return route;
+    }
+    return null;
+  }
+
+  MateoSheetRoute<dynamic>? _previousSheet;
+  _MateoSheetStackDismissal? _stackDismissal;
+
   final Widget view;
   final bool avoidBottomInset;
   final double? maxExtent;
@@ -31,6 +44,12 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   bool _hasSheetBelow = false;
   bool _disposed = false;
 
+  void _prepareStackDismissal(_MateoSheetStackDismissal dismissal) {
+    controller!.stop();
+    _stackDismissal = dismissal;
+    changedInternalState();
+  }
+
   void _updateProgress() {
     _stackEntry.progress = _movement.value;
     _stackEntry.changed();
@@ -44,6 +63,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   void didChangePrevious(Route<dynamic>? previousRoute) {
     super.didChangePrevious(previousRoute);
+    _previousSheet = previousRoute is MateoSheetRoute ? previousRoute : null;
     _hasSheetBelow = previousRoute is MateoSheetRoute;
     changedInternalState();
   }
@@ -84,6 +104,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   void install() {
     super.install();
+    (_routes[navigator!] ??= []).add(this);
     _movement = CurvedAnimation(parent: animation!, curve: from._curve, reverseCurve: from._reverseCurve);
     _movement.addListener(_updateProgress);
     _updateProgress();
@@ -105,7 +126,14 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   Duration get reverseTransitionDuration => reducedMotion ? .zero : from._reverseDuration;
 
   bool _canStartDrag() {
-    if (_disposed || !isCurrent || navigator == null || _checkingDismissal || _dismissSource != null) return false;
+    if (_stackDismissal != null ||
+        _disposed ||
+        !isCurrent ||
+        navigator == null ||
+        _checkingDismissal ||
+        _dismissSource != null) {
+      return false;
+    }
     _checkingDismissal = true;
     try {
       if (!(shouldDismiss?.call(.drag) ?? true)) return false;
@@ -116,7 +144,14 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   }
 
   Future<bool> _requestDismiss(MateoSheetDismissSource source) async {
-    if (_disposed || !isCurrent || navigator == null || _checkingDismissal || _dismissSource != null) return false;
+    if (_stackDismissal != null ||
+        _disposed ||
+        !isCurrent ||
+        navigator == null ||
+        _checkingDismissal ||
+        _dismissSource != null) {
+      return false;
+    }
     _dismissSource = source;
     try {
       await navigator!.maybePop<T>();
@@ -129,11 +164,11 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
 
   @override
   Future<RoutePopDisposition> willPop() async {
-    if (_disposed || !isCurrent || _checkingDismissal) return .doNotPop;
+    if (_stackDismissal != null || _disposed || !isCurrent || _checkingDismissal) return .doNotPop;
     _checkingDismissal = true;
     try {
       if (!(shouldDismiss?.call(_dismissSource ?? .systemBack) ?? true)) return .doNotPop;
-      if (_disposed || !isCurrent || navigator == null) return .doNotPop;
+      if (_stackDismissal != null || _disposed || !isCurrent || navigator == null) return .doNotPop;
       // Preserve route callbacks before Navigator.maybePop checks popDisposition.
       // ignore: deprecated_member_use
       return await super.willPop();
@@ -154,6 +189,18 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
 
   @override
   Widget buildModalBarrier() {
+    final stackDismissal = _stackDismissal;
+    if (stackDismissal != null) {
+      return AnimatedBuilder(
+        animation: stackDismissal.controller,
+        builder: (context, child) => ModalBarrier(
+          color: barrierColor?.withValues(
+            alpha: (barrierColor?.a ?? 0) * barrierCurve.transform(animation!.value) * (1 - stackDismissal.progress),
+          ),
+          dismissible: false,
+        ),
+      );
+    }
     final color = barrierColor;
     if (color != null && color.a != 0 && !offstage) {
       return AnimatedModalBarrier(
@@ -196,6 +243,25 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    final stackDismissal = _stackDismissal;
+    if (stackDismissal != null) {
+      return AnimatedBuilder(
+        animation: stackDismissal.controller,
+        builder: (context, child) => Transform.translate(
+          offset: Offset(0, stackDismissal.distance * stackDismissal.progress),
+          child: child,
+        ),
+        child: ExcludeSemantics(
+          child: ExcludeFocus(
+            child: AbsorbPointer(child: _buildSheetTransition(context, child)),
+          ),
+        ),
+      );
+    }
+    return _buildSheetTransition(context, child);
+  }
+
+  Widget _buildSheetTransition(BuildContext context, Widget child) {
     final bottomInset = avoidBottomInset ? MediaQuery.viewInsetsOf(context).bottom : 0.0;
     final bottomSafeArea = math.max<double>(0, MediaQuery.viewPaddingOf(context).bottom - bottomInset);
     return Padding(
@@ -253,6 +319,8 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   @override
   void dispose() {
     _disposed = true;
+    _routes[navigator!]?.remove(this);
+    _stackDismissal?.routeDisposed();
 
     _movement
       ..removeListener(_updateProgress)
