@@ -153,7 +153,7 @@ def main(argv=None):
         )
     ]
     report = dict(
-        scope=f"Source preservation, deterministic generation, model optical placement and contained {MAX_EXTENT:g}px bounds; {len(DISPLAY_SIZES) * 12} raster contexts per icon. Not a human perceptual test.",
+        scope=f"Source preservation, deterministic generation, model optical placement and contained {MAX_EXTENT:g}px bounds; {len(DISPLAY_SIZES) * 12} raster contexts per SVG. Not a human perceptual test.",
         count=len(results),
         pixels_per_unit=args.pixels_per_unit,
         failed=failures,
@@ -166,7 +166,7 @@ def main(argv=None):
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(
-        f"{len(results)} icons, {len(results) * len(DISPLAY_SIZES) * 12} display samples; {len(failures)} contract failures; "
+        f"{len(results)} SVGs, {len(results) * len(DISPLAY_SIZES) * 12} display samples; {len(failures)} contract failures; "
         f"{report['extent_limited']} extent-limited; {report['placement_limited']} placement-limited."
     )
     return int(bool(failures))

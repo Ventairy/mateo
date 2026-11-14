@@ -1,9 +1,9 @@
-# Adjust icon size and placement optically
+# Adjust icon and logo size and placement optically
 
 The `mateo-optical-5.3` model balances outer span with enclosed, compact narrow,
 and separated broad bodies, then balances their placement inside the frame.
-It preserves the 5.2 sizing score. Every icon receives one uniform scale and
-translation inside its existing 20px SVG frame. The
+It preserves the 5.2 sizing score. Every icon or logo receives one uniform scale
+and translation inside its existing 20px SVG frame. The
 [icon foundation](../../design-system/foundation/icons.md) owns how exported
 assets are used.
 
@@ -74,6 +74,32 @@ computed before files are replaced. Destination contents are checked again
 before replacement, and failed writes roll back the tool's own changes.
 The tool does not stage or commit repository changes.
 
+### Logos
+
+The same model supports the full-color SVGs in
+`design-system/foundation/assets/logos/`, including their embedded PNG artwork.
+Select this catalog explicitly; the default input remains the icon catalog:
+
+```sh
+"$ICON_PY" "$ICON_TOOLS/adjust_icon_sizes.py" \
+  --input design-system/foundation/assets/logos
+"$ICON_PY" "$ICON_TOOLS/adjust_icon_sizes.py" \
+  --input design-system/foundation/assets/logos --check
+```
+
+Use `--output-dir` and `--report` to generate a separate logo candidate, then
+pass the original and candidate directories to the validation and visual review
+commands below. Both catalogs use the same 20px frame, reference size, and
+placement rules. The measurement and validation JSON retain their existing
+`icons` result key for either catalog.
+
+The generated group scales and positions the complete logo together. Authored
+colors, gradients, masks, clipping, and embedded PNG bytes are preserved. Alpha
+coverage, including raster transparency, determines size and placement; the
+model does not weight visible colors or brightness. Review logos together at their actual
+display sizes, since equal geometry does not guarantee equal perceived weight
+across colors. This workflow does not copy logos into platform packages.
+
 ## Package integration
 
 The adjusted files in `design-system/foundation/assets/icons/svg/` are the
@@ -103,11 +129,23 @@ keep their existing sizes; the model is applied to the assets, not at runtime.
 
 Inputs require `width="20"`, `height="20"`, and `viewBox="0 0 20 20"`;
 equivalent numeric formatting is accepted. Static paths, basic shapes, groups,
-scaling strokes, local references, gradients, patterns, masks, and clip paths
-are supported. Geometry values must be finite and the drawing must be visible.
+scaling strokes, local references, gradients, patterns, masks, clip paths, and
+embedded static PNG images are supported. Geometry values must be finite and
+the drawing must be visible.
 
-Text, embedded raster images, external resources, CSS, filters, non-scaling
-vector effects, and transforms, masks, or clipping on the root SVG are
+An `image` element must have exactly one `href` or `xlink:href`, containing a
+`data:image/png;base64,` URI. Direct images and local pattern references are
+supported. PNG data must decode successfully and contain one static frame.
+Each image may be at most 4096px on either side, and the sum of decoded image
+pixels across the SVG may not exceed 16 million. Source size is limited to
+16MB, with at most 2MB outside the embedded PNG references. Embedded images
+retain their original bytes and pixel dimensions; measurement renders their
+coverage in the SVG context without re-encoding them.
+The exported inline declaration `style="mask-type:luminance"` (or `alpha`,
+with an optional trailing semicolon) is also supported on `mask` elements.
+
+Text, other embedded image formats, external resources, other CSS, filters,
+non-scaling vector effects, and transforms, masks, or clipping on the root SVG are
 unsupported. Malformed generated wrappers and unsupported input fail explicitly.
 The parser also limits source size, nesting, and element count.
 

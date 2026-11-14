@@ -1,5 +1,7 @@
 """Analytic geometry and preservation checks independent of the size model."""
 
+import base64
+import io
 import math
 import tempfile
 import unittest
@@ -7,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
+from PIL import Image
 from svg_measurement import render_alpha, split_optical_adjustment, unwrap, wrap
 
 
@@ -17,7 +20,105 @@ def svg(body, root=""):
     )
 
 
+def png_reference(image):
+    stream = io.BytesIO()
+    image.save(stream, format="PNG")
+    return "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode("ascii")
+
+
 class SvgMeasurementTests(unittest.TestCase):
+    def test_embedded_png_uses_alpha_coverage_and_preserves_every_authored_byte(self):
+        image = Image.new("RGBA", (8, 8), "#FF4A4B")
+        image.paste((0, 0, 0, 0), (2, 2, 6, 6))
+        source = svg(f'<image x="4" y="4" width="8" height="8" href="{png_reference(image)}"/>')
+        raster = render_alpha(source)
+        self.assertEqual(raster.bounds, (4, 4, 12, 12))
+        self.assertAlmostEqual(raster.ink_area, 48, delta=.1)
+        self.assertEqual(raster.alpha[18 * 32, 18 * 32], 0)
+        self.assertEqual(unwrap(wrap(source, .5, 5, 5)), source)
+
+    def test_png_pattern_with_local_xlink_use_scales_with_the_logo(self):
+        reference = png_reference(Image.new("RGBA", (4, 4), "#229ED9"))
+        source = svg(
+            '<defs><pattern id="paint" width="1" height="1" patternContentUnits="objectBoundingBox">'
+            '<use xlink:href="#pixels" transform="scale(.25)"/></pattern>'
+            f'<image id="pixels" width="4" height="4" xlink:href="{reference}"/></defs>'
+            '<rect x="4" y="4" width="8" height="12" fill="url(#paint)"/>',
+            root=' xmlns:xlink="http://www.w3.org/1999/xlink"',
+        )
+        self.assertEqual(render_alpha(source).ink_area, 96)
+        adjusted = wrap(source, .5, 5, 5)
+        self.assertEqual(unwrap(adjusted), source)
+        self.assertEqual(render_alpha(adjusted).bounds, (7, 7, 11, 13))
+        self.assertEqual(render_alpha(adjusted).ink_area, 24)
+
+    def test_exported_inline_mask_type_is_preserved_and_applied(self):
+        areas = {}
+        for mode in ("alpha", "luminance"):
+            source = svg(
+                '<defs><mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20" '
+                f'style="mask-type: {mode};"><rect width="20" height="20" fill="#808080"/></mask></defs>'
+                '<rect x="4" y="4" width="8" height="12" mask="url(#cut)"/>'
+            )
+            areas[mode] = render_alpha(source).ink_area
+            self.assertEqual(unwrap(wrap(source, .5, 5, 5)), source)
+        self.assertEqual(areas["alpha"], 96)
+        self.assertGreater(areas["luminance"], 0)
+        self.assertLess(areas["luminance"], areas["alpha"])
+        for body in ('<mask style="mask-type:luminance;fill:red"/>',
+                     '<g style="mask-type:luminance"/>', '<mask style="mask-type:url(local.png)"/>'):
+            with self.subTest(body=body), self.assertRaisesRegex(ValueError, "CSS is unsupported"):
+                unwrap(svg(body))
+
+    def test_invalid_embedded_images_fail_before_wrapping_or_rendering(self):
+        valid = png_reference(Image.new("RGBA", (4, 4), "red"))
+        stream = io.BytesIO()
+        Image.new("RGB", (4, 4), "red").save(stream, format="JPEG")
+        mislabeled = "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode()
+        sources = [
+            svg('<image width="4" height="4"/>'),
+            svg(f'<image href="{valid}" xlink:href="{valid}"/>',
+                root=' xmlns:xlink="http://www.w3.org/1999/xlink"'),
+            svg(f'<use href="{valid}"/>'),
+        ]
+        for reference in ("local.png", "https://example.com/logo.png", "data:image/svg+xml;base64,PHN2Zy8+",
+                          "data:image/png;base64,broken!", "data:image/png;base64,bm90IGEgcG5n", mislabeled,
+                          valid[:-12]):
+            sources.append(svg(f'<image href="{reference}"/>'))
+        for source in sources:
+            with self.subTest(source=source[:160]), patch("svg_measurement.resvg_py.svg_to_bytes") as render:
+                for operation in (unwrap, render_alpha, lambda s: wrap(s, .5, 5, 5)):
+                    with self.assertRaises(ValueError):
+                        operation(source)
+                render.assert_not_called()
+
+    def test_embedded_pngs_keep_source_geometry_and_decoded_pixel_limits(self):
+        reference = png_reference(Image.new("RGBA", (4, 4), "red"))
+        source = svg(f'<image href="{reference}" width="4" height="4"/>')
+        with patch("svg_measurement.MAX_SOURCE_BYTES", len(source.encode()) - 1):
+            with self.assertRaisesRegex(ValueError, "source limit"):
+                unwrap(source)
+        with patch("svg_measurement.MAX_GEOMETRY_BYTES", len(source) - len(reference)):
+            self.assertEqual(unwrap(source), source)
+            with self.assertRaisesRegex(ValueError, "geometry limit"):
+                unwrap(source.replace("</svg>", "<!-- extra geometry -->\n</svg>"))
+        with patch("svg_measurement.MAX_IMAGE_SIDE", 3):
+            with self.assertRaisesRegex(ValueError, "image pixel limit"):
+                unwrap(source)
+        with patch("svg_measurement.MAX_IMAGE_PIXELS", 20):
+            self.assertEqual(unwrap(source), source)
+            with self.assertRaisesRegex(ValueError, "combined image pixel limit"):
+                unwrap(source.replace("</svg>", f'<image href="{reference}"/></svg>'))
+
+    def test_animated_png_is_rejected(self):
+        stream = io.BytesIO()
+        Image.new("RGBA", (4, 4), "red").save(
+            stream, format="PNG", save_all=True, append_images=[Image.new("RGBA", (4, 4), "blue")],
+        )
+        reference = "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode()
+        with self.assertRaisesRegex(ValueError, "static PNG"):
+            unwrap(svg(f'<image href="{reference}"/>'))
+
     def test_circle_area_matches_analytic_geometry(self):
         raster = render_alpha(svg('<circle cx="10" cy="10" r="7"/>'))
         self.assertAlmostEqual(raster.ink_area, 49 * math.pi, delta=0.06)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adjust icon sizes optically using span, body, and detached-piece geometry.
+"""Adjust icon and logo size and placement using span, body, and detached-piece geometry.
 
 Only one uniform transform is generated inside each existing 20px SVG frame.
 No filename, family, catalog statistic, or per-icon adjustment enters the model.
@@ -446,7 +446,7 @@ def _write_batch(changes):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=ICONS, help="Directory of 20px SVG frames")
+    parser.add_argument("--input", type=Path, default=ICONS, help="Directory of 20px icon or logo SVG frames (defaults to icons)")
     parser.add_argument("--output-dir", type=Path, help="Write a separate candidate directory")
     parser.add_argument(
         "--check", action="store_true", help="Check exact output without writing SVGs"
@@ -461,7 +461,7 @@ def main(argv=None):
         choices=(32,),
         help="Fixed model geometry sampling density",
     )
-    parser.add_argument("--jobs", type=int, default=4, help="Parallel icon measurements (1–8)")
+    parser.add_argument("--jobs", type=int, default=4, help="Parallel artwork measurements (1–8)")
     args = parser.parse_args(argv)
     if not 1 <= args.jobs <= 8:
         parser.error("--jobs must be between 1 and 8")
@@ -540,7 +540,7 @@ def main(argv=None):
         parser.exit(2, f"Optical size adjustment failed: {error}\n")
     limited = sum(metrics["limited"] for _, _, _, metrics in results)
     print(
-        f"{len(results)} icons; {len(changes)} {'out of date' if args.check else 'updated'}; "
+        f"{len(results)} SVGs; {len(changes)} {'out of date' if args.check else 'updated'}; "
         f"{limited} extent-limited; shared span and body geometry model."
     )
     return int(args.check and bool(changes))

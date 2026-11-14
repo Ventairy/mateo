@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render static icon comparisons and contact sheets with resvg.
+"""Render static icon and logo comparisons and contact sheets with resvg.
 
 These are review artifacts, not automatic judgments of optical equivalence.
 PNG density is explicit: a 20px icon at density2 occupies40 image pixels.
@@ -151,7 +151,7 @@ def main():
             parser.error("--before must contain a matching SVG for every selected input icon")
         args.output_dir.mkdir(parents=True, exist_ok=True)
         draw_comparisons(paths, args.before, args.output_dir, args.label, args.density)
-        print(f"{len(paths)} icons compared across {len(DISPLAY_SIZES)} sizes and 3 contexts")
+        print(f"{len(paths)} SVGs compared across {len(DISPLAY_SIZES)} sizes and 3 contexts")
         return
     args.output_dir.mkdir(parents=True, exist_ok=True)
     if args.pair:
@@ -181,7 +181,7 @@ def main():
         )
         drawing.text(
             (20 * density, 43 * density),
-            f"{args.size}px icons / {circle}px circles / image density {density}x / page {page}",
+            f"{args.size}px artwork / {circle}px circles / image density {density}x / page {page}",
             fill="#636363",
             font=font(12 * density),
         )
@@ -214,7 +214,7 @@ def main():
                     font=font(11 * density),
                 )
         canvas.save(args.output_dir / f"catalog-{page:02d}.png")
-    print(f"{len(paths)} icons rendered across {math.ceil(len(paths) / args.per_page)} pages")
+    print(f"{len(paths)} SVGs rendered across {math.ceil(len(paths) / args.per_page)} pages")
 
 
 if __name__ == "__main__":

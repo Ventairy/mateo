@@ -1,12 +1,15 @@
-"""Preserve authored SVG bytes and sample uncropped vector geometry with resvg.
+"""Preserve authored SVG bytes and sample uncropped artwork with resvg.
 
-The supported input is static SVG geometry in a fixed 20px frame. Text, embedded
-images, external resources, CSS, filters, vector effects, and root transforms,
+The supported input is static SVG geometry and embedded PNGs in a fixed 20px
+frame, including exported mask-type declarations. Text, external resources,
+other CSS, filters, vector effects, and root transforms,
 clipping, or masking are excluded; every supported stroke scales with geometry.
 Only the temporary analysis document exposes paint outside the root viewport;
 authored clip paths and nested viewport clipping remain in effect.
 """
 
+import base64
+import binascii
 import io
 import math
 import re
@@ -21,9 +24,13 @@ FRAME = 20.0
 MARKER_ID = "mateo-optical-size"
 RENDERER_VERSION = f"resvg_py {resvg_py.__version__} / resvg {resvg_py.__resvg_version__}"
 SVG_NAMESPACE = "http://www.w3.org/2000/svg"
+MAX_SOURCE_BYTES = 16_000_000
+MAX_GEOMETRY_BYTES = 2_000_000
+MAX_IMAGE_PIXELS = 16_000_000
+MAX_IMAGE_SIDE = 4096
 _TAGS = set(
     "svg g defs path rect circle ellipse line polyline polygon clipPath "
-    "mask use linearGradient radialGradient stop pattern title desc".split()
+    "mask use linearGradient radialGradient stop pattern title desc image".split()
 )
 _NUMERIC = set(
     "viewBox x y x1 y1 x2 y2 width height cx cy r rx ry d points "
@@ -34,6 +41,7 @@ _NUMERIC = set(
 _NUMBER = re.compile(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?")
 _NONFINITE = re.compile(r"(?<![a-z])(?:nan|[+-]?inf(?:inity)?)(?![a-z])", re.I)
 _ATTRIBUTE = re.compile(r"""\s+([^\s=]+)\s*=\s*(["'])(.*?)\2""", re.S)
+_TAG_END = re.compile(rb"""[^>"']*(?:(?:"[^"]*"|'[^']*')[^>"']*)*>""")
 
 
 @dataclass
@@ -62,37 +70,67 @@ class Raster:
 
 
 def _tag_end(data, start):
-    quote = None
-    for i in range(start, len(data)):
-        char = data[i]
-        if quote is not None:
-            if char == quote:
-                quote = None
-        elif char in (34, 39):
-            quote = char
-        elif char == 62:
-            return i + 1
-    raise ValueError("Unterminated SVG tag")
+    # Skip quoted payloads in one scan, including multi-megabyte logo images.
+    match = _TAG_END.match(data, start)
+    if not match:
+        raise ValueError("Unterminated SVG tag")
+    return match.end()
+
+
+def _embedded_png_pixels(reference):
+    """Validate a self-contained static image before resvg can silently omit it."""
+    prefix = "data:image/png;base64,"
+    if not reference.startswith(prefix):
+        raise ValueError("SVG images require an embedded base64 PNG")
+    try:
+        payload = base64.b64decode(reference[len(prefix):], validate=True)
+        with Image.open(io.BytesIO(payload)) as image:
+            if image.format != "PNG" or getattr(image, "n_frames", 1) != 1:
+                raise ValueError("SVG images require a static PNG")
+            width, height = image.size
+            if max(width, height) > MAX_IMAGE_SIDE or width * height > MAX_IMAGE_PIXELS:
+                raise ValueError("Embedded PNG exceeds the image pixel limit")
+            image.verify()
+        with Image.open(io.BytesIO(payload)) as image:
+            image.load()
+            return width * height
+    except (binascii.Error, OSError, SyntaxError, Image.DecompressionBombError) as error:
+        raise ValueError(f"Invalid embedded PNG: {error}") from error
 
 
 def _parse(source):
     if not isinstance(source, str):
         raise ValueError("SVG source must be text")
     data = source.encode("utf-8")
-    if len(data) > 2_000_000:
-        raise ValueError("SVG source exceeds the 2MB geometry limit")
+    if len(data) > MAX_SOURCE_BYTES:
+        raise ValueError("SVG source exceeds the 16MB source limit")
     parser = expat.ParserCreate(namespace_separator="}")
     stack, elements = [], []
+    image_bytes, image_pixels = 0, 0
 
     def start(name, attributes):
+        nonlocal image_bytes, image_pixels
         namespace, _, tag = name.rpartition("}")
         if namespace not in ("", SVG_NAMESPACE) or tag not in _TAGS:
             raise ValueError(f"Unsupported SVG geometry element: {name}")
         if len(stack) >= 64 or len(elements) >= 4096:
             raise ValueError("SVG geometry exceeds nesting or element limits")
+        if tag == "image":
+            references = [v for k, v in attributes.items() if k.rsplit("}", 1)[-1] == "href"]
+            if len(references) != 1:
+                raise ValueError("SVG images require exactly one embedded PNG reference")
+            image_pixels += _embedded_png_pixels(references[0])
+            image_bytes += len(references[0])
+            if image_pixels > MAX_IMAGE_PIXELS:
+                raise ValueError("SVG images exceed the combined image pixel limit")
         for key, value in attributes.items():
             local = key.rsplit("}", 1)[-1]
-            if local == "style" or local.lower().startswith("on") or local == "base":
+            if local == "style" and not (
+                tag == "mask"
+                and re.fullmatch(r"\s*mask-type\s*:\s*(?:alpha|luminance)\s*;?\s*", value)
+            ):
+                raise ValueError("CSS is unsupported except an inline mask-type on mask elements")
+            if local.lower().startswith("on") or local == "base":
                 raise ValueError("CSS, event handlers, and external bases are unsupported")
             if local == "vector-effect" and value != "none":
                 raise ValueError("Vector effects are unsupported; strokes must scale with geometry")
@@ -100,7 +138,7 @@ def _parse(source):
                 raise ValueError(
                     "Filters are unsupported; use static geometry without filter effects"
                 )
-            if local == "href" and not re.fullmatch(r"#[\w.:-]+", value):
+            if local == "href" and tag != "image" and not re.fullmatch(r"#[\w.:-]+", value):
                 raise ValueError("Only local SVG fragment references are supported")
             for target in re.findall(r"url\(\s*([^)]+)\)", value, re.I):
                 if not re.fullmatch(r"#[\w.:-]+", target.strip(" \t\r\n\"'")):
@@ -137,6 +175,8 @@ def _parse(source):
         parser.Parse(data, True)
     except expat.ExpatError as error:
         raise ValueError(f"Malformed SVG: {error}") from error
+    if len(data) - image_bytes > MAX_GEOMETRY_BYTES:
+        raise ValueError("SVG source exceeds the 2MB geometry limit excluding embedded PNGs")
     if not elements or elements[0].tag != "svg":
         raise ValueError("Expected an SVG root")
     root = elements[0]
