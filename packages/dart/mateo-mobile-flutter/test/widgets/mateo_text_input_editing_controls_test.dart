@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:material_ui/material_ui.dart' as material;
 
 void main() {
   for (final platform in [TargetPlatform.android, TargetPlatform.iOS]) {

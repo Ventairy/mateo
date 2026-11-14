@@ -8,10 +8,10 @@ import '../fixtures/content_paint_counter.dart';
 const ValueKey<String> _childKey = ValueKey('content');
 const _child = SizedBox(key: _childKey, width: 120, height: 80);
 
-Widget _app(Widget child, {bool reduced = false}) => Directionality(
+Widget _app(Widget child, {bool reduced = false, bool reduceMotion = false}) => Directionality(
   textDirection: .ltr,
   child: MediaQuery(
-    data: MediaQueryData(disableAnimations: reduced),
+    data: MediaQueryData(disableAnimations: reduced, reduceMotion: reduceMotion),
     child: Center(child: child),
   ),
 );
@@ -19,6 +19,19 @@ Widget _app(Widget child, {bool reduced = false}) => Directionality(
 Offset _position(WidgetTester tester) => tester.getTopLeft(find.byKey(_childKey));
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference begins during resistance, it should remove translation immediately', (tester) async {
+      Widget view({required bool reduced}) => _app(
+        const MateoDragResistance.driven(dragOffset: Offset(96, 0), child: _child),
+        reduced: reduced && preference == 'disableAnimations',
+        reduceMotion: reduced && preference == 'reduceMotion',
+      );
+      await tester.pumpWidget(view(reduced: false));
+      await tester.pumpWidget(view(reduced: true));
+      expect(_position(tester), const Offset(340, 260));
+    });
+  }
+
   test('when configuring physical limits, it should provide validated value equality', () {
     expect(
       const MateoDragResistanceConfig.all(6),

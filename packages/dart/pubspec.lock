@@ -141,10 +141,10 @@ packages:
     dependency: transitive
     description:
       name: cli_launcher
-      sha256: "96883f87648524292e24e2cc6a369fbdf64883473fe3e3ddadd3d857bf16a484"
+      sha256: ff37bcc6d5fa25ab7ddcf255a60900b28e4e1712d34495e5f7952e0982933913
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3+2"
+    version: "0.3.4+1"
   cli_util:
     dependency: transitive
     description:
@@ -201,6 +201,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  cupertino_ui:
+    dependency: transitive
+    description:
+      name: cupertino_ui
+      sha256: "369e39a1c5c030a6212589c3da1809920b1c2cfade7b02aade7695bfa4b88c3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.6"
   dart_style:
     dependency: transitive
     description:
@@ -253,10 +261,10 @@ packages:
     dependency: transitive
     description:
       name: dotdart
-      sha256: f30ac001b0997dbe815baaf60f6d3e7a589e5c771466e0f49fafb06dfcf886a5
+      sha256: b3958d2d26cc800bae52074e8a5a5d03d2348d4601bd9ac1ee54b0986ec1ceb4
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.4"
+    version: "0.12.0"
   equatable:
     dependency: transitive
     description:
@@ -450,6 +458,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  listen:
+    dependency: transitive
+    description:
+      name: listen
+      sha256: "47501a08016a43fcad79252439d723f50f14f88fa7bfd8a177e0a417e5c9e1f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -474,6 +490,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  material_ui:
+    dependency: transitive
+    description:
+      name: material_ui
+      sha256: "474c135fd46b56ff1d35ca982155e8863d28fbc6464d1192acf4ee53a738680e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.0"
   melos:
     dependency: "direct dev"
     description:
@@ -526,10 +550,10 @@ packages:
     dependency: transitive
     description:
       name: oh_my_flutter
-      sha256: "192b0383bb796fef4ba11b04185d675dd0430ce0657addf4d16c2ba0add3b50e"
+      sha256: "138eb03d68143eb3056798d64df9e52aab95c033a57cd9693df00b3eb16b1938"
       url: "https://pub.dev"
     source: hosted
-    version: "0.29.0-beta.2"
+    version: "0.29.0"
   package_config:
     dependency: transitive
     description:
@@ -739,10 +763,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
+      sha256: "0a10344e901e5b2e63819567951cb6a06673ed6b84f40462188ff5a0c41f371f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.12"
+    version: "0.7.14"
   typed_data:
     dependency: transitive
     description:
@@ -819,10 +843,10 @@ packages:
     dependency: transitive
     description:
       name: vector_math
-      sha256: f36f9f3be64c6198714492bb455c11056e33e2f85d9a0b676a48301e44fdcf47
+      sha256: fa49e1674cb84acb900141714e6c6e1f9ae099827c24d141430ff6819db4e1bc
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.4"
   very_good_analysis:
     dependency: "direct dev"
     description:
@@ -896,5 +920,5 @@ packages:
     source: hosted
     version: "2.2.4"
 sdks:
-  dart: ">=3.14.0-95.2.beta <4.0.0"
-  flutter: ">=3.48.0-0.5.pre"
+  dart: ">=3.14.0 <4.0.0"
+  flutter: ">=3.50.0"

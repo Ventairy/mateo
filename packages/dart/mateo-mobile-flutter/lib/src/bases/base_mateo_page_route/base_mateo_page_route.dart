@@ -118,7 +118,8 @@ abstract class BaseMateoPageRoute<T> extends PageRoute<T> {
   }
 
   void updateMotion(BuildContext context) {
-    final disabled = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disabled =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
     if (disabled == reducedMotion) return;
     reducedMotion = disabled;
     _updateTiming();

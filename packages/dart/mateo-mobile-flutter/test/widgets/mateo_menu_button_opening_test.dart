@@ -254,18 +254,18 @@ void main() {
       );
       await tester.pumpAndSettle();
       final activate = tester.widget<MateoButton>(find.byType(MateoButton)).onPressed!;
-      activate();
-      activate();
+      unawaited(Future<void>.sync(activate));
+      unawaited(Future<void>.sync(activate));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 60));
       if (reduced) expect(surfaceFlight, findsNothing);
       expect(find.byType(MateoMenu), findsOneWidget);
       navigator.currentState!.pop();
-      activate();
+      unawaited(Future<void>.sync(activate));
       await tester.pumpAndSettle();
       expect(find.byType(MateoMenu), findsNothing);
       expect(surfaceFlight, findsNothing);
-      activate();
+      unawaited(Future<void>.sync(activate));
       await tester.pumpAndSettle();
       expect(find.byType(MateoMenu), findsOneWidget);
       navigator.currentState!.pop();
@@ -475,7 +475,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         final activate = tester.widget<MateoButton>(find.byType(MateoButton)).onPressed!;
-        activate();
+        unawaited(Future<void>.sync(activate));
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 60));
         if (closing) {
@@ -487,7 +487,7 @@ void main() {
         expect(surfaceFlight, findsOneWidget);
         update(() => present = false);
         await tester.pumpAndSettle();
-        activate();
+        unawaited(Future<void>.sync(activate));
         await tester.pumpAndSettle();
         if (!closing) {
           expect(find.byType(MateoMenu), findsOneWidget);

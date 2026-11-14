@@ -71,7 +71,9 @@ class _MateoToggleState extends State<MateoToggle>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _animates = !MediaQuery.disableAnimationsOf(context) && TickerMode.valuesOf(context).enabled;
+    _animates =
+        !(MediaQuery.disableAnimationsOf(context) || MediaQuery.reduceMotionOf(context)) &&
+        TickerMode.valuesOf(context).enabled;
     if (!_animates) _settle();
   }
 

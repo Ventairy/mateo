@@ -1,14 +1,13 @@
 import 'dart:isolate';
 
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show TextEditingValue, TextInputFormatter;
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mateo_mobile/src/gen/animated_icons.g.dart';
+import 'package:material_ui/material_ui.dart' as material;
 import 'package:oh_my_flutter/oh_my_flutter.dart'
     show Country, PhoneNumberTextInputFormatter, PhoneNumberTextInputFormatterResult;
 

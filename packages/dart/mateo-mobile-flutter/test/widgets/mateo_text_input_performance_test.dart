@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
+import 'package:material_ui/material_ui.dart' as material;
 
 Widget _host(Widget input, {MateoThemeData? theme}) => MateoApp(
   theme:

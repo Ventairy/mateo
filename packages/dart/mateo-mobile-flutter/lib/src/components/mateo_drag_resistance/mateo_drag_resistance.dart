@@ -156,7 +156,7 @@ class _MateoDragResistanceState extends State<MateoDragResistance> with SingleTi
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final reducedMotion = MediaQuery.disableAnimationsOf(context);
+    final reducedMotion = MediaQuery.disableAnimationsOf(context) || MediaQuery.reduceMotionOf(context);
     if (reducedMotion == _reducedMotion) return;
     _reducedMotion = reducedMotion;
     if (_reducedMotion) {

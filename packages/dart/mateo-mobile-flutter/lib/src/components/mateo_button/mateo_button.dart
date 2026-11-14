@@ -86,7 +86,10 @@ class _MateoButtonState extends State<MateoButton> with SingleTickerProviderStat
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _immediate = (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || !TickerMode.valuesOf(context).enabled;
+    _immediate =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ||
+        (MediaQuery.maybeReduceMotionOf(context) ?? false) ||
+        !TickerMode.valuesOf(context).enabled;
     if (_immediate) _synchronizeAvailability();
   }
 
