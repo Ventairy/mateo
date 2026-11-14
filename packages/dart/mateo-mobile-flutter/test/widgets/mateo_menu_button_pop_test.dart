@@ -252,8 +252,8 @@ void main() {
         await tester.pumpWidget(host(Center(child: button()), navigator: navigator));
         await tester.pumpAndSettle();
         final trigger = tester.widget<MateoButton>(find.byType(MateoButton));
-        trigger.onPressed!();
-        trigger.onPressed!();
+        unawaited(Future<void>.sync(trigger.onPressed!));
+        unawaited(Future<void>.sync(trigger.onPressed!));
         await tester.pump();
         await tester.pump(Duration(milliseconds: duringEntrance ? 50 : 400));
         expect(find.byType(MateoMenu), findsOneWidget);
@@ -263,7 +263,7 @@ void main() {
         navigator.currentState!.pop();
         await tester.pump();
         final menuElement = tester.element(find.byType(MateoMenu));
-        trigger.onPressed!();
+        unawaited(Future<void>.sync(trigger.onPressed!));
         const elapsedExit = Duration(milliseconds: 60);
         await tester.pump(elapsedExit);
         expect(tester.element(find.byType(MateoMenu)), same(menuElement));
@@ -273,7 +273,7 @@ void main() {
         expect(fade.opacity.value, inExclusiveRange(0, 1));
         await tester.pumpAndSettle();
         expect(find.byType(MateoMenu), findsNothing);
-        trigger.onPressed!();
+        unawaited(Future<void>.sync(trigger.onPressed!));
         await tester.pumpAndSettle();
         expect(find.byType(MateoMenu), findsOneWidget);
       },

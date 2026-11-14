@@ -53,7 +53,7 @@ Future<MateoMenuOptionsPresentationItem?> showMateoMenu({
     surfaceAnimation: surfaceAnimation,
     placement: placement,
     exitTransition: exitTransition,
-    reducedMotion: MediaQuery.disableAnimationsOf(anchorContext),
+    reducedMotion: MediaQuery.disableAnimationsOf(anchorContext) || MediaQuery.reduceMotionOf(anchorContext),
     theme: MateoTheme.of(anchorContext),
     capturedThemes: InheritedTheme.capture(from: anchorContext, to: navigator.context),
     direction: Directionality.of(anchorContext),

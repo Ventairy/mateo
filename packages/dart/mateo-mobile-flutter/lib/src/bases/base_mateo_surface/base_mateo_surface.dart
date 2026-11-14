@@ -148,7 +148,9 @@ class _BaseMateoSurfaceState extends State<BaseMateoSurface> {
         parentScope: MateoSurfaceCaretScope.maybeOf(context),
         view: View.of(context),
         isCurrent: (ModalRoute.isCurrentOf(context) ?? true) && TickerMode.valuesOf(context).enabled,
-        reduceMotion: MediaQuery.maybeDisableAnimationsOf(context) ?? false,
+        reduceMotion:
+            (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ||
+            (MediaQuery.maybeReduceMotionOf(context) ?? false),
       );
     }
     assert(widget.padding?.isNonNegative ?? true, 'padding must be nonnegative.');

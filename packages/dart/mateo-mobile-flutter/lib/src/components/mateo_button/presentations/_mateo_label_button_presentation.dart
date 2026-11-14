@@ -122,7 +122,10 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
   void didChangeDependencies() {
     super.didChangeDependencies();
     final loading = _MateoButtonPresentationScope.of(context).loading;
-    final immediate = (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || !TickerMode.valuesOf(context).enabled;
+    final immediate =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ||
+        (MediaQuery.maybeReduceMotionOf(context) ?? false) ||
+        !TickerMode.valuesOf(context).enabled;
     if (_initialized && loading == _loading && immediate == _immediate) return;
     _loading = loading;
     _immediate = immediate;

@@ -70,7 +70,7 @@ class _MateoToastOverlayState extends State<_MateoToastOverlay> with TickerProvi
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _reducedMotion = MediaQuery.disableAnimationsOf(context);
+    _reducedMotion = MediaQuery.disableAnimationsOf(context) || MediaQuery.reduceMotionOf(context);
     if (_started) return;
     _started = true;
     _restore();

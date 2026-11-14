@@ -9,7 +9,7 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     required this.theme,
     required this.capturedThemes,
     required this.direction,
-    required this.reducedMotion,
+    required this.motionPreferences,
     this.shouldDismiss,
     this.maxExtent,
   }) : super(requestFocus: true);
@@ -37,7 +37,8 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   final MateoThemeData theme;
   final CapturedThemes capturedThemes;
   final TextDirection direction;
-  final bool reducedMotion;
+  final ({bool disableAnimations, bool reduceMotion}) motionPreferences;
+  bool get reducedMotion => motionPreferences.disableAnimations || motionPreferences.reduceMotion;
   late final CurvedAnimation _movement;
   late final _stackEntry = _MateoSheetStackEntry(source: from, vsync: navigator!, reducedMotion: reducedMotion);
   Route<dynamic>? _coveringRoute;
@@ -299,7 +300,10 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
             builder: (context) => MediaQuery(
               data: MediaQuery.of(context)
                   .removeViewInsets(removeBottom: avoidBottomInset)
-                  .copyWith(disableAnimations: reducedMotion),
+                  .copyWith(
+                    disableAnimations: motionPreferences.disableAnimations,
+                    reduceMotion: motionPreferences.reduceMotion,
+                  ),
               child: draggableSheet,
             ),
           );

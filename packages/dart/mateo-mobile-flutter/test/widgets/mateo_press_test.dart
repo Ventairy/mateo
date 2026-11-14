@@ -7,16 +7,17 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
-Widget host(Widget child, {bool reducedMotion = false, bool tickerEnabled = true}) => Directionality(
-  textDirection: .ltr,
-  child: MediaQuery(
-    data: MediaQueryData(disableAnimations: reducedMotion),
-    child: TickerMode(
-      enabled: tickerEnabled,
-      child: Center(child: SizedBox(width: 160, height: 80, child: child)),
-    ),
-  ),
-);
+Widget host(Widget child, {bool reducedMotion = false, bool reduceMotion = false, bool tickerEnabled = true}) =>
+    Directionality(
+      textDirection: .ltr,
+      child: MediaQuery(
+        data: MediaQueryData(disableAnimations: reducedMotion, reduceMotion: reduceMotion),
+        child: TickerMode(
+          enabled: tickerEnabled,
+          child: Center(child: SizedBox(width: 160, height: 80, child: child)),
+        ),
+      ),
+    );
 
 double scale(WidgetTester tester) {
   final press = tester.widget<MateoPress>(find.byType(MateoPress));
@@ -29,6 +30,23 @@ Iterable<OpacityLayer> opacityLayers(WidgetTester tester) =>
     tester.layerListOf(find.byType(MateoPress)).whereType<OpacityLayer>();
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference changes during a held press, it should reset feedback immediately', (tester) async {
+      Widget view({required bool reduced}) => host(
+        MateoPress(onPressed: (_) {}, child: const Text('Press')),
+        reducedMotion: reduced && preference == 'disableAnimations',
+        reduceMotion: reduced && preference == 'reduceMotion',
+      );
+      await tester.pumpWidget(view(reduced: false));
+      final gesture = await tester.startGesture(tester.getCenter(find.byType(MateoPress)));
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(view(reduced: true));
+      expect(scale(tester), 1);
+      await gesture.up();
+      await tester.pumpAndSettle();
+    });
+  }
+
   testWidgets('when no style is supplied, it should default to scale', (tester) async {
     await tester.pumpWidget(host(MateoPress(onPressed: (_) {}, child: const Text('Press'))));
     expect(tester.widget<MateoPress>(find.byType(MateoPress)).animation, MateoPressAnimationType.scale);

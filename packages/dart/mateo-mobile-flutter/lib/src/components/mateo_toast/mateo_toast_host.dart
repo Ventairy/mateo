@@ -41,7 +41,8 @@ MateoToastController showMateoToast({
   final theme = MateoTheme.of(context);
   final direction = Directionality.of(context);
   final textScaler = MediaQuery.textScalerOf(context);
-  final reducedMotion = MediaQuery.disableAnimationsOf(context);
+  final disableAnimations = MediaQuery.disableAnimationsOf(context);
+  final reduceMotion = MediaQuery.reduceMotionOf(context);
   final locale = Localizations.maybeLocaleOf(context);
   return host.show(
     (overlayKey, onDismissed) {
@@ -60,7 +61,8 @@ MateoToastController showMateoToast({
         data: theme,
         child: Builder(
           builder: (context) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: textScaler, disableAnimations: reducedMotion),
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: textScaler, disableAnimations: disableAnimations, reduceMotion: reduceMotion),
             child: locale == null ? overlay : Localizations.override(context: context, locale: locale, child: overlay),
           ),
         ),

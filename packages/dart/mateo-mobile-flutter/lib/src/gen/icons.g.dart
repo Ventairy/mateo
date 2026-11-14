@@ -2658,7 +2658,7 @@ class _AppleLogoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.82623939,
@@ -2800,7 +2800,7 @@ class _ArrowDownPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.68549272,
@@ -2936,7 +2936,7 @@ class _ArrowLeftPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.701697352,
@@ -3073,7 +3073,7 @@ class _ArrowRightPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.70169873,
@@ -3210,8 +3210,8 @@ class _ArrowRotateClockisePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
-  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.676189105,
@@ -3365,7 +3365,7 @@ class _ArrowTurnUpRightPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.864095418,
@@ -3501,7 +3501,7 @@ class _ArrowUpPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.685492056,
@@ -3637,7 +3637,7 @@ class _AsteriskPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.71751042,
@@ -3818,7 +3818,7 @@ class _BankBuildingPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.767530401,
@@ -4075,7 +4075,7 @@ class _BanknotePinPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.83814805,
@@ -4260,7 +4260,7 @@ class _BeerMugPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.758640237,
@@ -4444,7 +4444,7 @@ class _BicyclePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.836624941,
@@ -4622,7 +4622,7 @@ class _BidirecionalHorizontalArrowPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.718951873,
@@ -4783,7 +4783,7 @@ class _BookPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.867529709,
@@ -4994,7 +4994,7 @@ class _BoxPencilPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.752057224,
@@ -5183,7 +5183,7 @@ class _BrokenHeartPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.755326737,
@@ -5325,7 +5325,7 @@ class _BroomPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.813336675,
@@ -5478,7 +5478,7 @@ class _BuildingsPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.851067708,
@@ -5634,7 +5634,7 @@ class _BusFrontPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.793428285,
@@ -5819,7 +5819,7 @@ class _CalendarPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.770162739,
@@ -6219,7 +6219,7 @@ class _CheckeredFlagPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.759292813,
@@ -6458,7 +6458,7 @@ class _CheckmarkPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.683048238,
@@ -6596,7 +6596,7 @@ class _ChevronDownPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.716257767,
@@ -6738,7 +6738,7 @@ class _ChevronLeftPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.687487305,
@@ -6880,7 +6880,7 @@ class _CirclePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.774999966,
@@ -7039,7 +7039,7 @@ class _CircleBlockPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.807715005,
@@ -7184,7 +7184,7 @@ class _CircleCheckPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.77553773,
@@ -7327,7 +7327,7 @@ class _CircleDollarPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.776977,
@@ -7490,7 +7490,7 @@ class _CircleInfoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.775489242,
@@ -7638,7 +7638,7 @@ class _ClassicBuildingPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.820850711,
@@ -7840,7 +7840,7 @@ class _ClockPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.775176351,
@@ -7982,7 +7982,7 @@ class _CopyrightPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.776967295,
@@ -8125,7 +8125,7 @@ class _CrossPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.677999008,
@@ -8268,7 +8268,7 @@ class _CrossCirclePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.775993538,
@@ -8445,7 +8445,7 @@ class _DiscoBallPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.87533983,
@@ -8709,7 +8709,7 @@ class _DoubleCrossPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.716289805,
@@ -8869,7 +8869,7 @@ class _DropPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.827732112,
@@ -8997,7 +8997,7 @@ class _DropFoamPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.843355473,
@@ -9182,7 +9182,7 @@ class _DumbbellPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.740213185,
@@ -9525,7 +9525,7 @@ class _EraserPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.744537347,
@@ -9673,7 +9673,7 @@ class _EvPlugPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.975,
@@ -9854,7 +9854,7 @@ class _ExclamationChatBubblePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.762357699,
@@ -10012,7 +10012,7 @@ class _ExclamationCirclePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.775493358,
@@ -10160,7 +10160,7 @@ class _ExclamationTrianglePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.782385158,
@@ -10305,7 +10305,7 @@ class _FerrisWheelPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.81806517,
@@ -10730,7 +10730,7 @@ class _FigureCropCirclePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.779293028,
@@ -10904,7 +10904,7 @@ class _FigureCropCircleQuestionmarkPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.796832602,
@@ -11093,7 +11093,7 @@ class _FlagPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.776460466,
@@ -11251,7 +11251,7 @@ class _FlagCheckPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.860108468,
@@ -11429,7 +11429,7 @@ class _FlamePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.800015796,
@@ -11566,7 +11566,7 @@ class _ForkKnifePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.731828889,
@@ -11743,7 +11743,7 @@ class _GasStationPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.746113832,
@@ -11907,7 +11907,7 @@ class _GearPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.78023249,
@@ -12080,7 +12080,7 @@ class _GiftPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.796756358,
@@ -12269,7 +12269,7 @@ class _GovernmentBuildingPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.851222634,
@@ -12508,7 +12508,7 @@ class _GraduateCapPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.916548609,
@@ -12724,7 +12724,7 @@ class _HandshakePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.975,
@@ -12919,7 +12919,7 @@ class _HeartPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.763161031,
@@ -13052,7 +13052,7 @@ class _HelicopterFrontPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.793159016,
@@ -13276,7 +13276,7 @@ class _HookahPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.766114575,
@@ -13512,7 +13512,7 @@ class _HotCoffeeCupPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.795853474,
@@ -13712,7 +13712,7 @@ class _IncognitoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.841362607,
@@ -13882,7 +13882,7 @@ class _InfoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.729227878,
@@ -14026,7 +14026,7 @@ class _InstagramLogoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.755875707,
@@ -14224,7 +14224,7 @@ class _IntellectualPropertyPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.859498956,
@@ -14499,7 +14499,7 @@ class _LettersPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.744399415,
@@ -14807,7 +14807,7 @@ class _LifebuoyPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.74881839,
@@ -14972,7 +14972,7 @@ class _LightningBoltPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.975,
@@ -15105,7 +15105,7 @@ class _LinkedinLogoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.713960097,
@@ -15280,7 +15280,7 @@ class _LinktreeLogoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.928068135,
@@ -15428,7 +15428,7 @@ class _LocationPinPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.816495905,
@@ -15563,7 +15563,7 @@ class _LogoutPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
+  static final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.738913105,
@@ -15710,7 +15710,7 @@ class _MagnifyingGlassPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.844703877,
@@ -15854,7 +15854,7 @@ class _MagnifyingGlassSadFacePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.906713724,
@@ -16037,7 +16037,7 @@ class _MatiniGlassPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.702750766,
@@ -16217,7 +16217,7 @@ class _MedicalCrossPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.73762315,
@@ -16359,7 +16359,7 @@ class _MegaphonePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.86078026,
@@ -16535,7 +16535,7 @@ class _MonkeyHeadPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.906161934,
@@ -16737,7 +16737,7 @@ class _NumbersPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.749042896,
@@ -17039,7 +17039,7 @@ class _PadlockPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.818085817,
@@ -17187,7 +17187,7 @@ class _PadlockOpenPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.814779957,
@@ -17333,7 +17333,7 @@ class _PaperPlaneUpRightPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.759452848,
@@ -17475,7 +17475,7 @@ class _ParkingSignPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.829190539,
@@ -17612,7 +17612,7 @@ class _PencilPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.688151489,
@@ -17751,7 +17751,7 @@ class _PhonePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.693263646,
@@ -17892,7 +17892,7 @@ class _PillsPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.831383384,
@@ -18050,7 +18050,7 @@ class _PlaneUpRightPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.696326365,
@@ -18213,7 +18213,7 @@ class _PlusSignalPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.705963992,
@@ -18356,7 +18356,7 @@ class _PointerHandUpPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.738934927,
@@ -18491,7 +18491,7 @@ class _PoliceBadgePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.762421944,
@@ -18676,7 +18676,7 @@ class _PopcornPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.871510986,
@@ -18908,7 +18908,7 @@ class _PrayingFigurePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.856471314,
@@ -19077,7 +19077,7 @@ class _QuestionmarkPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.685541296,
@@ -19229,7 +19229,7 @@ class _RaisedHandPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.861683996,
@@ -19419,7 +19419,7 @@ class _RectangleStackPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.747134335,
@@ -19566,7 +19566,7 @@ class _RoadPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.677651338,
@@ -19717,7 +19717,7 @@ class _RunningFigurePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.829002186,
@@ -19891,7 +19891,7 @@ class _SadEmoticonPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.698223653,
@@ -20036,7 +20036,7 @@ class _SadMaskHappyMaskPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.890444285,
@@ -20265,7 +20265,7 @@ class _ScissorsPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.767132563,
@@ -20448,7 +20448,7 @@ class _ScrollPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.812892445,
@@ -20624,7 +20624,7 @@ class _ShieldLockPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.783073519,
@@ -20778,7 +20778,7 @@ class _ShoppingBagPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.763522618,
@@ -20949,7 +20949,7 @@ class _ShoppingCartPainter extends CustomPainter {
   final Color mateoOpticalSizeColor1;
   final Color mateoOpticalSizeColor2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.825437963,
@@ -21134,7 +21134,7 @@ class _SleepingFigurePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.804229364,
@@ -21283,7 +21283,7 @@ class _SmartphonePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.835251616,
@@ -21421,7 +21421,7 @@ class _SocialMediaPostPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.748690359,
@@ -21626,7 +21626,7 @@ class _StadiumPainter extends CustomPainter {
   final Color mateoOpticalSizeColor1;
   final Color mateoOpticalSizeColor2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.819434195,
@@ -21877,7 +21877,7 @@ class _StarPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.738885557,
@@ -22163,7 +22163,7 @@ class _ThreeHorizontalLinesPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
+  static final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.690525764,
@@ -22298,7 +22298,7 @@ class _ThumbsDownPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.770263055,
@@ -22456,7 +22456,7 @@ class _TirePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.792714224,
@@ -22733,7 +22733,7 @@ class _TrainFrontPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.831143814,
@@ -22916,7 +22916,7 @@ class _TrashPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.776134503,
@@ -23086,7 +23086,7 @@ class _TreePainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.753766598,
@@ -23245,7 +23245,7 @@ class _WhatsappPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.74882432,
@@ -23424,7 +23424,7 @@ class _WifiPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.714347446,
@@ -23582,7 +23582,7 @@ class _WifiExclamationMarkPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.738278993,
@@ -23826,7 +23826,7 @@ class _WineGlassPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.916699085,
@@ -23967,7 +23967,7 @@ class _WrenchPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.703858593,
@@ -24110,7 +24110,7 @@ class _XLogoPainter extends CustomPainter {
 
   final Color mateoOpticalSizeColor;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
     0.705613134,

@@ -20,10 +20,20 @@ MateoEdgeFadePainter _fade(WidgetTester tester) =>
 
 void main() {
   late BuildContext launcher;
-  Future<void> host(WidgetTester tester) async {
+  Future<void> host(
+    WidgetTester tester, {
+    ({bool disableAnimations, bool reduceMotion}) motionPreferences = (disableAnimations: false, reduceMotion: false),
+  }) async {
     await tester.pumpWidget(
       MateoApp(
         theme: surfaceTransformTheme,
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            disableAnimations: motionPreferences.disableAnimations,
+            reduceMotion: motionPreferences.reduceMotion,
+          ),
+          child: child!,
+        ),
         home: Builder(
           builder: (context) {
             launcher = context;
@@ -33,6 +43,39 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  for (final disableAnimations in [false, true]) {
+    for (final reduceMotion in [false, true]) {
+      testWidgets(
+        'when a caller requests disableAnimations=$disableAnimations and reduceMotion=$reduceMotion, it should preserve both preferences in a sheet',
+        (tester) async {
+          final preferences = (disableAnimations: disableAnimations, reduceMotion: reduceMotion);
+          await host(tester, motionPreferences: preferences);
+          ({bool disableAnimations, bool reduceMotion})? observed;
+          unawaited(
+            showMateoSheet<void>(
+              context: launcher,
+              view: MateoSheetView(
+                surface: MateoSheetViewSurface(
+                  child: Builder(
+                    builder: (context) {
+                      observed = (
+                        disableAnimations: MediaQuery.disableAnimationsOf(context),
+                        reduceMotion: MediaQuery.reduceMotionOf(context),
+                      );
+                      return const SizedBox(height: 80);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(observed, preferences);
+        },
+      );
+    }
   }
 
   testWidgets(

@@ -10,7 +10,7 @@ abstract final class _MateoTextInputEditingControls {
 
   static Widget buildContextMenu(BuildContext context, EditableTextState editable) => Localizations.override(
     context: context,
-    delegates: const [GlobalCupertinoLocalizations.delegate, GlobalMaterialLocalizations.delegate],
+    delegates: const [GlobalCupertinoLocalizations.delegate, material.GlobalMaterialLocalizations.delegate],
     child: material.Theme(
       data: material.ThemeData.light().copyWith(platform: defaultTargetPlatform),
       child: Builder(

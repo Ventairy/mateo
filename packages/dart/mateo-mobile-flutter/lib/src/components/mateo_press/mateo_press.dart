@@ -116,7 +116,8 @@ class _MateoPressState extends State<MateoPress> with SingleTickerProviderStateM
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final disableAnimations =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
     final tickerEnabled = TickerMode.valuesOf(context).enabled;
     if (_resetAfterDeactivate || disableAnimations != _disableAnimations || tickerEnabled != _tickerEnabled) {
       _resetAfterDeactivate = false;

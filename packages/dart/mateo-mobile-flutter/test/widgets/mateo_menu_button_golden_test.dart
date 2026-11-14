@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +19,7 @@ Future<void> main() async {
           pumpBeforeTest: (tester) async {
             await tester.pumpAndSettle();
             for (final button in tester.widgetList<MateoButton>(find.byType(MateoButton)).toList()) {
-              button.onPressed!();
+              unawaited(Future<void>.sync(button.onPressed!));
             }
             await tester.pump();
             await tester.pump();

@@ -12,13 +12,18 @@ Widget _host(
   double width = 320,
   double textScale = 1,
   bool reducedMotion = false,
+  bool reduceMotion = false,
   bool tickerEnabled = true,
   TextDirection direction = .ltr,
   MateoThemeData? theme,
 }) => Directionality(
   textDirection: direction,
   child: MediaQuery(
-    data: MediaQueryData(textScaler: TextScaler.linear(textScale), disableAnimations: reducedMotion),
+    data: MediaQueryData(
+      textScaler: TextScaler.linear(textScale),
+      disableAnimations: reducedMotion,
+      reduceMotion: reduceMotion,
+    ),
     child: MateoTheme(
       data: theme ?? _theme,
       child: TickerMode(
@@ -48,6 +53,45 @@ Future<void> _activate(WidgetTester tester) async {
 }
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    for (final iconOnly in [false, true]) {
+      testWidgets(
+        'when $preference is requested and ${iconOnly ? 'icon' : 'label'} loading starts, it should update without animation',
+        (tester) async {
+          Widget button({required bool loading}) => _host(
+            MateoButton(
+              presentation: iconOnly ? const .icon(icon: MateoIcon(.cross)) : const .label(label: 'Save'),
+              onPressed: () {},
+              isLoading: loading,
+            ),
+            reducedMotion: preference == 'disableAnimations',
+            reduceMotion: preference == 'reduceMotion',
+          );
+          await tester.pumpWidget(button(loading: false));
+          await tester.pumpWidget(button(loading: true));
+          expect(tester.binding.transientCallbackCount, 0);
+        },
+      );
+    }
+    testWidgets('when $preference begins during button availability, it should apply its enabled color immediately', (
+      tester,
+    ) async {
+      Widget button({required bool enabled, required bool reduced}) => _host(
+        MateoButton(
+          presentation: const .label(label: 'Save'),
+          onPressed: enabled ? () {} : null,
+        ),
+        reducedMotion: reduced && preference == 'disableAnimations',
+        reduceMotion: reduced && preference == 'reduceMotion',
+      );
+      await tester.pumpWidget(button(enabled: false, reduced: false));
+      await tester.pumpWidget(button(enabled: true, reduced: false));
+      await tester.pump(const Duration(milliseconds: 60));
+      await tester.pumpWidget(button(enabled: true, reduced: true));
+      expect(tester.widget<MateoSurface>(find.byType(MateoSurface)).color, _theme.colorScheme.accent);
+    });
+  }
+
   test('when button widths are configured, it should validate caps and compare by value', () {
     expect(const MateoButtonWidth.fill(), const MateoButtonWidthFill());
     expect(const MateoButtonWidth.fit(), const MateoButtonWidthFit());

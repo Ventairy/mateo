@@ -46,7 +46,9 @@ mixin _DotdartLottieAnimationState<T extends StatefulWidget>
   bool _canAnimateForLifecycle = true;
 
   bool _shouldAnimate() {
-    final disableAnimations = lottieRespectDisableAnimations && (MediaQuery.maybeDisableAnimationsOf(context) ?? false);
+    final disableAnimations =
+        lottieRespectDisableAnimations &&
+        ((MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false));
     return lottieProgress == null && _canAnimateForLifecycle && !disableAnimations;
   }
 

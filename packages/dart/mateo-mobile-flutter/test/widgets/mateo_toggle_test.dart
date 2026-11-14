@@ -7,20 +7,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
 final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
-Widget host(Widget child, {bool reduced = false, bool ticker = true, TextDirection direction = TextDirection.ltr}) =>
-    Directionality(
-      textDirection: direction,
-      child: MediaQuery(
-        data: MediaQueryData(disableAnimations: reduced),
-        child: TickerMode(
-          enabled: ticker,
-          child: MateoTheme(
-            data: theme,
-            child: Center(child: child),
-          ),
-        ),
+Widget host(
+  Widget child, {
+  bool reduced = false,
+  bool reduceMotion = false,
+  bool ticker = true,
+  TextDirection direction = TextDirection.ltr,
+}) => Directionality(
+  textDirection: direction,
+  child: MediaQuery(
+    data: MediaQueryData(disableAnimations: reduced, reduceMotion: reduceMotion),
+    child: TickerMode(
+      enabled: ticker,
+      child: MateoTheme(
+        data: theme,
+        child: Center(child: child),
       ),
-    );
+    ),
+  ),
+);
 
 class _Canvas extends Fake implements Canvas {
   final paths = <({Rect bounds, Color color})>[];
@@ -39,6 +44,24 @@ List<({Rect bounds, Color color})> drawing(WidgetTester tester) {
 void ignore(bool value) {}
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference starts during a toggle, it should finish at its selected position', (tester) async {
+      final controller = MateoToggleController();
+      addTearDown(controller.dispose);
+      Widget view({required bool reduced}) => host(
+        MateoToggle(controller: controller, onChanged: ignore),
+        reduced: reduced && preference == 'disableAnimations',
+        reduceMotion: reduced && preference == 'reduceMotion',
+      );
+      await tester.pumpWidget(view(reduced: false));
+      unawaited(controller.toggle());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 40));
+      await tester.pumpWidget(view(reduced: true));
+      expect(drawing(tester).last.bounds.left, closeTo(37, 0.00001));
+    });
+  }
+
   testWidgets('when locally owned, it should toggle once per tap and expose switch semantics', (tester) async {
     final semantics = tester.ensureSemantics();
 

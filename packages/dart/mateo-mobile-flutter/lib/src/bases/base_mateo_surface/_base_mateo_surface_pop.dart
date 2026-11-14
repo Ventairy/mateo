@@ -39,7 +39,7 @@ class _BaseMateoSurfacePopState extends State<_BaseMateoSurfacePop> with SingleT
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
+    if ((MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false)) {
       _hasStarted = true;
       if (!_controller.isCompleted) _controller.value = 1;
       return;

@@ -38,6 +38,9 @@ class _MateoLoadingIndicatorState extends State<MateoLoadingIndicator>
   late final AnimationController _controller = AnimationController(vsync: this);
   late bool _active;
 
+  bool get _reducedMotion =>
+      (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
+
   @override
   void initState() {
     super.initState();
@@ -48,7 +51,7 @@ class _MateoLoadingIndicatorState extends State<MateoLoadingIndicator>
 
   void _synchronizeAnimation() {
     _controller.duration = widget.presentation._duration;
-    if (!_active || (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || !TickerMode.valuesOf(context).enabled) {
+    if (!_active || _reducedMotion || !TickerMode.valuesOf(context).enabled) {
       _controller.stop();
     } else if (!_controller.isAnimating) {
       _controller.repeat();
@@ -83,7 +86,7 @@ class _MateoLoadingIndicatorState extends State<MateoLoadingIndicator>
 
   @override
   Widget build(BuildContext context) => _MateoLoadingIndicatorScope(
-    progress: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? null : _controller,
+    progress: _reducedMotion ? null : _controller,
     semanticLabel: widget.semanticLabel,
     child: widget.presentation,
   );

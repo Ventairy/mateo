@@ -7,10 +7,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
-Widget _app(Widget child, {bool reduced = false, bool enabled = true, MateoThemeData? theme}) => Directionality(
+Widget _app(
+  Widget child, {
+  bool reduced = false,
+  bool reduceMotion = false,
+  bool enabled = true,
+  MateoThemeData? theme,
+}) => Directionality(
   textDirection: .ltr,
   child: MediaQuery(
-    data: MediaQueryData(disableAnimations: reduced),
+    data: MediaQueryData(disableAnimations: reduced, reduceMotion: reduceMotion),
     child: TickerMode(
       enabled: enabled,
       child: MateoTheme(
@@ -24,6 +30,24 @@ Finder get _paint => find.descendant(of: find.byType(MateoLoadingIndicator), mat
 dynamic _painter(WidgetTester tester) => tester.widget<CustomPaint>(_paint).painter;
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference changes, it should stop the loading loop and resume when cleared', (tester) async {
+      final indicator = MateoLoadingIndicator(presentation: .circular(color: _theme.colorScheme.accent));
+      Widget view({required bool reduced}) => _app(
+        indicator,
+        reduced: reduced && preference == 'disableAnimations',
+        reduceMotion: reduced && preference == 'reduceMotion',
+      );
+      await tester.pumpWidget(view(reduced: false));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 80));
+      await tester.pumpWidget(view(reduced: true));
+      final stopped = tester.binding.transientCallbackCount == 0;
+      await tester.pumpWidget(view(reduced: false));
+      expect((stopped: stopped, resumed: tester.binding.transientCallbackCount > 0), (stopped: true, resumed: true));
+    });
+  }
+
   test('when dimensions are invalid, it should reject them', () {
     for (final value in [-1.0, double.infinity, double.nan]) {
       expect(

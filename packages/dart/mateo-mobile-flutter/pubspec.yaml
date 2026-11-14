@@ -9,11 +9,12 @@ platforms:
   ios:
 
 environment:
-  sdk: ">=3.14.0-95.2.beta <4.0.0"
-  flutter: ">=3.48.0-0.5.pre"
+  sdk: ">=3.14.0 <4.0.0"
+  flutter: ">=3.50.0"
 
 dependencies:
   code_assets: ^2.1.0
+  cupertino_ui: ^1.1.5
   data_assets: ^0.20.0
   diacritic: ^0.1.6
   flutter:
@@ -22,16 +23,17 @@ dependencies:
     sdk: flutter
   hooks: ^2.2.0
   intl: ^0.20.3
+  material_ui: ^1.9.0
   meta: ^1.17.0
   native_toolchain_c: ^0.19.5
-  oh_my_flutter: ^0.29.0-beta.2
+  oh_my_flutter: ^0.29.0
   record_use: ^1.1.1
   slang: ^4.19.2
 
 dev_dependencies:
   alchemist: ^0.14.1
   build_runner: ^2.16.2
-  dotdart: ^0.11.4
+  dotdart: ^0.12.0
   flutter_test:
     sdk: flutter
   slang_build_runner: ^4.19.0

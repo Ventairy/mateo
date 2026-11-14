@@ -4,6 +4,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mateo_mobile/mateo_mobile.dart';
 
 void main() {
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference changes during a page fade, it should reveal the destination immediately', (
+      tester,
+    ) async {
+      const builder = MateoPageTransitionsBuilder(transition: .fade());
+      final pages = ValueNotifier<List<Page<void>>>([_TestPage(id: 'source', builder: builder)]);
+      final reduced = ValueNotifier(false);
+      addTearDown(pages.dispose);
+      addTearDown(reduced.dispose);
+      await tester.pumpWidget(_app(pages, reduced: reduced, reduceMotionPreference: preference == 'reduceMotion'));
+      pages.value = [...pages.value, _TestPage(id: 'destination', builder: builder)];
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      reduced.value = true;
+      await tester.pump();
+      expect(_fadeOpacity(tester, 'destination'), 1);
+      await tester.pumpAndSettle();
+    });
+  }
+
   test('when equivalent configurations are created, they should have value equality', () {
     expect(const MateoPageTransition.wash(), const MateoPageTransition.wash());
     expect(const MateoPageTransition.wash(), isNot(const MateoPageTransition.push()));
@@ -341,7 +361,11 @@ Offset _slideOffset({
 
 final _theme = MateoThemeData.light(accentColor: const Color(0xFF7551FF), onAccent: const Color(0xFFFFFFFF));
 
-Widget _app(ValueNotifier<List<Page<void>>> pages, {ValueNotifier<bool>? reduced}) => MateoApp(
+Widget _app(
+  ValueNotifier<List<Page<void>>> pages, {
+  ValueNotifier<bool>? reduced,
+  bool reduceMotionPreference = false,
+}) => MateoApp(
   theme: _theme,
   home: ValueListenableBuilder<List<Page<void>>>(
     valueListenable: pages,
@@ -357,7 +381,10 @@ Widget _app(ValueNotifier<List<Page<void>>> pages, {ValueNotifier<bool>? reduced
       : (context, child) => ValueListenableBuilder<bool>(
           valueListenable: reduced,
           builder: (context, value, _) => MediaQuery(
-            data: MediaQueryData(disableAnimations: value),
+            data: MediaQueryData(
+              disableAnimations: !reduceMotionPreference && value,
+              reduceMotion: reduceMotionPreference && value,
+            ),
             child: child!,
           ),
         ),

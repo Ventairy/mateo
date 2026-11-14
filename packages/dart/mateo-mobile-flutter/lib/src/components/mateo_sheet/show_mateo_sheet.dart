@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show MaterialLocalizations;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart' show GlobalMaterialLocalizations, MaterialLocalizations;
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
 import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
@@ -96,7 +95,10 @@ Future<T?> showMateoSheet<T>({
       theme: MateoTheme.of(context),
       capturedThemes: InheritedTheme.capture(from: context, to: navigator.context),
       direction: Directionality.of(context),
-      reducedMotion: MediaQuery.maybeDisableAnimationsOf(context) ?? false,
+      motionPreferences: (
+        disableAnimations: MediaQuery.maybeDisableAnimationsOf(context) ?? false,
+        reduceMotion: MediaQuery.maybeReduceMotionOf(context) ?? false,
+      ),
     ),
   );
 }

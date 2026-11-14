@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show FadeForwardsPageTransitionsBuilder, PredictiveBackPageTransitionsBuilder;
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart'
+    show FadeForwardsPageTransitionsBuilder, PredictiveBackPageTransitionsBuilder;
 
 import '../../bases/base_mateo_page_route/base_mateo_page_route.dart';
 import '../../components/mateo_page_transition/mateo_page_transition.dart';
@@ -67,7 +68,8 @@ class MateoPage<T> extends Page<T> {
 
   @override
   PageRoute<T> createRoute(BuildContext context) {
-    final reducedMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final reducedMotion =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
 
     if (transition != null) {
       return _MateoPageRoute<T>(page: this, reducedMotion: reducedMotion);

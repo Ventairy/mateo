@@ -15,7 +15,8 @@ class _MateoPageTransitionMotion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reducedMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final reducedMotion =
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
     return ClipRect(
       child: ValueListenableBuilder<bool>(
         valueListenable: Navigator.of(context).userGestureInProgressNotifier,

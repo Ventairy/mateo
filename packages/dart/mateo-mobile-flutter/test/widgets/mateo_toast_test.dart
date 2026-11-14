@@ -22,7 +22,13 @@ void main() {
 
   final theme = MateoThemeData.light(accentColor: const Color(0xFF4A5CFF), onAccent: MateoPalette().white);
   late BuildContext context;
-  Future<void> mount(WidgetTester tester, {Widget? child, bool reducedMotion = false, bool router = false}) async {
+  Future<void> mount(
+    WidgetTester tester, {
+    Widget? child,
+    bool reducedMotion = false,
+    bool reduceMotion = false,
+    bool router = false,
+  }) async {
     final home = Builder(
       builder: (value) {
         context = value;
@@ -30,7 +36,7 @@ void main() {
       },
     );
     Widget wrap(BuildContext context, Widget? child) => MediaQuery(
-      data: MediaQuery.of(context).copyWith(disableAnimations: reducedMotion),
+      data: MediaQuery.of(context).copyWith(disableAnimations: reducedMotion, reduceMotion: reduceMotion),
       child: child!,
     );
     await tester.pumpWidget(
@@ -72,6 +78,21 @@ void main() {
       find.ancestor(of: getToast(), matching: find.byType(FadeTransition)).first,
     );
     return fade.opacity.value;
+  }
+
+  for (final preference in ['disableAnimations', 'reduceMotion']) {
+    testWidgets('when $preference is requested by its caller, it should dismiss a toast immediately', (tester) async {
+      await mount(
+        tester,
+        reducedMotion: preference == 'disableAnimations',
+        reduceMotion: preference == 'reduceMotion',
+      );
+      show(dismissible: false);
+      await tester.pump();
+      dismissMateoToast(context: context);
+      await tester.pump();
+      expect(getToast(), findsNothing);
+    });
   }
 
   for (final router in [false, true]) {

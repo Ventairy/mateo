@@ -6272,7 +6272,7 @@ class _AbwPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 322.8)
@@ -6452,7 +6452,7 @@ class _AfgPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(145, 0)
@@ -6803,7 +6803,7 @@ class _AgoPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -7145,7 +7145,7 @@ class _AiaPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -7491,7 +7491,7 @@ class _AlaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -7657,7 +7657,7 @@ class _AlbPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -7953,7 +7953,7 @@ class _AndPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -8264,7 +8264,7 @@ class _ArePainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -8413,7 +8413,7 @@ class _ArgPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -8570,7 +8570,7 @@ class _ArmPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 171)
@@ -8735,7 +8735,7 @@ class _AscPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -8968,7 +8968,7 @@ class _AsmPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(512, 20.4)
@@ -9199,7 +9199,7 @@ class _AtaPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -9342,7 +9342,7 @@ class _AtfPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -9568,7 +9568,7 @@ class _AtgPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0.4)
@@ -9732,7 +9732,7 @@ class _AusPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -9971,7 +9971,7 @@ class _AutPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -10111,7 +10111,7 @@ class _AzePainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -10414,7 +10414,7 @@ class _BdiPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -10619,7 +10619,7 @@ class _BelPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -10756,7 +10756,7 @@ class _BenPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -10907,7 +10907,7 @@ class _BesPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(113.7, 119.8)
@@ -11264,7 +11264,7 @@ class _BfaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -11396,7 +11396,7 @@ class _BgdPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -11521,7 +11521,7 @@ class _BgrPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 166.9)
@@ -11648,7 +11648,7 @@ class _BhrPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -11788,7 +11788,7 @@ class _BhsPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -11927,7 +11927,7 @@ class _BihPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -12157,7 +12157,7 @@ class _BlmPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -12539,7 +12539,7 @@ class _BlrPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -12733,7 +12733,7 @@ class _BlzPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 44.5)
@@ -12935,7 +12935,7 @@ class _BmuPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -13157,7 +13157,7 @@ class _BolPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -13301,7 +13301,7 @@ class _BraPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -13585,7 +13585,7 @@ class _BrbPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -13759,7 +13759,7 @@ class _BrnPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -14136,7 +14136,7 @@ class _BtnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -14310,7 +14310,7 @@ class _BvtPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -14485,7 +14485,7 @@ class _BwaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -14647,7 +14647,7 @@ class _CafPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 378.4)
@@ -14815,7 +14815,7 @@ class _CanPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -14973,7 +14973,7 @@ class _CckPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -15418,7 +15418,7 @@ class _ChePainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -15553,7 +15553,7 @@ class _ChlPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -15691,7 +15691,7 @@ class _ChnPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -15868,7 +15868,7 @@ class _CivPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -16005,7 +16005,7 @@ class _CmrPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(144.8, 0)
@@ -16156,7 +16156,7 @@ class _CodPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -16314,7 +16314,7 @@ class _CogPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(384, 0)
@@ -16451,7 +16451,7 @@ class _CokPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -16711,7 +16711,7 @@ class _ColPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 384)
@@ -16862,7 +16862,7 @@ class _ComPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(96, 128)
@@ -17170,7 +17170,7 @@ class _CpvPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -17433,7 +17433,7 @@ class _CriPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -17587,7 +17587,7 @@ class _CubPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -17760,7 +17760,7 @@ class _CuwPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -17925,7 +17925,7 @@ class _CxrPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -18257,7 +18257,7 @@ class _CymPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -18529,7 +18529,7 @@ class _CypPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -18785,7 +18785,7 @@ class _CzePainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -18920,7 +18920,7 @@ class _DeuPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 345)
@@ -19064,7 +19064,7 @@ class _DjiPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -19230,7 +19230,7 @@ class _DmaPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -19640,7 +19640,7 @@ class _DnkPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -19795,7 +19795,7 @@ class _DomPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(35.5, 256)
@@ -20120,7 +20120,7 @@ class _DzaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -20420,7 +20420,7 @@ class _EcuPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 384)
@@ -20747,7 +20747,7 @@ class _EgyPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144)
@@ -20914,7 +20914,7 @@ class _EriPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -21199,7 +21199,7 @@ class _EshPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(90.1, 144.8)
@@ -21477,7 +21477,7 @@ class _EspPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 128)
@@ -23617,7 +23617,7 @@ class _EstPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -23761,7 +23761,7 @@ class _EthPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 345)
@@ -23926,7 +23926,7 @@ class _FinPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -24081,7 +24081,7 @@ class _FjiPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -24314,7 +24314,7 @@ class _FlkPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -24540,7 +24540,7 @@ class _FraPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -24677,7 +24677,7 @@ class _FroPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -24843,7 +24843,7 @@ class _FsmPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -25009,7 +25009,7 @@ class _GabPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -25146,7 +25146,7 @@ class _GbrPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -25376,7 +25376,7 @@ class _GeoPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -25580,7 +25580,7 @@ class _GgyPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -25758,7 +25758,7 @@ class _GhaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -25907,7 +25907,7 @@ class _GibPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 345)
@@ -26284,7 +26284,7 @@ class _GinPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -26428,7 +26428,7 @@ class _GlpPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 176)
@@ -27150,7 +27150,7 @@ class _GmbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 155.8)
@@ -27311,7 +27311,7 @@ class _GnbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -27479,7 +27479,7 @@ class _GnqPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(41.3, 121.9)
@@ -27786,7 +27786,7 @@ class _GrcPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -27964,7 +27964,7 @@ class _GrdPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(23.6, 23.7)
@@ -28248,7 +28248,7 @@ class _GrlPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -28494,7 +28494,7 @@ class _GtmPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -28805,7 +28805,7 @@ class _GufPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -28961,7 +28961,7 @@ class _GumPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -29196,7 +29196,7 @@ class _GuyPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(77.7, 0)
@@ -29347,7 +29347,7 @@ class _HkgPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -29732,7 +29732,7 @@ class _HmdPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -29971,7 +29971,7 @@ class _HndPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -30169,7 +30169,7 @@ class _HrvPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -30497,7 +30497,7 @@ class _HtiPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -30673,7 +30673,7 @@ class _HunPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -30800,7 +30800,7 @@ class _IdnPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -30918,7 +30918,7 @@ class _ImnPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -31072,7 +31072,7 @@ class _IndPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 160)
@@ -31251,7 +31251,7 @@ class _IotPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -31812,7 +31812,7 @@ class _IrlPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -31949,7 +31949,7 @@ class _IrnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -32150,7 +32150,7 @@ class _IrqPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -32471,7 +32471,7 @@ class _IslPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -32636,7 +32636,7 @@ class _IsrPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -32826,7 +32826,7 @@ class _ItaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -32963,7 +32963,7 @@ class _JamPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(23.3, 488.6)
@@ -33118,7 +33118,7 @@ class _JeyPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 47.1)
@@ -33289,7 +33289,7 @@ class _JorPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(126, 158)
@@ -33444,7 +33444,7 @@ class _JpnPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -33559,7 +33559,7 @@ class _KazPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -33778,7 +33778,7 @@ class _KenPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -34002,7 +34002,7 @@ class _KgzPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -34275,7 +34275,7 @@ class _KhmPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -34438,7 +34438,7 @@ class _KirPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -34772,7 +34772,7 @@ class _KnaPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 401.9)
@@ -34957,7 +34957,7 @@ class _KorPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -35301,7 +35301,7 @@ class _KwtPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(138.4, 147)
@@ -35447,7 +35447,7 @@ class _LaoPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -35586,7 +35586,7 @@ class _LbnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -35730,7 +35730,7 @@ class _LbrPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 232.7)
@@ -35933,7 +35933,7 @@ class _LbyPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144)
@@ -36238,7 +36238,7 @@ class _LcaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -36381,7 +36381,7 @@ class _LiePainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -36623,7 +36623,7 @@ class _LkaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(81.4, 27.2)
@@ -36868,7 +36868,7 @@ class _LsoPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -37050,7 +37050,7 @@ class _LtuPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -37187,7 +37187,7 @@ class _LuxPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -37314,7 +37314,7 @@ class _LvaPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -37447,7 +37447,7 @@ class _MacPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -37666,7 +37666,7 @@ class _MafPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 128)
@@ -37813,7 +37813,7 @@ class _MarPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -37963,7 +37963,7 @@ class _McoPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -38098,7 +38098,7 @@ class _MdaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -38456,7 +38456,7 @@ class _MdgPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -38593,7 +38593,7 @@ class _MdvPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -38900,7 +38900,7 @@ class _MexPainter extends CustomPainter {
   final Color color7;
   final Color color8;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(144, 0)
@@ -39963,7 +39963,7 @@ class _MhlPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -40112,7 +40112,7 @@ class _MkdPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -40302,7 +40302,7 @@ class _MliPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -40439,7 +40439,7 @@ class _MltPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -40590,7 +40590,7 @@ class _MmrPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -40751,7 +40751,7 @@ class _MnePainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -41073,7 +41073,7 @@ class _MngPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -41448,7 +41448,7 @@ class _MnpPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -42708,7 +42708,7 @@ class _MozPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(99, 136.8)
@@ -42903,7 +42903,7 @@ class _MrtPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -43168,7 +43168,7 @@ class _MsrPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -43376,7 +43376,7 @@ class _MtqPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -43518,7 +43518,7 @@ class _MusPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 378.3)
@@ -43667,7 +43667,7 @@ class _MwiPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -43826,7 +43826,7 @@ class _MysPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -44168,7 +44168,7 @@ class _MytPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -45938,7 +45938,7 @@ class _NamPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 401.9)
@@ -46129,7 +46129,7 @@ class _NclPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 352)
@@ -46844,7 +46844,7 @@ class _NerPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -46977,7 +46977,7 @@ class _NfkPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -47111,7 +47111,7 @@ class _NgaPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -47258,7 +47258,7 @@ class _NicPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -47632,7 +47632,7 @@ class _NiuPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -47845,7 +47845,7 @@ class _NldPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -47982,7 +47982,7 @@ class _NorPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -48157,7 +48157,7 @@ class _NplPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(228.4, 0)
@@ -48385,7 +48385,7 @@ class _NruPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -48542,7 +48542,7 @@ class _NzlPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -48802,7 +48802,7 @@ class _OmnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(189.2, 0)
@@ -48947,7 +48947,7 @@ class _PakPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -49232,7 +49232,7 @@ class _PanPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -49425,7 +49425,7 @@ class _PcnPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -49646,7 +49646,7 @@ class _PerPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -49786,7 +49786,7 @@ class _PhlPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -49970,7 +49970,7 @@ class _PlwPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -50102,7 +50102,7 @@ class _PngPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(512, 512)
@@ -50519,7 +50519,7 @@ class _PolPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -50647,7 +50647,7 @@ class _PriPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(27, 63.3)
@@ -50808,7 +50808,7 @@ class _PrkPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -50982,7 +50982,7 @@ class _PrtPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 512)
@@ -51201,7 +51201,7 @@ class _PryPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -51520,7 +51520,7 @@ class _PsePainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(41.3, 121.9)
@@ -51672,7 +51672,7 @@ class _PyfPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -51926,7 +51926,7 @@ class _QatPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -52069,7 +52069,7 @@ class _ReuPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(64, 0)
@@ -52233,7 +52233,7 @@ class _RouPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -52370,7 +52370,7 @@ class _RusPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(512, 170)
@@ -52507,7 +52507,7 @@ class _RwaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 378.5)
@@ -52658,7 +52658,7 @@ class _SauPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -53241,7 +53241,7 @@ class _SdnPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(43.6, 109.4)
@@ -53386,7 +53386,7 @@ class _SenPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(144.8, 0)
@@ -53527,7 +53527,7 @@ class _SgpPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -53851,7 +53851,7 @@ class _SgsPainter extends CustomPainter {
   final Color color8;
   final Color color9;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -54104,7 +54104,7 @@ class _ShnPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -54553,7 +54553,7 @@ class _SjmPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -54735,7 +54735,7 @@ class _SlbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(512, 512)
@@ -54933,7 +54933,7 @@ class _SlePainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -55077,7 +55077,7 @@ class _SlvPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -55393,7 +55393,7 @@ class _SmrPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -55872,7 +55872,7 @@ class _SomPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -56019,7 +56019,7 @@ class _SpmPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(160, 0)
@@ -56275,7 +56275,7 @@ class _SrbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -56645,7 +56645,7 @@ class _SsdPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(74.1, 115)
@@ -56824,7 +56824,7 @@ class _StpPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -56997,7 +56997,7 @@ class _SurPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -57161,7 +57161,7 @@ class _SvkPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 160)
@@ -57435,7 +57435,7 @@ class _SvnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -57583,7 +57583,7 @@ class _SwePainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -57744,7 +57744,7 @@ class _SwzPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 145)
@@ -57965,7 +57965,7 @@ class _SxmPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -58309,7 +58309,7 @@ class _SycPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -58474,7 +58474,7 @@ class _SyrPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -58649,7 +58649,7 @@ class _TaaPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -58917,7 +58917,7 @@ class _TcaPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -59206,7 +59206,7 @@ class _TcdPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(167, 0)
@@ -59357,7 +59357,7 @@ class _TgoPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -59533,7 +59533,7 @@ class _ThaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -59687,7 +59687,7 @@ class _TjkPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -59915,7 +59915,7 @@ class _TklPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -60168,7 +60168,7 @@ class _TkmPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -60902,7 +60902,7 @@ class _TlsPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -61044,7 +61044,7 @@ class _TonPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -61188,7 +61188,7 @@ class _TtoPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 110.2)
@@ -61321,7 +61321,7 @@ class _TunPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -61593,7 +61593,7 @@ class _TurPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -61876,7 +61876,7 @@ class _TuvPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -62165,7 +62165,7 @@ class _TwnPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -62336,7 +62336,7 @@ class _TzaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(399, 0)
@@ -62493,7 +62493,7 @@ class _UgaPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 85)
@@ -62749,7 +62749,7 @@ class _UkrPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -62877,7 +62877,7 @@ class _UmiPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -63098,7 +63098,7 @@ class _UryPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -63286,7 +63286,7 @@ class _UsaPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -63514,7 +63514,7 @@ class _UzbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 178)
@@ -63885,7 +63885,7 @@ class _VatPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -64417,7 +64417,7 @@ class _VctPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(378.5, 0)
@@ -64576,7 +64576,7 @@ class _VenPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 144.7)
@@ -64835,7 +64835,7 @@ class _VgbPainter extends CustomPainter {
   final Color color6;
   final Color color7;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -65129,7 +65129,7 @@ class _VirPainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -65356,7 +65356,7 @@ class _VnmPainter extends CustomPainter {
   final Color color1;
   final Color color2;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -65491,7 +65491,7 @@ class _VutPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(512, 223)
@@ -65809,7 +65809,7 @@ class _WlfPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(256, 0)
@@ -65972,7 +65972,7 @@ class _WsmPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 256)
@@ -66158,7 +66158,7 @@ class _XkkPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -66384,7 +66384,7 @@ class _YemPainter extends CustomPainter {
   final Color color2;
   final Color color3;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 167)
@@ -66542,7 +66542,7 @@ class _ZafPainter extends CustomPainter {
   final Color color5;
   final Color color6;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -66725,7 +66725,7 @@ class _ZmbPainter extends CustomPainter {
   final Color color3;
   final Color color4;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(0, 0)
@@ -67001,7 +67001,7 @@ class _ZwePainter extends CustomPainter {
   final Color color4;
   final Color color5;
 
-  final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Path __path0 = Path()
     ..moveTo(31.4, 0)
