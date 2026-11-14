@@ -124,15 +124,15 @@ Future<void> main() async {
                       items: const [
                         MateoMenuOptionsPresentationItem(
                           leading: MateoLogo(.googleMessages),
-                          principal: Text('Google Messages'),
+                          principal: MateoText('Google Messages', presentation: .interface()),
                         ),
                         MateoMenuOptionsPresentationItem(
                           leading: MateoLogo(.phoneByGoogle),
-                          principal: Text('Phone by Google'),
+                          principal: MateoText('Phone by Google', presentation: .interface()),
                         ),
                         MateoMenuOptionsPresentationItem(
                           leading: MateoLogo(.cataqui),
-                          principal: Text('Cataquí'),
+                          principal: MateoText('Cataquí', presentation: .interface()),
                         ),
                       ],
                     ),
