@@ -10,6 +10,7 @@ import '../../theme/color_scheme/mateo_color_scheme.dart';
 import '../../theme/mateo_theme.dart';
 import '../mateo_icon/mateo_icon_scope.dart';
 import '../mateo_loading_indicator/mateo_loading_indicator.dart';
+import '../mateo_logo/mateo_logo_scope.dart';
 import '../mateo_press/mateo_press.dart';
 import '../mateo_surface/mateo_surface.dart';
 import '../mateo_text/mateo_text.dart';

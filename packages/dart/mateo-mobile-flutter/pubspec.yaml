@@ -43,6 +43,7 @@ dotdart:
   svg:
     - assets/icons/
     - assets/flags/
+    - assets/logos/
   lottie:
     - assets/animated_icons/
   image:
@@ -52,6 +53,7 @@ flutter:
   assets:
     - assets/flags/
     - assets/icons/
+    - assets/logos/
     - assets/animated_icons/
     - assets/three_d_icons/
   fonts:

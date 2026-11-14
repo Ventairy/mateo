@@ -75,7 +75,10 @@ class _MateoMenuOptionsPresentationRow extends StatelessWidget {
                     size: _iconSize,
                     sizeWithBackground: _iconSizeWithBackground,
                     color: leadingColor,
-                    child: item.leading!,
+                    child: MateoLogoScope(
+                      size: _iconSize,
+                      child: item.leading!,
+                    ),
                   ),
                 if (item.leading != null && (item.principal != null || item.supporting != null))
                   SizedBox(width: _leadingGap),

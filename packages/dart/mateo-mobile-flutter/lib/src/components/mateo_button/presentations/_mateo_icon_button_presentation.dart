@@ -119,7 +119,10 @@ class _MateoIconButtonPresentationState extends State<_MateoIconButtonPresentati
                           child: MateoIconScope(
                             size: dimensions.iconSize,
                             color: foreground,
-                            child: widget.icon,
+                            child: MateoLogoScope(
+                              size: dimensions.iconSize,
+                              child: widget.icon,
+                            ),
                           ),
                         ),
                       ),

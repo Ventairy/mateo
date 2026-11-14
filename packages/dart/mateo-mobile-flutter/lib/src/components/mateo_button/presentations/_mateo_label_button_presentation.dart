@@ -178,43 +178,46 @@ class _MateoLabelButtonPresentationState extends State<_MateoLabelButtonPresenta
             child: MateoIconScope(
               color: foreground,
               size: dimensions.iconSize,
-              child: Row(
-                mainAxisSize: .min,
-                children: [
-                  if (widget.leadingIcon != null) ...[
-                    widget.leadingIcon!,
-                    const SizedBox(width: 4),
-                  ],
-                  Flexible(
-                    child: FittedBox(
-                      fit: .scaleDown,
-                      alignment: contentAlignment,
-                      child: MateoTextScope(
-                        inherit: false,
-                        child: MateoText(
-                          widget.label,
-                          presentation: .interface(
-                            fontSize: .custom(dimensions.fontSize),
-                            height: dimensions.lineHeight / dimensions.fontSize,
-                            fontWeight: .w600,
-                            color: foreground,
-                            maxLines: 1,
-                            softWrap: false,
-                            textAlign: switch (widget.alignment) {
-                              .left => .left,
-                              .center => .center,
-                              .right => .right,
-                            },
+              child: MateoLogoScope(
+                size: dimensions.iconSize,
+                child: Row(
+                  mainAxisSize: .min,
+                  children: [
+                    if (widget.leadingIcon != null) ...[
+                      widget.leadingIcon!,
+                      const SizedBox(width: 4),
+                    ],
+                    Flexible(
+                      child: FittedBox(
+                        fit: .scaleDown,
+                        alignment: contentAlignment,
+                        child: MateoTextScope(
+                          inherit: false,
+                          child: MateoText(
+                            widget.label,
+                            presentation: .interface(
+                              fontSize: .custom(dimensions.fontSize),
+                              height: dimensions.lineHeight / dimensions.fontSize,
+                              fontWeight: .w600,
+                              color: foreground,
+                              maxLines: 1,
+                              softWrap: false,
+                              textAlign: switch (widget.alignment) {
+                                .left => .left,
+                                .center => .center,
+                                .right => .right,
+                              },
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  if (widget.trailingIcon != null) ...[
-                    const SizedBox(width: 4),
-                    widget.trailingIcon!,
+                    if (widget.trailingIcon != null) ...[
+                      const SizedBox(width: 4),
+                      widget.trailingIcon!,
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),

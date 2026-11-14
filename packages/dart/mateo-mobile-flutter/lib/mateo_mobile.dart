@@ -20,6 +20,8 @@ export 'src/components/mateo_icon/mateo_icon_scope.dart' show MateoIconScope;
 export 'src/components/mateo_icon/mateo_icon_style.dart' show MateoIconStyle;
 export 'src/components/mateo_loading_indicator/mateo_loading_indicator.dart'
     show MateoLoadingIndicator, MateoLoadingIndicatorPresentation;
+export 'src/components/mateo_logo/mateo_logo.dart' show MateoLogo, MateoLogoData;
+export 'src/components/mateo_logo/mateo_logo_scope.dart' show MateoLogoScope;
 export 'src/components/mateo_menu/mateo_menu.dart' show MateoMenu, MateoMenuPresentation;
 export 'src/components/mateo_menu/mateo_menu_density.dart' show MateoMenuDensity;
 export 'src/components/mateo_menu/mateo_menu_width.dart' show MateoMenuWidth;

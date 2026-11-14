@@ -11,6 +11,7 @@ import '../mateo_drag_resistance/mateo_drag_resistance.dart';
 import '../mateo_icon/mateo_icon.dart';
 import '../mateo_icon/mateo_icon_scope.dart';
 import '../mateo_loading_indicator/mateo_loading_indicator.dart';
+import '../mateo_logo/mateo_logo_scope.dart';
 import '../mateo_surface/mateo_surface.dart';
 import '../mateo_text/mateo_text.dart';
 import 'duration/mateo_toast_duration.dart';
@@ -40,9 +41,6 @@ class MateoToast extends StatelessWidget {
   final MateoToastStatus status;
 
   /// The optional replacement for the status icon or indicator.
-  ///
-  /// Mateo icons inherit the toast's size and color through [MateoIconScope].
-  /// Explicit icon properties take precedence over those defaults.
   final Widget? icon;
 
   /// Called when a person completes a tap on the toast.
@@ -107,7 +105,10 @@ class MateoToast extends StatelessWidget {
                       size: _iconSize,
                       sizeWithBackground: _iconSize,
                       color: colors.icon,
-                      child: icon ?? _defaultStatusVisual(colors.icon),
+                      child: MateoLogoScope(
+                        size: _iconSize,
+                        child: icon ?? _defaultStatusVisual(colors.icon),
+                      ),
                     ),
                   ),
                 ),
