@@ -11,6 +11,7 @@ import unittest
 from adjust_icon_sizes import adjust_icon_size
 
 ICONS = Path(__file__).resolve().parents[2] / "design-system/foundation/assets/icons/svg"
+LOGOS = ICONS.parents[1] / "logos"
 
 
 @lru_cache(maxsize=32)
@@ -23,7 +24,32 @@ def painted_height(name):
     return (row["source_bounds"][3] - row["source_bounds"][1]) * row["scale"]
 
 
+@lru_cache(maxsize=7)
+def logo_metrics(name):
+    return adjust_icon_size((LOGOS / f"{name}.svg").read_text())[1]
+
+
 class CatalogBalanceTests(unittest.TestCase):
+    def test_authored_color_telegram_has_enough_span_beside_the_black_envelope(self):
+        ratio = logo_metrics("telegram")["extent"] / metrics("envelope")["extent"]
+        self.assertGreater(ratio, 1.10)
+        self.assertLess(ratio, 1.18)
+
+    def test_mixed_catalog_review_keeps_color_marks_in_their_accepted_size_ranges(self):
+        # Reviewed beside filled, open, narrow, and outlined icons at 16–28px,
+        # bare and in circular/rounded containers. These are design guardrails,
+        # not a claim that occupied span alone predicts perceived size.
+        for name, lower, upper in (
+            ("cataqui", 16.5, 17.5), ("gmail", 15.7, 16.8),
+            ("google-messages", 16.5, 17.6), ("instagram", 16.8, 17.9),
+            ("phone_by_google", 14.7, 15.8), ("telegram", 17.3, 18.4),
+            ("whatsapp", 18.1, 19.2),
+        ):
+            with self.subTest(name=name):
+                extent = logo_metrics(name)["extent"]
+                self.assertGreater(extent, lower)
+                self.assertLess(extent, upper)
+
     def test_separated_running_pose_keeps_up_with_the_praying_pose(self):
         ratio = painted_height("running-figure") / painted_height("praying-figure")
         self.assertGreater(ratio, 0.94)

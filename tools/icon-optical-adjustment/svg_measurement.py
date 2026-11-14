@@ -57,12 +57,13 @@ class _Element:
 
 @dataclass(frozen=True)
 class Raster:
-    """Alpha coverage with bounds expressed in original SVG user coordinates."""
+    """Rendered coverage and straight sRGB, with bounds in SVG user coordinates."""
 
     alpha: np.ndarray
     origin: tuple[float, float]
     pixels_per_unit: float
     bounds: tuple[float, float, float, float]
+    rgb: np.ndarray
 
     @property
     def ink_area(self):
@@ -305,9 +306,8 @@ def render_alpha(source, *, pixels_per_unit=32, padding=10.0):
         png = resvg_py.svg_to_bytes(
             svg_string=document, skip_system_fonts=True, shape_rendering="geometric_precision"
         )
-        alpha = (
-            np.asarray(Image.open(io.BytesIO(png)).convert("RGBA"))[..., 3].astype(np.float64) / 255
-        )
+        rgba = np.asarray(Image.open(io.BytesIO(png)).convert("RGBA"))
+        alpha = rgba[..., 3].astype(np.float64) / 255
     except (ValueError, OSError) as error:
         raise ValueError(f"SVG rendering failed: {error}") from error
     if alpha.shape != (size, size):
@@ -325,4 +325,4 @@ def render_alpha(source, *, pixels_per_unit=32, padding=10.0):
         (xs[-1] + 1) / ppu - padding,
         (ys[-1] + 1) / ppu - padding,
     )
-    return Raster(alpha, (-padding, -padding), ppu, tuple(map(float, bounds)))
+    return Raster(alpha, (-padding, -padding), ppu, tuple(map(float, bounds)), rgba[..., :3])

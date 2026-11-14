@@ -20,7 +20,7 @@ def digest_file(path):
 
 def read_model(path=MODEL_PATH):
     data = json.loads(Path(path).read_text())
-    if not isinstance(data, dict) or data.get("schema") != "mateo.icon-presence-model.v2":
+    if not isinstance(data, dict) or data.get("schema") != "mateo.icon-presence-model.v3":
         raise ValueError("Unsupported icon presence model schema")
     try:
         _validate(data)
@@ -30,7 +30,7 @@ def read_model(path=MODEL_PATH):
 
 
 def _validate(data):
-    if data["model"] != "mateo-optical-5.3":
+    if data["model"] != "mateo-optical-6.0":
         raise ValueError("Unsupported optical model")
     for name in (
         "reference_diameter",
@@ -44,6 +44,8 @@ def _validate(data):
         "broad_body_max_enlargement",
         "placement_weight",
         "placement_max_offset",
+        "appearance_weight",
+        "appearance_max_enlargement",
     ):
         value = data[name]
         if (
@@ -58,6 +60,18 @@ def _validate(data):
         raise ValueError("Invalid body calibration")
     if not 1 <= data["broad_body_max_enlargement"] <= 2:
         raise ValueError("Invalid broad-body enlargement limit")
+    if not 0 <= data["appearance_weight"] <= 1 or not 1 <= data["appearance_max_enlargement"] <= 2:
+        raise ValueError("Invalid appearance calibration")
+    channel_weights = data["appearance_channel_weights"]
+    if (
+        not isinstance(channel_weights, list)
+        or len(channel_weights) != 3
+        or any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v <= 0 for v in channel_weights)
+        or not math.isclose(sum(channel_weights), 1, abs_tol=1e-12)
+        or isinstance(data["appearance_levels"], bool)
+        or data["appearance_levels"] != 255
+    ):
+        raise ValueError("Invalid appearance channel or sampling calibration")
     if not 0 <= data["placement_weight"] <= 1 or not 0 < data["placement_max_offset"] <= 2:
         raise ValueError("Invalid placement calibration")
     for name in (
@@ -66,6 +80,8 @@ def _validate(data):
         "broad_body_concentration_rise",
         "broad_body_concentration_fall",
         "detached_ink_range",
+        "appearance_contrast_range",
+        "appearance_saturation_range",
     ):
         interval = data[name]
         if (

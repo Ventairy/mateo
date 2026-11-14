@@ -625,20 +625,20 @@ class _CataquiPainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.773691668,
+    0.848452469,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.773691668,
+    0.848452469,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.434034848,
-    2.748615594,
+    1.702945659,
+    2.047923926,
     0.0,
     1.0,
   ]);
@@ -765,20 +765,20 @@ class _GmailPainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.717051798,
+    0.810952697,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.717051798,
+    0.810952697,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.829495926,
-    2.978368836,
+    1.890488758,
+    2.058857191,
     0.0,
     1.0,
   ]);
@@ -999,20 +999,20 @@ class _GoogleMessagesPainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.754120644,
+    0.853174108,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.754120644,
+    0.853174108,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.465485093,
-    2.932456543,
+    1.475829391,
+    2.004137366,
     0.0,
     1.0,
   ]);
@@ -6768,8 +6768,8 @@ class _GoogleMessagesPainter extends CustomPainter {
     imageWidth: 0.99854976,
     imageHeight: 0.9982368,
   );
-  static final double _decodeWidth0 = _pattern0Geometry2.imageWidth * 0.754120644;
-  static final double _decodeHeight0 = _pattern0Geometry2.imageHeight * 0.754120644;
+  static final double _decodeWidth0 = _pattern0Geometry2.imageWidth * 0.853174108;
+  static final double _decodeHeight0 = _pattern0Geometry2.imageHeight * 0.853174108;
   static final List<List<_DotdartSvgPattern>> _patternDefinitions = [
     [_pattern0Geometry2],
   ];
@@ -6922,20 +6922,20 @@ class _InstagramPainter extends CustomPainter {
   final List<_DotdartSvgDecodedImage?> images;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.755849651,
+    0.865585988,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.755849651,
+    0.865585988,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.43981067,
-    2.443574078,
+    1.342201528,
+    1.346511319,
     0.0,
     1.0,
   ]);
@@ -21926,8 +21926,8 @@ class _InstagramPainter extends CustomPainter {
     imageWidth: 1.000001057,
     imageHeight: 1.000001057,
   );
-  static final double _decodeWidth0 = _pattern0Geometry0.imageWidth * 0.755849651;
-  static final double _decodeHeight0 = _pattern0Geometry0.imageHeight * 0.755849651;
+  static final double _decodeWidth0 = _pattern0Geometry0.imageWidth * 0.865585988;
+  static final double _decodeHeight0 = _pattern0Geometry0.imageHeight * 0.865585988;
   static final List<List<_DotdartSvgPattern>> _patternDefinitions = [
     [_pattern0Geometry0],
   ];
@@ -22076,20 +22076,20 @@ class _PhoneByGooglePainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.710274745,
+    0.768699896,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.710274745,
+    0.768699896,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    3.490526306,
-    2.462731459,
+    2.955075787,
+    1.842737502,
     0.0,
     1.0,
   ]);
@@ -22270,20 +22270,20 @@ class _TelegramPainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.775,
+    0.892734581,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.775,
+    0.892734581,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.250319859,
-    2.250148819,
+    1.073022643,
+    1.072825619,
     0.0,
     1.0,
   ]);
@@ -22434,20 +22434,20 @@ class _WhatsappPainter extends CustomPainter {
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.797633297,
+    0.934523164,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.797633297,
+    0.934523164,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.145532981,
-    1.90102249,
+    0.79754895,
+    0.511075555,
     0.0,
     1.0,
   ]);

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Adjust icon and logo size and placement using span, body, and detached-piece geometry.
+"""Balance icon and logo appearance using rendered contrast, span, and body geometry.
 
 Only one uniform transform is generated inside each existing 20px SVG frame.
 No filename, family, catalog statistic, or per-icon adjustment enters the model.
@@ -22,6 +22,7 @@ from pathlib import Path
 
 import optical_model
 import numpy as np
+from optical_appearance import appearance
 from optical_geometry import closure_measure, detached_ink_fraction, ink_concentration, layer_span
 from scipy import fft
 from svg_measurement import (
@@ -98,7 +99,7 @@ def _spectral_measurement(alpha, pixels_per_unit):
 
 
 def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
-    """Measure authored geometry; generated transforms do not become new inputs."""
+    """Measure size appearance and alpha placement without generated transforms."""
     original = unwrap(source)
     raw = render_alpha(original, pixels_per_unit=pixels_per_unit)
     x0, y0, x1, y1 = raw.bounds
@@ -112,7 +113,7 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     )
     raster = render_alpha(canonical, pixels_per_unit=pixels_per_unit)
     peak = float(raster.alpha.max())
-    alpha = raster.alpha / peak
+    alpha, appearance_metrics = appearance(raster, MODEL_DATA)
     support = layer_span(alpha, pixels_per_unit)
     width, height = support["width"], support["height"]
     diameter, axis_extent = support["diameter"], support["axis_extent"]
@@ -123,10 +124,10 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     vx = float(((xx - cx) ** 2 * alpha).sum() / mass)
     vy = float(((yy - cy) ** 2 * alpha).sum() / mass)
     orientation = (vy - vx) / (vy + vx)
-    # Re-render vectors at the analysis density, avoiding phase-dependent image
-    # enlargement and retaining native strokes and clipping behavior.
+    # Re-render at the analysis density, retaining strokes, RGB paint and clipping.
     analysis = render_alpha(canonical, pixels_per_unit=ANALYSIS_PIXELS_PER_UNIT)
-    coverage = analysis.alpha / float(analysis.alpha.max())
+    alpha_coverage = analysis.alpha / float(analysis.alpha.max())
+    coverage, _ = appearance(analysis, MODEL_DATA)
     closure = closure_measure(coverage, ANALYSIS_PIXELS_PER_UNIT, sigmas=CLOSURE_SIGMAS)
     # Express the softly filled support as a ratio so high-resolution ink area
     # remains authoritative. No blurred field is peak-normalized.
@@ -143,14 +144,18 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     diagonal_factor = (diameter / axis_extent) ** DIAGONAL_CUE_WEIGHT
     geometry_presence *= diagonal_factor
     frequencies, energy = _spectral_measurement(coverage, ANALYSIS_PIXELS_PER_UNIT)
-    body_center = np.mean(closure["body_centers"], axis=0) + analysis.origin
+    placement_closure = closure if np.array_equal(coverage, alpha_coverage) else closure_measure(
+        alpha_coverage, ANALYSIS_PIXELS_PER_UNIT, sigmas=CLOSURE_SIGMAS
+    )
+    body_center = np.mean(placement_closure["body_centers"], axis=0) + analysis.origin
     optical_center = FRAME / 2 + MODEL_DATA["placement_weight"] * (body_center - FRAME / 2)
     features = dict(
         width=width,
         height=height,
         axis_extent=axis_extent,
         diameter=diameter,
-        ink_area=area,
+        ink_area=float(raster.alpha.sum() / peak / pixels_per_unit**2),
+        appearance_ink_area=area,
         filled_area=filled_area,
         unoccupied_fraction=unoccupied_fraction,
         closure=closure["closure"],
@@ -167,6 +172,7 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
         peak_alpha=peak,
         body_center=body_center.tolist(),
         optical_center=optical_center.tolist(),
+        **appearance_metrics,
     )
     if not all(
         math.isfinite(value) for value in features.values() if isinstance(value, (int, float))
@@ -192,7 +198,7 @@ def _smooth_progress(value, interval):
 
 
 def measure(source, *, pixels_per_unit=PIXELS_PER_UNIT):
-    """Balance outer span with enclosed, narrow, and separated broad bodies."""
+    """Balance rendered size geometry and absolute color contrast independently."""
     if pixels_per_unit != PIXELS_PER_UNIT:
         raise ValueError("The fixed icon model requires 32 geometry samples per unit")
     _require_runtime()
@@ -254,7 +260,7 @@ def measure(source, *, pixels_per_unit=PIXELS_PER_UNIT):
         body_log_correction=correction,
         base_geometry_presence=features["geometry_presence"],
     )
-    features["geometry_presence"] *= math.exp(correction)
+    features["geometry_presence"] *= math.exp(correction) * features["color_presence_factor"]
     return replace(measured, features=features)
 
 
@@ -517,8 +523,8 @@ def main(argv=None):
                 model_details=dict(
                     parameters=MODEL_DATA,
                     parameters_sha256=optical_model.digest_file(optical_model.MODEL_PATH),
-                    formula="P(s) = P_span(s) * exp(w * log(P_body / P_span)); w combines enclosed and narrow-body evidence with bounded support for separated broad silhouettes.",
-                    inference="Deterministic geometry; no learned weights, downloads, fitting, or catalog statistics.",
+                    formula="P(s) = P_span(s) * exp(w * log(P_body / P_span)) * color_presence_factor; rendered contrast supplies size geometry and a bounded absolute color cue, while alpha supplies placement and containment.",
+                    inference="Deterministic light-background appearance and geometry; no learned weights, downloads, fitting, or catalog statistics.",
                 ),
                 input_directory=str(source_dir),
                 output_directory=str(destination),
@@ -541,7 +547,7 @@ def main(argv=None):
     limited = sum(metrics["limited"] for _, _, _, metrics in results)
     print(
         f"{len(results)} SVGs; {len(changes)} {'out of date' if args.check else 'updated'}; "
-        f"{limited} extent-limited; shared span and body geometry model."
+        f"{limited} extent-limited; shared appearance, span and body model."
     )
     return int(args.check and bool(changes))
 

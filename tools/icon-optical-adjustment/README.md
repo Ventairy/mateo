@@ -1,9 +1,10 @@
 # Adjust icon and logo size and placement optically
 
-The `mateo-optical-5.3` model balances outer span with enclosed, compact narrow,
-and separated broad bodies, then balances their placement inside the frame.
-It preserves the 5.2 sizing score. Every icon or logo receives one uniform scale
-and translation inside its existing 20px SVG frame. The
+The `mateo-optical-6.0` model balances rendered color contrast, outer span, and
+enclosed, compact narrow, and separated broad bodies. Size is calibrated for
+Mateo's light appearance; the original alpha geometry still owns placement and
+containment. Every icon or logo receives one uniform scale and translation
+inside its existing 20px SVG frame. The
 [icon foundation](../../design-system/foundation/icons.md) owns how exported
 assets are used.
 
@@ -94,11 +95,13 @@ placement rules. The measurement and validation JSON retain their existing
 `icons` result key for either catalog.
 
 The generated group scales and positions the complete logo together. Authored
-colors, gradients, masks, clipping, and embedded PNG bytes are preserved. Alpha
-coverage, including raster transparency, determines size and placement; the
-model does not weight visible colors or brightness. Review logos together at their actual
-display sizes, since equal geometry does not guarantee equal perceived weight
-across colors. This workflow does not copy logos into platform packages.
+colors, gradients, masks, clipping, and embedded PNG bytes are preserved.
+Rendered RGB contrast, including internal white details and raster transparency,
+contributes to size; alpha coverage determines placement and containment.
+Review logos and icons together at their actual display sizes on light surfaces
+and in existing inverse containers. The static artwork uses one calibration,
+not a different transform for every background. This workflow does not copy
+logos into platform packages.
 
 ## Package integration
 
@@ -113,6 +116,10 @@ painters from `packages/dart/` with the workspace's existing asset command:
 ```sh
 fvm dart run melos run gen --no-select
 ```
+
+Copy canonical logos byte-for-byte into the separate Flutter `assets/logos/`
+directory before running the same command. Review both the generated vector
+painters and embedded-image artwork against the canonical SVGs.
 
 From `packages/typescript/`, rebuild the framework-independent SVG delivery
 before the React package that consumes it:
@@ -167,14 +174,76 @@ viewport clipping remain effective. Keep source geometry near its 20px frame.
 
 [optical-model.json](optical-model.json) owns all calibration constants and
 package versions. [optical_model.py](optical_model.py) validates them.
-[optical_geometry.py](optical_geometry.py) measures coverage, span, enclosure,
-and spatial moments. [adjust_icon_sizes.py](adjust_icon_sizes.py) owns the
-presence score, scale solver, and final placement.
+[optical_appearance.py](optical_appearance.py) supplies rendered size evidence.
+[optical_geometry.py](optical_geometry.py) measures its span, enclosure, and
+spatial moments. [adjust_icon_sizes.py](adjust_icon_sizes.py) owns the presence
+score, scale solver, and alpha-based placement.
 
-The reference is a synthetic 20-unit disk displayed at 15.5px. Each drawing is
-first measured in a canonical 20-unit occupied span. Relative alpha coverage
-is normalized by its peak, preserving global-opacity invariance. Input colors
-are not part of the size or placement measurements.
+The reference is a synthetic black 20-unit disk displayed at 15.5px. Each
+drawing is first measured in a canonical 20-unit occupied alpha span. Relative
+alpha is normalized by its peak, preserving authored-global-opacity invariance.
+Only rendered paint enters the measurement: filenames, hidden RGB under zero
+alpha, occluded paths, and unused definitions do not select a correction.
+
+### Rendered appearance
+
+The reference background is white. Composite the rendered straight sRGB over
+white using the normalized alpha. For each encoded channel, subtract the result
+from one, square the difference, and weight red, green, and blue by 0.2126,
+0.7152, and 0.0722. The square root of their sum is the contrast field, C.
+These coefficients are used on **encoded sRGB** here, not as a linear-light
+luminance formula. This is a calibrated channel-contrast proxy, not a
+perceptually uniform color distance or a human-size prediction formula.
+
+For black paint this field equals the original normalized alpha. A white motif
+inside colored paint becomes background-like size evidence, just as an
+equivalent transparent cutout does on white. The same visible appearance can
+therefore supply the same size evidence without special-casing a company name.
+
+Keep absolute contrast separately. Its amplitude A is the sum of C squared
+divided by the sum of C; an empty contrast field has amplitude zero. Invisible
+padding contributes nothing. For uniformly colored solid interiors this
+approaches their channel contrast, while tiny dark details contribute according
+to their visible area rather than selecting the cue through a maximum alone.
+
+The high-contrast shoulder rises smoothly from zero at A = 0.75 to one at
+A = 0.95. Move A toward one by that shoulder fraction. This preserves the
+established black-glyph calibration instead of enlarging a black shape merely
+because it has more antialiased edge pixels.
+
+For size geometry, divide C by the smaller of its peak and this effective
+amplitude, limiting coverage to one. Distributed contrast supplies the
+normalization: adding one tiny black accent to a blue mark cannot halve the
+weight of the rest of its body by changing a single maximum pixel. Ordinary
+high-contrast black glyphs keep their alpha-based size coverage; genuinely
+fractional, low-contrast fields can receive different appearance coverage.
+
+Confidence rises smoothly from zero at distributed amplitude 0.04 to one at 0.12,
+using the same cubic progress curve as the body cues below. Blend from alpha
+geometry to the normalized contrast geometry by that confidence. Above zero
+confidence, round coverage to the nearest of 256 levels, keeping span and
+connectedness analysis bounded even for raster gradients. With zero
+confidence, retain alpha geometry. Very pale or white artwork remains valid
+for inverse use; the tool does not try to make invisible white-on-white paint
+visible through unlimited enlargement.
+
+Raise this effective amplitude to 0.2 and limit the result to at least 1/1.2.
+Raise that bounded factor to the appearance confidence, then multiply the
+span/body presence by it before the existing solver. The absolute-color cue
+alone can request at most 20% enlargement. Contrast geometry can independently
+change the shape score, and the final alpha-bound limit always takes precedence.
+
+Reports include contrast peak, amplitude, effective amplitude, confidence,
+color presence factor, and appearance coverage area. Their physical ink area
+remains alpha-based.
+One static transform cannot equalize every background, semantic recoloring, or
+person's perception; use mixed-catalog visual review as acceptance evidence.
+Global-opacity invariance is intentional: changing an entire asset's opacity
+does not change its intrinsic size, even when a different opaque gray could
+produce the same colors on a particular background.
+The renderer's 8-bit premultiplied-color rounding can still cause subpixel
+differences when a globally translucent source is reconstructed; numerical
+checks allow 0.05px for rendered colored-opacity comparisons.
 
 ### Span and body
 
@@ -298,6 +367,14 @@ The research informs the choice of multiple cues and the need for visual review:
 - [Bertulis et al., 2025](https://pmc.ncbi.nlm.nih.gov/articles/PMC12497920/)
   studied differences in perceived extent and the role of contours. Coverage
   and enclosed extent are consequently treated as separate cues here.
+- [Smart and Szafir, 2019](https://cmci.colorado.edu/visualab/papers/measuring_separability_CHI_2019.pdf)
+  found that shape and shape pairs influence size judgments, including cases
+  where sparse marks appear larger than denser ones. Contrast mass alone is
+  consequently insufficient for the shared score.
+- [Zhang et al., 2018](https://www.mdpi.com/2411-5150/2/3/28)
+  found contextual effects of color and luminance differences on a size
+  illusion. This supports reviewing mixed colors in context; it does not
+  validate a universal conversion from contrast to displayed size.
 
 Uniform scaling cannot independently equalize stroke weight and apparent size.
 Inspect the actual drawing at its intended size. A safety cap may prevent a
@@ -326,6 +403,31 @@ regressions, including separated figures and decorated objects, compact narrow
 objects, the calendar/clock pair, enclosed head, local-cavity symbols, dense tiles,
 and open stroke symbols. Those ranges supplement the independent geometry tests;
 filenames never enter the model itself.
+
+Mixed icon/logo acceptance ranges also protect the reviewed color calibration,
+including the envelope/Telegram regression. A matching numeric frame does not
+by itself imply a matching apparent size.
+
+Review both catalogs together with their separate namespaces and authored logo
+colors:
+
+```sh
+"$ICON_PY" "$ICON_TOOLS/render_mixed_sizes.py" \
+  --icons "$ICON_OUTPUT/adjusted" \
+  --logos "$ICON_OUTPUT/adjusted-logos" \
+  --before-icons design-system/foundation/assets/icons/svg \
+  --before-logos design-system/foundation/assets/logos \
+  --output-dir "$ICON_OUTPUT/mixed-preview"
+```
+
+This repeats all logos beside 25 representative icons at 16, 20, 24, and 28px,
+on light and inverse surfaces with bare, circular, and rounded-square contexts.
+Icons use the context foreground; logos retain authored colors. The optional
+paired `--before-icons` and `--before-logos` arguments add the envelope/Telegram
+before/after comparison. Density defaults to 2 and also accepts 1 or 3. Keep
+before catalogs until the review is complete, and inspect the final Flutter
+component goldens as well. Inverse contrast can still differ because one static
+asset transform cannot equalize every color against every background.
 
 The renderer accepts `--size 16`, `20`, `24`, or `28`, `--density 1`, `2`, or `3`,
 and repeated `--pair FIRST,SECOND` options. Review PNGs at their intended display

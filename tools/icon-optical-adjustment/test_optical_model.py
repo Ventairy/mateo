@@ -43,6 +43,15 @@ class ModelTests(unittest.TestCase):
             "broad_body_concentration_fall": ([0.6, 0.9], [True, 1], [0.8, math.inf]),
             "detached_ink_range": ([-1, 0.1], [0.2, 0.1], [0, math.nan]),
             "broad_body_max_enlargement": (0.9, 2.1, True, math.inf),
+            "appearance_weight": (-.1, 1.1, True, math.nan),
+            "appearance_max_enlargement": (.9, 2.1, True, math.inf),
+            "appearance_channel_weights": (
+                [], [.5, .5], [1, 0, 0], [-.1, .6, .5], [.2, .7, .2],
+                [True, .5, .5], [math.nan, .5, .5], [math.inf, .5, .5],
+            ),
+            "appearance_levels": (0, 32, 256, True, math.nan),
+            "appearance_contrast_range": ([], [.1], [.1, .1], [-.1, .2], [0, 1.1], [math.nan, 1]),
+            "appearance_saturation_range": ([], [.95, .75], [True, 1], [0, math.inf]),
         }.items():
             for value in values:
                 with self.subTest(name=name, value=value), tempfile.TemporaryDirectory() as temporary:
@@ -54,7 +63,11 @@ class ModelTests(unittest.TestCase):
                         model.read_model(path)
 
     def test_missing_calibration_is_rejected(self):
-        for name in ("body_area_weight", "reference_diameter", "packages"):
+        for name in (
+            "body_area_weight", "reference_diameter", "packages", "appearance_weight",
+            "appearance_max_enlargement", "appearance_channel_weights", "appearance_levels",
+            "appearance_contrast_range", "appearance_saturation_range",
+        ):
             with self.subTest(missing=name), tempfile.TemporaryDirectory() as temporary:
                 data = model.read_model()
                 del data[name]

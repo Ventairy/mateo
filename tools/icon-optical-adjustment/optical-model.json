@@ -1,6 +1,12 @@
 {
-  "schema": "mateo.icon-presence-model.v2",
-  "model": "mateo-optical-5.3",
+  "schema": "mateo.icon-presence-model.v3",
+  "model": "mateo-optical-6.0",
+  "appearance_channel_weights": [0.2126, 0.7152, 0.0722],
+  "appearance_weight": 0.2,
+  "appearance_max_enlargement": 1.2,
+  "appearance_contrast_range": [0.04, 0.12],
+  "appearance_saturation_range": [0.75, 0.95],
+  "appearance_levels": 255,
   "placement_weight": 0.5,
   "placement_max_offset": 1.0,
   "reference_diameter": 15.5,
@@ -30,7 +36,7 @@
     "scipy": "1.15.3",
     "scikit-image": "0.25.2"
   },
-  "calibration": "Fixed design calibration, not a fitted or perceptually certified model. Span, distributed enclosure, compact narrow bodies, and bounded support for detached broad silhouettes interpolate toward an area-and-spread body score. A synthetic disk fixes scale; no icon names or catalog statistics enter sizing.",
+  "calibration": "Fixed design calibration, not a fitted or perceptually certified model. White-backed rendered channel contrast supplies size geometry and a bounded color cue; alpha retains containment and placement. Span, enclosed, narrow and detached bodies share one synthetic black-disk reference. No icon names or catalog statistics select sizing.",
   "body_evidence_gain": 6.0,
   "compact_body_concentration_range": [
     0.55,

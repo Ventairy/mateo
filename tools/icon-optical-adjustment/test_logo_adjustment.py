@@ -34,12 +34,13 @@ class LogoAdjustmentTests(unittest.TestCase):
         self.assertLessEqual(max(bounds[2:]), 19.75 + 1 / 32)
         self.assertEqual(tool.adjust_icon_size(adjusted)[0], adjusted)
 
-    def test_authored_colors_do_not_select_a_different_scale_or_center(self):
+    def test_authored_colors_receive_contrast_sizing_without_recoloring_or_selecting_placement(self):
         blue = raster_logo("#229ED9")
         red = raster_logo("#FF4A4B")
         results = [tool.adjust_icon_size(source) for source in (blue, red)]
-        for key in ("scale", "tx", "ty", "extent"):
-            self.assertEqual(results[0][1][key], results[1][1][key])
+        self.assertGreater(results[0][1]["extent"], results[1][1]["extent"])
+        measurements = [tool.measure(source) for source in (blue, red)]
+        self.assertEqual(tool.placement(measurements[0], .5), tool.placement(measurements[1], .5))
         for source, (output, _) in zip((blue, red), results):
             self.assertEqual(unwrap(output), source)
         np.testing.assert_array_equal(render_alpha(blue).alpha, render_alpha(red).alpha)
