@@ -16,7 +16,7 @@ class MateoSurfaceCaretScope extends InheritedWidget {
 
   final ValueChanged<MateoSurfaceCaretClient> onChanged;
   final ValueChanged<MateoSurfaceCaretClient> onRemoved;
-  final Rect? Function(RenderBox viewport) visibleRectIn;
+  final Rect? Function(RenderBox viewport, {bool settledPresentation}) visibleRectIn;
   final Listenable geometryChanges;
 
   static MateoSurfaceCaretScope? maybeOf(BuildContext context) =>

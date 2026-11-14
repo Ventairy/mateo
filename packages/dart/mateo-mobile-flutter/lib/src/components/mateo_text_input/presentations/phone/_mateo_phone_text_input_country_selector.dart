@@ -192,8 +192,10 @@ class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInpu
         query.dispose();
       }
 
-      if (!mounted || selectedCountry == null) return;
-      widget.onChanged?.call(selectedCountry);
+      if (!mounted) return;
+      if (selectedCountry != null) widget.onChanged?.call(selectedCountry);
+      final scope = _MateoTextInputPresentationScope.of(context);
+      if (scope.enabled) scope.focusNode.requestFocus();
     } finally {
       _pickerOpeningOrOpen = false;
     }

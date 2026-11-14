@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:material_ui/material_ui.dart' show GlobalMaterialLocalizations, MaterialLocalizations;
 import 'package:oh_my_flutter/oh_my_flutter.dart';
 
+import '../../bases/base_mateo_surface/base_mateo_surface_presentation_scope.dart';
 import '../../bases/base_mateo_surface/mateo_surface_scope.dart';
 import '../../bases/base_mateo_view/base_mateo_view.dart';
 import '../../bases/base_mateo_view/mateo_view_scope.dart';

@@ -82,10 +82,10 @@ class _BaseMateoSurfaceCaretCoordinator extends ChangeNotifier with WidgetsBindi
     return true;
   }
 
-  Rect? visibleRectIn(RenderBox target) {
+  Rect? visibleRectIn(RenderBox target, {bool settledPresentation = false}) {
     final viewport = viewportKey.currentContext?.findRenderObject();
     if (viewport is! RenderBox || !viewport.attached || !viewport.hasSize || _view == null) return null;
-    final visible = _visibleBounds(viewport);
+    final visible = _visibleBounds(viewport, settledPresentation: settledPresentation);
     return MatrixUtils.transformRect(viewport.getTransformTo(target), visible);
   }
 
@@ -127,7 +127,7 @@ class _BaseMateoSurfaceCaretCoordinator extends ChangeNotifier with WidgetsBindi
     _geometryChanged();
   }
 
-  Rect _visibleBounds(RenderBox viewport) {
+  Rect _visibleBounds(RenderBox viewport, {bool settledPresentation = false}) {
     final view = _view!;
     final insets = _obstruction?.resolvePaintInsets() ?? EdgeInsets.zero;
     final screenBounds = Rect.fromLTWH(
@@ -136,11 +136,17 @@ class _BaseMateoSurfaceCaretCoordinator extends ChangeNotifier with WidgetsBindi
       view.physicalSize.width / view.devicePixelRatio,
       (view.physicalSize.height - view.viewInsets.bottom) / view.devicePixelRatio,
     );
-    final screenToViewport = Matrix4.tryInvert(viewport.getTransformTo(null));
+    final viewportToScreen = settledPresentation
+        ? BaseMateoSurfacePresentationScope.settledTransformToScreen(
+            context: viewportKey.currentContext!,
+            viewport: viewport,
+          )
+        : viewport.getTransformTo(null);
+    final screenToViewport = Matrix4.tryInvert(viewportToScreen);
     if (screenToViewport == null) return Rect.zero;
     final screenInViewport = MatrixUtils.transformRect(screenToViewport, screenBounds);
     final visible = insets.deflateRect(Offset.zero & viewport.size).intersect(screenInViewport);
-    final parentBounds = _parentScope?.visibleRectIn(viewport);
+    final parentBounds = _parentScope?.visibleRectIn(viewport, settledPresentation: settledPresentation);
     return parentBounds == null ? visible : visible.intersect(parentBounds);
   }
 
@@ -167,7 +173,7 @@ class _BaseMateoSurfaceCaretCoordinator extends ChangeNotifier with WidgetsBindi
     if (!editable.attached || !editable.hasSize || !selection.isValid) return;
 
     final viewportBounds = Offset.zero & viewport.size;
-    final visible = _visibleBounds(viewport);
+    final visible = _visibleBounds(viewport, settledPresentation: true);
     if (visible.isEmpty || !visible.isFinite) return;
 
     final reservedBottom = _obstruction?.layoutInsets.bottom ?? 0;

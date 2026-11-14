@@ -552,7 +552,7 @@ void main() {
     );
 
     await _openCountryPicker(tester, find.byType(MateoCountryFlag));
-    await tester.enterText(find.byType(CupertinoTextField).last, 'Brazil');
+    await tester.enterText(find.byType(CupertinoTextField).last, 'bra');
     await tester.pump();
     expect(find.descendant(of: find.byType(ListView), matching: find.text('Brazil')), findsOneWidget);
   });
@@ -887,6 +887,71 @@ void main() {
     expect(controller.selection, const TextSelection.collapsed(offset: 6));
     expect(changes, ['+11196923054']);
   });
+
+  for (final dismissWith in ['close', 'selection', 'back']) {
+    testWidgets(
+      'when the country picker returns through $dismissWith, it should keep the phone sheet open and restore its editor',
+      (tester) async {
+        final phoneFocusNode = FocusNode();
+        final phoneTextController = TextEditingController(text: '1196923054');
+        addTearDown(phoneFocusNode.dispose);
+        addTearDown(phoneTextController.dispose);
+        await tester.pumpWidget(
+          _host(
+            Builder(
+              builder: (context) => MateoButton(
+                presentation: const .label(label: 'Open phone'),
+                onPressed: () => unawaited(
+                  showMateoSheet<void>(
+                    context: context,
+                    avoidBottomInset: true,
+                    view: MateoSheetView(
+                      surface: .scrollable(
+                        child: MateoTextInput(
+                          focusNode: phoneFocusNode,
+                          controller: phoneTextController,
+                          placeholder: 'Phone number',
+                          presentation: const .phone(initialCountry: .brazil),
+                          onChanged: (_) {},
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.tap(find.text('Open phone'));
+        await tester.pumpAndSettle();
+        expect(phoneFocusNode.hasFocus, isTrue);
+        final originalDigits = phoneTextController.text.replaceAll(RegExp(r'\D'), '');
+        await _openCountryPicker(tester, find.bySemanticsLabel('Change country, currently Brazil'));
+        expect(find.byType(MateoSheetView), findsNWidgets(2));
+        expect(phoneFocusNode.hasFocus, isFalse);
+        tester.testTextInput.log.clear();
+        switch (dismissWith) {
+          case 'close':
+            await tester.tap(find.bySemanticsLabel('Close country picker'));
+          case 'selection':
+            await tester.enterText(find.byType(CupertinoTextField).last, 'bra');
+            await tester.pumpAndSettle();
+            await tester.tap(find.text('Brazil'));
+          case 'back':
+            await tester.binding.handlePopRoute();
+        }
+        await tester.pumpAndSettle();
+        expect(find.byType(MateoSheetView), findsOneWidget);
+        expect(phoneFocusNode.hasFocus, isTrue);
+        expect(phoneTextController.text.replaceAll(RegExp(r'\D'), ''), originalDigits);
+        expect(tester.testTextInput.log.where((call) => call.method == 'TextInput.hide'), isEmpty);
+        expect(tester.testTextInput.isVisible, isTrue);
+        await tester.enterText(find.byType(CupertinoTextField), '1196923053');
+        expect(phoneTextController.text.replaceAll(RegExp(r'\D'), ''), '1196923053');
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
 
   testWidgets('keyboard changes preserve the phone picker query, focus, and scroll state', (tester) async {
     tester.view.devicePixelRatio = 1;

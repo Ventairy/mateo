@@ -40,12 +40,16 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   final ({bool disableAnimations, bool reduceMotion}) motionPreferences;
   bool get reducedMotion => motionPreferences.disableAnimations || motionPreferences.reduceMotion;
   late final CurvedAnimation _movement;
+  late final Animation<Offset> _position = Tween<Offset>(begin: from._beginOffset, end: .zero).animate(_movement);
   late final _stackEntry = _MateoSheetStackEntry(source: from, vsync: navigator!, reducedMotion: reducedMotion);
   Route<dynamic>? _coveringRoute;
   bool _hasSheetBelow = false;
   bool _disposed = false;
+  double _layoutBottomInset = 0;
+  double? _dismissalBottomInset;
 
   void _prepareStackDismissal(_MateoSheetStackDismissal dismissal) {
+    _dismissalBottomInset = _layoutBottomInset;
     controller!.stop();
     _stackDismissal = dismissal;
     changedInternalState();
@@ -76,6 +80,13 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
     _stackEntry.covered = nextRoute != null;
     _stackEntry.next = nextRoute is MateoSheetRoute ? nextRoute._stackEntry : null;
     _stackEntry.changed();
+  }
+
+  @override
+  bool didPop(T? result) {
+    final popped = super.didPop(result);
+    if (popped) _dismissalBottomInset = _layoutBottomInset;
+    return popped;
   }
 
   @override
@@ -265,12 +276,14 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
   }
 
   Widget _buildSheetTransition(BuildContext context, Widget child) {
-    final bottomInset = avoidBottomInset ? MediaQuery.viewInsetsOf(context).bottom : 0.0;
+    // Keyboard changes must not move the origin of an exit already in progress.
+    final bottomInset = _dismissalBottomInset ?? (avoidBottomInset ? MediaQuery.viewInsetsOf(context).bottom : 0.0);
     final bottomSafeArea = math.max<double>(0, MediaQuery.viewPaddingOf(context).bottom - bottomInset);
     return Padding(
       padding: EdgeInsets.only(bottom: bottomInset),
       child: LayoutBuilder(
         builder: (context, constraints) {
+          _layoutBottomInset = bottomInset;
           final safePadding = MediaQuery.paddingOf(context).copyWith(bottom: bottomSafeArea);
           _stackEntry.bottomOffset = bottomInset + bottomSafeArea;
 
@@ -299,6 +312,11 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
           final sheet = Builder(
             builder: (context) => MediaQuery(
               data: MediaQuery.of(context)
+                  .copyWith(
+                    viewInsets: avoidBottomInset
+                        ? MediaQuery.viewInsetsOf(context).copyWith(bottom: bottomInset)
+                        : null,
+                  )
                   .removeViewInsets(removeBottom: avoidBottomInset)
                   .copyWith(
                     disableAnimations: motionPreferences.disableAnimations,
@@ -313,8 +331,8 @@ class MateoSheetRoute<T> extends PopupRoute<T> {
           return Align(
             alignment: from._sheetAlignment,
             child: SlideTransition(
-              position: Tween<Offset>(begin: from._beginOffset, end: .zero).animate(_movement),
-              child: sheet,
+              position: _position,
+              child: BaseMateoSurfacePresentationScope(position: _position, child: sheet),
             ),
           );
         },

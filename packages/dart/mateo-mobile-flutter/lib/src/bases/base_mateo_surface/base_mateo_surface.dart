@@ -13,6 +13,7 @@ import '../../foundation/mateo_surface_height/mateo_surface_height.dart';
 import '../../foundation/mateo_surface_width/mateo_surface_width.dart';
 import '../../theme/mateo_theme.dart';
 import '../base_mateo_transform/base_mateo_transform.dart';
+import 'base_mateo_surface_presentation_scope.dart';
 import 'mateo_surface_caret_client.dart';
 import 'mateo_surface_caret_scope.dart';
 import 'mateo_surface_obstruction.dart';

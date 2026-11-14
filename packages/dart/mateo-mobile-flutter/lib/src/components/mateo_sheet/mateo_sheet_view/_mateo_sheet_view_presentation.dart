@@ -18,6 +18,7 @@ class _MateoSheetViewPresentation extends StatefulWidget {
 }
 
 class _MateoSheetViewPresentationState extends State<_MateoSheetViewPresentation> {
+  final _contentFocusNode = FocusNode(canRequestFocus: false, skipTraversal: true);
   late double _opacity;
   late bool _covered;
 
@@ -43,12 +44,15 @@ class _MateoSheetViewPresentationState extends State<_MateoSheetViewPresentation
   void _readPresentation() {
     _opacity = widget.stackEntry.opacity;
     _covered = widget.stackEntry.covered;
+    _contentFocusNode.descendantsAreFocusable = !_covered;
   }
 
   void _handleStackChange() {
     final opacity = widget.stackEntry.opacity;
     final covered = widget.stackEntry.covered;
     if (_opacity == opacity && _covered == covered) return;
+    // Re-enable focus during the pop, before the previous input disconnects.
+    if (!covered) _contentFocusNode.descendantsAreFocusable = true;
     setState(() {
       _opacity = opacity;
       _covered = covered;
@@ -57,12 +61,14 @@ class _MateoSheetViewPresentationState extends State<_MateoSheetViewPresentation
 
   @override
   Widget build(BuildContext context) {
+    _contentFocusNode.descendantsAreFocusable = !_covered;
     return Opacity(
       opacity: _opacity,
       child: ExcludeSemantics(
         excluding: _covered,
-        child: ExcludeFocus(
-          excluding: _covered,
+        child: Focus.withExternalFocusNode(
+          focusNode: _contentFocusNode,
+          includeSemantics: false,
           child: IgnorePointer(
             ignoring: _covered,
             child: _MateoSheetFrame(
@@ -80,6 +86,7 @@ class _MateoSheetViewPresentationState extends State<_MateoSheetViewPresentation
   @override
   void dispose() {
     widget.stackEntry.removeListener(_handleStackChange);
+    _contentFocusNode.dispose();
     super.dispose();
   }
 }
