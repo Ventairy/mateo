@@ -1,6 +1,8 @@
 {
   "schema": "mateo.icon-presence-model.v2",
-  "model": "mateo-optical-5.2",
+  "model": "mateo-optical-5.3",
+  "placement_weight": 0.5,
+  "placement_max_offset": 1.0,
   "reference_diameter": 15.5,
   "max_extent": 19.5,
   "pixels_per_unit": 32,

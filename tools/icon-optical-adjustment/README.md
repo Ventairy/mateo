@@ -1,8 +1,9 @@
-# Adjust icon sizes optically
+# Adjust icon size and placement optically
 
-The `mateo-optical-5.2` model balances outer span with enclosed, compact narrow,
-and separated broad bodies. Every icon receives one uniform scale and translation
-inside its existing 20px SVG frame. The
+The `mateo-optical-5.3` model balances outer span with enclosed, compact narrow,
+and separated broad bodies, then balances their placement inside the frame.
+It preserves the 5.2 sizing score. Every icon receives one uniform scale and
+translation inside its existing 20px SVG frame. The
 [icon foundation](../../design-system/foundation/icons.md) owns how exported
 assets are used.
 
@@ -31,7 +32,7 @@ $ICON_PY = "$ICON_TOOLS/.venv/Scripts/python.exe"
 & $ICON_PY -m pip install -r "$ICON_TOOLS/requirements.txt"
 ```
 
-Sizing runs offline after installation. No neural-network runtime, model
+Adjustment runs offline after installation. No neural-network runtime, model
 weights, preparation download, or training is required. The exported SVGs do
 not require these asset-tool dependencies in an application.
 
@@ -64,8 +65,8 @@ $ICON_OUTPUT = Join-Path ([IO.Path]::GetTempPath()) ([guid]::NewGuid().ToString(
 and `--check` are mutually exclusive. `--jobs` accepts 1–8 workers. Geometry
 extraction stays fixed at 32 samples per SVG unit, with enclosure analysis at
 8 samples per unit. `--report PATH.json` records calibration, package versions,
-source/output hashes, span and body measurements, score residuals, and frame
-limits.
+source/output hashes, span and body measurements, score residuals, desired and
+applied placement offsets, and frame limits.
 
 Generation returns status 0. Freshness checking returns 1 when outputs need
 updating; invalid inputs or setup failures return 2. The complete batch is
@@ -130,12 +131,12 @@ viewport clipping remain effective. Keep source geometry near its 20px frame.
 package versions. [optical_model.py](optical_model.py) validates them.
 [optical_geometry.py](optical_geometry.py) measures coverage, span, enclosure,
 and spatial moments. [adjust_icon_sizes.py](adjust_icon_sizes.py) owns the
-presence score and scale solver.
+presence score, scale solver, and final placement.
 
 The reference is a synthetic 20-unit disk displayed at 15.5px. Each drawing is
 first measured in a canonical 20-unit occupied span. Relative alpha coverage
 is normalized by its peak, preserving global-opacity invariance. Input colors
-are not part of the size score.
+are not part of the size or placement measurements.
 
 ### Span and body
 
@@ -221,13 +222,36 @@ bisection steps match the reference within the 19.5px painted-span limit.
 This leaves a 0.25px geometric margin on each side of the 20px frame. The
 reference disk remains 15.5px; only drawings whose solved size needs the extra
 span use it. Extent-limited outputs report their remaining score difference.
-Centering uses
-the painted bounds, preserving the existing placement contract.
+
+### Optical placement
+
+Placement follows sizing; it never changes the solved scale. Start with the
+occupied-bounds midpoint. At each existing closure scale (0.35, 0.7, and 1.4
+canonical units), find the centroid of the softly filled coverage. Average the
+three centroids, then place the optical center halfway between that average and
+the occupied-bounds midpoint. The shared `placement_weight` is 0.5. This keeps
+the drawing's full reach involved while letting its main body influence its
+position. Closed contours contribute their enclosed body; detached pieces keep
+their coverage and relative position. No icon name selects a correction.
+
+Translate that optical center toward the center of the 20px frame. Relative to
+the previous bounds-centered placement, limit the requested correction to a
+Euclidean distance of 1px at this frame size, preserving its direction. Finally,
+limit each translation axis independently so all painted bounds remain between
+0.25 and 19.75. A drawing at the maximum horizontal span can still move
+vertically when room remains. Do not reduce the drawing's size to make room for
+a placement correction.
+
+Reports retain the optical center, desired correction, applied correction, and
+whether containment limited placement. `placement_limited` is separate from the
+size solver's `limited` flag. The generated group retains its
+`mateo-optical-size` ID for compatibility; it owns both scale and placement.
 
 ### Research and limits
 
-The model uses explicit design calibration, not fitted human-size judgments.
-The constants are shared across drawings and do not certify perceptual equality.
+The model uses explicit design calibration, not fitted human judgments of size
+or centering. The constants are shared across drawings and do not certify
+perceptual equality or an exact perceived center.
 The research informs the choice of multiple cues and the need for visual review:
 
 - [Pisu et al., 2025](https://doi.org/10.1037/xhp0001322) found systematic
@@ -239,8 +263,8 @@ The research informs the choice of multiple cues and the need for visual review:
 
 Uniform scaling cannot independently equalize stroke weight and apparent size.
 Inspect the actual drawing at its intended size. A safety cap may prevent a
-shape from reaching the reference score; the report makes that limit explicit.
-Do not add an icon-name exception to hide it.
+shape from reaching the reference score or its preferred placement; the report
+makes those limits explicit. Do not add an icon-name exception to hide them.
 
 ## Validation and visual review
 
@@ -254,7 +278,7 @@ Do not add an icon-name exception to hide it.
   --input "$ICON_OUTPUT/adjusted" --output-dir "$ICON_OUTPUT/preview"
 ```
 
-Validation checks authored-byte preservation, idempotence, centering, and
+Validation checks authored-byte preservation, idempotence, model placement, and
 containment, then renders 48 contexts per icon: four display sizes, three pixel
 densities, and four pixel phases. Phase variation and frame limits are reported
 separately. These checks establish rendering properties, not equal perception.
@@ -269,3 +293,24 @@ The renderer accepts `--size 16`, `20`, `24`, or `28`, `--density 1`, `2`, or `3
 and repeated `--pair FIRST,SECOND` options. Review PNGs at their intended display
 size. Judge fine strokes, gaps, directional variants, dense and outlined shapes,
 and adjacent text at native resolution, including reduced-contrast contexts.
+
+To review placement changes, keep the original catalog in a separate directory
+and compare it with the candidate:
+
+```sh
+"$ICON_PY" "$ICON_TOOLS/render_icon_sizes.py" \
+  --input "$ICON_OUTPUT/adjusted" \
+  --before design-system/foundation/assets/icons/svg \
+  --icon telegram --icon chevron-left \
+  --output-dir "$ICON_OUTPUT/placement-preview" \
+  --label "Optical placement"
+```
+
+This produces one `placement-NAME.png` per icon at all four display sizes, with
+before/after pairs on bare, circular, and rounded-square backgrounds. Omit
+`--icon` to compare the full input catalog, or repeat it to select a review set.
+The default density is 2; use the existing `--density` option for 1 or 3.
+`--before` and `--pair` are separate review modes. Review every changed icon in
+these contexts; unequal painted margins can be intentional after optical
+placement. The asset owns its intrinsic balance, while components still own
+alignment with text and surrounding layout.

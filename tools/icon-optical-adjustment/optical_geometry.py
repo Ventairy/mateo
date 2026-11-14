@@ -102,7 +102,7 @@ def layer_span(alpha, pixels_per_unit):
 
 
 def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
-    """Return ink area, softly enclosed area, and the enclosed fraction.
+    """Return enclosure size, spread, and body centroids in input-field units.
 
     ``sigmas`` are Gaussian standard deviations in the caller's SVG units;
     ``pixels_per_unit`` converts those units to samples. The caller supplies
@@ -138,7 +138,7 @@ def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
     ink_area = float(field.sum() * pixel_area)
     if not math.isfinite(ink_area) or ink_area <= 0:
         raise ValueError("Icon has no finite measurable area")
-    filled_areas, body_spreads, distributed_holes = [], [], []
+    filled_areas, body_spreads, distributed_holes, body_centers = [], [], [], []
     for sigma in sigmas:
         blurred = ndimage.gaussian_filter(
             field, sigma * pixels_per_unit, mode="constant", truncate=5
@@ -151,6 +151,12 @@ def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
         filled = soft_fill(blurred)
         filled_area_at_scale = max(ink_area, float(filled.sum() * pixel_area))
         filled_areas.append(filled_area_at_scale)
+        yy, xx = np.indices(filled.shape, dtype=float)
+        mass = float(filled.sum())
+        body_centers.append((
+            float(((xx + .5) * filled).sum() / mass + xs[0] - padding) / pixels_per_unit,
+            float(((yy + .5) * filled).sum() / mass + ys[0] - padding) / pixels_per_unit,
+        ))
         body_variance, body_determinant = _spatial_moments(filled, pixels_per_unit)
         body_spreads.append(math.sqrt(body_variance))
         holes = np.maximum(filled - blurred, 0)
@@ -169,6 +175,7 @@ def closure_measure(alpha, pixels_per_unit, *, sigmas=(0.35, 0.7, 1.4)):
         closure=1 - ink_area / filled_area,
         filled_areas=tuple(filled_areas),
         body_spreads=tuple(body_spreads),
+        body_centers=tuple(body_centers),
         distributed_enclosure=float(np.dot(weights, distributed_holes)) / filled_area,
     )
 

@@ -143,6 +143,8 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
     diagonal_factor = (diameter / axis_extent) ** DIAGONAL_CUE_WEIGHT
     geometry_presence *= diagonal_factor
     frequencies, energy = _spectral_measurement(coverage, ANALYSIS_PIXELS_PER_UNIT)
+    body_center = np.mean(closure["body_centers"], axis=0) + analysis.origin
+    optical_center = FRAME / 2 + MODEL_DATA["placement_weight"] * (body_center - FRAME / 2)
     features = dict(
         width=width,
         height=height,
@@ -163,6 +165,8 @@ def _measure_geometry(source, *, pixels_per_unit=PIXELS_PER_UNIT):
         diagonal_factor=diagonal_factor,
         geometry_presence=geometry_presence,
         peak_alpha=peak,
+        body_center=body_center.tolist(),
+        optical_center=optical_center.tolist(),
     )
     if not all(
         math.isfinite(value) for value in features.values() if isinstance(value, (int, float))
@@ -291,6 +295,31 @@ def reference_target(*, pixels_per_unit=PIXELS_PER_UNIT):
     return presence(disk, REFERENCE_DIAMETER / FRAME)
 
 
+def placement(icon, scale):
+    """Place the visual body without changing scale or leaving the safe frame."""
+    x0, y0, x1, y1 = icon.source_bounds
+    center_x, center_y = (x0 + x1) / 2, (y0 + y1) / 2
+    geometric = np.array([FRAME / 2 - scale * center_x, FRAME / 2 - scale * center_y])
+    desired = -(np.array(icon.features["optical_center"]) - FRAME / 2) * scale / icon.source_to_canonical
+    distance = float(np.linalg.norm(desired))
+    if distance > MODEL_DATA["placement_max_offset"]:
+        desired *= MODEL_DATA["placement_max_offset"] / distance
+    margin = (FRAME - MAX_EXTENT) / 2
+    translation = np.clip(
+        geometric + desired,
+        [margin - scale * x0, margin - scale * y0],
+        [FRAME - margin - scale * x1, FRAME - margin - scale * y1],
+    )
+    offset = translation - geometric
+    return dict(
+        tx=float(translation[0]),
+        ty=float(translation[1]),
+        desired_placement_offset=desired.tolist(),
+        placement_offset=offset.tolist(),
+        placement_limited=bool(np.linalg.norm(offset - desired) > TRANSFORM_TOLERANCE),
+    )
+
+
 def sizing(icon, target):
     if not math.isfinite(target) or target <= 0:
         raise ValueError("Presence target must be finite and positive")
@@ -308,12 +337,10 @@ def sizing(icon, target):
                 high = mid
         canonical_scale = (low + high) / 2
     scale = canonical_scale * icon.source_to_canonical
-    x0, y0, x1, y1 = icon.source_bounds
     achieved = presence(icon, canonical_scale)
     return dict(
         scale=scale,
-        tx=FRAME / 2 - scale * (x0 + x1) / 2,
-        ty=FRAME / 2 - scale * (y0 + y1) / 2,
+        **placement(icon, scale),
         extent=canonical_scale * FRAME,
         target_presence=target,
         presence=achieved,
@@ -351,6 +378,7 @@ def _retained_metrics(icon, metrics, transform):
         return None
     canonical_scale = scale / icon.source_to_canonical
     achieved = presence(icon, canonical_scale)
+    metrics = dict(metrics, **placement(icon, scale))
     return dict(
         metrics,
         scale=scale,
@@ -361,6 +389,8 @@ def _retained_metrics(icon, metrics, transform):
         relative_presence_residual=achieved / metrics["target_presence"] - 1,
         canonical_scale=canonical_scale,
         ink_area=icon.features["ink_area"] * canonical_scale**2,
+        placement_offset=[tx - (FRAME / 2 - scale * (x0 + x1) / 2),
+                          ty - (FRAME / 2 - scale * (y0 + y1) / 2)],
         visibility={
             str(int(size)): visibility(icon, canonical_scale, size) for size in DISPLAY_SIZES
         },

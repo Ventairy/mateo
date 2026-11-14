@@ -30,7 +30,7 @@ def read_model(path=MODEL_PATH):
 
 
 def _validate(data):
-    if data["model"] != "mateo-optical-5.2":
+    if data["model"] != "mateo-optical-5.3":
         raise ValueError("Unsupported optical model")
     for name in (
         "reference_diameter",
@@ -42,6 +42,8 @@ def _validate(data):
         "body_evidence_gain",
         "body_area_weight",
         "broad_body_max_enlargement",
+        "placement_weight",
+        "placement_max_offset",
     ):
         value = data[name]
         if (
@@ -56,6 +58,8 @@ def _validate(data):
         raise ValueError("Invalid body calibration")
     if not 1 <= data["broad_body_max_enlargement"] <= 2:
         raise ValueError("Invalid broad-body enlargement limit")
+    if not 0 <= data["placement_weight"] <= 1 or not 0 < data["placement_max_offset"] <= 2:
+        raise ValueError("Invalid placement calibration")
     for name in (
         "compact_body_concentration_range",
         "compact_body_aspect_range",

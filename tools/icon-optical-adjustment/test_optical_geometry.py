@@ -235,7 +235,12 @@ class OpticalGeometryTests(unittest.TestCase):
         raster = render_alpha(_ring(2), pixels_per_unit=8)
         result = closure_measure(raster.alpha, 8)
         shifted = closure_measure(np.pad(raster.alpha, ((5, 0), (3, 19))), 8)
-        self.assertEqual(result, shifted)
+        np.testing.assert_allclose(
+            np.array(shifted.pop("body_centers")) - result["body_centers"],
+            np.tile([3 / 8, 5 / 8], (3, 1)),
+        )
+        result_without_centers = {key: value for key, value in result.items() if key != "body_centers"}
+        self.assertEqual(result_without_centers, shifted)
         faint = closure_measure(raster.alpha * 1e-10, 8)
         self.assertAlmostEqual(faint["closure"], result["closure"], places=12)
         self.assertAlmostEqual(faint["filled_area"] / result["filled_area"], 1e-10, places=20)

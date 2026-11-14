@@ -7,9 +7,11 @@ import unittest
 from pathlib import Path
 
 from adjust_icon_sizes import adjust_icon_size, reference_target
+from svg_measurement import split_optical_adjustment, unwrap, wrap
 from validate_icon_sizes import audit, display_samples
 
 SOURCE = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/></svg>'
+TRIANGLE = SOURCE.replace('<circle cx="10" cy="10" r="7"/>', '<path d="M2 2L18 10L2 18Z"/>')
 
 
 class ValidationTests(unittest.TestCase):
@@ -62,6 +64,47 @@ class ValidationTests(unittest.TestCase):
             for density in (16, 64):
                 with self.assertRaisesRegex(ValueError, "32 geometry samples"):
                     audit(path, path, 16, pixels_per_unit=density)
+
+    def test_optically_placed_triangle_does_not_need_centered_painted_bounds(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            before, after = Path(temporary) / "before.svg", Path(temporary) / "after.svg"
+            target = reference_target()
+            before.write_text(TRIANGLE)
+            output, _ = adjust_icon_size(TRIANGLE, target)
+            after.write_text(output)
+            result = audit(before, after, target)
+            self.assertTrue(result["optically_placed"])
+            self.assertGreater(result["geometric_midpoint"][0], 10.5)
+            self.assertLess(result["placement_error"], 0.0001)
+            self.assertTrue(result["contained"])
+            self.assertTrue(result["idempotent"])
+
+    def test_validation_rejects_a_manually_displaced_generated_transform(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            before, after = Path(temporary) / "before.svg", Path(temporary) / "after.svg"
+            target = reference_target()
+            before.write_text(TRIANGLE)
+            output, _ = adjust_icon_size(TRIANGLE, target)
+            _, (scale, tx, ty) = split_optical_adjustment(output)
+            after.write_text(wrap(unwrap(output), scale, tx + 0.125, ty))
+            result = audit(before, after, target)
+            self.assertFalse(result["optically_placed"])
+            self.assertAlmostEqual(result["placement_residual"][0], 0.125, places=8)
+            self.assertTrue(result["source_preserved"])
+
+    def test_placement_limited_triangle_is_accepted_without_clipping(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            before, after = Path(temporary) / "before.svg", Path(temporary) / "after.svg"
+            target = reference_target() * 100
+            before.write_text(TRIANGLE)
+            output, _ = adjust_icon_size(TRIANGLE, target)
+            after.write_text(output)
+            result = audit(before, after, target)
+            self.assertTrue(result["optically_placed"])
+            self.assertTrue(result["placement_limited"])
+            self.assertTrue(result["limited"])
+            self.assertTrue(result["contained"])
+            self.assertTrue(result["idempotent"])
 
 
 if __name__ == "__main__":

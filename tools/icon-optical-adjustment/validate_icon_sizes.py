@@ -11,15 +11,24 @@ import argparse
 import hashlib
 import io
 import json
+import math
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import numpy as np
 import resvg_py
-from adjust_icon_sizes import DISPLAY_SIZES, MAX_EXTENT, adjust_icon_size, reference_target
+from adjust_icon_sizes import (
+    DISPLAY_SIZES,
+    MAX_EXTENT,
+    TRANSFORM_TOLERANCE,
+    adjust_icon_size,
+    measure,
+    placement,
+    reference_target,
+)
 from PIL import Image
-from svg_measurement import FRAME, render_alpha, unwrap
+from svg_measurement import FRAME, render_alpha, split_optical_adjustment, unwrap
 
 
 def display_samples(source):
@@ -65,16 +74,29 @@ def audit(original_path, adjusted_path, target, pixels_per_unit=32):
     repeated, metrics = adjust_icon_size(output, target, pixels_per_unit=pixels_per_unit)
     raster = render_alpha(output, pixels_per_unit=64)
     bounds = raster.bounds
-    centered = (
-        abs(bounds[0] + bounds[2] - 20) <= 1 / 32 and abs(bounds[1] + bounds[3] - 20) <= 1 / 32
-    )
+    # Check the serialized placement against freshly measured authored geometry.
+    # This verifies the model's export contract, not human perceptual agreement.
+    authored, transform = split_optical_adjustment(output)
+    scale, tx, ty = transform or (1.0, 0.0, 0.0)
+    measured = measure(authored, pixels_per_unit=pixels_per_unit)
+    expected = placement(measured, scale)
+    placement_residual = [tx - expected["tx"], ty - expected["ty"]]
+    placement_error = math.hypot(*placement_residual)
+    x0, y0, x1, y1 = measured.source_bounds
+    geometric_midpoint = [scale * (x0 + x1) / 2 + tx, scale * (y0 + y1) / 2 + ty]
     margin = (FRAME - MAX_EXTENT) / 2
     contained = min(bounds[:2]) >= margin - 1 / 64 and max(bounds[2:]) <= FRAME - margin + 1 / 64
     contexts = display_samples(output)
     return dict(
         source_preserved=source_preserved,
         idempotent=repeated == output,
-        centered=centered,
+        optically_placed=placement_error <= TRANSFORM_TOLERANCE,
+        geometric_midpoint=geometric_midpoint,
+        placement_offset=[coordinate - FRAME / 2 for coordinate in geometric_midpoint],
+        desired_placement_offset=expected["desired_placement_offset"],
+        placement_limited=expected["placement_limited"],
+        placement_residual=placement_residual,
+        placement_error=placement_error,
         contained=contained,
         visible_bounds=list(bounds),
         extent=metrics["extent"],
@@ -124,18 +146,20 @@ def main(argv=None):
             for key in (
                 "source_preserved",
                 "idempotent",
-                "centered",
+                "optically_placed",
                 "contained",
                 "all_contexts_visible",
             )
         )
     ]
     report = dict(
-        scope=f"Source preservation, deterministic generation, centered {MAX_EXTENT:g}px bounds; {len(DISPLAY_SIZES) * 12} raster contexts per icon. Not a human perceptual test.",
+        scope=f"Source preservation, deterministic generation, model optical placement and contained {MAX_EXTENT:g}px bounds; {len(DISPLAY_SIZES) * 12} raster contexts per icon. Not a human perceptual test.",
         count=len(results),
         pixels_per_unit=args.pixels_per_unit,
         failed=failures,
         extent_limited=sum(row["limited"] for row in results.values()),
+        placement_limited=sum(row["placement_limited"] for row in results.values()),
+        maximum_placement_error=max(row["placement_error"] for row in results.values()),
         maximum_phase_area_range=max(row["maximum_phase_area_range"] for row in results.values()),
         icons=results,
     )
@@ -143,7 +167,7 @@ def main(argv=None):
     args.report.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(
         f"{len(results)} icons, {len(results) * len(DISPLAY_SIZES) * 12} display samples; {len(failures)} contract failures; "
-        f"{report['extent_limited']} extent-limited."
+        f"{report['extent_limited']} extent-limited; {report['placement_limited']} placement-limited."
     )
     return int(bool(failures))
 

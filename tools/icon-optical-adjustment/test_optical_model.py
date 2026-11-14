@@ -31,6 +31,8 @@ class ModelTests(unittest.TestCase):
             "max_extent": (0, 14, 21, math.nan),
             "body_area_weight": (-1, 2, True, math.nan),
             "body_evidence_gain": (0, -1, True, math.inf),
+            "placement_weight": (-1, 2, True, math.nan),
+            "placement_max_offset": (0, 3, True, math.inf),
             "pixels_per_unit": (16, 64),
             "analysis_pixels_per_unit": (0, 16),
             "closure_sigmas": ([], [1, 1], [math.nan], [True]),

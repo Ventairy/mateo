@@ -174,26 +174,35 @@ language conventions, such as `arrowLeft` in Dart.
 
 ### Size and placement
 
-- SVG icons use a 20 × 20 frame with optical sizing built into the artwork.
+- SVG icons use a 20 × 20 frame with optical size and placement built into the artwork.
   Preserve this internal spacing when using the assets.
 - Preserve the icon's aspect ratio. Do not stretch it to fill a square.
 - Choose icon size in the component or platform specification, and test the
   result at its actual rendered size. Small icons must remain recognizable.
 - Treat icon size and interactive target size as separate decisions. A small
   icon still needs the touch or pointer target required by its platform.
-- Align icons by perceived visual weight, not only by their raw asset bounds.
-  When an icon sits beside text, center it optically with the text line.
-- Keep the icon asset unchanged. Add any spacing or alignment adjustment around
-  the icon in the component that uses it.
+- Center the exported icon frame within its container. Do not recenter its
+  painted bounds; unequal internal margins can be part of its optical balance.
+- Keep the icon asset unchanged when composing an interface. The component owns
+  spacing and alignment with text or an asymmetric container, while the asset
+  owns the drawing's intrinsic balance. Do not add an icon-specific offset to
+  compensate for the drawing in each place it appears.
 
-#### Optical sizing
+#### Optical size and placement
 
 Icons balance visible mass and apparent span at a displayed size of 20px.
 Their internal bounds intentionally differ: open contours, enclosed bodies,
 narrow shapes, and silhouettes with detached pieces can need different spans
-to look balanced. The SVG artwork is the source of truth for each icon's scale
-and internal spacing. Use the same component size for icons that share a role;
-do not add individual scale overrides around the exported artwork.
+to look balanced. The SVG artwork is the source of truth for each icon's scale,
+placement, and internal spacing. Use the same component size for icons that share
+a role; do not add individual scale or placement overrides around the exported
+artwork.
+
+An asymmetric drawing can need unequal margins to feel centered. Judge the
+balance of its body, contours, and detached pieces together rather than forcing
+the same empty space on opposite sides. Compare the result bare, inside a circle,
+and inside a rounded square. The drawing should feel balanced across those
+contexts without changing its geometry or the component's icon box.
 
 Judge the set together at its displayed size. Compare how strongly each icon
 stands out beside its neighbors, including its filled regions, negative space,
