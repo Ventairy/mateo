@@ -78,7 +78,12 @@ export 'src/foundation/mateo_navigator_observer.dart' show MateoNavigatorObserve
 export 'src/foundation/mateo_rounded_shape_border/mateo_rounded_shape_border.dart' show MateoRoundedShapeBorder;
 export 'src/foundation/mateo_shape/mateo_shape.dart' show MateoShape;
 export 'src/foundation/mateo_surface_animation/mateo_surface_animation.dart'
-    show MateoSurfaceAnimation, MateoSurfaceAnimationNone, MateoSurfaceAnimationPop, MateoSurfaceAnimationTransform;
+    show
+        MateoSurfaceAnimation,
+        MateoSurfaceAnimationNone,
+        MateoSurfaceAnimationPop,
+        MateoSurfaceAnimationPopDirection,
+        MateoSurfaceAnimationTransform;
 export 'src/foundation/mateo_surface_height/mateo_surface_height.dart'
     show MateoSurfaceHeight, MateoSurfaceHeightCustom, MateoSurfaceHeightFill, MateoSurfaceHeightFit;
 export 'src/foundation/mateo_surface_width/mateo_surface_width.dart'

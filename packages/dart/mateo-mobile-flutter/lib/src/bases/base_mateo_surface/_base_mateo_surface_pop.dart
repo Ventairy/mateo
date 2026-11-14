@@ -14,6 +14,7 @@ class _BaseMateoSurfacePopState extends State<_BaseMateoSurfacePop> with SingleT
   late final AnimationController _controller;
   late Animation<double> _scale;
   late Animation<double> _opacity;
+  late Animation<Offset> _slide;
   bool _hasStarted = false;
 
   @override
@@ -32,6 +33,7 @@ class _BaseMateoSurfacePopState extends State<_BaseMateoSurfacePop> with SingleT
 
   void _updateAnimations() {
     assert(widget.animation.duration > Duration.zero, 'duration must be positive.');
+    _slide = _controller.drive(_BaseMateoSurfacePopSlide(widget.animation));
     _scale = _controller.drive(_BaseMateoSurfacePopScale(widget.animation));
     _opacity = _controller.drive(_BaseMateoSurfacePopOpacity(widget.animation.curve));
   }
@@ -85,12 +87,15 @@ class _BaseMateoSurfacePopState extends State<_BaseMateoSurfacePop> with SingleT
     return FadeTransition(
       opacity: _opacity,
       alwaysIncludeSemantics: true,
-      child: ScaleTransition(
-        scale: _scale,
-        filterQuality: .low,
-        // The surface's existing GlobalKey preserves its subtree when this
-        // temporary boundary is removed after playback or reduced motion.
-        child: _controller.isCompleted ? widget.child : RepaintBoundary(child: widget.child),
+      child: SlideTransition(
+        position: _slide,
+        child: ScaleTransition(
+          scale: _scale,
+          filterQuality: .low,
+          // The surface's existing GlobalKey preserves its subtree when this
+          // temporary boundary is removed after playback or reduced motion.
+          child: _controller.isCompleted ? widget.child : RepaintBoundary(child: widget.child),
+        ),
       ),
     );
   }

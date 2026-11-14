@@ -10,6 +10,8 @@ import '../fixtures/surface_transform_test_widgets.dart';
 Widget host({
   MateoSurfaceAnimation? animation = const .pop(),
   bool reduced = false,
+  bool reduceMotion = false,
+  TextDirection textDirection = .ltr,
   bool ticker = true,
   Key? surfaceKey,
   Widget child = const Text('Welcome'),
@@ -33,9 +35,9 @@ Widget host({
   return MateoTheme(
     data: surfaceTransformTheme,
     child: Directionality(
-      textDirection: .ltr,
+      textDirection: textDirection,
       child: MediaQuery(
-        data: MediaQueryData(disableAnimations: reduced),
+        data: MediaQueryData(disableAnimations: reduced, reduceMotion: reduceMotion),
         child: TickerMode(
           enabled: ticker,
           child: Center(child: surface),
@@ -79,6 +81,12 @@ void main() {
     expect(pop, isNot(const MateoSurfaceAnimation.none()));
     expect(pop.duration, const Duration(milliseconds: 320));
     expect(pop.curve, Curves.easeOutBack);
+    expect(pop.direction, MateoSurfaceAnimationPopDirection.center);
+    expect(pop, const MateoSurfaceAnimation.pop(direction: .center));
+    const upward = MateoSurfaceAnimationPop(direction: .top);
+    expect(upward, const MateoSurfaceAnimation.pop(direction: .top));
+    expect(upward.hashCode, const MateoSurfaceAnimation.pop(direction: .top).hashCode);
+    expect(upward, isNot(pop));
     const custom = MateoSurfaceAnimationPop(duration: Duration(milliseconds: 200), curve: Curves.linear);
     const equal = MateoSurfaceAnimationPop(duration: Duration(milliseconds: 200), curve: Curves.linear);
     expect(custom, equal);
@@ -86,6 +94,120 @@ void main() {
     expect(custom, isNot(pop));
     expect(pop, isNot(const MateoSurfaceAnimation.pop(duration: Duration(milliseconds: 200))));
     expect(pop, isNot(const MateoSurfaceAnimation.pop(curve: Curves.linear)));
+  });
+  const starts = <MateoSurfaceAnimationPopDirection, Offset>{
+    .center: Offset.zero,
+    .top: Offset(0, 25),
+    .topRight: Offset(-50, 25),
+    .right: Offset(-50, 0),
+    .bottomRight: Offset(-50, -25),
+    .bottom: Offset(0, -25),
+    .bottomLeft: Offset(50, -25),
+    .left: Offset(50, 0),
+    .topLeft: Offset(50, 25),
+  };
+  const contentKey = ValueKey('moving content');
+  Offset restingCenter(WidgetTester tester) => tester.getCenter(find.byType(FadeTransition).first);
+  Offset contentCenter(WidgetTester tester) => tester.getCenter(find.byKey(contentKey));
+  Widget directed(MateoSurfaceAnimationPopDirection direction) => host(
+    animation: .pop(direction: direction, duration: const Duration(milliseconds: 200), curve: Curves.linear),
+    child: const SizedBox.expand(key: contentKey),
+  );
+  for (final entry in starts.entries) {
+    for (final textDirection in TextDirection.values) {
+      testWidgets('${entry.key.name} pop travels into place in ${textDirection.name} without changing layout', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          host(
+            animation: .pop(direction: entry.key, duration: const Duration(milliseconds: 200), curve: Curves.linear),
+            textDirection: textDirection,
+            child: const SizedBox.expand(key: contentKey),
+          ),
+        );
+        final center = restingCenter(tester);
+        final size = tester.getSize(popTransform.first);
+        expect(contentCenter(tester), center + entry.value);
+        await tester.pump(const Duration(milliseconds: 100));
+        expect(contentCenter(tester), center + entry.value * .5);
+        expect(scale(tester), .875);
+        expect(opacity(tester), .5);
+        expect(tester.getSize(popTransform.first), size);
+        await tester.pump(const Duration(milliseconds: 100));
+        expect(contentCenter(tester), center);
+        expect(tester.hasRunningAnimations, isFalse);
+      });
+    }
+  }
+  testWidgets('directional travel shares the pop bounce', (tester) async {
+    await tester.pumpWidget(
+      host(
+        animation: const .pop(direction: .top),
+        child: const SizedBox.expand(key: contentKey),
+      ),
+    );
+    final center = restingCenter(tester);
+    await tester.pump(const Duration(milliseconds: 240));
+    expect(scale(tester), greaterThan(1));
+    expect(contentCenter(tester).dy, lessThan(center.dy));
+    await tester.pumpAndSettle();
+    expect(contentCenter(tester), center);
+  });
+  testWidgets('direction changes keep current progress and never replay a settled pop', (tester) async {
+    await tester.pumpWidget(directed(.top));
+    final center = restingCenter(tester);
+    await tester.pump(const Duration(milliseconds: 100));
+    final element = tester.element(find.byKey(contentKey));
+    await tester.pumpWidget(directed(.left));
+    expect(contentCenter(tester), center + const Offset(25, 0));
+    expect(opacity(tester), .5);
+    expect(tester.element(find.byKey(contentKey)), same(element));
+    await tester.pumpAndSettle();
+    await tester.pumpWidget(directed(.bottomRight));
+    expect(contentCenter(tester), center);
+    expect(tester.hasRunningAnimations, isFalse);
+  });
+  for (final disableAnimations in [false, true]) {
+    testWidgets(
+      'directional pop settles with disableAnimations=$disableAnimations and reduceMotion=${!disableAnimations}',
+      (tester) async {
+        await tester.pumpWidget(
+          host(
+            animation: const .pop(direction: .topRight),
+            reduced: disableAnimations,
+            reduceMotion: !disableAnimations,
+            child: const SizedBox.expand(key: contentKey),
+          ),
+        );
+        expect(contentCenter(tester), restingCenter(tester));
+        expect(scale(tester), 1);
+        expect(opacity(tester), 1);
+        expect(tester.hasRunningAnimations, isFalse);
+      },
+    );
+  }
+  testWidgets('directional pop preserves semantics and moves the touch target', (tester) async {
+    final semantics = tester.ensureSemantics();
+    var taps = 0;
+    await tester.pumpWidget(
+      host(
+        animation: const .pop(direction: .right, duration: Duration(milliseconds: 200), curve: Curves.linear),
+        child: GestureDetector(
+          behavior: .opaque,
+          onTap: () => taps++,
+          child: Semantics(label: 'Moving action', child: const SizedBox.expand()),
+        ),
+      ),
+    );
+    expect(find.bySemanticsLabel('Moving action'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 100));
+    final bounds = tester.getRect(find.byType(FadeTransition).first);
+    await tester.tapAt(Offset(bounds.left + 5, bounds.center.dy));
+    expect(taps, 1);
+    await tester.tapAt(Offset(bounds.right - 30, bounds.center.dy));
+    expect(taps, 1);
+    await tester.pumpAndSettle();
+    semantics.dispose();
   });
   for (final scrollable in [false, true]) {
     testWidgets('pop animates scrollable=$scrollable without changing layout', (tester) async {

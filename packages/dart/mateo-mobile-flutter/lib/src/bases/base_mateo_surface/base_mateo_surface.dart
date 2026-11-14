@@ -25,6 +25,7 @@ part '_base_mateo_surface_decoration_painter.dart';
 part '_base_mateo_surface_pop.dart';
 part '_base_mateo_surface_pop_opacity.dart';
 part '_base_mateo_surface_pop_scale.dart';
+part '_base_mateo_surface_pop_slide.dart';
 part '_base_mateo_surface_repaint_boundary.dart';
 part '_base_mateo_surface_repaint_scope.dart';
 part '_base_mateo_surface_scroll.dart';

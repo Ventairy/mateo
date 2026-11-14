@@ -8,6 +8,7 @@ import '../mateo_transform_target/mateo_transform_target.dart';
 
 part 'mateo_surface_animation_none.dart';
 part 'mateo_surface_animation_pop.dart';
+part 'mateo_surface_animation_pop_direction.dart';
 part 'mateo_surface_animation_transform.dart';
 
 /// An animation style for a Mateo surface.
@@ -18,10 +19,12 @@ sealed class MateoSurfaceAnimation {
   /// Creates a surface animation with no transition.
   const factory none() = MateoSurfaceAnimationNone;
 
-  /// Creates an entrance with an animation that pops in
+  /// Creates an entrance that pops in, optionally sliding toward [direction].
   ///
   /// Runs when the surface mounts or switches to this style. Ordinary rebuilds
-  /// do not replay it. Reduced motion shows the surface immediately.
+  /// do not replay it. Direction names describe travel into the resting position;
+  /// for example, `.top` starts slightly below it. Reduced motion shows the
+  /// surface immediately.
   ///
   /// ```dart
   /// const MateoSurface(
@@ -29,7 +32,8 @@ sealed class MateoSurfaceAnimation {
   ///   child: MateoText('Welcome', presentation: .interface()),
   /// )
   /// ```
-  const factory pop({Duration duration, Curve curve}) = MateoSurfaceAnimationPop;
+  const factory pop({Duration duration, Curve curve, MateoSurfaceAnimationPopDirection direction}) =
+      MateoSurfaceAnimationPop;
 
   /// Connects surfaces using the same transform target.
   ///
