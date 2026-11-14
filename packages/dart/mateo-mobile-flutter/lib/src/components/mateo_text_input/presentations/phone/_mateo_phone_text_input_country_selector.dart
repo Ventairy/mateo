@@ -20,7 +20,6 @@ class _MateoPhoneTextInputCountrySelector extends StatefulWidget {
 class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInputCountrySelector> {
   static const _disabledFlagOpacity = 0.65;
   static const _flagCallingCodeGap = 6.0;
-  static const _callingCodeTrailingPadding = 4.0;
   // Keep one locale's catalog available to other phone inputs in this process.
   static Locale? _sharedCatalogLocale;
   static _MateoPhoneCountryCatalog? _sharedCatalog;
@@ -224,31 +223,25 @@ class _MateoPhoneTextInputCountrySelectorState extends State<_MateoPhoneTextInpu
                 return _showCountryPicker(deferRoutePush: deferRoutePush);
               }
             : null,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: widget.size.height, minWidth: 48),
-          child: Row(
-            mainAxisSize: .min,
-            children: [
-              Opacity(
-                opacity: widget.onChanged == null ? _disabledFlagOpacity : 1,
-                child: MateoCountryFlag(country: widget.country, size: widget.size.leadingIconSize),
+        child: Row(
+          mainAxisSize: .min,
+          children: [
+            Opacity(
+              opacity: widget.onChanged == null ? _disabledFlagOpacity : 1,
+              child: MateoCountryFlag(country: widget.country, size: widget.size.leadingIconSize),
+            ),
+            const SizedBox(width: _flagCallingCodeGap),
+            MateoText(
+              '+${widget.country.callingCode}',
+              presentation: .interface(
+                fontSize: _callingCodeFontSize,
+                fontWeight: widget.textStyle.fontWeight,
+                color: widget.textStyle.color,
+                height: widget.textStyle.height,
+                leadingDistribution: widget.textStyle.leadingDistribution,
               ),
-              const SizedBox(width: _flagCallingCodeGap),
-              Padding(
-                padding: const EdgeInsets.only(right: _callingCodeTrailingPadding),
-                child: MateoText(
-                  '+${widget.country.callingCode}',
-                  presentation: .interface(
-                    fontSize: _callingCodeFontSize,
-                    fontWeight: widget.textStyle.fontWeight,
-                    color: widget.textStyle.color,
-                    height: widget.textStyle.height,
-                    leadingDistribution: widget.textStyle.leadingDistribution,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

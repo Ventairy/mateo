@@ -27,7 +27,7 @@ enum MateoTextInputSize {
     trailingPadding: 14,
   );
 
-  new({
+  const new({
     required this.height,
     required this.leadingIconSize,
     required this.trailingIconSize,
@@ -35,7 +35,9 @@ enum MateoTextInputSize {
     required this.trailingPadding,
   });
 
-  /// The minimum surface height.
+  /// The minimum height of a surfaced text input.
+  ///
+  /// Plain inputs fit their content instead.
   final double height;
 
   /// The leading icon's square size.

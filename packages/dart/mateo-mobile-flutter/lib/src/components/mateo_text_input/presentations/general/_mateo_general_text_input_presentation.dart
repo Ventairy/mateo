@@ -149,7 +149,7 @@ class _MateoGeneralTextInputPresentationState extends State<_MateoGeneralTextInp
             child: _buildDragRegion(
               enabled: scope.enabled,
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: widget.size.height),
+                constraints: BoxConstraints(minHeight: _isFilled ? widget.size.height : 0),
                 child: _MateoTextInputSelectionOverflow(
                   repaint: Listenable.merge([scope.controller, scope.focusNode, _fadeRepaint]),
                   child: CupertinoTextField(
@@ -184,12 +184,14 @@ class _MateoGeneralTextInputPresentationState extends State<_MateoGeneralTextInp
                     cursorColor: theme.colorScheme.accent,
                     decoration: const BoxDecoration(),
                     clipBehavior: _isFilled ? Clip.none : Clip.hardEdge,
-                    padding: EdgeInsetsDirectional.only(
-                      start: _isFilled ? widget.size.leadingPadding : 0,
-                      end: widget.size.trailingPadding,
-                      top: (widget.size.height - typography.lineHeight) / 2,
-                      bottom: (widget.size.height - typography.lineHeight) / 2,
-                    ),
+                    padding: _isFilled
+                        ? EdgeInsetsDirectional.only(
+                            start: widget.size.leadingPadding,
+                            end: widget.size.trailingPadding,
+                            top: (widget.size.height - typography.lineHeight) / 2,
+                            bottom: (widget.size.height - typography.lineHeight) / 2,
+                          )
+                        : EdgeInsets.zero,
                   ),
                 ),
               ),

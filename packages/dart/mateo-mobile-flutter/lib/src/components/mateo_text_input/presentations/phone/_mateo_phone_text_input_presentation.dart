@@ -30,7 +30,7 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
   bool _countryConfigurationChanged = true;
   bool _hasUserInteracted = false;
 
-  static const _callingCodeTrailingPadding = 4.0;
+  static const _callingCodeTextGap = 8.0;
 
   @override
   void initState() {
@@ -170,57 +170,52 @@ class _MateoPhoneTextInputPresentationState extends State<_MateoPhoneTextInputPr
             brightness: .light,
             primaryColor: theme.colorScheme.accent,
           ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: widget.size.height),
-            child: Row(
-              children: [
-                _MateoPhoneTextInputCountrySelector(
-                  country: _phoneNumberFormatter.country,
-                  size: widget.size,
-                  textStyle: style.copyWith(fontWeight: .w600),
-                  onChanged: scope.enabled ? _handleCountryChanged : null,
-                ),
-                Expanded(
-                  child: _MateoTextInputSelectionOverflow(
-                    repaint: Listenable.merge([
-                      scope.controller,
-                      scope.focusNode,
-                    ]),
-                    child: CupertinoTextField(
-                      controller: scope.controller,
-                      focusNode: scope.focusNode,
-                      autofocus: scope.autofocus && scope.enabled,
-                      enabled: scope.enabled,
-                      inputFormatters: [_textInputFormatter],
-                      keyboardType: .phone,
-                      textInputAction: .done,
-                      textDirection: .ltr,
-                      onChanged: (_) => _handleChanged(scope),
-                      onSubmitted: scope.onSubmitted == null
-                          ? null
-                          : (_) => scope.onSubmitted!(
-                              _latestFormattingResult.internationalValue,
-                            ),
-                      selectionControls: _MateoTextInputEditingControls.selectionControls,
-                      contextMenuBuilder: _MateoTextInputEditingControls.buildContextMenu,
-                      placeholder: scope.placeholder,
-                      style: style,
-                      placeholderStyle: style.copyWith(
-                        color: scope.enabled ? plainColors.placeholder : plainColors.placeholderDisabled,
-                        overflow: .visible,
-                      ),
-                      cursorColor: theme.colorScheme.accent,
-                      decoration: const BoxDecoration(),
-                      clipBehavior: .none,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: _callingCodeTrailingPadding,
-                        vertical: (widget.size.height - typography.lineHeight) / 2,
-                      ),
+          child: Row(
+            children: [
+              _MateoPhoneTextInputCountrySelector(
+                country: _phoneNumberFormatter.country,
+                size: widget.size,
+                textStyle: style.copyWith(fontWeight: .w600),
+                onChanged: scope.enabled ? _handleCountryChanged : null,
+              ),
+              const SizedBox(width: _callingCodeTextGap),
+              Expanded(
+                child: _MateoTextInputSelectionOverflow(
+                  repaint: Listenable.merge([
+                    scope.controller,
+                    scope.focusNode,
+                  ]),
+                  child: CupertinoTextField(
+                    controller: scope.controller,
+                    focusNode: scope.focusNode,
+                    autofocus: scope.autofocus && scope.enabled,
+                    enabled: scope.enabled,
+                    inputFormatters: [_textInputFormatter],
+                    keyboardType: .phone,
+                    textInputAction: .done,
+                    textDirection: .ltr,
+                    onChanged: (_) => _handleChanged(scope),
+                    onSubmitted: scope.onSubmitted == null
+                        ? null
+                        : (_) => scope.onSubmitted!(
+                            _latestFormattingResult.internationalValue,
+                          ),
+                    selectionControls: _MateoTextInputEditingControls.selectionControls,
+                    contextMenuBuilder: _MateoTextInputEditingControls.buildContextMenu,
+                    placeholder: scope.placeholder,
+                    style: style,
+                    placeholderStyle: style.copyWith(
+                      color: scope.enabled ? plainColors.placeholder : plainColors.placeholderDisabled,
+                      overflow: .visible,
                     ),
+                    cursorColor: theme.colorScheme.accent,
+                    decoration: const BoxDecoration(),
+                    clipBehavior: .none,
+                    padding: EdgeInsets.zero,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -725,7 +725,12 @@ void main() {
       expect(tester.getRect(flag).right, lessThan(tester.getRect(code).left));
       expect(find.byType(MateoIcon), findsNothing);
       expect(tester.getRect(code).right, lessThan(tester.getRect(editor).left));
-      expect(tester.getSize(selector).height, size.height);
+      expect(tester.getSize(selector).height, tester.getSize(flag).height);
+      final inputBounds = tester.getRect(find.byType(MateoTextInput));
+      expect(inputBounds.top, tester.getRect(flag).top);
+      expect(inputBounds.bottom, tester.getRect(flag).bottom);
+      expect(inputBounds.left, tester.getRect(flag).left);
+      expect(inputBounds.right, tester.getRect(editor).right);
       expect(tester.getSize(flag), Size.square(size == .large ? 32 : size.leadingIconSize));
       expect(find.byType(MateoSurface), findsNothing);
       final expectedFontSize = switch (size) {
@@ -820,7 +825,8 @@ void main() {
     expect(field.style!.fontSize, 20);
     expect(field.style!.height, 28 / 20);
     expect(field.style!.color, _theme.colorScheme.textInputs.plain.textDisabled);
-    expect(tester.getSize(find.byType(CupertinoTextField)).height, greaterThan(57));
+    expect(tester.getSize(find.byType(MateoTextInput)).height, tester.getSize(find.byType(EditableText)).height);
+    expect(tester.getSize(find.byType(CupertinoTextField)).height, tester.getSize(find.byType(EditableText)).height);
     expect(tester.getSize(find.byType(MateoCountryFlag)), const Size.square(32));
     expect(tester.takeException(), isNull);
   });

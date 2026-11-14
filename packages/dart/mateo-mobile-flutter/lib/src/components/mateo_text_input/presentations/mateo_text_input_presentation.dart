@@ -35,6 +35,9 @@ sealed class MateoTextInputPresentation extends StatefulWidget {
     MateoTextInputSize size,
   }) = _MateoPhoneTextInputPresentation;
 
+  /// Creates a plain input for an account handle with a fixed `@` prefix.
+  const factory handle({MateoTextInputSize size}) = _MateoHandleTextInputPresentation;
+
   /// The surface lift
   ///
   /// Defaults to zero (flat).

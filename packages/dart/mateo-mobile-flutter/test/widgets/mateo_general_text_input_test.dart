@@ -348,7 +348,8 @@ void main() {
       );
       await tester.pumpWidget(_host(input()));
       final ordinaryHeight = tester.getSize(find.byType(MateoTextInput)).height;
-      expect(ordinaryHeight, greaterThanOrEqualTo(size.height));
+      expect(ordinaryHeight, tester.getSize(find.byType(EditableText)).height);
+      expect(tester.getRect(find.byType(MateoTextInput)), tester.getRect(find.byType(EditableText)));
       final typography = MateoTextInputVariant.plain.resolveTypography(size);
       final editor = tester.widget<EditableText>(find.byType(EditableText));
       expect(editor.style.fontSize, typography.fontSize);

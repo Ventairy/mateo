@@ -9,7 +9,7 @@ import 'package:flutter/services.dart' show TextEditingValue, TextInputFormatter
 import 'package:mateo_mobile/src/gen/animated_icons.g.dart';
 import 'package:material_ui/material_ui.dart' as material;
 import 'package:oh_my_flutter/oh_my_flutter.dart'
-    show Country, PhoneNumberTextInputFormatter, PhoneNumberTextInputFormatterResult;
+    show Country, HandleTextInputFormatter, PhoneNumberTextInputFormatter, PhoneNumberTextInputFormatterResult;
 
 import '../../bases/base_mateo_edge_fade/base_mateo_edge_fade.dart';
 import '../../bases/base_mateo_edge_fade/mateo_edge_fade_band.dart';
@@ -37,6 +37,7 @@ part '_mateo_text_input_presentation_scope.dart';
 part '_mateo_text_input_selection_overflow.dart';
 part 'presentations/general/_mateo_general_text_input_fade_profile.dart';
 part 'presentations/general/_mateo_general_text_input_presentation.dart';
+part 'presentations/handle/_mateo_handle_text_input_presentation.dart';
 part 'presentations/mateo_text_input_presentation.dart';
 part 'presentations/phone/_mateo_phone_country_picker.dart';
 part 'presentations/phone/_mateo_phone_country_row.dart';
