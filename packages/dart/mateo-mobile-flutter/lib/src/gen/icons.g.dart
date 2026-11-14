@@ -3838,22 +3838,23 @@ class _AtPainter extends CustomPainter {
   final Color mateoOpticalSizeColor;
 
   static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+  static final Paint _strokePaint = Paint()..style = PaintingStyle.stroke;
 
   static final Float64List _transform0 = Float64List.fromList([
-    0.756384566,
+    0.739582886,
     0.0,
     0.0,
     0.0,
     0.0,
-    0.756384566,
+    0.739582886,
     0.0,
     0.0,
     0.0,
     0.0,
     1.0,
     0.0,
-    2.498907391,
-    2.5035072,
+    2.664724246,
+    2.66797012,
     0.0,
     1.0,
   ]);
@@ -3892,8 +3893,6 @@ class _AtPainter extends CustomPainter {
     ..cubicTo(12.1082, 8.6184, 11.0838, 7.2978, 9.8883, 7.1298)
     ..close();
 
-  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
-
   @override
   void paint(Canvas canvas, Size size) {
     final scaleX = size.width / _At._viewBoxWidth;
@@ -3905,10 +3904,15 @@ class _AtPainter extends CustomPainter {
 
     canvas.save();
     canvas.transform(_transform0);
-    canvas.save();
-    canvas.clipPath(__clip0);
     canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
-    canvas.restore();
+    canvas.drawPath(
+      __path0,
+      _strokePaint
+        ..color = mateoOpticalSizeColor
+        ..strokeWidth = 0.5
+        ..strokeCap = StrokeCap.butt
+        ..strokeJoin = StrokeJoin.round,
+    );
     canvas.restore();
     canvas.restore();
   }
