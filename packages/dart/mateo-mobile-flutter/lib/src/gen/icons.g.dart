@@ -112,6 +112,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.asterisk(<params>);
 /// ```
 /// ```dart
+/// $Icons.at(<params>);
+/// ```
+/// ```dart
 /// $Icons.bankBuilding(<params>);
 /// ```
 /// ```dart
@@ -575,6 +578,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Asterisk(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `At` widget from `at.svg`.
+  static Widget at({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _At(
     key: key,
     width: width,
     height: height,
@@ -2355,6 +2373,7 @@ abstract final class $Icons {
     ),
     'arrow-up.svg' => arrowUp(key: key, width: width, height: height),
     'asterisk.svg' => asterisk(key: key, width: width, height: height),
+    'at.svg' => at(key: key, width: width, height: height),
     'bank-building.svg' => bankBuilding(key: key, width: width, height: height),
     'banknote-pin.svg' => banknotePin(key: key, width: width, height: height),
     'beer-mug.svg' => beerMug(key: key, width: width, height: height),
@@ -3739,6 +3758,163 @@ class _AsteriskPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AsteriskPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/at.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _At extends StatelessWidget with _DotdartSvgSizing {
+  const _At({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _At._svgWidth;
+
+  @override
+  double get svgNativeHeight => _At._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _At._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _At._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _AtPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _AtPainter extends CustomPainter {
+  _AtPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.756384566,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.756384566,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.498907391,
+    2.5035072,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(10, 2)
+    ..cubicTo(5.5817, 2, 2, 5.5817, 2, 10)
+    ..cubicTo(2, 14.4183, 5.5817, 18, 10, 18)
+    ..cubicTo(11.5465, 18, 12.9876, 17.5622, 14.2098, 16.8042)
+    ..cubicTo(14.6791, 16.5131, 15.2956, 16.6577, 15.5867, 17.127)
+    ..cubicTo(15.8778, 17.5964, 15.7332, 18.2128, 15.2639, 18.5039)
+    ..cubicTo(13.7343, 19.4525, 11.9296, 20, 10, 20)
+    ..cubicTo(4.4771, 20, 0, 15.5228, 0, 10)
+    ..cubicTo(0, 4.4771, 4.4771, 0, 10, 0)
+    ..cubicTo(15.5228, 0, 20, 4.4771, 20, 10)
+    ..cubicTo(20, 11.1044, 19.7294, 12.3102, 19.051, 13.2429)
+    ..cubicTo(18.3349, 14.2275, 17.202, 14.8431, 15.7196, 14.7084)
+    ..cubicTo(14.5162, 14.599, 13.4815, 13.9967, 12.7903, 13.1228)
+    ..cubicTo(11.8495, 14.3323, 10.4017, 15.0622, 8.805, 14.8378)
+    ..cubicTo(6.2756, 14.4823, 4.7653, 11.9275, 5.1233, 9.3804)
+    ..cubicTo(5.4813, 6.8334, 7.6372, 4.7938, 10.1667, 5.1493)
+    ..cubicTo(11.0724, 5.2766, 11.8474, 5.6858, 12.4528, 6.2758)
+    ..cubicTo(12.5679, 5.7731, 13.0518, 5.435, 13.5711, 5.5104)
+    ..cubicTo(14.1177, 5.5898, 14.4964, 6.0972, 14.417, 6.6437)
+    ..lineTo(13.902, 10.1893)
+    ..lineTo(13.9019, 10.1905)
+    ..cubicTo(13.7227, 11.4492, 14.6343, 12.6015, 15.9006, 12.7166)
+    ..cubicTo(16.6508, 12.7848, 17.1129, 12.5073, 17.4336, 12.0665)
+    ..cubicTo(17.792, 11.5737, 18, 10.8218, 18, 10)
+    ..cubicTo(18, 5.5817, 14.4183, 2, 10, 2)
+    ..close()
+    ..moveTo(9.8883, 7.1298)
+    ..cubicTo(8.6929, 6.9618, 7.3442, 7.9488, 7.1039, 9.6588)
+    ..cubicTo(6.8635, 11.3687, 7.8879, 12.6893, 9.0834, 12.8573)
+    ..cubicTo(10.2788, 13.0253, 11.6275, 12.0383, 11.8678, 10.3283)
+    ..cubicTo(12.1082, 8.6184, 11.0838, 7.2978, 9.8883, 7.1298)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _At._viewBoxWidth;
+    final scaleY = size.height / _At._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_At._viewBoxMinX, -_At._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _AtPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
