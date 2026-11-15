@@ -12,6 +12,8 @@ export class MateoColorScheme {
    * Default surface background for this appearance.
    */
   readonly background: string;
+  /** Color for visual separators between content. */
+  readonly divider: string;
   /**
    * Product accent color for emphasized interface elements.
    */
@@ -59,6 +61,7 @@ export class MateoColorScheme {
     colors: Pick<
       MateoColorScheme,
       | 'background'
+      | 'divider'
       | 'accent'
       | 'onAccent'
       | 'selection'
@@ -68,6 +71,7 @@ export class MateoColorScheme {
     >,
   ) {
     this.background = colors.background;
+    this.divider = colors.divider;
     this.accent = colors.accent;
     this.onAccent = colors.onAccent;
     this.selection = colors.selection;

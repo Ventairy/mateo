@@ -1,12 +1,12 @@
-import type { MateoPalette } from '../mateo-palette/mateo-palette.js';
-import { MateoButtonColorScheme } from './mateo-button-color-scheme.js';
-import { MateoButtonsColorScheme } from './mateo-buttons-color-scheme.js';
-import type { MateoColorScheme } from './mateo-color-scheme.js';
-import { MateoPrimaryButtonColorScheme } from './mateo-primary-button-color-scheme.js';
-import { MateoScrollbarColorScheme } from './mateo-scrollbar-color-scheme.js';
-import { MateoSecondaryButtonColorScheme } from './mateo-secondary-button-color-scheme.js';
-import { MateoSelectionColorScheme } from './mateo-selection-color-scheme.js';
-import { MateoTextColorScheme } from './mateo-text-color-scheme.js';
+import type { MateoPalette } from "../mateo-palette/mateo-palette.js";
+import { MateoButtonColorScheme } from "./mateo-button-color-scheme.js";
+import { MateoButtonsColorScheme } from "./mateo-buttons-color-scheme.js";
+import type { MateoColorScheme } from "./mateo-color-scheme.js";
+import { MateoPrimaryButtonColorScheme } from "./mateo-primary-button-color-scheme.js";
+import { MateoScrollbarColorScheme } from "./mateo-scrollbar-color-scheme.js";
+import { MateoSecondaryButtonColorScheme } from "./mateo-secondary-button-color-scheme.js";
+import { MateoSelectionColorScheme } from "./mateo-selection-color-scheme.js";
+import { MateoTextColorScheme } from "./mateo-text-color-scheme.js";
 
 /** The single source of semantic color assignments for the light appearance. */
 export function createMateoLightColorSchemeRoles(
@@ -14,16 +14,18 @@ export function createMateoLightColorSchemeRoles(
   onAccent: string,
 ): Pick<
   MateoColorScheme,
-  | 'background'
-  | 'accent'
-  | 'onAccent'
-  | 'selection'
-  | 'scrollbar'
-  | 'buttons'
-  | 'text'
+  | "background"
+  | "divider"
+  | "accent"
+  | "onAccent"
+  | "selection"
+  | "scrollbar"
+  | "buttons"
+  | "text"
 > {
   return {
     background: palette.white,
+    divider: palette.neutral[3],
     accent: palette.accent[9],
     onAccent,
     scrollbar: new MateoScrollbarColorScheme({
@@ -88,9 +90,9 @@ export function createMateoLightColorSchemeRoles(
         }),
       }),
       tertiary: new MateoButtonColorScheme({
-        background: 'transparent',
+        background: "transparent",
         foreground: palette.neutral[12],
-        backgroundDisabled: 'transparent',
+        backgroundDisabled: "transparent",
         foregroundDisabled: palette.neutral[9],
       }),
     }),

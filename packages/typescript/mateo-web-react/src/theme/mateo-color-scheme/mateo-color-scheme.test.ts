@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 import {
   createMateoPalette,
   createMateoTheme,
@@ -8,17 +8,18 @@ import {
   MateoColorScheme,
   MateoPrimaryButtonColorScheme,
   MateoSecondaryButtonColorScheme,
-} from '../../mateo.js';
+} from "../../mateo.js";
 
-const mateoSchemePalette = createMateoPalette({ accentColor: '#00A86B' });
+const mateoSchemePalette = createMateoPalette({ accentColor: "#00A86B" });
 
-describe('MateoColorScheme.light', () => {
-  it('should create immutable typed groups when deriving the light appearance', () => {
+describe("MateoColorScheme.light", () => {
+  it("should create immutable typed groups when deriving the light appearance", () => {
     const scheme = MateoColorScheme.light({
       palette: mateoSchemePalette,
-      onAccent: 'rgba(255, 255, 255, 0.8)',
+      onAccent: "rgba(255, 255, 255, 0.8)",
     });
     expect(scheme).toBeInstanceOf(MateoColorScheme);
+    expect(scheme.divider).toBe(mateoSchemePalette.neutral[3]);
     expect(scheme.buttons).toBeInstanceOf(MateoButtonsColorScheme);
     expect(scheme.buttons.primary).toBeInstanceOf(
       MateoPrimaryButtonColorScheme,
@@ -30,7 +31,7 @@ describe('MateoColorScheme.light', () => {
       MateoButtonColorScheme,
     );
     expect(scheme.buttons.primary.accent.foreground).toBe(scheme.onAccent);
-    expect(scheme.onAccent).toBe('rgba(255, 255, 255, 0.8)');
+    expect(scheme.onAccent).toBe("rgba(255, 255, 255, 0.8)");
     expect(scheme.buttons.primary.accent.background).toBe(
       mateoSchemePalette.accent[9],
     );
@@ -45,37 +46,38 @@ describe('MateoColorScheme.light', () => {
     }
   });
 
-  it('should expose a color scheme instance when creating a theme', () => {
+  it("should expose a color scheme instance when creating a theme", () => {
     const theme = createMateoTheme({
-      accentColor: '#00A86B',
-      onAccent: '#FFF',
+      accentColor: "#00A86B",
+      onAccent: "#FFF",
     });
     expect(theme.colorScheme).toBeInstanceOf(MateoColorScheme);
+    expect(theme.colorScheme.divider).toBe(theme.palette.neutral[3]);
     expect(theme.colorScheme).toEqual(
-      MateoColorScheme.light({ palette: theme.palette, onAccent: '#FFF' }),
+      MateoColorScheme.light({ palette: theme.palette, onAccent: "#FFF" }),
     );
   });
 
-  it('should reject unresolved foreground colors when creating light roles directly', () => {
+  it("should reject unresolved foreground colors when creating light roles directly", () => {
     expect(() =>
       MateoColorScheme.light({
         palette: mateoSchemePalette,
-        onAccent: 'var(--foreground)',
+        onAccent: "var(--foreground)",
       }),
     ).toThrow(TypeError);
   });
 });
 
 it.each([
-  ['default violet', '#4A5CFF'],
-  ['green hex', '#00A86B'],
-  ['RGB', 'rgb(0, 168, 107)'],
-  ['HSL', 'hsl(120, 100%, 50%)'],
-  ['OKLCH', 'oklch(50% 0 0)'],
+  ["default violet", "#4A5CFF"],
+  ["green hex", "#00A86B"],
+  ["RGB", "rgb(0, 168, 107)"],
+  ["HSL", "hsl(120, 100%, 50%)"],
+  ["OKLCH", "oklch(50% 0 0)"],
 ])(
-  'should provide a pale opaque highlight and dark accent text selection when using %s',
+  "should provide a pale opaque highlight and dark accent text selection when using %s",
   (_, accentColor) => {
-    const theme = createMateoTheme({ accentColor, onAccent: '#FFF' });
+    const theme = createMateoTheme({ accentColor, onAccent: "#FFF" });
     expect(theme.colorScheme.selection.background).toBe(
       theme.palette.accent[3],
     );

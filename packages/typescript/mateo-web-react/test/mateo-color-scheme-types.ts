@@ -15,6 +15,10 @@ const mateoLightScheme = MateoColorScheme.light({
 const mateoAccentTreatment: MateoButtonColorScheme =
   mateoLightScheme.buttons.primary.accent;
 void mateoAccentTreatment;
+const mateoDividerColor: string = mateoLightScheme.divider;
+void mateoDividerColor;
+// @ts-expect-error Divider colors are immutable.
+mateoLightScheme.divider = '#000000';
 const mateoTextColors: MateoTextColorScheme = mateoLightScheme.text;
 const mateoPrimaryTextColor: string = mateoTextColors.primary;
 void mateoPrimaryTextColor;
