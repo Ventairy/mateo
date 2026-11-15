@@ -86,14 +86,16 @@ export function createMateoTheme(options: MateoThemeOptions): MateoThemeData {
  *
  * @remarks
  * Apply the complete object returned by {@link getMateoThemeStyle} to an element
- * that contains your interface. Font size and weight remain content-owned.
+ * that contains your interface. Font size and emphasis weights remain content-owned.
  */
 export type MateoThemeStyle = Readonly<
-  Pick<CSSProperties, 'fontFamily' | 'letterSpacing'> & {
+  Pick<CSSProperties, 'fontFamily' | 'fontWeight' | 'letterSpacing'> & {
     /**
      * Font-family variable shared by Mateo typography.
      */
     '--mateo-font-family': string;
+    /** Default regular weight shared by native text and controls. */
+    '--mateo-font-weight': number;
     /**
      * Letter-spacing variable shared by Mateo typography.
      */
@@ -140,8 +142,10 @@ export function getMateoThemeStyle(theme: MateoThemeData): MateoThemeStyle {
     '--mateo-selection-background': theme.colorScheme.selection.background,
     '--mateo-selection-foreground': theme.colorScheme.selection.foreground,
     '--mateo-font-family': mateoTypography.fontFamily,
+    '--mateo-font-weight': mateoTypography.fontWeight,
     '--mateo-letter-spacing': mateoTypography.letterSpacing,
     fontFamily: mateoTypography.fontFamily,
+    fontWeight: mateoTypography.fontWeight,
     letterSpacing: mateoTypography.letterSpacing,
   });
 }

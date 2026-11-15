@@ -29,6 +29,7 @@
   /* Native controls have browser font defaults instead of inheriting text fonts. */
   :where(button, input, select, textarea) {
     font-family: var(--mateo-font-family, revert-layer);
+    font-weight: var(--mateo-font-weight, revert-layer);
     letter-spacing: var(--mateo-letter-spacing, revert-layer);
   }
 }

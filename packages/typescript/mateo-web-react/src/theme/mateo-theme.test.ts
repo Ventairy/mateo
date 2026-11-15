@@ -38,8 +38,10 @@ it('should provide inherited typography, selection, and scrollbar colors when ap
   expect(Object.isFrozen(style)).toBe(true);
   expect(style).toEqual({
     fontFamily: 'Inter, sans-serif',
+    fontWeight: 450,
     letterSpacing: '-0.02em',
     '--mateo-font-family': 'Inter, sans-serif',
+    '--mateo-font-weight': 450,
     '--mateo-letter-spacing': '-0.02em',
     '--mateo-scrollbar-size': '12px',
     '--mateo-scrollbar-inset': '2px',

@@ -74,3 +74,41 @@ it('should resolve minus two percent at each font size when descendants resize t
     getComputedStyle(view.getByTestId('large').element()).letterSpacing,
   ).toBe('-0.8px');
 });
+
+// Native DOM inheritance is also the contract used by server-rendered Astro
+// content. Object-shape tests cannot detect browser control font defaults.
+it('should inherit regular weight in native content and controls while preserving explicit weights', async () => {
+  const theme = createMateoTheme({ accentColor: '#4A5CFF', onAccent: '#FFF' });
+  const view = await render(
+    <main style={getMateoThemeStyle(theme)}>
+      <p data-testid="body">Cataquí perto de você</p>
+      <button type="button">Continue</button>
+      <input aria-label="Name" />
+      <textarea aria-label="Description" />
+      <select aria-label="City">
+        <option>São Paulo</option>
+      </select>
+      <h2 data-testid="heading" style={{ fontWeight: 550 }}>
+        Novidades
+      </h2>
+      <p data-testid="custom" style={{ fontWeight: 350 }}>
+        Custom weight
+      </p>
+    </main>,
+  );
+  for (const element of [
+    view.getByTestId('body'),
+    view.getByRole('button', { name: 'Continue' }),
+    view.getByRole('textbox', { name: 'Name' }),
+    view.getByRole('textbox', { name: 'Description' }),
+    view.getByRole('combobox', { name: 'City' }),
+  ]) {
+    expect(getComputedStyle(element.element()).fontWeight).toBe('450');
+  }
+  expect(
+    getComputedStyle(view.getByTestId('heading').element()).fontWeight,
+  ).toBe('550');
+  expect(
+    getComputedStyle(view.getByTestId('custom').element()).fontWeight,
+  ).toBe('350');
+});
