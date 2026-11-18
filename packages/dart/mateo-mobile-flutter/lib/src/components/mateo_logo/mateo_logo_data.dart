@@ -5,6 +5,9 @@ enum MateoLogoData {
   /// The Cataquí logo.
   cataqui,
 
+  /// The Cataquí Plus logo.
+  cataquiPlus,
+
   /// The Gmail logo.
   gmail,
 
@@ -25,6 +28,7 @@ enum MateoLogoData {
 
   Widget _buildSvg({required double size}) => switch (this) {
     cataqui => $Logos.cataqui(width: size, height: size),
+    cataquiPlus => $Logos.cataquiPlus(width: size, height: size),
     gmail => $Logos.gmail(width: size, height: size),
     googleMessages => $Logos.googleMessages(width: size, height: size),
     instagram => $Logos.instagram(width: size, height: size),
