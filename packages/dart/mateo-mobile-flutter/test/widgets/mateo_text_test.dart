@@ -78,6 +78,7 @@ void main() {
     const presentation = MateoTextPresentation.interface(
       fontSize: .custom(23),
       fontWeight: .w500,
+      fontFeatures: [.tabularFigures()],
       color: Color(0xFF153040),
       height: 1.2,
       leadingDistribution: .even,
@@ -89,6 +90,7 @@ void main() {
     expect(paragraph.text.style!.fontSize, 23);
     expect(paragraph.text.style!.letterSpacing, -0.46);
     expect(paragraph.text.style!.fontWeight, FontWeight.w500);
+    expect(paragraph.text.style!.fontFeatures, const [FontFeature.tabularFigures()]);
     expect(paragraph.text.style!.color, const Color(0xFF153040));
     expect(paragraph.text.style!.height, 1.2);
     expect(paragraph.text.style!.leadingDistribution, TextLeadingDistribution.even);

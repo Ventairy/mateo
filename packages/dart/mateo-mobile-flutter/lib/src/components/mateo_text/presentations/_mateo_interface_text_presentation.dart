@@ -4,6 +4,7 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
   const new({
     this.fontSize,
     this.fontWeight,
+    this.fontFeatures,
     this.color,
     this.height,
     this.leadingDistribution,
@@ -16,6 +17,7 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
 
   final MateoTextInterfaceFontSize? fontSize;
   final FontWeight? fontWeight;
+  final List<FontFeature>? fontFeatures;
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
@@ -36,6 +38,7 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
       fontSize: resolvedFontSize,
       letterSpacing: scaler.scale(resolvedFontSize) * -0.02,
       fontWeight: fontWeight ?? defaults.fontWeight,
+      fontFeatures: fontFeatures,
       color: color ?? defaults.color,
       height: height ?? defaults.height,
       leadingDistribution: leadingDistribution,

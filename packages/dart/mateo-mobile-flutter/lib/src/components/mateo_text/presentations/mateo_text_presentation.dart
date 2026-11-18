@@ -9,6 +9,7 @@ sealed class MateoTextPresentation extends StatelessWidget {
   const factory interface({
     MateoTextInterfaceFontSize? fontSize,
     FontWeight? fontWeight,
+    List<FontFeature>? fontFeatures,
     Color? color,
     TextAlign? textAlign,
     int? maxLines,
