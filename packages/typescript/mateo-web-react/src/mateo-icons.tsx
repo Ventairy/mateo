@@ -36,6 +36,7 @@ import MateoCircleInfoArtwork from '@mateo/icons/svg/circle-info.svg?react';
 import MateoClassicBuildingArtwork from '@mateo/icons/svg/classic-building.svg?react';
 import MateoClockArtwork from '@mateo/icons/svg/clock.svg?react';
 import MateoCopyrightArtwork from '@mateo/icons/svg/copyright.svg?react';
+import MateoCreditCardArtwork from '@mateo/icons/svg/credit-card.svg?react';
 import MateoCrossArtwork from '@mateo/icons/svg/cross.svg?react';
 import MateoCrossCircleArtwork from '@mateo/icons/svg/cross-circle.svg?react';
 import MateoDiscoBallArtwork from '@mateo/icons/svg/disco-ball.svg?react';
@@ -322,6 +323,11 @@ export function MateoClockIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the copyright artwork with Mateo icon appearance and accessibility. */
 export function MateoCopyrightIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCopyrightArtwork} />;
+}
+
+/** Renders the creditCard artwork with Mateo icon appearance and accessibility. */
+export function MateoCreditCardIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoCreditCardArtwork} />;
 }
 
 /** Renders the crossCircle artwork with Mateo icon appearance and accessibility. */

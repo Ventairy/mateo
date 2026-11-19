@@ -105,6 +105,9 @@ enum MateoIconData {
   /// The copyright icon.
   copyright,
 
+  /// The credit card icon.
+  creditCard,
+
   /// The cross icon.
   cross,
 
@@ -422,6 +425,7 @@ enum MateoIconData {
     classicBuilding => $Icons.classicBuilding(mateoOpticalSizeColor: color),
     clock => $Icons.clock(mateoOpticalSizeColor: color),
     copyright => $Icons.copyright(mateoOpticalSizeColor: color),
+    creditCard => $Icons.creditCard(mateoOpticalSizeColor: color),
     cross => $Icons.cross(mateoOpticalSizeColor: color),
     crossCircle => $Icons.crossCircle(mateoOpticalSizeColor: color),
     discoBall => $Icons.discoBall(mateoOpticalSizeColor: color),

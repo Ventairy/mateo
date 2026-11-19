@@ -190,6 +190,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.copyright(<params>);
 /// ```
 /// ```dart
+/// $Icons.creditCard(<params>);
+/// ```
+/// ```dart
 /// $Icons.cross(<params>);
 /// ```
 /// ```dart
@@ -968,6 +971,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Copyright(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `CreditCard` widget from `creditCard.svg`.
+  static Widget creditCard({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _CreditCard(
     key: key,
     width: width,
     height: height,
@@ -2411,6 +2429,7 @@ abstract final class $Icons {
     ),
     'clock.svg' => clock(key: key, width: width, height: height),
     'copyright.svg' => copyright(key: key, width: width, height: height),
+    'credit-card.svg' => creditCard(key: key, width: width, height: height),
     'cross.svg' => cross(key: key, width: width, height: height),
     'cross-circle.svg' => crossCircle(key: key, width: width, height: height),
     'disco-ball.svg' => discoBall(key: key, width: width, height: height),
@@ -8226,6 +8245,167 @@ class _CopyrightPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CopyrightPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/credit-card.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CreditCard extends StatelessWidget with _DotdartSvgSizing {
+  const _CreditCard({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CreditCard._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CreditCard._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CreditCard._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CreditCard._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CreditCardPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CreditCardPainter extends CustomPainter {
+  _CreditCardPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.8065683,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.8065683,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.903119631,
+    1.763411941,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(20, 11.9004)
+    ..cubicTo(20, 13.8603, 19.9996, 14.8402, 19.6182, 15.5889)
+    ..cubicTo(19.2826, 16.2474, 18.7474, 16.7826, 18.0889, 17.1182)
+    ..cubicTo(17.3402, 17.4996, 16.3603, 17.5, 14.4004, 17.5)
+    ..lineTo(5.5996, 17.5)
+    ..cubicTo(3.6397, 17.5, 2.6598, 17.4996, 1.9111, 17.1182)
+    ..cubicTo(1.2526, 16.7826, 0.7174, 16.2474, 0.3818, 15.5889)
+    ..cubicTo(0.0004, 14.8402, 0, 13.8603, 0, 11.9004)
+    ..lineTo(0, 8.1328)
+    ..lineTo(20, 8.1328)
+    ..lineTo(20, 11.9004)
+    ..close()
+    ..moveTo(4.4629, 11.3486)
+    ..cubicTo(3.8719, 11.3486, 3.5756, 11.3488, 3.3525, 11.4697)
+    ..cubicTo(3.1826, 11.562, 3.0425, 11.7021, 2.9502, 11.8721)
+    ..cubicTo(2.8291, 12.0952, 2.8291, 12.3911, 2.8291, 12.9824)
+    ..cubicTo(2.8291, 13.5738, 2.8291, 13.8696, 2.9502, 14.0928)
+    ..cubicTo(3.0425, 14.2627, 3.1826, 14.4019, 3.3525, 14.4941)
+    ..cubicTo(3.5757, 14.6152, 3.8716, 14.6152, 4.4629, 14.6152)
+    ..lineTo(5.2119, 14.6152)
+    ..cubicTo(5.8033, 14.6152, 6.0991, 14.6153, 6.3223, 14.4941)
+    ..cubicTo(6.4922, 14.4019, 6.6323, 14.2627, 6.7246, 14.0928)
+    ..cubicTo(6.8457, 13.8696, 6.8457, 13.5737, 6.8457, 12.9824)
+    ..cubicTo(6.8457, 12.3912, 6.8456, 12.0952, 6.7246, 11.8721)
+    ..cubicTo(6.6323, 11.7021, 6.4922, 11.562, 6.3223, 11.4697)
+    ..cubicTo(6.0991, 11.3488, 5.8031, 11.3486, 5.2119, 11.3486)
+    ..lineTo(4.4629, 11.3486)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(14.4004, 2.5)
+    ..cubicTo(16.3603, 2.5, 17.3402, 2.5004, 18.0889, 2.8818)
+    ..cubicTo(18.7474, 3.2174, 19.2826, 3.7526, 19.6182, 4.4111)
+    ..cubicTo(19.842, 4.8504, 19.9325, 5.3693, 19.9707, 6.1191)
+    ..lineTo(0.0293, 6.1191)
+    ..cubicTo(0.0675, 5.3693, 0.158, 4.8504, 0.3818, 4.4111)
+    ..cubicTo(0.7174, 3.7526, 1.2526, 3.2174, 1.9111, 2.8818)
+    ..cubicTo(2.6598, 2.5004, 3.6397, 2.5, 5.5996, 2.5)
+    ..lineTo(14.4004, 2.5)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CreditCard._viewBoxWidth;
+    final scaleY = size.height / _CreditCard._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CreditCard._viewBoxMinX, -_CreditCard._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CreditCardPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
