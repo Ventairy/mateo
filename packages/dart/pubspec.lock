@@ -165,10 +165,10 @@ packages:
     dependency: transitive
     description:
       name: code_assets
-      sha256: "828110d598123b5ea96c00c9f3c72105bf79f8ee36c20a39b26209ade421ec57"
+      sha256: "1ef22a0be3af9370bd9481ac76db114db92bfe75d5ca2b2d7bc911764478a4d9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   collection:
     dependency: transitive
     description:
@@ -260,9 +260,10 @@ packages:
   dotdart:
     dependency: "direct overridden"
     description:
-      path: "/Users/personal/Developer/ventairy/flutter/dotdart"
-      relative: false
-    source: path
+      name: dotdart
+      sha256: c3ee8b8bdca84cbe23599f48d4d19b1232d91ecb3fd1a4c4d300da9e0155d344
+      url: "https://pub.dev"
+    source: hosted
     version: "0.12.1"
   equatable:
     dependency: transitive
@@ -548,9 +549,10 @@ packages:
   oh_my_flutter:
     dependency: "direct overridden"
     description:
-      path: "/Users/personal/Developer/ventairy/flutter/oh_my_flutter"
-      relative: false
-    source: path
+      name: oh_my_flutter
+      sha256: "138eb03d68143eb3056798d64df9e52aab95c033a57cd9693df00b3eb16b1938"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.29.0"
   package_config:
     dependency: transitive
