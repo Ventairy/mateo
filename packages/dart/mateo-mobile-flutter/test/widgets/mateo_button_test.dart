@@ -702,6 +702,7 @@ void main() {
           textScale: 2,
           direction: .rtl,
         );
+        await tester.pumpWidget(const SizedBox.shrink());
         await tester.pumpWidget(button(loading: false));
         final width = tester.getSize(_surface()).width;
         await tester.pumpWidget(button(loading: true));

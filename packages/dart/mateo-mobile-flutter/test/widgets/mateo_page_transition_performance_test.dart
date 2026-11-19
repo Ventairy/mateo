@@ -353,8 +353,8 @@ void main() {
       await tester.tap(find.text('Count: 0'));
       await tester.pump();
       expect(find.text('Count: 1'), findsOneWidget);
-      expect(created.where(_isPageImage), hasLength(3));
-      expect(_textures(created.where(_isPageImage)), hasLength(2));
+      expect(created.where(_isFullPageImage), hasLength(3));
+      expect(_textures(created.where(_isFullPageImage)), hasLength(2));
       pages.value = [
         source,
         const MateoPage<void>(key: destinationKey, transition: .push(), allowSnapshotting: false, child: counter),
@@ -364,9 +364,9 @@ void main() {
       expect(tester.state(find.byType(AppTestCounter)), same(originalState));
       expect(find.text('Count: 1'), findsOneWidget);
       expect(disposed.where(_isEdgeImage), isEmpty);
-      expect(disposed.where(_isPageImage), hasLength(2));
+      expect(disposed.where(_isFullPageImage), hasLength(2));
       await _pumpFrames(tester, 3);
-      expect(created.where(_isPageImage), hasLength(3));
+      expect(created.where(_isFullPageImage), hasLength(3));
       await tester.pumpAndSettle();
       expect(disposed, unorderedEquals(created));
       await tester.tap(find.text('Count: 1'));

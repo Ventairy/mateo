@@ -1,13 +1,15 @@
 part of 'mateo_text.dart';
 
 class _MateoTextPresentationScope extends InheritedWidget {
-  const new({required this.text, required super.child});
+  const new({required this.data, required this.semanticsLabel, required super.child});
 
-  final MateoText text;
+  final String data;
+  final String? semanticsLabel;
 
-  static MateoText of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_MateoTextPresentationScope>()!.text;
+  static _MateoTextPresentationScope of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_MateoTextPresentationScope>()!;
 
   @override
-  bool updateShouldNotify(_MateoTextPresentationScope oldWidget) => text != oldWidget.text;
+  bool updateShouldNotify(_MateoTextPresentationScope oldWidget) =>
+      data != oldWidget.data || semanticsLabel != oldWidget.semanticsLabel;
 }

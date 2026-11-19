@@ -35,6 +35,21 @@ void main() {
     expect(style.height, _ambient.height);
   });
 
+  testWidgets('an unchanged interface label reuses its native text when its parent rebuilds', (tester) async {
+    const presentation = MateoTextPresentation.interface();
+    Widget label(String semanticsLabel) =>
+        _host(MateoText('17 segundos', presentation: presentation, semanticsLabel: semanticsLabel));
+
+    await tester.pumpWidget(label('17 segundos restantes'));
+    final nativeText = tester.widget<Text>(find.byType(Text));
+
+    await tester.pumpWidget(label('17 segundos restantes'));
+    expect(tester.widget<Text>(find.byType(Text)), same(nativeText));
+
+    await tester.pumpWidget(label('O cronômetro tem 17 segundos'));
+    expect(tester.widget<Text>(find.byType(Text)).semanticsLabel, 'O cronômetro tem 17 segundos');
+  });
+
   for (final (name, fontSize, expectedSize) in <(String, MateoTextInterfaceFontSize, double)>[
     ('body', .body, 15.7),
     ('custom', const .custom(32), 32),

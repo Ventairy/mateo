@@ -44,18 +44,27 @@ final class _MateoInterfaceTextPresentation extends MateoTextPresentation {
       leadingDistribution: leadingDistribution,
     );
 
+    final label = Text(
+      text.data,
+      style: style,
+      textAlign: textAlign ?? defaults.textAlign ?? .start,
+      maxLines: maxLines,
+      overflow: overflow,
+      softWrap: softWrap,
+      semanticsLabel: text.semanticsLabel,
+      textHeightBehavior: defaults.textHeightBehavior,
+    );
+
     // Isolate Flutter's renderer from native text defaults outside Mateo.
     return DefaultTextStyle(
       style: const TextStyle(),
-      child: Text(
-        text.data,
-        style: style,
-        textAlign: textAlign ?? defaults.textAlign ?? .start,
-        maxLines: maxLines,
-        overflow: overflow,
-        softWrap: softWrap,
-        semanticsLabel: text.semanticsLabel,
-        textHeightBehavior: defaults.textHeightBehavior,
+      child: _MateoTextMotion(
+        enabled:
+            !(MediaQuery.maybeDisableAnimationsOf(context) ?? false) &&
+            !(MediaQuery.maybeReduceMotionOf(context) ?? false) &&
+            TickerMode.valuesOf(context).enabled &&
+            SelectionContainer.maybeOf(context) == null,
+        child: label,
       ),
     );
   }
