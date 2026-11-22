@@ -107,6 +107,7 @@ import MateoSadEmoticonArtwork from '@mateo/icons/svg/sad-emoticon.svg?react';
 import MateoSadMaskHappyMaskArtwork from '@mateo/icons/svg/sad-mask-happy-mask.svg?react';
 import MateoScissorsArtwork from '@mateo/icons/svg/scissors.svg?react';
 import MateoScrollArtwork from '@mateo/icons/svg/scroll.svg?react';
+import MateoShieldEyeArtwork from '@mateo/icons/svg/shield-eye.svg?react';
 import MateoShieldLockArtwork from '@mateo/icons/svg/shield-lock.svg?react';
 import MateoShoppingBagArtwork from '@mateo/icons/svg/shopping-bag.svg?react';
 import MateoShoppingCartArtwork from '@mateo/icons/svg/shopping-cart.svg?react';
@@ -737,6 +738,11 @@ export function MateoScissorsIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the scroll artwork with Mateo icon appearance and accessibility. */
 export function MateoScrollIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoScrollArtwork} />;
+}
+
+/** Renders the shieldEye artwork with Mateo icon appearance and accessibility. */
+export function MateoShieldEyeIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoShieldEyeArtwork} />;
 }
 
 /** Renders the shieldLock artwork with Mateo icon appearance and accessibility. */

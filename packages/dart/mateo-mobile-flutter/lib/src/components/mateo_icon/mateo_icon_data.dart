@@ -312,6 +312,9 @@ enum MateoIconData {
   /// The scroll icon.
   scroll,
 
+  /// The shield with an eye icon.
+  shieldEye,
+
   /// The shield with a lock icon.
   shieldLock,
 
@@ -491,6 +494,7 @@ enum MateoIconData {
     sadMaskHappyMask => $Icons.sadMaskHappyMask(mateoOpticalSizeColor: color),
     scissors => $Icons.scissors(mateoOpticalSizeColor: color),
     scroll => $Icons.scroll(mateoOpticalSizeColor: color),
+    shieldEye => $Icons.shieldEye(mateoOpticalSizeColor: color),
     shieldLock => $Icons.shieldLock(mateoOpticalSizeColor: color),
     shoppingBag => $Icons.shoppingBag(mateoOpticalSizeColor: color),
     shoppingCart => $Icons.shoppingCart(mateoOpticalSizeColor1: color, mateoOpticalSizeColor2: color),
