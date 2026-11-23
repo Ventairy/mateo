@@ -33,7 +33,7 @@ dependencies:
 dev_dependencies:
   alchemist: ^0.14.1
   build_runner: ^2.16.2
-  dotdart: ^0.12.0
+  dotdart: ^0.12.2
   flutter_test:
     sdk: flutter
   slang_build_runner: ^4.19.0
