@@ -147,6 +147,9 @@ enum MateoIconData {
   /// The exclamation triangle icon.
   exclamationTriangle,
 
+  /// The eye with a slash icon.
+  eyeSlash,
+
   /// The ferris wheel icon.
   ferrisWheel,
 
@@ -442,6 +445,7 @@ enum MateoIconData {
     exclamationChatBubble => $Icons.exclamationChatBubble(mateoOpticalSizeColor: color),
     exclamationCircle => $Icons.exclamationCircle(mateoOpticalSizeColor: color),
     exclamationTriangle => $Icons.exclamationTriangle(mateoOpticalSizeColor: color),
+    eyeSlash => $Icons.eyeSlash(mateoOpticalSizeColor: color),
     ferrisWheel => $Icons.ferrisWheel(mateoOpticalSizeColor: color),
     figureCropCircle => $Icons.figureCropCircle(mateoOpticalSizeColor: color),
     figureCropCircleQuestionmark => $Icons.figureCropCircleQuestionmark(mateoOpticalSizeColor: color),

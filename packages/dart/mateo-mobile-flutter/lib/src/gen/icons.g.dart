@@ -232,6 +232,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.exclamationTriangle(<params>);
 /// ```
 /// ```dart
+/// $Icons.eyeSlash(<params>);
+/// ```
+/// ```dart
 /// $Icons.ferrisWheel(<params>);
 /// ```
 /// ```dart
@@ -1184,6 +1187,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _ExclamationTriangle(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `EyeSlash` widget from `eyeSlash.svg`.
+  static Widget eyeSlash({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _EyeSlash(
     key: key,
     width: width,
     height: height,
@@ -2473,6 +2491,7 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'eye-slash.svg' => eyeSlash(key: key, width: width, height: height),
     'ferris-wheel.svg' => ferrisWheel(key: key, width: width, height: height),
     'figure-crop-circle.svg' => figureCropCircle(
       key: key,
@@ -10605,6 +10624,187 @@ class _ExclamationTrianglePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ExclamationTrianglePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/eye-slash.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _EyeSlash extends StatelessWidget with _DotdartSvgSizing {
+  const _EyeSlash({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _EyeSlash._svgWidth;
+
+  @override
+  double get svgNativeHeight => _EyeSlash._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _EyeSlash._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _EyeSlash._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _EyeSlashPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _EyeSlashPainter extends CustomPainter {
+  _EyeSlashPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.886894646,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.886894646,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.138842236,
+    1.091321101,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(6.3291, 8.7602)
+    ..cubicTo(6.1751, 9.1799, 6.0918, 9.6338, 6.0918, 10.1069)
+    ..cubicTo(6.0918, 12.2649, 7.8419, 14.0141, 10, 14.0141)
+    ..cubicTo(10.4745, 14.0141, 10.9289, 13.9288, 11.3496, 13.7739)
+    ..lineTo(14.251, 16.6723)
+    ..cubicTo(12.8934, 17.3135, 11.4545, 17.6419, 10, 17.642)
+    ..cubicTo(6.4176, 17.642, 2.9299, 15.6571, 0.5186, 11.8832)
+    ..cubicTo(-0.1725, 10.8016, -0.1725, 9.4121, 0.5186, 8.3305)
+    ..cubicTo(1.2469, 7.1906, 2.074, 6.2146, 2.9717, 5.4067)
+    ..lineTo(6.3291, 8.7602)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(15.1113, 16.2162)
+    ..lineTo(12.2148, 13.3246)
+    ..lineTo(12.2158, 13.3237)
+    ..lineTo(15.1113, 16.2162)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(10, 2.5717)
+    ..cubicTo(13.5823, 2.5719, 17.0703, 4.5566, 19.4814, 8.3305)
+    ..cubicTo(20.1724, 9.412, 20.1724, 10.8017, 19.4814, 11.8832)
+    ..cubicTo(18.7529, 13.0235, 17.9244, 13.9989, 17.0264, 14.8071)
+    ..lineTo(13.668, 11.4535)
+    ..cubicTo(13.8222, 11.0336, 13.9072, 10.5802, 13.9072, 10.1069)
+    ..cubicTo(13.9072, 7.9489, 12.158, 6.1998, 10, 6.1996)
+    ..cubicTo(9.5247, 6.1996, 9.0688, 6.2835, 8.6475, 6.4389)
+    ..lineTo(5.7461, 3.5404)
+    ..cubicTo(7.1043, 2.8987, 8.5448, 2.5717, 10, 2.5717)
+    ..close();
+
+  static final Path __path3 = Path()
+    ..moveTo(16.5688, 17.6709)
+    ..cubicTo(16.8479, 17.95, 17.291, 17.9696, 17.5798, 17.6709)
+    ..cubicTo(17.8687, 17.3626, 17.8472, 16.9487, 17.5798, 16.6716)
+    ..lineTo(3.2089, 2.3202)
+    ..cubicTo(2.9337, 2.0451, 2.479, 2.0411, 2.1999, 2.3202)
+    ..cubicTo(1.9305, 2.5896, 1.9305, 3.0521, 2.1999, 3.3215)
+    ..lineTo(16.5688, 17.6709)
+    ..close();
+
+  static final Path __path4 = Path()
+    ..moveTo(10.2363, 12.6615)
+    ..cubicTo(10.1585, 12.6687, 10.0797, 12.6742, 10, 12.6742)
+    ..cubicTo(8.5822, 12.6742, 7.4326, 11.5247, 7.4326, 10.1069)
+    ..cubicTo(7.4326, 10.0282, 7.4374, 9.9504, 7.4443, 9.8735)
+    ..lineTo(10.2363, 12.6615)
+    ..close();
+
+  static final Path __path5 = Path()
+    ..moveTo(10, 7.5395)
+    ..cubicTo(11.4178, 7.5395, 12.5674, 8.689, 12.5674, 10.1069)
+    ..cubicTo(12.5674, 10.1856, 12.5616, 10.2633, 12.5547, 10.3403)
+    ..lineTo(9.7627, 7.5512)
+    ..cubicTo(9.8409, 7.544, 9.92, 7.5395, 10, 7.5395)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _EyeSlash._viewBoxWidth;
+    final scaleY = size.height / _EyeSlash._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_EyeSlash._viewBoxMinX, -_EyeSlash._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path3, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path4, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path5, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _EyeSlashPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

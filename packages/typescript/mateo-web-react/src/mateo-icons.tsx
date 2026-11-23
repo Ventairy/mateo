@@ -50,6 +50,7 @@ import MateoEvPlugArtwork from '@mateo/icons/svg/ev-plug.svg?react';
 import MateoExclamationChatBubbleArtwork from '@mateo/icons/svg/exclamation-chat-bubble.svg?react';
 import MateoExclamationCircleArtwork from '@mateo/icons/svg/exclamation-circle.svg?react';
 import MateoExclamationTriangleArtwork from '@mateo/icons/svg/exclamation-triangle.svg?react';
+import MateoEyeSlashArtwork from '@mateo/icons/svg/eye-slash.svg?react';
 import MateoFerrisWheelArtwork from '@mateo/icons/svg/ferris-wheel.svg?react';
 import MateoFigureCropCircleArtwork from '@mateo/icons/svg/figure-crop-circle.svg?react';
 import MateoFigureCropCircleQuestionmarkArtwork from '@mateo/icons/svg/figure-crop-circle-questionmark.svg?react';
@@ -402,6 +403,11 @@ export function MateoExclamationTriangleIcon(
   props: MateoNamedIconProps,
 ): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoExclamationTriangleArtwork} />;
+}
+
+/** Renders the eyeSlash artwork with Mateo icon appearance and accessibility. */
+export function MateoEyeSlashIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoEyeSlashArtwork} />;
 }
 
 /** Renders the ferrisWheel artwork with Mateo icon appearance and accessibility. */
