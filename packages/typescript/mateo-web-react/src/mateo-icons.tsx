@@ -26,6 +26,7 @@ import MateoCalendarArtwork from '@mateo/icons/svg/calendar.svg?react';
 import MateoChatBubbleArtwork from '@mateo/icons/svg/chat-bubble.svg?react';
 import MateoCheckeredFlagArtwork from '@mateo/icons/svg/checkered-flag.svg?react';
 import MateoCheckmarkArtwork from '@mateo/icons/svg/checkmark.svg?react';
+import MateoCheckmarkSealArtwork from '@mateo/icons/svg/checkmark-seal.svg?react';
 import MateoChevronDownArtwork from '@mateo/icons/svg/chevron-down.svg?react';
 import MateoChevronLeftArtwork from '@mateo/icons/svg/chevron-left.svg?react';
 import MateoCircleArtwork from '@mateo/icons/svg/circle.svg?react';
@@ -271,6 +272,13 @@ export function MateoCheckeredFlagIcon(
 /** Renders the checkmark artwork with Mateo icon appearance and accessibility. */
 export function MateoCheckmarkIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoCheckmarkArtwork} />;
+}
+
+/** Renders the checkmarkSeal artwork with Mateo icon appearance and accessibility. */
+export function MateoCheckmarkSealIcon(
+  props: MateoNamedIconProps,
+): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoCheckmarkSealArtwork} />;
 }
 
 /** Renders the chevronDown artwork with Mateo icon appearance and accessibility. */

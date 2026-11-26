@@ -75,6 +75,9 @@ enum MateoIconData {
   /// The checkmark icon.
   checkmark,
 
+  /// The seal with a checkmark icon.
+  checkmarkSeal,
+
   /// The chevron down icon.
   chevronDown,
 
@@ -421,6 +424,7 @@ enum MateoIconData {
     chatBubble => $Icons.chatBubble(mateoOpticalSizeColor: color),
     checkeredFlag => $Icons.checkeredFlag(mateoOpticalSizeColor: color),
     checkmark => $Icons.checkmark(mateoOpticalSizeColor: color),
+    checkmarkSeal => $Icons.checkmarkSeal(mateoOpticalSizeColor: color),
     chevronDown => $Icons.chevronDown(mateoOpticalSizeColor: color),
     chevronLeft => $Icons.chevronLeft(mateoOpticalSizeColor: color),
     circle => $Icons.circle(mateoOpticalSizeColor: color),

@@ -160,6 +160,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.checkmark(<params>);
 /// ```
 /// ```dart
+/// $Icons.checkmarkSeal(<params>);
+/// ```
+/// ```dart
 /// $Icons.chevronDown(<params>);
 /// ```
 /// ```dart
@@ -827,6 +830,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _Checkmark(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `CheckmarkSeal` widget from `checkmarkSeal.svg`.
+  static Widget checkmarkSeal({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _CheckmarkSeal(
     key: key,
     width: width,
     height: height,
@@ -2451,6 +2469,11 @@ abstract final class $Icons {
       height: height,
     ),
     'checkmark.svg' => checkmark(key: key, width: width, height: height),
+    'checkmark-seal.svg' => checkmarkSeal(
+      key: key,
+      width: width,
+      height: height,
+    ),
     'chevron-down.svg' => chevronDown(key: key, width: width, height: height),
     'chevron-left.svg' => chevronLeft(key: key, width: width, height: height),
     'circle.svg' => circle(key: key, width: width, height: height),
@@ -6754,6 +6777,180 @@ class _CheckmarkPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CheckmarkPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/checkmark-seal.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CheckmarkSeal extends StatelessWidget with _DotdartSvgSizing {
+  const _CheckmarkSeal({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CheckmarkSeal._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CheckmarkSeal._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CheckmarkSeal._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CheckmarkSeal._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CheckmarkSealPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CheckmarkSealPainter extends CustomPainter {
+  _CheckmarkSealPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.769270359,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.769270359,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.307620796,
+    2.220611476,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(8.0677, 0.9937)
+    ..cubicTo(9.0882, -0.1808, 10.9118, -0.1808, 11.9322, 0.9937)
+    ..lineTo(12.7271, 1.9086)
+    ..cubicTo(12.8589, 2.0603, 13.0596, 2.1333, 13.2581, 2.1018)
+    ..lineTo(14.455, 1.912)
+    ..cubicTo(15.9917, 1.6682, 17.3886, 2.8404, 17.4154, 4.396)
+    ..lineTo(17.4363, 5.6078)
+    ..cubicTo(17.4398, 5.8087, 17.5465, 5.9936, 17.7188, 6.0971)
+    ..lineTo(18.7578, 6.721)
+    ..cubicTo(20.0916, 7.522, 20.4083, 9.3179, 19.4288, 10.5269)
+    ..lineTo(18.6659, 11.4685)
+    ..cubicTo(18.5394, 11.6246, 18.5023, 11.8349, 18.5678, 12.0249)
+    ..lineTo(18.9626, 13.1707)
+    ..cubicTo(19.4695, 14.6417, 18.5578, 16.221, 17.0303, 16.5175)
+    ..lineTo(15.8406, 16.7484)
+    ..cubicTo(15.6434, 16.7868, 15.4799, 16.924, 15.4079, 17.1116)
+    ..lineTo(14.9739, 18.2431)
+    ..cubicTo(14.4166, 19.6958, 12.7029, 20.3196, 11.3423, 19.5649)
+    ..lineTo(10.2825, 18.9772)
+    ..cubicTo(10.1067, 18.8797, 9.8933, 18.8797, 9.7176, 18.9772)
+    ..lineTo(8.6577, 19.5649)
+    ..cubicTo(7.297, 20.3196, 5.5834, 19.6958, 5.0262, 18.2431)
+    ..lineTo(4.5921, 17.1116)
+    ..cubicTo(4.5202, 16.924, 4.3566, 16.7868, 4.1594, 16.7484)
+    ..lineTo(2.9696, 16.5175)
+    ..cubicTo(1.4422, 16.221, 0.5304, 14.6417, 1.0373, 13.1707)
+    ..lineTo(1.4322, 12.0249)
+    ..cubicTo(1.4977, 11.8349, 1.4606, 11.6246, 1.3341, 11.4685)
+    ..lineTo(0.5712, 10.5269)
+    ..cubicTo(-0.4083, 9.3179, -0.0916, 7.522, 1.2422, 6.721)
+    ..lineTo(2.2812, 6.0971)
+    ..cubicTo(2.4535, 5.9936, 2.5602, 5.8087, 2.5637, 5.6078)
+    ..lineTo(2.5846, 4.396)
+    ..cubicTo(2.6113, 2.8404, 4.0083, 1.6682, 5.545, 1.912)
+    ..lineTo(6.742, 2.1018)
+    ..cubicTo(6.9404, 2.1333, 7.141, 2.0603, 7.2728, 1.9086)
+    ..lineTo(8.0677, 0.9937)
+    ..close()
+    ..moveTo(13.1709, 9.2159)
+    ..cubicTo(13.557, 8.8298, 13.557, 8.2037, 13.1709, 7.8177)
+    ..cubicTo(12.7848, 7.4315, 12.1587, 7.4315, 11.7727, 7.8177)
+    ..lineTo(9.0113, 10.579)
+    ..lineTo(8.2274, 9.795)
+    ..cubicTo(7.8413, 9.409, 7.2153, 9.409, 6.8292, 9.795)
+    ..cubicTo(6.443, 10.1811, 6.443, 10.8072, 6.8292, 11.1933)
+    ..lineTo(7.9626, 12.3268)
+    ..cubicTo(8.5418, 12.9059, 9.4808, 12.9059, 10.0599, 12.3268)
+    ..lineTo(13.1709, 9.2159)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CheckmarkSeal._viewBoxWidth;
+    final scaleY = size.height / _CheckmarkSeal._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CheckmarkSeal._viewBoxMinX, -_CheckmarkSeal._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CheckmarkSealPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
