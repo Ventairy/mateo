@@ -117,6 +117,9 @@ enum MateoIconData {
   /// The cross in a circle icon.
   crossCircle,
 
+  /// The seal with a cross icon.
+  crossSeal,
+
   /// The disco ball icon.
   discoBall,
 
@@ -203,6 +206,9 @@ enum MateoIconData {
 
   /// The hot coffee cup icon.
   hotCoffeeCup,
+
+  /// The identification card icon.
+  id,
 
   /// The incognito hat and glasses icon.
   incognito,
@@ -441,6 +447,7 @@ enum MateoIconData {
     creditCard => $Icons.creditCard(mateoOpticalSizeColor: color),
     cross => $Icons.cross(mateoOpticalSizeColor: color),
     crossCircle => $Icons.crossCircle(mateoOpticalSizeColor: color),
+    crossSeal => $Icons.crossSeal(mateoOpticalSizeColor: color),
     discoBall => $Icons.discoBall(mateoOpticalSizeColor: color),
     doubleCross => $Icons.doubleCross(mateoOpticalSizeColor: color),
     drop => $Icons.drop(mateoOpticalSizeColor: color),
@@ -470,6 +477,7 @@ enum MateoIconData {
     helicopterFront => $Icons.helicopterFront(mateoOpticalSizeColor: color),
     hookah => $Icons.hookah(mateoOpticalSizeColor: color),
     hotCoffeeCup => $Icons.hotCoffeeCup(mateoOpticalSizeColor: color),
+    id => $Icons.id(mateoOpticalSizeColor: color),
     incognito => $Icons.incognito(mateoOpticalSizeColor: color),
     intellectualProperty => $Icons.intellectualProperty(mateoOpticalSizeColor: color),
     info => $Icons.info(mateoOpticalSizeColor: color),

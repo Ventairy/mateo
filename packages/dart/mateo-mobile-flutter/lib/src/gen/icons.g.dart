@@ -202,6 +202,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.crossCircle(<params>);
 /// ```
 /// ```dart
+/// $Icons.crossSeal(<params>);
+/// ```
+/// ```dart
 /// $Icons.discoBall(<params>);
 /// ```
 /// ```dart
@@ -287,6 +290,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// ```
 /// ```dart
 /// $Icons.hotCoffeeCup(<params>);
+/// ```
+/// ```dart
+/// $Icons.id(<params>);
 /// ```
 /// ```dart
 /// $Icons.incognito(<params>);
@@ -1050,6 +1056,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `CrossSeal` widget from `crossSeal.svg`.
+  static Widget crossSeal({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _CrossSeal(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `DiscoBall` widget from `discoBall.svg`.
   static Widget discoBall({
     Key? key,
@@ -1478,6 +1499,21 @@ abstract final class $Icons {
     bool maintainAspectRatio = true,
     Color? mateoOpticalSizeColor,
   }) => _HotCoffeeCup(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
+  /// Builds the `Id` widget from `id.svg`.
+  static Widget id({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _Id(
     key: key,
     width: width,
     height: height,
@@ -2509,6 +2545,7 @@ abstract final class $Icons {
     'credit-card.svg' => creditCard(key: key, width: width, height: height),
     'cross.svg' => cross(key: key, width: width, height: height),
     'cross-circle.svg' => crossCircle(key: key, width: width, height: height),
+    'cross-seal.svg' => crossSeal(key: key, width: width, height: height),
     'disco-ball.svg' => discoBall(key: key, width: width, height: height),
     'double-cross.svg' => doubleCross(key: key, width: width, height: height),
     'drop.svg' => drop(key: key, width: width, height: height),
@@ -2570,6 +2607,7 @@ abstract final class $Icons {
       width: width,
       height: height,
     ),
+    'id.svg' => id(key: key, width: width, height: height),
     'incognito.svg' => incognito(key: key, width: width, height: height),
     'info.svg' => info(key: key, width: width, height: height),
     'instagram-logo.svg' => instagramLogo(
@@ -8984,6 +9022,205 @@ class _CrossCirclePainter extends CustomPainter {
   }
 }
 
+/// A dotdart-generated SVG widget from `assets/icons/cross-seal.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _CrossSeal extends StatelessWidget with _DotdartSvgSizing {
+  const _CrossSeal({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _CrossSeal._svgWidth;
+
+  @override
+  double get svgNativeHeight => _CrossSeal._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _CrossSeal._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _CrossSeal._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _CrossSealPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _CrossSealPainter extends CustomPainter {
+  _CrossSealPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.772271204,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.772271204,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    2.279940325,
+    2.174752181,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(9.8313, 0.011)
+    ..cubicTo(10.0942, -0.0231, 10.398, 0.0272, 10.6534, 0.0899)
+    ..cubicTo(11.5749, 0.316, 11.9713, 0.865, 12.4927, 1.5789)
+    ..cubicTo(12.6263, 1.7619, 12.7704, 1.9708, 12.9903, 2.0551)
+    ..cubicTo(13.3719, 2.2013, 14.2875, 1.8945, 14.7414, 1.863)
+    ..cubicTo(15.0067, 1.8453, 15.273, 1.8756, 15.5275, 1.9524)
+    ..cubicTo(16.5678, 2.2695, 17.2846, 3.2094, 17.4288, 4.2865)
+    ..cubicTo(17.4961, 4.7899, 17.3366, 5.5294, 17.5851, 5.939)
+    ..cubicTo(17.6801, 6.0955, 18.0051, 6.2801, 18.1693, 6.3712)
+    ..cubicTo(18.8083, 6.7255, 19.3177, 7.1004, 19.6709, 7.764)
+    ..cubicTo(19.871, 8.1457, 19.9756, 8.5702, 19.9761, 9.0012)
+    ..cubicTo(19.9813, 9.4706, 19.8551, 9.9321, 19.6117, 10.3336)
+    ..cubicTo(19.4208, 10.6464, 19.1562, 10.9112, 18.9287, 11.1955)
+    ..cubicTo(18.7621, 11.4037, 18.5966, 11.5837, 18.5882, 11.8636)
+    ..cubicTo(18.5813, 12.0876, 18.673, 12.3147, 18.756, 12.5156)
+    ..cubicTo(19.0636, 13.2614, 19.2797, 14.0116, 19.0097, 14.8117)
+    ..cubicTo(18.881, 15.2183, 18.6367, 15.6145, 18.3316, 15.9152)
+    ..cubicTo(18.081, 16.1623, 17.7673, 16.3755, 17.4377, 16.5042)
+    ..cubicTo(17.1019, 16.6354, 16.7295, 16.6912, 16.3753, 16.7543)
+    ..cubicTo(16.1745, 16.7879, 15.9705, 16.8069, 15.7772, 16.8731)
+    ..cubicTo(15.4175, 16.9964, 15.3328, 17.3165, 15.2221, 17.6393)
+    ..cubicTo(15.1267, 17.9174, 15.0348, 18.2158, 14.9135, 18.4845)
+    ..cubicTo(14.6691, 19.0261, 14.228, 19.4457, 13.7022, 19.714)
+    ..cubicTo(12.7795, 20.1803, 11.9062, 20.047, 11.0498, 19.5273)
+    ..cubicTo(10.8116, 19.3828, 10.4037, 19.1167, 10.1568, 19.0371)
+    ..cubicTo(9.9451, 18.9911, 9.7709, 19.0211, 9.5805, 19.1231)
+    ..cubicTo(9.1938, 19.3303, 8.8266, 19.5863, 8.4263, 19.7675)
+    ..cubicTo(8.1532, 19.8901, 7.8612, 19.9654, 7.5628, 19.9901)
+    ..cubicTo(7.0783, 20.0286, 6.6072, 19.9017, 6.1918, 19.6705)
+    ..cubicTo(5.3427, 19.2356, 4.9502, 18.4621, 4.691, 17.5887)
+    ..cubicTo(4.5138, 16.9917, 4.3254, 16.8596, 3.7109, 16.7707)
+    ..cubicTo(3.0375, 16.6734, 2.3721, 16.5409, 1.8436, 16.0751)
+    ..cubicTo(1.4446, 15.7235, 1.142, 15.3301, 0.9774, 14.8159)
+    ..cubicTo(0.6863, 14.0105, 0.9211, 13.2114, 1.2428, 12.4591)
+    ..cubicTo(1.4704, 11.927, 1.4863, 11.6587, 1.0793, 11.204)
+    ..cubicTo(0.5283, 10.5883, 0.0825, 10.0638, 0.0291, 9.1904)
+    ..cubicTo(-0.0325, 8.1822, 0.4434, 7.2991, 1.2567, 6.7192)
+    ..cubicTo(1.565, 6.4665, 2.3168, 6.2075, 2.4719, 5.8364)
+    ..cubicTo(2.6048, 5.5183, 2.5319, 4.7226, 2.5601, 4.3597)
+    ..cubicTo(2.6095, 3.7633, 2.8513, 3.1991, 3.2491, 2.752)
+    ..cubicTo(3.7622, 2.1645, 4.3116, 1.8978, 5.1152, 1.8558)
+    ..cubicTo(5.6324, 1.8287, 6.7312, 2.2962, 7.1472, 1.9792)
+    ..cubicTo(7.4137, 1.7762, 7.7855, 1.176, 8.0265, 0.8972)
+    ..cubicTo(8.4854, 0.3723, 9.1354, 0.0532, 9.8313, 0.011)
+    ..close()
+    ..moveTo(8.803, 9.9488)
+    ..cubicTo(8.3646, 10.4086, 7.848, 10.92, 7.3947, 11.3655)
+    ..cubicTo(7.24, 11.5176, 7.086, 11.6704, 6.9329, 11.8241)
+    ..cubicTo(6.8769, 11.8798, 6.7625, 11.9804, 6.7192, 12.0448)
+    ..cubicTo(6.1519, 12.8892, 7.1696, 13.8989, 7.9569, 13.1903)
+    ..cubicTo(8.147, 13.0193, 8.334, 12.8184, 8.5176, 12.6352)
+    ..lineTo(10.0043, 11.1492)
+    ..lineTo(11.5032, 12.6458)
+    ..cubicTo(11.6178, 12.7612, 11.7345, 12.8765, 11.8474, 12.9934)
+    ..cubicTo(12.065, 13.2188, 12.2534, 13.4462, 12.5938, 13.4445)
+    ..cubicTo(12.609, 13.4443, 12.6242, 13.4437, 12.6394, 13.4426)
+    ..cubicTo(13.3136, 13.3686, 13.6468, 12.6899, 13.3254, 12.1219)
+    ..cubicTo(13.2471, 11.9835, 12.8173, 11.5746, 12.686, 11.4418)
+    ..lineTo(11.2002, 9.9531)
+    ..lineTo(12.6767, 8.4759)
+    ..cubicTo(12.7812, 8.3712, 12.89, 8.2589, 12.9963, 8.1567)
+    ..cubicTo(13.2545, 7.9085, 13.4493, 7.7166, 13.446, 7.334)
+    ..cubicTo(13.4424, 7.1013, 13.3468, 6.8794, 13.1801, 6.717)
+    ..cubicTo(12.9396, 6.4842, 12.5124, 6.3919, 12.2094, 6.5806)
+    ..cubicTo(11.9643, 6.7332, 11.7407, 7.0428, 11.5203, 7.2316)
+    ..cubicTo(11.0134, 7.7204, 10.5164, 8.2601, 10.0085, 8.7439)
+    ..cubicTo(9.879, 8.5978, 9.704, 8.4329, 9.5638, 8.2925)
+    ..lineTo(8.7724, 7.4977)
+    ..lineTo(8.2091, 6.9334)
+    ..cubicTo(8.107, 6.8309, 7.9971, 6.7207, 7.8893, 6.6245)
+    ..cubicTo(7.7721, 6.5198, 7.5031, 6.4495, 7.349, 6.4766)
+    ..cubicTo(6.8385, 6.5354, 6.5165, 6.945, 6.5663, 7.4543)
+    ..cubicTo(6.5773, 7.5672, 6.6383, 7.755, 6.7139, 7.8368)
+    ..cubicTo(7.3809, 8.559, 8.1259, 9.2379, 8.803, 9.9488)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _CrossSeal._viewBoxWidth;
+    final scaleY = size.height / _CrossSeal._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_CrossSeal._viewBoxMinX, -_CrossSeal._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CrossSealPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
 /// A dotdart-generated SVG widget from `assets/icons/disco-ball.svg`.
 ///
 /// Renders a 20.0×20.0 SVG
@@ -14428,6 +14665,202 @@ class _HotCoffeeCupPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _HotCoffeeCupPainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/id.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _Id extends StatelessWidget with _DotdartSvgSizing {
+  const _Id({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _Id._svgWidth;
+
+  @override
+  double get svgNativeHeight => _Id._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _Id._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _Id._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _IdPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _IdPainter extends CustomPainter {
+  _IdPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.813903755,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.813903755,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.718733689,
+    1.847562761,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(3.16, 12.1952)
+    ..cubicTo(3.16, 12.3471, 3.2419, 12.4661, 3.4112, 12.4661)
+    ..lineTo(7.423, 12.4661)
+    ..cubicTo(7.5912, 12.4661, 7.6786, 12.3471, 7.6786, 12.1952)
+    ..cubicTo(7.6786, 11.7083, 6.9554, 10.4683, 5.4171, 10.4683)
+    ..cubicTo(3.8777, 10.4683, 3.16, 11.7083, 3.16, 12.1952)
+    ..close()
+    ..moveTo(4.2891, 8.8819)
+    ..cubicTo(4.2891, 9.581, 4.7935, 10.104, 5.4171, 10.104)
+    ..cubicTo(6.0407, 10.1095, 6.5385, 9.581, 6.5385, 8.8819)
+    ..cubicTo(6.5385, 8.22, 6.0407, 7.6751, 5.4171, 7.6751)
+    ..cubicTo(4.7935, 7.6751, 4.2891, 8.22, 4.2891, 8.8819)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..fillType = PathFillType.evenOdd
+    ..moveTo(16, 3.3467)
+    ..cubicTo(17.3999, 3.3467, 18.101, 3.3467, 18.6357, 3.6191)
+    ..cubicTo(19.1058, 3.8588, 19.488, 4.2418, 19.7275, 4.7119)
+    ..cubicTo(19.9998, 5.2466, 20, 5.947, 20, 7.3467)
+    ..lineTo(20, 12.6543)
+    ..cubicTo(20, 14.054, 20, 14.7544, 19.7275, 15.2891)
+    ..cubicTo(19.4879, 15.7592, 19.1059, 16.1422, 18.6357, 16.3818)
+    ..cubicTo(18.101, 16.6543, 17.3999, 16.6543, 16, 16.6543)
+    ..lineTo(4, 16.6543)
+    ..cubicTo(2.6005, 16.6543, 1.8999, 16.6541, 1.3652, 16.3818)
+    ..cubicTo(0.895, 16.1422, 0.5122, 15.7593, 0.2725, 15.2891)
+    ..cubicTo(0.0001, 14.7544, 0, 14.0539, 0, 12.6543)
+    ..lineTo(0, 7.3467)
+    ..cubicTo(0, 5.947, 0.0002, 5.2466, 0.2725, 4.7119)
+    ..cubicTo(0.5121, 4.2415, 0.8949, 3.8588, 1.3652, 3.6191)
+    ..cubicTo(1.9, 3.3467, 2.6002, 3.3467, 4, 3.3467)
+    ..lineTo(16, 3.3467)
+    ..close()
+    ..moveTo(4.666, 5.1797)
+    ..cubicTo(3.6046, 5.1797, 3.0736, 5.1799, 2.6787, 5.4092)
+    ..cubicTo(2.4241, 5.5571, 2.2124, 5.7688, 2.0644, 6.0234)
+    ..cubicTo(1.8352, 6.4183, 1.835, 6.9493, 1.835, 8.0107)
+    ..lineTo(1.835, 11.9893)
+    ..cubicTo(1.835, 13.0505, 1.8353, 13.5817, 2.0644, 13.9766)
+    ..cubicTo(2.2124, 14.2311, 2.4241, 14.4439, 2.6787, 14.5918)
+    ..cubicTo(3.0735, 14.8209, 3.6049, 14.8213, 4.666, 14.8213)
+    ..lineTo(6.1729, 14.8213)
+    ..cubicTo(7.2341, 14.8213, 7.7653, 14.821, 8.1602, 14.5918)
+    ..cubicTo(8.4148, 14.4439, 8.6265, 14.2312, 8.7744, 13.9766)
+    ..cubicTo(9.0037, 13.5817, 9.0039, 13.0506, 9.0039, 11.9893)
+    ..lineTo(9.0039, 8.0107)
+    ..cubicTo(9.0039, 6.9496, 9.0035, 6.4182, 8.7744, 6.0234)
+    ..cubicTo(8.6265, 5.769, 8.4146, 5.5571, 8.1602, 5.4092)
+    ..cubicTo(7.7653, 5.1799, 7.2343, 5.1797, 6.1729, 5.1797)
+    ..lineTo(4.666, 5.1797)
+    ..close()
+    ..moveTo(11.4502, 12.3027)
+    ..cubicTo(11.1185, 12.3028, 10.8498, 12.5717, 10.8496, 12.9033)
+    ..cubicTo(10.8496, 13.2351, 11.1184, 13.5049, 11.4502, 13.5049)
+    ..lineTo(13.1904, 13.5049)
+    ..cubicTo(13.5222, 13.5049, 13.792, 13.2351, 13.792, 12.9033)
+    ..cubicTo(13.7918, 12.5717, 13.5221, 12.3027, 13.1904, 12.3027)
+    ..lineTo(11.4502, 12.3027)
+    ..close()
+    ..moveTo(11.4502, 9.3994)
+    ..cubicTo(11.1184, 9.3994, 10.8497, 9.6683, 10.8496, 10)
+    ..cubicTo(10.8496, 10.3318, 11.1184, 10.6006, 11.4502, 10.6006)
+    ..lineTo(15.2715, 10.6006)
+    ..cubicTo(15.6032, 10.6005, 15.8721, 10.3317, 15.8721, 10)
+    ..cubicTo(15.872, 9.6683, 15.6031, 9.3995, 15.2715, 9.3994)
+    ..lineTo(11.4502, 9.3994)
+    ..close()
+    ..moveTo(11.4541, 6.4951)
+    ..cubicTo(11.1224, 6.4952, 10.8535, 6.7649, 10.8535, 7.0967)
+    ..cubicTo(10.8537, 7.4283, 11.1225, 7.6971, 11.4541, 7.6973)
+    ..lineTo(17.5684, 7.6973)
+    ..cubicTo(17.8998, 7.697, 18.1688, 7.4282, 18.1689, 7.0967)
+    ..cubicTo(18.1689, 6.765, 17.8999, 6.4954, 17.5684, 6.4951)
+    ..lineTo(11.4541, 6.4951)
+    ..close();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _Id._viewBoxWidth;
+    final scaleY = size.height / _Id._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_Id._viewBoxMinX, -_Id._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _IdPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }
