@@ -193,6 +193,9 @@ class _DotdartCachedImage extends ResizeImage {
 /// ```dart
 /// $ThreeDIcons.redFlag(<params>);
 /// ```
+/// ```dart
+/// $ThreeDIcons.wavingHand(<params>);
+/// ```
 abstract final class $ThreeDIcons {
   $ThreeDIcons._();
 
@@ -436,6 +439,30 @@ abstract final class $ThreeDIcons {
     colorBlendMode: colorBlendMode,
   );
 
+  /// Builds the `WavingHand` widget from `wavingHand.image`.
+  /// Pass [package] when this image belongs to a dependency package.
+  static Widget wavingHand({
+    Key? key,
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Color? color,
+    BlendMode? colorBlendMode,
+  }) => _WavingHand(
+    key: key,
+    width: width,
+    height: height,
+    package: package,
+    imageCache: imageCache,
+    fit: fit,
+    alignment: alignment,
+    color: color,
+    colorBlendMode: colorBlendMode,
+  );
+
   /// Builds the asset matching [fileName], or returns null if it is absent.
   ///
   /// Pass the original filename, including its extension and exact case.
@@ -523,6 +550,13 @@ abstract final class $ThreeDIcons {
       package: package,
       imageCache: imageCache,
     ),
+    'waving-hand.webp' => wavingHand(
+      key: key,
+      width: width,
+      height: height,
+      package: package,
+      imageCache: imageCache,
+    ),
     _ => null,
   };
 }
@@ -544,6 +578,7 @@ abstract final class $ThreeDIconsCache {
   static const _pencilAssetPath = 'assets/three_d_icons/pencil.webp';
   static const _pointerHandUpAssetPath = 'assets/three_d_icons/pointer-hand-up.webp';
   static const _redFlagAssetPath = 'assets/three_d_icons/red-flag.webp';
+  static const _wavingHandAssetPath = 'assets/three_d_icons/waving-hand.webp';
 
   /// Decodes `bidirecionalHorizontalArrow` before its first render.
   ///
@@ -1119,6 +1154,64 @@ abstract final class $ThreeDIconsCache {
     final provider = _provider(
       context,
       asset: AssetImage(_redFlagAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    );
+    final key = await provider.obtainKey(configuration);
+    return (imageCache ?? PaintingBinding.instance.imageCache).evict(
+      key,
+      includeLive: false,
+    );
+  }
+
+  /// Decodes `wavingHand` before its first render.
+  ///
+  /// [width] and [height] are logical pixels. Pass the same values to
+  /// `$ThreeDIcons.wavingHand` so it reuses this cache entry.
+  /// Pass the same [package] as the image widget for package assets.
+  /// [imageCache] selects the same optional cache used when rendering.
+  /// [onError] receives failures without preventing a later load.
+  /// Omitting both values uses the widget's default display size.
+  static Future<void> precacheWavingHand(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+    ImageErrorListener? onError,
+  }) => precacheImage(
+    _provider(
+      context,
+      asset: AssetImage(_wavingHandAssetPath, package: package),
+      aspectRatio: 1,
+      width: width,
+      height: height,
+      cache: imageCache,
+    ),
+    context,
+    onError: onError,
+  );
+
+  /// Removes the decoded `wavingHand` entry from Flutter's image cache.
+  ///
+  /// Returns whether the matching entry existed. [width] and [height]
+  /// must match the values used to precache or render the image.
+  /// [package] and [imageCache] must match the image widget and precache call.
+  /// An image that is still displayed remains live until its last listener
+  /// is removed, preventing a duplicate decode during transitions.
+  static Future<bool> removeWavingHand(
+    BuildContext context, {
+    double? width,
+    double? height,
+    String? package,
+    ImageCache? imageCache,
+  }) async {
+    final configuration = createLocalImageConfiguration(context);
+    final provider = _provider(
+      context,
+      asset: AssetImage(_wavingHandAssetPath, package: package),
       aspectRatio: 1,
       width: width,
       height: height,
@@ -2683,6 +2776,162 @@ class _RedFlag extends StatelessWidget {
     _dominantColor,
   );
   static const String _assetPath = 'assets/three_d_icons/red-flag.webp';
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    const aspect = _aspectRatio;
+    final w = width ?? (height != null ? height! * aspect : 280.0);
+    final h = height ?? w / aspect;
+
+    final asset = AssetImage(_assetPath, package: package);
+    final pixelWidth = (w * dpr).ceil();
+    final pixelHeight = (h * dpr).ceil();
+    final provider = imageCache == null
+        ? ResizeImage.resizeIfNeeded(pixelWidth, pixelHeight, asset)
+        : _DotdartCachedImage(
+            asset,
+            width: pixelWidth,
+            height: pixelHeight,
+            cache: imageCache!,
+          );
+    final image = Image(
+      image: provider,
+      key: key,
+      width: w,
+      height: h,
+      fit: fit,
+      alignment: alignment,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.low,
+      frameBuilder: _frameBuilder,
+    );
+
+    return RepaintBoundary(child: image);
+  }
+}
+
+/// A dotdart-generated image widget from `assets/three_d_icons/waving-hand.webp`.
+///
+/// Intrinsic 1254×1254 · WebP · aspect 1.0000.
+/// Decodes at display size × device pixel ratio for minimal memory.
+/// Renders a thumbhash placeholder in frame 1, then swaps to the image.
+class _WavingHand extends StatelessWidget {
+  const _WavingHand({
+    super.key,
+    this.width,
+    this.height,
+    this.package,
+    this.imageCache,
+    this.fit,
+    this.alignment = Alignment.center,
+    this.color,
+    this.colorBlendMode,
+  });
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// Package containing the image.
+  final String? package;
+
+  /// The decoded-image cache, or Flutter’s shared cache when omitted.
+  final ImageCache? imageCache;
+
+  /// How to inscribe the image in its bounds.
+  final BoxFit? fit;
+
+  /// Alignment within the widget bounds.
+  final AlignmentGeometry alignment;
+
+  /// A color to blend with the image.
+  final Color? color;
+
+  /// The blend mode applied when color is set.
+  final BlendMode? colorBlendMode;
+
+  static const double _aspectRatio = 1;
+  static const Color _dominantColor = Color(0x9D8F7E2A);
+  static const int _thumbhashWidth = 8;
+  static const int _thumbhashHeight = 8;
+  static const List<Color> _thumbhashPixels = <Color>[
+    Color(0x43DBB785),
+    Color(0x57E8BD84),
+    Color(0x7EEFBC59),
+    Color(0xA0F5CD4B),
+    Color(0x6EEDCF50),
+    Color(0x6FE3CB82),
+    Color(0x7ACEB2A5),
+    Color(0x3DE8B062),
+    Color(0x55D5B870),
+    Color(0x96DBBD64),
+    Color(0xD4E9C44D),
+    Color(0xC3ECD02A),
+    Color(0xD4E9C654),
+    Color(0x96E6D22E),
+    Color(0xAFCCAC97),
+    Color(0x77C5AD9E),
+    Color(0x59F1D358),
+    Color(0xA9E4C34F),
+    Color(0xC2F9D047),
+    Color(0xC0F3D744),
+    Color(0xCCF2CC34),
+    Color(0xADF7D544),
+    Color(0xA4E6CC3A),
+    Color(0x69DFBE71),
+    Color(0x74E6B64B),
+    Color(0xC9E9C250),
+    Color(0xC3F7CD4A),
+    Color(0xD8F9CF3C),
+    Color(0xDDF0D04E),
+    Color(0xC2FBD452),
+    Color(0xD3EEC554),
+    Color(0x74E8BD5A),
+    Color(0x58F3C666),
+    Color(0xA3EBCC5F),
+    Color(0xD1FBCE4F),
+    Color(0xD5F3D04F),
+    Color(0xD3F5D63C),
+    Color(0xC0F5D14B),
+    Color(0xCAF5D450),
+    Color(0x77EBC64A),
+    Color(0x62D9C975),
+    Color(0x8FDDC23E),
+    Color(0xCAF2CA3F),
+    Color(0xD2F5D233),
+    Color(0xD5EECB41),
+    Color(0xBCEFD748),
+    Color(0xC6EFCF49),
+    Color(0x66E5D053),
+    Color(0x7DCCAC9A),
+    Color(0xA1C4B79D),
+    Color(0xB2F1C42A),
+    Color(0xD8F6CB53),
+    Color(0xC8F1D12A),
+    Color(0xD1EDCE4E),
+    Color(0xA8EABE5E),
+    Color(0x65D6BF67),
+    Color(0x42D7C85D),
+    Color(0x91B3A598),
+    Color(0x8ADABD76),
+    Color(0xA5E3C642),
+    Color(0xB6DEBA46),
+    Color(0x8EE1C154),
+    Color(0x76DBBC72),
+    Color(0x50C0B27A),
+  ];
+  static final ImageFrameBuilder _frameBuilder = _dotdartImageFrameBuilder(
+    _thumbhashWidth,
+    _thumbhashHeight,
+    _thumbhashPixels,
+    _dominantColor,
+  );
+  static const String _assetPath = 'assets/three_d_icons/waving-hand.webp';
 
   @override
   Widget build(BuildContext context) {

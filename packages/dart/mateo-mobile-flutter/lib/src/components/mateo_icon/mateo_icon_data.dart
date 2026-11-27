@@ -556,6 +556,7 @@ enum MateoIconData {
       imageCache: imageCache,
     ),
     redFlag => $ThreeDIcons.redFlag(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
+    wavingHand => $ThreeDIcons.wavingHand(width: size, height: size, package: 'mateo_mobile', imageCache: imageCache),
     _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
   };
 
@@ -576,6 +577,7 @@ enum MateoIconData {
       pencil => $ThreeDIconsCache.precachePencil,
       pointerHandUp => $ThreeDIconsCache.precachePointerHandUp,
       redFlag => $ThreeDIconsCache.precacheRedFlag,
+      wavingHand => $ThreeDIconsCache.precacheWavingHand,
       _ => throw UnsupportedError('Mateo icon $name has no 3D artwork.'),
     };
     return precache(
