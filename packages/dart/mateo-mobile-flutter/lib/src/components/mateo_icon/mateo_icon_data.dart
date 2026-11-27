@@ -366,6 +366,9 @@ enum MateoIconData {
   /// The tree icon.
   tree,
 
+  /// The waving hand icon.
+  wavingHand,
+
   /// The whatsapp icon.
   whatsapp,
 
@@ -518,6 +521,7 @@ enum MateoIconData {
     trainFront => $Icons.trainFront(mateoOpticalSizeColor: color),
     trash => $Icons.trash(mateoOpticalSizeColor: color),
     tree => $Icons.tree(mateoOpticalSizeColor: color),
+    wavingHand => $Icons.wavingHand(mateoOpticalSizeColor: color),
     whatsapp => $Icons.whatsapp(mateoOpticalSizeColor: color),
     wifi => $Icons.wifi(mateoOpticalSizeColor: color),
     wifiExclamation => $Icons.wifiExclamationMark(mateoOpticalSizeColor: color),

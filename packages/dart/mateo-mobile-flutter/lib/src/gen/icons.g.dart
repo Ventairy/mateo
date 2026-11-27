@@ -457,6 +457,9 @@ mixin _DotdartSvgSizing on StatelessWidget {
 /// $Icons.tree(<params>);
 /// ```
 /// ```dart
+/// $Icons.wavingHand(<params>);
+/// ```
+/// ```dart
 /// $Icons.whatsapp(<params>);
 /// ```
 /// ```dart
@@ -2326,6 +2329,21 @@ abstract final class $Icons {
     mateoOpticalSizeColor: mateoOpticalSizeColor,
   );
 
+  /// Builds the `WavingHand` widget from `wavingHand.svg`.
+  static Widget wavingHand({
+    Key? key,
+    double? width,
+    double? height,
+    bool maintainAspectRatio = true,
+    Color? mateoOpticalSizeColor,
+  }) => _WavingHand(
+    key: key,
+    width: width,
+    height: height,
+    maintainAspectRatio: maintainAspectRatio,
+    mateoOpticalSizeColor: mateoOpticalSizeColor,
+  );
+
   /// Builds the `Whatsapp` widget from `whatsapp.svg`.
   static Widget whatsapp({
     Key? key,
@@ -2668,6 +2686,7 @@ abstract final class $Icons {
     'train-front.svg' => trainFront(key: key, width: width, height: height),
     'trash.svg' => trash(key: key, width: width, height: height),
     'tree.svg' => tree(key: key, width: width, height: height),
+    'waving-hand.svg' => wavingHand(key: key, width: width, height: height),
     'whatsapp.svg' => whatsapp(key: key, width: width, height: height),
     'wifi.svg' => wifi(key: key, width: width, height: height),
     'wifi-exclamation-mark.svg' => wifiExclamationMark(
@@ -24090,6 +24109,231 @@ class _TreePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _TreePainter oldDelegate) {
+    return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
+  }
+}
+
+/// A dotdart-generated SVG widget from `assets/icons/waving-hand.svg`.
+///
+/// Renders a 20.0×20.0 SVG
+/// on a viewBox of 0.0 0.0 20.0 20.0.
+/// No flutter_svg runtime dependency — drawn entirely via [CustomPainter].
+class _WavingHand extends StatelessWidget with _DotdartSvgSizing {
+  const _WavingHand({
+    super.key,
+    this.width,
+    this.height,
+    this.maintainAspectRatio = true,
+    this.mateoOpticalSizeColor,
+  });
+
+  static const double _svgWidth = 20;
+  static const double _svgHeight = 20;
+  static const double _viewBoxMinX = 0;
+  static const double _viewBoxMinY = 0;
+  static const double _viewBoxWidth = 20;
+  static const double _viewBoxHeight = 20;
+
+  /// Width in logical pixels.
+  final double? width;
+
+  /// Height in logical pixels.
+  final double? height;
+
+  /// When true (default), keeps the native aspect ratio using the larger requested value as the reference. When false, both dimensions are applied as-is and the asset may distort.
+  final bool maintainAspectRatio;
+
+  /// Color from SVG id `mateo-optical-size` — defaults to 0xff000000.
+  final Color? mateoOpticalSizeColor;
+
+  @override
+  double? get svgWidgetWidth => width;
+
+  @override
+  double? get svgWidgetHeight => height;
+
+  @override
+  bool get svgMaintainAspectRatio => maintainAspectRatio;
+
+  @override
+  double get svgNativeWidth => _WavingHand._svgWidth;
+
+  @override
+  double get svgNativeHeight => _WavingHand._svgHeight;
+
+  @override
+  double get svgViewBoxWidth => _WavingHand._viewBoxWidth;
+
+  @override
+  double get svgViewBoxHeight => _WavingHand._viewBoxHeight;
+
+  @override
+  Widget buildPainter({required double width, required double height}) {
+    return SizedBox.fromSize(
+      size: Size(width, height),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _WavingHandPainter(
+            mateoOpticalSizeColor: mateoOpticalSizeColor ?? const Color(0xff000000),
+          ),
+          size: Size(width, height),
+        ),
+      ),
+    );
+  }
+}
+
+class _WavingHandPainter extends CustomPainter {
+  _WavingHandPainter({required this.mateoOpticalSizeColor});
+
+  final Color mateoOpticalSizeColor;
+
+  static final Paint _fillPaint = Paint()..style = PaintingStyle.fill;
+
+  static final Float64List _transform0 = Float64List.fromList([
+    0.925913755,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.925913755,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.666819507,
+    0.51976375,
+    0.0,
+    1.0,
+  ]);
+  static final Path __path0 = Path()
+    ..moveTo(7.4476, 1.9826)
+    ..cubicTo(7.8491, 1.9366, 8.2579, 2.1211, 8.5206, 2.4201)
+    ..cubicTo(8.7739, 2.7085, 9.0922, 3.5741, 9.2623, 3.9616)
+    ..lineTo(10.5673, 6.8922)
+    ..cubicTo(10.7326, 7.2677, 10.9005, 7.642, 11.071, 8.0151)
+    ..cubicTo(11.1483, 8.1841, 11.2501, 8.5194, 11.4188, 8.5851)
+    ..cubicTo(11.6798, 8.6866, 11.9447, 8.4317, 11.8212, 8.1619)
+    ..cubicTo(11.6164, 7.7148, 11.4051, 7.2759, 11.1953, 6.8342)
+    ..lineTo(10.1885, 4.6745)
+    ..cubicTo(10.0322, 4.3344, 9.8751, 3.9934, 9.7197, 3.6526)
+    ..cubicTo(9.5877, 3.363, 9.5768, 3.0687, 9.7016, 2.7702)
+    ..cubicTo(9.8264, 2.4732, 10.0664, 2.2396, 10.3666, 2.1229)
+    ..cubicTo(10.6978, 1.9926, 11.0165, 2.0092, 11.3432, 2.1468)
+    ..cubicTo(11.8371, 2.3547, 11.9767, 2.7525, 12.1826, 3.2067)
+    ..lineTo(12.5139, 3.9352)
+    ..lineTo(13.1354, 5.3133)
+    ..cubicTo(13.256, 5.583, 13.3907, 5.8687, 13.4979, 6.1426)
+    ..cubicTo(13.4684, 6.2064, 13.4278, 6.2785, 13.391, 6.3377)
+    ..cubicTo(12.8432, 7.2164, 12.6287, 8.271, 12.8992, 9.2817)
+    ..cubicTo(12.958, 9.5013, 13.0681, 9.7058, 13.1505, 9.9193)
+    ..cubicTo(13.0631, 10.0645, 12.8308, 10.2882, 12.712, 10.4442)
+    ..cubicTo(12.0241, 11.3482, 11.688, 12.4932, 11.8976, 13.6227)
+    ..cubicTo(11.9423, 13.8638, 12.0851, 14.1144, 12.3591, 14.1215)
+    ..cubicTo(12.5557, 14.1281, 12.7452, 13.9858, 12.7553, 13.7806)
+    ..cubicTo(12.7589, 13.6372, 12.7123, 13.4746, 12.6937, 13.3298)
+    ..cubicTo(12.6397, 12.8999, 12.679, 12.4636, 12.8086, 12.0502)
+    ..cubicTo(12.887, 11.8024, 13.0763, 11.4291, 13.2203, 11.2183)
+    ..cubicTo(13.3015, 11.0988, 13.3877, 10.9827, 13.4787, 10.8704)
+    ..cubicTo(13.6768, 10.6307, 13.9828, 10.3289, 14.0228, 10.0105)
+    ..cubicTo(14.0659, 9.6685, 13.8773, 9.4257, 13.7659, 9.1143)
+    ..cubicTo(13.657, 8.8099, 13.581, 8.5275, 13.5872, 8.1965)
+    ..cubicTo(13.6026, 7.3803, 14.0388, 6.4287, 14.606, 5.8424)
+    ..cubicTo(14.8355, 5.6155, 15.114, 5.4642, 15.4424, 5.4753)
+    ..cubicTo(16.2141, 5.5013, 16.3781, 6.2695, 16.6112, 6.8559)
+    ..cubicTo(16.7648, 7.2423, 16.9134, 7.6339, 17.0509, 8.0248)
+    ..cubicTo(17.4206, 9.0759, 17.573, 10.14, 17.5385, 11.2534)
+    ..cubicTo(17.4786, 12.7286, 16.9709, 14.1506, 16.0832, 15.3303)
+    ..cubicTo(15.9127, 15.5549, 15.7211, 15.7878, 15.5155, 15.9812)
+    ..cubicTo(15.3899, 16.1158, 15.2671, 16.2273, 15.1287, 16.3482)
+    ..cubicTo(14.7312, 16.7001, 14.2942, 17.0049, 13.8265, 17.2564)
+    ..cubicTo(12.8348, 17.7802, 11.4984, 18.0819, 10.3756, 17.998)
+    ..cubicTo(8.0796, 17.8264, 6.0353, 16.2443, 4.8995, 14.2981)
+    ..cubicTo(4.7154, 13.9825, 4.5567, 13.6, 4.4039, 13.268)
+    ..lineTo(3.6889, 11.7223)
+    ..lineTo(2.9426, 10.1335)
+    ..cubicTo(2.8318, 9.8974, 2.6391, 9.5196, 2.556, 9.2852)
+    ..cubicTo(2.4769, 9.0626, 2.4446, 8.8262, 2.4609, 8.5906)
+    ..cubicTo(2.551, 7.4217, 3.9857, 6.9769, 4.5391, 8.0943)
+    ..cubicTo(4.5963, 8.2098, 4.6568, 8.3276, 4.7144, 8.4433)
+    ..cubicTo(4.8603, 8.7376, 5.0039, 9.0331, 5.1453, 9.3296)
+    ..cubicTo(5.367, 9.7887, 5.5733, 10.2307, 5.8107, 10.7079)
+    ..cubicTo(5.9406, 10.969, 6.1757, 11.8706, 6.6399, 11.3923)
+    ..cubicTo(6.817, 11.2099, 6.5527, 10.8408, 6.4633, 10.6474)
+    ..cubicTo(6.3837, 10.475, 6.2713, 10.2658, 6.1791, 10.0834)
+    ..lineTo(4.7508, 7.2302)
+    ..cubicTo(4.5898, 6.9043, 4.2766, 6.3397, 4.1485, 6.0131)
+    ..cubicTo(4.0925, 5.8727, 4.0614, 5.7235, 4.0567, 5.5724)
+    ..cubicTo(4.0396, 4.9255, 4.4951, 4.3708, 5.1579, 4.3585)
+    ..cubicTo(5.4668, 4.3537, 5.7627, 4.4829, 5.9691, 4.7127)
+    ..cubicTo(6.1358, 4.8958, 6.3101, 5.3039, 6.4247, 5.5389)
+    ..cubicTo(6.5828, 5.8554, 6.738, 6.1733, 6.8901, 6.4927)
+    ..lineTo(8.0669, 8.8824)
+    ..cubicTo(8.1773, 9.1117, 8.2968, 9.3515, 8.4013, 9.5825)
+    ..cubicTo(8.5133, 9.8302, 8.804, 9.9496, 8.9906, 9.7172)
+    ..cubicTo(9.0537, 9.6372, 9.0763, 9.5326, 9.0519, 9.4337)
+    ..cubicTo(9.0278, 9.3385, 8.9214, 9.1432, 8.8741, 9.0476)
+    ..lineTo(8.558, 8.4035)
+    ..lineTo(7.4398, 6.1154)
+    ..lineTo(6.7699, 4.7453)
+    ..cubicTo(6.6181, 4.431, 6.4326, 4.1036, 6.3237, 3.7723)
+    ..cubicTo(6.0462, 2.928, 6.5573, 2.0736, 7.4476, 1.9826)
+    ..close();
+
+  static final Path __path1 = Path()
+    ..moveTo(3.2775, 15.093)
+    ..cubicTo(3.9057, 15.0425, 3.9938, 15.511, 4.2185, 15.9555)
+    ..cubicTo(4.2745, 16.0661, 4.3477, 16.1857, 4.4128, 16.2925)
+    ..cubicTo(4.9425, 17.1589, 5.6735, 17.8847, 6.5436, 18.4084)
+    ..cubicTo(6.7667, 18.5427, 7.0082, 18.6467, 7.2371, 18.7688)
+    ..cubicTo(7.406, 18.8591, 7.5522, 19.0053, 7.6015, 19.1959)
+    ..cubicTo(7.6431, 19.353, 7.6204, 19.5202, 7.5387, 19.6607)
+    ..cubicTo(7.4294, 19.8464, 7.2576, 19.9426, 7.0563, 19.9952)
+    ..cubicTo(6.6111, 20.0455, 5.9094, 19.688, 5.5071, 19.431)
+    ..cubicTo(4.2876, 18.6519, 3.2079, 17.392, 2.7381, 16.0122)
+    ..cubicTo(2.5992, 15.6042, 2.8415, 15.1913, 3.2775, 15.093)
+    ..close();
+
+  static final Path __path2 = Path()
+    ..moveTo(12.1116, 0.0066)
+    ..cubicTo(12.3222, -0.0199, 12.5362, 0.0387, 12.7395, 0.0855)
+    ..cubicTo(13.3344, 0.2224, 13.8891, 0.4484, 14.406, 0.776)
+    ..cubicTo(15.0077, 1.151, 15.5243, 1.6478, 15.9224, 2.2345)
+    ..cubicTo(16.1529, 2.5739, 16.3483, 2.9249, 16.0922, 3.3229)
+    ..cubicTo(15.9756, 3.5041, 15.8213, 3.5719, 15.621, 3.6121)
+    ..cubicTo(15.1044, 3.6259, 15.0208, 3.2436, 14.7286, 2.8797)
+    ..cubicTo(14.139, 2.1452, 13.4484, 1.6507, 12.5382, 1.3837)
+    ..cubicTo(12.3138, 1.2963, 11.969, 1.2941, 11.7775, 1.1529)
+    ..cubicTo(11.2232, 0.7442, 11.5151, 0.1104, 12.1116, 0.0066)
+    ..close();
+
+  static final Path __clip0 = Path()..addRect(const Rect.fromLTWH(0, 0, 20, 20));
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scaleX = size.width / _WavingHand._viewBoxWidth;
+    final scaleY = size.height / _WavingHand._viewBoxHeight;
+    canvas
+      ..save()
+      ..scale(scaleX, scaleY)
+      ..translate(-_WavingHand._viewBoxMinX, -_WavingHand._viewBoxMinY);
+
+    canvas.save();
+    canvas.transform(_transform0);
+    canvas.save();
+    canvas.clipPath(__clip0);
+    canvas.drawPath(__path0, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path1, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.drawPath(__path2, _fillPaint..color = mateoOpticalSizeColor);
+    canvas.restore();
+    canvas.restore();
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _WavingHandPainter oldDelegate) {
     return oldDelegate.mateoOpticalSizeColor != mateoOpticalSizeColor;
   }
 }

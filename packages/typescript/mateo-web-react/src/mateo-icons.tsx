@@ -125,6 +125,7 @@ import MateoTireArtwork from '@mateo/icons/svg/tire.svg?react';
 import MateoTrainFrontArtwork from '@mateo/icons/svg/train-front.svg?react';
 import MateoTrashArtwork from '@mateo/icons/svg/trash.svg?react';
 import MateoTreeArtwork from '@mateo/icons/svg/tree.svg?react';
+import MateoWavingHandArtwork from '@mateo/icons/svg/waving-hand.svg?react';
 import MateoWhatsappArtwork from '@mateo/icons/svg/whatsapp.svg?react';
 import MateoWifiArtwork from '@mateo/icons/svg/wifi.svg?react';
 import MateoWifiExclamationArtwork from '@mateo/icons/svg/wifi-exclamation-mark.svg?react';
@@ -842,6 +843,11 @@ export function MateoTrashIcon(props: MateoNamedIconProps): ReactElement {
 /** Renders the tree artwork with Mateo icon appearance and accessibility. */
 export function MateoTreeIcon(props: MateoNamedIconProps): ReactElement {
   return <BaseMateoIcon {...props} artwork={MateoTreeArtwork} />;
+}
+
+/** Renders the wavingHand artwork with Mateo icon appearance and accessibility. */
+export function MateoWavingHandIcon(props: MateoNamedIconProps): ReactElement {
+  return <BaseMateoIcon {...props} artwork={MateoWavingHandArtwork} />;
 }
 
 /** Renders the whatsapp artwork with Mateo icon appearance and accessibility. */
