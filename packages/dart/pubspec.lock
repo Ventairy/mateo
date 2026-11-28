@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: alchemist
-      sha256: "6a43c6a973403abfc8f95f066e4c03f39db668c052dfcfc177a38bade7f6b68b"
+      sha256: a83a511d731671c7f50623ce0dc70b4d6d3588bd8375243fc7978546c1556776
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.1"
+    version: "0.15.0"
   analyzer:
     dependency: transitive
     description:
@@ -260,10 +260,11 @@ packages:
   dotdart:
     dependency: "direct overridden"
     description:
-      path: "/Users/personal/Developer/ventairy/flutter/dotdart"
-      relative: false
-    source: path
-    version: "0.15.0"
+      name: dotdart
+      sha256: "00a0336952d928f76f2ba4f5087f88682b995ff7be8e79b98a873b37d4618d57"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.2"
   equatable:
     dependency: transitive
     description:
@@ -548,10 +549,11 @@ packages:
   oh_my_flutter:
     dependency: "direct overridden"
     description:
-      path: "/Users/personal/Developer/ventairy/flutter/oh_my_flutter"
-      relative: false
-    source: path
-    version: "0.34.0"
+      name: oh_my_flutter
+      sha256: "138eb03d68143eb3056798d64df9e52aab95c033a57cd9693df00b3eb16b1938"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.29.0"
   package_config:
     dependency: transitive
     description:
