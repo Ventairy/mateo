@@ -16,6 +16,12 @@ class _IconRecordingCanvas extends Fake implements Canvas {
   void save() {}
 
   @override
+  void saveLayer(Rect? bounds, Paint paint) {}
+
+  @override
+  void clipRect(Rect rect, {ClipOp clipOp = ClipOp.intersect, bool doAntiAlias = true}) {}
+
+  @override
   void restore() {}
 
   @override

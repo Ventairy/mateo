@@ -10,6 +10,34 @@ import '../fixtures/surface_transform_test_widgets.dart';
 
 Future<void> main() async {
   await goldenTest(
+    'sticker colors preserve the white cross, border, and cast shadow',
+    fileName: 'mateo_icon_sticker',
+    builder: () => GoldenTestGroup(
+      columns: 2,
+      children: [
+        for (final size in [20.0, 64.0])
+          GoldenTestScenario(
+            name: '${size.toInt()}px',
+            child: ColoredBox(
+              color: surfaceTransformTheme.palette.neutral[4],
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  mainAxisSize: .min,
+                  spacing: 12,
+                  children: [
+                    MateoIcon(.crossSeal, style: .sticker, size: size),
+                    MateoIcon(.crossSeal, style: .sticker, size: size, color: const Color(0xFFFF0000)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
+    ),
+  );
+
+  await goldenTest(
     'when icons mix open strokes and enclosed bodies, it should preserve their optical balance',
     fileName: 'mateo_icon_optical_balance',
     builder: () => MateoTheme(

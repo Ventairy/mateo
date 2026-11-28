@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Balance icon and logo appearance using rendered contrast, span, and body geometry.
+"""Balance icons, logos, and stickers using rendered contrast, span, and body geometry.
 
 Only one uniform transform is generated inside each existing 20px SVG frame.
 No filename, family, catalog statistic, or per-icon adjustment enters the model.
@@ -452,7 +452,7 @@ def _write_batch(changes):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=ICONS, help="Directory of 20px icon or logo SVG frames (defaults to icons)")
+    parser.add_argument("--input", type=Path, default=ICONS, help="Directory of 20px icon, logo, or sticker SVG frames (defaults to icons)")
     parser.add_argument("--output-dir", type=Path, help="Write a separate candidate directory")
     parser.add_argument(
         "--check", action="store_true", help="Check exact output without writing SVGs"

@@ -8,4 +8,7 @@ enum MateoIconStyle {
 
   /// The dimensional image treatment, available for selected icons.
   threeD,
+
+  /// Icon styled in a way that looks like a sticker
+  sticker,
 }

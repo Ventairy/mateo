@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui' show ClipOp;
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +29,32 @@ void main() {
     final box = tester.renderObject<RenderBox>(find.byType(MateoIcon));
     return MatrixUtils.transformRect(child.getTransformTo(box), Offset.zero & child.size);
   }
+
+  testWidgets('the sticker body inherits its color and accepts an explicit override', (tester) async {
+    for (final explicitColor in [null, red]) {
+      await tester.pumpWidget(
+        host(
+          MateoIconScope(
+            color: blue,
+            child: MateoIcon(.crossSeal, style: .sticker, color: explicitColor),
+          ),
+        ),
+      );
+      expect(painterColors(tester).toSet(), {explicitColor ?? blue, const Color(0xFFFFFFFF)});
+    }
+  });
+
+  testWidgets('requesting a missing sticker identifies the icon and artwork', (tester) async {
+    await tester.pumpWidget(host(const MateoIcon(.checkmarkSeal, style: .sticker)));
+    expect(
+      tester.takeException(),
+      isA<UnsupportedError>().having(
+        (error) => error.message,
+        'message',
+        'Mateo icon checkmarkSeal has no sticker artwork.',
+      ),
+    );
+  });
 
   test('when background size is configured, it should support const values and reject invalid dimensions', () {
     const scope = MateoIconScope(sizeWithBackground: 42, child: SizedBox());

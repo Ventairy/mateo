@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../gen/icons.g.dart';
+import '../../gen/stickers.g.dart';
 import '../../gen/three_d_icons.g.dart';
 import '../../theme/mateo_theme.dart';
 import '../mateo_text/mateo_text.dart';
@@ -63,7 +64,7 @@ final class MateoIcon extends StatelessWidget {
   /// finite and nonnegative; zero renders empty.
   final double? size;
 
-  /// The SVG foreground color, overriding inherited colors when supplied.
+  /// The vector foreground color, overriding inherited colors when supplied.
   ///
   /// Otherwise follows [MateoIconScope], surrounding text, the Mateo primary
   /// text color, then the asset's authored color.
@@ -90,19 +91,20 @@ final class MateoIcon extends StatelessWidget {
     );
   }
 
+  Color? _foregroundColor(BuildContext context) =>
+      color ??
+      MateoIconScope.of(context).color ??
+      MateoTextScope.of(context).color ??
+      MateoTheme.maybeOf(context)?.colorScheme.text.primary;
+
   /// Builds the constrained artwork with resolved defaults and image semantics.
   @override
   Widget build(BuildContext context) {
     final resolvedSizes = _resolvedSizes(context);
     if (resolvedSizes.icon == 0) return const SizedBox.shrink();
     var artwork = switch (style) {
-      .svg => icon._buildSvg(
-        color:
-            color ??
-            MateoIconScope.of(context).color ??
-            MateoTextScope.of(context).color ??
-            MateoTheme.maybeOf(context)?.colorScheme.text.primary,
-      ),
+      .svg => icon._buildSvg(color: _foregroundColor(context)),
+      .sticker => icon._buildSticker(color: _foregroundColor(context)),
       .threeD => icon._buildThreeD(size: resolvedSizes.artwork, imageCache: MateoThreeDIconCacheHost.cacheOf(context)),
     };
     if (Directionality.maybeOf(context) == TextDirection.rtl) {

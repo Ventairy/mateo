@@ -2,7 +2,7 @@
 
 The supported input is static SVG geometry and embedded PNGs in a fixed 20px
 frame, including exported mask-type declarations. Text, external resources,
-other CSS, filters, vector effects, and root transforms,
+other CSS, external filters, vector effects, and root transforms,
 clipping, or masking are excluded; every supported stroke scales with geometry.
 Only the temporary analysis document exposes paint outside the root viewport;
 authored clip paths and nested viewport clipping remain in effect.
@@ -30,13 +30,14 @@ MAX_IMAGE_PIXELS = 16_000_000
 MAX_IMAGE_SIDE = 4096
 _TAGS = set(
     "svg g defs path rect circle ellipse line polyline polygon clipPath "
-    "mask use linearGradient radialGradient stop pattern title desc image".split()
+    "mask use linearGradient radialGradient stop pattern title desc image filter feFlood "
+    "feColorMatrix feOffset feGaussianBlur feComposite feBlend feDropShadow".split()
 )
 _NUMERIC = set(
     "viewBox x y x1 y1 x2 y2 width height cx cy r rx ry d points "
     "transform gradientTransform patternTransform opacity fill-opacity "
     "stroke-opacity stroke-width stroke-miterlimit stroke-dasharray "
-    "stroke-dashoffset offset pathLength".split()
+    "stroke-dashoffset offset pathLength dx dy stdDeviation values flood-opacity".split()
 )
 _NUMBER = re.compile(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?")
 _NONFINITE = re.compile(r"(?<![a-z])(?:nan|[+-]?inf(?:inity)?)(?![a-z])", re.I)
@@ -108,6 +109,7 @@ def _parse(source):
     parser = expat.ParserCreate(namespace_separator="}")
     stack, elements = [], []
     image_bytes, image_pixels = 0, 0
+    filter_references = set()
 
     def start(name, attributes):
         nonlocal image_bytes, image_pixels
@@ -136,9 +138,10 @@ def _parse(source):
             if local == "vector-effect" and value != "none":
                 raise ValueError("Vector effects are unsupported; strokes must scale with geometry")
             if local == "filter" and value.strip() != "none":
-                raise ValueError(
-                    "Filters are unsupported; use static geometry without filter effects"
-                )
+                reference = re.fullmatch(r"url\(#([\w.:-]+)\)", value.strip())
+                if not stack or not reference:
+                    raise ValueError("Expected a local filter reference on a child element")
+                filter_references.add(reference[1])
             if local == "href" and tag != "image" and not re.fullmatch(r"#[\w.:-]+", value):
                 raise ValueError("Only local SVG fragment references are supported")
             for target in re.findall(r"url\(\s*([^)]+)\)", value, re.I):
@@ -180,6 +183,9 @@ def _parse(source):
         raise ValueError("SVG source exceeds the 2MB geometry limit excluding embedded PNGs")
     if not elements or elements[0].tag != "svg":
         raise ValueError("Expected an SVG root")
+    filter_ids = {node.attributes.get("id") for node in elements if node.tag == "filter"}
+    if filter_references - filter_ids:
+        raise ValueError("Missing local filter definition")
     root = elements[0]
     for attr in ("width", "height"):
         length = root.attributes.get(attr, "").strip()

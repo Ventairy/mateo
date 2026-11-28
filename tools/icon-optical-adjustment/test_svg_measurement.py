@@ -362,14 +362,14 @@ class SvgMeasurementTests(unittest.TestCase):
             svg('<rect style="fill: red"/>'),
             svg('<circle r="5" vector-effect="non-scaling-stroke"/>'),
             svg("<script/>"),
-            svg("<filter/>"),
+            svg("<filter><feImage/></filter>"),
             '<!DOCTYPE svg [<!ENTITY x "value">]>' + svg("<title>&x;</title>"),
         ]
         for source in sources:
             with self.subTest(source=source), self.assertRaises(ValueError):
                 render_alpha(source)
 
-    def test_filter_attributes_fail_before_geometry_is_rendered_or_wrapped(self):
+    def test_invalid_filter_attributes_fail_before_geometry_is_rendered_or_wrapped(self):
         for effect in ("blur(1px)", "drop-shadow(1px 1px 1px)", "url(#effect)"):
             for source in (
                 svg(f'<rect width="10" height="10" filter="{effect}"/>'),
@@ -380,9 +380,27 @@ class SvgMeasurementTests(unittest.TestCase):
                     patch("svg_measurement.resvg_py.svg_to_bytes") as render,
                 ):
                     for operation in (unwrap, render_alpha, lambda s: wrap(s, 0.5, 5, 5)):
-                        with self.assertRaisesRegex(ValueError, "Filters are unsupported"):
+                        with self.assertRaisesRegex(ValueError, "local filter"):
                             operation(source)
                     render.assert_not_called()
+
+    def test_sticker_shadow_and_border_fit_after_optical_adjustment(self):
+        from adjust_icon_sizes import adjust_icon_size
+
+        source = svg(
+            '<defs><filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">'
+            '<feDropShadow dx="1" dy="3" stdDeviation="1"/></filter></defs>'
+            '<circle cx="14" cy="14" r="6" fill="red" stroke="white" stroke-width="2" '
+            'filter="url(#shadow)"/>'
+        )
+        self.assertGreater(render_alpha(source).bounds[3], 23)
+        adjusted, metrics = adjust_icon_size(source)
+        self.assertEqual(unwrap(adjusted), source)
+        self.assertEqual(adjust_icon_size(adjusted)[0], adjusted)
+        self.assertTrue(metrics["limited"])
+        left, top, right, bottom = render_alpha(adjusted, pixels_per_unit=64).bounds
+        self.assertGreater(min(left, top), 0)
+        self.assertLess(max(right, bottom), 20)
 
     def test_explicit_none_filter_preserves_static_geometry_and_authored_bytes(self):
         source = svg(

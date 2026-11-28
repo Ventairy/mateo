@@ -42,6 +42,7 @@ dotdart:
   output: lib/src/gen/
   svg:
     - assets/icons/
+    - assets/stickers/
     - assets/flags/
     - assets/logos/
   lottie:
@@ -51,10 +52,6 @@ dotdart:
 
 flutter:
   assets:
-    - assets/flags/
-    - assets/icons/
-    - assets/logos/
-    - assets/animated_icons/
     - assets/three_d_icons/
   fonts:
     - family: Inter

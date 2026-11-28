@@ -402,6 +402,11 @@ enum MateoIconData {
   /// The open padlock icon.
   padlockOpen;
 
+  Widget _buildSticker({Color? color}) => switch (this) {
+    crossSeal => $Stickers.crossSeal(mateoOpticalSizeColor2: color),
+    _ => throw UnsupportedError('Mateo icon $name has no sticker artwork.'),
+  };
+
   Widget _buildSvg({Color? color}) => switch (this) {
     lifebuoy => $Icons.lifebuoy(mateoOpticalSizeColor: color),
     redFlag => throw UnsupportedError('Mateo icon $name has no SVG artwork.'),

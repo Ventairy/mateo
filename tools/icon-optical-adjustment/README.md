@@ -1,9 +1,9 @@
-# Adjust icon and logo size and placement optically
+# Adjust icons, logos, and stickers optically
 
 The `mateo-optical-6.0` model balances rendered color contrast, outer span, and
 enclosed, compact narrow, and separated broad bodies. Size is calibrated for
 Mateo's light appearance; the original alpha geometry still owns placement and
-containment. Every icon or logo receives one uniform scale and translation
+containment. Every asset receives one uniform scale and translation
 inside its existing 20px SVG frame. The
 [icon foundation](../../design-system/foundation/icons.md) owns how exported
 assets are used.
@@ -103,6 +103,20 @@ and in existing inverse containers. The static artwork uses one calibration,
 not a different transform for every background. This workflow does not copy
 logos into platform packages.
 
+### Stickers
+
+Use the shared size target and optical placement for the sticker catalog:
+
+```sh
+"$ICON_PY" "$ICON_TOOLS/adjust_icon_sizes.py" --input design-system/foundation/assets/icons/stickers
+"$ICON_PY" "$ICON_TOOLS/adjust_icon_sizes.py" --input design-system/foundation/assets/icons/stickers --check
+```
+
+The tool measures the rendered sticker, including its border and shadow, on
+a padded canvas and fits all visible paint inside the frame. Leave room for
+blur and offset in the SVG filter region. Remove export-only frame clips that
+trim the sticker before measurement. Keep intentional artwork clips.
+
 ## Package integration
 
 The adjusted files in `design-system/foundation/assets/icons/svg/` are the
@@ -151,7 +165,11 @@ coverage in the SVG context without re-encoding them.
 The exported inline declaration `style="mask-type:luminance"` (or `alpha`,
 with an optional trailing semicolon) is also supported on `mask` elements.
 
-Text, other embedded image formats, external resources, other CSS, filters,
+Local SVG shadow filters on child artwork can use `feDropShadow` or the exported
+`feFlood`, `feColorMatrix`, `feOffset`, `feGaussianBlur`, `feComposite`, and
+`feBlend` primitives. CSS filter functions and root filters are unsupported.
+
+Text, other embedded image formats, external resources, other CSS,
 non-scaling vector effects, and transforms, masks, or clipping on the root SVG are
 unsupported. Malformed generated wrappers and unsupported input fail explicitly.
 The parser also limits source size, nesting, and element count.

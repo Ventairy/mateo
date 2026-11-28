@@ -79,7 +79,7 @@ language conventions, such as `arrowLeft` in Dart.
 | ![Copyright symbol](assets/icons/svg/copyright.svg) | `copyright` | A copyright notice or copyright information, paired with text that identifies the work or owner. | A trademark, license type, security guarantee, or a generic account owner. |
 | ![Credit card](assets/icons/svg/credit-card.svg) | `credit-card` | Card payments, payment methods, or a saved payment card when the surrounding label identifies the action or information. | A completed payment, available balance, or a security guarantee without supporting context. |
 | ![Cross](assets/icons/svg/cross.svg)                                                                                                                                                                                               | `cross`                         | Close, dismiss, clear, or remove from a reversible context. The component must make the exact action clear.                                       | Error status by itself or an unlabeled destructive action.                                        |
-| ![Seal with a cross](assets/icons/svg/cross-seal.svg) | `cross-seal` | A rejected or unapproved status when nearby text explains the decision and the next step. | Close, delete, an unverified status that has not been reviewed, or a generic error. |
+| ![Seal with a cross](assets/icons/svg/cross-seal.svg) ![Sticker seal with a cross](assets/icons/stickers/cross-seal.svg) | `cross-seal` | A rejected or unapproved status when nearby text explains the decision and the next step. | Close, delete, an unverified status that has not been reviewed, or a generic error. |
 | ![Disco ball](assets/icons/svg/disco-ball.svg)                                                                                                                                                                                     | `disco-ball`                    | Dancing, nightlife, a party, or a venue centered on those activities.                                                                             | Entertainment or celebration in general when dancing or nightlife is not involved.                |
 | ![Two crosses](assets/icons/svg/double-cross.svg)                                                                                                                                                                                  | `double-cross`                  | Two unavailable, incorrect, or excluded items when each cross corresponds to something visible and named.                                         | Close, delete, or a generic error without two distinct subjects.                                  |
 | ![Drop](assets/icons/svg/drop.svg)                                                                                                                                                                                                 | `drop`                          | Water, a liquid, moisture, or a measured amount of fluid when the surrounding text identifies it.                                                 | Fuel, tears, or a generic status without a liquid context.                                        |
@@ -205,6 +205,10 @@ to look balanced. The SVG artwork is the source of truth for each icon's scale,
 placement, and internal spacing. Use the same component size for icons that share
 a role; do not add individual scale or placement overrides around the exported
 artwork.
+
+The [sticker treatment](assets/icons/stickers/) includes the border and cast
+shadow in the exported frame. Display the whole frame at the same size as
+neighboring icons so the sticker keeps its edge and depth.
 
 An asymmetric drawing can need unequal margins to feel centered. Judge the
 balance of its body, contours, and detached pieces together rather than forcing
